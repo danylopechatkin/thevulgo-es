@@ -107,11 +107,11 @@ export default function RootLayout({
 
             <div className="flex items-center gap-2">
               <a
-                href="/estimate"
-                className="bg-yellow-400 text-black px-5 py-2.5 rounded-2xl font-bold shadow-md hover:shadow-xl hover:scale-105 transition"
-              >
-                Get estimate
-              </a>
+  href="/services"
+  className="bg-yellow-400 text-black px-5 py-2.5 rounded-2xl font-bold shadow-md hover:shadow-xl hover:scale-105 transition"
+>
+  Get estimate
+</a>
 
               <a
                 href="https://wa.me/14379074913?text=Hi!%20I%E2%80%99d%20like%20an%20estimate%20in%20Valencia."
