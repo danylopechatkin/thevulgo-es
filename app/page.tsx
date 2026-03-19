@@ -121,174 +121,125 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
         </div>
       </section>
 
-      {/* FEATURED SERVICES */}
-      <section id="services" className="py-16 sm:py-20 px-4">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-extrabold">Featured services</h2>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              Popular jobs delivered with clean installation and a professional finish.
-            </p>
-          </div>
+     {/* FEATURED SERVICES */}
+<section id="services" className="py-16 sm:py-20 px-4">
+  <div className="w-full max-w-7xl mx-auto">
+    <div className="text-center">
+      <h2 className="text-3xl sm:text-4xl font-extrabold">Featured services</h2>
+      <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+        Popular jobs delivered with clean installation and a professional finish.
+      </p>
+    </div>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <FeatureCard
-              title="Wall mounting & installs"
-              text="TVs, monitors, shelves, mirrors and brackets — level, secure and precisely aligned."
-              badge="Top"
-            />
-            <FeatureCard
-              title="Built-in audio & speakers"
-              text="Ceiling and wall speakers, soundbars, and clean cable routing with a tidy finish."
-              badge="New"
-            />
-            <FeatureCard
-              title="Drywall & finishing"
-              text="Cutouts, patching, skim coat, sanding and paint prep — clean ready-to-finish work."
-            />
-            <FeatureCard
-              title="Furniture & fixtures"
-              text="Assembly, anchors, curtain rods, blinds, bathroom accessories, small installs."
-            />
-            <FeatureCard
-              title="Basic plumbing"
-              text="Faucets, sinks, toilets, valves and small leaks — done quickly and neatly."
-              badge="Fontanería"
-            />
-            <FeatureCard
-              title="Basic electrical"
-              text="Lights, switches, sockets, mounting, tidy wiring (no complex rewiring)."
-            />
-          </div>
+    <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <FeatureCard
+        title="Wall mounting & installs"
+        text="TVs, monitors, shelves, mirrors and brackets — level, secure and precisely aligned."
+        badge="Top"
+      />
+      <FeatureCard
+        title="Built-in audio & speakers"
+        text="Ceiling and wall speakers, soundbars, and clean cable routing with a tidy finish."
+        badge="New"
+      />
+      <FeatureCard
+        title="Drywall & finishing"
+        text="Cutouts, patching, skim coat, sanding and paint prep — clean ready-to-finish work."
+        badge="Pro"
+      />
+      <FeatureCard
+        title="Furniture & fixtures"
+        text="Assembly, anchors, curtain rods, blinds, bathroom accessories and small installs."
+        badge="Popular"
+      />
+      <FeatureCard
+        title="Basic plumbing"
+        text="Faucets, sinks, toilets, valves and small leaks — done quickly and neatly."
+        badge="Fontanería"
+      />
+      <FeatureCard
+        title="Basic electrical"
+        text="Lights, switches, sockets, mounting and tidy wiring for clean everyday upgrades."
+        badge="Safe"
+      />
+      <FeatureCard
+        title="Smart home & devices"
+        text="Cameras, video doorbells, smart locks, sensors and practical device setup for modern homes."
+        badge="Smart"
+      />
+      <FeatureCard
+        title="Doors & hardware"
+        text="Handles, hinges, closers, latch fixes and small alignment work to improve daily use."
+        badge="Fix"
+      />
+      <FeatureCard
+        title="Bathroom installations"
+        text="Mirrors, cabinets, holders, shelves and clean fitting work for a more finished bathroom."
+        badge="Bath"
+      />
+    </div>
 
-          <div className="mt-10 text-center">
-            <button
-              onClick={goEstimate}
-              className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
-            >
-              Get estimate <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      </section>
+    <div className="mt-10 text-center">
+      <button
+        onClick={() => router.push("/services")}
+        className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
+      >
+        View all services <ArrowRight className="h-4 w-4" />
+      </button>
+    </div>
+  </div>
+</section>
 
       {/* HOW IT WORKS */}
-      <section id="how" className="py-16 sm:py-20 px-4 bg-white">
-        <div className="w-full max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-extrabold">How it works</h2>
-          <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-            Simple process. Clear communication. Clean result.
-          </p>
+<section id="how" className="py-16 sm:py-20 px-4 bg-white">
+  <div className="w-full max-w-7xl mx-auto text-center">
+    <h2 className="text-3xl sm:text-4xl font-extrabold">How it works</h2>
+    <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+      Simple process. Clear communication. Clean result from the first message to the finished job
+    </p>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <StepCard
-              n="1"
-              title="Pick a category"
-              text="Choose what you need — each service has a dedicated calculator page."
-              icon={<Wrench className="h-5 w-5" />}
-            />
-            <StepCard
-              n="2"
-              title="Get a fast estimate"
-              text="You’ll see a clear price range and what affects the final cost."
-              icon={<MessageCircle className="h-5 w-5" />}
-            />
-            <StepCard
-              n="3"
-              title="Clean install"
-              text="Measured, aligned, neatly finished — no mess left behind."
-              icon={<BadgeCheck className="h-5 w-5" />}
-            />
-          </div>
-        </div>
-      </section>
+    <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <StepCard
+        n="1"
+        title="Choose a service"
+        text="Pick the category that matches your job: TV mounting, plumbing, electrical, drywall, furniture or smart home."
+        icon={<Wrench className="h-5 w-5" />}
+      />
+      <StepCard
+        n="2"
+        title="Send photos or details"
+        text="Share 2–4 photos, your location in Valencia and a short description so the job can be reviewed properly."
+        icon={<Camera className="h-5 w-5" />}
+      />
+      <StepCard
+        n="3"
+        title="Get a clear estimate"
+        text="You receive a transparent price range and clear explanation of what affects the final cost."
+        icon={<MessageCircle className="h-5 w-5" />}
+      />
+      <StepCard
+        n="4"
+        title="Confirm the booking"
+        text="Once the scope is clear, the appointment time is confirmed with the right plan and materials in mind."
+        icon={<Check className="h-5 w-5" />}
+      />
+      <StepCard
+        n="5"
+        title="Clean professional install"
+        text="Measured, aligned and neatly finished work with attention to details, hardware and final presentation."
+        icon={<BadgeCheck className="h-5 w-5" />}
+      />
+      <StepCard
+        n="6"
+        title="Final check and cleanup"
+        text="Before leaving, everything is checked with you and the area is left tidy, clean and ready to use."
+        icon={<Sparkles className="h-5 w-5" />}
+      />
+    </div>
+  </div>
+</section>
 
-      {/* CATEGORIES */}
-      <section id="categories" className="py-16 sm:py-20 px-4 bg-white">
-        <div className="w-full max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-black">Service categories</h2>
-          <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-            A clean set of services for Valencia. Each category has its own calculator.
-          </p>
-
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <CategoryCard title="Mounting & Wall Installs" items={["Shelves & mirrors", "Brackets & rails", "Wall accessories"]} />
-            <CategoryCard title="Furniture & Assembly" items={["IKEA / general assembly", "Wall fixing & anchors", "Doors / handles (basic)"]} />
-            <CategoryCard title="Drywall & Finishing" items={["Cutouts & patch", "Skim coat & sanding", "Paint prep / touch-ups"]} />
-
-            <CategoryCard title="Basic Electrical" items={["Lights & lamps", "Switches / sockets", "Tidy wiring & mounting"]} />
-            <CategoryCard title="Fontanería Básica" items={["Faucets / taps", "Sinks / toilets", "Valves / small leaks"]} />
-            <CategoryCard title="Audio & Built-ins" items={["Ceiling / wall speakers", "Soundbar installs", "In-wall prep (when possible)"]} />
-
-            <CategoryCard title="Cable Concealment" items={["Surface raceway (clean)", "In-wall routing (where suitable)", "TV / workspace setups"]} />
-            <CategoryCard title="Doors & Hardware" items={["Handles / hinges", "Closers (basic)", "Minor alignment fixes"]} />
-            <CategoryCard title="Small Repairs" items={["Silicone / sealing", "Minor fixes", "Home touch-ups"]} />
-          </div>
-        </div>
-      </section>
-
-      {/* PROOF (boost conversion without fake reviews) */}
-      <section id="proof" className="py-16 sm:py-20 px-4 bg-white">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-extrabold">Proof of quality</h2>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              Early-stage business? No problem. You can still build trust with clear process
-              and real work examples.
-            </p>
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <ProofCard
-              icon={<Star className="h-5 w-5" />}
-              title="What clients usually say"
-              items={[
-                "Arrives on time and communicates clearly",
-                "Everything is level and aligned",
-                "Leaves the place clean — no mess",
-                "Explains options before drilling",
-              ]}
-            />
-            <ProofCard
-              icon={<Camera className="h-5 w-5" />}
-              title="Work examples (add photos later)"
-              items={[
-                "TV mounting with hidden cables",
-                "Shelves and mirrors perfectly aligned",
-                "Clean speaker installs / cable routing",
-                "Patch & prep for paint",
-              ]}
-            />
-            <ProofCard
-              icon={<ShieldCheck className="h-5 w-5" />}
-              title="No-surprise promise"
-              items={[
-                "Clear scope before starting",
-                "Price range shown in calculator",
-                "Confirm wall type + anchors first",
-                "You approve before drilling",
-              ]}
-            />
-          </div>
-
-          <div className="mt-10 rounded-2xl border border-yellow-400 bg-white p-6 shadow-xl">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div>
-                <p className="font-extrabold text-black">Get an estimate in 30 seconds</p>
-                <p className="mt-1 text-sm text-gray-600">
-                  Pick your category → open the calculator → see price range + options.
-                </p>
-              </div>
-              <button
-                onClick={goEstimate}
-                className="inline-flex items-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 text-sm font-extrabold text-black shadow-lg transition-transform duration-200 hover:scale-[1.02]"
-              >
-                Get estimate <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* WHY CHOOSE */}
       <section id="why" className="relative py-16 sm:py-20 px-4">
@@ -343,31 +294,55 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
       </section>
 
       {/* TIPS & GUIDES */}
-      <section id="guides" className="py-16 sm:py-20 px-4 bg-white">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-extrabold">Tips & Guides</h2>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              Short, useful tips to avoid common mistakes and get a cleaner result.
-            </p>
-          </div>
+<section id="guides" className="py-16 sm:py-20 px-4 bg-white">
+  <div className="w-full max-w-7xl mx-auto">
+    <div className="text-center">
+      <h2 className="text-3xl sm:text-4xl font-extrabold">Tips & Guides</h2>
+      <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+        Short, useful tips to avoid common mistakes and get a cleaner, safer and better-looking result.
+      </p>
+    </div>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <GuideCard
-              title="TV mounting height"
-              text="The best height depends on sofa distance and screen size. A quick rule: center of the TV close to eye level when seated."
-            />
-            <GuideCard
-              title="Choosing anchors"
-              text="Plasterboard vs brick vs concrete need different anchors. Wrong hardware = loose installs. Ask before drilling."
-            />
-            <GuideCard
-              title="Cable concealment"
-              text="Raceway is the cleanest fast option. In-wall routing is possible only when the wall type allows it safely."
-            />
-          </div>
-        </div>
-      </section>
+    <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <GuideCard
+        title="TV mounting height"
+        text="The best height depends on sofa distance and screen size. A good rule is to keep the center of the TV close to eye level when seated."
+      />
+      <GuideCard
+        title="Choosing anchors"
+        text="Plasterboard, brick and concrete all need different hardware. Wrong anchors can make shelves, TVs or mirrors unsafe."
+      />
+      <GuideCard
+        title="Cable concealment"
+        text="Raceway is the fastest clean-looking option. In-wall routing is only suitable when the wall type allows it safely."
+      />
+      <GuideCard
+        title="Before drilling the wall"
+        text="Always confirm wall material, cable routes and final height before drilling. Small planning mistakes create expensive fixes later."
+      />
+      <GuideCard
+        title="Mirror positioning"
+        text="Bathroom and hallway mirrors should be centered carefully and placed at a height that feels balanced for everyday use."
+      />
+      <GuideCard
+        title="Shelf spacing"
+        text="Good shelf installation is not only about level mounting. Spacing, symmetry and surrounding furniture matter too."
+      />
+      <GuideCard
+        title="Small plumbing upgrades"
+        text="Replacing faucets, shower heads and visible fittings can improve the feel of a kitchen or bathroom without full renovation."
+      />
+      <GuideCard
+        title="Light fixture planning"
+        text="Before replacing a light, check compatibility, mounting base and room purpose to get both practical lighting and clean appearance."
+      />
+      <GuideCard
+        title="Bundle small jobs together"
+        text="The most efficient approach is often grouping several small tasks into one visit instead of booking each issue separately."
+      />
+    </div>
+  </div>
+</section>
 
    {/* FAQ */}
 <section id="faq" className="py-16 sm:py-20 px-4 bg-white">
@@ -416,8 +391,8 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
 
       {/* CONTACT / PICKER (goes to /estimate/[slug]) */}
       <section id="contact" className="relative py-16 sm:py-20">
-        <ServicePickerSection
-  onPick={(slug) => router.push(`/estimate/${slug}`)}
+       <ServicePickerSection
+  onPick={(slug) => router.push(`/services/${slug}`)}
   onOpenEstimate={() => router.push("/services")}
   whatsappEnabled={whatsappEnabled}
   whatsappHref={whatsappHref}
@@ -778,7 +753,7 @@ function ServicePickerSection({
   {
     title: "Apartment & Move-In Setup",
     desc: "<strong>Curtains</strong>, furniture, move-in installs.",
-    slug: "apartment",
+    slug: "move-in",
     badge: "Setup",
   },
   {
@@ -870,11 +845,11 @@ function ServicePickerSection({
 />
 
                   <div className="mt-4 inline-flex items-center gap-2 font-extrabold text-black text-sm max-[720px]:text-[13px] max-[640px]:text-[12px]">
-                    Get estimate{" "}
-                    <span className="text-yellow-400 transition-transform duration-200 group-hover:translate-x-1">
-                      →
-                    </span>
-                  </div>
+  See details
+  <span className="text-yellow-400 transition-transform duration-200 group-hover:translate-x-1">
+    →
+  </span>
+</div>
                 </div>
               </button>
             ))}

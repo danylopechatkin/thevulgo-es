@@ -58,23 +58,14 @@ export default function RootLayout({
                 <span className="absolute left-2 right-2 -bottom-[3px] h-[2px] bg-yellow-400 scale-x-0 origin-left transition-transform duration-200 ease-out group-hover:scale-x-100" />
               </a>
 
-              <a
-                href="/#categories"
-                className="group relative px-2 py-1 text-gray-700 hover:text-black transition"
-              >
-                <span className="relative z-10 inline-block transition-transform duration-200 ease-out group-hover:-translate-y-[1px]">
-                  Categories
-                </span>
-                <span className="absolute inset-0 rounded-lg bg-yellow-100/0 transition group-hover:bg-yellow-100/40" />
-                <span className="absolute left-2 right-2 -bottom-[3px] h-[2px] bg-yellow-400 scale-x-0 origin-left transition-transform duration-200 ease-out group-hover:scale-x-100" />
-              </a>
+              
 
               <a
-                href="/#proof"
+                href="/#how"
                 className="group relative px-2 py-1 text-gray-700 hover:text-black transition"
               >
                 <span className="relative z-10 inline-block transition-transform duration-200 ease-out group-hover:-translate-y-[1px]">
-                  Proof
+                  How it works?
                 </span>
                 <span className="absolute inset-0 rounded-lg bg-yellow-100/0 transition group-hover:bg-yellow-100/40" />
                 <span className="absolute left-2 right-2 -bottom-[3px] h-[2px] bg-yellow-400 scale-x-0 origin-left transition-transform duration-200 ease-out group-hover:scale-x-100" />
