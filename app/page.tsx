@@ -417,11 +417,11 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
       {/* CONTACT / PICKER (goes to /estimate/[slug]) */}
       <section id="contact" className="relative py-16 sm:py-20">
         <ServicePickerSection
-          onPick={(slug) => router.push(`/estimate/${slug}`)}
-          onOpenEstimate={goEstimate}
-          whatsappEnabled={whatsappEnabled}
-          whatsappHref={whatsappHref}
-        />
+  onPick={(slug) => router.push(`/estimate/${slug}`)}
+  onOpenEstimate={() => router.push("/services")}
+  whatsappEnabled={whatsappEnabled}
+  whatsappHref={whatsappHref}
+/>
       </section>
 
       {/* FOOTER */}
