@@ -415,11 +415,13 @@ export default function EstimatePage() {
   return "tv-mounting" as CategoryKey;
 })();
 
-  const [category, setCategory] = useState<CategoryKey>(initialCategory);
+const [category, setCategory] = useState<CategoryKey>(initialCategory);
 const [categoryPage, setCategoryPage] = useState(0);
 const [categoryDirection, setCategoryDirection] = useState<"next" | "prev">("next");
 const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const [client, setClient] = useState({
+const [submitStage, setSubmitStage] = useState<"build" | "review" | "success">("build");
+const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+const [client, setClient] = useState({
   fullName: "",
   email: "",
   phone: "",
@@ -589,6 +591,9 @@ const clearAll = () => setQuantities({});
 const selectedCityAreas = CITY_AREA_OPTIONS[client.city] || [];
 const hasAreaOptions = selectedCityAreas.length > 0;
 const isCustomCity = client.city === "My city is not listed";
+const displayCity = isCustomCity ? client.customCity : client.city;
+const hasSelectedServices = selectedServices.length > 0;
+const hasContact = client.email.trim() !== "" || client.phone.trim() !== "";
 
 const categoriesPerPage = 4;
 const totalCategoryPages = Math.ceil(CATEGORY_OPTIONS.length / categoriesPerPage);
@@ -597,6 +602,58 @@ const visibleCategoryOptions = CATEGORY_OPTIONS.slice(
   categoryPage * categoriesPerPage,
   categoryPage * categoriesPerPage + categoriesPerPage
 );
+
+const validateEstimateForm = () => {
+  const errors: Record<string, string> = {};
+
+  if (!hasSelectedServices) {
+    errors.services = "Select at least one service.";
+  }
+
+  if (!client.fullName.trim()) {
+    errors.fullName = "Enter your full name.";
+  }
+
+  if (!hasContact) {
+    errors.contact = "Enter phone or email.";
+  }
+
+  if (!displayCity?.trim()) {
+    errors.city = "Choose your city.";
+  }
+
+  if (!client.area.trim()) {
+    errors.area = "Enter or choose area / district.";
+  }
+
+  if (!client.houseAddress.trim()) {
+    errors.houseAddress = "Enter house address.";
+  }
+
+  if (!client.preferredDate.trim()) {
+    errors.preferredDate = "Choose preferred date.";
+  }
+
+  if (!client.preferredTime.trim()) {
+    errors.preferredTime = "Choose preferred time.";
+  }
+
+  setFormErrors(errors);
+  return Object.keys(errors).length === 0;
+};
+
+const handleNextStep = () => {
+  if (!validateEstimateForm()) return;
+  setSubmitStage("review");
+};
+
+const handleBackToEdit = () => {
+  setSubmitStage("build");
+};
+
+const handleConfirmSend = () => {
+  setSubmitStage("success");
+};
 
 useEffect(() => {
   const categoryIndex = CATEGORY_OPTIONS.findIndex(
@@ -823,6 +880,9 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
                     );
                   })}
                 </div>
+                <p className="mt-4 text-xs text-gray-500">
+  Can’t find your exact service? Choose "Custom job / Not listed" or describe it in notes.
+</p>
               </section>
 
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
@@ -1032,7 +1092,7 @@ className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black
                       onChange={(e) =>
                         setClient((prev) => ({ ...prev, notes: e.target.value }))
                       }
-                      placeholder="Add any details about the job, wall type, photos, timing or special request..."
+                      placeholder="Describe your job in detail (wall type, materials, photos, timing, access, etc.)"
                       className="min-h-[150px] w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
                     />
                   </div>
@@ -1117,14 +1177,179 @@ className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black
                   </p>
                 </div>
 
-                <button
-                  type="button"
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
-                >
-                  Next step: send request
-                  <ArrowRight className="h-4 w-4" />
-                </button>
+                {submitStage === "build" && (
+  <>
+    <button
+      type="button"
+      onClick={handleNextStep}
+      className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
+    >
+      Next step: review request
+      <ArrowRight className="h-4 w-4" />
+    </button>
 
+    {Object.keys(formErrors).length > 0 && (
+      <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+        <p className="font-bold">Please complete the required fields:</p>
+        <ul className="mt-2 space-y-1">
+          {Object.entries(formErrors).map(([key, value]) => (
+            <li key={key}>• {value}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </>
+)}
+
+{submitStage === "review" && (
+  <div className="mt-6 space-y-4">
+    <div className="rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4">
+      <p className="text-sm font-bold text-black">Review your request</p>
+      <p className="mt-1 text-sm text-gray-600">
+        Please confirm your details before sending.
+      </p>
+    </div>
+
+    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+        Client
+      </p>
+      <div className="mt-2 space-y-1 text-sm text-black">
+        <p><span className="font-semibold">Name:</span> {client.fullName || "—"}</p>
+        <p><span className="font-semibold">Phone:</span> {client.phone || "—"}</p>
+        <p><span className="font-semibold">Email:</span> {client.email || "—"}</p>
+      </div>
+    </div>
+
+    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+        Selected services
+      </p>
+
+      <div className="mt-2 space-y-3 text-sm text-black">
+        {selectedServices.map((item) => (
+          <div
+            key={item.id}
+            className="flex items-center justify-between gap-3 border-b border-gray-100 pb-2"
+          >
+            <span className="font-medium">
+              {item.label} × {item.qty}
+            </span>
+
+            <span className="font-semibold text-black">
+              €{item.subtotal}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 flex items-center justify-between border-t border-gray-300 pt-4">
+        <span className="text-sm font-bold uppercase tracking-wide text-gray-500">
+          Total
+        </span>
+
+        <span className="text-xl font-extrabold text-black">
+          €{estimatedTotal}
+        </span>
+      </div>
+
+      <p className="mt-2 text-xs text-gray-500">
+        Final price confirmed after inspection if needed.
+      </p>
+    </div>
+
+    <div className="mt-4 rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+        Address
+      </p>
+      <div className="mt-2 space-y-1 text-sm text-black">
+        <p><span className="font-semibold">City:</span> {displayCity || "—"}</p>
+        <p><span className="font-semibold">Area:</span> {client.area || "—"}</p>
+        <p><span className="font-semibold">Address:</span> {client.houseAddress || "—"}</p>
+        <p><span className="font-semibold">Apartment:</span> {client.apartmentNumber || "—"}</p>
+        <p><span className="font-semibold">Extra details:</span> {client.addressDetails || "—"}</p>
+      </div>
+    </div>
+
+    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+        Schedule
+      </p>
+      <div className="mt-2 space-y-1 text-sm text-black">
+        <p><span className="font-semibold">Preferred date:</span> {client.preferredDate || "—"}</p>
+        <p><span className="font-semibold">Preferred time:</span> {client.preferredTime || "—"}</p>
+      </div>
+    </div>
+
+    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+        Notes
+      </p>
+      <p className="mt-2 text-sm text-black">
+        {client.notes.trim() || "No additional notes"}
+      </p>
+    </div>
+
+    <p className="text-center text-xs text-gray-500">
+      No payment required. We’ll confirm everything before the visit.
+    </p>
+
+    <div className="flex gap-3">
+      <button
+        type="button"
+        onClick={handleBackToEdit}
+        className="flex-1 rounded-2xl border border-gray-300 bg-white py-4 font-bold"
+      >
+        Back
+      </button>
+
+      <button
+        type="button"
+        onClick={handleConfirmSend}
+        className="flex-1 rounded-2xl bg-yellow-400 py-4 font-extrabold"
+      >
+        Confirm request
+      </button>
+    </div>
+  </div>
+)}
+
+{submitStage === "success" && (
+  <div className="mt-6 space-y-4">
+    <div className="rounded-2xl border border-green-200 bg-green-50 p-5">
+      <p className="text-lg font-extrabold text-black">Request prepared successfully</p>
+      <p className="mt-2 text-sm text-gray-600">
+        Your request is ready. Email sending will be connected in the next stage.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      onClick={() => {
+        setSubmitStage("build");
+        setQuantities({});
+        setFormErrors({});
+        setClient({
+          fullName: "",
+          email: "",
+          phone: "",
+          city: "Valencia",
+          customCity: "",
+          area: "",
+          houseAddress: "",
+          apartmentNumber: "",
+          addressDetails: "",
+          preferredDate: "",
+          preferredTime: "",
+          notes: "",
+        });
+      }}
+      className="w-full rounded-2xl border border-gray-300 bg-white py-4 font-bold"
+    >
+      New request
+    </button>
+  </div>
+)}
                 
               </section>
             </div>
@@ -1178,12 +1403,17 @@ function Field({
         {label}
       </label>
       <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
-      />
+  type={type}
+  value={value}
+  onChange={(e) => onChange(e.target.value)}
+  placeholder={placeholder}
+  disabled={disabled}
+  className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition
+    ${disabled
+      ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
+      : "bg-white text-black border-gray-300 focus:border-yellow-400"}
+  `}
+/>
     </div>
   );
 }
