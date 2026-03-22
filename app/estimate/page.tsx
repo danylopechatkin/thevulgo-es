@@ -4,13 +4,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Calculator,
-  ChevronDown,
-  ChevronUp,
   ClipboardList,
   Hammer,
   Tv,
-  ShieldCheck,
-  Sparkles,
   Zap,
   Droplets,
   Trash2,
@@ -25,7 +21,19 @@ import {
   Home,
 } from "lucide-react";
 
-type CategoryKey = "tv-mounting" | "electrical" | "plumbing" | "furniture";
+type CategoryKey =
+  | "tv-mounting"
+  | "electrical"
+  | "plumbing"
+  | "furniture"
+  | "drywall"
+  | "repairs"
+  | "doors"
+  | "smart-home"
+  | "kitchen"
+  | "bathroom"
+  | "move-in"
+  | "exterior";
 
 type ServiceItem = {
   id: string;
@@ -108,65 +116,199 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
       { id: "wall-fix", label: "Furniture wall fixing", price: 29 },
     ],
   },
+
+drywall: {
+  title: "Drywall",
+  icon: <Hammer className="h-5 w-5" />,
+  subtitle: "Patching, cutouts, sanding and small wall finishing work.",
+  badge: "Pro",
+  services: [
+    { id: "drywall-patch", label: "Small drywall patch", price: 35 },
+    { id: "drywall-cutout", label: "Wall cutout", price: 39 },
+  ],
+},
+repairs: {
+  title: "Repairs",
+  icon: <Hammer className="h-5 w-5" />,
+  subtitle: "Small home fixes, adjustments and practical repair work.",
+  badge: "Quick",
+  services: [
+    { id: "minor-fix", label: "Minor repair", price: 29 },
+    { id: "adjustment", label: "Home adjustment", price: 25 },
+  ],
+},
+doors: {
+  title: "Doors & Hardware",
+  icon: <Home className="h-5 w-5" />,
+  subtitle: "Handles, hinges, locks and visible door hardware fixes.",
+  badge: "Fix",
+  services: [
+    { id: "handle-fix", label: "Handle replacement", price: 25 },
+    { id: "hinge-fix", label: "Hinge adjustment", price: 25 },
+  ],
+},
+"smart-home": {
+  title: "Smart Home",
+  icon: <Zap className="h-5 w-5" />,
+  subtitle: "Cameras, doorbells, sensors and smart home device setup.",
+  badge: "Smart",
+  services: [
+    { id: "camera-setup", label: "Camera setup", price: 39 },
+    { id: "doorbell-setup", label: "Smart doorbell setup", price: 39 },
+  ],
+},
+kitchen: {
+  title: "Kitchen",
+  icon: <Home className="h-5 w-5" />,
+  subtitle: "Kitchen fittings, shelves, rails and practical installations.",
+  badge: "Kitchen",
+  services: [
+    { id: "kitchen-shelf", label: "Kitchen shelf install", price: 35 },
+    { id: "kitchen-rail", label: "Kitchen rail install", price: 29 },
+  ],
+},
+bathroom: {
+  title: "Bathroom",
+  icon: <Droplets className="h-5 w-5" />,
+  subtitle: "Mirrors, holders, cabinets and bathroom fitting work.",
+  badge: "Bath",
+  services: [
+    { id: "mirror-install", label: "Mirror installation", price: 35 },
+    { id: "holder-install", label: "Holder installation", price: 25 },
+  ],
+},
+"move-in": {
+  title: "Move-In Setup",
+  icon: <Package className="h-5 w-5" />,
+  subtitle: "Apartment setup, curtains, furniture and move-in help.",
+  badge: "Setup",
+  services: [
+    { id: "curtain-install", label: "Curtain installation", price: 35 },
+    { id: "movein-help", label: "Move-in setup help", price: 49 },
+  ],
+},
+exterior: {
+  title: "Exterior",
+  icon: <Home className="h-5 w-5" />,
+  subtitle: "Outdoor work, facade items, fences and exterior fixes.",
+  badge: "House",
+  services: [
+    { id: "exterior-fix", label: "Exterior repair", price: 49 },
+    { id: "fence-fix", label: "Fence repair", price: 45 },
+  ],
+},
+
 };
+
+
 
 const CATEGORY_OPTIONS: { key: CategoryKey; label: string }[] = [
   { key: "tv-mounting", label: "TV Mounting" },
   { key: "electrical", label: "Electrical" },
   { key: "plumbing", label: "Plumbing" },
   { key: "furniture", label: "Furniture Assembly" },
+  { key: "drywall", label: "Drywall" },
+  { key: "repairs", label: "Repairs" },
+  { key: "doors", label: "Doors & Hardware" },
+  { key: "smart-home", label: "Smart Home" },
+  { key: "kitchen", label: "Kitchen" },
+  { key: "bathroom", label: "Bathroom" },
+  { key: "move-in", label: "Move-In Setup" },
+  { key: "exterior", label: "Exterior" },
 ];
 
 export default function EstimatePage() {
   const searchParams = useSearchParams();
 
   const initialCategory = (() => {
-    const raw = searchParams.get("category");
-    if (
-      raw === "tv-mounting" ||
-      raw === "electrical" ||
-      raw === "plumbing" ||
-      raw === "furniture"
-    ) {
-      return raw;
-    }
-    return "tv-mounting" as CategoryKey;
-  })();
+  const raw = searchParams.get("category");
+  if (
+    raw === "tv-mounting" ||
+    raw === "electrical" ||
+    raw === "plumbing" ||
+    raw === "furniture" ||
+    raw === "drywall" ||
+    raw === "repairs" ||
+    raw === "doors" ||
+    raw === "smart-home" ||
+    raw === "kitchen" ||
+    raw === "bathroom" ||
+    raw === "move-in" ||
+    raw === "exterior"
+  ) {
+    return raw;
+  }
+  return "tv-mounting" as CategoryKey;
+})();
 
   const [category, setCategory] = useState<CategoryKey>(initialCategory);
-  const [quantities, setQuantities] = useState<Record<string, number>>({});
+const [categoryPage, setCategoryPage] = useState(0);
+const [categoryDirection, setCategoryDirection] = useState<"next" | "prev">("next");
+const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [client, setClient] = useState({
   fullName: "",
   email: "",
   phone: "",
   city: "Valencia",
+  customCity: "",
   area: "",
-  address: "",
+  houseAddress: "",
+  apartmentNumber: "",
+  addressDetails: "",
   preferredDate: "",
   preferredTime: "",
   notes: "",
 });
 
-const AREA_OPTIONS = [
-  "Ciutat Vella",
-  "Eixample",
-  "Extramurs",
-  "Campanar",
-  "La Saïdia",
-  "El Pla del Real",
-  "L'Olivereta",
-  "Patraix",
-  "Jesús",
-  "Quatre Carreres",
-  "Poblats Marítims",
-  "Camins al Grau",
-  "Algirós",
-  "Benimaclet",
-  "Rascanya",
-  "Benicalap",
-  "Pobles del Nord",
-  "Pobles de l'Oest",
-  "Pobles del Sud",
+const CITY_AREA_OPTIONS: Record<string, string[]> = {
+  Valencia: [
+    "Ciutat Vella",
+    "Russafa",
+    "El Pla del Remei",
+    "La Gran Via",
+    "Campanar",
+    "Marxalenes",
+    "Morvedre",
+    "Trinitat",
+    "Benimaclet",
+    "Algirós",
+    "El Cabanyal - El Canyamelar",
+    "La Malva-rosa",
+    "Aiora",
+    "Amistat",
+    "Mestalla",
+    "Patraix",
+    "Safranar",
+    "Favara",
+    "Arrancapins",
+    "Botànic",
+    "La Roqueta",
+    "La Petxina",
+    "Benicalap",
+    "Torrefiel",
+    "Orriols",
+    "Sant Antoni",
+    "Jesús",
+    "Sant Marcel·lí",
+    "Camí Real",
+    "Malilla",
+    "Monteolivete",
+    "En Corts",
+    "Natzaret",
+    "Quatre Carreres",
+    "Beniferri",
+    "Benimàmet",
+  ],
+
+  Torrent: ["Centre", "El Vedat", "Parc Central"],
+  Paterna: ["Centro", "La Canyada", "Valterna", "Terramelar", "Campamento"],
+  Burjassot: ["Centro", "Empalme", "Cantereria"],
+  Alboraia: ["Alboraia Centre", "Port Saplaya", "La Patacona"],
+  Mislata: ["Centro", "La Constitución", "El Quint"],
+};
+
+const CITY_OPTIONS = [
+  "Valencia",
   "Mislata",
   "Xirivella",
   "Aldaia",
@@ -180,11 +322,6 @@ const AREA_OPTIONS = [
   "Moncada",
   "Tavernes Blanques",
   "Alboraia",
-  "Massamagrell",
-  "Meliana",
-  "Foios",
-  "Vinalesa",
-  "Bonrepòs i Mirambell",
   "Sedaví",
   "Benetússer",
   "Alfafar",
@@ -194,6 +331,7 @@ const AREA_OPTIONS = [
   "Catarroja",
   "Massanassa",
   "Silla",
+  "My city is not listed",
 ];
 
 const TIME_OPTIONS = [
@@ -216,18 +354,28 @@ const TIME_OPTIONS = [
   "23:00",
 ];
 
+  
   useEffect(() => {
-    const raw = searchParams.get("category");
-    if (
-      raw === "tv-mounting" ||
-      raw === "electrical" ||
-      raw === "plumbing" ||
-      raw === "furniture"
-    ) {
-      setCategory(raw);
-      setQuantities({});
-    }
-  }, [searchParams]);
+  const raw = searchParams.get("category");
+
+  if (
+    raw === "tv-mounting" ||
+    raw === "electrical" ||
+    raw === "plumbing" ||
+    raw === "furniture" ||
+    raw === "drywall" ||
+    raw === "repairs" ||
+    raw === "doors" ||
+    raw === "smart-home" ||
+    raw === "kitchen" ||
+    raw === "bathroom" ||
+    raw === "move-in" ||
+    raw === "exterior"
+  ) {
+    setCategory(raw);
+    setQuantities({});
+  }
+}, [searchParams]);
 
   const currentCategory = CATEGORY_DATA[category];
 
@@ -260,11 +408,34 @@ const TIME_OPTIONS = [
     });
   };
 
-  const addOne = (id: string) => setQty(id, (quantities[id] || 0) + 1);
-  const removeOne = (id: string) => setQty(id, (quantities[id] || 0) - 1);
-  const clearAll = () => setQuantities({});
+const addOne = (id: string) => setQty(id, (quantities[id] || 0) + 1);
+const removeOne = (id: string) => setQty(id, (quantities[id] || 0) - 1);
+const clearAll = () => setQuantities({});
 
-  return (
+const selectedCityAreas = CITY_AREA_OPTIONS[client.city] || [];
+const hasAreaOptions = selectedCityAreas.length > 0;
+const isCustomCity = client.city === "My city is not listed";
+
+const categoriesPerPage = 4;
+const totalCategoryPages = Math.ceil(CATEGORY_OPTIONS.length / categoriesPerPage);
+
+const visibleCategoryOptions = CATEGORY_OPTIONS.slice(
+  categoryPage * categoriesPerPage,
+  categoryPage * categoriesPerPage + categoriesPerPage
+);
+
+useEffect(() => {
+  const categoryIndex = CATEGORY_OPTIONS.findIndex(
+    (item) => item.key === category
+  );
+
+  if (categoryIndex >= 0) {
+    setCategoryPage(Math.floor(categoryIndex / 4));
+  }
+}, [category]);
+
+return (
+
     <div className="min-h-screen bg-white text-black font-sans">
       <section className="relative px-4 py-10 sm:py-2">
         <div className="absolute inset-0 -z-10">
@@ -301,46 +472,88 @@ const TIME_OPTIONS = [
                   </div>
                 </div>
 
-                <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                  {CATEGORY_OPTIONS.map((option) => {
-                    const active = category === option.key;
-                    const cfg = CATEGORY_DATA[option.key];
+                <div className="mt-6">
+  <div className="mb-4 flex items-center justify-between gap-4">
+    <div className="text-sm text-gray-500">
+      Page {categoryPage + 1} of {totalCategoryPages}
+    </div>
 
-                    return (
-                      <button
-                        key={option.key}
-                        type="button"
-                        onClick={() => {
-                          setCategory(option.key);
-                          setQuantities({});
-                        }}
-                        className={`group rounded-2xl border p-5 text-left shadow-md transition-all duration-200 ${
-                          active
-                            ? "border-yellow-500 bg-yellow-50 shadow-xl scale-[1.01]"
-                            : "border-yellow-400 bg-white hover:scale-[1.01] hover:shadow-xl"
-                        }`}
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-                            {cfg.icon}
-                          </div>
+    <div className="flex items-center gap-2">
+  <button
+    type="button"
+    onClick={() => {
+      setCategoryDirection("prev");
+      setCategoryPage((prev) => Math.max(prev - 1, 0));
+    }}
+    disabled={categoryPage === 0}
+    className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:shadow-md disabled:cursor-not-allowed disabled:opacity-40"
+  >
+    ←
+  </button>
 
-                          <span className="rounded-full bg-red-500 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-                            {cfg.badge}
-                          </span>
-                        </div>
+  <button
+    type="button"
+    onClick={() => {
+      setCategoryDirection("next");
+      setCategoryPage((prev) =>
+        Math.min(prev + 1, totalCategoryPages - 1)
+      );
+    }}
+    disabled={categoryPage === totalCategoryPages - 1}
+    className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md transition hover:scale-[1.05] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40"
+  >
+    →
+  </button>
+</div>
+  </div>
 
-                        <h3 className="mt-4 text-base font-extrabold text-black">
-                          {cfg.title}
-                        </h3>
-                        <p className="mt-2 text-sm leading-6 text-gray-600">
-                          {cfg.subtitle}
-                        </p>
-                      </button>
-                    );
-                  })}
-                </div>
-              </section>
+   <div
+  key={categoryPage}
+  className={`grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 animate-category-page ${
+    categoryDirection === "next" ? "animate-slide-left" : "animate-slide-right"
+  }`}
+>
+  {visibleCategoryOptions.map((option) => {
+    const active = category === option.key;
+    const cfg = CATEGORY_DATA[option.key];
+
+      return (
+        <button
+          key={option.key}
+          type="button"
+          onClick={() => {
+            setCategory(option.key);
+            setQuantities({});
+          }}
+          className={`group rounded-2xl border p-5 text-left shadow-md transition-all duration-200 ${
+            active
+              ? "border-yellow-500 bg-yellow-50 shadow-xl scale-[1.01]"
+              : "border-yellow-400 bg-white hover:scale-[1.01] hover:shadow-xl"
+          }`}
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
+              {cfg.icon}
+            </div>
+
+            <span className="rounded-full bg-red-500 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+              {cfg.badge}
+            </span>
+          </div>
+
+          <h3 className="mt-4 text-lg font-extrabold text-black">
+            {cfg.title}
+          </h3>
+
+          <p className="mt-2 text-sm leading-6 text-gray-600 line-clamp-3">
+            {cfg.subtitle}
+          </p>
+        </button>
+      );
+    })}
+  </div>
+</div>
+</section>
 
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -475,30 +688,123 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
                     placeholder="+34 ..."
                   />
 
-                  <Field
+                  <SelectField
   label="City"
   icon={<MapPin className="h-4 w-4" />}
   value={client.city}
-  onChange={(v) => setClient((prev) => ({ ...prev, city: v }))}
-  placeholder="Valencia"
+  onChange={(v) =>
+    setClient((prev) => ({
+      ...prev,
+      city: v,
+      area: "",
+      customCity: v === "My city is not listed" ? prev.customCity : "",
+    }))
+  }
+  options={CITY_OPTIONS}
+  placeholder="Choose city"
 />
 
-<SelectField
-  label="Area / district"
-  icon={<MapPin className="h-4 w-4" />}
-  value={client.area}
-  onChange={(v) => setClient((prev) => ({ ...prev, area: v }))}
-  options={AREA_OPTIONS}
-  placeholder="Choose area or district"
+
+{client.city === "My city is not listed" && (
+  <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+    <label className="mb-2 flex items-center gap-2 text-sm font-bold text-black">
+      <MapPin className="h-4 w-4" />
+      Write your city
+    </label>
+
+    <input
+      type="text"
+      value={client.customCity}
+      onChange={(e) =>
+        setClient((prev) => ({ ...prev, customCity: e.target.value }))
+      }
+      placeholder="Enter your city"
+      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
+    />
+
+    <p className="mt-3 text-xs leading-6 text-gray-500">
+      We’ll contact you to confirm travel time, availability and access to your location.
+    </p>
+  </div>
+)}
+
+{!isCustomCity && hasAreaOptions && (
+  <SelectField
+    label={client.city === "Valencia" ? "Area / district" : "Area / neighborhood"}
+    icon={<MapPin className="h-4 w-4" />}
+    value={client.area}
+    onChange={(v) => setClient((prev) => ({ ...prev, area: v }))}
+    options={selectedCityAreas}
+    placeholder={
+      client.city === "Valencia"
+        ? "Choose area or district"
+        : "Choose area or neighborhood"
+    }
+  />
+)}
+
+{!isCustomCity && !hasAreaOptions && (
+  <Field
+    label="Area / neighborhood"
+    icon={<MapPin className="h-4 w-4" />}
+    value={client.area}
+    onChange={(v) => setClient((prev) => ({ ...prev, area: v }))}
+    placeholder="Write area, neighborhood or urbanization"
+  />
+)}
+
+{isCustomCity && (
+  <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+    <label className="mb-2 flex items-center gap-2 text-sm font-bold text-black">
+      <MapPin className="h-4 w-4" />
+      Area / neighborhood
+    </label>
+
+    <input
+      type="text"
+      value={client.area}
+      onChange={(e) => setClient((prev) => ({ ...prev, area: e.target.value }))}
+      placeholder="Write area, neighborhood or zone"
+      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
+    />
+
+    <p className="mt-3 text-xs leading-6 text-gray-500">
+      We’ll contact you to confirm travel time, availability and access to your location.
+    </p>
+  </div>
+)}
+
+<Field
+  label="House address"
+  icon={<Home className="h-4 w-4" />}
+  value={client.houseAddress}
+  onChange={(v) =>
+    setClient((prev) => ({ ...prev, houseAddress: v }))
+  }
+  placeholder="Street and building number"
 />
 
 <Field
-  label="Exact address / apartment"
+  label="Apartment number"
   icon={<Home className="h-4 w-4" />}
-  value={client.address}
-  onChange={(v) => setClient((prev) => ({ ...prev, address: v }))}
-  placeholder="Street, building, apartment, floor, door code..."
+  value={client.apartmentNumber}
+  onChange={(v) =>
+    setClient((prev) => ({ ...prev, apartmentNumber: v }))
+  }
+  placeholder="Apartment, floor, door"
 />
+
+<Field
+  label="Extra address details"
+  icon={<Home className="h-4 w-4" />}
+  value={client.addressDetails}
+  onChange={(v) =>
+    setClient((prev) => ({ ...prev, addressDetails: v }))
+  }
+  placeholder="Entrance code, block, landmark, extra instructions..."
+/>
+
+
 
 
 
@@ -517,8 +823,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
       onChange={(e) =>
         setClient((prev) => ({ ...prev, preferredDate: e.target.value }))
       }
-      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
-    />
+className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400 appearance-none"/>
   </div>
 
   {/* TIME */}
@@ -529,8 +834,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
     onChange={(e) =>
       setClient((prev) => ({ ...prev, preferredTime: e.target.value }))
     }
-    className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
-  >
+className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400 appearance-none" >
     <option value="">Choose preferred time</option>
     {TIME_OPTIONS.map((time) => (
       <option key={time} value={time}>
@@ -543,7 +847,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
 
                   <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
                     <label className="mb-2 flex items-center gap-2 text-sm font-bold text-black">
-                      <MessageSquare className="h-4 w-4" />
+                      <MessageSquare className="h-6 w-4" />
                       Notes
                     </label>
                     <textarea
@@ -552,7 +856,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
                         setClient((prev) => ({ ...prev, notes: e.target.value }))
                       }
                       placeholder="Add any details about the job, wall type, photos, timing or special request..."
-                      className="min-h-[124px] w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
+                      className="min-h-[150px] w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
                     />
                   </div>
                 </div>
@@ -644,9 +948,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
                   <ArrowRight className="h-4 w-4" />
                 </button>
 
-                <div className="mt-4 rounded-2xl border border-gray-200 bg-white p-4 text-sm leading-7 text-gray-600">
-                  Stage 1 is focused on design, estimate building and live total. Email sending will be connected in the next step.
-                </div>
+                
               </section>
             </div>
           </div>
@@ -683,6 +985,7 @@ function Field({
   onChange,
   placeholder,
   type = "text",
+  disabled = false,
 }: {
   label: string;
   icon: React.ReactNode;
@@ -730,18 +1033,24 @@ function SelectField({
         {label}
       </label>
 
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
-      >
-        <option value="">{placeholder || "Select option"}</option>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
+     <div className="relative">
+  <select
+    value={value}
+    onChange={(e) => onChange(e.target.value)}
+    className="w-full appearance-none rounded-xl border border-gray-300 bg-white px-4 py-3 pr-12 text-sm text-black outline-none transition focus:border-yellow-400"
+  >
+          <option value="">{placeholder || "Select option"}</option>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+
+        <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
+          ▼
+        </div>
+      </div>
     </div>
   );
 }
