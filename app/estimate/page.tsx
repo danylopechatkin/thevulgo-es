@@ -1317,10 +1317,10 @@ className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black
 {submitStage === "success" && (
   <div className="mt-6 space-y-4">
     <div className="rounded-2xl border border-green-200 bg-green-50 p-5">
-      <p className="text-lg font-extrabold text-black">Request prepared successfully</p>
-      <p className="mt-2 text-sm text-gray-600">
-        Your request is ready. Email sending will be connected in the next stage.
-      </p>
+      <p className="text-lg font-extrabold text-black">Request saved successfully</p>
+<p className="mt-2 text-sm text-gray-600">
+  Your request has been prepared correctly. Email sending will be connected in the next stage.
+</p>
     </div>
 
     <button
@@ -1395,6 +1395,7 @@ function Field({
   onChange: (value: string) => void;
   placeholder?: string;
   type?: string;
+  disabled?: boolean;
 }) {
   return (
     <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
