@@ -651,8 +651,40 @@ const handleBackToEdit = () => {
   setSubmitStage("build");
 };
 
-const handleConfirmSend = () => {
-  setSubmitStage("success");
+const handleConfirmSend = async () => {
+  try {
+    const response = await fetch("/api/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fullName: client.fullName,
+        email: client.email,
+        phone: client.phone,
+        city: displayCity,
+        area: client.area,
+        houseAddress: client.houseAddress,
+        apartmentNumber: client.apartmentNumber,
+        addressDetails: client.addressDetails,
+        preferredDate: client.preferredDate,
+        preferredTime: client.preferredTime,
+        notes: client.notes,
+        category: currentCategory.title,
+        services: selectedServices,
+        total: estimatedTotal,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to send request");
+    }
+
+    setSubmitStage("success");
+  } catch (error) {
+    console.error(error);
+    alert("Error sending request. Try again.");
+  }
 };
 
 useEffect(() => {
