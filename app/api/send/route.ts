@@ -9,15 +9,54 @@ export async function POST(req: Request) {
     await resend.emails.send({
       from: "TheVulgo <info@thevulgo.es>",
       to: ["info@thevulgo.es"],
-      subject: `New request from ${data.fullName}`,
+      subject: `New estimate request from ${data.fullName}`,
       html: `
         <h2>New Request</h2>
         <p><b>Name:</b> ${data.fullName}</p>
-        <p><b>Phone:</b> ${data.phone}</p>
-        <p><b>Email:</b> ${data.email}</p>
+        <p><b>Phone:</b> ${data.phone || "—"}</p>
+        <p><b>Email:</b> ${data.email || "—"}</p>
+        <p><b>Category:</b> ${data.category}</p>
+        <p><b>City:</b> ${data.city || "—"}</p>
+        <p><b>Area:</b> ${data.area || "—"}</p>
+        <p><b>Address:</b> ${data.houseAddress || "—"}</p>
+        <p><b>Apartment:</b> ${data.apartmentNumber || "—"}</p>
+        <p><b>Extra details:</b> ${data.addressDetails || "—"}</p>
+        <p><b>Preferred date:</b> ${data.preferredDate || "—"}</p>
+        <p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>
+        <p><b>Notes:</b> ${data.notes || "—"}</p>
         <p><b>Total:</b> €${data.total}</p>
+
+        <h3>Selected services</h3>
+        <ul>
+          ${data.services
+            .map(
+              (item: any) =>
+                `<li>${item.label} × ${item.qty} — €${item.subtotal}</li>`
+            )
+            .join("")}
+        </ul>
       `,
     });
+
+    if (data.email) {
+      await resend.emails.send({
+        from: "TheVulgo <info@thevulgo.es>",
+        to: [data.email],
+        subject: "We received your request — TheVulgo",
+        html: `
+          <h2>Thank you for your request</h2>
+          <p>Hello ${data.fullName},</p>
+          <p>We received your estimate request and will contact you soon.</p>
+          <p><b>Category:</b> ${data.category}</p>
+          <p><b>Estimated total:</b> €${data.total}</p>
+          <p><b>Preferred date:</b> ${data.preferredDate || "—"}</p>
+          <p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>
+          <br />
+          <p>TheVulgo Valencia</p>
+          <p>info@thevulgo.es</p>
+        `,
+      });
+    }
 
     return Response.json({ success: true });
   } catch (error) {
