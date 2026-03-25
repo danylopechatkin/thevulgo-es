@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Calculator,
@@ -391,7 +391,7 @@ const CATEGORY_OPTIONS: { key: CategoryKey; label: string }[] = [
   { key: "exterior", label: "Exterior" },
 ];
 
-export default function EstimatePage() {
+function EstimatePageContent() {
   const searchParams = useSearchParams();
 
   const initialCategory = (() => {
@@ -1357,6 +1357,15 @@ className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black
         </div>
       </section>
     </div>
+  );
+}
+
+
+export default function EstimatePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <EstimatePageContent />
+    </Suspense>
   );
 }
 
