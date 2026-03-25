@@ -7,15 +7,16 @@ export async function POST(req: Request) {
     const data = await req.json();
 
     await resend.emails.send({
-      from: "TheVulgo <info@thevulgo.es>",
+      from: "TheVulgo <onboarding@resend.dev>",
       to: ["info@thevulgo.es"],
+      replyTo: "info@thevulgo.es",
       subject: `New estimate request from ${data.fullName}`,
       html: `
         <h2>New Request</h2>
         <p><b>Name:</b> ${data.fullName}</p>
         <p><b>Phone:</b> ${data.phone || "—"}</p>
         <p><b>Email:</b> ${data.email || "—"}</p>
-        <p><b>Category:</b> ${data.category}</p>
+        <p><b>Category:</b> ${data.category || "—"}</p>
         <p><b>City:</b> ${data.city || "—"}</p>
         <p><b>Area:</b> ${data.area || "—"}</p>
         <p><b>Address:</b> ${data.houseAddress || "—"}</p>
@@ -28,7 +29,7 @@ export async function POST(req: Request) {
 
         <h3>Selected services</h3>
         <ul>
-          ${data.services
+          ${(data.services || [])
             .map(
               (item: any) =>
                 `<li>${item.label} × ${item.qty} — €${item.subtotal}</li>`
@@ -40,14 +41,15 @@ export async function POST(req: Request) {
 
     if (data.email) {
       await resend.emails.send({
-        from: "TheVulgo <info@thevulgo.es>",
+        from: "TheVulgo <onboarding@resend.dev>",
         to: [data.email],
+        replyTo: "info@thevulgo.es",
         subject: "We received your request — TheVulgo",
         html: `
           <h2>Thank you for your request</h2>
           <p>Hello ${data.fullName},</p>
           <p>We received your estimate request and will contact you soon.</p>
-          <p><b>Category:</b> ${data.category}</p>
+          <p><b>Category:</b> ${data.category || "—"}</p>
           <p><b>Estimated total:</b> €${data.total}</p>
           <p><b>Preferred date:</b> ${data.preferredDate || "—"}</p>
           <p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>
