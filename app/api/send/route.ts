@@ -7,10 +7,10 @@ export async function POST(req: Request) {
     const data = await req.json();
 
     const adminResult = await resend.emails.send({
-      from: "TheVulgo <onboarding@resend.dev>",
-      to: ["info@thevulgo.es"],
-      replyTo: "info@thevulgo.es",
-      subject: `New estimate request from ${data.fullName}`,
+  from: "TheVulgo <info@thevulgo.es>",
+  to: ["info@thevulgo.es"],
+  replyTo: "info@thevulgo.es",
+  subject: `New estimate request from ${data.fullName}`,
       html: `
         <h2>New Request</h2>
         <p><b>Name:</b> ${data.fullName}</p>
@@ -44,10 +44,10 @@ export async function POST(req: Request) {
 
     if (data.email) {
       clientResult = await resend.emails.send({
-        from: "TheVulgo <onboarding@resend.dev>",
-        to: [data.email],
-        replyTo: "info@thevulgo.es",
-        subject: "We received your request — TheVulgo",
+  from: "TheVulgo <info@thevulgo.es>",
+  to: [data.email],
+  replyTo: "info@thevulgo.es",
+  subject: "We received your request — TheVulgo",
         html: `
           <h2>Thank you for your request</h2>
           <p>Hello ${data.fullName},</p>
