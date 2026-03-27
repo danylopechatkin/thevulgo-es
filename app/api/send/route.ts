@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
 
-    await resend.emails.send({
+    const adminResult = await resend.emails.send({
       from: "TheVulgo <onboarding@resend.dev>",
       to: ["info@thevulgo.es"],
       replyTo: "info@thevulgo.es",
@@ -26,7 +26,6 @@ export async function POST(req: Request) {
         <p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>
         <p><b>Notes:</b> ${data.notes || "—"}</p>
         <p><b>Total:</b> €${data.total}</p>
-
         <h3>Selected services</h3>
         <ul>
           ${(data.services || [])
@@ -39,8 +38,12 @@ export async function POST(req: Request) {
       `,
     });
 
+    console.log("ADMIN RESULT:", JSON.stringify(adminResult, null, 2));
+
+    let clientResult = null;
+
     if (data.email) {
-      await resend.emails.send({
+      clientResult = await resend.emails.send({
         from: "TheVulgo <onboarding@resend.dev>",
         to: [data.email],
         replyTo: "info@thevulgo.es",
@@ -58,11 +61,17 @@ export async function POST(req: Request) {
           <p>info@thevulgo.es</p>
         `,
       });
+
+      console.log("CLIENT RESULT:", JSON.stringify(clientResult, null, 2));
     }
 
-    return Response.json({ success: true });
+    return Response.json({
+      success: true,
+      adminResult,
+      clientResult,
+    });
   } catch (error) {
-    console.error(error);
+    console.error("SEND ERROR:", error);
     return Response.json({ error: "Error sending email" }, { status: 500 });
   }
 }
