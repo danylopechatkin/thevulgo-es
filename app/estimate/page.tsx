@@ -1006,31 +1006,32 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
                 </div>
 
                 <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
+                 <Field
+  label="Full name"
+  icon={<BadgeCheck className="h-4 w-4" />}
+  value={client.fullName}
+  onChange={(v) => setClient((prev) => ({ ...prev, fullName: v }))}
+  placeholder="Your full name"
+  error={formErrors.fullName}
+/>
                   <Field
-                    label="Full name"
-                    icon={<BadgeCheck className="h-4 w-4" />}
-                    value={client.fullName}
-                    onChange={(v) => setClient((prev) => ({ ...prev, fullName: v }))}
-                    placeholder="Your full name"
-                  />
+  label="Email"
+  icon={<Mail className="h-4 w-4" />}
+  value={client.email}
+  onChange={(v) => setClient((prev) => ({ ...prev, email: v }))}
+  placeholder="your@email.com"
+  type="email"
+  error={formErrors.email}
+/>
 
-                  <Field
-                    label="Email"
-                    icon={<Mail className="h-4 w-4" />}
-                    value={client.email}
-                    onChange={(v) => setClient((prev) => ({ ...prev, email: v }))}
-                    placeholder="your@email.com"
-                    type="email"
-                  />
-
-                  <Field
-                    label="Phone / WhatsApp"
-                    icon={<Phone className="h-4 w-4" />}
-                    value={client.phone}
-                    onChange={(v) => setClient((prev) => ({ ...prev, phone: v }))}
-                    placeholder="+34 ..."
-                  />
-
+                 <Field
+  label="Phone / WhatsApp"
+  icon={<Phone className="h-4 w-4" />}
+  value={client.phone}
+  onChange={(v) => setClient((prev) => ({ ...prev, phone: v }))}
+  placeholder="+34 ..."
+  error={formErrors.phone || formErrors.contact}
+/>
                   <SelectField
   label="City"
   icon={<MapPin className="h-4 w-4" />}
@@ -1045,6 +1046,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   }
   options={CITY_OPTIONS}
   placeholder="Choose city"
+  error={formErrors.city}
 />
 
 
@@ -1056,44 +1058,54 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
     </label>
 
     <input
-      type="text"
-      value={client.customCity}
-      onChange={(e) =>
-        setClient((prev) => ({ ...prev, customCity: e.target.value }))
-      }
-      placeholder="Enter your city"
-      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
-    />
+  type="text"
+  value={client.customCity}
+  onChange={(e) =>
+    setClient((prev) => ({ ...prev, customCity: e.target.value }))
+  }
+  placeholder="Enter your city"
+  className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition
+    ${formErrors.city
+      ? "border-red-400 bg-red-50 focus:border-red-500"
+      : "border-gray-300 focus:border-yellow-400"}
+  `}
+/>
 
-    <p className="mt-3 text-xs leading-6 text-gray-500">
-      We’ll contact you to confirm travel time, availability and access to your location.
-    </p>
+{formErrors.city ? (
+  <p className="mt-2 text-xs font-medium text-red-600">{formErrors.city}</p>
+) : null}
+
+<p className="mt-3 text-xs leading-6 text-gray-500">
+  We’ll contact you to confirm travel time, availability and access to your location.
+</p>
   </div>
 )}
 
 {!isCustomCity && hasAreaOptions && (
   <SelectField
-    label={client.city === "Valencia" ? "Area / district" : "Area / neighborhood"}
-    icon={<MapPin className="h-4 w-4" />}
-    value={client.area}
-    onChange={(v) => setClient((prev) => ({ ...prev, area: v }))}
-    options={selectedCityAreas}
-    placeholder={
-      client.city === "Valencia"
-        ? "Choose area or district"
-        : "Choose area or neighborhood"
-    }
-  />
+  label={client.city === "Valencia" ? "Area / district" : "Area / neighborhood"}
+  icon={<MapPin className="h-4 w-4" />}
+  value={client.area}
+  onChange={(v) => setClient((prev) => ({ ...prev, area: v }))}
+  options={selectedCityAreas}
+  placeholder={
+    client.city === "Valencia"
+      ? "Choose area or district"
+      : "Choose area or neighborhood"
+  }
+  error={formErrors.area}
+/>
 )}
 
 {!isCustomCity && !hasAreaOptions && (
   <Field
-    label="Area / neighborhood"
-    icon={<MapPin className="h-4 w-4" />}
-    value={client.area}
-    onChange={(v) => setClient((prev) => ({ ...prev, area: v }))}
-    placeholder="Write area, neighborhood or urbanization"
-  />
+  label="Area / neighborhood"
+  icon={<MapPin className="h-4 w-4" />}
+  value={client.area}
+  onChange={(v) => setClient((prev) => ({ ...prev, area: v }))}
+  placeholder="Write area, neighborhood or urbanization"
+  error={formErrors.area}
+/>
 )}
 
 {isCustomCity && (
@@ -1104,16 +1116,24 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
     </label>
 
     <input
-      type="text"
-      value={client.area}
-      onChange={(e) => setClient((prev) => ({ ...prev, area: e.target.value }))}
-      placeholder="Write area, neighborhood or zone"
-      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
-    />
+  type="text"
+  value={client.area}
+  onChange={(e) => setClient((prev) => ({ ...prev, area: e.target.value }))}
+  placeholder="Write area, neighborhood or zone"
+  className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition
+    ${formErrors.area
+      ? "border-red-400 bg-red-50 focus:border-red-500"
+      : "border-gray-300 focus:border-yellow-400"}
+  `}
+/>
 
-    <p className="mt-3 text-xs leading-6 text-gray-500">
-      We’ll contact you to confirm travel time, availability and access to your location.
-    </p>
+{formErrors.area ? (
+  <p className="mt-2 text-xs font-medium text-red-600">{formErrors.area}</p>
+) : null}
+
+<p className="mt-3 text-xs leading-6 text-gray-500">
+  We’ll contact you to confirm travel time, availability and access to your location.
+</p>
   </div>
 )}
 
@@ -1125,6 +1145,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
     setClient((prev) => ({ ...prev, houseAddress: v }))
   }
   placeholder="Street and building number"
+  error={formErrors.houseAddress}
 />
 
 <Field
@@ -1159,39 +1180,62 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
 
   {/* DATE */}
   <div className="mb-3">
-    <p className="mb-2 text-xs font-semibold text-gray-500">Preferred date</p>
-      <input
-  type="date"
-  min={minSelectableDate}
-  value={client.preferredDate}
-  onChange={(e) =>
-    setClient((prev) => ({ ...prev, preferredDate: e.target.value }))
-  }
-  className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400 appearance-none"
-/>
-  </div>
+  <p className="mb-2 text-xs font-semibold text-gray-500">Preferred date</p>
 
-  {/* TIME */}
+  <input
+    type="date"
+    min={minSelectableDate}
+    value={client.preferredDate}
+    onChange={(e) =>
+      setClient((prev) => ({ ...prev, preferredDate: e.target.value }))
+    }
+    className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition appearance-none
+      ${formErrors.preferredDate
+        ? "border-red-400 bg-red-50 focus:border-red-500"
+        : "border-gray-300 focus:border-yellow-400"}
+    `}
+  />
+
+  {formErrors.preferredDate ? (
+    <p className="mt-2 text-xs font-medium text-red-600">
+      {formErrors.preferredDate}
+    </p>
+  ) : null}
+</div>
+
   <div>
   <p className="mb-2 text-xs font-semibold text-gray-500">Preferred time</p>
+
   <select
     value={client.preferredTime}
     onChange={(e) =>
       setClient((prev) => ({ ...prev, preferredTime: e.target.value }))
     }
-className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400 appearance-none" >
+    className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition appearance-none
+      ${formErrors.preferredTime
+        ? "border-red-400 bg-red-50 focus:border-red-500"
+        : "border-gray-300 focus:border-yellow-400"}
+    `}
+  >
     <option value="">Choose preferred time</option>
     {availableTimeOptions.map((time) => (
-  <option key={time} value={time}>
-    {time}
-  </option>
-))}
+      <option key={time} value={time}>
+        {time}
+      </option>
+    ))}
   </select>
-   <p className="mt-3 text-xs leading-6 text-gray-500">
+
+  {formErrors.preferredTime ? (
+    <p className="mt-2 text-xs font-medium text-red-600">
+      {formErrors.preferredTime}
+    </p>
+  ) : (
+    <p className="mt-3 text-xs leading-6 text-gray-500">
       {client.preferredDate === todayDateString
         ? "For today, only times at least 1 hour ahead are available."
         : "Choose your preferred arrival time."}
     </p>
+  )}
 </div>
 </div>
 
@@ -1531,6 +1575,7 @@ function Field({
   placeholder,
   type = "text",
   disabled = false,
+  error,
 }: {
   label: string;
   icon: React.ReactNode;
@@ -1539,6 +1584,7 @@ function Field({
   placeholder?: string;
   type?: string;
   disabled?: boolean;
+  error?: string;
 }) {
   return (
     <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
@@ -1546,18 +1592,25 @@ function Field({
         {icon}
         {label}
       </label>
+
       <input
-  type={type}
-  value={value}
-  onChange={(e) => onChange(e.target.value)}
-  placeholder={placeholder}
-  disabled={disabled}
-  className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition
-    ${disabled
-      ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
-      : "bg-white text-black border-gray-300 focus:border-yellow-400"}
-  `}
-/>
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        disabled={disabled}
+        className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition
+          ${disabled
+            ? "cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400"
+            : error
+            ? "border-red-400 bg-red-50 text-black focus:border-red-500"
+            : "border-gray-300 bg-white text-black focus:border-yellow-400"}
+        `}
+      />
+
+      {error ? (
+        <p className="mt-2 text-xs font-medium text-red-600">{error}</p>
+      ) : null}
     </div>
   );
 }
@@ -1569,6 +1622,7 @@ function SelectField({
   onChange,
   options,
   placeholder,
+  error,
 }: {
   label: string;
   icon: React.ReactNode;
@@ -1576,6 +1630,7 @@ function SelectField({
   onChange: (value: string) => void;
   options: string[];
   placeholder?: string;
+  error?: string;
 }) {
   return (
     <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
@@ -1584,12 +1639,17 @@ function SelectField({
         {label}
       </label>
 
-     <div className="relative">
-  <select
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-    className="w-full appearance-none rounded-xl border border-gray-300 bg-white px-4 py-3 pr-12 text-sm text-black outline-none transition focus:border-yellow-400"
-  >
+      <div className="relative">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`w-full appearance-none rounded-xl border px-4 py-3 pr-12 text-sm outline-none transition
+            ${
+              error
+                ? "border-red-400 bg-red-50 text-black focus:border-red-500"
+                : "border-gray-300 bg-white text-black focus:border-yellow-400"
+            }`}
+        >
           <option value="">{placeholder || "Select option"}</option>
           {options.map((option) => (
             <option key={option} value={option}>
@@ -1602,6 +1662,10 @@ function SelectField({
           ▼
         </div>
       </div>
+
+      {error ? (
+        <p className="mt-2 text-xs font-medium text-red-600">{error}</p>
+      ) : null}
     </div>
   );
 }
