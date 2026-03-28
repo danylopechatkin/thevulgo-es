@@ -618,6 +618,20 @@ const availableTimeOptions =
     ? TIME_OPTIONS.filter((time) => time >= minimumTimeForToday)
     : TIME_OPTIONS;
 
+const isValidEmail = (value: string) => {
+  if (!value.trim()) return true;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+};
+
+const normalizePhone = (value: string) => value.replace(/[^\d+]/g, "");
+
+const isValidPhone = (value: string) => {
+  if (!value.trim()) return true;
+  const normalized = normalizePhone(value);
+  const digitsOnly = normalized.replace(/\D/g, "");
+  return digitsOnly.length >= 7;
+};
+
 const categoriesPerPage = 4;
 const totalCategoryPages = Math.ceil(CATEGORY_OPTIONS.length / categoriesPerPage);
 
@@ -641,6 +655,14 @@ const validateEstimateForm = () => {
     errors.contact = "Enter phone or email.";
   }
 
+  if (client.email.trim() && !isValidEmail(client.email)) {
+    errors.email = "Enter a valid email address.";
+  }
+
+  if (client.phone.trim() && !isValidPhone(client.phone)) {
+    errors.phone = "Enter a valid phone number.";
+  }
+
   if (!displayCity?.trim()) {
     errors.city = "Choose your city.";
   }
@@ -655,10 +677,25 @@ const validateEstimateForm = () => {
 
   if (!client.preferredDate.trim()) {
     errors.preferredDate = "Choose preferred date.";
+  } else if (client.preferredDate < todayDateString) {
+    errors.preferredDate = "Past dates are not available.";
   }
 
   if (!client.preferredTime.trim()) {
     errors.preferredTime = "Choose preferred time.";
+  } else if (
+    client.preferredDate === todayDateString &&
+    client.preferredTime < minimumTimeForToday
+  ) {
+    errors.preferredTime = "Choose a time at least 1 hour from now.";
+  }
+
+  if (
+    client.preferredDate &&
+    client.preferredTime &&
+    !availableTimeOptions.includes(client.preferredTime)
+  ) {
+    errors.preferredTime = "Selected time is not available for this date.";
   }
 
   setFormErrors(errors);
@@ -1266,7 +1303,7 @@ className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black
 
     {Object.keys(formErrors).length > 0 && (
       <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
-        <p className="font-bold">Please complete the required fields:</p>
+        <p className="font-bold">Please fix the following before continuing:</p>
         <ul className="mt-2 space-y-1">
           {Object.entries(formErrors).map(([key, value]) => (
             <li key={key}>• {value}</li>
