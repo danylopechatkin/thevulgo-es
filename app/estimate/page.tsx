@@ -1324,15 +1324,21 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
                   )}
                 </div>
 
-                <div className="mt-6 rounded-2xl border border-yellow-400 bg-white p-5 shadow-md">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-gray-600">Estimated total</span>
-                    <span className="text-2xl font-extrabold text-black">€{estimatedTotal}</span>
-                  </div>
-                  <p className="mt-3 text-xs leading-6 text-gray-500">
-                    Final price depends on wall type, access, materials, hidden conditions and exact job scope.
-                  </p>
-                </div>
+                <div className="rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md">
+  <div className="flex items-center justify-between">
+    <span className="text-sm font-bold uppercase tracking-wide text-gray-600">
+      Estimated total
+    </span>
+
+    <span className="text-2xl font-extrabold text-black">
+      €{estimatedTotal}
+    </span>
+  </div>
+
+  <p className="mt-2 text-xs text-gray-500">
+    Final price confirmed after inspection if needed.
+  </p>
+</div>
 
                 {submitStage === "build" && (
   <>
@@ -1371,11 +1377,11 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
     Client
   </p>
-  <div className="mt-2 space-y-1 text-sm text-black">
-    <p><span className="font-semibold">Name:</span> {client.fullName || "—"}</p>
-    <p><span className="font-semibold">Phone:</span> {client.phone || "—"}</p>
-    <p><span className="font-semibold">Email:</span> {client.email || "—"}</p>
-  </div>
+  <div className="space-y-2 text-sm text-black">
+  <p><span className="text-gray-500">Name:</span> <span className="font-semibold">{client.fullName || "—"}</span></p>
+  <p><span className="text-gray-500">Phone:</span> <span className="font-semibold">{client.phone || "—"}</span></p>
+  <p><span className="text-gray-500">Email:</span> <span className="font-semibold">{client.email || "—"}</span></p>
+</div>
 </div>
 
 <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
@@ -1397,9 +1403,14 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
             key={item.id}
             className="flex items-center justify-between gap-3 border-b border-gray-100 pb-2"
           >
-            <span className="font-medium">
-              {item.label} × {item.qty}
-            </span>
+            <div className="flex flex-col">
+  <span className="font-semibold text-black">
+    {item.label}
+  </span>
+  <span className="text-xs text-gray-500">
+    {item.qty} × €{item.price}
+  </span>
+</div>
 
             <span className="font-semibold text-black">
               €{item.subtotal}
@@ -1423,28 +1434,47 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
       </p>
     </div>
 
-    <div className="mt-4 rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-        Address
+   <div className="mt-4 rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+    Address
+  </p>
+
+  <div className="mt-2 space-y-2">
+    
+    {/* MAIN LINE */}
+    <p className="text-sm font-semibold text-black">
+      {displayCity || "—"}, {client.area || "—"}
+    </p>
+
+    {/* STREET */}
+    <p className="text-sm text-gray-700">
+      {client.houseAddress || "—"}
+      {client.apartmentNumber ? `, ${client.apartmentNumber}` : ""}
+    </p>
+
+    {/* EXTRA */}
+    {client.addressDetails && (
+      <p className="text-xs text-gray-500">
+        {client.addressDetails}
       </p>
-      <div className="mt-2 space-y-1 text-sm text-black">
-        <p><span className="font-semibold">City:</span> {displayCity || "—"}</p>
-        <p><span className="font-semibold">Area:</span> {client.area || "—"}</p>
-        <p><span className="font-semibold">Address:</span> {client.houseAddress || "—"}</p>
-        <p><span className="font-semibold">Apartment:</span> {client.apartmentNumber || "—"}</p>
-        <p><span className="font-semibold">Extra details:</span> {client.addressDetails || "—"}</p>
-      </div>
-    </div>
+    )}
+
+  </div>
+</div>
 
     <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-        Schedule
-      </p>
-      <div className="mt-2 space-y-1 text-sm text-black">
-        <p><span className="font-semibold">Preferred date:</span> {client.preferredDate || "—"}</p>
-        <p><span className="font-semibold">Preferred time:</span> {client.preferredTime || "—"}</p>
-      </div>
-    </div>
+  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+    Schedule
+  </p>
+
+  <div className="mt-2 flex items-start gap-3">
+    <Clock3 className="mt-1 h-4 w-4 text-yellow-500" />
+
+    <p className="text-sm font-semibold text-black">
+      {client.preferredDate || "—"} {client.preferredTime ? `at ${client.preferredTime}` : ""}
+    </p>
+  </div>
+</div>
 
     <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
       <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
