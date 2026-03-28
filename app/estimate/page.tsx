@@ -1014,14 +1014,14 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   placeholder="Your full name"
   error={formErrors.fullName}
 />
-                  <Field
+                 <Field
   label="Email"
   icon={<Mail className="h-4 w-4" />}
   value={client.email}
   onChange={(v) => setClient((prev) => ({ ...prev, email: v }))}
   placeholder="your@email.com"
   type="email"
-  error={formErrors.email}
+  error={formErrors.email || formErrors.contact}
 />
 
                  <Field
