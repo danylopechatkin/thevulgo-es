@@ -26,7 +26,8 @@ export default function HomePage() {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-const goEstimate = () => router.push("/services");
+  const goEstimate = () => router.push("/estimate");
+
   // WhatsApp пока нет номера: оставляем выключенным
 const whatsappEnabled = true;
 

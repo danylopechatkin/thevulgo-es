@@ -1348,11 +1348,32 @@ className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black
 
 {submitStage === "success" && (
   <div className="mt-6 space-y-4">
-    <div className="rounded-2xl border border-green-200 bg-green-50 p-5">
-      <p className="text-lg font-extrabold text-black">Request saved successfully</p>
-<p className="mt-2 text-sm text-gray-600">
-  Your request has been prepared correctly. Email sending will be connected in the next stage.
-</p>
+    <div className="rounded-2xl border border-green-200 bg-green-50 p-5 shadow-sm">
+      <div className="flex items-start gap-4">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green-500 text-lg font-extrabold text-white shadow-sm">
+          ✓
+        </div>
+
+        <div>
+          <p className="text-lg font-extrabold text-black">
+            Request sent successfully
+          </p>
+
+          <p className="mt-2 text-sm leading-6 text-gray-600">
+            We received your request and sent a confirmation email. We will contact you shortly to confirm the details.
+          </p>
+
+          <div className="mt-4 space-y-1 text-sm text-gray-700">
+            <p>• Your request was submitted successfully</p>
+            <p>• A confirmation email was sent to your inbox</p>
+            <p>• We will review your details and get back to you soon</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className="rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4 text-sm leading-6 text-gray-700">
+      Need to add more details or send another request? You can create a new one anytime.
     </div>
 
     <button
@@ -1376,7 +1397,7 @@ className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black
           notes: "",
         });
       }}
-      className="w-full rounded-2xl border border-gray-300 bg-white py-4 font-bold"
+      className="w-full rounded-2xl border border-gray-300 bg-white py-4 text-sm font-bold text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md active:scale-95"
     >
       New request
     </button>
