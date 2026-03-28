@@ -1368,21 +1368,29 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
     </div>
 
     <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-        Client
-      </p>
-      <div className="mt-2 space-y-1 text-sm text-black">
-        <p><span className="font-semibold">Name:</span> {client.fullName || "—"}</p>
-        <p><span className="font-semibold">Phone:</span> {client.phone || "—"}</p>
-        <p><span className="font-semibold">Email:</span> {client.email || "—"}</p>
-      </div>
-    </div>
+  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+    Client
+  </p>
+  <div className="mt-2 space-y-1 text-sm text-black">
+    <p><span className="font-semibold">Name:</span> {client.fullName || "—"}</p>
+    <p><span className="font-semibold">Phone:</span> {client.phone || "—"}</p>
+    <p><span className="font-semibold">Email:</span> {client.email || "—"}</p>
+  </div>
+</div>
 
-    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-        Selected services
-      </p>
+<div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+    Category
+  </p>
+  <p className="mt-2 text-sm font-semibold text-black">
+    {currentCategory.title}
+  </p>
+</div>
 
+<div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+    Selected services
+  </p>
       <div className="mt-2 space-y-3 text-sm text-black">
         {selectedServices.map((item) => (
           <div
