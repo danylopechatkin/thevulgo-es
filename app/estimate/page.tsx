@@ -595,6 +595,29 @@ const displayCity = isCustomCity ? client.customCity : client.city;
 const hasSelectedServices = selectedServices.length > 0;
 const hasContact = client.email.trim() !== "" || client.phone.trim() !== "";
 
+const now = new Date();
+
+const todayDateString = [
+  now.getFullYear(),
+  String(now.getMonth() + 1).padStart(2, "0"),
+  String(now.getDate()).padStart(2, "0"),
+].join("-");
+
+const minSelectableDate = todayDateString;
+
+const minimumTimeForToday = (() => {
+  const nextHour = new Date(now.getTime() + 60 * 60 * 1000);
+  const hours = String(nextHour.getHours()).padStart(2, "0");
+  const minutes = String(nextHour.getMinutes()).padStart(2, "0");
+
+  return `${hours}:${minutes}`;
+})();
+
+const availableTimeOptions =
+  client.preferredDate === todayDateString
+    ? TIME_OPTIONS.filter((time) => time >= minimumTimeForToday)
+    : TIME_OPTIONS;
+
 const categoriesPerPage = 4;
 const totalCategoryPages = Math.ceil(CATEGORY_OPTIONS.length / categoriesPerPage);
 
@@ -696,6 +719,20 @@ useEffect(() => {
     setCategoryPage(Math.floor(categoryIndex / 4));
   }
 }, [category]);
+
+// 👇 ВОТ СЮДА ВСТАВЛЯЕМ
+useEffect(() => {
+  if (
+    client.preferredDate === todayDateString &&
+    client.preferredTime &&
+    client.preferredTime < minimumTimeForToday
+  ) {
+    setClient((prev) => ({
+      ...prev,
+      preferredTime: "",
+    }));
+  }
+}, [client.preferredDate, client.preferredTime, todayDateString, minimumTimeForToday]);
 
 return (
 
@@ -1086,13 +1123,15 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   {/* DATE */}
   <div className="mb-3">
     <p className="mb-2 text-xs font-semibold text-gray-500">Preferred date</p>
-    <input
-      type="date"
-      value={client.preferredDate}
-      onChange={(e) =>
-        setClient((prev) => ({ ...prev, preferredDate: e.target.value }))
-      }
-className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400 appearance-none"/>
+      <input
+  type="date"
+  min={minSelectableDate}
+  value={client.preferredDate}
+  onChange={(e) =>
+    setClient((prev) => ({ ...prev, preferredDate: e.target.value }))
+  }
+  className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400 appearance-none"
+/>
   </div>
 
   {/* TIME */}
@@ -1105,12 +1144,17 @@ className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black
     }
 className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400 appearance-none" >
     <option value="">Choose preferred time</option>
-    {TIME_OPTIONS.map((time) => (
-      <option key={time} value={time}>
-        {time}
-      </option>
-    ))}
+    {availableTimeOptions.map((time) => (
+  <option key={time} value={time}>
+    {time}
+  </option>
+))}
   </select>
+   <p className="mt-3 text-xs leading-6 text-gray-500">
+      {client.preferredDate === todayDateString
+        ? "For today, only times at least 1 hour ahead are available."
+        : "Choose your preferred arrival time."}
+    </p>
 </div>
 </div>
 
