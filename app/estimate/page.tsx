@@ -725,19 +725,7 @@ const handleBackToEdit = () => {
   setSubmitStage("build");
 };
 
-function buildScheduledAtUTC(date: string, time: string) {
-  if (!date || !time) return null;
 
-  // создаём дату как будто это Мадрид
-  const madridDate = new Date(`${date}T${time}:00`);
-
-  // компенсируем timezone вручную
-  const tzOffset = madridDate.getTimezoneOffset();
-
-  const utcDate = new Date(madridDate.getTime() - tzOffset * 60000);
-
-  return utcDate.toISOString();
-}
 
 const handleConfirmSend = async () => {
   try {
@@ -766,7 +754,10 @@ const handleConfirmSend = async () => {
         subtotal,
         iva,
         total: totalWithTax,
-        scheduledAt: buildScheduledAtUTC(client.preferredDate, client.preferredTime),
+        scheduledAt:
+  client.preferredDate && client.preferredTime
+    ? `${client.preferredDate}T${client.preferredTime}:00`
+    : null,
       }),
     });
 
