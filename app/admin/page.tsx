@@ -1,7 +1,10 @@
 "use client";
-
+import { formatMadridDateTime } from "@/lib/time";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
+
+
+
 
 type OrderStatus = "new" | "in_progress" | "done";
 
@@ -34,6 +37,7 @@ type Order = {
   services?: ServiceItem[];
   notes?: string;
   internal_notes?: string;
+  scheduled_at?: string;
 };
 
 export default function AdminPage() {
@@ -276,15 +280,14 @@ export default function AdminPage() {
                       </td>
 
                       <td className="px-4 py-5 align-top">
-                        <div className="flex flex-col">
-                          <span className="font-semibold text-black">
-                            {order.preferred_date || "—"}
-                          </span>
-                          <span className="mt-1 text-xs text-gray-500">
-                            {order.preferred_time || "No time"}
-                          </span>
-                        </div>
-                      </td>
+  <div className="flex flex-col">
+    <span className="font-semibold text-black">
+  {order.scheduled_at
+    ? formatMadridDateTime(order.scheduled_at).full
+    : "—"}
+</span>
+  </div>
+</td>
 
                       <td className="px-4 py-5 align-top">
                         <div className="flex flex-col">
@@ -423,9 +426,10 @@ export default function AdminPage() {
                     Schedule
                   </p>
                   <p className="mt-2 text-sm text-black">
-                    {selected.preferred_date || "—"}{" "}
-                    {selected.preferred_time || ""}
-                  </p>
+  {selected.scheduled_at
+    ? formatMadridDateTime(selected.scheduled_at).full
+    : "—"}
+</p>
                 </div>
 
                 <div className="rounded-2xl border border-gray-200 bg-white p-3">

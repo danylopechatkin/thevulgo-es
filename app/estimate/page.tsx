@@ -728,10 +728,15 @@ const handleBackToEdit = () => {
 function buildScheduledAtUTC(date: string, time: string) {
   if (!date || !time) return null;
 
-  // ВАЖНО: это время воспринимается как "локальное выбранное"
-  const localDateTime = new Date(`${date}T${time}:00`);
+  // создаём дату как будто это Мадрид
+  const madridDate = new Date(`${date}T${time}:00`);
 
-  return localDateTime.toISOString();
+  // компенсируем timezone вручную
+  const tzOffset = madridDate.getTimezoneOffset();
+
+  const utcDate = new Date(madridDate.getTime() - tzOffset * 60000);
+
+  return utcDate.toISOString();
 }
 
 const handleConfirmSend = async () => {

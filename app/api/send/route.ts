@@ -6,6 +6,65 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: Request) {
   try {
     const data = await req.json();
+
+    // 🛡 REQUEST LOGGING
+
+const ip =
+  req.headers.get("x-forwarded-for") ||
+  req.headers.get("x-real-ip") ||
+  "unknown";
+
+const userAgent = req.headers.get("user-agent") || "unknown";
+
+const timestamp = new Date().toISOString();
+
+console.log("📥 NEW REQUEST", {
+  time: timestamp,
+  ip,
+  userAgent,
+  name: data.fullName,
+  email: data.email,
+  servicesCount: Array.isArray(data.services) ? data.services.length : 0,
+});
+
+// 🔐 BASIC VALIDATION (ANTI-SPAM / ANTI-BROKEN REQUEST)
+
+if (!data.fullName || typeof data.fullName !== "string") {
+  return Response.json(
+    { success: false, error: "Invalid name" },
+    { status: 400 }
+  );
+}
+
+if (!Array.isArray(data.services) || data.services.length === 0) {
+  return Response.json(
+    { success: false, error: "No services selected" },
+    { status: 400 }
+  );
+}
+
+if (!data.preferredDate || !data.preferredTime) {
+  return Response.json(
+    { success: false, error: "Missing date or time" },
+    { status: 400 }
+  );
+}
+
+if (!data.city || !data.area || !data.houseAddress) {
+  return Response.json(
+    { success: false, error: "Missing address data" },
+    { status: 400 }
+  );
+}
+
+// 💡 OPTIONAL (очень полезно)
+if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+  return Response.json(
+    { success: false, error: "Invalid email format" },
+    { status: 400 }
+  );
+}
+
     const subtotal = Number(data.subtotal || 0);
 const iva = Number(data.iva || 0);
 const total = Number(data.total || 0);
@@ -23,13 +82,14 @@ const { data: insertedOrder, error: orderInsertError } = await supabase
       apartment: data.apartmentNumber || "",
       address_details: data.addressDetails || "",
       category: data.category || "",
-      services: data.services || [],
+      services: Array.isArray(data.services) ? data.services : [],
       subtotal,
       iva,
       total,
       status: "new",
       preferred_date: data.preferredDate || null,
       preferred_time: data.preferredTime || "",
+      scheduled_at: data.scheduledAt || null,
       notes: data.notes || "",
       email_sent: false,
       reminder_sent: false,
@@ -203,7 +263,7 @@ ${data.houseAddress} ${data.apartmentNumber || ""}
 <td style="padding:0 30px 20px 30px;">
 <div style="font-size:12px;color:#666;">Schedule</div>
 <div style="font-weight:700;">
-${data.preferredDate} at ${data.preferredTime}
+${data.scheduledAt ? formatMadridFromUTC(data.scheduledAt) : "—"}
 </div>
 </td>
 </tr>
@@ -289,4 +349,12 @@ Valencia & nearby · Fast response
       { status: 500 }
     );
   }
+}
+
+function formatMadridFromUTC(date: string) {
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Madrid",
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(date));
 }
