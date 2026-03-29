@@ -1329,7 +1329,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
                   )}
                 </div>
 
-                <div className="mt-10 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md">
+                <div className="mt-8 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md">
   <div className="flex items-center justify-between">
     <span className="text-sm font-bold uppercase tracking-wide text-gray-600">
       Estimated total
