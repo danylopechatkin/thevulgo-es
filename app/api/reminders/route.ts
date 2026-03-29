@@ -24,8 +24,8 @@ export async function GET() {
       if (!order.preferred_date || !order.preferred_time || !order.email) continue;
 
       const jobDateTime = new Date(
-        `${order.preferred_date}T${order.preferred_time}:00+01:00`
-      );
+  `${order.preferred_date} ${order.preferred_time}`
+);
 
       const diffHours =
         (jobDateTime.getTime() - now.getTime()) / (1000 * 60 * 60);
