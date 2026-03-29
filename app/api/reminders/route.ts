@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
-import { getMadridNow, toMadridDate, formatMadridDateTime } from "@/lib/time";
+import { formatMadridDateTime } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
 
@@ -22,17 +22,24 @@ export async function GET() {
     }
 
     const now = new Date();
-const sent: string[] = [];
+    const sent: string[] = [];
 
-for (const order of orders || []) {
-  if (!order.scheduled_at || !order.email) continue;
+    for (const order of orders || []) {
+      if (!order.scheduled_at || !order.email) continue;
 
-  const scheduled = new Date(order.scheduled_at);
-  const diffMs = scheduled.getTime() - now.getTime();
-  const diffHours = diffMs / (1000 * 60 * 60);
+      const scheduled = new Date(order.scheduled_at);
+      const diffMs = scheduled.getTime() - now.getTime();
+      const diffHours = diffMs / (1000 * 60 * 60);
+
+      console.log("⏰ REMINDER CHECK:", {
+        orderId: order.id,
+        now,
+        scheduled,
+        diffHours,
+      });
 
       if (diffHours > 0 && diffHours <= 12) {
-  const formatted = formatMadridDateTime(order.scheduled_at);
+        const formatted = formatMadridDateTime(order.scheduled_at);
 
         const emailResult = await resend.emails.send({
           from: "TheVulgo <info@thevulgo.es>",
@@ -110,6 +117,12 @@ for (const order of orders || []) {
           `,
         });
 
+        console.log("📧 REMINDER EMAIL RESULT:", {
+          orderId: order.id,
+          success: !emailResult.error,
+          error: emailResult.error,
+        });
+
         if (!emailResult.error) {
           await supabase
             .from("orders")
@@ -129,11 +142,15 @@ for (const order of orders || []) {
       sentCount: sent.length,
       sentOrders: sent,
     });
-  } catch (error) {
+  } catch (error: any) {
+    console.error("❌ REMINDER JOB ERROR:", {
+      message: error?.message,
+      stack: error?.stack,
+    });
+
     return Response.json(
       { success: false, error: "Reminder job failed" },
       { status: 500 }
     );
   }
 }
-
