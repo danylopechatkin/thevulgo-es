@@ -601,22 +601,27 @@ const displayCity = isCustomCity ? client.customCity : client.city;
 const hasSelectedServices = selectedServices.length > 0;
 const hasContact = client.email.trim() !== "" || client.phone.trim() !== "";
 
-const now = new Date();
+const madridNowParts = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Madrid",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+}).formatToParts(new Date());
 
-const todayDateString = [
-  now.getFullYear(),
-  String(now.getMonth() + 1).padStart(2, "0"),
-  String(now.getDate()).padStart(2, "0"),
-].join("-");
+const getMadridPart = (type: string) =>
+  madridNowParts.find((part) => part.type === type)?.value || "";
 
+const todayDateString = `${getMadridPart("year")}-${getMadridPart("month")}-${getMadridPart("day")}`;
 const minSelectableDate = todayDateString;
 
-// ближайший полный следующий час
-const nextAvailableHour = (() => {
-  const next = new Date(now);
-  next.setHours(next.getHours() + 1, 0, 0, 0);
-  return next.getHours();
-})();
+const madridCurrentHour = Number(getMadridPart("hour"));
+const madridCurrentMinute = Number(getMadridPart("minute"));
+
+const nextAvailableHour =
+  madridCurrentMinute > 0 ? madridCurrentHour + 1 : madridCurrentHour;
 
 const availableTimeOptions =
   client.preferredDate === todayDateString
@@ -780,17 +785,17 @@ useEffect(() => {
 
 // 👇 ВОТ СЮДА ВСТАВЛЯЕМ
 useEffect(() => {
-  if (client.preferredDate === todayDateString && client.preferredTime) {
-    const selectedHour = Number(client.preferredTime.split(":")[0]);
-
-    if (selectedHour < nextAvailableHour) {
-      setClient((prev) => ({
-        ...prev,
-        preferredTime: "",
-      }));
-    }
+  if (
+    client.preferredDate === todayDateString &&
+    client.preferredTime &&
+    !availableTimeOptions.includes(client.preferredTime)
+  ) {
+    setClient((prev) => ({
+      ...prev,
+      preferredTime: "",
+    }));
   }
-}, [client.preferredDate, client.preferredTime, todayDateString, nextAvailableHour]);
+}, [client.preferredDate, client.preferredTime, todayDateString, availableTimeOptions]);
 
 return (
 
