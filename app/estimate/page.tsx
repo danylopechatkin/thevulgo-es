@@ -725,7 +725,14 @@ const handleBackToEdit = () => {
   setSubmitStage("build");
 };
 
+function buildScheduledAtUTC(date: string, time: string) {
+  if (!date || !time) return null;
 
+  // ВАЖНО: это время воспринимается как "локальное выбранное"
+  const localDateTime = new Date(`${date}T${time}:00`);
+
+  return localDateTime.toISOString();
+}
 
 const handleConfirmSend = async () => {
   try {
@@ -754,7 +761,7 @@ const handleConfirmSend = async () => {
         subtotal,
         iva,
         total: totalWithTax,
-
+        scheduledAt: buildScheduledAtUTC(client.preferredDate, client.preferredTime),
       }),
     });
 
