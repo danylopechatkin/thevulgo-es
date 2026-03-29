@@ -5,6 +5,13 @@ import { supabase } from "@/lib/supabase";
 
 type OrderStatus = "new" | "in_progress" | "done";
 
+type ServiceItem = {
+  label?: string;
+  qty?: number;
+  price?: number;
+  subtotal?: number;
+};
+
 type Order = {
   id: string;
   order_number: number | null;
@@ -23,20 +30,17 @@ type Order = {
   email_sent: boolean;
   reminder_sent: boolean;
   completed_email_sent: boolean;
-
-  // 👇 ДОБАВИТЬ
   category?: string;
-  services?: any[];
+  services?: ServiceItem[];
   notes?: string;
   internal_notes?: string;
 };
 
 export default function AdminPage() {
-    const [internalNotes, setInternalNotes] = useState("");
+  const [internalNotes, setInternalNotes] = useState("");
   const [orders, setOrders] = useState<Order[]>([]);
   const [selected, setSelected] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
-  
 
   const loadOrders = async () => {
     setLoading(true);
@@ -61,10 +65,10 @@ export default function AdminPage() {
   }, []);
 
   useEffect(() => {
-  if (selected) {
-    setInternalNotes(selected.internal_notes || "");
-  }
-}, [selected]);
+    if (selected) {
+      setInternalNotes(selected.internal_notes || "");
+    }
+  }, [selected]);
 
   const metrics = useMemo(() => {
     const totalOrders = orders.length;
@@ -120,28 +124,28 @@ export default function AdminPage() {
   };
 
   const saveInternalNotes = async () => {
-  if (!selected) return;
+    if (!selected) return;
 
-  const { error } = await supabase
-    .from("orders")
-    .update({ internal_notes: internalNotes })
-    .eq("id", selected.id);
+    const { error } = await supabase
+      .from("orders")
+      .update({ internal_notes: internalNotes })
+      .eq("id", selected.id);
 
-  if (error) {
-    console.error("SAVE INTERNAL NOTES ERROR:", error);
-    return;
-  }
+    if (error) {
+      console.error("SAVE INTERNAL NOTES ERROR:", error);
+      return;
+    }
 
-  setOrders((prev) =>
-    prev.map((o) =>
-      o.id === selected.id ? { ...o, internal_notes: internalNotes } : o
-    )
-  );
+    setOrders((prev) =>
+      prev.map((o) =>
+        o.id === selected.id ? { ...o, internal_notes: internalNotes } : o
+      )
+    );
 
-  setSelected((prev) =>
-    prev ? { ...prev, internal_notes: internalNotes } : prev
-  );
-};
+    setSelected((prev) =>
+      prev ? { ...prev, internal_notes: internalNotes } : prev
+    );
+  };
 
   const formatOrderId = (order: Order) => {
     if (order.order_number) {
@@ -371,7 +375,7 @@ export default function AdminPage() {
 
         {selected && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3 sm:p-4">
-            <div className="w-full max-w-[95vw] sm:max-w-[720px] lg:max-w-[980px] max-h-[92vh] overflow-y-auto space-y-4 rounded-3xl bg-white p-5 sm:p-6 lg:p-8 shadow-2xl">
+            <div className="w-full max-w-[95vw] sm:max-w-[760px] lg:max-w-[1120px] rounded-3xl bg-white p-4 sm:p-5 lg:p-5 shadow-2xl">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
@@ -387,174 +391,187 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-4 text-sm">
-                <div className="space-y-2">
-                  <p>📞 {selected.phone || "—"}</p>
-                  <p>📧 {selected.email || "—"}</p>
+              <div className="mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+                <div className="rounded-2xl border border-gray-200 bg-white p-3 text-sm xl:col-span-2">
+                  <div className="space-y-2">
+                    <p>📞 {selected.phone || "—"}</p>
+                    <p>📧 {selected.email || "—"}</p>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Order
+                  </p>
+                  <p className="mt-2 font-bold text-black">
+                    {formatOrderId(selected)}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Address
+                  </p>
+                  <p className="mt-2 text-sm text-black">
+                    {selected.city || "—"}, {selected.area || "—"},{" "}
+                    {selected.address || "—"}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Schedule
+                  </p>
+                  <p className="mt-2 text-sm text-black">
+                    {selected.preferred_date || "—"}{" "}
+                    {selected.preferred_time || ""}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Category
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-black">
+                    {selected.category || "—"}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-3 xl:col-span-2">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Services
+                  </p>
+
+                  <div className="mt-2 space-y-1">
+                    {Array.isArray(selected.services) &&
+                    selected.services.length > 0 ? (
+                      selected.services.map((item: ServiceItem, index: number) => (
+                        <div
+                          key={index}
+                          className="flex items-start justify-between gap-3 border-b border-gray-100 py-1 last:border-b-0"
+                        >
+                          <div className="flex flex-col">
+                            <span className="text-sm font-semibold text-black">
+                              {item.label}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              {item.qty} × €{item.price}
+                            </span>
+                          </div>
+
+                          <span className="text-sm font-bold text-black">
+                            €{Number(item.subtotal || 0).toFixed(2)}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm text-gray-500">No services listed</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Client notes
+                  </p>
+                  <p className="mt-2 text-sm text-black whitespace-pre-line">
+                    {selected.notes || "No client notes"}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-3 xl:col-span-2">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Internal notes
+                  </p>
+
+                  <textarea
+                    value={internalNotes}
+                    onChange={(e) => setInternalNotes(e.target.value)}
+                    placeholder="What to bring, tools, wall type, access notes, materials..."
+                    className="mt-2 min-h-[72px] w-full resize-none rounded-xl border border-gray-300 px-3 py-2 text-sm text-black outline-none transition focus:border-yellow-400"
+                  />
+
+                  <button
+                    onClick={saveInternalNotes}
+                    className="mt-2 rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.02]"
+                  >
+                    Save internal notes
+                  </button>
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                  Order
-                </p>
-                <p className="mt-2 font-bold text-black">
-                  {formatOrderId(selected)}
-                </p>
-              </div>
+              <div className="mt-4 grid grid-cols-1 xl:grid-cols-[1.4fr_0.9fr] gap-3">
+                <div className="rounded-2xl border border-yellow-400 bg-yellow-50/60 p-4">
+                  <p className="font-semibold text-black">Pricing</p>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                  Address
-                </p>
-                <p className="mt-2 text-sm text-black">
-                  {selected.city || "—"}, {selected.area || "—"},{" "}
-                  {selected.address || "—"}
-                </p>
-              </div>
+                  <div className="mt-3 space-y-2 text-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-600">Net revenue</span>
+                      <span className="font-semibold text-black">
+                        €{Number(selected.subtotal || 0).toFixed(2)}
+                      </span>
+                    </div>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                  Schedule
-                </p>
-                <p className="mt-2 text-sm text-black">
-                  {selected.preferred_date || "—"}{" "}
-                  {selected.preferred_time || ""}
-                </p>
-              </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-600">IVA reserve</span>
+                      <span className="font-semibold text-black">
+                        €{Number(selected.iva || 0).toFixed(2)}
+                      </span>
+                    </div>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-4">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Category
-  </p>
-  <p className="mt-2 text-sm font-semibold text-black">
-    {selected.category || "—"}
-  </p>
-</div>
-
-<div className="rounded-2xl border border-gray-200 bg-white p-4">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Services
-  </p>
-
-  <div className="mt-3 space-y-2">
-    {Array.isArray(selected.services) && selected.services.length > 0 ? (
-      selected.services.map((item: any, index: number) => (
-        <div
-          key={index}
-          className="flex items-start justify-between gap-3 border-b border-gray-100 pb-2"
-        >
-          <div className="flex flex-col">
-            <span className="font-semibold text-black">{item.label}</span>
-            <span className="text-xs text-gray-500">
-              {item.qty} × €{item.price}
-            </span>
-          </div>
-
-          <span className="text-sm font-bold text-black">
-            €{Number(item.subtotal || 0).toFixed(2)}
-          </span>
-        </div>
-      ))
-    ) : (
-      <p className="text-sm text-gray-500">No services listed</p>
-    )}
-  </div>
-</div>
-
-<div className="rounded-2xl border border-gray-200 bg-white p-4">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Client notes
-  </p>
-  <p className="mt-2 text-sm text-black whitespace-pre-line">
-    {selected.notes || "No client notes"}
-  </p>
-</div>
-
-<div className="rounded-2xl border border-gray-200 bg-white p-4">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Internal notes
-  </p>
-
-  <textarea
-    value={internalNotes}
-    onChange={(e) => setInternalNotes(e.target.value)}
-    placeholder="What to bring, tools, wall type, access notes, materials..."
-    className="mt-3 min-h-[120px] w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
-  />
-
-  <button
-    onClick={saveInternalNotes}
-    className="mt-3 rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.02]"
-  >
-    Save internal notes
-  </button>
-</div>
-
-              <div className="rounded-2xl border border-yellow-400 bg-yellow-50/60 p-4">
-                <p className="font-semibold text-black">Pricing</p>
-
-                <div className="mt-3 space-y-2 text-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Net revenue</span>
-                    <span className="font-semibold text-black">
-                      €{Number(selected.subtotal || 0).toFixed(2)}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">IVA reserve</span>
-                    <span className="font-semibold text-black">
-                      €{Number(selected.iva || 0).toFixed(2)}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between border-t border-yellow-400 pt-2">
-                    <span className="font-bold text-black">Gross total</span>
-                    <span className="text-base font-extrabold text-black">
-                      €{Number(selected.total || 0).toFixed(2)}
-                    </span>
+                    <div className="flex items-center justify-between border-t border-yellow-400 pt-2">
+                      <span className="font-bold text-black">Gross total</span>
+                      <span className="text-base font-extrabold text-black">
+                        €{Number(selected.total || 0).toFixed(2)}
+                      </span>
+                    </div>
                   </div>
                 </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Actions
+                  </p>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <button
+                      onClick={() =>
+                        navigator.clipboard.writeText(
+                          `${selected.city || ""}, ${selected.area || ""}, ${selected.address || ""}`
+                        )
+                      }
+                      className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
+                    >
+                      Copy address
+                    </button>
+
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                        `${selected.city || ""}, ${selected.area || ""}, ${selected.address || ""}`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black transition hover:scale-[1.02]"
+                    >
+                      Open map
+                    </a>
+
+                    <a
+                      href={`tel:${selected.phone}`}
+                      className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
+                    >
+                      Call
+                    </a>
+                  </div>
+
+                  <button
+                    onClick={() => setSelected(null)}
+                    className="mt-4 w-full rounded-2xl border border-gray-300 py-3 text-sm font-bold text-black transition hover:bg-gray-50"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
-
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() =>
-                    navigator.clipboard.writeText(
-                      `${selected.city || ""}, ${selected.area || ""}, ${selected.address || ""}`
-                    )
-                  }
-                  className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
-                >
-                  Copy address
-                </button>
-
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                    `${selected.city || ""}, ${selected.area || ""}, ${selected.address || ""}`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black transition hover:scale-[1.02]"
-                >
-                  Open map
-                </a>
-
-                <a
-                  href={`tel:${selected.phone}`}
-                  className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
-                >
-                  Call
-                </a>
-              </div>
-
-              <button
-                onClick={() => setSelected(null)}
-                className="mt-2 w-full rounded-2xl border border-gray-300 py-3 text-sm font-bold text-black transition hover:bg-gray-50"
-              >
-                Close
-              </button>
             </div>
           </div>
         )}
