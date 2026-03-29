@@ -27,7 +27,7 @@ export async function GET() {
     for (const order of orders || []) {
       if (!order.scheduled_at || !order.email) continue;
 
-      const scheduled = new Date(order.scheduled_at);
+      const scheduled = new Date(order.scheduled_at + "Z");
       const diffMs = scheduled.getTime() - now.getTime();
       const diffHours = diffMs / (1000 * 60 * 60);
 
