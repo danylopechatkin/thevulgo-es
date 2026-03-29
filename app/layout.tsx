@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -58,8 +59,6 @@ export default function RootLayout({
                 <span className="absolute left-2 right-2 -bottom-[3px] h-[2px] bg-yellow-400 scale-x-0 origin-left transition-transform duration-200 ease-out group-hover:scale-x-100" />
               </a>
 
-              
-
               <a
                 href="/#how"
                 className="group relative px-2 py-1 text-gray-700 hover:text-black transition"
@@ -107,11 +106,11 @@ export default function RootLayout({
 
             <div className="flex items-center gap-2">
               <a
-  href="/services"
-  className="bg-yellow-400 text-black px-5 py-2.5 rounded-2xl font-bold shadow-md hover:shadow-xl hover:scale-105 transition"
->
-  Get estimate
-</a>
+                href="/services"
+                className="bg-yellow-400 text-black px-5 py-2.5 rounded-2xl font-bold shadow-md hover:shadow-xl hover:scale-105 transition"
+              >
+                Get estimate
+              </a>
 
               <a
                 href="https://wa.me/14379074913?text=Hi!%20I%E2%80%99d%20like%20an%20estimate%20in%20Valencia."
@@ -126,7 +125,8 @@ export default function RootLayout({
         </header>
 
         {children}
-         <Analytics />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
