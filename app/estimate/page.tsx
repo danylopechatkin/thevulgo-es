@@ -611,17 +611,19 @@ const todayDateString = [
 
 const minSelectableDate = todayDateString;
 
-const minimumTimeForToday = (() => {
-  const nextHour = new Date(now.getTime() + 60 * 60 * 1000);
-  const hours = String(nextHour.getHours()).padStart(2, "0");
-  const minutes = String(nextHour.getMinutes()).padStart(2, "0");
-
-  return `${hours}:${minutes}`;
+// ближайший полный следующий час
+const nextAvailableHour = (() => {
+  const next = new Date(now);
+  next.setHours(next.getHours() + 1, 0, 0, 0);
+  return next.getHours();
 })();
 
 const availableTimeOptions =
   client.preferredDate === todayDateString
-    ? TIME_OPTIONS.filter((time) => time >= minimumTimeForToday)
+    ? TIME_OPTIONS.filter((time) => {
+        const hour = Number(time.split(":")[0]);
+        return hour >= nextAvailableHour;
+      })
     : TIME_OPTIONS;
 
 const isValidEmail = (value: string) => {
@@ -689,12 +691,12 @@ const validateEstimateForm = () => {
 
   if (!client.preferredTime.trim()) {
     errors.preferredTime = "Choose preferred time.";
-  } else if (
-    client.preferredDate === todayDateString &&
-    client.preferredTime < minimumTimeForToday
-  ) {
+  } else if (client.preferredDate === todayDateString) {
+  const selectedHour = Number(client.preferredTime.split(":")[0]);
+  if (selectedHour < nextAvailableHour) {
     errors.preferredTime = "Choose a time at least 1 hour from now.";
   }
+}
 
   if (
     client.preferredDate &&
@@ -778,17 +780,17 @@ useEffect(() => {
 
 // 👇 ВОТ СЮДА ВСТАВЛЯЕМ
 useEffect(() => {
-  if (
-    client.preferredDate === todayDateString &&
-    client.preferredTime &&
-    client.preferredTime < minimumTimeForToday
-  ) {
-    setClient((prev) => ({
-      ...prev,
-      preferredTime: "",
-    }));
+  if (client.preferredDate === todayDateString && client.preferredTime) {
+    const selectedHour = Number(client.preferredTime.split(":")[0]);
+
+    if (selectedHour < nextAvailableHour) {
+      setClient((prev) => ({
+        ...prev,
+        preferredTime: "",
+      }));
+    }
   }
-}, [client.preferredDate, client.preferredTime, todayDateString, minimumTimeForToday]);
+}, [client.preferredDate, client.preferredTime, todayDateString, nextAvailableHour]);
 
 return (
 
