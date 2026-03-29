@@ -370,8 +370,8 @@ export default function AdminPage() {
         </div>
 
         {selected && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/40 p-4">
-            <div className="w-full max-w-[460px] space-y-4 rounded-3xl bg-white p-6 shadow-2xl">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3 sm:p-4">
+            <div className="w-full max-w-[95vw] sm:max-w-[720px] lg:max-w-[980px] max-h-[92vh] overflow-y-auto space-y-4 rounded-3xl bg-white p-5 sm:p-6 lg:p-8 shadow-2xl">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
