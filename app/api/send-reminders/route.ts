@@ -12,6 +12,7 @@ export async function GET() {
       .eq("reminder_sent", false);
 
     if (error) {
+      console.error("LOAD REMINDER ORDERS ERROR:", error);
       return Response.json(
         { success: false, error: "Failed to load orders" },
         { status: 500 }
@@ -22,7 +23,9 @@ export async function GET() {
     const sent: string[] = [];
 
     for (const order of orders || []) {
-      if (!order.preferred_date || !order.preferred_time || !order.email) continue;
+      if (!order.preferred_date || !order.preferred_time || !order.email) {
+        continue;
+      }
 
       const jobDateTime = new Date(
         `${order.preferred_date}T${order.preferred_time}:00`
@@ -108,17 +111,25 @@ export async function GET() {
           `,
         });
 
-        if (!emailResult.error) {
-          await supabase
-            .from("orders")
-            .update({
-              reminder_sent: true,
-              status: "in_progress",
-            })
-            .eq("id", order.id);
-
-          sent.push(order.id);
+        if (emailResult.error) {
+          console.error("REMINDER EMAIL ERROR:", emailResult.error);
+          continue;
         }
+
+        const { error: updateError } = await supabase
+          .from("orders")
+          .update({
+            reminder_sent: true,
+            status: "in_progress",
+          })
+          .eq("id", order.id);
+
+        if (updateError) {
+          console.error("REMINDER UPDATE ERROR:", updateError);
+          continue;
+        }
+
+        sent.push(order.id);
       }
     }
 
@@ -128,6 +139,8 @@ export async function GET() {
       sentOrders: sent,
     });
   } catch (error) {
+    console.error("REMINDER JOB ERROR:", error);
+
     return Response.json(
       { success: false, error: "Reminder job failed" },
       { status: 500 }
