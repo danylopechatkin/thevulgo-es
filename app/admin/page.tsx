@@ -1,205 +1,250 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
-type OrderStatus = "NEW" | "IN_PROGRESS" | "DONE";
+type OrderStatus = "new" | "in_progress" | "done";
 
 type Order = {
   id: string;
-  fullName: string;
+  order_number: number | null;
+  full_name: string;
   phone: string;
   email: string;
   city: string;
   area: string;
   address: string;
-  date: string;
-  time: string;
+  preferred_date: string | null;
+  preferred_time: string;
   total: number;
   status: OrderStatus;
-  emailConfirmationSent: boolean;
-  emailReminderSent: boolean;
-  emailCompletedSent: boolean;
+  email_sent: boolean;
+  reminder_sent: boolean;
+  completed_email_sent: boolean;
 };
 
-const MOCK_ORDERS: Order[] = [
-  {
-    id: "TVG-0001",
-    fullName: "Juan Perez",
-    phone: "+34600111222",
-    email: "juan@mail.com",
-    city: "Valencia",
-    area: "Russafa",
-    address: "Calle Cuba 12",
-    date: "2026-04-01",
-    time: "10:00",
-    total: 79,
-    status: "NEW",
-    emailConfirmationSent: true,
-    emailReminderSent: false,
-    emailCompletedSent: false,
-  },
-  {
-    id: "TVG-0002",
-    fullName: "Maria Lopez",
-    phone: "+34600999888",
-    email: "maria@mail.com",
-    city: "Valencia",
-    area: "Benimaclet",
-    address: "Av. Primado Reig 55",
-    date: "2026-04-01",
-    time: "14:00",
-    total: 45,
-    status: "IN_PROGRESS",
-    emailConfirmationSent: true,
-    emailReminderSent: true,
-    emailCompletedSent: false,
-  },
-];
-
 export default function AdminPage() {
-  const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [selected, setSelected] = useState<Order | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // 💰 METRICS
+  const loadOrders = async () => {
+    setLoading(true);
+
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("LOAD ORDERS ERROR:", error);
+      setLoading(false);
+      return;
+    }
+
+    setOrders(data || []);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadOrders();
+  }, []);
+
   const metrics = useMemo(() => {
     const total = orders.length;
+    const revenue = orders.reduce((sum, o) => sum + Number(o.total || 0), 0);
 
-    const revenue = orders.reduce((sum, o) => sum + o.total, 0);
-
-    const newCount = orders.filter(o => o.status === "NEW").length;
-    const progress = orders.filter(o => o.status === "IN_PROGRESS").length;
-    const done = orders.filter(o => o.status === "DONE").length;
+    const newCount = orders.filter((o) => o.status === "new").length;
+    const progress = orders.filter((o) => o.status === "in_progress").length;
+    const done = orders.filter((o) => o.status === "done").length;
 
     return { total, revenue, newCount, progress, done };
   }, [orders]);
 
-  const updateStatus = (id: string, status: OrderStatus) => {
-    setOrders(prev =>
-      prev.map(o => (o.id === id ? { ...o, status } : o))
+  const updateStatus = async (id: string, status: OrderStatus) => {
+    const { error } = await supabase
+      .from("orders")
+      .update({ status })
+      .eq("id", id);
+
+    if (error) {
+      console.error("UPDATE STATUS ERROR:", error);
+      return;
+    }
+
+    setOrders((prev) =>
+      prev.map((o) => (o.id === id ? { ...o, status } : o))
     );
+
+    if (selected?.id === id) {
+      setSelected((prev) => (prev ? { ...prev, status } : prev));
+    }
+  };
+
+  const formatOrderId = (order: Order) => {
+    if (order.order_number) {
+      return `TVG-${String(order.order_number).padStart(4, "0")}`;
+    }
+    return order.id.slice(0, 8).toUpperCase();
+  };
+
+  const formatStatusLabel = (status: OrderStatus) => {
+    if (status === "new") return "NEW";
+    if (status === "in_progress") return "IN PROGRESS";
+    return "DONE";
   };
 
   return (
     <div className="min-h-screen bg-white p-6 text-black">
-      <div className="max-w-7xl mx-auto space-y-8">
-
-        {/* 🔥 DASHBOARD */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <Card title="Revenue" value={`€${metrics.revenue}`} />
+      <div className="mx-auto max-w-7xl space-y-8">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
+          <Card title="Revenue" value={`€${metrics.revenue.toFixed(2)}`} />
           <Card title="Orders" value={metrics.total} />
           <Card title="New" value={metrics.newCount} />
           <Card title="In Progress" value={metrics.progress} />
           <Card title="Done" value={metrics.done} />
         </div>
 
-        {/* 📋 TABLE */}
-        <div className="rounded-2xl border border-yellow-400 overflow-hidden">
+        <div className="overflow-hidden rounded-2xl border border-yellow-400">
           <table className="w-full text-sm">
             <thead className="bg-yellow-50">
               <tr>
                 <th className="p-3 text-left">ID</th>
-                <th>Name</th>
-                <th>Time</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Emails</th>
-                <th></th>
+                <th className="text-left">Name</th>
+                <th className="text-left">Time</th>
+                <th className="text-left">Total</th>
+                <th className="text-left">Status</th>
+                <th className="text-left">Emails</th>
+                <th className="text-left"></th>
               </tr>
             </thead>
 
             <tbody>
-              {orders.map(order => (
-                <tr key={order.id} className="border-t">
-                  <td className="p-3">{order.id}</td>
-                  <td>{order.fullName}</td>
-                  <td>{order.date} {order.time}</td>
-                  <td>€{order.total}</td>
-
-                  {/* STATUS */}
-                  <td>
-                    <select
-                      value={order.status}
-                      onChange={e =>
-                        updateStatus(order.id, e.target.value as OrderStatus)
-                      }
-                      className="border rounded px-2 py-1"
-                    >
-                      <option value="NEW">NEW</option>
-                      <option value="IN_PROGRESS">IN PROGRESS</option>
-                      <option value="DONE">DONE</option>
-                    </select>
-                  </td>
-
-                  {/* EMAILS */}
-                  <td className="text-xs">
-                    <div>📩 {order.emailConfirmationSent ? "✔" : "❌"}</div>
-                    <div>⏰ {order.emailReminderSent ? "✔" : "❌"}</div>
-                    <div>🧾 {order.emailCompletedSent ? "✔" : "❌"}</div>
-                  </td>
-
-                  <td>
-                    <button
-                      onClick={() => setSelected(order)}
-                      className="bg-yellow-400 px-3 py-1 rounded"
-                    >
-                      Open
-                    </button>
+              {loading ? (
+                <tr>
+                  <td colSpan={7} className="p-6 text-center text-gray-500">
+                    Loading orders...
                   </td>
                 </tr>
-              ))}
+              ) : orders.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="p-6 text-center text-gray-500">
+                    No orders yet
+                  </td>
+                </tr>
+              ) : (
+                orders.map((order) => (
+                  <tr key={order.id} className="border-t">
+                    <td className="p-3">{formatOrderId(order)}</td>
+                    <td>{order.full_name}</td>
+                    <td>
+                      {order.preferred_date || "—"}{" "}
+                      {order.preferred_time || ""}
+                    </td>
+                    <td>€{Number(order.total || 0).toFixed(2)}</td>
+
+                    <td>
+                      <select
+                        value={order.status}
+                        onChange={(e) =>
+                          updateStatus(order.id, e.target.value as OrderStatus)
+                        }
+                        className="rounded border px-2 py-1"
+                      >
+                        <option value="new">NEW</option>
+                        <option value="in_progress">IN PROGRESS</option>
+                        <option value="done">DONE</option>
+                      </select>
+                    </td>
+
+                    <td className="text-xs">
+                      <div>📩 {order.email_sent ? "✔" : "❌"}</div>
+                      <div>⏰ {order.reminder_sent ? "✔" : "❌"}</div>
+                      <div>🧾 {order.completed_email_sent ? "✔" : "❌"}</div>
+                    </td>
+
+                    <td>
+                      <button
+                        onClick={() => setSelected(order)}
+                        className="rounded bg-yellow-400 px-3 py-1"
+                      >
+                        Open
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
 
-        {/* 🔥 MODAL */}
         {selected && (
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-2xl w-[400px] space-y-4">
-
-              <h2 className="text-xl font-bold">{selected.fullName}</h2>
+          <div className="fixed inset-0 flex items-center justify-center bg-black/40">
+            <div className="w-[420px] space-y-4 rounded-2xl bg-white p-6">
+              <h2 className="text-xl font-bold">{selected.full_name}</h2>
 
               <div className="text-sm">
-                <p>📞 {selected.phone}</p>
-                <p>📧 {selected.email}</p>
+                <p>📞 {selected.phone || "—"}</p>
+                <p>📧 {selected.email || "—"}</p>
+              </div>
+
+              <div>
+                <p className="font-semibold">Order:</p>
+                <p>{formatOrderId(selected)}</p>
+              </div>
+
+              <div>
+                <p className="font-semibold">Status:</p>
+                <p>{formatStatusLabel(selected.status)}</p>
               </div>
 
               <div>
                 <p className="font-semibold">Address:</p>
                 <p>
-                  {selected.city}, {selected.area}, {selected.address}
+                  {selected.city || "—"}, {selected.area || "—"},{" "}
+                  {selected.address || "—"}
                 </p>
               </div>
 
-              {/* ACTIONS */}
-              <div className="flex gap-2 flex-wrap">
+              <div>
+                <p className="font-semibold">Schedule:</p>
+                <p>
+                  {selected.preferred_date || "—"}{" "}
+                  {selected.preferred_time || ""}
+                </p>
+              </div>
 
-                {/* COPY */}
+              <div>
+                <p className="font-semibold">Total:</p>
+                <p>€{Number(selected.total || 0).toFixed(2)}</p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() =>
                     navigator.clipboard.writeText(
-                      `${selected.city}, ${selected.area}, ${selected.address}`
+                      `${selected.city || ""}, ${selected.area || ""}, ${selected.address || ""}`
                     )
                   }
-                  className="border px-3 py-2 rounded"
+                  className="rounded border px-3 py-2"
                 >
                   Copy address
                 </button>
 
-                {/* MAP */}
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                    `${selected.city}, ${selected.area}, ${selected.address}`
+                    `${selected.city || ""}, ${selected.area || ""}, ${selected.address || ""}`
                   )}`}
                   target="_blank"
-                  className="bg-yellow-400 px-3 py-2 rounded"
+                  rel="noopener noreferrer"
+                  className="rounded bg-yellow-400 px-3 py-2"
                 >
                   Open map
                 </a>
 
-                {/* CALL */}
                 <a
                   href={`tel:${selected.phone}`}
-                  className="border px-3 py-2 rounded"
+                  className="rounded border px-3 py-2"
                 >
                   Call
                 </a>
@@ -207,23 +252,21 @@ export default function AdminPage() {
 
               <button
                 onClick={() => setSelected(null)}
-                className="w-full mt-4 border py-2 rounded"
+                className="mt-4 w-full rounded border py-2"
               >
                 Close
               </button>
             </div>
           </div>
         )}
-
       </div>
     </div>
   );
 }
 
-// 🔥 CARD
-function Card({ title, value }: { title: string; value: any }) {
+function Card({ title, value }: { title: string; value: React.ReactNode }) {
   return (
-    <div className="border border-yellow-400 rounded-2xl p-4 shadow-sm">
+    <div className="rounded-2xl border border-yellow-400 p-4 shadow-sm">
       <div className="text-xs text-gray-500">{title}</div>
       <div className="text-xl font-bold">{value}</div>
     </div>
