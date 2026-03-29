@@ -1341,8 +1341,8 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   </div>
 
   <p className="mt-2 text-xs text-gray-500">
-    Final price confirmed after inspection if needed.
-  </p>
+  Clear pricing. No surprises.
+</p>
 </div>
 
                 {submitStage === "build" && (
