@@ -417,6 +417,7 @@ function EstimatePageContent() {
 
 const [category, setCategory] = useState<CategoryKey>(initialCategory);
 const [categoryPage, setCategoryPage] = useState(0);
+const [loading, setLoading] = useState(false);
 const [categoryDirection, setCategoryDirection] = useState<"next" | "prev">("next");
 const [quantities, setQuantities] = useState<Record<string, number>>({});
 const [submitStage, setSubmitStage] = useState<"build" | "review" | "success">("build");
@@ -713,6 +714,8 @@ const handleBackToEdit = () => {
 
 const handleConfirmSend = async () => {
   try {
+    setLoading(true);
+
     const response = await fetch("/api/send", {
       method: "POST",
       headers: {
@@ -744,6 +747,8 @@ const handleConfirmSend = async () => {
   } catch (error) {
     console.error(error);
     alert("Error sending request. Try again.");
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -1490,22 +1495,26 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
     </p>
 
     <div className="flex gap-3">
-      <button
-        type="button"
-        onClick={handleBackToEdit}
-        className="flex-1 rounded-2xl border border-gray-300 bg-white py-4 font-bold"
-      >
-        Back
-      </button>
+  {/* BACK */}
+  <button
+  type="button"
+  onClick={handleBackToEdit}
+  disabled={loading}
+  className="flex-1 rounded-2xl border border-gray-300 bg-white py-4 text-sm font-bold text-black transition hover:bg-gray-50 hover:shadow-sm active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+>
+  Back to edit
+</button>
 
-      <button
-        type="button"
-        onClick={handleConfirmSend}
-        className="flex-1 rounded-2xl bg-yellow-400 py-4 font-extrabold"
-      >
-        Confirm request
-      </button>
-    </div>
+  {/* SEND */}
+  <button
+  type="button"
+  onClick={handleConfirmSend}
+  disabled={loading}
+  className="flex-1 rounded-2xl bg-yellow-400 py-4 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.02] hover:shadow-lg active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+>
+  {loading ? "Sending..." : "Send request"}
+</button>
+</div>
   </div>
 )}
 
