@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { supabase } from "@/lib/supabase";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -8,6 +9,45 @@ export async function POST(req: Request) {
     const subtotal = Number(data.subtotal || 0);
 const iva = Number(data.iva || 0);
 const total = Number(data.total || 0);
+
+const { data: insertedOrder, error: orderInsertError } = await supabase
+  .from("orders")
+  .insert([
+    {
+      full_name: data.fullName || "",
+      email: data.email || "",
+      phone: data.phone || "",
+      city: data.city || "",
+      area: data.area || "",
+      address: data.houseAddress || "",
+      apartment: data.apartmentNumber || "",
+      address_details: data.addressDetails || "",
+      category: data.category || "",
+      services: data.services || [],
+      subtotal,
+      iva,
+      total,
+      status: "new",
+      preferred_date: data.preferredDate || null,
+      preferred_time: data.preferredTime || "",
+      notes: data.notes || "",
+      email_sent: false,
+      reminder_sent: false,
+      completed_email_sent: false,
+      referral_code: null,
+    },
+  ])
+  .select("id")
+  .single();
+
+if (orderInsertError) {
+  console.error("SUPABASE INSERT ERROR:", orderInsertError);
+
+  return Response.json(
+    { success: false, error: "Failed to save order to CRM" },
+    { status: 500 }
+  );
+}
 
     // 🔥 SERVICES HTML (для красивого email)
     const servicesHtml = (data.services || [])
@@ -228,6 +268,15 @@ Valencia & nearby · Fast response
         );
       }
     }
+
+    if (insertedOrder?.id && data.email) {
+  await supabase
+    .from("orders")
+    .update({
+      email_sent: true,
+    })
+    .eq("id", insertedOrder.id);
+}
 
     return Response.json({
       success: true,
