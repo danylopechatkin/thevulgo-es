@@ -732,34 +732,40 @@ const handleConfirmSend = async () => {
     setIsSending(true);
     setSendError("");
 
+const payload = {
+  fullName: client.fullName,
+  email: client.email,
+  phone: client.phone,
+  city: displayCity,
+  area: client.area,
+  houseAddress: client.houseAddress,
+  apartmentNumber: client.apartmentNumber,
+  addressDetails: client.addressDetails,
+  preferredDate: client.preferredDate,
+  preferredTime: client.preferredTime,
+  notes: client.notes,
+  category: currentCategory.title,
+  services: selectedServices,
+  subtotal,
+  iva,
+  total: totalWithTax,
+  scheduledAt:
+    client.preferredDate && client.preferredTime
+      ? `${client.preferredDate}T${client.preferredTime}:00`
+      : null,
+};
+
+console.log("FRONT SEND PAYLOAD", payload);
+
+
     const response = await fetch("/api/send", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fullName: client.fullName,
-        email: client.email,
-        phone: client.phone,
-        city: displayCity,
-        area: client.area,
-        houseAddress: client.houseAddress,
-        apartmentNumber: client.apartmentNumber,
-        addressDetails: client.addressDetails,
-        preferredDate: client.preferredDate,
-        preferredTime: client.preferredTime,
-        notes: client.notes,
-        category: currentCategory.title,
-        services: selectedServices,
-        subtotal,
-        iva,
-        total: totalWithTax,
-        scheduledAt:
-  client.preferredDate && client.preferredTime
-    ? `${client.preferredDate}T${client.preferredTime}:00`
-    : null,
-      }),
-    });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(payload),
+});
+       
 
     const result = await response.json();
 
