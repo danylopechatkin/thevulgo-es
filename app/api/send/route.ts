@@ -5,6 +5,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: Request) {
   try {
     const data = await req.json();
+    const subtotal = Number(data.subtotal || 0);
+const iva = Number(data.iva || 0);
+const total = Number(data.total || 0);
 
     // 🔥 SERVICES HTML (для красивого email)
     const servicesHtml = (data.services || [])
@@ -44,7 +47,9 @@ export async function POST(req: Request) {
         <p><b>Preferred date:</b> ${data.preferredDate || "—"}</p>
         <p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>
         <p><b>Notes:</b> ${data.notes || "—"}</p>
-        <p><b>Total:</b> €${data.total}</p>
+        <p><b>Subtotal:</b> €${subtotal.toFixed(2)}</p>
+<p><b>IVA (21%):</b> €${iva.toFixed(2)}</p>
+<p><b>Total:</b> €${total.toFixed(2)}</p>
         <h3>Selected services</h3>
         <ul>
           ${(data.services || [])
@@ -113,11 +118,29 @@ ${data.category}
 ${servicesHtml}
 
 <tr>
+<td style="padding:15px;font-size:13px;color:#555;">
+Subtotal
+</td>
+<td style="padding:15px;text-align:right;font-size:13px;">
+€${subtotal.toFixed(2)}
+</td>
+</tr>
+
+<tr>
+<td style="padding:15px;font-size:13px;color:#555;">
+IVA (21%)
+</td>
+<td style="padding:15px;text-align:right;font-size:13px;">
+€${iva.toFixed(2)}
+</td>
+</tr>
+
+<tr>
 <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">
 Total
 </td>
 <td style="padding:15px;border-top:1px solid #ddd;text-align:right;font-weight:800;">
-€${data.total}
+€${total.toFixed(2)}
 </td>
 </tr>
 </table>
@@ -183,7 +206,8 @@ Share THEVULGO & Get rewarded
 </tr>
 
 <tr>
-<td style="background:#fafafa;padding:20px 30px;font-size:12px;color:#777;">
+<td style="background:#fafafa;padding:20px 30px;font-size:12px;color:#777;line-height:1.6;">
+Final total includes IVA (21%).<br/>
 Clear pricing. No surprises.<br/>
 Valencia & nearby · Fast response
 </td>

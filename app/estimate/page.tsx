@@ -574,6 +574,10 @@ const TIME_OPTIONS = [
     return selectedServices.reduce((sum, item) => sum + item.subtotal, 0);
   }, [selectedServices]);
 
+  const subtotal = Number(estimatedTotal.toFixed(2));
+const iva = Number((subtotal * 0.21).toFixed(2));
+const totalWithTax = Number((subtotal + iva).toFixed(2));
+
   const setQty = (id: string, value: number) => {
     setQuantities((prev) => {
       const next = { ...prev };
@@ -740,7 +744,10 @@ const handleConfirmSend = async () => {
         notes: client.notes,
         category: currentCategory.title,
         services: selectedServices,
-        total: estimatedTotal,
+        subtotal,
+        iva,
+        total: totalWithTax,
+
       }),
     });
 
@@ -1336,20 +1343,26 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
                   )}
                 </div>
 
-                <div className="mt-8 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md">
-  <div className="flex items-center justify-between">
-    <span className="text-sm font-bold uppercase tracking-wide text-gray-600">
-      Estimated total
-    </span>
-
-    <span className="text-2xl font-extrabold text-black">
-      €{estimatedTotal}
-    </span>
+                <div className="mt-8 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
+  
+  <div className="flex justify-between text-sm text-gray-600">
+    <span>Subtotal</span>
+    <span>€{subtotal.toFixed(2)}</span>
   </div>
 
-  <p className="mt-2 text-xs text-gray-500">
-  Clear pricing. No surprises.
-</p>
+  <div className="flex justify-between text-sm text-gray-600">
+    <span>IVA (21%)</span>
+    <span>€{iva.toFixed(2)}</span>
+  </div>
+
+  <div className="flex justify-between text-lg font-extrabold text-black border-t border-yellow-400 pt-2">
+    <span>Total</span>
+    <span>€{totalWithTax.toFixed(2)}</span>
+  </div>
+
+  <p className="text-xs text-gray-500">
+    Prices exclude IVA unless stated otherwise.
+  </p>
 </div>
 
                 {submitStage === "build" && (
@@ -1431,19 +1444,31 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
         ))}
       </div>
 
-      <div className="mt-4 flex items-center justify-between border-t border-gray-300 pt-4">
-        <span className="text-sm font-bold uppercase tracking-wide text-gray-500">
-          Total
-        </span>
+      <div className="mt-4 space-y-2 border-t border-gray-300 pt-4">
+  <div className="flex items-center justify-between text-sm text-gray-600">
+    <span>Subtotal</span>
+    <span>€{subtotal.toFixed(2)}</span>
+  </div>
 
-        <span className="text-xl font-extrabold text-black">
-          €{estimatedTotal}
-        </span>
-      </div>
+  <div className="flex items-center justify-between text-sm text-gray-600">
+    <span>IVA (21%)</span>
+    <span>€{iva.toFixed(2)}</span>
+  </div>
 
-      <p className="mt-2 text-xs text-gray-500">
-        Clear pricing. No surprises.
-      </p>
+  <div className="flex items-center justify-between">
+    <span className="text-sm font-bold uppercase tracking-wide text-gray-500">
+      Total
+    </span>
+
+    <span className="text-xl font-extrabold text-black">
+      €{totalWithTax.toFixed(2)}
+    </span>
+  </div>
+</div>
+
+<p className="mt-2 text-xs text-gray-500">
+  Final total includes IVA.
+</p>
     </div>
 
    <div className="mt-4 rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
