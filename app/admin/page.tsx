@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Wallet, Receipt, PiggyBank, ClipboardList } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 type OrderStatus = "new" | "in_progress" | "done";
@@ -45,7 +44,7 @@ export default function AdminPage() {
       return;
     }
 
-    setOrders(data || []);
+    setOrders((data as Order[]) || []);
     setLoading(false);
   };
 
@@ -54,37 +53,37 @@ export default function AdminPage() {
   }, []);
 
   const metrics = useMemo(() => {
-  const totalOrders = orders.length;
+    const totalOrders = orders.length;
 
-  const grossRevenue = orders.reduce(
-    (sum, o) => sum + Number(o.total || 0),
-    0
-  );
+    const grossRevenue = orders.reduce(
+      (sum, o) => sum + Number(o.total || 0),
+      0
+    );
 
-  const ivaReserve = orders.reduce(
-    (sum, o) => sum + Number(o.iva || 0),
-    0
-  );
+    const ivaReserve = orders.reduce(
+      (sum, o) => sum + Number(o.iva || 0),
+      0
+    );
 
-  const netRevenue = orders.reduce(
-    (sum, o) => sum + Number(o.subtotal || 0),
-    0
-  );
+    const netRevenue = orders.reduce(
+      (sum, o) => sum + Number(o.subtotal || 0),
+      0
+    );
 
-  const newCount = orders.filter((o) => o.status === "new").length;
-  const progress = orders.filter((o) => o.status === "in_progress").length;
-  const done = orders.filter((o) => o.status === "done").length;
+    const newCount = orders.filter((o) => o.status === "new").length;
+    const progress = orders.filter((o) => o.status === "in_progress").length;
+    const done = orders.filter((o) => o.status === "done").length;
 
-  return {
-    totalOrders,
-    grossRevenue,
-    ivaReserve,
-    netRevenue,
-    newCount,
-    progress,
-    done,
-  };
-}, [orders]);
+    return {
+      totalOrders,
+      grossRevenue,
+      ivaReserve,
+      netRevenue,
+      newCount,
+      progress,
+      done,
+    };
+  }, [orders]);
 
   const updateStatus = async (id: string, status: OrderStatus) => {
     const { error } = await supabase
@@ -123,183 +122,295 @@ export default function AdminPage() {
     <div className="min-h-screen bg-white p-6 text-black">
       <div className="mx-auto max-w-7xl space-y-8">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-7">
-  <MetricCard
-    title="Gross booked"
-    value={`€${metrics.grossRevenue.toFixed(2)}`}
-    subtitle="Total including IVA"
-    icon={<Wallet className="h-5 w-5" />}
-  />
+          <MetricCard
+            title="Gross booked"
+            value={`€${metrics.grossRevenue.toFixed(2)}`}
+            subtitle="Total including IVA"
+          />
 
-  <MetricCard
-    title="IVA reserve"
-    value={`€${metrics.ivaReserve.toFixed(2)}`}
-    subtitle="Set aside for tax"
-    icon={<PiggyBank className="h-5 w-5" />}
-  />
+          <MetricCard
+            title="IVA reserve"
+            value={`€${metrics.ivaReserve.toFixed(2)}`}
+            subtitle="Set aside for tax"
+          />
 
-  <MetricCard
-    title="Net revenue"
-    value={`€${metrics.netRevenue.toFixed(2)}`}
-    subtitle="Before other expenses"
-    icon={<Receipt className="h-5 w-5" />}
-  />
+          <MetricCard
+            title="Net revenue"
+            value={`€${metrics.netRevenue.toFixed(2)}`}
+            subtitle="Before other expenses"
+          />
 
-  <MetricCard
-    title="Orders"
-    value={metrics.totalOrders}
-    subtitle="All orders"
-    icon={<ClipboardList className="h-5 w-5" />}
-  />
+          <MetricCard
+            title="Orders"
+            value={metrics.totalOrders}
+            subtitle="All orders"
+          />
 
-  <StatusCard title="New" value={metrics.newCount} />
-  <StatusCard title="In Progress" value={metrics.progress} />
-  <StatusCard title="Done" value={metrics.done} />
-</div>
+          <StatusCard title="New" value={metrics.newCount} />
+          <StatusCard title="In Progress" value={metrics.progress} />
+          <StatusCard title="Done" value={metrics.done} />
+        </div>
 
-        <div className="overflow-hidden rounded-2xl border border-yellow-400">
-          <table className="w-full text-sm">
-            <thead className="bg-yellow-50">
-              <tr>
-                <th className="p-3 text-left">ID</th>
-                <th className="text-left">Name</th>
-                <th className="text-left">Time</th>
-                <th className="text-left">Total</th>
-                <th className="text-left">Status</th>
-                <th className="text-left">Emails</th>
-                <th className="text-left"></th>
-              </tr>
-            </thead>
+        <div className="overflow-hidden rounded-[28px] border border-yellow-400 bg-white shadow-xl">
+          <div className="border-b border-yellow-400 bg-gradient-to-r from-yellow-50 via-[#fffdf4] to-white px-6 py-4">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
+                  Orders
+                </p>
+                <h2 className="mt-1 text-xl font-extrabold tracking-tight text-black">
+                  Current booking list
+                </h2>
+              </div>
 
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={7} className="p-6 text-center text-gray-500">
-                    Loading orders...
-                  </td>
+              <div className="rounded-2xl border border-yellow-400 bg-yellow-50 px-4 py-2 text-sm font-semibold text-black shadow-sm">
+                {orders.length} active
+              </div>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-sm">
+              <thead className="bg-[#fffdf4]">
+                <tr className="border-b border-yellow-400">
+                  <th className="px-6 py-4 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+                    ID
+                  </th>
+                  <th className="px-4 py-4 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+                    Client
+                  </th>
+                  <th className="px-4 py-4 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+                    Schedule
+                  </th>
+                  <th className="px-4 py-4 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+                    Pricing
+                  </th>
+                  <th className="px-4 py-4 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+                    Status
+                  </th>
+                  <th className="px-4 py-4 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+                    Emails
+                  </th>
+                  <th className="px-6 py-4 text-right text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+                    Action
+                  </th>
                 </tr>
-              ) : orders.length === 0 ? (
-                <tr>
-                  <td colSpan={7} className="p-6 text-center text-gray-500">
-                    No orders yet
-                  </td>
-                </tr>
-              ) : (
-                orders.map((order) => (
-                  <tr key={order.id} className="border-t">
-                    <td className="p-3">{formatOrderId(order)}</td>
-                    <td>{order.full_name}</td>
-                    <td>
-                      {order.preferred_date || "—"}{" "}
-                      {order.preferred_time || ""}
-                    </td>
-                    <td>
-  <div className="flex flex-col">
-    <span className="font-semibold text-black">
-      €{Number(order.total || 0).toFixed(2)}
-    </span>
-    <span className="text-xs text-gray-500">
-      Net €{Number(order.subtotal || 0).toFixed(2)}
-    </span>
-  </div>
-</td>
+              </thead>
 
-                    <td>
-                      <select
-                        value={order.status}
-                        onChange={(e) =>
-                          updateStatus(order.id, e.target.value as OrderStatus)
-                        }
-                        className="rounded border px-2 py-1"
-                      >
-                        <option value="new">NEW</option>
-                        <option value="in_progress">IN PROGRESS</option>
-                        <option value="done">DONE</option>
-                      </select>
-                    </td>
-
-                    <td className="text-xs">
-                      <div>📩 {order.email_sent ? "✔" : "❌"}</div>
-                      <div>⏰ {order.reminder_sent ? "✔" : "❌"}</div>
-                      <div>🧾 {order.completed_email_sent ? "✔" : "❌"}</div>
-                    </td>
-
-                    <td>
-                      <button
-                        onClick={() => setSelected(order)}
-                        className="rounded bg-yellow-400 px-3 py-1"
-                      >
-                        Open
-                      </button>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan={7} className="p-6 text-center text-gray-500">
+                      Loading orders...
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : orders.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="p-6 text-center text-gray-500">
+                      No orders yet
+                    </td>
+                  </tr>
+                ) : (
+                  orders.map((order) => (
+                    <tr
+                      key={order.id}
+                      className="border-b border-gray-100 transition-colors duration-150 hover:bg-yellow-50/40"
+                    >
+                      <td className="px-6 py-5 align-top">
+                        <div className="font-extrabold text-black">
+                          {formatOrderId(order)}
+                        </div>
+                      </td>
+
+                      <td className="px-4 py-5 align-top">
+                        <div className="flex flex-col">
+                          <span className="font-bold text-black">
+                            {order.full_name}
+                          </span>
+                          <span className="mt-1 text-xs text-gray-500">
+                            {order.city || "—"}, {order.area || "—"}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td className="px-4 py-5 align-top">
+                        <div className="flex flex-col">
+                          <span className="font-semibold text-black">
+                            {order.preferred_date || "—"}
+                          </span>
+                          <span className="mt-1 text-xs text-gray-500">
+                            {order.preferred_time || "No time"}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td className="px-4 py-5 align-top">
+                        <div className="flex flex-col">
+                          <span className="text-base font-extrabold text-black">
+                            €{Number(order.total || 0).toFixed(2)}
+                          </span>
+                          <span className="mt-1 text-xs text-gray-500">
+                            Net €{Number(order.subtotal || 0).toFixed(2)}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td className="px-4 py-5 align-top">
+                        <select
+                          value={order.status}
+                          onChange={(e) =>
+                            updateStatus(
+                              order.id,
+                              e.target.value as OrderStatus
+                            )
+                          }
+                          className="min-w-[140px] rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-black outline-none transition focus:border-yellow-400"
+                        >
+                          <option value="new">NEW</option>
+                          <option value="in_progress">IN PROGRESS</option>
+                          <option value="done">DONE</option>
+                        </select>
+                      </td>
+
+                      <td className="px-4 py-5 align-top">
+                        <div className="space-y-1 text-xs">
+                          <div className="flex items-center gap-2">
+                            <span>📩</span>
+                            <span
+                              className={
+                                order.email_sent
+                                  ? "font-semibold text-green-600"
+                                  : "font-semibold text-red-500"
+                              }
+                            >
+                              {order.email_sent ? "Sent" : "No"}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <span>⏰</span>
+                            <span
+                              className={
+                                order.reminder_sent
+                                  ? "font-semibold text-green-600"
+                                  : "font-semibold text-red-500"
+                              }
+                            >
+                              {order.reminder_sent ? "Sent" : "No"}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <span>🧾</span>
+                            <span
+                              className={
+                                order.completed_email_sent
+                                  ? "font-semibold text-green-600"
+                                  : "font-semibold text-red-500"
+                              }
+                            >
+                              {order.completed_email_sent ? "Sent" : "No"}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="px-6 py-5 align-top text-right">
+                        <button
+                          onClick={() => setSelected(order)}
+                          className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.03] hover:shadow-md"
+                        >
+                          Open
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {selected && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/40">
-            <div className="w-[420px] space-y-4 rounded-2xl bg-white p-6">
-              <h2 className="text-xl font-bold">{selected.full_name}</h2>
+          <div className="fixed inset-0 flex items-center justify-center bg-black/40 p-4">
+            <div className="w-full max-w-[460px] space-y-4 rounded-3xl bg-white p-6 shadow-2xl">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+                    Order details
+                  </p>
+                  <h2 className="mt-1 text-2xl font-extrabold text-black">
+                    {selected.full_name}
+                  </h2>
+                </div>
 
-              <div className="text-sm">
-                <p>📞 {selected.phone || "—"}</p>
-                <p>📧 {selected.email || "—"}</p>
+                <div className="rounded-2xl border border-yellow-400 bg-yellow-50 px-3 py-2 text-sm font-bold text-black">
+                  {formatStatusLabel(selected.status)}
+                </div>
               </div>
 
-              <div>
-                <p className="font-semibold">Order:</p>
-                <p>{formatOrderId(selected)}</p>
+              <div className="rounded-2xl border border-gray-200 bg-white p-4 text-sm">
+                <div className="space-y-2">
+                  <p>📞 {selected.phone || "—"}</p>
+                  <p>📧 {selected.email || "—"}</p>
+                </div>
               </div>
 
-              <div>
-                <p className="font-semibold">Status:</p>
-                <p>{formatStatusLabel(selected.status)}</p>
+              <div className="rounded-2xl border border-gray-200 bg-white p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                  Order
+                </p>
+                <p className="mt-2 font-bold text-black">
+                  {formatOrderId(selected)}
+                </p>
               </div>
 
-              <div>
-                <p className="font-semibold">Address:</p>
-                <p>
+              <div className="rounded-2xl border border-gray-200 bg-white p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                  Address
+                </p>
+                <p className="mt-2 text-sm text-black">
                   {selected.city || "—"}, {selected.area || "—"},{" "}
                   {selected.address || "—"}
                 </p>
               </div>
 
-              <div>
-                <p className="font-semibold">Schedule:</p>
-                <p>
+              <div className="rounded-2xl border border-gray-200 bg-white p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                  Schedule
+                </p>
+                <p className="mt-2 text-sm text-black">
                   {selected.preferred_date || "—"}{" "}
                   {selected.preferred_time || ""}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-yellow-400 bg-yellow-50/60 p-4">
-  <p className="font-semibold text-black">Pricing</p>
+                <p className="font-semibold text-black">Pricing</p>
 
-  <div className="mt-3 space-y-2 text-sm">
-    <div className="flex items-center justify-between">
-      <span className="text-gray-600">Net revenue</span>
-      <span className="font-semibold text-black">
-        €{Number(selected.subtotal || 0).toFixed(2)}
-      </span>
-    </div>
+                <div className="mt-3 space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">Net revenue</span>
+                    <span className="font-semibold text-black">
+                      €{Number(selected.subtotal || 0).toFixed(2)}
+                    </span>
+                  </div>
 
-    <div className="flex items-center justify-between">
-      <span className="text-gray-600">IVA reserve</span>
-      <span className="font-semibold text-black">
-        €{Number(selected.iva || 0).toFixed(2)}
-      </span>
-    </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">IVA reserve</span>
+                    <span className="font-semibold text-black">
+                      €{Number(selected.iva || 0).toFixed(2)}
+                    </span>
+                  </div>
 
-    <div className="flex items-center justify-between border-t border-yellow-400 pt-2">
-      <span className="font-bold text-black">Gross total</span>
-      <span className="text-base font-extrabold text-black">
-        €{Number(selected.total || 0).toFixed(2)}
-      </span>
-    </div>
-  </div>
-</div>
+                  <div className="flex items-center justify-between border-t border-yellow-400 pt-2">
+                    <span className="font-bold text-black">Gross total</span>
+                    <span className="text-base font-extrabold text-black">
+                      €{Number(selected.total || 0).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              </div>
 
               <div className="flex flex-wrap gap-2">
                 <button
@@ -308,7 +419,7 @@ export default function AdminPage() {
                       `${selected.city || ""}, ${selected.area || ""}, ${selected.address || ""}`
                     )
                   }
-                  className="rounded border px-3 py-2"
+                  className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
                 >
                   Copy address
                 </button>
@@ -319,14 +430,14 @@ export default function AdminPage() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded bg-yellow-400 px-3 py-2"
+                  className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black transition hover:scale-[1.02]"
                 >
                   Open map
                 </a>
 
                 <a
                   href={`tel:${selected.phone}`}
-                  className="rounded border px-3 py-2"
+                  className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
                 >
                   Call
                 </a>
@@ -334,7 +445,7 @@ export default function AdminPage() {
 
               <button
                 onClick={() => setSelected(null)}
-                className="mt-4 w-full rounded border py-2"
+                className="mt-2 w-full rounded-2xl border border-gray-300 py-3 text-sm font-bold text-black transition hover:bg-gray-50"
               >
                 Close
               </button>
@@ -350,30 +461,22 @@ function MetricCard({
   title,
   value,
   subtitle,
-  icon,
 }: {
   title: string;
   value: React.ReactNode;
   subtitle: string;
-  icon: React.ReactNode;
 }) {
   return (
-    <div className="rounded-3xl border border-yellow-400 bg-white p-5 shadow-md transition hover:-translate-y-[1px] hover:shadow-xl">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-            {title}
-          </p>
-          <div className="mt-2 text-3xl font-extrabold tracking-tight text-black">
-            {value}
-          </div>
-          <p className="mt-2 text-xs text-gray-500">{subtitle}</p>
-        </div>
+    <div className="rounded-3xl border border-yellow-400 bg-white p-5 shadow-md transition-all duration-200 hover:-translate-y-[1px] hover:shadow-xl">
+      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+        {title}
+      </p>
 
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md">
-          {icon}
-        </div>
+      <div className="mt-3 text-4xl font-extrabold tracking-tight text-black">
+        {value}
       </div>
+
+      <p className="mt-3 text-xs leading-5 text-gray-500">{subtitle}</p>
     </div>
   );
 }
@@ -386,11 +489,11 @@ function StatusCard({
   value: React.ReactNode;
 }) {
   return (
-    <div className="rounded-3xl border border-yellow-400 bg-gradient-to-b from-yellow-50 to-white p-5 shadow-md transition hover:-translate-y-[1px] hover:shadow-xl">
-      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+    <div className="rounded-3xl border border-yellow-400 bg-[#fffdf6] p-5 shadow-md transition-all duration-200 hover:-translate-y-[1px] hover:shadow-xl">
+      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
         {title}
       </p>
-      <div className="mt-2 text-3xl font-extrabold tracking-tight text-black">
+      <div className="mt-3 text-4xl font-extrabold tracking-tight text-black">
         {value}
       </div>
     </div>
