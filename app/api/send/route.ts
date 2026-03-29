@@ -161,16 +161,19 @@ ${data.notes || "No additional notes"}
 <tr>
 <td style="padding:20px;">
 <div style="font-size:18px;font-weight:800;">
-Share THEVULGO & get rewarded
+Share THEVULGO & Get rewarded
 </div>
 
-<div style="margin-top:10px;font-size:14px;color:#555;">
-After we complete your order, you’ll receive a personal referral code.
-Your friend gets <b>10% off</b>.
+<div style="font-size:14px;color:#555;line-height:1.6;">
+  After we complete your order, you’ll receive your personal referral code.
 </div>
 
-<div style="margin-top:10px;font-size:14px;color:#555;">
-Once they book, <b>you also get 10% off</b> your next service.
+<div style="margin-top:10px;font-size:14px;color:#555;line-height:1.6;">
+  Share it with a friend — they get <b>10% off</b> their first service.
+</div>
+
+<div style="margin-top:10px;font-size:14px;color:#555;line-height:1.6;">
+  Once they book, <b>you also get 10% off</b> your next job.
 </div>
 
 </td>
