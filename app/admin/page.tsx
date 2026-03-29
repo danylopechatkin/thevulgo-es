@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { Wallet, Receipt, PiggyBank, ClipboardList } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 type OrderStatus = "new" | "in_progress" | "done";
@@ -16,6 +17,8 @@ type Order = {
   address: string;
   preferred_date: string | null;
   preferred_time: string;
+  subtotal: number;
+  iva: number;
   total: number;
   status: OrderStatus;
   email_sent: boolean;
@@ -51,15 +54,37 @@ export default function AdminPage() {
   }, []);
 
   const metrics = useMemo(() => {
-    const total = orders.length;
-    const revenue = orders.reduce((sum, o) => sum + Number(o.total || 0), 0);
+  const totalOrders = orders.length;
 
-    const newCount = orders.filter((o) => o.status === "new").length;
-    const progress = orders.filter((o) => o.status === "in_progress").length;
-    const done = orders.filter((o) => o.status === "done").length;
+  const grossRevenue = orders.reduce(
+    (sum, o) => sum + Number(o.total || 0),
+    0
+  );
 
-    return { total, revenue, newCount, progress, done };
-  }, [orders]);
+  const ivaReserve = orders.reduce(
+    (sum, o) => sum + Number(o.iva || 0),
+    0
+  );
+
+  const netRevenue = orders.reduce(
+    (sum, o) => sum + Number(o.subtotal || 0),
+    0
+  );
+
+  const newCount = orders.filter((o) => o.status === "new").length;
+  const progress = orders.filter((o) => o.status === "in_progress").length;
+  const done = orders.filter((o) => o.status === "done").length;
+
+  return {
+    totalOrders,
+    grossRevenue,
+    ivaReserve,
+    netRevenue,
+    newCount,
+    progress,
+    done,
+  };
+}, [orders]);
 
   const updateStatus = async (id: string, status: OrderStatus) => {
     const { error } = await supabase
@@ -97,13 +122,39 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-white p-6 text-black">
       <div className="mx-auto max-w-7xl space-y-8">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
-          <Card title="Revenue" value={`€${metrics.revenue.toFixed(2)}`} />
-          <Card title="Orders" value={metrics.total} />
-          <Card title="New" value={metrics.newCount} />
-          <Card title="In Progress" value={metrics.progress} />
-          <Card title="Done" value={metrics.done} />
-        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-7">
+  <MetricCard
+    title="Gross booked"
+    value={`€${metrics.grossRevenue.toFixed(2)}`}
+    subtitle="Total including IVA"
+    icon={<Wallet className="h-5 w-5" />}
+  />
+
+  <MetricCard
+    title="IVA reserve"
+    value={`€${metrics.ivaReserve.toFixed(2)}`}
+    subtitle="Set aside for tax"
+    icon={<PiggyBank className="h-5 w-5" />}
+  />
+
+  <MetricCard
+    title="Net revenue"
+    value={`€${metrics.netRevenue.toFixed(2)}`}
+    subtitle="Before other expenses"
+    icon={<Receipt className="h-5 w-5" />}
+  />
+
+  <MetricCard
+    title="Orders"
+    value={metrics.totalOrders}
+    subtitle="All orders"
+    icon={<ClipboardList className="h-5 w-5" />}
+  />
+
+  <StatusCard title="New" value={metrics.newCount} />
+  <StatusCard title="In Progress" value={metrics.progress} />
+  <StatusCard title="Done" value={metrics.done} />
+</div>
 
         <div className="overflow-hidden rounded-2xl border border-yellow-400">
           <table className="w-full text-sm">
@@ -141,7 +192,16 @@ export default function AdminPage() {
                       {order.preferred_date || "—"}{" "}
                       {order.preferred_time || ""}
                     </td>
-                    <td>€{Number(order.total || 0).toFixed(2)}</td>
+                    <td>
+  <div className="flex flex-col">
+    <span className="font-semibold text-black">
+      €{Number(order.total || 0).toFixed(2)}
+    </span>
+    <span className="text-xs text-gray-500">
+      Net €{Number(order.subtotal || 0).toFixed(2)}
+    </span>
+  </div>
+</td>
 
                     <td>
                       <select
@@ -214,10 +274,32 @@ export default function AdminPage() {
                 </p>
               </div>
 
-              <div>
-                <p className="font-semibold">Total:</p>
-                <p>€{Number(selected.total || 0).toFixed(2)}</p>
-              </div>
+              <div className="rounded-2xl border border-yellow-400 bg-yellow-50/60 p-4">
+  <p className="font-semibold text-black">Pricing</p>
+
+  <div className="mt-3 space-y-2 text-sm">
+    <div className="flex items-center justify-between">
+      <span className="text-gray-600">Net revenue</span>
+      <span className="font-semibold text-black">
+        €{Number(selected.subtotal || 0).toFixed(2)}
+      </span>
+    </div>
+
+    <div className="flex items-center justify-between">
+      <span className="text-gray-600">IVA reserve</span>
+      <span className="font-semibold text-black">
+        €{Number(selected.iva || 0).toFixed(2)}
+      </span>
+    </div>
+
+    <div className="flex items-center justify-between border-t border-yellow-400 pt-2">
+      <span className="font-bold text-black">Gross total</span>
+      <span className="text-base font-extrabold text-black">
+        €{Number(selected.total || 0).toFixed(2)}
+      </span>
+    </div>
+  </div>
+</div>
 
               <div className="flex flex-wrap gap-2">
                 <button
@@ -264,11 +346,53 @@ export default function AdminPage() {
   );
 }
 
-function Card({ title, value }: { title: string; value: React.ReactNode }) {
+function MetricCard({
+  title,
+  value,
+  subtitle,
+  icon,
+}: {
+  title: string;
+  value: React.ReactNode;
+  subtitle: string;
+  icon: React.ReactNode;
+}) {
   return (
-    <div className="rounded-2xl border border-yellow-400 p-4 shadow-sm">
-      <div className="text-xs text-gray-500">{title}</div>
-      <div className="text-xl font-bold">{value}</div>
+    <div className="rounded-3xl border border-yellow-400 bg-white p-5 shadow-md transition hover:-translate-y-[1px] hover:shadow-xl">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            {title}
+          </p>
+          <div className="mt-2 text-3xl font-extrabold tracking-tight text-black">
+            {value}
+          </div>
+          <p className="mt-2 text-xs text-gray-500">{subtitle}</p>
+        </div>
+
+        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md">
+          {icon}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StatusCard({
+  title,
+  value,
+}: {
+  title: string;
+  value: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-3xl border border-yellow-400 bg-gradient-to-b from-yellow-50 to-white p-5 shadow-md transition hover:-translate-y-[1px] hover:shadow-xl">
+      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+        {title}
+      </p>
+      <div className="mt-2 text-3xl font-extrabold tracking-tight text-black">
+        {value}
+      </div>
     </div>
   );
 }
