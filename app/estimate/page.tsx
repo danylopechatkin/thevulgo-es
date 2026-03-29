@@ -417,11 +417,12 @@ function EstimatePageContent() {
 
 const [category, setCategory] = useState<CategoryKey>(initialCategory);
 const [categoryPage, setCategoryPage] = useState(0);
-const [loading, setLoading] = useState(false);
 const [categoryDirection, setCategoryDirection] = useState<"next" | "prev">("next");
 const [quantities, setQuantities] = useState<Record<string, number>>({});
 const [submitStage, setSubmitStage] = useState<"build" | "review" | "success">("build");
 const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+const [isSending, setIsSending] = useState(false);
+const [sendError, setSendError] = useState("");
 const [client, setClient] = useState({
   fullName: "",
   email: "",
@@ -709,12 +710,16 @@ const handleNextStep = () => {
 };
 
 const handleBackToEdit = () => {
+  setSendError("");
   setSubmitStage("build");
 };
 
+
+
 const handleConfirmSend = async () => {
   try {
-    setLoading(true);
+    setIsSending(true);
+    setSendError("");
 
     const response = await fetch("/api/send", {
       method: "POST",
@@ -739,16 +744,18 @@ const handleConfirmSend = async () => {
       }),
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to send request");
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || "Failed to send request");
     }
 
     setSubmitStage("success");
   } catch (error) {
-    console.error(error);
-    alert("Error sending request. Try again.");
+    console.error("SEND REQUEST ERROR:", error);
+    setSendError("Request was not sent. Please try again.");
   } finally {
-    setLoading(false);
+    setIsSending(false);
   }
 };
 
@@ -1029,7 +1036,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   error={formErrors.email || formErrors.contact}
 />
 
-                 <Field
+<Field
   label="Phone / WhatsApp"
   icon={<Phone className="h-4 w-4" />}
   value={client.phone}
@@ -1051,7 +1058,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   }
   options={CITY_OPTIONS}
   placeholder="Choose city"
-  error={formErrors.city}
+  error={!isCustomCity ? formErrors.city : undefined}
 />
 
 
@@ -1435,7 +1442,7 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
       </div>
 
       <p className="mt-2 text-xs text-gray-500">
-        Final price confirmed after inspection if needed.
+        Clear pricing. No surprises.
       </p>
     </div>
 
@@ -1491,31 +1498,36 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
     </div>
 
     <p className="text-center text-xs text-gray-500">
-      No payment required. We’ll confirm everything before the visit.
-    </p>
+  No payment required. We’ll confirm everything before the visit.
+</p>
 
-    <div className="flex gap-3">
-  {/* BACK */}
-  <button
-  type="button"
-  onClick={handleBackToEdit}
-  disabled={loading}
-  className="flex-1 rounded-2xl border border-gray-300 bg-white py-4 text-sm font-bold text-black transition hover:bg-gray-50 hover:shadow-sm active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
->
-  Back to edit
-</button>
-
-  {/* SEND */}
-  <button
-  type="button"
-  onClick={handleConfirmSend}
-  disabled={loading}
-  className="flex-1 rounded-2xl bg-yellow-400 py-4 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.02] hover:shadow-lg active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
->
-  {loading ? "Sending..." : "Send request"}
-</button>
-</div>
+{sendError && (
+  <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+    {sendError}
   </div>
+)}
+
+<div className="flex gap-3">
+  <button
+    type="button"
+    onClick={handleBackToEdit}
+    disabled={isSending}
+    className="flex-1 rounded-2xl border border-gray-300 bg-white py-4 text-sm font-bold text-black transition hover:bg-gray-50 hover:shadow-sm active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+  >
+    Back to edit
+  </button>
+
+  <button
+    type="button"
+    onClick={handleConfirmSend}
+    disabled={isSending}
+    className="flex-1 rounded-2xl bg-yellow-400 py-4 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.02] hover:shadow-lg active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+  >
+    {isSending ? "Sending..." : "Send request"}
+  </button>
+</div>
+
+</div>
 )}
 
 {submitStage === "success" && (
@@ -1551,24 +1563,25 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
     <button
       type="button"
       onClick={() => {
-        setSubmitStage("build");
-        setQuantities({});
-        setFormErrors({});
-        setClient({
-          fullName: "",
-          email: "",
-          phone: "",
-          city: "Valencia",
-          customCity: "",
-          area: "",
-          houseAddress: "",
-          apartmentNumber: "",
-          addressDetails: "",
-          preferredDate: "",
-          preferredTime: "",
-          notes: "",
-        });
-      }}
+  setSubmitStage("build");
+  setQuantities({});
+  setFormErrors({});
+  setSendError("");
+  setClient({
+    fullName: "",
+    email: "",
+    phone: "",
+    city: "Valencia",
+    customCity: "",
+    area: "",
+    houseAddress: "",
+    apartmentNumber: "",
+    addressDetails: "",
+    preferredDate: "",
+    preferredTime: "",
+    notes: "",
+  });
+}}
       className="w-full rounded-2xl border border-gray-300 bg-white py-4 text-sm font-bold text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md active:scale-95"
     >
       New request
@@ -1594,25 +1607,7 @@ export default function EstimatePage() {
   );
 }
 
-function MiniStat({
-  icon,
-  title,
-  text,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  text: string;
-}) {
-  return (
-    <div className="rounded-2xl border border-yellow-400 bg-white p-6 shadow-md transition-all duration-200 hover:scale-[1.02] hover:shadow-xl">
-      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-        {icon}
-      </div>
-      <h3 className="mt-4 text-lg font-extrabold text-black">{title}</h3>
-      <p className="mt-2 text-sm leading-7 text-gray-600">{text}</p>
-    </div>
-  );
-}
+
 
 function Field({
   label,
