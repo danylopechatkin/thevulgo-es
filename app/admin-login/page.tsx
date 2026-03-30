@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/lib/supabase-browser";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -13,22 +11,55 @@ export default function AdminLoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    console.log("🔐 LOGIN SUBMIT START", {
+      email,
+      hasPassword: Boolean(password),
+      passwordLength: password.length,
+      time: new Date().toISOString(),
+    });
+
     setLoading(true);
     setError("");
 
-    const { error } = await supabaseBrowser.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { data, error } = await supabaseBrowser.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) {
-      setError(error.message || "Login failed");
+      console.log("🔐 LOGIN RESULT", {
+        success: !error,
+        errorMessage: error?.message || null,
+        userId: data?.user?.id || null,
+        userEmail: data?.user?.email || null,
+        sessionExists: Boolean(data?.session),
+      });
+
+      if (error) {
+        console.error("❌ LOGIN ERROR", {
+          message: error.message,
+          name: error.name,
+          status: (error as any)?.status || null,
+        });
+
+        setError(error.message || "Login failed");
+        setLoading(false);
+        return;
+      }
+
+      console.log("✅ LOGIN OK, REDIRECT TO /admin");
+
+      window.location.href = "/admin";
+    } catch (err: any) {
+      console.error("❌ LOGIN EXCEPTION", {
+        message: err?.message || "Unknown error",
+        stack: err?.stack || null,
+      });
+
+      setError(err?.message || "Unexpected login error");
       setLoading(false);
-      return;
     }
-
-    router.push("/admin");
-    router.refresh();
   };
 
   return (
