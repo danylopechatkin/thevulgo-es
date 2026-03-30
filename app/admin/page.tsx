@@ -1,10 +1,8 @@
 "use client";
+
 import { formatMadridDateTime } from "@/lib/time";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
-
-
-
 
 type OrderStatus = "new" | "in_progress" | "done";
 
@@ -38,6 +36,7 @@ type Order = {
   notes?: string;
   internal_notes?: string;
   scheduled_at?: string;
+  referral_code?: string | null;
 };
 
 export default function AdminPage() {
@@ -45,6 +44,8 @@ export default function AdminPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [selected, setSelected] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isCompleting, setIsCompleting] = useState(false);
+  const [showCompleteConfirm, setShowCompleteConfirm] = useState(false);
 
   const loadOrders = async () => {
     setLoading(true);
@@ -149,6 +150,60 @@ export default function AdminPage() {
     setSelected((prev) =>
       prev ? { ...prev, internal_notes: internalNotes } : prev
     );
+  };
+
+  const completeOrder = async () => {
+    if (!selected) return;
+
+    try {
+      setIsCompleting(true);
+
+      const response = await fetch("/api/orders/complete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          orderId: selected.id,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || "Failed to complete order");
+      }
+
+      setOrders((prev) =>
+        prev.map((o) =>
+          o.id === selected.id
+            ? {
+                ...o,
+                status: "done",
+                completed_email_sent: true,
+                referral_code: result.referralCode || o.referral_code,
+              }
+            : o
+        )
+      );
+
+      setSelected((prev) =>
+        prev
+          ? {
+              ...prev,
+              status: "done",
+              completed_email_sent: true,
+              referral_code: result.referralCode || prev.referral_code,
+            }
+          : prev
+      );
+
+      setShowCompleteConfirm(false);
+    } catch (error) {
+      console.error("COMPLETE ORDER ERROR:", error);
+    } finally {
+      setIsCompleting(false);
+    }
   };
 
   const formatOrderId = (order: Order) => {
@@ -280,14 +335,14 @@ export default function AdminPage() {
                       </td>
 
                       <td className="px-4 py-5 align-top">
-  <div className="flex flex-col">
-    <span className="font-semibold text-black">
-  {order.scheduled_at
-    ? formatMadridDateTime(order.scheduled_at).full
-    : "—"}
-</span>
-  </div>
-</td>
+                        <div className="flex flex-col">
+                          <span className="font-semibold text-black">
+                            {order.scheduled_at
+                              ? formatMadridDateTime(order.scheduled_at).full
+                              : "—"}
+                          </span>
+                        </div>
+                      </td>
 
                       <td className="px-4 py-5 align-top">
                         <div className="flex flex-col">
@@ -394,7 +449,7 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
                 <div className="rounded-2xl border border-gray-200 bg-white p-3 text-sm xl:col-span-2">
                   <div className="space-y-2">
                     <p>📞 {selected.phone || "—"}</p>
@@ -426,10 +481,10 @@ export default function AdminPage() {
                     Schedule
                   </p>
                   <p className="mt-2 text-sm text-black">
-  {selected.scheduled_at
-    ? formatMadridDateTime(selected.scheduled_at).full
-    : "—"}
-</p>
+                    {selected.scheduled_at
+                      ? formatMadridDateTime(selected.scheduled_at).full
+                      : "—"}
+                  </p>
                 </div>
 
                 <div className="rounded-2xl border border-gray-200 bg-white p-3">
@@ -438,6 +493,15 @@ export default function AdminPage() {
                   </p>
                   <p className="mt-2 text-sm font-semibold text-black">
                     {selected.category || "—"}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Referral code
+                  </p>
+                  <p className="mt-2 text-sm font-extrabold text-black">
+                    {selected.referral_code || "Not generated yet"}
                   </p>
                 </div>
 
@@ -478,7 +542,7 @@ export default function AdminPage() {
                   <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Client notes
                   </p>
-                  <p className="mt-2 text-sm text-black whitespace-pre-line">
+                  <p className="mt-2 whitespace-pre-line text-sm text-black">
                     {selected.notes || "No client notes"}
                   </p>
                 </div>
@@ -504,7 +568,7 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="mt-4 grid grid-cols-1 xl:grid-cols-[1.4fr_0.9fr] gap-3">
+              <div className="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[1.4fr_0.9fr]">
                 <div className="rounded-2xl border border-yellow-400 bg-yellow-50/60 p-4">
                   <p className="font-semibold text-black">Pricing</p>
 
@@ -566,6 +630,15 @@ export default function AdminPage() {
                     >
                       Call
                     </a>
+
+                    {selected.status !== "done" && (
+                      <button
+                        onClick={() => setShowCompleteConfirm(true)}
+                        className="rounded-2xl bg-black px-4 py-2 text-sm font-extrabold text-white transition hover:scale-[1.02]"
+                      >
+                        Mark as done
+                      </button>
+                    )}
                   </div>
 
                   <button
@@ -575,6 +648,48 @@ export default function AdminPage() {
                     Close
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showCompleteConfirm && selected && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
+            <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl">
+              <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+                Confirm action
+              </p>
+
+              <h3 className="mt-2 text-2xl font-extrabold text-black">
+                Complete this order?
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-gray-600">
+                This will:
+              </p>
+
+              <div className="mt-3 space-y-2 text-sm text-black">
+                <p>• Change status to Done</p>
+                <p>• Send completed email to the client</p>
+                <p>• Generate referral code</p>
+              </div>
+
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={() => setShowCompleteConfirm(false)}
+                  disabled={isCompleting}
+                  className="flex-1 rounded-2xl border border-gray-300 bg-white py-3 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  onClick={completeOrder}
+                  disabled={isCompleting}
+                  className="flex-1 rounded-2xl bg-black py-3 text-sm font-extrabold text-white transition hover:opacity-90 disabled:opacity-60"
+                >
+                  {isCompleting ? "Completing..." : "Yes, complete"}
+                </button>
               </div>
             </div>
           </div>
