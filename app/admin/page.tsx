@@ -1,10 +1,10 @@
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import AdminClient from "./AdminClient";
 
 export default async function AdminPage() {
-  const cookieStore = await cookies();
+  const cookieStore = await cookies(); // ← ВАЖНО
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,8 +14,6 @@ export default async function AdminPage() {
         get(name: string) {
           return cookieStore.get(name)?.value;
         },
-        set() {},
-        remove() {},
       },
     }
   );
@@ -24,13 +22,15 @@ export default async function AdminPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
+  console.log("🔐 ADMIN USER:", user?.email);
+
+  // ❗ ТВОЙ EMAIL
+  if (!user || user.email !== "pechatkin.work@gmail.com") {
+    console.log("🚫 NO ACCESS → redirect");
     redirect("/admin-login");
   }
 
-  if (user.email !== process.env.ADMIN_EMAIL) {
-    redirect("/admin-login");
-  }
+  console.log("✅ ADMIN ACCESS GRANTED");
 
   return <AdminClient />;
 }
