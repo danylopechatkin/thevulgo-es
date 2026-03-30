@@ -436,7 +436,7 @@ setSelected((prev) =>
 
         {selected && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3 sm:p-4">
-            <div className="w-full max-w-[95vw] sm:max-w-[760px] lg:max-w-[1120px] rounded-3xl bg-white p-4 sm:p-5 lg:p-5 shadow-2xl">
+            <div className="w-full max-h-[92vh] overflow-y-auto max-w-[95vw] sm:max-w-[760px] lg:max-w-[1120px] rounded-3xl bg-white p-4 sm:p-5 lg:p-5 shadow-2xl">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
@@ -520,37 +520,36 @@ setSelected((prev) =>
 </div>
 
                 <div className="rounded-2xl border border-gray-200 bg-white p-3 xl:col-span-2">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Services
-                  </p>
+  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+    Services
+  </p>
 
-                  <div className="mt-2 space-y-1">
-                    {Array.isArray(selected.services) &&
-                    selected.services.length > 0 ? (
-                      selected.services.map((item: ServiceItem, index: number) => (
-                        <div
-                          key={index}
-                          className="flex items-start justify-between gap-3 border-b border-gray-100 py-1 last:border-b-0"
-                        >
-                          <div className="flex flex-col">
-                            <span className="text-sm font-semibold text-black">
-                              {item.label}
-                            </span>
-                            <span className="text-xs text-gray-500">
-                              {item.qty} × €{item.price}
-                            </span>
-                          </div>
+  <div className="mt-2 max-h-[260px] overflow-y-auto pr-2 space-y-1">
+    {Array.isArray(selected.services) && selected.services.length > 0 ? (
+      selected.services.map((item: ServiceItem, index: number) => (
+        <div
+          key={index}
+          className="flex items-start justify-between gap-3 border-b border-gray-100 py-2 last:border-b-0"
+        >
+          <div className="flex min-w-0 flex-col">
+            <span className="text-sm font-semibold text-black break-words">
+              {item.label}
+            </span>
+            <span className="text-xs text-gray-500">
+              {item.qty} × €{item.price}
+            </span>
+          </div>
 
-                          <span className="text-sm font-bold text-black">
-                            €{Number(item.subtotal || 0).toFixed(2)}
-                          </span>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-sm text-gray-500">No services listed</p>
-                    )}
-                  </div>
-                </div>
+          <span className="shrink-0 text-sm font-bold text-black">
+            €{Number(item.subtotal || 0).toFixed(2)}
+          </span>
+        </div>
+      ))
+    ) : (
+      <p className="text-sm text-gray-500">No services listed</p>
+    )}
+  </div>
+</div>
 
                 <div className="rounded-2xl border border-gray-200 bg-white p-3">
                   <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
