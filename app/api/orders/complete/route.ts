@@ -1,5 +1,7 @@
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +28,33 @@ function formatMadridFromUTC(date: string) {
 
 export async function POST(req: Request) {
   try {
+    const cookieStore = cookies();
+
+    const authSupabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return cookieStore.get(name)?.value;
+          },
+          set() {},
+          remove() {},
+        },
+      }
+    );
+
+    const {
+      data: { user },
+    } = await authSupabase.auth.getUser();
+
+    if (!user || user.email !== process.env.ADMIN_EMAIL) {
+      return Response.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const { orderId } = await req.json();
 
     if (!orderId) {
@@ -42,7 +71,6 @@ export async function POST(req: Request) {
       .single();
 
     if (orderError || !order) {
-      console.error("LOAD ORDER ERROR:", orderError);
       return Response.json(
         { success: false, error: "Order not found" },
         { status: 404 }
@@ -80,9 +108,7 @@ export async function POST(req: Request) {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;padding:40px 0;font-family:Arial,sans-serif;">
   <tr>
     <td align="center">
-
       <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
-        
         <tr>
           <td style="background:#000;padding:20px 30px;color:#fff;font-weight:800;font-size:20px;">
             THEVULGO · Valencia
@@ -91,10 +117,7 @@ export async function POST(req: Request) {
 
         <tr>
           <td style="padding:30px;">
-            <div style="font-size:24px;font-weight:800;color:#000;">
-              Order completed
-            </div>
-
+            <div style="font-size:24px;font-weight:800;color:#000;">Order completed</div>
             <div style="margin-top:10px;font-size:14px;color:#666;line-height:1.7;">
               Hi ${order.full_name || "client"}, thank you for choosing THEVULGO.
               Your service has been completed successfully.
@@ -135,27 +158,21 @@ export async function POST(req: Request) {
               ${servicesHtml}
 
               <tr>
-                <td style="padding:15px;font-size:13px;color:#555;">
-                  Net
-                </td>
+                <td style="padding:15px;font-size:13px;color:#555;">Net</td>
                 <td style="padding:15px;text-align:right;font-size:13px;">
                   €${Number(order.subtotal || 0).toFixed(2)}
                 </td>
               </tr>
 
               <tr>
-                <td style="padding:15px;font-size:13px;color:#555;">
-                  IVA (21%)
-                </td>
+                <td style="padding:15px;font-size:13px;color:#555;">IVA (21%)</td>
                 <td style="padding:15px;text-align:right;font-size:13px;">
                   €${Number(order.iva || 0).toFixed(2)}
                 </td>
               </tr>
 
               <tr>
-                <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">
-                  Total
-                </td>
+                <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">Total</td>
                 <td style="padding:15px;border-top:1px solid #ddd;text-align:right;font-weight:800;">
                   €${Number(order.total || 0).toFixed(2)}
                 </td>
@@ -169,30 +186,19 @@ export async function POST(req: Request) {
             <table width="100%" style="background:#fff8db;border:1px solid #facc15;border-radius:14px;">
               <tr>
                 <td style="padding:20px;">
-                  <div style="font-size:18px;font-weight:800;color:#000;">
-                    Share with a friend
-                  </div>
-
+                  <div style="font-size:18px;font-weight:800;color:#000;">Share with a friend</div>
                   <div style="margin-top:10px;font-size:14px;color:#555;line-height:1.7;">
                     Your personal referral code:
                   </div>
-
                   <div style="margin-top:8px;font-size:28px;font-weight:800;color:#000;">
                     ${referralCode}
                   </div>
-
                   <div style="margin-top:12px;font-size:14px;color:#555;line-height:1.7;">
                     Send this code to a friend. They get <b>10% off</b> their first order.
                     You also get <b>10% off</b> your next service.
                   </div>
-
                   <div style="margin-top:18px;">
                     <img src="${qrImageUrl}" alt="Referral QR code" width="160" height="160" style="display:block;border-radius:10px;" />
-                  </div>
-
-                  <div style="margin-top:14px;font-size:12px;color:#777;line-height:1.6;">
-                    Or share this link:<br/>
-                    ${referralLink}
                   </div>
                 </td>
               </tr>
@@ -207,9 +213,7 @@ export async function POST(req: Request) {
             Valencia & nearby · Fast response
           </td>
         </tr>
-
       </table>
-
     </td>
   </tr>
 </table>
@@ -232,18 +236,17 @@ export async function POST(req: Request) {
 
     const completedAt = new Date().toISOString();
 
-const { error: updateError } = await supabase
-  .from("orders")
-  .update({
-    status: "done",
-    completed_email_sent: true,
-    referral_code: referralCode,
-    completed_at: completedAt,
-  })
-  .eq("id", order.id);
+    const { error: updateError } = await supabase
+      .from("orders")
+      .update({
+        status: "done",
+        completed_email_sent: true,
+        referral_code: referralCode,
+        completed_at: completedAt,
+      })
+      .eq("id", order.id);
 
     if (updateError) {
-      console.error("UPDATE ORDER ERROR:", updateError);
       return Response.json(
         { success: false, error: "Failed to update order" },
         { status: 500 }
@@ -251,10 +254,10 @@ const { error: updateError } = await supabase
     }
 
     return Response.json({
-  success: true,
-  referralCode,
-  completedAt,
-});
+      success: true,
+      referralCode,
+      completedAt,
+    });
   } catch (error: any) {
     console.error("❌ COMPLETE ORDER ERROR:", {
       message: error?.message,
