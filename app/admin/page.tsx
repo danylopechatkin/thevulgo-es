@@ -24,7 +24,7 @@ export default async function AdminPage() {
     error,
   } = await supabase.auth.getUser();
 
- const adminEmail = "pechatkin.work@gmail.com".trim().toLowerCase();
+ const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
   const currentEmail = user?.email?.trim().toLowerCase();
 
   console.log("🔐 ADMIN USER:", user?.email);
