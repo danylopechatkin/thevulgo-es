@@ -3,6 +3,7 @@
 import { formatMadridDateTime } from "@/lib/time";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { supabaseBrowser } from "@/lib/supabase-browser";
 
 type OrderStatus = "new" | "in_progress" | "done";
 
@@ -41,15 +42,44 @@ type Order = {
 };
 
 export default function AdminClient() {
+
   const [internalNotes, setInternalNotes] = useState("");
   const [orders, setOrders] = useState<Order[]>([]);
   const [selected, setSelected] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [isCompleting, setIsCompleting] = useState(false);
   const [showCompleteConfirm, setShowCompleteConfirm] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+const handleLogout = async () => {
+  console.log("🚪 LOGOUT START");
+
+  try {
+    setIsLoggingOut(true);
+
+    const { error } = await supabase.auth.signOut();
+
+    console.log("🚪 LOGOUT RESULT", { error });
+
+    if (error) {
+      console.error("❌ LOGOUT ERROR", error);
+      return;
+    }
+
+    console.log("✅ LOGOUT SUCCESS → redirect");
+
+    window.location.href = "/admin-login";
+  } catch (err) {
+    console.error("❌ LOGOUT EXCEPTION", err);
+  } finally {
+    setIsLoggingOut(false);
+  }
+};
 
   const loadOrders = async () => {
     setLoading(true);
+
+  
 
     const { data, error } = await supabase
       .from("orders")
@@ -225,7 +255,19 @@ setSelected((prev) =>
   return (
     <div className="min-h-screen bg-white p-6 text-black">
       <div className="mx-auto max-w-7xl space-y-8">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-7">
+
+  <div className="flex justify-end mb-4">
+    <button
+      type="button"
+      onClick={handleLogout}
+      disabled={isLoggingOut}
+      className="rounded-2xl border border-gray-300 bg-white px-5 py-3 text-sm font-extrabold text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md disabled:opacity-60"
+    >
+      {isLoggingOut ? "Signing out..." : "Log out"}
+    </button>
+  </div>
+
+  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-7">
           <MetricCard
             title="Gross booked"
             value={`€${metrics.grossRevenue.toFixed(2)}`}
