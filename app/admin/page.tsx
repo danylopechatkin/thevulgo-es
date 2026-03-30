@@ -436,7 +436,7 @@ setSelected((prev) =>
 
         {selected && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3 sm:p-4">
-            <div className="w-full max-h-[92vh] overflow-y-auto max-w-[95vw] sm:max-w-[760px] lg:max-w-[1120px] rounded-3xl bg-white p-4 sm:p-5 lg:p-5 shadow-2xl">
+            <div className="w-full max-w-[95vw] sm:max-w-[760px] lg:max-w-[1120px] rounded-3xl bg-white p-4 sm:p-5 lg:p-5 shadow-2xl">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
