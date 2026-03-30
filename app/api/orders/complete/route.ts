@@ -230,14 +230,17 @@ export async function POST(req: Request) {
       }
     }
 
-    const { error: updateError } = await supabase
-      .from("orders")
-      .update({
-        status: "done",
-        completed_email_sent: true,
-        referral_code: referralCode,
-      })
-      .eq("id", order.id);
+    const completedAt = new Date().toISOString();
+
+const { error: updateError } = await supabase
+  .from("orders")
+  .update({
+    status: "done",
+    completed_email_sent: true,
+    referral_code: referralCode,
+    completed_at: completedAt,
+  })
+  .eq("id", order.id);
 
     if (updateError) {
       console.error("UPDATE ORDER ERROR:", updateError);
@@ -248,9 +251,10 @@ export async function POST(req: Request) {
     }
 
     return Response.json({
-      success: true,
-      referralCode,
-    });
+  success: true,
+  referralCode,
+  completedAt,
+});
   } catch (error: any) {
     console.error("❌ COMPLETE ORDER ERROR:", {
       message: error?.message,

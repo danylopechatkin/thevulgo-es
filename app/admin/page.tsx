@@ -37,6 +37,7 @@ type Order = {
   internal_notes?: string;
   scheduled_at?: string;
   referral_code?: string | null;
+  completed_at?: string | null;
 };
 
 export default function AdminPage() {
@@ -175,28 +176,30 @@ export default function AdminPage() {
       }
 
       setOrders((prev) =>
-        prev.map((o) =>
-          o.id === selected.id
-            ? {
-                ...o,
-                status: "done",
-                completed_email_sent: true,
-                referral_code: result.referralCode || o.referral_code,
-              }
-            : o
-        )
-      );
+  prev.map((o) =>
+    o.id === selected.id
+      ? {
+          ...o,
+          status: "done",
+          completed_email_sent: true,
+          referral_code: result.referralCode || o.referral_code,
+          completed_at: result.completedAt || o.completed_at,
+        }
+      : o
+  )
+);
 
-      setSelected((prev) =>
-        prev
-          ? {
-              ...prev,
-              status: "done",
-              completed_email_sent: true,
-              referral_code: result.referralCode || prev.referral_code,
-            }
-          : prev
-      );
+setSelected((prev) =>
+  prev
+    ? {
+        ...prev,
+        status: "done",
+        completed_email_sent: true,
+        referral_code: result.referralCode || prev.referral_code,
+        completed_at: result.completedAt || prev.completed_at,
+      }
+    : prev
+);
 
       setShowCompleteConfirm(false);
     } catch (error) {
@@ -504,6 +507,17 @@ export default function AdminPage() {
                     {selected.referral_code || "Not generated yet"}
                   </p>
                 </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-3">
+  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+    Completed at
+  </p>
+  <p className="mt-2 text-sm font-semibold text-black">
+    {selected.completed_at
+      ? formatMadridDateTime(selected.completed_at).full
+      : "Not completed yet"}
+  </p>
+</div>
 
                 <div className="rounded-2xl border border-gray-200 bg-white p-3 xl:col-span-2">
                   <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
