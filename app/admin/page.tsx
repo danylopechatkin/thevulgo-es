@@ -24,10 +24,15 @@ export default async function AdminPage() {
     error,
   } = await supabase.auth.getUser();
 
+  const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const currentEmail = user?.email?.trim().toLowerCase();
+
   console.log("🔐 ADMIN USER:", user?.email);
   console.log("🔐 ADMIN AUTH ERROR:", error?.message || null);
+  console.log("🔐 ADMIN ENV EMAIL:", process.env.ADMIN_EMAIL);
+  console.log("🔐 EMAIL MATCH:", currentEmail === adminEmail);
 
-  if (!user || user.email !== process.env.ADMIN_EMAIL) {
+  if (!user || !adminEmail || currentEmail !== adminEmail) {
     console.log("🚫 NO ACCESS → redirect");
     redirect("/admin-login");
   }
