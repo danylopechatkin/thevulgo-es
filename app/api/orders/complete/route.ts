@@ -28,7 +28,7 @@ function formatMadridFromUTC(date: string) {
 
 export async function POST(req: Request) {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
 
     const authSupabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
