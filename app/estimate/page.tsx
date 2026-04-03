@@ -968,11 +968,49 @@ return (
                 </div>
 
                 <div className="mt-6">
-  {/* MOBILE */}
-  <div className="grid grid-cols-2 gap-3 md:hidden">
-    {CATEGORY_OPTIONS.map((option) => {
-      const active = category === option.key;
-      const cfg = CATEGORY_DATA[option.key];
+  <div className="mb-4 flex items-center justify-between gap-4">
+    <div className="text-sm text-gray-500">
+      Page {categoryPage + 1} of {totalCategoryPages}
+    </div>
+
+    <div className="flex items-center gap-2">
+  <button
+    type="button"
+    onClick={() => {
+      setCategoryDirection("prev");
+      setCategoryPage((prev) => Math.max(prev - 1, 0));
+    }}
+    disabled={categoryPage === 0}
+    className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:shadow-md disabled:cursor-not-allowed disabled:opacity-40"
+  >
+    ←
+  </button>
+
+  <button
+    type="button"
+    onClick={() => {
+      setCategoryDirection("next");
+      setCategoryPage((prev) =>
+        Math.min(prev + 1, totalCategoryPages - 1)
+      );
+    }}
+    disabled={categoryPage === totalCategoryPages - 1}
+    className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md transition hover:scale-[1.05] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40"
+  >
+    →
+  </button>
+</div>
+  </div>
+
+   <div
+  key={categoryPage}
+  className={`grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 animate-category-page ${
+    categoryDirection === "next" ? "animate-slide-left" : "animate-slide-right"
+  }`}
+>
+  {visibleCategoryOptions.map((option) => {
+    const active = category === option.key;
+    const cfg = CATEGORY_DATA[option.key];
 
       return (
         <button
@@ -982,108 +1020,34 @@ return (
             setCategory(option.key);
             setQuantities({});
           }}
-          className={`flex aspect-square flex-col items-center justify-center rounded-2xl border p-4 text-center shadow-sm transition-all duration-200 ${
+          className={`group rounded-2xl border p-5 text-left shadow-md transition-all duration-200 ${
             active
-              ? "border-yellow-500 bg-yellow-50 shadow-lg scale-[1.02]"
-              : "border-yellow-400 bg-white hover:bg-yellow-50/40"
+              ? "border-yellow-500 bg-yellow-50 shadow-xl scale-[1.01]"
+              : "border-yellow-400 bg-white hover:scale-[1.01] hover:shadow-xl"
           }`}
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-            {cfg.icon}
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
+              {cfg.icon}
+            </div>
+
+            <span className="rounded-full bg-red-500 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+              {cfg.badge}
+            </span>
           </div>
 
-          <h3 className="mt-3 text-[13px] font-extrabold leading-4 text-black">
+          <h3 className="mt-4 text-lg font-extrabold text-black">
             {cfg.title}
           </h3>
+
+          <p className="mt-2 text-sm leading-6 text-gray-600 line-clamp-3">
+            {cfg.subtitle}
+          </p>
         </button>
       );
     })}
   </div>
-
-  {/* DESKTOP / LAPTOP */}
-  <div className="hidden md:block">
-    <div className="mb-4 flex items-center justify-between gap-4">
-      <div className="text-sm text-gray-500">
-        Page {categoryPage + 1} of {totalCategoryPages}
-      </div>
-
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={() => {
-            setCategoryDirection("prev");
-            setCategoryPage((prev) => Math.max(prev - 1, 0));
-          }}
-          disabled={categoryPage === 0}
-          className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:shadow-md disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          ←
-        </button>
-
-        <button
-          type="button"
-          onClick={() => {
-            setCategoryDirection("next");
-            setCategoryPage((prev) =>
-              Math.min(prev + 1, totalCategoryPages - 1)
-            );
-          }}
-          disabled={categoryPage === totalCategoryPages - 1}
-          className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md transition hover:scale-[1.05] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          →
-        </button>
-      </div>
-    </div>
-
-    <div
-      key={categoryPage}
-      className={`grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 animate-category-page ${
-        categoryDirection === "next" ? "animate-slide-left" : "animate-slide-right"
-      }`}
-    >
-      {visibleCategoryOptions.map((option) => {
-        const active = category === option.key;
-        const cfg = CATEGORY_DATA[option.key];
-
-        return (
-          <button
-            key={option.key}
-            type="button"
-            onClick={() => {
-              setCategory(option.key);
-              setQuantities({});
-            }}
-            className={`group rounded-2xl border p-5 text-left shadow-md transition-all duration-200 ${
-              active
-                ? "border-yellow-500 bg-yellow-50 shadow-xl scale-[1.01]"
-                : "border-yellow-400 bg-white hover:scale-[1.01] hover:shadow-xl"
-            }`}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-                {cfg.icon}
-              </div>
-
-              <span className="rounded-full bg-red-500 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-                {cfg.badge}
-              </span>
-            </div>
-
-            <h3 className="mt-4 text-lg font-extrabold text-black">
-              {cfg.title}
-            </h3>
-
-            <p className="mt-2 text-sm leading-6 text-gray-600 line-clamp-3">
-              {cfg.subtitle}
-            </p>
-          </button>
-        );
-      })}
-    </div>
-  </div>
 </div>
-
 </section>
 
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
