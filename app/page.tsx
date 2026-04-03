@@ -418,21 +418,7 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
         </div>
       </footer>
 
-      {/* MOBILE STICKY CTA */}
-      <div className="md:hidden fixed bottom-4 left-0 right-0 z-50 px-4">
-        <div className="mx-auto max-w-md rounded-2xl border border-yellow-400 bg-white/95 backdrop-blur shadow-2xl p-3 flex items-center justify-between">
-          <div className="text-left">
-            <p className="text-xs text-gray-500">Valencia</p>
-            <p className="text-sm font-extrabold text-black">Get estimate</p>
-          </div>
-          <button
-            onClick={goEstimate}
-            className="rounded-xl bg-yellow-400 px-4 py-2 text-xs font-extrabold text-black shadow-md"
-          >
-            Estimate →
-          </button>
-        </div>
-      </div>
+      
     </div>
   );
 }

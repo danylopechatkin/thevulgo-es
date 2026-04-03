@@ -26,10 +26,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-black font-sans`}
-      >
+  className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden antialiased bg-white text-black font-sans`}
+>
         {/* GLOBAL HEADER */}
         <header className="sticky top-0 z-50 bg-white backdrop-blur-md shadow-sm">
           <div className="w-full max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
