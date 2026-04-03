@@ -85,11 +85,11 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
           {/* buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <button
-              onClick={() => scrollTo("services")}
-              className="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold shadow-md md:hover:scale-105 transition"
-            >
-              Explore Services
-            </button>
+  onClick={() => router.push("/services")}
+  className="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold shadow-md md:hover:scale-105 transition"
+>
+  Explore Services
+</button>
 
             <button
               onClick={goEstimate}
