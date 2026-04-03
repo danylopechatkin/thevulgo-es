@@ -944,8 +944,8 @@ return (
 
           
 
-          <div className="mt-4 grid grid-cols-1 gap-8 sm:mt-6 lg:grid-cols-[1.15fr_0.85fr]">
-            <div className="space-y-8">
+          <div className="mt-4 grid grid-cols-1 gap-8 sm:mt-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+            <div className="space-y-8 lg:h-fit">
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
                 <div className="flex items-start justify-between gap-4">
                   <div>
