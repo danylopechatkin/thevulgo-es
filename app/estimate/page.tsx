@@ -421,6 +421,12 @@ const [categoryDirection, setCategoryDirection] = useState<"next" | "prev">("nex
 const [quantities, setQuantities] = useState<Record<string, number>>({});
 const [submitStage, setSubmitStage] = useState<"build" | "review" | "success">("build");
 const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+const [fieldStatus, setFieldStatus] = useState<
+  Record<string, "default" | "error" | "success">
+>({});
+
 const [isSending, setIsSending] = useState(false);
 const [sendError, setSendError] = useState("");
 const [client, setClient] = useState({
@@ -653,8 +659,83 @@ const visibleCategoryOptions = CATEGORY_OPTIONS.slice(
   categoryPage * categoriesPerPage + categoriesPerPage
 );
 
+const setFieldValue = (field: string, value: string) => {
+  setClient((prev) => ({ ...prev, [field]: value }));
+
+  setFieldErrors((prev) => {
+    const next = { ...prev };
+    delete next[field];
+
+    if (field === "email" || field === "phone") {
+      delete next.contact;
+    }
+
+    return next;
+  });
+
+  setFieldStatus((prev) => ({
+    ...prev,
+    [field]: "default",
+  }));
+};
+
+const setFieldSuccessIfValid = (field: string, value?: string) => {
+  let isValid = false;
+
+  switch (field) {
+    case "fullName":
+      isValid = Boolean((value ?? client.fullName).trim());
+      break;
+
+    case "email": {
+      const v = (value ?? client.email).trim();
+      isValid = v !== "" && isValidEmail(v);
+      break;
+    }
+
+    case "phone": {
+      const v = (value ?? client.phone).trim();
+      isValid = v !== "" && isValidPhone(v);
+      break;
+    }
+
+    case "area":
+      isValid = Boolean((value ?? client.area).trim());
+      break;
+
+    case "houseAddress":
+      isValid = Boolean((value ?? client.houseAddress).trim());
+      break;
+
+    case "preferredDate": {
+      const v = (value ?? client.preferredDate).trim();
+      isValid = Boolean(v) && v >= todayDateString;
+      break;
+    }
+
+    case "preferredTime": {
+      const v = (value ?? client.preferredTime).trim();
+      isValid = Boolean(v) && availableTimeOptions.includes(v);
+      break;
+    }
+
+    case "customCity":
+      isValid = Boolean((value ?? client.customCity).trim());
+      break;
+
+    default:
+      isValid = false;
+  }
+
+  setFieldStatus((prev) => ({
+    ...prev,
+    [field]: isValid ? "success" : "default",
+  }));
+};
+
 const validateEstimateForm = () => {
   const errors: Record<string, string> = {};
+  const statuses: Record<string, "default" | "error" | "success"> = {};
 
   if (!hasSelectedServices) {
     errors.services = "Select at least one service.";
@@ -662,56 +743,98 @@ const validateEstimateForm = () => {
 
   if (!client.fullName.trim()) {
     errors.fullName = "Enter your full name.";
+    statuses.fullName = "error";
+  } else {
+    statuses.fullName = "success";
   }
 
   if (!hasContact) {
     errors.contact = "Enter phone or email.";
-  }
+    statuses.email = "error";
+    statuses.phone = "error";
+  } else {
+    if (client.email.trim()) {
+      if (!isValidEmail(client.email)) {
+        errors.email = "Enter a valid email address.";
+        statuses.email = "error";
+      } else {
+        statuses.email = "success";
+      }
+    }
 
-  if (client.email.trim() && !isValidEmail(client.email)) {
-    errors.email = "Enter a valid email address.";
-  }
+    if (client.phone.trim()) {
+      if (!isValidPhone(client.phone)) {
+        errors.phone = "Enter a valid phone number.";
+        statuses.phone = "error";
+      } else {
+        statuses.phone = "success";
+      }
+    }
 
-  if (client.phone.trim() && !isValidPhone(client.phone)) {
-    errors.phone = "Enter a valid phone number.";
+    if (!client.email.trim() && !client.phone.trim()) {
+      statuses.email = "error";
+      statuses.phone = "error";
+    }
   }
 
   if (!displayCity?.trim()) {
     errors.city = "Choose your city.";
+    statuses.city = "error";
+    statuses.customCity = "error";
+  } else {
+    if (isCustomCity) {
+      statuses.customCity = "success";
+    } else {
+      statuses.city = "success";
+    }
   }
 
   if (!client.area.trim()) {
     errors.area = "Enter or choose area / district.";
+    statuses.area = "error";
+  } else {
+    statuses.area = "success";
   }
 
   if (!client.houseAddress.trim()) {
     errors.houseAddress = "Enter house address.";
+    statuses.houseAddress = "error";
+  } else {
+    statuses.houseAddress = "success";
   }
 
   if (!client.preferredDate.trim()) {
     errors.preferredDate = "Choose preferred date.";
+    statuses.preferredDate = "error";
   } else if (client.preferredDate < todayDateString) {
     errors.preferredDate = "Past dates are not available.";
+    statuses.preferredDate = "error";
+  } else {
+    statuses.preferredDate = "success";
   }
 
   if (!client.preferredTime.trim()) {
     errors.preferredTime = "Choose preferred time.";
+    statuses.preferredTime = "error";
   } else if (client.preferredDate === todayDateString) {
-  const selectedHour = Number(client.preferredTime.split(":")[0]);
-  if (selectedHour < nextAvailableHour) {
-    errors.preferredTime = "Choose a time at least 1 hour from now.";
-  }
-}
-
-  if (
-    client.preferredDate &&
-    client.preferredTime &&
-    !availableTimeOptions.includes(client.preferredTime)
-  ) {
+    const selectedHour = Number(client.preferredTime.split(":")[0]);
+    if (selectedHour < nextAvailableHour) {
+      errors.preferredTime = "Choose a time at least 1 hour from now.";
+      statuses.preferredTime = "error";
+    } else {
+      statuses.preferredTime = "success";
+    }
+  } else if (!availableTimeOptions.includes(client.preferredTime)) {
     errors.preferredTime = "Selected time is not available for this date.";
+    statuses.preferredTime = "error";
+  } else {
+    statuses.preferredTime = "success";
   }
 
   setFormErrors(errors);
+  setFieldErrors(errors);
+  setFieldStatus((prev) => ({ ...prev, ...statuses }));
+
   return Object.keys(errors).length === 0;
 };
 
@@ -1045,43 +1168,63 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   label="Full name"
   icon={<BadgeCheck className="h-4 w-4" />}
   value={client.fullName}
-  onChange={(v) => setClient((prev) => ({ ...prev, fullName: v }))}
+  onChange={(v) => setFieldValue("fullName", v)}
+  onBlur={() => setFieldSuccessIfValid("fullName")}
   placeholder="Your full name"
-  error={formErrors.fullName}
+  error={fieldErrors.fullName}
+  status={fieldStatus.fullName || "default"}
 />
                  <Field
   label="Email"
   icon={<Mail className="h-4 w-4" />}
   value={client.email}
-  onChange={(v) => setClient((prev) => ({ ...prev, email: v }))}
+  onChange={(v) => setFieldValue("email", v)}
+  onBlur={() => setFieldSuccessIfValid("email")}
   placeholder="your@email.com"
   type="email"
-  error={formErrors.email || formErrors.contact}
+  error={fieldErrors.email || fieldErrors.contact}
+  status={fieldStatus.email || "default"}
 />
 
 <Field
   label="Phone / WhatsApp"
   icon={<Phone className="h-4 w-4" />}
   value={client.phone}
-  onChange={(v) => setClient((prev) => ({ ...prev, phone: v }))}
+  onChange={(v) => setFieldValue("phone", v)}
+  onBlur={() => setFieldSuccessIfValid("phone")}
   placeholder="+34 ..."
-  error={formErrors.phone || formErrors.contact}
+  error={fieldErrors.phone || fieldErrors.contact}
+  status={fieldStatus.phone || "default"}
 />
                   <SelectField
   label="City"
   icon={<MapPin className="h-4 w-4" />}
   value={client.city}
-  onChange={(v) =>
+  onChange={(v) => {
     setClient((prev) => ({
       ...prev,
       city: v,
       area: "",
       customCity: v === "My city is not listed" ? prev.customCity : "",
-    }))
-  }
+    }));
+
+    setFieldErrors((prev) => {
+      const next = { ...prev };
+      delete next.city;
+      delete next.area;
+      return next;
+    });
+
+    setFieldStatus((prev) => ({
+      ...prev,
+      city: v ? "success" : "default",
+      area: "default",
+    }));
+  }}
   options={CITY_OPTIONS}
   placeholder="Choose city"
-  error={!isCustomCity ? formErrors.city : undefined}
+  error={!isCustomCity ? fieldErrors.city : undefined}
+  status={fieldStatus.city || "default"}
 />
 
 
@@ -1121,14 +1264,18 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   label={client.city === "Valencia" ? "Area / district" : "Area / neighborhood"}
   icon={<MapPin className="h-4 w-4" />}
   value={client.area}
-  onChange={(v) => setClient((prev) => ({ ...prev, area: v }))}
+  onChange={(v) => {
+    setFieldValue("area", v);
+    setFieldSuccessIfValid("area", v);
+  }}
   options={selectedCityAreas}
   placeholder={
     client.city === "Valencia"
       ? "Choose area or district"
       : "Choose area or neighborhood"
   }
-  error={formErrors.area}
+  error={fieldErrors.area}
+  status={fieldStatus.area || "default"}
 />
 )}
 
@@ -1137,9 +1284,11 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   label="Area / neighborhood"
   icon={<MapPin className="h-4 w-4" />}
   value={client.area}
-  onChange={(v) => setClient((prev) => ({ ...prev, area: v }))}
+  onChange={(v) => setFieldValue("area", v)}
+  onBlur={() => setFieldSuccessIfValid("area")}
   placeholder="Write area, neighborhood or urbanization"
-  error={formErrors.area}
+  error={fieldErrors.area}
+  status={fieldStatus.area || "default"}
 />
 )}
 
@@ -1176,11 +1325,11 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
   label="House address"
   icon={<Home className="h-4 w-4" />}
   value={client.houseAddress}
-  onChange={(v) =>
-    setClient((prev) => ({ ...prev, houseAddress: v }))
-  }
+  onChange={(v) => setFieldValue("houseAddress", v)}
+  onBlur={() => setFieldSuccessIfValid("houseAddress")}
   placeholder="Street and building number"
-  error={formErrors.houseAddress}
+  error={fieldErrors.houseAddress}
+  status={fieldStatus.houseAddress || "default"}
 />
 
 <Field
@@ -1221,21 +1370,28 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
     type="date"
     min={minSelectableDate}
     value={client.preferredDate}
-    onChange={(e) =>
-      setClient((prev) => ({ ...prev, preferredDate: e.target.value }))
-    }
+    onChange={(e) => {
+  const value = e.target.value;
+  setFieldValue("preferredDate", value);
+}}
+onBlur={() => setFieldSuccessIfValid("preferredDate")}
+    
     className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition appearance-none
-      ${formErrors.preferredDate
-        ? "border-red-400 bg-red-50 focus:border-red-500"
-        : "border-gray-300 focus:border-yellow-400"}
-    `}
+  ${
+    fieldStatus.preferredDate === "error"
+      ? "border-red-400 bg-red-50 focus:border-red-500"
+      : fieldStatus.preferredDate === "success"
+      ? "border-green-500 bg-green-50 focus:border-green-600"
+      : "border-gray-300 focus:border-yellow-400"
+  }
+`}
   />
 
-  {formErrors.preferredDate ? (
-    <p className="mt-2 text-xs font-medium text-red-600">
-      {formErrors.preferredDate}
-    </p>
-  ) : null}
+  {fieldErrors.preferredDate ? (
+  <p className="mt-2 text-xs font-medium text-red-600">
+    {fieldErrors.preferredDate}
+  </p>
+) : null}
 </div>
 
   <div>
@@ -1243,14 +1399,21 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
 
   <select
     value={client.preferredTime}
-    onChange={(e) =>
-      setClient((prev) => ({ ...prev, preferredTime: e.target.value }))
-    }
+    onChange={(e) => {
+  const value = e.target.value;
+  setFieldValue("preferredTime", value);
+}}
+onBlur={() => setFieldSuccessIfValid("preferredTime")}
+    
     className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition appearance-none
-      ${formErrors.preferredTime
-        ? "border-red-400 bg-red-50 focus:border-red-500"
-        : "border-gray-300 focus:border-yellow-400"}
-    `}
+  ${
+    fieldStatus.preferredTime === "error"
+      ? "border-red-400 bg-red-50 focus:border-red-500"
+      : fieldStatus.preferredTime === "success"
+      ? "border-green-500 bg-green-50 focus:border-green-600"
+      : "border-gray-300 focus:border-yellow-400"
+  }
+`}
   >
     <option value="">Choose preferred time</option>
     {availableTimeOptions.map((time) => (
@@ -1260,17 +1423,17 @@ className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border bo
     ))}
   </select>
 
-  {formErrors.preferredTime ? (
-    <p className="mt-2 text-xs font-medium text-red-600">
-      {formErrors.preferredTime}
-    </p>
-  ) : (
-    <p className="mt-3 text-xs leading-6 text-gray-500">
-      {client.preferredDate === todayDateString
-        ? "For today, only times at least 1 hour ahead are available."
-        : "Choose your preferred arrival time."}
-    </p>
-  )}
+  {fieldErrors.preferredTime ? (
+  <p className="mt-2 text-xs font-medium text-red-600">
+    {fieldErrors.preferredTime}
+  </p>
+) : (
+  <p className="mt-3 text-xs leading-6 text-gray-500">
+    {client.preferredDate === todayDateString
+      ? "For today, only times at least 1 hour ahead are available."
+      : "Choose your preferred arrival time."}
+  </p>
+)}
 </div>
 </div>
 
@@ -1655,19 +1818,23 @@ function Field({
   icon,
   value,
   onChange,
+  onBlur,
   placeholder,
   type = "text",
   disabled = false,
   error,
+  status = "default",
 }: {
   label: string;
   icon: React.ReactNode;
   value: string;
   onChange: (value: string) => void;
+  onBlur?: () => void;
   placeholder?: string;
   type?: string;
   disabled?: boolean;
   error?: string;
+  status?: "default" | "error" | "success";
 }) {
   return (
     <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
@@ -1680,14 +1847,19 @@ function Field({
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
         className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition
-          ${disabled
-            ? "cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400"
-            : error
-            ? "border-red-400 bg-red-50 text-black focus:border-red-500"
-            : "border-gray-300 bg-white text-black focus:border-yellow-400"}
+          ${
+            disabled
+              ? "cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400"
+              : status === "error"
+              ? "border-red-400 bg-red-50 text-black focus:border-red-500"
+              : status === "success"
+              ? "border-green-500 bg-green-50 text-black focus:border-green-600"
+              : "border-gray-300 bg-white text-black focus:border-yellow-400"
+          }
         `}
       />
 
@@ -1706,6 +1878,7 @@ function SelectField({
   options,
   placeholder,
   error,
+  status = "default",
 }: {
   label: string;
   icon: React.ReactNode;
@@ -1714,6 +1887,7 @@ function SelectField({
   options: string[];
   placeholder?: string;
   error?: string;
+  status?: "default" | "error" | "success";
 }) {
   return (
     <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
@@ -1728,8 +1902,10 @@ function SelectField({
           onChange={(e) => onChange(e.target.value)}
           className={`w-full appearance-none rounded-xl border px-4 py-3 pr-12 text-sm outline-none transition
             ${
-              error
+              status === "error"
                 ? "border-red-400 bg-red-50 text-black focus:border-red-500"
+                : status === "success"
+                ? "border-green-500 bg-green-50 text-black focus:border-green-600"
                 : "border-gray-300 bg-white text-black focus:border-yellow-400"
             }`}
         >
