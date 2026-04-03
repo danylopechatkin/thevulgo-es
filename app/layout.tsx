@@ -32,7 +32,7 @@ export default function RootLayout({
 >
         {/* GLOBAL HEADER */}
         <header className="sticky top-0 z-50 bg-white backdrop-blur-md shadow-sm">
-          <div className="w-full max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:px-4">
             <a
               href="/"
               className="flex items-center gap-3"
@@ -104,10 +104,10 @@ export default function RootLayout({
               </a>
             </nav>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <a
   href="/estimate"
-  className="inline-flex min-w-[158px] items-center justify-center whitespace-nowrap rounded-2xl bg-yellow-400 px-5 py-2.5 text-black font-bold shadow-md transition hover:shadow-xl hover:scale-105"
+  className="bg-yellow-400 text-black px-4 sm:px-5 py-2.5 rounded-2xl font-bold shadow-md whitespace-nowrap"
 >
   Get estimate
 </a>
