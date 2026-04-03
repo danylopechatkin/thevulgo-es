@@ -1455,8 +1455,8 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
               </section>
             </div>
 
-            <div className="space-y-8">
-  <section className="sticky top-24 self-start rounded-3xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-8">
+            <div className="space-y-8 lg:self-start">
+  <section className="lg:sticky lg:top-24 rounded-3xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-8">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-3 py-1 text-xs font-semibold text-black">
