@@ -192,7 +192,7 @@ export default function TvMountingPage() {
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
-                  onClick={() => router.push("/estimate/tv-mounting")}
+                   onClick={() => router.push("/estimate?category=tv-mounting")}
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-3 text-sm font-extrabold text-black shadow-lg hover:scale-[1.02] transition"
                 >
                   Get estimate <ArrowRight className="h-4 w-4" />
@@ -330,7 +330,7 @@ export default function TvMountingPage() {
 
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
-                    onClick={() => router.push("/estimate/tv-mounting")}
+                    onClick={() => router.push("/estimate?category=tv-mounting")}
                     className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-3 text-sm font-extrabold text-black shadow-lg hover:scale-[1.02] transition"
                   >
                     Get estimate <ArrowRight className="h-4 w-4" />
