@@ -931,15 +931,15 @@ useEffect(() => {
 
 return (
 
-    <div className="min-h-screen overflow-x-hidden bg-white text-black font-sans">
-      <section className="relative overflow-hidden px-4 pt-4 pb-8 sm:pt-2 sm:pb-2">
+    <div className="min-h-screen bg-white text-black font-sans">
+      <section className="relative px-4 pt-4 pb-8 sm:pt-2 sm:pb-2">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-white" />
           <div className="absolute left-1/2 top-0 h-[540px] w-[540px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
           <div className="absolute right-8 top-24 h-[320px] w-[320px] rounded-full bg-yellow-100/70 blur-3xl" />
         </div>
 
-        <div className="mx-auto w-full max-w-7xl overflow-x-hidden">
+        <div className="mx-auto w-full max-w-7xl">
           
 
           
