@@ -41,14 +41,14 @@ const whatsappText = encodeURIComponent(
 
 const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
   return (
-    <div className="bg-white text-black font-sans">
+  <div className="overflow-x-hidden bg-white text-black font-sans">
       
 
       {/* HERO */}
       <section
-        id="top"
-        className="relative min-h-[88vh] pt-24 flex flex-col items-center justify-center text-center bg-white px-4"
-      >
+  id="top"
+  className="relative min-h-[88vh] overflow-hidden bg-white px-4 pt-24 text-center flex flex-col items-center justify-center"
+>
         {/* premium background */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-white" />
@@ -242,7 +242,7 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
       
 
       {/* WHY CHOOSE */}
-      <section id="why" className="relative py-16 sm:py-20 px-4">
+      <section id="why" className="relative overflow-hidden px-4 py-16 sm:py-20">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-white" />
           <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
@@ -390,7 +390,7 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
 </section>
 
       {/* CONTACT / PICKER (goes to /estimate/[slug]) */}
-      <section id="contact" className="relative py-16 sm:py-20">
+      <section id="contact" className="relative overflow-hidden py-16 sm:py-20">
        <ServicePickerSection
   onPick={(slug) => router.push(`/services/${slug}`)}
   onOpenEstimate={() => router.push("/services")}
@@ -751,7 +751,7 @@ function ServicePickerSection({
 ];
 
   return (
-    <section className="relative w-full bg-white py-16 sm:py-20 overflow-visible">
+    <section className="relative w-full overflow-hidden bg-white py-16 sm:py-20">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-white" />
         <div className="absolute left-1/2 top-[-160px] h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-200/40 blur-3xl" />
@@ -759,8 +759,8 @@ function ServicePickerSection({
         <div className="absolute left-[-180px] bottom-[-220px] h-[520px] w-[520px] rounded-full bg-yellow-100/60 blur-3xl" />
       </div>
 
-      <div className="mx-auto w-full max-w-7xl px-4 flex py-8 max-[720px]:py-6 max-[640px]:py-5">
-       <div className="w-full max-w-6xl mx-auto rounded-[28px] border border-yellow-400 bg-white shadow-xl p-8 pb-10 flex flex-col">
+      <div className="mx-auto flex w-full max-w-7xl overflow-x-hidden px-4 py-8 max-[720px]:py-6 max-[640px]:py-5">
+       <div className="mx-auto flex w-full max-w-6xl flex-col overflow-hidden rounded-[28px] border border-yellow-400 bg-white p-8 pb-10 shadow-xl">
           <div className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-3 py-1 text-xs font-semibold text-black shadow-sm">
               <span className="h-2 w-2 rounded-full bg-yellow-400" />
