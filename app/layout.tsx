@@ -42,8 +42,8 @@ export default function RootLayout({
                 V
               </div>
               <div className="font-extrabold tracking-tight text-yellow-400">
-                THEVULGO{" "}
-                <span className="font-semibold text-gray-500">· Valencia</span>
+                THEVULGO
+                <span className="font-semibold text-gray-500"> Valencia</span>
               </div>
             </a>
 
@@ -106,11 +106,11 @@ export default function RootLayout({
 
             <div className="flex items-center gap-2">
               <a
-                href="/estimate"
-                className="bg-yellow-400 text-black px-5 py-2.5 rounded-2xl font-bold shadow-md hover:shadow-xl hover:scale-105 transition"
-              >
-                Get estimate
-              </a>
+  href="/estimate"
+  className="inline-flex min-w-[158px] items-center justify-center whitespace-nowrap rounded-2xl bg-yellow-400 px-5 py-2.5 text-black font-bold shadow-md transition hover:shadow-xl hover:scale-105"
+>
+  Get estimate
+</a>
 
               <a
                 href="https://wa.me/14379074913?text=Hi!%20I%E2%80%99d%20like%20an%20estimate%20in%20Valencia."
