@@ -1002,12 +1002,13 @@ return (
 </div>
   </div>
 
-   <div
-  key={categoryPage}
-  className={`grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 animate-category-page ${
-    categoryDirection === "next" ? "animate-slide-left" : "animate-slide-right"
-  }`}
->
+   <div className="overflow-x-hidden lg:overflow-visible">
+    <div
+      key={categoryPage}
+      className={`grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 animate-category-page ${
+        categoryDirection === "next" ? "animate-slide-left" : "animate-slide-right"
+      }`}
+    >
   {visibleCategoryOptions.map((option) => {
     const active = category === option.key;
     const cfg = CATEGORY_DATA[option.key];
@@ -1046,6 +1047,7 @@ return (
         </button>
       );
     })}
+  </div>
   </div>
 </div>
 </section>
