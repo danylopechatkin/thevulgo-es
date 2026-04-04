@@ -1457,7 +1457,7 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
             </div>
 
             <div className="lg:sticky lg:top-24 lg:self-start">
-  <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-8 lg:max-h-[calc(100vh-7rem)] lg:flex lg:flex-col">
+  <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-8">
 
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -1485,7 +1485,7 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
                   </div>
                 </div>
 
-                <div className="mt-6 space-y-3 lg:min-h-0 lg:overflow-y-auto lg:pr-2">
+                <div className="mt-6 grid grid-cols-1 gap-3 xl:grid-cols-2">
                   {selectedServices.length === 0 ? (
                     <div className="rounded-2xl border border-dashed border-yellow-400 bg-white p-5 text-sm leading-7 text-gray-500">
                       No services added yet. Start by choosing one or more items from the estimate builder.
@@ -1497,22 +1497,24 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
     className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm"
   >
     <div className="flex items-start justify-between gap-3">
-      <div>
-        <p className="font-bold text-black">{item.label}</p>
+      <div className="min-w-0 pr-2">
+        <p className="text-base font-extrabold leading-6 text-black">
+          {item.label}
+        </p>
         <p className="mt-1 text-xs text-gray-500">
           {item.qty} × €{item.price}
         </p>
       </div>
 
-      <div className="flex items-start gap-3">
-        <div className="text-sm font-extrabold text-black">
+      <div className="flex shrink-0 items-start gap-2">
+        <div className="text-base font-extrabold text-black">
           €{item.subtotal}
         </div>
 
         <button
           type="button"
           onClick={() => setQty(item.id, 0)}
-          className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md active:scale-95"
+          className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md active:scale-95"
           title="Remove item"
         >
           <Trash2 className="h-4 w-4" />
@@ -1524,7 +1526,7 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
                   )}
                 </div>
 
-                <div className="mt-8 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2 lg:mt-auto">
+                <div className="mt-8 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
   
   <div className="flex justify-between text-sm text-gray-600">
     <span>Subtotal</span>
