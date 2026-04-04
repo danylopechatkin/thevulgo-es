@@ -931,13 +931,13 @@ useEffect(() => {
 
 return (
 
-    <div className="min-h-screen bg-white text-black font-sans">
-      <section className="relative px-4 pt-4 pb-8 sm:pt-2 sm:pb-2">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-white" />
-          <div className="absolute left-1/2 top-0 h-[540px] w-[540px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
-          <div className="absolute right-8 top-24 h-[320px] w-[320px] rounded-full bg-yellow-100/70 blur-3xl" />
-        </div>
+  <div className="min-h-screen overflow-x-clip bg-white text-black font-sans lg:overflow-x-visible">
+    <section className="relative overflow-x-clip px-4 pt-4 pb-8 sm:pt-2 sm:pb-2 lg:overflow-x-visible">
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-white" />
+        <div className="absolute left-1/2 top-0 h-[540px] w-[540px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
+        <div className="absolute right-8 top-24 h-[320px] w-[320px] rounded-full bg-yellow-100/70 blur-3xl" />
+      </div>
 
         <div className="mx-auto w-full max-w-7xl">
           
@@ -1002,7 +1002,7 @@ return (
 </div>
   </div>
 
-   <div className="overflow-x-hidden lg:overflow-visible">
+   
     <div
       key={categoryPage}
       className={`grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 animate-category-page ${
@@ -1049,7 +1049,6 @@ return (
     })}
   </div>
   </div>
-</div>
 </section>
 
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
