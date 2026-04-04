@@ -931,21 +931,21 @@ useEffect(() => {
 
 return (
 
-    <div className="min-h-screen bg-white text-black font-sans">
-      <section className="relative px-4 pt-4 pb-8 sm:pt-2 sm:pb-2">
+    <div className="min-h-screen w-full overflow-x-clip bg-white text-black font-sans">
+      <section className="relative w-full overflow-x-clip px-4 pt-4 pb-8 sm:pt-2 sm:pb-2">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-white" />
           <div className="absolute left-1/2 top-0 h-[540px] w-[540px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
           <div className="absolute right-8 top-24 h-[320px] w-[320px] rounded-full bg-yellow-100/70 blur-3xl" />
         </div>
 
-        <div className="mx-auto w-full max-w-7xl">
+        <div className="mx-auto w-full max-w-7xl overflow-x-hidden">
           
 
           
 
-          <div className="mt-4 grid grid-cols-1 gap-8 sm:mt-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-            <div className="space-y-8 lg:h-fit">
+         <div className="mt-4 grid w-full min-w-0 grid-cols-1 gap-8 sm:mt-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start">
+            <div className="min-w-0 space-y-8 lg:h-fit">
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -1455,7 +1455,7 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
               </section>
             </div>
 
-            <div className="lg:sticky lg:top-24 lg:self-start h-fit">
+            <div className="min-w-0 h-fit lg:sticky lg:top-24 lg:self-start">
   <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-8">
 
                 <div className="flex items-start justify-between gap-4">
