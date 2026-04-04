@@ -120,13 +120,13 @@ export default function ServicesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-black font-sans">
-      <section className="relative py-20 sm:py-24 px-4">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-white" />
-          <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
-          <div className="absolute right-10 top-24 h-[320px] w-[320px] rounded-full bg-yellow-100/60 blur-3xl" />
-        </div>
+  <div className="min-h-screen bg-white text-black font-sans overflow-x-hidden">
+    <section className="relative py-20 sm:py-24 px-4">
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-white" />
+        <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
+        <div className="absolute right-10 top-24 h-[320px] w-[320px] rounded-full bg-yellow-100/60 blur-3xl" />
+      </div>
 
         <div className="w-full max-w-7xl mx-auto">
           <div className="text-center">
