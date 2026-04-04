@@ -1456,8 +1456,8 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
               </section>
             </div>
 
-            <div className="lg:sticky lg:top-24 lg:self-start h-fit">
-  <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-8">
+            <div className="lg:sticky lg:top-24 lg:self-start">
+  <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-8 lg:max-h-[calc(100vh-7rem)] lg:flex lg:flex-col">
 
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -1485,7 +1485,7 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
                   </div>
                 </div>
 
-                <div className="mt-6 space-y-3">
+                <div className="mt-6 space-y-3 lg:min-h-0 lg:overflow-y-auto lg:pr-2">
                   {selectedServices.length === 0 ? (
                     <div className="rounded-2xl border border-dashed border-yellow-400 bg-white p-5 text-sm leading-7 text-gray-500">
                       No services added yet. Start by choosing one or more items from the estimate builder.
@@ -1524,7 +1524,7 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
                   )}
                 </div>
 
-                <div className="mt-8 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
+                <div className="mt-8 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2 lg:mt-auto">
   
   <div className="flex justify-between text-sm text-gray-600">
     <span>Subtotal</span>
