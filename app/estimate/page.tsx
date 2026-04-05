@@ -1082,46 +1082,46 @@ return (
 </div>
 
   {/* DESKTOP / TABLET */}
-  <div className="hidden sm:grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
-    {CATEGORY_OPTIONS.map((option) => {
-      const active = category === option.key;
-      const cfg = CATEGORY_DATA[option.key];
+<div className="hidden sm:grid sm:grid-cols-2 xl:grid-cols-4 gap-3">
+  {CATEGORY_OPTIONS.map((option) => {
+    const active = category === option.key;
+    const cfg = CATEGORY_DATA[option.key];
 
-      return (
-        <button
-          key={option.key}
-          type="button"
-          onClick={() => {
-            setCategory(option.key);
-            setQuantities({});
-          }}
-          className={`group rounded-2xl border p-5 text-left shadow-md transition-all duration-200 ${
-            active
-  ? "border-yellow-500 bg-yellow-50 shadow-lg"
-  : "border-yellow-400 bg-white"
-          }`}
-        >
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-              {cfg.icon}
-            </div>
-
-            <span className="rounded-full bg-red-500 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-              {cfg.badge}
-            </span>
+    return (
+      <button
+        key={option.key}
+        type="button"
+        onClick={() => {
+          setCategory(option.key);
+          setQuantities({});
+        }}
+        className={`group min-h-[235px] rounded-2xl border p-4 text-left transition-all duration-200 ${
+          active
+            ? "border-yellow-500 bg-yellow-50 shadow-md"
+            : "border-yellow-400 bg-white"
+        }`}
+      >
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-sm">
+            {cfg.icon}
           </div>
 
-          <h3 className="mt-4 text-lg font-extrabold text-black">
-            {cfg.title}
-          </h3>
+          <span className="rounded-full bg-red-500 px-2 py-1 text-[9px] font-bold uppercase tracking-wide text-white">
+            {cfg.badge}
+          </span>
+        </div>
 
-          <p className="mt-2 text-sm leading-6 text-gray-600 line-clamp-3">
-            {cfg.subtitle}
-          </p>
-        </button>
-      );
-    })}
-  </div>
+        <h3 className="mt-4 text-[18px] font-extrabold leading-[1.15] text-black">
+          {cfg.title}
+        </h3>
+
+        <p className="mt-3 text-[13px] leading-6 text-gray-600 line-clamp-4">
+          {cfg.subtitle}
+        </p>
+      </button>
+    );
+  })}
+</div>
 </>
   </div>
 </section>
