@@ -1555,16 +1555,18 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
       </div>
     </div>
 
-    <div className="mt-4 rounded-2xl border border-yellow-400 bg-yellow-50/40 p-4 shadow-sm">
-  <div className="flex items-center justify-between">
-    <div>
-      <p className="text-xs text-gray-600">Selected category</p>
-      <p className="text-sm font-bold text-black">
-        {currentCategory.title}
-      </p>
+    {submitStage === "build" && (
+  <div className="mt-4 rounded-2xl border border-yellow-400 bg-yellow-50/40 p-4 shadow-sm">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-xs text-gray-600">Selected category</p>
+        <p className="text-sm font-bold text-black">
+          {currentCategory.title}
+        </p>
+      </div>
     </div>
   </div>
-</div>
+)}
 
     <div className="mt-6 flex-1 min-h-0 overflow-y-auto pr-2 space-y-3">
       {selectedServices.length === 0 ? (
@@ -1604,26 +1606,28 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
       )}
     </div>
 
-    <div className="mt-6 shrink-0 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
-      <div className="flex justify-between text-sm text-gray-600">
-        <span>Subtotal</span>
-        <span>€{subtotal.toFixed(2)}</span>
-      </div>
-
-      <div className="flex justify-between text-sm text-gray-600">
-        <span>IVA (21%)</span>
-        <span>€{iva.toFixed(2)}</span>
-      </div>
-
-      <div className="flex justify-between text-lg font-extrabold text-black border-t border-yellow-400 pt-2">
-        <span>Total</span>
-        <span>€{totalWithTax.toFixed(2)}</span>
-      </div>
-
-      <p className="text-xs text-gray-500">
-        Prices exclude IVA unless stated otherwise.
-      </p>
+    {submitStage === "build" && (
+  <div className="mt-6 shrink-0 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
+    <div className="flex justify-between text-sm text-gray-600">
+      <span>Subtotal</span>
+      <span>€{subtotal.toFixed(2)}</span>
     </div>
+
+    <div className="flex justify-between text-sm text-gray-600">
+      <span>IVA (21%)</span>
+      <span>€{iva.toFixed(2)}</span>
+    </div>
+
+    <div className="flex justify-between text-lg font-extrabold text-black border-t border-yellow-400 pt-2">
+      <span>Total</span>
+      <span>€{totalWithTax.toFixed(2)}</span>
+    </div>
+
+    <p className="text-xs text-gray-500">
+      Prices exclude IVA unless stated otherwise.
+    </p>
+  </div>
+)}
 
     {submitStage === "build" && (
   <div className="mt-6">
@@ -1653,7 +1657,7 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
 )}
 
 {submitStage === "review" && (
-  <div className="mt-6 space-y-4">
+  <div className="mt-6 flex-1 min-h-0 overflow-y-auto pr-2 space-y-4">
     <div className="rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4">
       <p className="text-sm font-bold text-black">Review your request</p>
       <p className="mt-1 text-sm text-gray-600">
