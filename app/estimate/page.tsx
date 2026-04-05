@@ -416,8 +416,6 @@ function EstimatePageContent() {
 })();
 
 const [category, setCategory] = useState<CategoryKey>(initialCategory);
-const [categoryPage, setCategoryPage] = useState(0);
-const [categoryDirection, setCategoryDirection] = useState<"next" | "prev">("next");
 const [quantities, setQuantities] = useState<Record<string, number>>({});
 const [submitStage, setSubmitStage] = useState<"build" | "review" | "success">("build");
 const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -432,27 +430,8 @@ const [sendError, setSendError] = useState("");
 
 const [hasTriedNext, setHasTriedNext] = useState(false);
 
-const [mobileCardsHint, setMobileCardsHint] = useState(false);
 
-useEffect(() => {
-  if (typeof window === "undefined") return;
-  if (window.innerWidth >= 640) return;
 
-  setMobileCardsHint(false);
-
-  const t1 = setTimeout(() => {
-    setMobileCardsHint(true);
-  }, 350);
-
-  const t2 = setTimeout(() => {
-    setMobileCardsHint(false);
-  }, 950);
-
-  return () => {
-    clearTimeout(t1);
-    clearTimeout(t2);
-  };
-}, [categoryPage]);
 
 
 
@@ -678,13 +657,7 @@ const isValidPhone = (value: string) => {
   return digitsOnly.length >= 7;
 };
 
-const categoriesPerPage = 4;
-const totalCategoryPages = Math.ceil(CATEGORY_OPTIONS.length / categoriesPerPage);
 
-const visibleCategoryOptions = CATEGORY_OPTIONS.slice(
-  categoryPage * categoriesPerPage,
-  categoryPage * categoriesPerPage + categoriesPerPage
-);
 
 const liveErrors = useMemo(() => {
   const errors: string[] = [];
@@ -1004,15 +977,7 @@ console.log("FRONT SEND PAYLOAD", payload);
   }
 };
 
-useEffect(() => {
-  const categoryIndex = CATEGORY_OPTIONS.findIndex(
-    (item) => item.key === category
-  );
 
-  if (categoryIndex >= 0) {
-    setCategoryPage(Math.floor(categoryIndex / 4));
-  }
-}, [category]);
 
 // 👇 ВОТ СЮДА ВСТАВЛЯЕМ
 useEffect(() => {
@@ -1067,51 +1032,15 @@ return (
                 </div>
 
                 <div className="mt-6">
-  <div className="mb-4 flex items-center justify-between gap-4">
-    <div className="text-sm text-gray-500">
-      Page {categoryPage + 1} of {totalCategoryPages}
-    </div>
-
-    <div className="flex items-center gap-2">
-  <button
-    type="button"
-    onClick={() => {
-      setCategoryDirection("prev");
-      setCategoryPage((prev) => Math.max(prev - 1, 0));
-    }}
-    disabled={categoryPage === 0}
-   className="flex h-12 w-12 sm:h-11 sm:w-11 items-center justify-center rounded-2xl border border-gray-300 bg-white text-black shadow-md transition active:scale-95 sm:rounded-xl sm:shadow-sm sm:hover:shadow-md disabled:cursor-not-allowed disabled:opacity-40"
-  >
-    ←
-  </button>
-
-  <button
-    type="button"
-    onClick={() => {
-      setCategoryDirection("next");
-      setCategoryPage((prev) =>
-        Math.min(prev + 1, totalCategoryPages - 1)
-      );
-    }}
-    disabled={categoryPage === totalCategoryPages - 1}
-    className="flex h-12 w-12 sm:h-11 sm:w-11 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-lg transition active:scale-95 animate-pulse sm:animate-none sm:rounded-xl sm:shadow-md sm:hover:scale-[1.05] sm:hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40"
-  >
-    →
-  </button>
-</div>
-  </div>
+  
 
    
-    <>
-  {/* MOBILE: horizontal cards with swipe hint */}
-  <div
-    key={`mobile-${categoryPage}`}
-    className={`-mr-6 overflow-x-auto pb-2 pr-6 sm:hidden transition-transform duration-500 ${
-      mobileCardsHint ? "-translate-x-6" : "translate-x-0"
-    }`}
-  >
+
+  <>
+  {/* MOBILE: all 12 categories in one horizontal swipe row */}
+  <div className="-mr-6 overflow-x-auto pb-2 pr-6 sm:hidden">
     <div className="flex w-max snap-x snap-mandatory gap-4">
-      {visibleCategoryOptions.map((option) => {
+      {CATEGORY_OPTIONS.map((option) => {
         const active = category === option.key;
         const cfg = CATEGORY_DATA[option.key];
 
@@ -1152,14 +1081,9 @@ return (
     </div>
   </div>
 
-  {/* DESKTOP / TABLET: old grid */}
-  <div
-    key={`desktop-${categoryPage}`}
-    className={`hidden sm:grid sm:grid-cols-2 xl:grid-cols-4 gap-4 animate-category-page ${
-      categoryDirection === "next" ? "animate-slide-left" : "animate-slide-right"
-    }`}
-  >
-    {visibleCategoryOptions.map((option) => {
+  {/* DESKTOP / TABLET */}
+  <div className="hidden sm:grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
+    {CATEGORY_OPTIONS.map((option) => {
       const active = category === option.key;
       const cfg = CATEGORY_DATA[option.key];
 
