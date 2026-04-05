@@ -1633,14 +1633,17 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
         <ArrowRight className="h-4 w-4" />
       </button>
     ) : (
-      <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
-        <p className="font-bold">Please fix the following before continuing:</p>
-        <ul className="mt-2 space-y-1">
-          {liveErrors.map((error, index) => (
-            <li key={index}>• {error}</li>
-          ))}
-        </ul>
-      </div>
+      <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-red-600">
+  <p className="text-sm font-bold">Please fix the following before continuing:</p>
+
+  <ul className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 text-sm lg:grid-cols-2">
+    {liveErrors.map((error, index) => (
+      <li key={index} className="leading-5">
+        • {error}
+      </li>
+    ))}
+  </ul>
+</div>
     )}
   </div>
 )}
