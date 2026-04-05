@@ -429,6 +429,11 @@ const [fieldStatus, setFieldStatus] = useState<
 
 const [isSending, setIsSending] = useState(false);
 const [sendError, setSendError] = useState("");
+
+const [hasTriedNext, setHasTriedNext] = useState(false);
+
+
+
 const [client, setClient] = useState({
   fullName: "",
   email: "",
@@ -659,6 +664,75 @@ const visibleCategoryOptions = CATEGORY_OPTIONS.slice(
   categoryPage * categoriesPerPage + categoriesPerPage
 );
 
+const liveErrors = useMemo(() => {
+  const errors: string[] = [];
+
+  if (!hasSelectedServices) {
+    errors.push("Select at least one service.");
+  }
+
+  if (!client.fullName.trim()) {
+    errors.push("Enter your full name.");
+  }
+
+  if (!hasContact) {
+    errors.push("Enter phone or email.");
+  } else {
+    if (client.email.trim() && !isValidEmail(client.email)) {
+      errors.push("Enter a valid email address.");
+    }
+
+    if (client.phone.trim() && !isValidPhone(client.phone)) {
+      errors.push("Enter a valid phone number.");
+    }
+  }
+
+  if (!displayCity?.trim()) {
+    errors.push("Choose your city.");
+  }
+
+  if (!client.area.trim()) {
+    errors.push("Enter or choose area / district.");
+  }
+
+  if (!client.houseAddress.trim()) {
+    errors.push("Enter house address.");
+  }
+
+  if (!client.preferredDate.trim()) {
+    errors.push("Choose preferred date.");
+  } else if (client.preferredDate < todayDateString) {
+    errors.push("Past dates are not available.");
+  }
+
+  if (!client.preferredTime.trim()) {
+    errors.push("Choose preferred time.");
+  } else if (
+    client.preferredDate === todayDateString &&
+    Number(client.preferredTime.split(":")[0]) < nextAvailableHour
+  ) {
+    errors.push("Choose a time at least 1 hour from now.");
+  } else if (!availableTimeOptions.includes(client.preferredTime)) {
+    errors.push("Selected time is not available for this date.");
+  }
+
+  return errors;
+}, [
+  hasSelectedServices,
+  client.fullName,
+  client.email,
+  client.phone,
+  client.area,
+  client.houseAddress,
+  client.preferredDate,
+  client.preferredTime,
+  displayCity,
+  hasContact,
+  todayDateString,
+  nextAvailableHour,
+  availableTimeOptions,
+]);
+
 const setFieldValue = (field: string, value: string) => {
   setClient((prev) => ({ ...prev, [field]: value }));
 
@@ -839,7 +913,10 @@ const validateEstimateForm = () => {
 };
 
 const handleNextStep = () => {
+  setHasTriedNext(true);
+
   if (!validateEstimateForm()) return;
+
   setSubmitStage("review");
 };
 
@@ -1545,27 +1622,27 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
     </div>
 
     {submitStage === "build" && (
-      <>
-        <button
-          type="button"
-          onClick={handleNextStep}
-          className="mt-6 inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
-        >
-          Next step: review request
-          <ArrowRight className="h-4 w-4" />
-        </button>
-
-        {Object.keys(fieldErrors).length > 0 && (
-          <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600 shrink-0">
-            <p className="font-bold">Please fix the following before continuing:</p>
-            <ul className="mt-2 space-y-1">
-              {Object.entries(fieldErrors).map(([key, value]) => (
-                <li key={key}>• {value}</li>
-              ))}
-            </ul>
-          </div>
-)}
-  </>
+  <div className="mt-6">
+    {!hasTriedNext || liveErrors.length === 0 ? (
+      <button
+        type="button"
+        onClick={handleNextStep}
+        className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
+      >
+        Next step: review request
+        <ArrowRight className="h-4 w-4" />
+      </button>
+    ) : (
+      <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+        <p className="font-bold">Please fix the following before continuing:</p>
+        <ul className="mt-2 space-y-1">
+          {liveErrors.map((error, index) => (
+            <li key={index}>• {error}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
 )}
 
 {submitStage === "review" && (
@@ -1771,6 +1848,7 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
   setQuantities({});
   setFormErrors({});
   setSendError("");
+  setHasTriedNext(false);
   setClient({
     fullName: "",
     email: "",
