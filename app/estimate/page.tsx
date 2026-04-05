@@ -1485,11 +1485,11 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
                   </div>
                 </div>
 
-                <div className="mt-6 grid grid-cols-1 gap-3 xl:grid-cols-2">
-                  {selectedServices.length === 0 ? (
-                    <div className="rounded-2xl border border-dashed border-yellow-400 bg-white p-5 text-sm leading-7 text-gray-500">
-                      No services added yet. Start by choosing one or more items from the estimate builder.
-                    </div>
+                <div className="mt-6">
+  {selectedServices.length === 0 ? (
+    <div className="max-w-[240px] rounded-2xl border border-dashed border-yellow-400 bg-white p-4 text-sm leading-7 text-gray-500">
+      No services added yet. Start by choosing one or more items from the estimate builder.
+    </div>
                   ) : (
                     selectedServices.map((item) => (
   <div
