@@ -1095,14 +1095,14 @@ return (
           setCategory(option.key);
           setQuantities({});
         }}
-        className={`group min-h-[235px] rounded-2xl border p-4 text-left transition-all duration-200 ${
+        className={`group min-h-[185px] rounded-2xl border p-4 text-left transition-all duration-200 ${
           active
-            ? "border-yellow-500 bg-yellow-50 shadow-md"
+            ? "border-yellow-500 bg-yellow-50 shadow-sm"
             : "border-yellow-400 bg-white"
         }`}
       >
         <div className="flex items-start justify-between gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-sm">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-sm">
             {cfg.icon}
           </div>
 
@@ -1111,11 +1111,11 @@ return (
           </span>
         </div>
 
-        <h3 className="mt-4 text-[18px] font-extrabold leading-[1.15] text-black">
+        <h3 className="mt-3 text-[17px] font-extrabold leading-[1.15] text-black">
           {cfg.title}
         </h3>
 
-        <p className="mt-3 text-[13px] leading-6 text-gray-600 line-clamp-4">
+        <p className="mt-2 text-[12px] leading-5 text-gray-600 line-clamp-4">
           {cfg.subtitle}
         </p>
       </button>
