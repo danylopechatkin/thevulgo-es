@@ -1068,11 +1068,11 @@ return (
             </span>
           </div>
 
-          <h3 className="mt-5 text-[2rem] leading-none font-extrabold text-black">
+          <h3 className="mt-5 text-[1.5rem] leading-tight font-bold text-black">
             {cfg.title}
           </h3>
 
-          <p className="mt-3 text-base leading-7 text-gray-600">
+          <p className="mt-3 text-[15px] leading-6 text-gray-600">
             {cfg.subtitle}
           </p>
         </button>
