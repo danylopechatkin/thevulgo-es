@@ -1949,7 +1949,7 @@ function Field({
         onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
-        className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition
+        className={`w-full rounded-xl border px-4 py-3 text-base outline-none transition
           ${
             disabled
               ? "cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400"
@@ -1999,7 +1999,7 @@ function SelectField({
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={`w-full appearance-none rounded-xl border px-4 py-3 pr-12 text-sm outline-none transition
+          className={`w-full appearance-none rounded-xl border px-4 py-3 pr-12 text-base outline-none transition
             ${
               status === "error"
                 ? "border-red-400 bg-red-50 text-black focus:border-red-500"
