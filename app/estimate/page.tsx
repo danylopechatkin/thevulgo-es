@@ -1568,43 +1568,46 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
   </div>
 )}
 
-    <div className="mt-6 flex-1 min-h-0 overflow-y-auto pr-2 space-y-3">
-      {selectedServices.length === 0 ? (
-        <div className="max-w-[240px] rounded-2xl border border-dashed border-yellow-400 bg-white p-4 text-sm leading-7 text-gray-500">
-          No services added yet. Start by choosing one or more items from the estimate builder.
-        </div>
-      ) : (
-        selectedServices.map((item) => (
-          <div
-            key={item.id}
-            className="rounded-2xl border border-yellow-400 bg-white px-4 py-3 shadow-sm"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="font-bold text-black">{item.label}</p>
-                <p className="mt-1 text-xs text-gray-500">
-                  {item.qty} × €{item.price}
-                </p>
+    {submitStage === "build" && (
+  <div className="mt-6 flex-1 min-h-0 overflow-y-auto pr-2 space-y-3">
+    {selectedServices.length === 0 ? (
+      <div className="max-w-[240px] rounded-2xl border border-dashed border-yellow-400 bg-white p-4 text-sm leading-7 text-gray-500">
+        No services added yet. Start by choosing one or more items from the estimate builder.
+      </div>
+    ) : (
+      selectedServices.map((item) => (
+        <div
+          key={item.id}
+          className="rounded-2xl border border-yellow-400 bg-white px-4 py-3 shadow-sm"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="font-bold text-black">{item.label}</p>
+              <p className="mt-1 text-xs text-gray-500">
+                {item.qty} × €{item.price}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="text-sm font-extrabold text-black">
+                €{item.subtotal}
               </div>
 
-              <div className="flex items-center gap-3">
-                <div className="text-sm font-extrabold text-black">
-                  €{item.subtotal}
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setQty(item.id, 0)}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md active:scale-95"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => setQty(item.id, 0)}
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md active:scale-95"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
             </div>
           </div>
-        ))
-      )}
-    </div>
+        </div>
+      ))
+    )}
+  </div>
+)}
+
 
     {submitStage === "build" && (
   <div className="mt-6 shrink-0 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
@@ -1657,169 +1660,174 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
 )}
 
 {submitStage === "review" && (
-  <div className="mt-6 flex-1 min-h-0 overflow-y-auto pr-2 space-y-4">
-    <div className="rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4">
-      <p className="text-sm font-bold text-black">Review your request</p>
-      <p className="mt-1 text-sm text-gray-600">
-        Please confirm your details before sending.
-      </p>
-    </div>
-
-    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Client
-  </p>
-  <div className="space-y-2 text-sm text-black">
-  <p><span className="text-gray-500">Name:</span> <span className="font-semibold">{client.fullName || "—"}</span></p>
-  <p><span className="text-gray-500">Phone:</span> <span className="font-semibold">{client.phone || "—"}</span></p>
-  <p><span className="text-gray-500">Email:</span> <span className="font-semibold">{client.email || "—"}</span></p>
-</div>
-</div>
-
-<div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Category
-  </p>
-  <p className="mt-2 text-sm font-semibold text-black">
-    {currentCategory.title}
-  </p>
-</div>
-
-<div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Selected services
-  </p>
-      <div className="mt-2 space-y-3 text-sm text-black">
-        {selectedServices.map((item) => (
-          <div
-            key={item.id}
-            className="flex items-center justify-between gap-3 border-b border-gray-100 pb-2"
-          >
-            <div className="flex flex-col">
-  <span className="font-semibold text-black">
-    {item.label}
-  </span>
-  <span className="text-xs text-gray-500">
-    {item.qty} × €{item.price}
-  </span>
-</div>
-
-            <span className="font-semibold text-black">
-              €{item.subtotal}
-            </span>
-          </div>
-        ))}
+  <>
+    <div className="mt-6 flex-1 min-h-0 overflow-y-auto pr-2 space-y-4">
+      <div className="rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4">
+        <p className="text-sm font-bold text-black">Review your request</p>
+        <p className="mt-1 text-sm text-gray-600">
+          Please confirm your details before sending.
+        </p>
       </div>
 
-      <div className="mt-4 space-y-2 border-t border-gray-300 pt-4">
-  <div className="flex items-center justify-between text-sm text-gray-600">
-    <span>Subtotal</span>
-    <span>€{subtotal.toFixed(2)}</span>
-  </div>
+      <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          Client
+        </p>
+        <div className="space-y-2 text-sm text-black">
+          <p>
+            <span className="text-gray-500">Name:</span>{" "}
+            <span className="font-semibold">{client.fullName || "—"}</span>
+          </p>
+          <p>
+            <span className="text-gray-500">Phone:</span>{" "}
+            <span className="font-semibold">{client.phone || "—"}</span>
+          </p>
+          <p>
+            <span className="text-gray-500">Email:</span>{" "}
+            <span className="font-semibold">{client.email || "—"}</span>
+          </p>
+        </div>
+      </div>
 
-  <div className="flex items-center justify-between text-sm text-gray-600">
-    <span>IVA (21%)</span>
-    <span>€{iva.toFixed(2)}</span>
-  </div>
+      <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          Category
+        </p>
+        <p className="mt-2 text-sm font-semibold text-black">
+          {currentCategory.title}
+        </p>
+      </div>
 
-  <div className="flex items-center justify-between">
-    <span className="text-sm font-bold uppercase tracking-wide text-gray-500">
-      Total
-    </span>
+      <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          Selected services
+        </p>
 
-    <span className="text-xl font-extrabold text-black">
-      €{totalWithTax.toFixed(2)}
-    </span>
-  </div>
-</div>
+        <div className="mt-2 space-y-3 text-sm text-black">
+          {selectedServices.map((item) => (
+            <div
+              key={item.id}
+              className="flex items-center justify-between gap-3 border-b border-gray-100 pb-2"
+            >
+              <div className="flex flex-col">
+                <span className="font-semibold text-black">{item.label}</span>
+                <span className="text-xs text-gray-500">
+                  {item.qty} × €{item.price}
+                </span>
+              </div>
 
-<p className="mt-2 text-xs text-gray-500">
-  Final total includes IVA.
-</p>
+              <span className="font-semibold text-black">
+                €{item.subtotal}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 space-y-2 border-t border-gray-300 pt-4">
+          <div className="flex items-center justify-between text-sm text-gray-600">
+            <span>Subtotal</span>
+            <span>€{subtotal.toFixed(2)}</span>
+          </div>
+
+          <div className="flex items-center justify-between text-sm text-gray-600">
+            <span>IVA (21%)</span>
+            <span>€{iva.toFixed(2)}</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold uppercase tracking-wide text-gray-500">
+              Total
+            </span>
+
+            <span className="text-xl font-extrabold text-black">
+              €{totalWithTax.toFixed(2)}
+            </span>
+          </div>
+        </div>
+
+        <p className="mt-2 text-xs text-gray-500">
+          Final total includes IVA.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          Address
+        </p>
+
+        <div className="mt-2 space-y-2">
+          <p className="text-sm font-semibold text-black">
+            {displayCity || "—"}, {client.area || "—"}
+          </p>
+
+          <p className="text-sm text-gray-700">
+            {client.houseAddress || "—"}
+            {client.apartmentNumber ? `, ${client.apartmentNumber}` : ""}
+          </p>
+
+          {client.addressDetails && (
+            <p className="text-xs text-gray-500">{client.addressDetails}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          Schedule
+        </p>
+
+        <div className="mt-2 flex items-start gap-3">
+          <Clock3 className="mt-1 h-4 w-4 text-yellow-500" />
+
+          <p className="text-sm font-semibold text-black">
+            {client.preferredDate || "—"}{" "}
+            {client.preferredTime ? `at ${client.preferredTime}` : ""}
+          </p>
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          Notes
+        </p>
+        <p className="mt-2 text-sm text-black">
+          {client.notes.trim() || "No additional notes"}
+        </p>
+      </div>
+
+      <p className="text-center text-xs text-gray-500">
+        No payment required. We’ll confirm everything before the visit.
+      </p>
+
+      {sendError && (
+        <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+          {sendError}
+        </div>
+      )}
     </div>
 
-   <div className="mt-4 rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Address
-  </p>
+    <div className="mt-6 shrink-0">
+      <div className="flex gap-3">
+        <button
+          type="button"
+          onClick={handleBackToEdit}
+          disabled={isSending}
+          className="flex-1 rounded-2xl border border-gray-300 bg-white py-4 text-sm font-bold text-black transition hover:bg-gray-50 hover:shadow-sm active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          Back to edit
+        </button>
 
-  <div className="mt-2 space-y-2">
-    
-    {/* MAIN LINE */}
-    <p className="text-sm font-semibold text-black">
-      {displayCity || "—"}, {client.area || "—"}
-    </p>
-
-    {/* STREET */}
-    <p className="text-sm text-gray-700">
-      {client.houseAddress || "—"}
-      {client.apartmentNumber ? `, ${client.apartmentNumber}` : ""}
-    </p>
-
-    {/* EXTRA */}
-    {client.addressDetails && (
-      <p className="text-xs text-gray-500">
-        {client.addressDetails}
-      </p>
-    )}
-
-  </div>
-</div>
-
-    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Schedule
-  </p>
-
-  <div className="mt-2 flex items-start gap-3">
-    <Clock3 className="mt-1 h-4 w-4 text-yellow-500" />
-
-    <p className="text-sm font-semibold text-black">
-      {client.preferredDate || "—"} {client.preferredTime ? `at ${client.preferredTime}` : ""}
-    </p>
-  </div>
-</div>
-
-    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-        Notes
-      </p>
-      <p className="mt-2 text-sm text-black">
-        {client.notes.trim() || "No additional notes"}
-      </p>
+        <button
+          type="button"
+          onClick={handleConfirmSend}
+          disabled={isSending}
+          className="flex-1 rounded-2xl bg-yellow-400 py-4 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.02] hover:shadow-lg active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {isSending ? "Sending..." : "Send request"}
+        </button>
+      </div>
     </div>
-
-    <p className="text-center text-xs text-gray-500">
-  No payment required. We’ll confirm everything before the visit.
-</p>
-
-{sendError && (
-  <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
-    {sendError}
-  </div>
-)}
-
-<div className="flex gap-3">
-  <button
-    type="button"
-    onClick={handleBackToEdit}
-    disabled={isSending}
-    className="flex-1 rounded-2xl border border-gray-300 bg-white py-4 text-sm font-bold text-black transition hover:bg-gray-50 hover:shadow-sm active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
-  >
-    Back to edit
-  </button>
-
-  <button
-    type="button"
-    onClick={handleConfirmSend}
-    disabled={isSending}
-    className="flex-1 rounded-2xl bg-yellow-400 py-4 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.02] hover:shadow-lg active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
-  >
-    {isSending ? "Sending..." : "Send request"}
-  </button>
-</div>
-
-</div>
+  </>
 )}
 
 {submitStage === "success" && (
