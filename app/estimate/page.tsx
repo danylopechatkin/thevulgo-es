@@ -1097,8 +1097,8 @@ return (
           }}
           className={`group rounded-2xl border p-5 text-left shadow-md transition-all duration-200 ${
             active
-              ? "border-yellow-500 bg-yellow-50 shadow-xl scale-[1.01]"
-              : "border-yellow-400 bg-white hover:scale-[1.01] hover:shadow-xl"
+  ? "border-yellow-500 bg-yellow-50 shadow-lg"
+  : "border-yellow-400 bg-white"
           }`}
         >
           <div className="flex items-start justify-between gap-3">
