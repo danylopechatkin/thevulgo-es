@@ -1507,10 +1507,14 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
   </p>
 ) : (
   <p className="mt-3 text-xs leading-6 text-gray-500">
-    {client.preferredDate === todayDateString
-      ? "For today, only times at least 1 hour ahead are available."
-      : "Choose your preferred arrival time."}
-  </p>
+  {client.preferredDate === todayDateString
+    ? "For today, only times at least 1 hour ahead are available."
+    : "Choose your preferred arrival time."}
+  <br />
+  <span className="text-gray-400">
+    All times are Valencia (Spain) local time.
+  </span>
+</p>
 )}
 </div>
 </div>
