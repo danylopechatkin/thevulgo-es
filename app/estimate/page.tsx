@@ -1052,7 +1052,7 @@ return (
               setCategory(option.key);
               setQuantities({});
             }}
-            className={`group w-[80vw] max-w-[340px] shrink-0 snap-start rounded-2xl border p-5 text-left shadow-md transition-all duration-200 ${
+            className={`group w-[72vw] max-w-[320px] shrink-0 snap-start rounded-2xl border p-5 text-left shadow-md transition-all duration-200 ${
               active
                 ? "border-yellow-500 bg-yellow-50 shadow-xl scale-[1.01]"
                 : "border-yellow-400 bg-white"
