@@ -1038,48 +1038,48 @@ return (
 
   <>
   {/* MOBILE: all 12 categories in one horizontal swipe row */}
-  <div className="overflow-x-auto px-0 pt-3 pb-0 sm:hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-  <div className="flex w-max snap-x snap-mandatory gap-4 pl-4 pr-6">
-      {CATEGORY_OPTIONS.map((option) => {
-        const active = category === option.key;
-        const cfg = CATEGORY_DATA[option.key];
+  <div className="overflow-x-auto px-1 pb-5 pt-1 sm:hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+  <div className="flex w-max snap-x snap-mandatory gap-4 pl-1 pr-6">
+    {CATEGORY_OPTIONS.map((option) => {
+      const active = category === option.key;
+      const cfg = CATEGORY_DATA[option.key];
 
-        return (
-          <button
-            key={option.key}
-            type="button"
-            onClick={() => {
-              setCategory(option.key);
-              setQuantities({});
-            }}
-            className={`group w-[65vw] max-w-[300px] min-h-[220px] shrink-0 snap-start rounded-2xl border p-5 text-left transition-all duration-200 ${
-              active
-                ? "border-yellow-500 bg-yellow-50 shadow-xl scale-[1.01]"
-                : "border-yellow-400 bg-white"
-            }`}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md">
-                {cfg.icon}
-              </div>
-
-              <span className="rounded-full bg-red-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
-                {cfg.badge}
-              </span>
+      return (
+        <button
+          key={option.key}
+          type="button"
+          onClick={() => {
+            setCategory(option.key);
+            setQuantities({});
+          }}
+          className={`group w-[65vw] max-w-[300px] min-h-[220px] shrink-0 snap-start rounded-2xl border p-5 text-left transition-all duration-200 ${
+            active
+              ? "border-yellow-500 bg-yellow-50 shadow-lg"
+              : "border-yellow-400 bg-white"
+          }`}
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md">
+              {cfg.icon}
             </div>
 
-            <h3 className="mt-5 text-2xl font-extrabold text-black">
-              {cfg.title}
-            </h3>
+            <span className="rounded-full bg-red-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+              {cfg.badge}
+            </span>
+          </div>
 
-            <p className="mt-3 text-base leading-8 text-gray-600">
-              {cfg.subtitle}
-            </p>
-          </button>
-        );
-      })}
-    </div>
+          <h3 className="mt-5 text-[2rem] leading-none font-extrabold text-black">
+            {cfg.title}
+          </h3>
+
+          <p className="mt-3 text-base leading-7 text-gray-600">
+            {cfg.subtitle}
+          </p>
+        </button>
+      );
+    })}
   </div>
+</div>
 
   {/* DESKTOP / TABLET */}
   <div className="hidden sm:grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
