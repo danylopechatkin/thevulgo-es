@@ -1038,8 +1038,8 @@ return (
 
   <>
   {/* MOBILE: all 12 categories in one horizontal swipe row */}
-  <div className="overflow-x-auto px-1 pb-2 sm:hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-  <div className="flex w-max snap-x snap-mandatory gap-4 pl-1 pr-6">
+  <div className="overflow-x-auto px-0 pt-3 pb-3 sm:hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+  <div className="flex w-max snap-x snap-mandatory gap-4 pl-4 pr-6">
       {CATEGORY_OPTIONS.map((option) => {
         const active = category === option.key;
         const cfg = CATEGORY_DATA[option.key];
@@ -1052,7 +1052,7 @@ return (
               setCategory(option.key);
               setQuantities({});
             }}
-            className={`group w-[65vw] max-w-[300px] h-[220px] shrink-0 snap-start rounded-2xl border p-5 text-left shadow-md transition-all duration-200 ${
+            className={`group w-[65vw] max-w-[300px] min-h-[210px] shrink-0 snap-start rounded-2xl border p-5 text-left shadow-[0_6px_18px_rgba(0,0,0,0.05)] transition-all duration-200 ${
               active
                 ? "border-yellow-500 bg-yellow-50 shadow-xl scale-[1.01]"
                 : "border-yellow-400 bg-white"
