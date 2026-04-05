@@ -1457,114 +1457,113 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
             </div>
 
             <div className="lg:sticky lg:top-24 lg:self-start">
-  <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-8">
+  <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-8 lg:h-[calc(100vh-7rem)] lg:flex lg:flex-col">
 
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-3 py-1 text-xs font-semibold text-black">
-                      <Calculator className="h-4 w-4" />
-                      Live summary
-                    </div>
-                    <h2 className="mt-4 text-2xl font-extrabold text-black">
-                      Your estimate
-                    </h2>
-                    <p className="mt-2 text-sm leading-7 text-gray-600">
-                      Add services on the left and your estimate will update instantly here.
-                    </p>
-                  </div>
-
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md">
-                    {currentCategory.icon}
-                  </div>
-                </div>
-
-                <div className="mt-6 rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4">
-                  <div className="text-sm text-gray-600">Selected category</div>
-                  <div className="mt-1 text-lg font-extrabold text-black">
-                    {currentCategory.title}
-                  </div>
-                </div>
-
-                <div className="mt-6">
-  {selectedServices.length === 0 ? (
-    <div className="max-w-[240px] rounded-2xl border border-dashed border-yellow-400 bg-white p-4 text-sm leading-7 text-gray-500">
-      No services added yet. Start by choosing one or more items from the estimate builder.
-    </div>
-                  ) : (
-                    selectedServices.map((item) => (
-  <div
-    key={item.id}
-    className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm"
-  >
-    <div className="flex items-start justify-between gap-3">
+    <div className="flex items-start justify-between gap-4">
       <div>
-        <p className="font-bold text-black">{item.label}</p>
-        <p className="mt-1 text-xs text-gray-500">
-          {item.qty} × €{item.price}
+        <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-3 py-1 text-xs font-semibold text-black">
+          <Calculator className="h-4 w-4" />
+          Live summary
+        </div>
+        <h2 className="mt-4 text-2xl font-extrabold text-black">
+          Your estimate
+        </h2>
+        <p className="mt-2 text-sm leading-7 text-gray-600">
+          Add services on the left and your estimate will update instantly here.
         </p>
       </div>
 
-      <div className="flex items-center gap-3">
-        <div className="text-sm font-extrabold text-black">
-          €{item.subtotal}
-        </div>
-
-        <button
-          type="button"
-          onClick={() => setQty(item.id, 0)}
-          className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md active:scale-95"
-        >
-          <Trash2 className="h-4 w-4" />
-        </button>
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md">
+        {currentCategory.icon}
       </div>
     </div>
-  </div>
-))
-                  )}
+
+    <div className="mt-6 rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4 shrink-0">
+      <div className="text-sm text-gray-600">Selected category</div>
+      <div className="mt-1 text-lg font-extrabold text-black">
+        {currentCategory.title}
+      </div>
+    </div>
+
+    <div className="mt-6 flex-1 min-h-0 overflow-y-auto pr-2 space-y-3">
+      {selectedServices.length === 0 ? (
+        <div className="max-w-[240px] rounded-2xl border border-dashed border-yellow-400 bg-white p-4 text-sm leading-7 text-gray-500">
+          No services added yet. Start by choosing one or more items from the estimate builder.
+        </div>
+      ) : (
+        selectedServices.map((item) => (
+          <div
+            key={item.id}
+            className="rounded-2xl border border-yellow-400 bg-white px-4 py-3 shadow-sm"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="font-bold text-black">{item.label}</p>
+                <p className="mt-1 text-xs text-gray-500">
+                  {item.qty} × €{item.price}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="text-sm font-extrabold text-black">
+                  €{item.subtotal}
                 </div>
 
-                <div className="mt-8 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
-  
-  <div className="flex justify-between text-sm text-gray-600">
-    <span>Subtotal</span>
-    <span>€{subtotal.toFixed(2)}</span>
-  </div>
+                <button
+                  type="button"
+                  onClick={() => setQty(item.id, 0)}
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md active:scale-95"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
 
-  <div className="flex justify-between text-sm text-gray-600">
-    <span>IVA (21%)</span>
-    <span>€{iva.toFixed(2)}</span>
-  </div>
+    <div className="mt-6 shrink-0 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
+      <div className="flex justify-between text-sm text-gray-600">
+        <span>Subtotal</span>
+        <span>€{subtotal.toFixed(2)}</span>
+      </div>
 
-  <div className="flex justify-between text-lg font-extrabold text-black border-t border-yellow-400 pt-2">
-    <span>Total</span>
-    <span>€{totalWithTax.toFixed(2)}</span>
-  </div>
+      <div className="flex justify-between text-sm text-gray-600">
+        <span>IVA (21%)</span>
+        <span>€{iva.toFixed(2)}</span>
+      </div>
 
-  <p className="text-xs text-gray-500">
-    Prices exclude IVA unless stated otherwise.
-  </p>
-</div>
+      <div className="flex justify-between text-lg font-extrabold text-black border-t border-yellow-400 pt-2">
+        <span>Total</span>
+        <span>€{totalWithTax.toFixed(2)}</span>
+      </div>
 
-                {submitStage === "build" && (
-  <>
-    <button
-      type="button"
-      onClick={handleNextStep}
-      className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
-    >
-      Next step: review request
-      <ArrowRight className="h-4 w-4" />
-    </button>
+      <p className="text-xs text-gray-500">
+        Prices exclude IVA unless stated otherwise.
+      </p>
+    </div>
 
-    {Object.keys(fieldErrors).length > 0 && (
-  <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
-    <p className="font-bold">Please fix the following before continuing:</p>
-    <ul className="mt-2 space-y-1">
-      {Object.entries(fieldErrors).map(([key, value]) => (
-        <li key={key}>• {value}</li>
-      ))}
-    </ul>
-  </div>
+    {submitStage === "build" && (
+      <>
+        <button
+          type="button"
+          onClick={handleNextStep}
+          className="mt-6 inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
+        >
+          Next step: review request
+          <ArrowRight className="h-4 w-4" />
+        </button>
+
+        {Object.keys(fieldErrors).length > 0 && (
+          <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600 shrink-0">
+            <p className="font-bold">Please fix the following before continuing:</p>
+            <ul className="mt-2 space-y-1">
+              {Object.entries(fieldErrors).map(([key, value]) => (
+                <li key={key}>• {value}</li>
+              ))}
+            </ul>
+          </div>
 )}
   </>
 )}
