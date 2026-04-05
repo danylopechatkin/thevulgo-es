@@ -1494,32 +1494,33 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
                     selectedServices.map((item) => (
   <div
     key={item.id}
-    className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm"
+    className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm min-h-[132px]"
   >
-    <div className="flex items-start justify-between gap-3">
-      <div className="min-w-0 pr-2">
-        <p className="text-base font-extrabold leading-6 text-black">
+    <div className="flex h-full flex-col justify-between gap-4">
+      <div className="flex items-start justify-between gap-3">
+        <p className="min-w-0 pr-2 text-[15px] font-extrabold leading-7 text-black">
           {item.label}
         </p>
-        <p className="mt-1 text-xs text-gray-500">
-          {item.qty} × €{item.price}
-        </p>
-      </div>
 
-      <div className="flex shrink-0 items-start gap-2">
-        <div className="text-base font-extrabold text-black">
-          €{item.subtotal}
+        <div className="flex shrink-0 items-start gap-2">
+          <div className="text-base font-extrabold text-black whitespace-nowrap">
+            €{item.subtotal}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setQty(item.id, 0)}
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-300 bg-white text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md active:scale-95"
+            title="Remove item"
+          >
+            <Trash2 className="h-4 w-4" />
+          </button>
         </div>
-
-        <button
-          type="button"
-          onClick={() => setQty(item.id, 0)}
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md active:scale-95"
-          title="Remove item"
-        >
-          <Trash2 className="h-4 w-4" />
-        </button>
       </div>
+
+      <p className="text-xs text-gray-500">
+        {item.qty} × €{item.price}
+      </p>
     </div>
   </div>
 ))
