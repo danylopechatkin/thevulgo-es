@@ -951,7 +951,7 @@ const payload = {
   total: totalWithTax,
   scheduledAt:
   client.preferredDate && client.preferredTime
-    ? new Date(`${client.preferredDate}T${client.preferredTime}:00`).toISOString()
+    ? new Date(`${client.preferredDate}T${client.preferredTime}:00+02:00`).toISOString()
     : null,
 };
 
