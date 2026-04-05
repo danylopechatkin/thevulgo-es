@@ -1555,12 +1555,16 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
       </div>
     </div>
 
-    <div className="mt-4 rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4 shrink-0">
-      <div className="text-sm text-gray-600">Selected category</div>
-      <div className="mt-1 text-lg font-extrabold text-black">
+    <div className="mt-4 rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+  <div className="flex items-center justify-between">
+    <div>
+      <p className="text-xs text-gray-500">Selected category</p>
+      <p className="text-sm font-bold text-black">
         {currentCategory.title}
-      </div>
+      </p>
     </div>
+  </div>
+</div>
 
     <div className="mt-6 flex-1 min-h-0 overflow-y-auto pr-2 space-y-3">
       {selectedServices.length === 0 ? (
