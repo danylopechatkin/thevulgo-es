@@ -432,6 +432,28 @@ const [sendError, setSendError] = useState("");
 
 const [hasTriedNext, setHasTriedNext] = useState(false);
 
+const [mobileCardsHint, setMobileCardsHint] = useState(false);
+
+useEffect(() => {
+  if (typeof window === "undefined") return;
+  if (window.innerWidth >= 640) return;
+
+  setMobileCardsHint(false);
+
+  const t1 = setTimeout(() => {
+    setMobileCardsHint(true);
+  }, 350);
+
+  const t2 = setTimeout(() => {
+    setMobileCardsHint(false);
+  }, 950);
+
+  return () => {
+    clearTimeout(t1);
+    clearTimeout(t2);
+  };
+}, [categoryPage]);
+
 
 
 const [client, setClient] = useState({
@@ -1033,10 +1055,10 @@ return (
                     <h2 className="mt-4 text-2xl font-extrabold text-black sm:text-3xl">
                       Select your service category
                     </h2>
-                    <p className="mt-2 max-w-2xl text-sm leading-7 text-gray-600 sm:text-base">
-                      If you came from a service page, your category can already be preselected.
-                      You can still switch it here at any time.
-                    </p>
+                    <p className="mt-3 flex items-center gap-2 text-xs font-semibold text-yellow-700 sm:hidden">
+  Swipe to see more categories
+  <span aria-hidden="true">→</span>
+</p>
                   </div>
 
                   <div className="hidden h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md sm:flex">
@@ -1058,7 +1080,7 @@ return (
       setCategoryPage((prev) => Math.max(prev - 1, 0));
     }}
     disabled={categoryPage === 0}
-    className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:shadow-md disabled:cursor-not-allowed disabled:opacity-40"
+   className="flex h-12 w-12 sm:h-11 sm:w-11 items-center justify-center rounded-2xl border border-gray-300 bg-white text-black shadow-md transition active:scale-95 sm:rounded-xl sm:shadow-sm sm:hover:shadow-md disabled:cursor-not-allowed disabled:opacity-40"
   >
     ←
   </button>
@@ -1072,7 +1094,7 @@ return (
       );
     }}
     disabled={categoryPage === totalCategoryPages - 1}
-    className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md transition hover:scale-[1.05] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40"
+    className="flex h-12 w-12 sm:h-11 sm:w-11 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-lg transition active:scale-95 animate-pulse sm:animate-none sm:rounded-xl sm:shadow-md sm:hover:scale-[1.05] sm:hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40"
   >
     →
   </button>
@@ -1080,15 +1102,66 @@ return (
   </div>
 
    
-    <div
-      key={categoryPage}
-      className={`grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 animate-category-page ${
-        categoryDirection === "next" ? "animate-slide-left" : "animate-slide-right"
-      }`}
-    >
-  {visibleCategoryOptions.map((option) => {
-    const active = category === option.key;
-    const cfg = CATEGORY_DATA[option.key];
+    <>
+  {/* MOBILE: horizontal cards with swipe hint */}
+  <div
+    key={`mobile-${categoryPage}`}
+    className={`-mr-6 overflow-x-auto pb-2 pr-6 sm:hidden transition-transform duration-500 ${
+      mobileCardsHint ? "-translate-x-6" : "translate-x-0"
+    }`}
+  >
+    <div className="flex w-max snap-x snap-mandatory gap-4">
+      {visibleCategoryOptions.map((option) => {
+        const active = category === option.key;
+        const cfg = CATEGORY_DATA[option.key];
+
+        return (
+          <button
+            key={option.key}
+            type="button"
+            onClick={() => {
+              setCategory(option.key);
+              setQuantities({});
+            }}
+            className={`group w-[82vw] max-w-[340px] shrink-0 snap-start rounded-2xl border p-5 text-left shadow-md transition-all duration-200 ${
+              active
+                ? "border-yellow-500 bg-yellow-50 shadow-xl scale-[1.01]"
+                : "border-yellow-400 bg-white"
+            }`}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md">
+                {cfg.icon}
+              </div>
+
+              <span className="rounded-full bg-red-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+                {cfg.badge}
+              </span>
+            </div>
+
+            <h3 className="mt-5 text-2xl font-extrabold text-black">
+              {cfg.title}
+            </h3>
+
+            <p className="mt-3 text-base leading-8 text-gray-600">
+              {cfg.subtitle}
+            </p>
+          </button>
+        );
+      })}
+    </div>
+  </div>
+
+  {/* DESKTOP / TABLET: old grid */}
+  <div
+    key={`desktop-${categoryPage}`}
+    className={`hidden sm:grid sm:grid-cols-2 xl:grid-cols-4 gap-4 animate-category-page ${
+      categoryDirection === "next" ? "animate-slide-left" : "animate-slide-right"
+    }`}
+  >
+    {visibleCategoryOptions.map((option) => {
+      const active = category === option.key;
+      const cfg = CATEGORY_DATA[option.key];
 
       return (
         <button
@@ -1125,6 +1198,7 @@ return (
       );
     })}
   </div>
+</>
   </div>
 </section>
 
