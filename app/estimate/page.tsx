@@ -1555,10 +1555,10 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
       </div>
     </div>
 
-    <div className="mt-4 rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+    <div className="mt-4 rounded-2xl border border-yellow-400 bg-yellow-50/40 p-4 shadow-sm">
   <div className="flex items-center justify-between">
     <div>
-      <p className="text-xs text-gray-500">Selected category</p>
+      <p className="text-xs text-gray-600">Selected category</p>
       <p className="text-sm font-bold text-black">
         {currentCategory.title}
       </p>
