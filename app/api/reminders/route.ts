@@ -3,7 +3,6 @@ import { supabase } from "@/lib/supabase";
 import {
   getMadridNow,
   formatMadridDateTime,
-  madridLocalStringToDate,
 } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
@@ -25,25 +24,30 @@ export async function GET() {
       );
     }
 
-    const nowMadrid = getMadridNow();
+    
     const sent: string[] = [];
 
     for (const order of orders || []) {
       if (!order.scheduled_at || !order.email) continue;
 
-      const scheduledMadrid = madridLocalStringToDate(order.scheduled_at);
-      const diffMs = scheduledMadrid.getTime() - nowMadrid.getTime();
+      const scheduledDate = new Date(order.scheduled_at);
+      const now = new Date();
+      const diffMs = scheduledDate.getTime() - Date.now();
       const diffHours = diffMs / (1000 * 60 * 60);
 
       console.log("⏰ REMINDER CHECK:", {
-        orderId: order.id,
-        nowMadrid,
-        scheduledMadrid,
-        diffHours,
-      });
+  orderId: order.id,
+  now,
+  scheduledDate,
+  diffHours,
+});
 
       if (diffHours > 0 && diffHours <= 12) {
-        const formatted = formatMadridDateTime(scheduledMadrid);
+        const formatted = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Europe/Madrid",
+  dateStyle: "medium",
+  timeStyle: "short",
+}).format(scheduledDate);
 
         const emailResult = await resend.emails.send({
           from: "TheVulgo <info@thevulgo.es>",
@@ -86,7 +90,7 @@ export async function GET() {
                           <tr>
                             <td style="padding:15px;font-size:12px;color:#666;">Schedule</td>
                             <td style="padding:15px;text-align:right;font-weight:700;color:#000;">
-                              ${formatted.date} at ${formatted.time}
+                              ${formatted}
                             </td>
                           </tr>
 

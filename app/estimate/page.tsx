@@ -950,9 +950,9 @@ const payload = {
   iva,
   total: totalWithTax,
   scheduledAt:
-    client.preferredDate && client.preferredTime
-      ? `${client.preferredDate}T${client.preferredTime}:00`
-      : null,
+  client.preferredDate && client.preferredTime
+    ? new Date(`${client.preferredDate}T${client.preferredTime}:00`).toISOString()
+    : null,
 };
 
 console.log("FRONT SEND PAYLOAD", payload);
