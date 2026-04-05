@@ -1545,9 +1545,9 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
         <h2 className="mt-4 text-2xl font-extrabold text-black">
           Your estimate
         </h2>
-        <p className="mt-2 text-sm leading-7 text-gray-600">
-          Add services on the left and your estimate will update instantly here.
-        </p>
+        <p className="mt-2 text-sm text-gray-600 lg:whitespace-nowrap">
+  Add services on the left and your estimate will update instantly here.
+</p>
       </div>
 
       <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md">
@@ -1555,7 +1555,7 @@ onBlur={() => setFieldSuccessIfValid("preferredTime")}
       </div>
     </div>
 
-    <div className="mt-6 rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4 shrink-0">
+    <div className="mt-4 rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4 shrink-0">
       <div className="text-sm text-gray-600">Selected category</div>
       <div className="mt-1 text-lg font-extrabold text-black">
         {currentCategory.title}
