@@ -28,17 +28,17 @@
       }
     },
     "trust": {
-      "typicalResponse": "24h",
-      "finishDetails": "Acabado limpio",
-      "localFocus": "Valencia",
-      "pricingScope": "Transparente"
-    },
-    "trustLabels": {
-      "typicalResponse": "Tiempo de respuesta",
-      "finishDetails": "Acabado y detalles",
-      "localFocus": "Servicio local",
-      "pricingScope": "Precio transparente"
-    },
+  "typicalResponse": "24h",
+  "finishDetails": "Acabado limpio",
+  "localFocus": "Valencia",
+  "pricingScope": "Transparente"
+},
+"trustLabels": {
+  "typicalResponse": "Tiempo de respuesta",
+  "finishDetails": "Acabado y detalles",
+  "localFocus": "Servicio local",
+  "pricingScope": "Precio transparente"
+},
     "featured": {
       "title": "Servicios destacados",
       "subtitle": "Trabajos frecuentes con instalación limpia, acabado cuidado y precio claro.",

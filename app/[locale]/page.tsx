@@ -142,10 +142,10 @@ export default function HomePage() {
       <section className="py-10 px-4 bg-white">
         <div className="w-full max-w-7xl mx-auto bg-white border border-yellow-400 rounded-2xl p-6 sm:p-8 shadow-xl">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
-            <TrustStat value="24h" label={t("trust.typicalResponse")} />
-            <TrustStat value="Clean" label={t("trust.finishDetails")} />
-            <TrustStat value="Valencia" label={t("trust.localFocus")} />
-            <TrustStat value="Transparent" label={t("trust.pricingScope")} />
+           <TrustStat value={t("trust.typicalResponse")} label={t("trustLabels.typicalResponse")} />
+<TrustStat value={t("trust.finishDetails")} label={t("trustLabels.finishDetails")} />
+<TrustStat value={t("trust.localFocus")} label={t("trustLabels.localFocus")} />
+<TrustStat value={t("trust.pricingScope")} label={t("trustLabels.pricingScope")} />
           </div>
         </div>
       </section>
