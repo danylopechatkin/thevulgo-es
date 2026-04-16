@@ -9,7 +9,7 @@
     "whatsapp": "WhatsApp"
   },
   "home": {
-    "whatsappText": "Hola, me gustaría pedir un presupuesto para un servicio en Valencia.",
+    "whatsappText": "Hola, me gustaría pedir presupuesto para un servicio en Valencia.",
     "hero": {
       "badge": "Valencia y alrededores · Acabado limpio · Respuesta rápida",
       "title1": "Instalaciones limpias en Valencia",
@@ -17,9 +17,9 @@
       "title3": "Sin desorden. Sin estrés.",
       "descriptionBefore": "Montaje de TV, fontanería, electricidad básica y pequeñas reparaciones del hogar —",
       "descriptionHighlight": "precio claro antes de empezar",
-      "descriptionAfter": "Apruebas antes de perforar. Limpieza incluida.",
+      "descriptionAfter": "Sin sorpresas. Apruebas antes de perforar. Limpieza incluida.",
       "exploreServices": "Ver servicios",
-      "estimatePrice": "Calcular precio",
+      "estimatePrice": "Ver precio",
       "chips": {
         "fastReplies": "Respuesta rápida",
         "cleanFinish": "Acabado limpio",
@@ -28,20 +28,20 @@
       }
     },
     "trust": {
-  "typicalResponse": "24h",
-  "finishDetails": "Acabado limpio",
-  "localFocus": "Valencia",
-  "pricingScope": "Transparente"
-},
-"trustLabels": {
-  "typicalResponse": "Tiempo de respuesta",
-  "finishDetails": "Acabado y detalles",
-  "localFocus": "Servicio local",
-  "pricingScope": "Precio transparente"
-},
+      "typicalResponse": "24h",
+      "finishDetails": "Acabado limpio",
+      "localFocus": "Valencia",
+      "pricingScope": "Sin sorpresas"
+    },
+    "trustLabels": {
+      "typicalResponse": "Tiempo de respuesta",
+      "finishDetails": "Acabado y detalles",
+      "localFocus": "Servicio local",
+      "pricingScope": "Precio claro"
+    },
     "featured": {
       "title": "Servicios destacados",
-      "subtitle": "Trabajos frecuentes con instalación limpia, acabado cuidado y precio claro.",
+      "subtitle": "Trabajos reales en Valencia con instalación limpia, acabado cuidado y precio claro desde el inicio.",
       "viewAll": "Ver todos los servicios",
       "items": {
         "0": {
@@ -123,11 +123,11 @@
       }
     },
     "why": {
-      "badge": "Valencia • Servicio profesional",
-      "title": "Trabajo limpio sin complicaciones",
-      "subtitle": "Acabado premium, respuesta rápida y trato directo.",
+      "badge": "Valencia · Servicio profesional",
+      "title": "Trabajo limpio, fácil y sin complicaciones",
+      "subtitle": "Acabado cuidado, respuesta rápida y trato directo desde el primer mensaje.",
       "ctaTitle": "¿Necesitas presupuesto hoy?",
-      "ctaText": "Elige un servicio y obtén un precio claro.",
+      "ctaText": "Elige un servicio y consigue un precio claro antes de reservar.",
       "ctaButton": "Pedir presupuesto",
       "items": {
         "0": {
@@ -143,12 +143,12 @@
         "2": {
           "badge": "Todo en uno",
           "title": "Multiservicio",
-          "text": "Un solo profesional para varios trabajos."
+          "text": "Un solo profesional para varios trabajos del hogar."
         },
         "3": {
           "badge": "Confianza",
           "title": "Sin sorpresas",
-          "text": "Precio claro y trabajo transparente."
+          "text": "Precio claro, trabajo transparente y comunicación directa."
         }
       }
     },
@@ -196,15 +196,15 @@
     },
     "faq": {
       "title": "FAQ",
-      "subtitle": "Respuestas rápidas a preguntas comunes.",
+      "subtitle": "Respuestas rápidas a preguntas habituales.",
       "items": {
         "0": {
           "q": "¿Trabajas fuera de Valencia?",
           "a": "Sí, también en alrededores según la distancia y la agenda."
         },
         "1": {
-          "q": "¿Puedes dar precio antes?",
-          "a": "Sí. Con fotos y una breve descripción se puede estimar en muchos casos."
+          "q": "¿Puedes dar precio antes de la visita?",
+          "a": "Sí. Con fotos y una breve descripción se puede dar una estimación en muchos casos."
         },
         "2": {
           "q": "¿Cuándo puedes venir?",
@@ -233,9 +233,9 @@
       }
     },
     "picker": {
-      "badge": "Presupuesto • Elige categoría",
+      "badge": "Presupuesto · Elige categoría",
       "title": "Elige tu servicio",
-      "subtitle": "Selecciona un servicio para obtener precio",
+      "subtitle": "Selecciona un servicio para ver el precio",
       "openAll": "Ver todos",
       "whatsapp": "WhatsApp ahora",
       "whatsappDisabled": "Número no configurado",
