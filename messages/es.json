@@ -1,4 +1,13 @@
 {
+  "nav": {
+    "services": "Servicios",
+    "howItWorks": "Cómo funciona",
+    "tips": "Guías",
+    "faq": "FAQ",
+    "estimate": "Presupuesto",
+    "getEstimate": "Pedir presupuesto",
+    "whatsapp": "WhatsApp"
+  },
   "home": {
     "whatsappText": "¡Hola! Me gustaría pedir un presupuesto en Valencia.",
     "hero": {

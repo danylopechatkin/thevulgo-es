@@ -1,4 +1,13 @@
 {
+  "nav": {
+    "services": "Services",
+    "howItWorks": "How it works",
+    "tips": "Guides",
+    "faq": "FAQ",
+    "estimate": "Estimate",
+    "getEstimate": "Get estimate",
+    "whatsapp": "WhatsApp"
+  },
   "home": {
     "whatsappText": "Hi! I’d like an estimate in Valencia.",
     "hero": {
