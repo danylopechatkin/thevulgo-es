@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "services": "Services",
+    "howItWorks": "How it works?",
+    "tips": "Tips & Guides",
+    "faq": "FAQ",
+    "estimate": "Estimate",
+    "getEstimate": "Get estimate",
+    "whatsapp": "WhatsApp"
+  },
+  "estimatePage": {
+    "step1": "Step 1 • Choose category",
+    "title": "Select your service category",
+    "swipeHint": "Swipe to see more categories"
+  }
+}

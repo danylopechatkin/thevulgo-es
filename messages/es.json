@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "services": "Servicios",
+    "howItWorks": "Cómo funciona",
+    "tips": "Consejos y guías",
+    "faq": "Preguntas frecuentes",
+    "estimate": "Presupuesto",
+    "getEstimate": "Solicitar presupuesto",
+    "whatsapp": "WhatsApp"
+  },
+  "estimatePage": {
+    "step1": "Paso 1 • Elige categoría",
+    "title": "Selecciona la categoría del servicio",
+    "swipeHint": "Desliza para ver más categorías"
+  }
+}
