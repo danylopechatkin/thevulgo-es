@@ -1,16 +1,300 @@
 {
-  "nav": {
-    "services": "Servicios",
-    "howItWorks": "Cómo funciona",
-    "tips": "Consejos y guías",
-    "faq": "Preguntas frecuentes",
-    "estimate": "Presupuesto",
-    "getEstimate": "Solicitar presupuesto",
-    "whatsapp": "WhatsApp"
-  },
-  "estimatePage": {
-    "step1": "Paso 1 • Elige categoría",
-    "title": "Selecciona la categoría del servicio",
-    "swipeHint": "Desliza para ver más categorías"
+  "home": {
+    "whatsappText": "¡Hola! Me gustaría pedir un presupuesto en Valencia.",
+    "hero": {
+      "badge": "Valencia y alrededores · Acabado limpio · Respuesta rápida",
+      "title1": "Instalaciones limpias en Valencia",
+      "title2": "SIN SORPRESAS",
+      "title3": "Sin desorden. Sin estrés.",
+      "descriptionBefore": "Montaje de TV, fontanería, electricidad básica y arreglos del hogar —",
+      "descriptionHighlight": "precio claro antes de empezar",
+      "descriptionAfter": "Apruebas antes de perforar. Limpieza incluida.",
+      "exploreServices": "Ver servicios",
+      "estimatePrice": "Calcular precio",
+      "chips": {
+        "fastReplies": "Respuestas rápidas",
+        "cleanFinish": "Acabado limpio",
+        "proTools": "Herramientas pro",
+        "valenciaArea": "Zona Valencia"
+      }
+    },
+    "trust": {
+      "typicalResponse": "Respuesta típica",
+      "finishDetails": "Acabado y detalles",
+      "localFocus": "Enfoque local",
+      "pricingScope": "Precio y alcance"
+    },
+    "featured": {
+      "title": "Servicios destacados",
+      "subtitle": "Trabajos populares realizados con instalación limpia y acabado profesional.",
+      "viewAll": "Ver todos los servicios",
+      "items": [
+        {
+          "title": "Montaje en pared e instalaciones",
+          "text": "TVs, monitores, estantes, espejos y soportes — nivelado, seguro y alineado con precisión.",
+          "badge": "Top"
+        },
+        {
+          "title": "Audio integrado y altavoces",
+          "text": "Altavoces de techo y pared, barras de sonido y cableado limpio con acabado ordenado.",
+          "badge": "Nuevo"
+        },
+        {
+          "title": "Pladur y acabados",
+          "text": "Cortes, reparaciones, enlucido, lijado y preparación para pintura — trabajo limpio listo para terminar.",
+          "badge": "Pro"
+        },
+        {
+          "title": "Montaje de muebles y accesorios",
+          "text": "Montaje, anclajes, barras de cortina, persianas, accesorios de baño e instalaciones pequeñas.",
+          "badge": "Popular"
+        },
+        {
+          "title": "Fontanería básica",
+          "text": "Grifos, fregaderos, inodoros, válvulas y pequeñas fugas — rápido y limpio.",
+          "badge": "Fontanería"
+        },
+        {
+          "title": "Electricidad básica",
+          "text": "Luces, interruptores, enchufes, montaje y cableado ordenado para mejoras del día a día.",
+          "badge": "Seguro"
+        },
+        {
+          "title": "Hogar inteligente y dispositivos",
+          "text": "Cámaras, videoporteros, cerraduras inteligentes, sensores y configuración práctica para hogares modernos.",
+          "badge": "Smart"
+        },
+        {
+          "title": "Puertas y herrajes",
+          "text": "Manillas, bisagras, cierrapuertas, ajustes de pestillos y pequeñas alineaciones para un mejor uso diario.",
+          "badge": "Fix"
+        },
+        {
+          "title": "Instalaciones de baño",
+          "text": "Espejos, armarios, soportes, estantes e instalación limpia para un baño más acabado.",
+          "badge": "Baño"
+        }
+      ]
+    },
+    "how": {
+      "title": "Cómo funciona",
+      "subtitle": "Proceso simple. Comunicación clara. Resultado limpio desde el primer mensaje hasta el trabajo terminado.",
+      "step": "Paso",
+      "items": [
+        {
+          "title": "Elige un servicio",
+          "text": "Selecciona la categoría que encaja con tu trabajo: montaje de TV, fontanería, electricidad, pladur, muebles o smart home."
+        },
+        {
+          "title": "Envía fotos o detalles",
+          "text": "Comparte 2–4 fotos, tu ubicación en Valencia y una breve descripción para revisar bien el trabajo."
+        },
+        {
+          "title": "Recibe un presupuesto claro",
+          "text": "Recibes un rango de precio transparente y una explicación clara de qué influye en el coste final."
+        },
+        {
+          "title": "Confirma la reserva",
+          "text": "Una vez claro el alcance, se confirma la cita con el plan y los materiales adecuados."
+        },
+        {
+          "title": "Instalación limpia y profesional",
+          "text": "Trabajo medido, alineado y bien rematado con atención a los detalles, herrajes y presentación final."
+        },
+        {
+          "title": "Revisión final y limpieza",
+          "text": "Antes de irnos, todo se revisa contigo y la zona queda ordenada, limpia y lista para usar."
+        }
+      ]
+    },
+    "why": {
+      "badge": "Valencia • Handyman profesional",
+      "title": "Pensado para un trabajo limpio y cero dolores de cabeza",
+      "subtitle": "Acabado premium, respuesta rápida y asesoramiento honesto — el tipo de servicio que recomendarías a un amigo.",
+      "ctaTitle": "¿Necesitas presupuesto hoy?",
+      "ctaText": "Elige una categoría y abre su calculadora — obtendrás un rango de precio claro.",
+      "ctaButton": "Solicitar presupuesto",
+      "items": [
+        {
+          "badge": "Calidad",
+          "title": "Acabado limpio",
+          "text": "Líneas rectas, bordes limpios y buenos detalles. Tu hogar se mantiene limpio."
+        },
+        {
+          "badge": "Rapidez",
+          "title": "Respuesta rápida",
+          "text": "Valencia y alrededores. Programación rápida y hora estimada clara — sin perseguir a nadie."
+        },
+        {
+          "badge": "Todo en uno",
+          "title": "Multiservicio",
+          "text": "Un solo especialista para muchos trabajos pequeños — menos coordinación, mejores resultados."
+        },
+        {
+          "badge": "Confianza",
+          "title": "Sin sorpresas",
+          "text": "Alcance claro, recomendaciones honestas y precio transparente."
+        }
+      ]
+    },
+    "guides": {
+      "title": "Consejos y guías",
+      "subtitle": "Consejos cortos y útiles para evitar errores comunes y lograr un resultado más limpio, seguro y bonito.",
+      "items": [
+        {
+          "title": "Altura para montar la TV",
+          "text": "La mejor altura depende de la distancia al sofá y del tamaño de la pantalla. Una buena regla es que el centro de la TV quede cerca del nivel de los ojos al estar sentado."
+        },
+        {
+          "title": "Elegir anclajes",
+          "text": "Pladur, ladrillo y hormigón necesitan herrajes distintos. Usar anclajes incorrectos puede hacer inseguros estantes, TVs o espejos."
+        },
+        {
+          "title": "Ocultación de cables",
+          "text": "La canaleta es la opción más rápida con aspecto limpio. Pasar cables por dentro de la pared solo es adecuado cuando el tipo de pared lo permite con seguridad."
+        },
+        {
+          "title": "Antes de perforar la pared",
+          "text": "Confirma siempre el material de la pared, el recorrido de cables y la altura final antes de perforar. Pequeños errores de planificación crean arreglos caros después."
+        },
+        {
+          "title": "Colocación de espejos",
+          "text": "Los espejos de baño y pasillo deben centrarse con cuidado y colocarse a una altura equilibrada para el uso diario."
+        },
+        {
+          "title": "Espaciado de estantes",
+          "text": "Una buena instalación de estantes no depende solo de que estén nivelados. También importan la distancia, la simetría y el mobiliario alrededor."
+        },
+        {
+          "title": "Pequeñas mejoras de fontanería",
+          "text": "Cambiar grifos, duchas y accesorios visibles puede mejorar mucho la sensación de una cocina o baño sin hacer una reforma completa."
+        },
+        {
+          "title": "Planificación de luminarias",
+          "text": "Antes de cambiar una lámpara, revisa compatibilidad, base de montaje y función de la habitación para lograr iluminación práctica y aspecto limpio."
+        },
+        {
+          "title": "Agrupa trabajos pequeños",
+          "text": "Lo más eficiente suele ser reunir varias tareas pequeñas en una sola visita en lugar de reservar cada problema por separado."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "subtitle": "Respuestas rápidas a las preguntas más comunes.",
+      "items": [
+        {
+          "q": "¿Trabajáis fuera de Valencia?",
+          "a": "THEVULGO trabaja principalmente en Valencia y alrededores. También pueden aceptarse solicitudes fuera de la ciudad según la distancia y la agenda — solo comparte tu ubicación para confirmar disponibilidad."
+        },
+        {
+          "q": "¿Podéis dar precio antes de la visita?",
+          "a": "En la mayoría de los casos, sí. Tras revisar fotos y una breve descripción, THEVULGO puede dar un rango de precio estimado. El precio final se confirma una vez verificados el alcance completo y las condiciones de la pared."
+        },
+        {
+          "q": "¿Con cuánta rapidez se puede programar el servicio?",
+          "a": "Muchos trabajos estándar pueden programarse el mismo día o al día siguiente según disponibilidad. Siempre se da una franja clara de confirmación antes de cerrar la cita."
+        },
+        {
+          "q": "¿Lleváis herramientas profesionales y herrajes?",
+          "a": "Sí. THEVULGO llega completamente equipado con herramientas profesionales y herrajes de montaje estándar. Si se necesitan anclajes o materiales especiales, se comentan antes de la instalación."
+        },
+        {
+          "q": "¿Hacéis recableado eléctrico complejo?",
+          "a": "No. THEVULGO realiza tareas eléctricas básicas como instalación de lámparas, interruptores, enchufes y trabajos limpios de montaje. El recableado complejo debe hacerlo un electricista autorizado."
+        },
+        {
+          "q": "¿Se puede reservar sin inspección en persona?",
+          "a": "Sí. Muchas instalaciones pueden confirmarse a distancia usando fotos y medidas. Si algún detalle técnico no queda claro, se pedirá información adicional antes de confirmar la reserva."
+        },
+        {
+          "q": "¿Qué información hace falta para empezar?",
+          "a": "Para preparar un presupuesto preciso, THEVULGO suele necesitar 2–4 fotos de la zona, el servicio solicitado, tu ubicación en Valencia y la franja horaria que prefieres."
+        },
+        {
+          "q": "¿La limpieza está incluida después del trabajo?",
+          "a": "Por supuesto. El trabajo limpio es un estándar básico de THEVULGO. La zona se deja ordenada y se retiran los pequeños residuos tras la instalación."
+        }
+      ]
+    },
+    "picker": {
+      "badge": "Presupuesto • Elige una categoría",
+      "title": "Elige tu servicio",
+      "subtitle": "Selecciona un servicio para obtener un presupuesto instantáneo",
+      "openAll": "Abrir todos los servicios",
+      "whatsapp": "WhatsApp",
+      "whatsappDisabled": "El número de WhatsApp aún no está configurado",
+      "seeDetails": "Ver detalles",
+      "bottomNote": "Precio transparente — conoce el coste antes de reservar",
+      "items": [
+        {
+          "title": "Montaje de TV e instalaciones en pared",
+          "desc": "<strong>TVs</strong>, estantes, espejos y canalización de cables.",
+          "badge": "Top"
+        },
+        {
+          "title": "Montaje de muebles",
+          "desc": "<strong>IKEA</strong>, armarios, camas y muebles.",
+          "badge": "Popular"
+        },
+        {
+          "title": "Servicios eléctricos",
+          "desc": "<strong>Luces</strong>, interruptores, enchufes y básicos.",
+          "badge": "Seguro"
+        },
+        {
+          "title": "Fontanería",
+          "desc": "<strong>Grifos</strong>, fregaderos, inodoros y fugas.",
+          "badge": "Rápido"
+        },
+        {
+          "title": "Reparaciones del hogar",
+          "desc": "<strong>Pequeñas</strong> reparaciones y mantenimiento.",
+          "badge": "Quick"
+        },
+        {
+          "title": "Paredes y reparaciones de pladur",
+          "desc": "<strong>Reparación</strong>, anclajes, perforaciones y arreglos.",
+          "badge": "Pro"
+        },
+        {
+          "title": "Puertas y herrajes",
+          "desc": "<strong>Manillas</strong>, bisagras, cerraduras y cierrapuertas.",
+          "badge": "Fix"
+        },
+        {
+          "title": "Hogar inteligente y dispositivos",
+          "desc": "<strong>Cámaras</strong>, cerraduras, timbres y configuración.",
+          "badge": "Smart"
+        },
+        {
+          "title": "Instalaciones de cocina",
+          "desc": "<strong>Armarios</strong>, estantes, luces y accesorios.",
+          "badge": "Cocina"
+        },
+        {
+          "title": "Instalaciones de baño",
+          "desc": "<strong>Espejos</strong>, armarios, soportes y accesorios.",
+          "badge": "Baño"
+        },
+        {
+          "title": "Preparación de piso y entrada",
+          "desc": "<strong>Cortinas</strong>, muebles e instalaciones al mudarse.",
+          "badge": "Setup"
+        },
+        {
+          "title": "Exterior de la casa y trabajos al aire libre",
+          "desc": "<strong>Vallas</strong>, tejados, fachadas y reparaciones exteriores.",
+          "badge": "Casa"
+        }
+      ]
+    },
+    "footer": {
+      "brand": "THEVULGO · Valencia",
+      "rights": "TheVulgo. Todos los derechos reservados.",
+      "location": "Valencia, España",
+      "fastResponse": "Respuesta rápida",
+      "cleanFinish": "Acabado limpio"
+    }
   }
 }

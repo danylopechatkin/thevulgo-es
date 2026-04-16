@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Sparkles,
   Zap,
   ShieldCheck,
   Wrench,
   ArrowRight,
-  Star,
   Check,
   Clock,
   MapPin,
@@ -20,36 +20,69 @@ import {
 
 export default function HomePage() {
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("home");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const goEstimate = () => router.push("/estimate");
+  const goEstimate = () => router.push(`/${locale}/estimate`);
 
-  // WhatsApp пока нет номера: оставляем выключенным
-const whatsappEnabled = true;
+  const whatsappEnabled = true;
 
-const WHATSAPP_NUMBER = "14379074913"; 
-// ⚠️ ВАЖНО: для Канады нужен код страны 1
-// Поэтому не 437..., а 1437...
+  const WHATSAPP_NUMBER = "14379074913";
 
-const whatsappText = encodeURIComponent(
-  "Hi! I’d like an estimate in Valencia."
-);
+  const whatsappText = encodeURIComponent(
+    t("whatsappText")
+  );
 
-const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
+  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
+
+  const FAQS = [
+    {
+      q: t("faq.items.0.q"),
+      a: t("faq.items.0.a"),
+    },
+    {
+      q: t("faq.items.1.q"),
+      a: t("faq.items.1.a"),
+    },
+    {
+      q: t("faq.items.2.q"),
+      a: t("faq.items.2.a"),
+    },
+    {
+      q: t("faq.items.3.q"),
+      a: t("faq.items.3.a"),
+    },
+    {
+      q: t("faq.items.4.q"),
+      a: t("faq.items.4.a"),
+    },
+    {
+      q: t("faq.items.5.q"),
+      a: t("faq.items.5.a"),
+    },
+    {
+      q: t("faq.items.6.q"),
+      a: t("faq.items.6.a"),
+    },
+    {
+      q: t("faq.items.7.q"),
+      a: t("faq.items.7.a"),
+    },
+  ];
+
   return (
-  <div className="overflow-x-hidden bg-white text-black font-sans">
-      
-
+    <div className="overflow-x-hidden bg-white text-black font-sans">
       {/* HERO */}
       <section
-  id="top"
-  className="relative min-h-[88vh] overflow-hidden bg-white px-4 pt-24 text-center flex flex-col items-center justify-center"
->
-        {/* premium background */}
+        id="top"
+        className="relative min-h-[88vh] overflow-hidden bg-white px-4 pt-24 text-center flex flex-col items-center justify-center"
+      >
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-white" />
           <div className="absolute left-1/2 -top-28 h-[620px] w-[620px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
@@ -59,52 +92,48 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
         <div className="w-full max-w-6xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-yellow-400 text-sm font-medium text-gray-800 mb-6 bg-white/80 backdrop-blur shadow-sm">
             <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
-            Valencia & nearby · Clean finish · Fast response
+            {t("hero.badge")}
           </div>
 
-         <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-6xl font-extrabold text-black leading-tight mb-6 text-center">
-  <span className="block">
-    Clean installs in Valencia
-  </span>
+          <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-6xl font-extrabold text-black leading-tight mb-6 text-center">
+            <span className="block">{t("hero.title1")}</span>
 
-  <span className="block text-yellow-400 tracking-[0.08em] mt-3">
-    NO SURPRISES
-  </span>
+            <span className="block text-yellow-400 tracking-[0.08em] mt-3">
+              {t("hero.title2")}
+            </span>
 
-  <span className="block mt-3">
-    No mess. No stress.
-  </span>
-</h1>
+            <span className="block mt-3">{t("hero.title3")}</span>
+          </h1>
 
-<p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-  TV mounting, plumbing, basic electrical and home fixes —{" "}
-  <span className="font-semibold text-gray-800">clear pricing before we start</span>.
-  You approve before drilling. Cleanup included.
-</p>
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+            {t("hero.descriptionBefore")}{" "}
+            <span className="font-semibold text-gray-800">
+              {t("hero.descriptionHighlight")}
+            </span>
+            . {t("hero.descriptionAfter")}
+          </p>
 
-          {/* buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <button
-  onClick={() => router.push("/services")}
-  className="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold shadow-md md:hover:scale-105 transition"
->
-  Explore Services
-</button>
+              onClick={() => router.push(`/${locale}/services`)}
+              className="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold shadow-md md:hover:scale-105 transition"
+            >
+              {t("hero.exploreServices")}
+            </button>
 
             <button
               onClick={goEstimate}
               className="bg-white border border-gray-300 text-black px-8 py-4 rounded-2xl font-semibold shadow-md md:hover:scale-105 transition"
             >
-              Estimate price
+              {t("hero.estimatePrice")}
             </button>
           </div>
 
-          {/* mini trust chips */}
           <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-gray-700">
-            <Chip icon={<Clock className="h-4 w-4" />} text="Fast replies" />
-            <Chip icon={<Check className="h-4 w-4" />} text="Clean finish" />
-            <Chip icon={<Wrench className="h-4 w-4" />} text="Pro tools" />
-            <Chip icon={<MapPin className="h-4 w-4" />} text="Valencia area" />
+            <Chip icon={<Clock className="h-4 w-4" />} text={t("hero.chips.fastReplies")} />
+            <Chip icon={<Check className="h-4 w-4" />} text={t("hero.chips.cleanFinish")} />
+            <Chip icon={<Wrench className="h-4 w-4" />} text={t("hero.chips.proTools")} />
+            <Chip icon={<MapPin className="h-4 w-4" />} text={t("hero.chips.valenciaArea")} />
           </div>
         </div>
       </section>
@@ -113,133 +142,137 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
       <section className="py-10 px-4 bg-white">
         <div className="w-full max-w-7xl mx-auto bg-white border border-yellow-400 rounded-2xl p-6 sm:p-8 shadow-xl">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
-            <TrustStat value="24h" label="Typical response" />
-            <TrustStat value="Clean" label="Finish & details" />
-            <TrustStat value="Valencia" label="Local focus" />
-            <TrustStat value="Transparent" label="Pricing & scope" />
+            <TrustStat value="24h" label={t("trust.typicalResponse")} />
+            <TrustStat value="Clean" label={t("trust.finishDetails")} />
+            <TrustStat value="Valencia" label={t("trust.localFocus")} />
+            <TrustStat value="Transparent" label={t("trust.pricingScope")} />
           </div>
         </div>
       </section>
 
-     {/* FEATURED SERVICES */}
-<section id="services" className="py-16 sm:py-20 px-4">
-  <div className="w-full max-w-7xl mx-auto">
-    <div className="text-center">
-      <h2 className="text-3xl sm:text-4xl font-extrabold">Featured services</h2>
-      <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-        Popular jobs delivered with clean installation and a professional finish.
-      </p>
-    </div>
+      {/* FEATURED SERVICES */}
+      <section id="services" className="py-16 sm:py-20 px-4">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="text-center">
+            <h2 className="text-3xl sm:text-4xl font-extrabold">{t("featured.title")}</h2>
+            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+              {t("featured.subtitle")}
+            </p>
+          </div>
 
-    <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <FeatureCard
-        title="Wall mounting & installs"
-        text="TVs, monitors, shelves, mirrors and brackets — level, secure and precisely aligned."
-        badge="Top"
-      />
-      <FeatureCard
-        title="Built-in audio & speakers"
-        text="Ceiling and wall speakers, soundbars, and clean cable routing with a tidy finish."
-        badge="New"
-      />
-      <FeatureCard
-        title="Drywall & finishing"
-        text="Cutouts, patching, skim coat, sanding and paint prep — clean ready-to-finish work."
-        badge="Pro"
-      />
-      <FeatureCard
-        title="Furniture & fixtures"
-        text="Assembly, anchors, curtain rods, blinds, bathroom accessories and small installs."
-        badge="Popular"
-      />
-      <FeatureCard
-        title="Basic plumbing"
-        text="Faucets, sinks, toilets, valves and small leaks — done quickly and neatly."
-        badge="Fontanería"
-      />
-      <FeatureCard
-        title="Basic electrical"
-        text="Lights, switches, sockets, mounting and tidy wiring for clean everyday upgrades."
-        badge="Safe"
-      />
-      <FeatureCard
-        title="Smart home & devices"
-        text="Cameras, video doorbells, smart locks, sensors and practical device setup for modern homes."
-        badge="Smart"
-      />
-      <FeatureCard
-        title="Doors & hardware"
-        text="Handles, hinges, closers, latch fixes and small alignment work to improve daily use."
-        badge="Fix"
-      />
-      <FeatureCard
-        title="Bathroom installations"
-        text="Mirrors, cabinets, holders, shelves and clean fitting work for a more finished bathroom."
-        badge="Bath"
-      />
-    </div>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <FeatureCard
+              title={t("featured.items.0.title")}
+              text={t("featured.items.0.text")}
+              badge={t("featured.items.0.badge")}
+            />
+            <FeatureCard
+              title={t("featured.items.1.title")}
+              text={t("featured.items.1.text")}
+              badge={t("featured.items.1.badge")}
+            />
+            <FeatureCard
+              title={t("featured.items.2.title")}
+              text={t("featured.items.2.text")}
+              badge={t("featured.items.2.badge")}
+            />
+            <FeatureCard
+              title={t("featured.items.3.title")}
+              text={t("featured.items.3.text")}
+              badge={t("featured.items.3.badge")}
+            />
+            <FeatureCard
+              title={t("featured.items.4.title")}
+              text={t("featured.items.4.text")}
+              badge={t("featured.items.4.badge")}
+            />
+            <FeatureCard
+              title={t("featured.items.5.title")}
+              text={t("featured.items.5.text")}
+              badge={t("featured.items.5.badge")}
+            />
+            <FeatureCard
+              title={t("featured.items.6.title")}
+              text={t("featured.items.6.text")}
+              badge={t("featured.items.6.badge")}
+            />
+            <FeatureCard
+              title={t("featured.items.7.title")}
+              text={t("featured.items.7.text")}
+              badge={t("featured.items.7.badge")}
+            />
+            <FeatureCard
+              title={t("featured.items.8.title")}
+              text={t("featured.items.8.text")}
+              badge={t("featured.items.8.badge")}
+            />
+          </div>
 
-    <div className="mt-10 text-center">
-      <button
-        onClick={() => router.push("/services")}
-        className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
-      >
-        View all services <ArrowRight className="h-4 w-4" />
-      </button>
-    </div>
-  </div>
-</section>
+          <div className="mt-10 text-center">
+            <button
+              onClick={() => router.push(`/${locale}/services`)}
+              className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
+            >
+              {t("featured.viewAll")} <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* HOW IT WORKS */}
-<section id="how" className="py-16 sm:py-20 px-4 bg-white">
-  <div className="w-full max-w-7xl mx-auto text-center">
-    <h2 className="text-3xl sm:text-4xl font-extrabold">How it works</h2>
-    <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-      Simple process. Clear communication. Clean result from the first message to the finished job
-    </p>
+      <section id="how" className="py-16 sm:py-20 px-4 bg-white">
+        <div className="w-full max-w-7xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-extrabold">{t("how.title")}</h2>
+          <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+            {t("how.subtitle")}
+          </p>
 
-    <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <StepCard
-        n="1"
-        title="Choose a service"
-        text="Pick the category that matches your job: TV mounting, plumbing, electrical, drywall, furniture or smart home."
-        icon={<Wrench className="h-5 w-5" />}
-      />
-      <StepCard
-        n="2"
-        title="Send photos or details"
-        text="Share 2–4 photos, your location in Valencia and a short description so the job can be reviewed properly."
-        icon={<Camera className="h-5 w-5" />}
-      />
-      <StepCard
-        n="3"
-        title="Get a clear estimate"
-        text="You receive a transparent price range and clear explanation of what affects the final cost."
-        icon={<MessageCircle className="h-5 w-5" />}
-      />
-      <StepCard
-        n="4"
-        title="Confirm the booking"
-        text="Once the scope is clear, the appointment time is confirmed with the right plan and materials in mind."
-        icon={<Check className="h-5 w-5" />}
-      />
-      <StepCard
-        n="5"
-        title="Clean professional install"
-        text="Measured, aligned and neatly finished work with attention to details, hardware and final presentation."
-        icon={<BadgeCheck className="h-5 w-5" />}
-      />
-      <StepCard
-        n="6"
-        title="Final check and cleanup"
-        text="Before leaving, everything is checked with you and the area is left tidy, clean and ready to use."
-        icon={<Sparkles className="h-5 w-5" />}
-      />
-    </div>
-  </div>
-</section>
-
-      
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <StepCard
+              n="1"
+              title={t("how.items.0.title")}
+              text={t("how.items.0.text")}
+              icon={<Wrench className="h-5 w-5" />}
+              stepLabel={t("how.step")}
+            />
+            <StepCard
+              n="2"
+              title={t("how.items.1.title")}
+              text={t("how.items.1.text")}
+              icon={<Camera className="h-5 w-5" />}
+              stepLabel={t("how.step")}
+            />
+            <StepCard
+              n="3"
+              title={t("how.items.2.title")}
+              text={t("how.items.2.text")}
+              icon={<MessageCircle className="h-5 w-5" />}
+              stepLabel={t("how.step")}
+            />
+            <StepCard
+              n="4"
+              title={t("how.items.3.title")}
+              text={t("how.items.3.text")}
+              icon={<Check className="h-5 w-5" />}
+              stepLabel={t("how.step")}
+            />
+            <StepCard
+              n="5"
+              title={t("how.items.4.title")}
+              text={t("how.items.4.text")}
+              icon={<BadgeCheck className="h-5 w-5" />}
+              stepLabel={t("how.step")}
+            />
+            <StepCard
+              n="6"
+              title={t("how.items.5.title")}
+              text={t("how.items.5.text")}
+              icon={<Sparkles className="h-5 w-5" />}
+              stepLabel={t("how.step")}
+            />
+          </div>
+        </div>
+      </section>
 
       {/* WHY CHOOSE */}
       <section id="why" className="relative overflow-hidden px-4 py-16 sm:py-20">
@@ -253,32 +286,51 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
           <div className="mx-auto max-w-2xl text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-3 py-1 text-xs font-semibold text-black shadow-sm">
               <span className="h-2 w-2 rounded-full bg-yellow-400" />
-              Valencia • Professional Handyman
+              {t("why.badge")}
             </div>
 
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-black sm:text-4xl">
-              Built for clean work and zero headaches
+              {t("why.title")}
             </h2>
 
             <p className="mt-3 text-sm leading-relaxed text-gray-600 sm:text-base">
-              Premium finish, quick response, and honest guidance — the kind of service
-              you’d recommend to a friend.
+              {t("why.subtitle")}
             </p>
           </div>
 
           <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <WhyCard icon={<Sparkles className="h-5 w-5" />} badge="Quality" title="Clean finish" text="Straight lines, neat edges, tidy details. Your home stays clean." />
-            <WhyCard icon={<Zap className="h-5 w-5" />} badge="Speed" title="Fast response" text="Valencia + nearby. Quick scheduling and clear ETA — no chasing." />
-            <WhyCard icon={<Wrench className="h-5 w-5" />} badge="All-in-one" title="Multi-skill" text="One specialist for many small jobs — less coordination, better results." />
-            <WhyCard icon={<ShieldCheck className="h-5 w-5" />} badge="Trust" title="No surprises" text="Clear scope, honest recommendations, and transparent pricing." />
+            <WhyCard
+              icon={<Sparkles className="h-5 w-5" />}
+              badge={t("why.items.0.badge")}
+              title={t("why.items.0.title")}
+              text={t("why.items.0.text")}
+            />
+            <WhyCard
+              icon={<Zap className="h-5 w-5" />}
+              badge={t("why.items.1.badge")}
+              title={t("why.items.1.title")}
+              text={t("why.items.1.text")}
+            />
+            <WhyCard
+              icon={<Wrench className="h-5 w-5" />}
+              badge={t("why.items.2.badge")}
+              title={t("why.items.2.title")}
+              text={t("why.items.2.text")}
+            />
+            <WhyCard
+              icon={<ShieldCheck className="h-5 w-5" />}
+              badge={t("why.items.3.badge")}
+              title={t("why.items.3.title")}
+              text={t("why.items.3.text")}
+            />
           </div>
 
           <div className="mt-10 rounded-2xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-7">
             <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
               <div>
-                <p className="text-lg font-extrabold text-black">Need an estimate today?</p>
+                <p className="text-lg font-extrabold text-black">{t("why.ctaTitle")}</p>
                 <p className="mt-1 text-sm text-gray-600">
-                  Pick a category and open its calculator — you’ll get a clear price range.
+                  {t("why.ctaText")}
                 </p>
               </div>
 
@@ -286,7 +338,7 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
                 onClick={goEstimate}
                 className="inline-flex items-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 text-sm font-extrabold text-black shadow-lg transition-transform duration-200 hover:scale-[1.02]"
               >
-                Get estimate <ArrowRight className="h-4 w-4" />
+                {t("why.ctaButton")} <ArrowRight className="h-4 w-4" />
               </button>
             </div>
           </div>
@@ -294,173 +346,106 @@ const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
       </section>
 
       {/* TIPS & GUIDES */}
-<section id="guides" className="py-16 sm:py-20 px-4 bg-white">
-  <div className="w-full max-w-7xl mx-auto">
-    <div className="text-center">
-      <h2 className="text-3xl sm:text-4xl font-extrabold">Tips & Guides</h2>
-      <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-        Short, useful tips to avoid common mistakes and get a cleaner, safer and better-looking result.
-      </p>
-    </div>
+      <section id="guides" className="py-16 sm:py-20 px-4 bg-white">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="text-center">
+            <h2 className="text-3xl sm:text-4xl font-extrabold">{t("guides.title")}</h2>
+            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+              {t("guides.subtitle")}
+            </p>
+          </div>
 
-    <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <GuideCard
-        title="TV mounting height"
-        text="The best height depends on sofa distance and screen size. A good rule is to keep the center of the TV close to eye level when seated."
-      />
-      <GuideCard
-        title="Choosing anchors"
-        text="Plasterboard, brick and concrete all need different hardware. Wrong anchors can make shelves, TVs or mirrors unsafe."
-      />
-      <GuideCard
-        title="Cable concealment"
-        text="Raceway is the fastest clean-looking option. In-wall routing is only suitable when the wall type allows it safely."
-      />
-      <GuideCard
-        title="Before drilling the wall"
-        text="Always confirm wall material, cable routes and final height before drilling. Small planning mistakes create expensive fixes later."
-      />
-      <GuideCard
-        title="Mirror positioning"
-        text="Bathroom and hallway mirrors should be centered carefully and placed at a height that feels balanced for everyday use."
-      />
-      <GuideCard
-        title="Shelf spacing"
-        text="Good shelf installation is not only about level mounting. Spacing, symmetry and surrounding furniture matter too."
-      />
-      <GuideCard
-        title="Small plumbing upgrades"
-        text="Replacing faucets, shower heads and visible fittings can improve the feel of a kitchen or bathroom without full renovation."
-      />
-      <GuideCard
-        title="Light fixture planning"
-        text="Before replacing a light, check compatibility, mounting base and room purpose to get both practical lighting and clean appearance."
-      />
-      <GuideCard
-        title="Bundle small jobs together"
-        text="The most efficient approach is often grouping several small tasks into one visit instead of booking each issue separately."
-      />
-    </div>
-  </div>
-</section>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <GuideCard title={t("guides.items.0.title")} text={t("guides.items.0.text")} />
+            <GuideCard title={t("guides.items.1.title")} text={t("guides.items.1.text")} />
+            <GuideCard title={t("guides.items.2.title")} text={t("guides.items.2.text")} />
+            <GuideCard title={t("guides.items.3.title")} text={t("guides.items.3.text")} />
+            <GuideCard title={t("guides.items.4.title")} text={t("guides.items.4.text")} />
+            <GuideCard title={t("guides.items.5.title")} text={t("guides.items.5.text")} />
+            <GuideCard title={t("guides.items.6.title")} text={t("guides.items.6.text")} />
+            <GuideCard title={t("guides.items.7.title")} text={t("guides.items.7.text")} />
+            <GuideCard title={t("guides.items.8.title")} text={t("guides.items.8.text")} />
+          </div>
+        </div>
+      </section>
 
-   {/* FAQ */}
-<section id="faq" className="py-16 sm:py-20 px-4 bg-white">
-  <div className="w-full max-w-7xl mx-auto">
-    <div className="text-center">
-      <h2 className="text-3xl sm:text-4xl font-extrabold">FAQ</h2>
-      <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-        Quick answers to the most common questions.
-      </p>
-    </div>
+      {/* FAQ */}
+      <section id="faq" className="py-16 sm:py-20 px-4 bg-white">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="text-center">
+            <h2 className="text-3xl sm:text-4xl font-extrabold">{t("faq.title")}</h2>
+            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+              {t("faq.subtitle")}
+            </p>
+          </div>
 
-    {/* 2 independent columns (no equal-height rows) */}
-    <div className="mt-10 max-w-5xl mx-auto md:flex gap-6">
-      <div className="flex-1 space-y-4">
-        {FAQS.filter((_, i) => i % 2 === 0).map((x) => {
-          const idx = FAQS.indexOf(x);
-          return (
-            <FaqItem
-              key={x.q}
-              q={x.q}
-              a={x.a}
-              isOpen={openFaq === idx}
-              onToggle={() => setOpenFaq(openFaq === idx ? null : idx)}
-            />
-          );
-        })}
-      </div>
+          <div className="mt-10 max-w-5xl mx-auto md:flex gap-6">
+            <div className="flex-1 space-y-4">
+              {FAQS.filter((_, i) => i % 2 === 0).map((x) => {
+                const idx = FAQS.indexOf(x);
+                return (
+                  <FaqItem
+                    key={x.q}
+                    q={x.q}
+                    a={x.a}
+                    isOpen={openFaq === idx}
+                    onToggle={() => setOpenFaq(openFaq === idx ? null : idx)}
+                  />
+                );
+              })}
+            </div>
 
-      <div className="flex-1 space-y-4 mt-4 md:mt-0">
-        {FAQS.filter((_, i) => i % 2 === 1).map((x) => {
-          const idx = FAQS.indexOf(x);
-          return (
-            <FaqItem
-              key={x.q}
-              q={x.q}
-              a={x.a}
-              isOpen={openFaq === idx}
-              onToggle={() => setOpenFaq(openFaq === idx ? null : idx)}
-            />
-          );
-        })}
-      </div>
-    </div>
-  </div>
-</section>
+            <div className="flex-1 space-y-4 mt-4 md:mt-0">
+              {FAQS.filter((_, i) => i % 2 === 1).map((x) => {
+                const idx = FAQS.indexOf(x);
+                return (
+                  <FaqItem
+                    key={x.q}
+                    q={x.q}
+                    a={x.a}
+                    isOpen={openFaq === idx}
+                    onToggle={() => setOpenFaq(openFaq === idx ? null : idx)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* CONTACT / PICKER (goes to /estimate/[slug]) */}
+      {/* CONTACT / PICKER */}
       <section id="contact" className="relative overflow-hidden py-16 sm:py-20">
-       <ServicePickerSection
-  onPick={(slug) => router.push(`/services/${slug}`)}
-  onOpenEstimate={() => router.push("/services")}
-  whatsappEnabled={whatsappEnabled}
-  whatsappHref={whatsappHref}
-/>
+        <ServicePickerSection
+          onPick={(slug) => router.push(`/${locale}/services/${slug}`)}
+          onOpenEstimate={() => router.push(`/${locale}/services`)}
+          whatsappEnabled={whatsappEnabled}
+          whatsappHref={whatsappHref}
+        />
       </section>
 
       {/* FOOTER */}
       <footer className="py-10 text-center bg-white border-t border-gray-200 px-4">
-        <p className="text-lg font-extrabold">THEVULGO · Valencia</p>
+        <p className="text-lg font-extrabold">{t("footer.brand")}</p>
         <p className="text-gray-500 mt-2">
-          © {new Date().getFullYear()} TheVulgo. All rights reserved.
+          © {new Date().getFullYear()} {t("footer.rights")}
         </p>
         <div className="mt-4 flex flex-wrap justify-center gap-3 text-xs text-gray-600">
           <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 bg-white">
-            <MapPin className="h-4 w-4" /> Valencia, Spain
+            <MapPin className="h-4 w-4" /> {t("footer.location")}
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 bg-white">
-            <Clock className="h-4 w-4" /> Fast response
+            <Clock className="h-4 w-4" /> {t("footer.fastResponse")}
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 bg-white">
-            <ShieldCheck className="h-4 w-4" /> Clean finish
+            <ShieldCheck className="h-4 w-4" /> {t("footer.cleanFinish")}
           </span>
         </div>
       </footer>
-
-      
     </div>
   );
 }
 
 /* ================= Components ================= */
-
-const FAQS = [
-  {
-    q: "Do you work outside Valencia?",
-    a: "THEVULGO primarily serves Valencia and nearby areas. Requests outside the city may still be accepted depending on distance and schedule — simply share your location to confirm availability.",
-  },
-  {
-    q: "Can you provide a price before the visit?",
-    a: "In most cases, yes. After reviewing photos and a short description, THEVULGO can provide an estimated price range. Final pricing is confirmed once the full scope and wall conditions are verified.",
-  },
-  {
-    q: "How quickly can the service be scheduled?",
-    a: "Many standard jobs can be scheduled the same day or next day depending on availability. Clients always receive a clear confirmation window before the appointment is finalized.",
-  },
-  {
-    q: "Do you bring professional tools and hardware?",
-    a: "Yes. THEVULGO arrives fully equipped with professional tools and standard mounting hardware. If specialized anchors or materials are required, suitable options are discussed before installation.",
-  },
-  {
-    q: "Do you handle complex electrical rewiring?",
-    a: "No. THEVULGO performs basic electrical tasks such as light fixtures, switches, sockets, and clean mounting work. Complex rewiring must be completed by a licensed electrician.",
-  },
-  {
-    q: "Is it possible to book without an on-site inspection?",
-    a: "Yes. Many installations can be confirmed remotely using photos and measurements. If any technical details remain unclear, additional information will be requested before confirming the booking.",
-  },
-  {
-    q: "What information is required to get started?",
-    a: "To provide an accurate quote, THEVULGO typically requires 2–4 photos of the area, the service requested, your location in Valencia, and your preferred time window.",
-  },
-  {
-    q: "Is cleanup included after the job?",
-    a: "Absolutely. Clean workmanship is a core standard of THEVULGO. The work area is left tidy, and minor debris is removed after installation.",
-  },
-];
-
-
 
 function Chip({ icon, text }: { icon: React.ReactNode; text: string }) {
   return (
@@ -556,11 +541,13 @@ function StepCard({
   title,
   text,
   icon,
+  stepLabel,
 }: {
   n: string;
   title: string;
   text: string;
   icon: React.ReactNode;
+  stepLabel: string;
 }) {
   return (
     <div className="bg-white border border-yellow-400 rounded-2xl p-6 shadow-xl md:hover:shadow-2xl transition md:hover:scale-[1.02] text-left">
@@ -569,7 +556,7 @@ function StepCard({
           {icon}
         </div>
         <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-red-500 text-white">
-          Step {n}
+          {stepLabel} {n}
         </span>
       </div>
       <h3 className="mt-4 text-lg font-extrabold text-black">{title}</h3>
@@ -675,80 +662,81 @@ function ServicePickerSection({
   whatsappEnabled: boolean;
   whatsappHref: string;
 }) {
+  const t = useTranslations("home");
   const items = [
-  {
-    title: "TV Mounting & Wall Installations",
-    desc: "<strong>TVs</strong>, shelves, mirrors, cable routing.",
-    slug: "tv-mounting",
-    badge: "Top",
-  },
-  {
-    title: "Furniture Assembly",
-    desc: "<strong>IKEA</strong>, wardrobes, beds, cabinets.",
-    slug: "furniture",
-    badge: "Popular",
-  },
-  {
-    title: "Electrical Services",
-    desc: "<strong>Lights</strong>, switches, sockets, basics.",
-    slug: "electrical",
-    badge: "Safe",
-  },
-  {
-    title: "Plumbing",
-    desc: "<strong>Faucets</strong>, sinks, toilets, leaks.",
-    slug: "plumbing",
-    badge: "Fast",
-  },
-  {
-    title: "Home Repairs",
-    desc: "<strong>Small</strong> fixes and maintenance.",
-    slug: "repairs",
-    badge: "Quick",
-  },
-  {
-    title: "Walls & Drywall Repairs",
-    desc: "<strong>Patching</strong>, anchors, drilling, repairs.",
-    slug: "drywall",
-    badge: "Pro",
-  },
-  {
-    title: "Doors & Hardware",
-    desc: "<strong>Handles</strong>, hinges, locks, closers.",
-    slug: "doors",
-    badge: "Fix",
-  },
-  {
-    title: "Smart Home & Devices",
-    desc: "<strong>Cameras</strong>, locks, doorbells, setup.",
-    slug: "smart-home",
-    badge: "Smart",
-  },
-  {
-    title: "Kitchen Installations",
-    desc: "<strong>Cabinets</strong>, shelves, lights, fittings.",
-    slug: "kitchen",
-    badge: "Kitchen",
-  },
-  {
-    title: "Bathroom Installations",
-    desc: "<strong>Mirrors</strong>, cabinets, holders, fittings.",
-    slug: "bathroom",
-    badge: "Bath",
-  },
-  {
-    title: "Apartment & Move-In Setup",
-    desc: "<strong>Curtains</strong>, furniture, move-in installs.",
-    slug: "move-in",
-    badge: "Setup",
-  },
-  {
-    title: "House Exterior & Outdoor Work",
-    desc: "<strong>Fences</strong>, roofs, facades, outdoor repairs.",
-    slug: "exterior",
-    badge: "House",
-  },
-];
+    {
+      title: t("picker.items.0.title"),
+      desc: t.raw("picker.items.0.desc") as string,
+      slug: "tv-mounting",
+      badge: t("picker.items.0.badge"),
+    },
+    {
+      title: t("picker.items.1.title"),
+      desc: t.raw("picker.items.1.desc") as string,
+      slug: "furniture",
+      badge: t("picker.items.1.badge"),
+    },
+    {
+      title: t("picker.items.2.title"),
+      desc: t.raw("picker.items.2.desc") as string,
+      slug: "electrical",
+      badge: t("picker.items.2.badge"),
+    },
+    {
+      title: t("picker.items.3.title"),
+      desc: t.raw("picker.items.3.desc") as string,
+      slug: "plumbing",
+      badge: t("picker.items.3.badge"),
+    },
+    {
+      title: t("picker.items.4.title"),
+      desc: t.raw("picker.items.4.desc") as string,
+      slug: "repairs",
+      badge: t("picker.items.4.badge"),
+    },
+    {
+      title: t("picker.items.5.title"),
+      desc: t.raw("picker.items.5.desc") as string,
+      slug: "drywall",
+      badge: t("picker.items.5.badge"),
+    },
+    {
+      title: t("picker.items.6.title"),
+      desc: t.raw("picker.items.6.desc") as string,
+      slug: "doors",
+      badge: t("picker.items.6.badge"),
+    },
+    {
+      title: t("picker.items.7.title"),
+      desc: t.raw("picker.items.7.desc") as string,
+      slug: "smart-home",
+      badge: t("picker.items.7.badge"),
+    },
+    {
+      title: t("picker.items.8.title"),
+      desc: t.raw("picker.items.8.desc") as string,
+      slug: "kitchen",
+      badge: t("picker.items.8.badge"),
+    },
+    {
+      title: t("picker.items.9.title"),
+      desc: t.raw("picker.items.9.desc") as string,
+      slug: "bathroom",
+      badge: t("picker.items.9.badge"),
+    },
+    {
+      title: t("picker.items.10.title"),
+      desc: t.raw("picker.items.10.desc") as string,
+      slug: "move-in",
+      badge: t("picker.items.10.badge"),
+    },
+    {
+      title: t("picker.items.11.title"),
+      desc: t.raw("picker.items.11.desc") as string,
+      slug: "exterior",
+      badge: t("picker.items.11.badge"),
+    },
+  ];
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-16 sm:py-20">
@@ -760,28 +748,27 @@ function ServicePickerSection({
       </div>
 
       <div className="mx-auto flex w-full max-w-7xl overflow-x-hidden px-4 py-8 max-[720px]:py-6 max-[640px]:py-5">
-       <div className="mx-auto flex w-full max-w-6xl flex-col overflow-hidden rounded-[28px] border border-yellow-400 bg-white p-8 pb-10 shadow-xl">
+        <div className="mx-auto flex w-full max-w-6xl flex-col overflow-hidden rounded-[28px] border border-yellow-400 bg-white p-8 pb-10 shadow-xl">
           <div className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-3 py-1 text-xs font-semibold text-black shadow-sm">
               <span className="h-2 w-2 rounded-full bg-yellow-400" />
-              Estimate • Pick a category
+              {t("picker.badge")}
             </div>
 
             <h2 className="mt-4 font-extrabold tracking-tight text-black text-4xl max-[720px]:text-3xl max-[640px]:text-2xl">
-              Choose your service
+              {t("picker.title")}
             </h2>
 
             <p className="mt-3 text-gray-600 text-base max-[720px]:text-sm max-[640px]:text-xs">
-              Select a service to get an instant estimate
+              {t("picker.subtitle")}
             </p>
 
-            {/* Dual CTA */}
             <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
               <button
                 onClick={onOpenEstimate}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-3 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
               >
-                Open all services <ArrowRight className="h-4 w-4" />
+                {t("picker.openAll")} <ArrowRight className="h-4 w-4" />
               </button>
 
               {whatsappEnabled ? (
@@ -789,15 +776,15 @@ function ServicePickerSection({
                   href={whatsappHref}
                   className="inline-flex items-center justify-center gap-2 rounded-2xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-black shadow-md transition hover:scale-[1.02]"
                 >
-                  <MessageSquare className="h-4 w-4" /> WhatsApp
+                  <MessageSquare className="h-4 w-4" /> {t("picker.whatsapp")}
                 </a>
               ) : (
                 <button
                   disabled
-                  title="WhatsApp number not set yet"
+                  title={t("picker.whatsappDisabled")}
                   className="inline-flex items-center justify-center gap-2 rounded-2xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-black shadow-md opacity-60 cursor-not-allowed"
                 >
-                  <MessageSquare className="h-4 w-4" /> WhatsApp
+                  <MessageSquare className="h-4 w-4" /> {t("picker.whatsapp")}
                 </button>
               )}
             </div>
@@ -825,24 +812,24 @@ function ServicePickerSection({
                     {x.title}
                   </h3>
 
-                 <p
-  className="mt-2 text-gray-800 leading-relaxed text-sm max-[820px]:hidden"
-  dangerouslySetInnerHTML={{ __html: x.desc }}
-/>
+                  <p
+                    className="mt-2 text-gray-800 leading-relaxed text-sm max-[820px]:hidden"
+                    dangerouslySetInnerHTML={{ __html: x.desc }}
+                  />
 
                   <div className="mt-4 inline-flex items-center gap-2 font-extrabold text-black text-sm max-[720px]:text-[13px] max-[640px]:text-[12px]">
-  See details
-  <span className="text-yellow-400 transition-transform duration-200 group-hover:translate-x-1">
-    →
-  </span>
-</div>
+                    {t("picker.seeDetails")}
+                    <span className="text-yellow-400 transition-transform duration-200 group-hover:translate-x-1">
+                      →
+                    </span>
+                  </div>
                 </div>
               </button>
             ))}
           </div>
 
           <div className="mt-4 text-center text-xs text-gray-500">
-            Transparent pricing — know the cost before booking
+            {t("picker.bottomNote")}
           </div>
         </div>
       </div>
