@@ -28,194 +28,194 @@
       "title": "Featured services",
       "subtitle": "Popular jobs delivered with clean installation and a professional finish.",
       "viewAll": "View all services",
-      "items": [
-        {
+      "items": {
+        "0": {
           "title": "Wall mounting & installs",
           "text": "TVs, monitors, shelves, mirrors and brackets — level, secure and precisely aligned.",
           "badge": "Top"
         },
-        {
+        "1": {
           "title": "Built-in audio & speakers",
           "text": "Ceiling and wall speakers, soundbars, and clean cable routing with a tidy finish.",
           "badge": "New"
         },
-        {
+        "2": {
           "title": "Drywall & finishing",
           "text": "Cutouts, patching, skim coat, sanding and paint prep — clean ready-to-finish work.",
           "badge": "Pro"
         },
-        {
+        "3": {
           "title": "Furniture & fixtures",
           "text": "Assembly, anchors, curtain rods, blinds, bathroom accessories and small installs.",
           "badge": "Popular"
         },
-        {
+        "4": {
           "title": "Basic plumbing",
           "text": "Faucets, sinks, toilets, valves and small leaks — done quickly and neatly.",
-          "badge": "Fontanería"
+          "badge": "Plumbing"
         },
-        {
+        "5": {
           "title": "Basic electrical",
           "text": "Lights, switches, sockets, mounting and tidy wiring for clean everyday upgrades.",
           "badge": "Safe"
         },
-        {
+        "6": {
           "title": "Smart home & devices",
           "text": "Cameras, video doorbells, smart locks, sensors and practical device setup for modern homes.",
           "badge": "Smart"
         },
-        {
+        "7": {
           "title": "Doors & hardware",
           "text": "Handles, hinges, closers, latch fixes and small alignment work to improve daily use.",
           "badge": "Fix"
         },
-        {
+        "8": {
           "title": "Bathroom installations",
           "text": "Mirrors, cabinets, holders, shelves and clean fitting work for a more finished bathroom.",
           "badge": "Bath"
         }
-      ]
+      }
     },
     "how": {
       "title": "How it works",
-      "subtitle": "Simple process. Clear communication. Clean result from the first message to the finished job",
+      "subtitle": "Simple process. Clear communication. Clean result from the first message to the finished job.",
       "step": "Step",
-      "items": [
-        {
+      "items": {
+        "0": {
           "title": "Choose a service",
           "text": "Pick the category that matches your job: TV mounting, plumbing, electrical, drywall, furniture or smart home."
         },
-        {
+        "1": {
           "title": "Send photos or details",
           "text": "Share 2–4 photos, your location in Valencia and a short description so the job can be reviewed properly."
         },
-        {
+        "2": {
           "title": "Get a clear estimate",
           "text": "You receive a transparent price range and clear explanation of what affects the final cost."
         },
-        {
+        "3": {
           "title": "Confirm the booking",
           "text": "Once the scope is clear, the appointment time is confirmed with the right plan and materials in mind."
         },
-        {
+        "4": {
           "title": "Clean professional install",
           "text": "Measured, aligned and neatly finished work with attention to details, hardware and final presentation."
         },
-        {
+        "5": {
           "title": "Final check and cleanup",
           "text": "Before leaving, everything is checked with you and the area is left tidy, clean and ready to use."
         }
-      ]
+      }
     },
     "why": {
       "badge": "Valencia • Professional Handyman",
       "title": "Built for clean work and zero headaches",
       "subtitle": "Premium finish, quick response, and honest guidance — the kind of service you’d recommend to a friend.",
       "ctaTitle": "Need an estimate today?",
-      "ctaText": "Pick a category and open its calculator — you’ll get a clear price range.",
+      "ctaText": "Pick a service and get a clear price.",
       "ctaButton": "Get estimate",
-      "items": [
-        {
+      "items": {
+        "0": {
           "badge": "Quality",
           "title": "Clean finish",
           "text": "Straight lines, neat edges, tidy details. Your home stays clean."
         },
-        {
+        "1": {
           "badge": "Speed",
           "title": "Fast response",
           "text": "Valencia + nearby. Quick scheduling and clear ETA — no chasing."
         },
-        {
+        "2": {
           "badge": "All-in-one",
           "title": "Multi-skill",
           "text": "One specialist for many small jobs — less coordination, better results."
         },
-        {
+        "3": {
           "badge": "Trust",
           "title": "No surprises",
           "text": "Clear scope, honest recommendations, and transparent pricing."
         }
-      ]
+      }
     },
     "guides": {
       "title": "Tips & Guides",
       "subtitle": "Short, useful tips to avoid common mistakes and get a cleaner, safer and better-looking result.",
-      "items": [
-        {
+      "items": {
+        "0": {
           "title": "TV mounting height",
           "text": "The best height depends on sofa distance and screen size. A good rule is to keep the center of the TV close to eye level when seated."
         },
-        {
+        "1": {
           "title": "Choosing anchors",
           "text": "Plasterboard, brick and concrete all need different hardware. Wrong anchors can make shelves, TVs or mirrors unsafe."
         },
-        {
+        "2": {
           "title": "Cable concealment",
           "text": "Raceway is the fastest clean-looking option. In-wall routing is only suitable when the wall type allows it safely."
         },
-        {
+        "3": {
           "title": "Before drilling the wall",
           "text": "Always confirm wall material, cable routes and final height before drilling. Small planning mistakes create expensive fixes later."
         },
-        {
+        "4": {
           "title": "Mirror positioning",
           "text": "Bathroom and hallway mirrors should be centered carefully and placed at a height that feels balanced for everyday use."
         },
-        {
+        "5": {
           "title": "Shelf spacing",
           "text": "Good shelf installation is not only about level mounting. Spacing, symmetry and surrounding furniture matter too."
         },
-        {
+        "6": {
           "title": "Small plumbing upgrades",
           "text": "Replacing faucets, shower heads and visible fittings can improve the feel of a kitchen or bathroom without full renovation."
         },
-        {
+        "7": {
           "title": "Light fixture planning",
           "text": "Before replacing a light, check compatibility, mounting base and room purpose to get both practical lighting and clean appearance."
         },
-        {
+        "8": {
           "title": "Bundle small jobs together",
           "text": "The most efficient approach is often grouping several small tasks into one visit instead of booking each issue separately."
         }
-      ]
+      }
     },
     "faq": {
       "title": "FAQ",
       "subtitle": "Quick answers to the most common questions.",
-      "items": [
-        {
+      "items": {
+        "0": {
           "q": "Do you work outside Valencia?",
           "a": "THEVULGO primarily serves Valencia and nearby areas. Requests outside the city may still be accepted depending on distance and schedule — simply share your location to confirm availability."
         },
-        {
+        "1": {
           "q": "Can you provide a price before the visit?",
           "a": "In most cases, yes. After reviewing photos and a short description, THEVULGO can provide an estimated price range. Final pricing is confirmed once the full scope and wall conditions are verified."
         },
-        {
+        "2": {
           "q": "How quickly can the service be scheduled?",
           "a": "Many standard jobs can be scheduled the same day or next day depending on availability. Clients always receive a clear confirmation window before the appointment is finalized."
         },
-        {
+        "3": {
           "q": "Do you bring professional tools and hardware?",
           "a": "Yes. THEVULGO arrives fully equipped with professional tools and standard mounting hardware. If specialized anchors or materials are required, suitable options are discussed before installation."
         },
-        {
+        "4": {
           "q": "Do you handle complex electrical rewiring?",
           "a": "No. THEVULGO performs basic electrical tasks such as light fixtures, switches, sockets, and clean mounting work. Complex rewiring must be completed by a licensed electrician."
         },
-        {
+        "5": {
           "q": "Is it possible to book without an on-site inspection?",
           "a": "Yes. Many installations can be confirmed remotely using photos and measurements. If any technical details remain unclear, additional information will be requested before confirming the booking."
         },
-        {
+        "6": {
           "q": "What information is required to get started?",
           "a": "To provide an accurate quote, THEVULGO typically requires 2–4 photos of the area, the service requested, your location in Valencia, and your preferred time window."
         },
-        {
+        "7": {
           "q": "Is cleanup included after the job?",
           "a": "Absolutely. Clean workmanship is a core standard of THEVULGO. The work area is left tidy, and minor debris is removed after installation."
         }
-      ]
+      }
     },
     "picker": {
       "badge": "Estimate • Pick a category",
@@ -226,68 +226,68 @@
       "whatsappDisabled": "WhatsApp number not set yet",
       "seeDetails": "See details",
       "bottomNote": "Transparent pricing — know the cost before booking",
-      "items": [
-        {
+      "items": {
+        "0": {
           "title": "TV Mounting & Wall Installations",
           "desc": "<strong>TVs</strong>, shelves, mirrors, cable routing.",
           "badge": "Top"
         },
-        {
+        "1": {
           "title": "Furniture Assembly",
           "desc": "<strong>IKEA</strong>, wardrobes, beds, cabinets.",
           "badge": "Popular"
         },
-        {
+        "2": {
           "title": "Electrical Services",
           "desc": "<strong>Lights</strong>, switches, sockets, basics.",
           "badge": "Safe"
         },
-        {
+        "3": {
           "title": "Plumbing",
           "desc": "<strong>Faucets</strong>, sinks, toilets, leaks.",
           "badge": "Fast"
         },
-        {
+        "4": {
           "title": "Home Repairs",
           "desc": "<strong>Small</strong> fixes and maintenance.",
           "badge": "Quick"
         },
-        {
+        "5": {
           "title": "Walls & Drywall Repairs",
           "desc": "<strong>Patching</strong>, anchors, drilling, repairs.",
           "badge": "Pro"
         },
-        {
+        "6": {
           "title": "Doors & Hardware",
           "desc": "<strong>Handles</strong>, hinges, locks, closers.",
           "badge": "Fix"
         },
-        {
+        "7": {
           "title": "Smart Home & Devices",
           "desc": "<strong>Cameras</strong>, locks, doorbells, setup.",
           "badge": "Smart"
         },
-        {
+        "8": {
           "title": "Kitchen Installations",
           "desc": "<strong>Cabinets</strong>, shelves, lights, fittings.",
           "badge": "Kitchen"
         },
-        {
+        "9": {
           "title": "Bathroom Installations",
           "desc": "<strong>Mirrors</strong>, cabinets, holders, fittings.",
           "badge": "Bath"
         },
-        {
+        "10": {
           "title": "Apartment & Move-In Setup",
           "desc": "<strong>Curtains</strong>, furniture, move-in installs.",
           "badge": "Setup"
         },
-        {
+        "11": {
           "title": "House Exterior & Outdoor Work",
           "desc": "<strong>Fences</strong>, roofs, facades, outdoor repairs.",
           "badge": "House"
         }
-      ]
+      }
     },
     "footer": {
       "brand": "THEVULGO · Valencia",
@@ -297,4 +297,4 @@
       "cleanFinish": "Clean finish"
     }
   }
-}
+}  
