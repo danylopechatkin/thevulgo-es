@@ -83,14 +83,16 @@ export default async function LocaleLayout({
               </nav>
 
               <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-                <LanguageSwitcher locale={locale} />
+  <div className="mr-3 sm:mr-4">
+    <LanguageSwitcher locale={locale} />
+  </div>
 
-                <Link
-                  href={`/${locale}/estimate`}
-                  className="whitespace-nowrap rounded-xl bg-yellow-400 px-3 py-2 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:rounded-2xl sm:px-5 sm:py-2.5 sm:text-base"
-                >
-                  Get estimate
-                </Link>
+  <Link
+    href={`/${locale}/estimate`}
+    className="whitespace-nowrap rounded-xl bg-yellow-400 px-3 py-2 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:rounded-2xl sm:px-5 sm:py-2.5 sm:text-base"
+  >
+    Get estimate
+  </Link>
 
                 <a
                   href="https://wa.me/14379074913"
