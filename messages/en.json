@@ -28,12 +28,18 @@
       }
     },
     "trust": {
-      "typicalResponse": "Typical response",
-      "finishDetails": "Finish & details",
-      "localFocus": "Local focus",
-      "pricingScope": "Pricing & scope"
-    },
-    "featured": {
+  "typicalResponse": "Typical response",
+  "finishDetails": "Finish & details",
+  "localFocus": "Local focus",
+  "pricingScope": "Pricing & scope"
+},
+"trustLabels": {
+  "typicalResponse": "Response time",
+  "finishDetails": "Finish & details",
+  "localFocus": "Local service",
+  "pricingScope": "Clear pricing"
+},
+"featured": {
       "title": "Featured services",
       "subtitle": "Popular jobs delivered with clean installation and a professional finish.",
       "viewAll": "View all services",
@@ -305,5 +311,90 @@
       "fastResponse": "Fast response",
       "cleanFinish": "Clean finish"
     }
+  },
+  "services": {
+    "badge": "THEVULGO · Valencia",
+    "title": "Services in Valencia",
+    "subtitle": "Clear categories, guide prices and clean work from the start. Choose the service that fits your case and review the details.",
+    "viewService": "View service",
+    "cta": {
+      "title": "Not sure which service you need?",
+      "text": "Send a short description or a few photos and we’ll guide you to the right category and an approximate price.",
+      "button": "Get estimate"
+    },
+    "items": {
+      "tvMounting": {
+        "title": "TV Mounting",
+        "desc": "TVs, brackets, shelves, mirrors and clean cable routing.",
+        "price": "from €49",
+        "badge": "Top"
+      },
+      "furniture": {
+        "title": "Furniture Assembly",
+        "desc": "IKEA, wardrobes, beds, furniture and small home installations.",
+        "price": "from €39",
+        "badge": "Popular"
+      },
+      "electrical": {
+        "title": "Basic Electrical",
+        "desc": "Lights, switches, sockets and simple upgrades with a clean finish.",
+        "price": "from €35",
+        "badge": "Safe"
+      },
+      "plumbing": {
+        "title": "Plumbing",
+        "desc": "Faucets, sinks, toilets, valves and small leaks.",
+        "price": "from €39",
+        "badge": "Fast"
+      },
+      "repairs": {
+        "title": "Home Repairs",
+        "desc": "Small repairs, adjustments and general maintenance.",
+        "price": "from €25",
+        "badge": "Practical"
+      },
+      "drywall": {
+        "title": "Walls & Drywall",
+        "desc": "Repairs, anchors, drilling, cutouts and finish preparation.",
+        "price": "from €45",
+        "badge": "Pro"
+      },
+      "doors": {
+        "title": "Doors & Hardware",
+        "desc": "Handles, hinges, locks, closers and adjustments.",
+        "price": "from €35",
+        "badge": "Fix"
+      },
+      "smartHome": {
+        "title": "Smart Home",
+        "desc": "Cameras, smart locks, doorbells and device setup.",
+        "price": "from €49",
+        "badge": "Smart"
+      },
+      "kitchen": {
+        "title": "Kitchen",
+        "desc": "Cabinets, shelves, lights, accessories and small installations.",
+        "price": "from €45",
+        "badge": "Kitchen"
+      },
+      "bathroom": {
+        "title": "Bathroom",
+        "desc": "Mirrors, cabinets, holders, accessories and clean finishing work.",
+        "price": "from €39",
+        "badge": "Bath"
+      },
+      "moveIn": {
+        "title": "Move-In Setup",
+        "desc": "Curtains, furniture and common setup work when moving into a home.",
+        "price": "from €49",
+        "badge": "Setup"
+      },
+      "exterior": {
+        "title": "Exterior Work",
+        "desc": "Fences, facades, roofs and selected outdoor repairs.",
+        "price": "from €59",
+        "badge": "House"
+      }
+    }
   }
-}  
+}
