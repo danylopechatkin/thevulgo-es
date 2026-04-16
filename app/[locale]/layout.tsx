@@ -1,5 +1,5 @@
 import {NextIntlClientProvider} from "next-intl";
-import {getMessages, setRequestLocale} from "next-intl/server";
+import {getMessages, getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import Link from "next/link";
 import LanguageSwitcher from "@/app/components/LanguageSwitcher";
@@ -38,7 +38,9 @@ export default async function LocaleLayout({
   }
 
   setRequestLocale(locale);
+
   const messages = await getMessages();
+  const t = await getTranslations("nav");
 
   return (
     <html lang={locale}>
@@ -66,33 +68,33 @@ export default async function LocaleLayout({
 
               <nav className="hidden items-center gap-6 text-[15px] font-semibold text-gray-800 md:flex">
                 <Link href={`/${locale}/services`} className="hover:text-black">
-                  Services
+                  {t("services")}
                 </Link>
                 <Link href={`/${locale}/#how`} className="hover:text-black">
-                  How it works?
+                  {t("howItWorks")}
                 </Link>
                 <Link href={`/${locale}/#guides`} className="hover:text-black">
-                  Tips & Guides
+                  {t("tips")}
                 </Link>
                 <Link href={`/${locale}/#faq`} className="hover:text-black">
-                  FAQ
+                  {t("faq")}
                 </Link>
                 <Link href={`/${locale}/estimate`} className="hover:text-black">
-                  Estimate
+                  {t("estimate")}
                 </Link>
               </nav>
 
               <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-  <div className="mr-3 sm:mr-4">
-    <LanguageSwitcher locale={locale} />
-  </div>
+                <div className="mr-3 sm:mr-4">
+                  <LanguageSwitcher locale={locale} />
+                </div>
 
-  <Link
-    href={`/${locale}/estimate`}
-    className="whitespace-nowrap rounded-xl bg-yellow-400 px-3 py-2 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:rounded-2xl sm:px-5 sm:py-2.5 sm:text-base"
-  >
-    Get estimate
-  </Link>
+                <Link
+                  href={`/${locale}/estimate`}
+                  className="whitespace-nowrap rounded-xl bg-yellow-400 px-3 py-2 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:rounded-2xl sm:px-5 sm:py-2.5 sm:text-base"
+                >
+                  {t("getEstimate")}
+                </Link>
 
                 <a
                   href="https://wa.me/14379074913"
@@ -100,7 +102,7 @@ export default async function LocaleLayout({
                   rel="noopener noreferrer"
                   className="hidden items-center gap-2 whitespace-nowrap rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-black shadow-sm transition hover:scale-[1.02] hover:border-[#25D366]/60 hover:shadow-md sm:inline-flex sm:rounded-2xl sm:px-4 sm:py-2.5 sm:text-base"
                 >
-                  WhatsApp
+                  {t("whatsapp")}
                 </a>
               </div>
             </div>
