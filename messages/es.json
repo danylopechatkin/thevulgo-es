@@ -9,13 +9,13 @@
     "whatsapp": "WhatsApp"
   },
   "home": {
-    "whatsappText": "¡Hola! Me gustaría pedir un presupuesto en Valencia.",
+    "whatsappText": "Hola, me gustaría pedir un presupuesto para un servicio en Valencia.",
     "hero": {
       "badge": "Valencia y alrededores · Acabado limpio · Respuesta rápida",
       "title1": "Instalaciones limpias en Valencia",
       "title2": "SIN SORPRESAS",
       "title3": "Sin desorden. Sin estrés.",
-      "descriptionBefore": "Montaje de TV, fontanería, electricidad básica y reparaciones del hogar —",
+      "descriptionBefore": "Montaje de TV, fontanería, electricidad básica y pequeñas reparaciones del hogar —",
       "descriptionHighlight": "precio claro antes de empezar",
       "descriptionAfter": "Apruebas antes de perforar. Limpieza incluida.",
       "exploreServices": "Ver servicios",
@@ -24,10 +24,16 @@
         "fastReplies": "Respuesta rápida",
         "cleanFinish": "Acabado limpio",
         "proTools": "Herramientas profesionales",
-        "valenciaArea": "Zona Valencia"
+        "valenciaArea": "Valencia y alrededores"
       }
     },
     "trust": {
+      "typicalResponse": "24h",
+      "finishDetails": "Acabado limpio",
+      "localFocus": "Valencia",
+      "pricingScope": "Transparente"
+    },
+    "trustLabels": {
       "typicalResponse": "Tiempo de respuesta",
       "finishDetails": "Acabado y detalles",
       "localFocus": "Servicio local",
@@ -35,17 +41,17 @@
     },
     "featured": {
       "title": "Servicios destacados",
-      "subtitle": "Trabajos populares con instalación limpia y acabado profesional.",
+      "subtitle": "Trabajos frecuentes con instalación limpia, acabado cuidado y precio claro.",
       "viewAll": "Ver todos los servicios",
       "items": {
         "0": {
-          "title": "Montaje en pared e instalaciones",
-          "text": "TVs, monitores, estantes, espejos y soportes — nivelado, seguro y preciso.",
+          "title": "Montaje en pared",
+          "text": "TVs, monitores, estantes, espejos y soportes con acabado limpio y alineación precisa.",
           "badge": "Top"
         },
         "1": {
-          "title": "Audio y altavoces",
-          "text": "Altavoces de techo y pared, barras de sonido y cableado limpio.",
+          "title": "Audio y sonido",
+          "text": "Altavoces, barras de sonido y organización limpia del cableado.",
           "badge": "Nuevo"
         },
         "2": {
@@ -55,17 +61,17 @@
         },
         "3": {
           "title": "Montaje de muebles",
-          "text": "Montaje, cortinas, accesorios y pequeñas instalaciones.",
+          "text": "Montaje, cortinas, accesorios y pequeñas instalaciones del hogar.",
           "badge": "Popular"
         },
         "4": {
-          "title": "Fontanería básica",
+          "title": "Fontanería",
           "text": "Grifos, fregaderos, inodoros y pequeñas fugas.",
           "badge": "Rápido"
         },
         "5": {
           "title": "Electricidad básica",
-          "text": "Luces, enchufes, interruptores y cableado limpio.",
+          "text": "Luces, enchufes, interruptores y mejoras sencillas con acabado limpio.",
           "badge": "Seguro"
         },
         "6": {
@@ -79,15 +85,15 @@
           "badge": "Fix"
         },
         "8": {
-          "title": "Instalaciones de baño",
-          "text": "Espejos, muebles y accesorios con acabado limpio.",
+          "title": "Baño y accesorios",
+          "text": "Espejos, muebles, soportes y accesorios con instalación limpia.",
           "badge": "Baño"
         }
       }
     },
     "how": {
       "title": "Cómo funciona",
-      "subtitle": "Proceso simple, comunicación clara y resultado limpio.",
+      "subtitle": "Proceso simple, comunicación clara y resultado limpio de principio a fin.",
       "step": "Paso",
       "items": {
         "0": {
@@ -96,15 +102,15 @@
         },
         "1": {
           "title": "Envía fotos",
-          "text": "Comparte fotos, ubicación y una breve descripción."
+          "text": "Comparte fotos, ubicación en Valencia y una breve descripción."
         },
         "2": {
           "title": "Recibe presupuesto",
-          "text": "Obtén un precio claro y transparente."
+          "text": "Obtén un precio claro y una idea real del trabajo."
         },
         "3": {
           "title": "Confirma la cita",
-          "text": "Se acuerda el horario y los detalles del trabajo."
+          "text": "Se acuerda el horario y los detalles antes de empezar."
         },
         "4": {
           "title": "Instalación profesional",
@@ -112,7 +118,7 @@
         },
         "5": {
           "title": "Revisión y limpieza",
-          "text": "Todo se revisa y el espacio queda limpio."
+          "text": "Todo se revisa y el espacio queda limpio y listo para usar."
         }
       }
     },
@@ -148,11 +154,11 @@
     },
     "guides": {
       "title": "Guías",
-      "subtitle": "Consejos prácticos para evitar errores y lograr mejores resultados.",
+      "subtitle": "Consejos prácticos para evitar errores y conseguir un mejor resultado.",
       "items": {
         "0": {
           "title": "Altura del TV",
-          "text": "El centro del TV debe quedar a la altura de los ojos."
+          "text": "El centro del TV debe quedar cerca de la altura de los ojos."
         },
         "1": {
           "title": "Anclajes correctos",
@@ -172,7 +178,7 @@
         },
         "5": {
           "title": "Espaciado de estantes",
-          "text": "La simetría y el entorno importan."
+          "text": "La simetría y el entorno también importan."
         },
         "6": {
           "title": "Pequeñas mejoras de fontanería",
@@ -194,23 +200,23 @@
       "items": {
         "0": {
           "q": "¿Trabajas fuera de Valencia?",
-          "a": "Sí, también en alrededores dependiendo de la distancia."
+          "a": "Sí, también en alrededores según la distancia y la agenda."
         },
         "1": {
           "q": "¿Puedes dar precio antes?",
-          "a": "Sí, con fotos y descripción se puede estimar."
+          "a": "Sí. Con fotos y una breve descripción se puede estimar en muchos casos."
         },
         "2": {
           "q": "¿Cuándo puedes venir?",
-          "a": "Muchos trabajos se hacen el mismo día o al siguiente."
+          "a": "Muchos trabajos se pueden hacer el mismo día o al siguiente, según disponibilidad."
         },
         "3": {
           "q": "¿Traes herramientas?",
-          "a": "Sí, todo el equipo necesario para el trabajo."
+          "a": "Sí, se lleva el equipo necesario para realizar el trabajo correctamente."
         },
         "4": {
           "q": "¿Incluye limpieza?",
-          "a": "Sí, siempre se deja el área limpia."
+          "a": "Sí, siempre se deja la zona limpia al terminar."
         },
         "5": {
           "q": "¿Se puede reservar sin visita previa?",
@@ -231,7 +237,7 @@
       "title": "Elige tu servicio",
       "subtitle": "Selecciona un servicio para obtener precio",
       "openAll": "Ver todos",
-      "whatsapp": "WhatsApp",
+      "whatsapp": "WhatsApp ahora",
       "whatsappDisabled": "Número no configurado",
       "seeDetails": "Ver detalles",
       "bottomNote": "Precio claro antes de reservar",
@@ -287,12 +293,12 @@
           "badge": "Baño"
         },
         "10": {
-          "title": "Preparación de piso",
+          "title": "Preparación del hogar",
           "desc": "<strong>Cortinas</strong>, muebles e instalaciones al mudarse.",
           "badge": "Setup"
         },
         "11": {
-          "title": "Exterior y trabajos al aire libre",
+          "title": "Trabajos exteriores",
           "desc": "<strong>Vallas</strong>, tejados, fachadas y reparaciones exteriores.",
           "badge": "Casa"
         }
