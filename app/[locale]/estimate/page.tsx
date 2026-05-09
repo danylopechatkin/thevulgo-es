@@ -1,6 +1,7 @@
 "use client";
 
 import React, { Suspense, useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import {
   Calculator,
@@ -393,7 +394,7 @@ const CATEGORY_OPTIONS: { key: CategoryKey; label: string }[] = [
 
 function EstimatePageContent() {
   const searchParams = useSearchParams();
-
+  const t = useTranslations("estimatePage");
   const initialCategory = (() => {
   const raw = searchParams.get("category");
   if (

@@ -396,5 +396,111 @@
         "badge": "Casa"
       }
     }
+  },
+  "estimatePage": {
+  "step1": {
+    "badge": "Paso 1 • Elige una categoría",
+    "title": "Selecciona la categoría del servicio",
+    "swipe": "Desliza para ver más categorías"
+  },
+  "step2": {
+    "badge": "Paso 2 • Añade servicios",
+    "titleSuffix": "calculadora de presupuesto",
+    "description": "Elige exactamente lo que necesitas. Añade uno o varios servicios para crear tu presupuesto.",
+    "clearAll": "Borrar todo",
+    "startingPrice": "Precio inicial por unidad",
+    "subtotal": "Subtotal",
+    "customNote": "¿No encuentras el servicio exacto? Elige \"Trabajo personalizado / No está en la lista\" o descríbelo en notas."
+  },
+  "step3": {
+    "badge": "Paso 3 • Tus datos",
+    "title": "Datos de contacto",
+    "description": "En el siguiente paso enviaremos la solicitud a nuestro email oficial y una copia al cliente."
+  },
+  "summary": {
+    "badge": "Resumen en vivo",
+    "title": "Tu presupuesto",
+    "description": "Añade servicios a la izquierda y el presupuesto se actualizará aquí al instante.",
+    "selectedCategory": "Categoría seleccionada",
+    "empty": "Todavía no has añadido servicios. Empieza eligiendo uno o varios servicios.",
+    "subtotal": "Subtotal",
+    "iva": "IVA (21%)",
+    "total": "Total",
+    "pricesNote": "Los precios no incluyen IVA salvo que se indique lo contrario.",
+    "next": "Siguiente paso: revisar solicitud"
+  },
+  "form": {
+    "fullName": "Nombre completo",
+    "email": "Email",
+    "phone": "Teléfono / WhatsApp",
+    "city": "Ciudad",
+    "customCity": "Escribe tu ciudad",
+    "area": "Zona / distrito",
+    "areaNeighborhood": "Zona / barrio",
+    "houseAddress": "Dirección",
+    "apartmentNumber": "Piso, puerta o apartamento",
+    "addressDetails": "Detalles adicionales de la dirección",
+    "preferredDateTime": "Fecha y hora preferidas",
+    "preferredDate": "Fecha preferida",
+    "preferredTime": "Hora preferida",
+    "notes": "Notas",
+    "chooseCity": "Elige ciudad",
+    "enterCity": "Escribe tu ciudad",
+    "chooseArea": "Elige zona o distrito",
+    "chooseAreaNeighborhood": "Elige zona o barrio",
+    "writeArea": "Escribe zona, barrio o urbanización",
+    "addressPlaceholder": "Calle y número del edificio",
+    "apartmentPlaceholder": "Piso, puerta, apartamento",
+    "addressDetailsPlaceholder": "Código de entrada, bloque, punto de referencia, instrucciones extra...",
+    "chooseTime": "Elige hora preferida",
+    "todayTimeNote": "Para hoy, solo están disponibles las horas con al menos 1 hora de antelación.",
+    "normalTimeNote": "Elige tu hora preferida de llegada.",
+    "localTimeNote": "Todas las horas son hora local de Valencia (España).",
+    "notesPlaceholder": "Describe el trabajo con detalle (tipo de pared, materiales, fotos, horario, acceso, etc.)"
+  },
+  "review": {
+    "title": "Revisa tu solicitud",
+    "description": "Por favor confirma tus datos antes de enviar.",
+    "client": "Cliente",
+    "name": "Nombre",
+    "phone": "Teléfono",
+    "email": "Email",
+    "category": "Categoría",
+    "selectedServices": "Servicios seleccionados",
+    "address": "Dirección",
+    "schedule": "Horario",
+    "notes": "Notas",
+    "noNotes": "Sin notas adicionales",
+    "noPayment": "No se requiere pago. Confirmaremos todo antes de la visita.",
+    "back": "Volver a editar",
+    "send": "Enviar solicitud",
+    "sending": "Enviando..."
+  },
+  "success": {
+    "title": "Solicitud enviada correctamente",
+    "description": "Hemos recibido tu solicitud y enviado un email de confirmación. Te contactaremos pronto para confirmar los detalles.",
+    "point1": "Tu solicitud se envió correctamente",
+    "point2": "Se envió un email de confirmación a tu correo",
+    "point3": "Revisaremos tus datos y te responderemos pronto",
+    "note": "¿Necesitas añadir más detalles o enviar otra solicitud? Puedes crear una nueva cuando quieras.",
+    "newRequest": "Nueva solicitud"
+  },
+  "errors": {
+    "fixTitle": "Por favor corrige lo siguiente antes de continuar:",
+    "selectService": "Selecciona al menos un servicio.",
+    "fullName": "Introduce tu nombre completo.",
+    "contact": "Introduce teléfono o email.",
+    "email": "Introduce un email válido.",
+    "phone": "Introduce un número de teléfono válido.",
+    "city": "Elige tu ciudad.",
+    "area": "Introduce o elige zona / distrito.",
+    "address": "Introduce la dirección.",
+    "date": "Elige la fecha preferida.",
+    "pastDate": "No se pueden elegir fechas pasadas.",
+    "time": "Elige la hora preferida.",
+    "timeToday": "Elige una hora con al menos 1 hora de antelación.",
+    "timeUnavailable": "La hora seleccionada no está disponible para esta fecha.",
+    "sendError": "La solicitud no se ha enviado. Inténtalo de nuevo."
   }
+}
 } 

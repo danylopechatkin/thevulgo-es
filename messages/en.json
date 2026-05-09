@@ -1,3 +1,5 @@
+
+
 {
   "nav": {
     "services": "Services",
@@ -396,5 +398,114 @@
         "badge": "House"
       }
     }
+  },
+  "estimatePage": {
+  "step1": {
+    "badge": "Step 1 • Choose category",
+    "title": "Select your service category",
+    "swipe": "Swipe to see more categories"
+  },
+  "step2": {
+    "badge": "Step 2 • Add services",
+    "titleSuffix": "estimate builder",
+    "description": "Choose exactly what you need. Add one or several items to build your estimate.",
+    "clearAll": "Clear all",
+    "startingPrice": "Starting price per item",
+    "subtotal": "Subtotal",
+    "customNote": "Can’t find your exact service? Choose \"Custom job / Not listed\" or describe it in notes."
+  },
+  "step3": {
+    "badge": "Step 3 • Your details",
+    "title": "Contact details",
+    "description": "In the next stage this form will send the request to your official email and a copy to the client."
+  },
+  "summary": {
+    "badge": "Live summary",
+    "title": "Your estimate",
+    "description": "Add services on the left and your estimate will update instantly here.",
+    "selectedCategory": "Selected category",
+    "empty": "No services added yet. Start by choosing one or more items from the estimate builder.",
+    "subtotal": "Subtotal",
+    "iva": "IVA (21%)",
+    "total": "Total",
+    "pricesNote": "Prices exclude IVA unless stated otherwise.",
+    "next": "Next step: review request"
+  },
+  "form": {
+    "fullName": "Full name",
+    "email": "Email",
+    "phone": "Phone / WhatsApp",
+    "city": "City",
+    "customCity": "Write your city",
+    "area": "Area / district",
+    "areaNeighborhood": "Area / neighborhood",
+    "houseAddress": "House address",
+    "apartmentNumber": "Apartment number",
+    "addressDetails": "Extra address details",
+    "preferredDateTime": "Preferred date & time",
+    "preferredDate": "Preferred date",
+    "preferredTime": "Preferred time",
+    "notes": "Notes",
+    "chooseCity": "Choose city",
+    "enterCity": "Enter your city",
+    "chooseArea": "Choose area or district",
+    "chooseAreaNeighborhood": "Choose area or neighborhood",
+    "writeArea": "Write area, neighborhood or zone",
+    "addressPlaceholder": "Street and building number",
+    "apartmentPlaceholder": "Apartment, floor, door",
+    "addressDetailsPlaceholder": "Entrance code, block, landmark, extra instructions...",
+    "chooseTime": "Choose preferred time",
+    "todayTimeNote": "For today, only times at least 1 hour ahead are available.",
+    "normalTimeNote": "Choose your preferred arrival time.",
+    "localTimeNote": "All times are Valencia (Spain) local time.",
+    "notesPlaceholder": "Describe your job in detail (wall type, materials, photos, timing, access, etc.)"
+  },
+  "review": {
+    "title": "Review your request",
+    "description": "Please confirm your details before sending.",
+    "client": "Client",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "category": "Category",
+    "selectedServices": "Selected services",
+    "address": "Address",
+    "schedule": "Schedule",
+    "notes": "Notes",
+    "noNotes": "No additional notes",
+    "noPayment": "No payment required. We’ll confirm everything before the visit.",
+    "back": "Back to edit",
+    "send": "Send request",
+    "sending": "Sending..."
+  },
+  "success": {
+    "title": "Request sent successfully",
+    "description": "We received your request and sent a confirmation email. We will contact you shortly to confirm the details.",
+    "point1": "Your request was submitted successfully",
+    "point2": "A confirmation email was sent to your inbox",
+    "point3": "We will review your details and get back to you soon",
+    "note": "Need to add more details or send another request? You can create a new one anytime.",
+    "newRequest": "New request"
+  },
+  "errors": {
+    "fixTitle": "Please fix the following before continuing:",
+    "selectService": "Select at least one service.",
+    "fullName": "Enter your full name.",
+    "contact": "Enter phone or email.",
+    "email": "Enter a valid email address.",
+    "phone": "Enter a valid phone number.",
+    "city": "Choose your city.",
+    "area": "Enter or choose area / district.",
+    "address": "Enter house address.",
+    "date": "Choose preferred date.",
+    "pastDate": "Past dates are not available.",
+    "time": "Choose preferred time.",
+    "timeToday": "Choose a time at least 1 hour from now.",
+    "timeUnavailable": "Selected time is not available for this date.",
+    "sendError": "Request was not sent. Please try again."
   }
+}
+
+
+  
 }
