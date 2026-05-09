@@ -428,7 +428,7 @@
     "subtotal": "Subtotal",
     "iva": "IVA (21%)",
     "total": "Total",
-    "pricesNote": "Prices exclude IVA unless stated otherwise.",
+    "pricesNote": "Service prices exclude IVA. The final total already includes IVA (21%).",
     "next": "Next step: review request"
   },
   "form": {

@@ -941,7 +941,9 @@ function EstimatePageContent() {
                       {t("step2.badge")}
                     </div>
                     <h2 className="mt-4 text-2xl font-extrabold text-black sm:text-3xl">
-                      {categoryTitle} {t("step2.titleSuffix")}
+                      {isEs
+  ? `${t("step2.titlePrefix")} ${categoryTitle.toLowerCase()}`
+  : `${categoryTitle} ${t("step2.titleSuffix")}`}
                     </h2>
                     <p className="mt-2 text-sm leading-7 text-gray-600 sm:text-base">
                       {t("step2.description")}
@@ -1336,7 +1338,7 @@ function EstimatePageContent() {
                 {submitStage === "build" && (
                   <div className="mt-6 flex-1 min-h-0 overflow-y-auto pr-2 space-y-3">
                     {selectedServices.length === 0 ? (
-                      <div className="max-w-[240px] rounded-2xl border border-dashed border-yellow-400 bg-white p-4 text-sm leading-7 text-gray-500">
+                      <div className="flex min-h-[150px] w-full items-center rounded-2xl border border-dashed border-yellow-400 bg-white p-5 text-sm leading-7 text-gray-500">
                         {t("summary.empty")}
                       </div>
                     ) : (
@@ -1373,35 +1375,38 @@ function EstimatePageContent() {
                 )}
 
                 {submitStage === "build" && (
-                  <div className="mt-6">
-                    {!hasTriedNext || liveErrors.length === 0 ? (
-                      <button
-                        type="button"
-                        onClick={handleNextStep}
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
-                      >
-                        {t("summary.next")}
-                        <ArrowRight className="h-4 w-4" />
-                      </button>
-                    ) : (
-                      <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-red-600">
-                        <p className="text-sm font-bold">{t("errors.fixTitle")}</p>
+  <div className="mt-6">
+    {!hasTriedNext || liveErrors.length === 0 ? (
+      <button
+        type="button"
+        onClick={handleNextStep}
+        className={`inline-flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-extrabold text-black shadow-lg transition ${
+          hasSelectedServices
+            ? "bg-yellow-400 hover:scale-[1.02]"
+            : "bg-yellow-300 hover:bg-yellow-400"
+        }`}
+      >
+        {t("summary.next")}
+        <ArrowRight className="h-4 w-4" />
+      </button>
+    ) : (
+      <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-red-600">
+        <p className="text-sm font-bold">{t("errors.fixTitle")}</p>
 
-                        <ul className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 text-sm lg:grid-cols-2">
-                          {liveErrors.map((error, index) => (
-                            <li key={index} className="leading-5">
-                              • {error}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                )}
-
+        <ul className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 text-sm lg:grid-cols-2">
+          {liveErrors.map((error, index) => (
+            <li key={index} className="leading-5">
+              • {error}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+)}
                 {submitStage === "review" && (
                   <>
-                    <div className="mt-6 flex-1 min-h-0 overflow-y-auto pr-2 space-y-4">
+                    <div className="mt-6 max-h-[70vh] flex-1 overflow-y-auto pr-2 space-y-4">
                       <div className="rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4">
                         <p className="text-sm font-bold text-black">{t("review.title")}</p>
                         <p className="mt-1 text-sm text-gray-600">{t("review.description")}</p>
@@ -1508,7 +1513,7 @@ function EstimatePageContent() {
                       )}
                     </div>
 
-                    <div className="mt-6 shrink-0">
+                   <div className="mt-6 shrink-0 pb-4">
                       <div className="flex gap-3">
                         <button
                           type="button"
@@ -1533,7 +1538,7 @@ function EstimatePageContent() {
                 )}
 
                 {submitStage === "success" && (
-                  <div className="mt-6 space-y-4">
+                  <div className="mt-6 flex flex-1 flex-col justify-center space-y-4">
                     <div className="rounded-2xl border border-green-200 bg-green-50 p-5 shadow-sm">
                       <div className="flex items-start gap-4">
                         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green-500 text-lg font-extrabold text-white shadow-sm">

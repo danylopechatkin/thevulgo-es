@@ -404,6 +404,7 @@
     "swipe": "Desliza para ver más categorías"
   },
   "step2": {
+    "titlePrefix": "Presupuesto para",
     "badge": "Paso 2 • Añade servicios",
     "titleSuffix": "calculadora de presupuesto",
     "description": "Elige exactamente lo que necesitas. Añade uno o varios servicios para crear tu presupuesto.",
@@ -426,7 +427,7 @@
     "subtotal": "Subtotal",
     "iva": "IVA (21%)",
     "total": "Total",
-    "pricesNote": "Los precios no incluyen IVA salvo que se indique lo contrario.",
+    "pricesNote": "Los precios de los servicios no incluyen IVA. El total final ya incluye IVA (21%).",
     "next": "Siguiente paso: revisar solicitud"
   },
   "form": {
