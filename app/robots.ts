@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://thevulgo.es/sitemap.xml",
+    sitemap: "https://www.thevulgo.es/sitemap.xml",
   };
 }
