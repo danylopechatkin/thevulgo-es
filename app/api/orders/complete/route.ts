@@ -77,8 +77,45 @@ export async function POST(req: Request) {
       );
     }
 
+    const locale = order.locale === "es" ? "es" : "en";
+    const isEs = locale === "es";
+
+    const labels = {
+      subject: isEs
+        ? "Tu pedido está completado — THEVULGO"
+        : "Your order is complete — THEVULGO",
+
+      title: isEs ? "Pedido completado" : "Order completed",
+
+      greeting: isEs
+        ? `Hola ${order.full_name || "cliente"}, gracias por elegir THEVULGO. Tu servicio se ha completado correctamente.`
+        : `Hi ${order.full_name || "client"}, thank you for choosing THEVULGO. Your service has been completed successfully.`,
+
+      order: isEs ? "Pedido" : "Order",
+      category: isEs ? "Categoría" : "Category",
+      schedule: isEs ? "Horario" : "Schedule",
+      net: isEs ? "Base imponible" : "Net",
+      total: "Total",
+
+      referralTitle: isEs ? "Comparte con un amigo" : "Share with a friend",
+      referralCode: isEs ? "Tu código personal de recomendación:" : "Your personal referral code:",
+
+      referralText: isEs
+        ? "Envía este código a un amigo. Recibirá un 10% de descuento en su primer pedido. Tú también recibirás un 10% de descuento en tu próximo servicio."
+        : "Send this code to a friend. They get 10% off their first order. You also get 10% off your next service.",
+
+      footer: isEs
+        ? "Gracias por elegir THEVULGO.<br/>Precio claro. Sin sorpresas.<br/>Valencia y alrededores · Respuesta rápida"
+        : "Thank you for choosing THEVULGO.<br/>Clear pricing. No surprises.<br/>Valencia & nearby · Fast response",
+    };
+
     const referralCode = makeReferralCode(order.full_name || "CLIENT");
-    const referralLink = `https://thevulgo.es/estimate?ref=${encodeURIComponent(referralCode)}`;
+
+    const referralLink =
+      locale === "es"
+        ? `https://thevulgo.es/es/estimate?ref=${encodeURIComponent(referralCode)}`
+        : `https://thevulgo.es/en/estimate?ref=${encodeURIComponent(referralCode)}`;
+
     const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(referralLink)}`;
 
     const servicesHtml = Array.isArray(order.services)
@@ -103,7 +140,7 @@ export async function POST(req: Request) {
         from: "TheVulgo <info@thevulgo.es>",
         to: [order.email],
         replyTo: "info@thevulgo.es",
-        subject: "Your order is complete — TheVulgo",
+        subject: labels.subject,
         html: `
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;padding:40px 0;font-family:Arial,sans-serif;">
   <tr>
@@ -117,10 +154,11 @@ export async function POST(req: Request) {
 
         <tr>
           <td style="padding:30px;">
-            <div style="font-size:24px;font-weight:800;color:#000;">Order completed</div>
+            <div style="font-size:24px;font-weight:800;color:#000;">
+              ${labels.title}
+            </div>
             <div style="margin-top:10px;font-size:14px;color:#666;line-height:1.7;">
-              Hi ${order.full_name || "client"}, thank you for choosing THEVULGO.
-              Your service has been completed successfully.
+              ${labels.greeting}
             </div>
           </td>
         </tr>
@@ -129,14 +167,14 @@ export async function POST(req: Request) {
           <td style="padding:0 30px 30px 30px;">
             <table width="100%" style="background:#fffbea;border:1px solid #facc15;border-radius:12px;">
               <tr>
-                <td style="padding:15px;font-size:12px;color:#666;">Order</td>
+                <td style="padding:15px;font-size:12px;color:#666;">${labels.order}</td>
                 <td style="padding:15px;text-align:right;font-weight:700;color:#000;">
                   ${order.order_number ? `TVG-${String(order.order_number).padStart(4, "0")}` : order.id}
                 </td>
               </tr>
 
               <tr>
-                <td style="padding:15px;font-size:12px;color:#666;">Category</td>
+                <td style="padding:15px;font-size:12px;color:#666;">${labels.category}</td>
                 <td style="padding:15px;text-align:right;font-weight:700;color:#000;">
                   ${order.category || "—"}
                 </td>
@@ -146,7 +184,7 @@ export async function POST(req: Request) {
                 order.scheduled_at
                   ? `
               <tr>
-                <td style="padding:15px;font-size:12px;color:#666;">Schedule</td>
+                <td style="padding:15px;font-size:12px;color:#666;">${labels.schedule}</td>
                 <td style="padding:15px;text-align:right;font-weight:700;color:#000;">
                   ${formatMadridFromUTC(order.scheduled_at)}
                 </td>
@@ -158,7 +196,7 @@ export async function POST(req: Request) {
               ${servicesHtml}
 
               <tr>
-                <td style="padding:15px;font-size:13px;color:#555;">Net</td>
+                <td style="padding:15px;font-size:13px;color:#555;">${labels.net}</td>
                 <td style="padding:15px;text-align:right;font-size:13px;">
                   €${Number(order.subtotal || 0).toFixed(2)}
                 </td>
@@ -172,7 +210,7 @@ export async function POST(req: Request) {
               </tr>
 
               <tr>
-                <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">Total</td>
+                <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">${labels.total}</td>
                 <td style="padding:15px;border-top:1px solid #ddd;text-align:right;font-weight:800;">
                   €${Number(order.total || 0).toFixed(2)}
                 </td>
@@ -186,16 +224,17 @@ export async function POST(req: Request) {
             <table width="100%" style="background:#fff8db;border:1px solid #facc15;border-radius:14px;">
               <tr>
                 <td style="padding:20px;">
-                  <div style="font-size:18px;font-weight:800;color:#000;">Share with a friend</div>
+                  <div style="font-size:18px;font-weight:800;color:#000;">
+                    ${labels.referralTitle}
+                  </div>
                   <div style="margin-top:10px;font-size:14px;color:#555;line-height:1.7;">
-                    Your personal referral code:
+                    ${labels.referralCode}
                   </div>
                   <div style="margin-top:8px;font-size:28px;font-weight:800;color:#000;">
                     ${referralCode}
                   </div>
                   <div style="margin-top:12px;font-size:14px;color:#555;line-height:1.7;">
-                    Send this code to a friend. They get <b>10% off</b> their first order.
-                    You also get <b>10% off</b> your next service.
+                    ${labels.referralText}
                   </div>
                   <div style="margin-top:18px;">
                     <img src="${qrImageUrl}" alt="Referral QR code" width="160" height="160" style="display:block;border-radius:10px;" />
@@ -208,9 +247,7 @@ export async function POST(req: Request) {
 
         <tr>
           <td style="background:#fafafa;padding:20px 30px;font-size:12px;color:#777;line-height:1.6;">
-            Thank you for choosing THEVULGO.<br/>
-            Clear pricing. No surprises.<br/>
-            Valencia & nearby · Fast response
+            ${labels.footer}
           </td>
         </tr>
       </table>
@@ -224,6 +261,7 @@ export async function POST(req: Request) {
         orderId: order.id,
         success: !emailResult.error,
         error: emailResult.error,
+        locale,
       });
 
       if (emailResult.error) {
@@ -257,6 +295,7 @@ export async function POST(req: Request) {
       success: true,
       referralCode,
       completedAt,
+      locale,
     });
   } catch (error: any) {
     console.error("❌ COMPLETE ORDER ERROR:", {
