@@ -15,6 +15,9 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
 
+    const locale = data.locale === "es" ? "es" : "en";
+    const isEs = locale === "es";
+
     console.log("📩 NEW ORDER REQUEST:", {
       name: data.fullName,
       email: data.email,
@@ -22,6 +25,7 @@ export async function POST(req: Request) {
       date: data.preferredDate,
       time: data.preferredTime,
       scheduledUTC: data.scheduledAt,
+      locale,
       servicesCount: Array.isArray(data.services) ? data.services.length : 0,
     });
 
@@ -39,10 +43,10 @@ export async function POST(req: Request) {
       userAgent,
       name: data.fullName,
       email: data.email,
+      locale,
       servicesCount: Array.isArray(data.services) ? data.services.length : 0,
     });
 
-    // BASIC VALIDATION
     if (!data.fullName || typeof data.fullName !== "string") {
       return Response.json(
         { success: false, error: "Invalid name" },
@@ -87,6 +91,7 @@ export async function POST(req: Request) {
       subtotal,
       iva,
       total,
+      locale,
     });
 
     const { data: insertedOrder, error: orderInsertError } = await supabase
@@ -115,6 +120,7 @@ export async function POST(req: Request) {
           reminder_sent: false,
           completed_email_sent: false,
           referral_code: null,
+          locale,
         },
       ])
       .select("id")
@@ -133,6 +139,46 @@ export async function POST(req: Request) {
       orderId: insertedOrder?.id,
     });
 
+    const labels = {
+      clientSubject: isEs
+        ? "Hemos recibido tu solicitud — THEVULGO"
+        : "We received your request — THEVULGO",
+
+      requestTitle: isEs ? "Solicitud recibida" : "Request received",
+
+      requestText: isEs
+        ? `Hola ${data.fullName}, hemos recibido tu solicitud. Te contactaremos pronto para confirmar los detalles.`
+        : `Hi ${data.fullName}, we received your request. We will contact you shortly to confirm the details.`,
+
+      category: isEs ? "Categoría" : "Category",
+      subtotal: "Subtotal",
+      total: "Total",
+      address: isEs ? "Dirección" : "Address",
+      schedule: isEs ? "Horario" : "Schedule",
+      notes: isEs ? "Notas" : "Notes",
+      noNotes: isEs ? "Sin notas adicionales" : "No additional notes",
+
+      referralTitle: isEs
+        ? "Comparte THEVULGO y recibe recompensa"
+        : "Share THEVULGO & Get rewarded",
+
+      referralText1: isEs
+        ? "Cuando completemos tu pedido, recibirás tu código personal de recomendación."
+        : "After we complete your order, you’ll receive your personal referral code.",
+
+      referralText2: isEs
+        ? "Compártelo con un amigo — recibirá un 10% de descuento en su primer servicio."
+        : "Share it with a friend — they get 10% off their first service.",
+
+      referralText3: isEs
+        ? "Cuando reserve, tú también recibirás un 10% de descuento en tu próximo trabajo."
+        : "Once they book, you also get 10% off your next job.",
+
+      footer: isEs
+        ? "El total final incluye IVA (21%).<br/>Precio claro. Sin sorpresas.<br/>Valencia y alrededores · Respuesta rápida"
+        : "Final total includes IVA (21%).<br/>Clear pricing. No surprises.<br/>Valencia & nearby · Fast response",
+    };
+
     const servicesHtml = (Array.isArray(data.services) ? data.services : [])
       .map(
         (item: any) => `
@@ -141,14 +187,13 @@ export async function POST(req: Request) {
     ${item.label} (${item.qty} × €${item.price})
   </td>
   <td style="padding:10px 15px;text-align:right;font-size:13px;font-weight:700;color:#000;">
-    €${item.subtotal}
+    €${Number(item.subtotal || 0).toFixed(2)}
   </td>
 </tr>
 `
       )
       .join("");
 
-    // ADMIN EMAIL
     const adminResult = await resend.emails.send({
       from: "TheVulgo <info@thevulgo.es>",
       to: ["info@thevulgo.es"],
@@ -159,6 +204,7 @@ export async function POST(req: Request) {
         <p><b>Name:</b> ${data.fullName}</p>
         <p><b>Phone:</b> ${data.phone || "—"}</p>
         <p><b>Email:</b> ${data.email || "—"}</p>
+        <p><b>Language:</b> ${locale}</p>
         <p><b>Category:</b> ${data.category || "—"}</p>
         <p><b>City:</b> ${data.city || "—"}</p>
         <p><b>Area:</b> ${data.area || "—"}</p>
@@ -177,7 +223,7 @@ export async function POST(req: Request) {
           ${(Array.isArray(data.services) ? data.services : [])
             .map(
               (item: any) =>
-                `<li>${item.label} × ${item.qty} — €${item.subtotal}</li>`
+                `<li>${item.label} × ${item.qty} — €${Number(item.subtotal || 0).toFixed(2)}</li>`
             )
             .join("")}
         </ul>
@@ -197,7 +243,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // CLIENT EMAIL
     let clientResult = null;
 
     if (data.email) {
@@ -205,14 +250,12 @@ export async function POST(req: Request) {
         from: "TheVulgo <info@thevulgo.es>",
         to: [data.email],
         replyTo: "info@thevulgo.es",
-        subject: "We received your request — TheVulgo",
+        subject: labels.clientSubject,
         html: `
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;padding:40px 0;font-family:Arial,sans-serif;">
 <tr>
 <td align="center">
-
 <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
-
 <tr>
 <td style="background:#000;padding:20px 30px;color:#fff;font-weight:800;font-size:20px;">
 THEVULGO · Valencia
@@ -222,11 +265,11 @@ THEVULGO · Valencia
 <tr>
 <td style="padding:30px;">
 <div style="font-size:22px;font-weight:800;color:#000;">
-Request received
+${labels.requestTitle}
 </div>
 
 <div style="margin-top:10px;font-size:14px;color:#666;">
-Hi ${data.fullName}, we received your request. We will contact you shortly.
+${labels.requestText}
 </div>
 </td>
 </tr>
@@ -235,7 +278,7 @@ Hi ${data.fullName}, we received your request. We will contact you shortly.
 <td style="padding:0 30px 30px 30px;">
 <table width="100%" style="background:#fffbea;border:1px solid #facc15;border-radius:12px;">
 <tr>
-<td style="padding:15px;font-size:12px;color:#666;">Category</td>
+<td style="padding:15px;font-size:12px;color:#666;">${labels.category}</td>
 <td style="padding:15px;text-align:right;font-weight:700;color:#000;">
 ${data.category || "—"}
 </td>
@@ -245,7 +288,7 @@ ${servicesHtml}
 
 <tr>
 <td style="padding:15px;font-size:13px;color:#555;">
-Subtotal
+${labels.subtotal}
 </td>
 <td style="padding:15px;text-align:right;font-size:13px;">
 €${subtotal.toFixed(2)}
@@ -263,7 +306,7 @@ IVA (21%)
 
 <tr>
 <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">
-Total
+${labels.total}
 </td>
 <td style="padding:15px;border-top:1px solid #ddd;text-align:right;font-weight:800;">
 €${total.toFixed(2)}
@@ -275,7 +318,7 @@ Total
 
 <tr>
 <td style="padding:0 30px 20px 30px;">
-<div style="font-size:12px;color:#666;">Address</div>
+<div style="font-size:12px;color:#666;">${labels.address}</div>
 <div style="font-weight:700;">
 ${data.city || ""}, ${data.area || ""}
 </div>
@@ -287,7 +330,7 @@ ${data.houseAddress || ""} ${data.apartmentNumber || ""}
 
 <tr>
 <td style="padding:0 30px 20px 30px;">
-<div style="font-size:12px;color:#666;">Schedule</div>
+<div style="font-size:12px;color:#666;">${labels.schedule}</div>
 <div style="font-weight:700;">
 ${
   data.scheduledAt
@@ -300,9 +343,9 @@ ${
 
 <tr>
 <td style="padding:0 30px 30px 30px;">
-<div style="font-size:12px;color:#666;">Notes</div>
+<div style="font-size:12px;color:#666;">${labels.notes}</div>
 <div style="font-size:13px;color:#555;">
-${data.notes || "No additional notes"}
+${data.notes || labels.noNotes}
 </div>
 </td>
 </tr>
@@ -313,21 +356,20 @@ ${data.notes || "No additional notes"}
 <tr>
 <td style="padding:20px;">
 <div style="font-size:18px;font-weight:800;">
-Share THEVULGO & Get rewarded
+${labels.referralTitle}
 </div>
 
 <div style="font-size:14px;color:#555;line-height:1.6;">
-  After we complete your order, you’ll receive your personal referral code.
+${labels.referralText1}
 </div>
 
 <div style="margin-top:10px;font-size:14px;color:#555;line-height:1.6;">
-  Share it with a friend — they get <b>10% off</b> their first service.
+${labels.referralText2}
 </div>
 
 <div style="margin-top:10px;font-size:14px;color:#555;line-height:1.6;">
-  Once they book, <b>you also get 10% off</b> your next job.
+${labels.referralText3}
 </div>
-
 </td>
 </tr>
 </table>
@@ -336,14 +378,11 @@ Share THEVULGO & Get rewarded
 
 <tr>
 <td style="background:#fafafa;padding:20px 30px;font-size:12px;color:#777;line-height:1.6;">
-Final total includes IVA (21%).<br/>
-Clear pricing. No surprises.<br/>
-Valencia & nearby · Fast response
+${labels.footer}
 </td>
 </tr>
 
 </table>
-
 </td>
 </tr>
 </table>
@@ -377,6 +416,7 @@ Valencia & nearby · Fast response
       orderId: insertedOrder?.id,
       adminEmail: adminResult.data?.id,
       clientEmail: clientResult?.data?.id,
+      locale,
     });
 
     return Response.json({
@@ -396,4 +436,3 @@ Valencia & nearby · Fast response
     );
   }
 }
-
