@@ -1,7 +1,9 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://thevulgo.es";
+  const baseUrl = "https://www.thevulgo.es";
+
+  const locales = ["es", "en"];
 
   const services = [
     "tv-mounting",
@@ -14,30 +16,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "smart-home",
     "kitchen",
     "bathroom",
-    "apartment",
+    "move-in",
     "exterior",
   ];
 
-  const servicePages = services.map((slug) => ({
-    url: `${baseUrl}/services/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
+  const pages: MetadataRoute.Sitemap = [];
 
-  return [
-    {
-      url: baseUrl,
+  for (const locale of locales) {
+    pages.push({
+      url: `${baseUrl}/${locale}`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/services`,
+      priority: locale === "es" ? 1 : 0.9,
+    });
+
+    pages.push({
+      url: `${baseUrl}/${locale}/services`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
-    },
-    ...servicePages,
-  ];
+    });
+
+    for (const service of services) {
+      pages.push({
+        url: `${baseUrl}/${locale}/services/${service}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
+    }
+  }
+
+  return pages;
 }
