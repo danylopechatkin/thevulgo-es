@@ -132,9 +132,12 @@ export default function ServicesPage() {
                   {t(`items.${service.key}.title`)}
                 </h2>
 
-                <p className="mt-2 text-sm leading-relaxed text-gray-700">
-                  {t(`items.${service.key}.desc`)}
-                </p>
+                <p
+  className="mt-2 text-sm leading-relaxed text-gray-700"
+  dangerouslySetInnerHTML={{
+    __html: t.raw(`items.${service.key}.desc`) as string,
+  }}
+/>
 
                 <div className="mt-4 text-sm font-extrabold text-yellow-500">
                   {t(`items.${service.key}.price`)}
