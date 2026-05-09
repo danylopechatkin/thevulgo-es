@@ -97,13 +97,17 @@ export default async function LocaleLayout({
                 </Link>
 
                 <a
-                  href="https://wa.me/14379074913"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hidden items-center gap-2 whitespace-nowrap rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-black shadow-sm transition hover:scale-[1.02] hover:border-[#25D366]/60 hover:shadow-md sm:inline-flex sm:rounded-2xl sm:px-4 sm:py-2.5 sm:text-base"
-                >
-                  {t("whatsapp")}
-                </a>
+  href={`https://wa.me/34610076942?text=${encodeURIComponent(
+    locale === "es"
+      ? "Hola, me gustaría pedir presupuesto para un servicio en Valencia."
+      : "Hi! I’d like an estimate for a service in Valencia."
+  )}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="hidden items-center gap-2 whitespace-nowrap rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-black shadow-sm transition hover:scale-[1.02] hover:border-[#25D366]/60 hover:shadow-md sm:inline-flex sm:rounded-2xl sm:px-4 sm:py-2.5 sm:text-base"
+>
+  {t("whatsapp")}
+</a>
               </div>
             </div>
           </header>
