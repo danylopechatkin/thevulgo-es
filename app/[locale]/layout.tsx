@@ -1,13 +1,13 @@
-import {NextIntlClientProvider} from "next-intl";
-import {getMessages, getTranslations, setRequestLocale} from "next-intl/server";
-import {notFound} from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import LanguageSwitcher from "@/app/components/LanguageSwitcher";
 
-import {SpeedInsights} from "@vercel/speed-insights/next";
-import {Analytics} from "@vercel/analytics/react";
-import type {Metadata} from "next";
-import {Geist, Geist_Mono} from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -20,9 +20,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "THEVULGO | Valencia Handyman Services",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  return {
+    metadataBase: new URL("https://www.thevulgo.es"),
+    title:
+      locale === "es"
+        ? "THEVULGO | Servicios de manitas en Valencia"
+        : "THEVULGO | Valencia Handyman Services",
+    description:
+      locale === "es"
+        ? "Servicios profesionales de manitas en Valencia: montaje de TV, muebles, electricidad básica, fontanería y reparaciones del hogar."
+        : "Professional handyman services in Valencia: TV mounting, furniture assembly, basic electrical, plumbing and home repairs.",
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        es: "/es",
+        en: "/en",
+      },
+    },
+  };
+}
 
 export default async function LocaleLayout({
   children,
