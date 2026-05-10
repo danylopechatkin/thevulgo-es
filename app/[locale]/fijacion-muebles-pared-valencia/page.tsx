@@ -11,7 +11,7 @@ import {
   Star,
   Ruler,
   PackageCheck,
-  Wall,
+    BrickWall,
 } from "lucide-react";
 
 type PageProps = {
@@ -290,7 +290,7 @@ export default async function FurnitureWallAnchoringValenciaPage({
         <div className="grid gap-6 md:grid-cols-4">
           {[
             {
-              icon: Wall,
+              icon: BrickWall,
               title: "Anclajes adecuados",
               text: "Elegimos fijación según pared, mueble y peso aproximado.",
             },
