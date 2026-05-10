@@ -30,7 +30,7 @@ export default function FurniturePage() {
       : "Hi! I’d like an estimate for furniture assembly in Valencia."
   );
 
-  const whatsappHref = `https://wa.me/14379074913?text=${whatsappText}`;
+  const whatsappHref = `https://wa.me/34610076942?text=${whatsappText}`;
 
   const copy = {
     badge: "THEVULGO • Valencia",
@@ -104,10 +104,11 @@ export default function FurniturePage() {
       title: isEs ? "Montaje de muebles IKEA" : "IKEA furniture assembly",
       desc: isEs
         ? "Montaje profesional de muebles IKEA tipo flat-pack: armarios, camas, muebles, cómodas y estanterías. Ajuste cuidadoso, alineación correcta y estructura estable para uso diario."
-        : "Professional assembly of IKEA flat-pack furniture including wardrobes, beds, cabinets, dressers and shelving units. Careful fitting, correct alignment and stable setup for everyday use.",
+        : "Professional assembly of IKEA flat-pack furniture including wardrobes, beds, cabinets, dressers and shelving units.",
       price: isEs ? "desde €39" : "from €39",
       icon: <Hammer className="h-5 w-5" />,
       className: "lg:col-span-2",
+      href: `/${locale}/montaje-muebles-ikea-valencia`,
     },
     {
       title: isEs ? "Montaje de armario" : "Wardrobe assembly",
@@ -117,6 +118,7 @@ export default function FurniturePage() {
       price: isEs ? "desde €69" : "from €69",
       icon: <Boxes className="h-5 w-5" />,
       className: "",
+      href: `/${locale}/montaje-armario-valencia`,
     },
     {
       title: isEs ? "Montaje de cama" : "Bed frame assembly",
@@ -126,6 +128,7 @@ export default function FurniturePage() {
       price: isEs ? "desde €49" : "from €49",
       icon: <BedDouble className="h-5 w-5" />,
       className: "",
+      href: `/${locale}/montaje-cama-valencia`,
     },
     {
       title: isEs ? "Cómodas y cajoneras" : "Chest of drawers",
@@ -135,6 +138,7 @@ export default function FurniturePage() {
       price: isEs ? "desde €45" : "from €45",
       icon: <FolderOpen className="h-5 w-5" />,
       className: "",
+      href: `/${locale}/montaje-comodas-cajoneras-valencia`,
     },
     {
       title: isEs ? "Estanterías" : "Shelving units",
@@ -144,15 +148,17 @@ export default function FurniturePage() {
       price: isEs ? "desde €39" : "from €39",
       icon: <Boxes className="h-5 w-5" />,
       className: "",
+      href: `/${locale}/montaje-estanterias-valencia`,
     },
     {
       title: isEs ? "Muebles TV y multimedia" : "TV stands & media units",
       desc: isEs
         ? "Montaje de muebles TV, consolas multimedia y unidades de entretenimiento con alineación cuidada y posición estable."
-        : "Assembly of TV stands, media consoles and entertainment units with careful alignment and stable positioning. Suitable for living rooms, home cinema setups and media storage furniture.",
+        : "Assembly of TV stands, media consoles and entertainment units with careful alignment and stable positioning.",
       price: isEs ? "desde €45" : "from €45",
       icon: <Package className="h-5 w-5" />,
       className: "lg:col-span-2",
+      href: `/${locale}/montaje-muebles-tv-multimedia-valencia`,
     },
     {
       title: isEs ? "Escritorios y zonas de trabajo" : "Desks & workstations",
@@ -162,6 +168,7 @@ export default function FurniturePage() {
       price: isEs ? "desde €39" : "from €39",
       icon: <LampDesk className="h-5 w-5" />,
       className: "",
+      href: `/${locale}/montaje-escritorios-valencia`,
     },
     {
       title: isEs ? "Mesas de comedor" : "Dining tables",
@@ -171,6 +178,7 @@ export default function FurniturePage() {
       price: isEs ? "desde €35" : "from €35",
       icon: <Package className="h-5 w-5" />,
       className: "",
+      href: `/${locale}/montaje-mesas-comedor-valencia`,
     },
     {
       title: isEs ? "Aparadores y muebles auxiliares" : "Sideboards & cabinets",
@@ -180,6 +188,7 @@ export default function FurniturePage() {
       price: isEs ? "desde €49" : "from €49",
       icon: <Boxes className="h-5 w-5" />,
       className: "",
+      href: `/${locale}/montaje-aparadores-muebles-auxiliares-valencia`,
     },
     {
       title: isEs ? "Sofás y piezas modulares" : "Sofa & modular pieces",
@@ -189,15 +198,17 @@ export default function FurniturePage() {
       price: isEs ? "desde €39" : "from €39",
       icon: <Package className="h-5 w-5" />,
       className: "",
+      href: `/${locale}/montaje-sofas-modulares-valencia`,
     },
     {
       title: isEs ? "Fijación de muebles a la pared" : "Furniture fixing to wall",
       desc: isEs
-        ? "Fijación profesional anti-vuelco para armarios, muebles altos, estanterías y almacenamiento alto. Mejora la estabilidad y seguridad usando anclajes adecuados."
-        : "Professional anti-tip wall fixing for wardrobes, cabinets, shelving units and tall storage furniture. Improves stability and safety by securing furniture to the wall using suitable anchors and hardware.",
+        ? "Fijación profesional anti-vuelco para armarios, muebles altos, estanterías y almacenamiento alto."
+        : "Professional anti-tip wall fixing for wardrobes, cabinets, shelving units and tall storage furniture.",
       price: isEs ? "desde €29" : "from €29",
       icon: <ShieldCheck className="h-5 w-5" />,
       className: "lg:col-span-2",
+      href: `/${locale}/fijacion-muebles-pared-valencia`,
     },
     {
       title: isEs ? "Preparación de muebles al mudarse" : "Move-in furniture setup",
@@ -207,6 +218,7 @@ export default function FurniturePage() {
       price: isEs ? "presupuesto personalizado" : "custom quote",
       icon: <Package className="h-5 w-5" />,
       className: "",
+      href: `/${locale}/preparacion-muebles-mudanza-valencia`,
     },
   ];
 
@@ -244,9 +256,7 @@ export default function FurniturePage() {
 
   const faqItems = [
     {
-      q: isEs
-        ? "¿Solo montas muebles IKEA?"
-        : "Do you assemble IKEA furniture only?",
+      q: isEs ? "¿Solo montas muebles IKEA?" : "Do you assemble IKEA furniture only?",
       a: isEs
         ? "No. IKEA es común, pero también se pueden montar muchas otras marcas de muebles flat-pack y estándar según el tipo de mueble y herrajes."
         : "No. IKEA is common, but many other flat-pack and standard furniture brands can also be assembled depending on the item and hardware.",
@@ -323,9 +333,10 @@ export default function FurniturePage() {
 
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
             {serviceCards.map((item) => (
-              <div
+              <button
                 key={item.title}
-                className={`rounded-2xl border border-yellow-400 bg-white p-6 text-left shadow-lg transition-all duration-200 hover:shadow-2xl hover:scale-[1.02] ${item.className}`}
+                onClick={() => router.push(item.href)}
+                className={`group rounded-2xl border border-yellow-400 bg-white p-6 text-left shadow-lg transition-all duration-200 hover:shadow-2xl hover:scale-[1.02] ${item.className}`}
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
                   {item.icon}
@@ -342,7 +353,12 @@ export default function FurniturePage() {
                 <div className="mt-4 text-sm font-extrabold text-yellow-500">
                   {item.price}
                 </div>
-              </div>
+
+                <div className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-black opacity-0 transition group-hover:opacity-100">
+                  {isEs ? "Ver servicio" : "Open service"}
+                  <ArrowRight className="h-4 w-4" />
+                </div>
+              </button>
             ))}
           </div>
 
