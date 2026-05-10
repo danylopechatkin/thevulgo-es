@@ -18,6 +18,7 @@ type PageProps = {
 };
 
 const siteUrl = "https://thevulgo.es";
+const phoneNumber = "34610076942";
 
 export async function generateMetadata({
   params,
@@ -116,7 +117,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
       : "Hi, I would like a quote for TV mounting in Valencia."
   );
 
-  const whatsappUrl = `https://wa.me/34610076942?text=${whatsappText}`;
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappText}`;
 
   const serviceSchema = {
     "@context": "https://schema.org",
@@ -127,6 +128,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
       "@type": "LocalBusiness",
       name: "THEVULGO",
       url: siteUrl,
+      telephone: "+34610076942",
       areaServed: "Valencia",
     },
     areaServed: serviceAreas,
@@ -143,6 +145,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
     "@type": "LocalBusiness",
     name: "THEVULGO",
     url: siteUrl,
+    telephone: "+34610076942",
     areaServed: "Valencia",
     priceRange: "€€",
     description:
@@ -189,33 +192,21 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
 
   return (
     <main className="bg-white text-neutral-950">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <section className="relative overflow-hidden border-b border-yellow-200 bg-gradient-to-br from-yellow-50 via-white to-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-2 md:px-8 md:py-24">
           <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-white px-4 py-2 text-sm font-semibold shadow-sm">
-              <MapPin className="h-4 w-4 text-yellow-500" />
-              Valencia & nearby · Clean finish · Fast response
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-yellow-100 px-4 py-2 text-sm font-black text-neutral-900 shadow-sm">
+              <MapPin className="h-4 w-4 text-yellow-600" />
+              Servicio profesional en Valencia
             </div>
 
             <h1 className="text-4xl font-black tracking-tight md:text-6xl">
-              Montaje de TV en Valencia
+              Montaje de TV <span className="text-yellow-500">en Valencia</span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
@@ -228,45 +219,47 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href={whatsappUrl}
-                className="inline-flex items-center justify-center rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-md transition hover:scale-105 hover:bg-yellow-300"
+                className="inline-flex items-center justify-center rounded-xl bg-yellow-400 px-6 py-4 font-black text-black shadow-md transition hover:scale-105 hover:bg-yellow-300"
               >
                 Pedir presupuesto por WhatsApp
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
 
-              <Link
-                href={`/${locale}/services`}
-                className="inline-flex items-center justify-center rounded-xl border border-neutral-300 bg-white px-6 py-4 font-bold text-neutral-950 shadow-sm transition hover:scale-105"
+              <a
+                href={`tel:+${phoneNumber}`}
+                className="inline-flex items-center justify-center rounded-xl border border-neutral-300 bg-white px-6 py-4 font-black text-neutral-950 shadow-sm transition hover:scale-105 hover:border-yellow-400"
               >
-                Ver otros servicios
-              </Link>
+                Llamar ahora
+              </a>
             </div>
 
-            <div className="mt-8 grid gap-3 text-sm font-medium text-neutral-700 sm:grid-cols-2">
+            <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
                 "Instalación desde 49€",
                 "Soportes fijos o articulados",
                 "Ocultación de cables",
                 "TVs grandes y Samsung Frame",
+                "Trabajo limpio y ordenado",
+                "Valencia y alrededores",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-green-600" />
+                  <CheckCircle2 className="h-5 w-5 text-yellow-500" />
                   {item}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-2xl">
-            <div className="rounded-2xl bg-neutral-950 p-8 text-white">
-              <Tv className="mb-6 h-12 w-12 text-yellow-400" />
-              <p className="text-sm font-bold uppercase tracking-widest text-yellow-400">
+          <div className="rounded-3xl border border-yellow-300 bg-white p-4 shadow-2xl md:p-6">
+            <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
+              <Tv className="mb-6 h-12 w-12 text-black" />
+              <p className="text-sm font-black uppercase tracking-widest">
                 THEVULGO Valencia
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 Clean TV installation. No mess. No stress.
               </h2>
-              <p className="mt-4 text-neutral-300">
+              <p className="mt-4 font-medium leading-7 text-neutral-900">
                 Revisamos la pared, nivelamos la TV, usamos herramientas
                 profesionales y dejamos la zona limpia.
               </p>
@@ -281,7 +274,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
               ].map(([title, text]) => (
                 <div
                   key={title}
-                  className="rounded-2xl border border-neutral-200 bg-yellow-50 p-4"
+                  className="rounded-2xl border border-yellow-200 bg-yellow-50 p-4 shadow-sm"
                 >
                   <p className="font-black">{title}</p>
                   <p className="mt-1 text-sm text-neutral-700">{text}</p>
@@ -318,7 +311,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
           ].map((item) => (
             <div
               key={item.title}
-              className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+              className="rounded-2xl border border-yellow-200 bg-yellow-50 p-6 shadow-sm"
             >
               <item.icon className="h-8 w-8 text-yellow-500" />
               <h2 className="mt-4 text-xl font-black">{item.title}</h2>
@@ -360,7 +353,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="bg-neutral-950 py-16 text-white">
+      <section className="bg-yellow-50 py-16">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <h2 className="text-3xl font-black md:text-4xl">
             ¿Qué incluye nuestro servicio?
@@ -380,10 +373,10 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             ].map((item) => (
               <div
                 key={item}
-                className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-5"
+                className="flex items-start gap-3 rounded-2xl border border-yellow-200 bg-white p-5 shadow-sm"
               >
-                <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-400" />
-                <p className="font-semibold">{item}</p>
+                <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
+                <p className="font-bold text-neutral-900">{item}</p>
               </div>
             ))}
           </div>
@@ -391,6 +384,10 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <h2 className="mb-8 text-3xl font-black md:text-4xl">
+          Tipos de soporte para TV
+        </h2>
+
         <div className="grid gap-8 md:grid-cols-3">
           {[
             {
@@ -408,78 +405,46 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
           ].map((item) => (
             <div
               key={item.title}
-              className="rounded-3xl border border-yellow-300 bg-yellow-50 p-7 shadow-md"
+              className="rounded-3xl border border-yellow-300 bg-white p-7 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
             >
-              <h2 className="text-2xl font-black">{item.title}</h2>
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-400">
+                <Tv className="h-8 w-8 text-black" />
+              </div>
+              <h3 className="text-2xl font-black">{item.title}</h3>
               <p className="mt-4 leading-7 text-neutral-700">{item.text}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-5 py-10 md:px-8">
-        <h2 className="text-3xl font-black">
-          Ocultación de cables y enchufes para TV
-        </h2>
-
-        <p className="mt-6 text-lg leading-8 text-neutral-700">
-          Si quieres una instalación más limpia, podemos ayudarte con la
-          ocultación de cables. La solución más rápida suele ser una canaleta
-          exterior blanca o negra. Para acabados más avanzados, podemos revisar
-          si es posible mover una toma eléctrica, preparar una salida detrás de
-          la TV o planificar una instalación más discreta según la pared y el
-          espacio disponible.
-        </p>
-
-        <div className="mt-8 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-          <h3 className="text-xl font-black">También podemos ayudarte con:</h3>
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            {[
-              "Instalar enchufe para TV",
-              "Ocultar cable HDMI",
-              "Instalar soundbar",
-              "Pasar cable por canaleta",
-              "Preparar TV para consola",
-              "Organizar router o decodificador",
-            ].map((item) => (
-              <div key={item} className="flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-green-600" />
-                <span className="font-medium">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-yellow-50 py-16">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="grid gap-10 md:grid-cols-2">
-            <div>
-              <h2 className="text-3xl font-black md:text-4xl">
-                Instalación Samsung Frame TV
-              </h2>
-              <p className="mt-6 text-lg leading-8 text-neutral-700">
-                Samsung Frame necesita una instalación especialmente cuidada:
-                altura exacta, nivelación precisa, planificación del cable One
-                Connect y una colocación limpia para conseguir ese efecto de
-                cuadro en la pared. Podemos instalar Samsung Frame en Valencia
-                y ayudarte a decidir la mejor posición antes de perforar.
-              </p>
+      <section className="mx-auto max-w-7xl px-5 py-10 md:px-8">
+        <div className="grid gap-6 md:grid-cols-4">
+          {[
+            {
+              title: "Ocultación de cables y enchufes",
+              text: "Instalamos canaletas o buscamos la mejor solución para dejar todo más limpio.",
+            },
+            {
+              title: "Instalación Samsung Frame",
+              text: "Nivelación perfecta y planificación del cable One Connect para efecto cuadro.",
+            },
+            {
+              title: "TVs grandes 65” – 98”",
+              text: "Revisamos pared, peso y soporte para que tu TV grande quede segura.",
+            },
+            {
+              title: "También podemos ayudarte con",
+              text: "Instalar enchufe, soundbar, HDMI, router, consola o decodificador.",
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className="rounded-3xl border border-yellow-200 bg-yellow-50 p-6 shadow-sm"
+            >
+              <h2 className="text-xl font-black">{item.title}</h2>
+              <p className="mt-4 leading-7 text-neutral-700">{item.text}</p>
             </div>
-
-            <div>
-              <h2 className="text-3xl font-black md:text-4xl">
-                TVs grandes: 65”, 75”, 85” y más
-              </h2>
-              <p className="mt-6 text-lg leading-8 text-neutral-700">
-                Para televisores grandes revisamos con más cuidado el peso, el
-                soporte, la pared y los puntos de fijación. Una TV grande debe
-                quedar segura, nivelada y bien centrada. Si tienes una pantalla
-                de gran formato, envíanos fotos de la zona y te diremos qué
-                soporte y qué instalación conviene.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -499,7 +464,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
           ].map((item) => (
             <div
               key={item}
-              className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm"
+              className="rounded-2xl border border-yellow-200 bg-white p-5 shadow-sm"
             >
               <Home className="h-7 w-7 text-yellow-500" />
               <p className="mt-3 font-bold">{item}</p>
@@ -514,21 +479,21 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
         </p>
       </section>
 
-      <section className="bg-neutral-950 py-16 text-white">
+      <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
-          <p className="text-sm font-black uppercase tracking-widest text-yellow-400">
+          <p className="text-sm font-black uppercase tracking-widest">
             Precio claro
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Montaje de TV desde 49€
           </h2>
-          <p className="mt-6 text-lg leading-8 text-neutral-300">
+          <p className="mt-6 text-lg font-medium leading-8 text-neutral-900">
             El precio estándar empieza desde 49€. El coste final puede variar si
             necesitas soporte incluido, instalación de TV grande, ocultación de
             cables, trabajo eléctrico, canaleta o montaje especial.
           </p>
 
-          <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6 text-left">
+          <div className="mt-8 rounded-3xl border border-yellow-600/30 bg-white p-6 text-left shadow-xl">
             <h3 className="text-xl font-black">El precio depende de:</h3>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {[
@@ -542,8 +507,8 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
                 "Distancia fuera de Valencia",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400" />
-                  <span>{item}</span>
+                  <CheckCircle2 className="h-5 w-5 text-yellow-500" />
+                  <span className="font-medium">{item}</span>
                 </div>
               ))}
             </div>
@@ -551,7 +516,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
 
           <a
             href={whatsappUrl}
-            className="mt-8 inline-flex items-center justify-center rounded-xl bg-yellow-400 px-7 py-4 font-black text-black shadow-md transition hover:scale-105 hover:bg-yellow-300"
+            className="mt-8 inline-flex items-center justify-center rounded-xl bg-black px-7 py-4 font-black text-white shadow-md transition hover:scale-105"
           >
             Enviar fotos y pedir precio
             <ArrowRight className="ml-2 h-5 w-5" />
@@ -581,7 +546,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="bg-neutral-50 py-16">
+      <section className="bg-yellow-50 py-16">
         <div className="mx-auto max-w-4xl px-5 md:px-8">
           <h2 className="text-3xl font-black md:text-4xl">
             Preguntas frecuentes
@@ -591,7 +556,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             {faqs.map((item) => (
               <details
                 key={item.q}
-                className="group rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+                className="group rounded-2xl border border-yellow-200 bg-white p-6 shadow-sm"
               >
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-black">
                   <span>{item.q}</span>
@@ -639,7 +604,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             <Link
               key={item.title}
               href={item.href}
-              className="group rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-yellow-400 hover:shadow-md"
+              className="group rounded-2xl border border-yellow-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-yellow-400 hover:shadow-md"
             >
               <p className="text-xl font-black">{item.title}</p>
               <p className="mt-3 inline-flex items-center font-bold text-neutral-700 group-hover:text-black">
