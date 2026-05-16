@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje profesional de TV en Valencia y alrededores. Instalación limpia, gestión de cables y montaje de soportes."
         : "Professional TV mounting in Valencia and nearby. Clean installation, cable management and bracket mounting.",
-      url: `https://thevulgo.es/${locale}/services/tv-mounting`,
+      url: `https://www.thevulgo.es/${locale}/services/tv-mounting`,
       siteName: "THEVULGO",
       type: "website",
     },

@@ -17,7 +17,7 @@ type PageProps = {
   params: Promise<{ locale: string }>;
 };
 
-const siteUrl = "https://thevulgo.es";
+const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 
 const serviceAreas = [

@@ -113,8 +113,8 @@ export async function POST(req: Request) {
 
     const referralLink =
       locale === "es"
-        ? `https://thevulgo.es/es/estimate?ref=${encodeURIComponent(referralCode)}`
-        : `https://thevulgo.es/en/estimate?ref=${encodeURIComponent(referralCode)}`;
+        ? `https://www.thevulgo.es/es/estimate?ref=${encodeURIComponent(referralCode)}`
+        : `https://www.thevulgo.es/en/estimate?ref=${encodeURIComponent(referralCode)}`;
 
     const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(referralLink)}`;
 
