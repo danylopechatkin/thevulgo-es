@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Script from "next/script";
 import LanguageSwitcher from "@/app/components/LanguageSwitcher";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -9,7 +10,6 @@ import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,12 +50,12 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: Promise<{ locale: string }>;
 }) {
-  const {locale} = await params;
+  const { locale } = await params;
 
   if (locale !== "en" && locale !== "es") {
     notFound();
@@ -71,6 +71,21 @@ export default async function LocaleLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden bg-white font-sans text-black antialiased`}
       >
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17552260425"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-ads-tag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17552260425');
+          `}
+        </Script>
+
         <NextIntlClientProvider messages={messages}>
           <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-md">
             <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:px-4">
@@ -82,7 +97,7 @@ export default async function LocaleLayout({
                   V
                 </div>
 
-                <div className="min-w-0 font-extrabold text-yellow-400 leading-none">
+                <div className="min-w-0 font-extrabold leading-none text-yellow-400">
                   <span className="block truncate">THEVULGO</span>
                   <span className="ml-0 mt-0.5 hidden text-sm font-semibold text-gray-500 sm:block">
                     Valencia
@@ -121,17 +136,17 @@ export default async function LocaleLayout({
                 </Link>
 
                 <a
-  href={`https://wa.me/34610076942?text=${encodeURIComponent(
-    locale === "es"
-      ? "Hola, me gustaría pedir presupuesto para un servicio en Valencia."
-      : "Hi! I’d like an estimate for a service in Valencia."
-  )}`}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="hidden items-center gap-2 whitespace-nowrap rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-black shadow-sm transition hover:scale-[1.02] hover:border-[#25D366]/60 hover:shadow-md sm:inline-flex sm:rounded-2xl sm:px-4 sm:py-2.5 sm:text-base"
->
-  {t("whatsapp")}
-</a>
+                  href={`https://wa.me/34610076942?text=${encodeURIComponent(
+                    locale === "es"
+                      ? "Hola, me gustaría pedir presupuesto para un servicio en Valencia."
+                      : "Hi! I’d like an estimate for a service in Valencia."
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden items-center gap-2 whitespace-nowrap rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-black shadow-sm transition hover:scale-[1.02] hover:border-[#25D366]/60 hover:shadow-md sm:inline-flex sm:rounded-2xl sm:px-4 sm:py-2.5 sm:text-base"
+                >
+                  {t("whatsapp")}
+                </a>
               </div>
             </div>
           </header>
