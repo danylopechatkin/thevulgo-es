@@ -1,180 +1,311 @@
-"use client";
+import type { Metadata } from "next";
+import ServicesClient from "./ServicesClient";
 
-import React from "react";
-import { useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
-import {
-  ArrowRight,
-  Wrench,
-  Zap,
-  Droplets,
-  Hammer,
-  DoorOpen,
-  Paintbrush,
-  ShieldCheck,
-  ChefHat,
-  Bath,
-  Home,
-  House,
-} from "lucide-react";
+type Props = {
+  params: Promise<{ locale: string }>;
+};
 
-export default function ServicesPage() {
-  const router = useRouter();
-  const locale = useLocale();
-  const t = useTranslations("services");
+const baseUrl = "https://www.thevulgo.es";
 
-  const services = [
-    {
-      key: "tvMounting",
-      slug: "tv-mounting",
-      icon: <Wrench className="h-5 w-5" />,
+const serviceCategories = [
+  {
+    slug: "tv-mounting",
+    es: "Montaje de TV en Valencia",
+    en: "TV mounting in Valencia",
+  },
+  {
+    slug: "furniture",
+    es: "Montaje de muebles en Valencia",
+    en: "Furniture assembly in Valencia",
+  },
+  {
+    slug: "electrical",
+    es: "Electricidad básica en Valencia",
+    en: "Basic electrical services in Valencia",
+  },
+  {
+    slug: "plumbing",
+    es: "Fontanería básica en Valencia",
+    en: "Basic plumbing services in Valencia",
+  },
+  {
+    slug: "repairs",
+    es: "Reparaciones del hogar en Valencia",
+    en: "Home repairs in Valencia",
+  },
+  {
+    slug: "drywall",
+    es: "Pladur y pequeñas reformas en Valencia",
+    en: "Drywall and small renovation jobs in Valencia",
+  },
+  {
+    slug: "doors",
+    es: "Puertas y herrajes en Valencia",
+    en: "Doors and hardware in Valencia",
+  },
+  {
+    slug: "smart-home",
+    es: "Smart home e instalaciones en Valencia",
+    en: "Smart home installations in Valencia",
+  },
+  {
+    slug: "kitchen",
+    es: "Trabajos de cocina en Valencia",
+    en: "Kitchen handyman jobs in Valencia",
+  },
+  {
+    slug: "bathroom",
+    es: "Trabajos de baño en Valencia",
+    en: "Bathroom handyman jobs in Valencia",
+  },
+  {
+    slug: "move-in",
+    es: "Servicios para mudanzas en Valencia",
+    en: "Move-in handyman services in Valencia",
+  },
+  {
+    slug: "exterior",
+    es: "Pequeños trabajos exteriores en Valencia",
+    en: "Exterior small jobs in Valencia",
+  },
+];
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const isEs = locale === "es";
+
+  const title = isEs
+    ? "Servicios de handyman en Valencia | TV, muebles, reparaciones | THEVULGO"
+    : "Handyman Services in Valencia | TV, Furniture, Repairs | THEVULGO";
+
+  const description = isEs
+    ? "Servicios de handyman en Valencia: montaje de TV, montaje de muebles, electricidad básica, fontanería básica, pladur, puertas, cocina, baño, mudanzas y pequeñas reparaciones. Presupuesto claro y acabado limpio."
+    : "Handyman services in Valencia: TV mounting, furniture assembly, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom, move-in jobs and small repairs. Clear estimate and clean finish.";
+
+  return {
+    title,
+    description,
+    keywords: isEs
+      ? [
+          "servicios handyman Valencia",
+          "manitas Valencia",
+          "montaje TV Valencia",
+          "montaje muebles Valencia",
+          "reparaciones hogar Valencia",
+          "electricidad básica Valencia",
+          "fontanería básica Valencia",
+          "pladur Valencia",
+          "puertas Valencia",
+          "cocina baño Valencia",
+        ]
+      : [
+          "handyman services Valencia",
+          "handyman Valencia",
+          "TV mounting Valencia",
+          "furniture assembly Valencia",
+          "home repairs Valencia",
+          "basic electrical Valencia",
+          "basic plumbing Valencia",
+          "drywall Valencia",
+          "doors Valencia",
+          "kitchen bathroom Valencia",
+        ],
+    alternates: {
+      canonical: `${baseUrl}/${locale}/services`,
+      languages: {
+        es: `${baseUrl}/es/services`,
+        en: `${baseUrl}/en/services`,
+      },
     },
-    {
-      key: "furniture",
-      slug: "furniture",
-      icon: <Hammer className="h-5 w-5" />,
+    openGraph: {
+      title,
+      description,
+      url: `${baseUrl}/${locale}/services`,
+      siteName: "THEVULGO",
+      type: "website",
+      locale: isEs ? "es_ES" : "en_US",
     },
-    {
-      key: "electrical",
-      slug: "electrical",
-      icon: <Zap className="h-5 w-5" />,
+    robots: {
+      index: true,
+      follow: true,
     },
-    {
-      key: "plumbing",
-      slug: "plumbing",
-      icon: <Droplets className="h-5 w-5" />,
+  };
+}
+
+export default async function ServicesPage({ params }: Props) {
+  const { locale } = await params;
+  const isEs = locale === "es";
+
+  const pageUrl = `${baseUrl}/${locale}/services`;
+
+  const collectionPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: isEs
+      ? "Servicios de handyman en Valencia"
+      : "Handyman services in Valencia",
+    description: isEs
+      ? "Página de servicios de THEVULGO para trabajos de handyman en Valencia: montaje de TV, muebles, electricidad básica, fontanería básica, pladur, puertas, cocina, baño, mudanzas y reparaciones."
+      : "THEVULGO services page for handyman jobs in Valencia: TV mounting, furniture assembly, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom, move-in jobs and repairs.",
+    url: pageUrl,
+    inLanguage: isEs ? "es" : "en",
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: isEs ? "Inicio" : "Home",
+        item: `${baseUrl}/${locale}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: isEs ? "Servicios" : "Services",
+        item: pageUrl,
+      },
+    ],
+  };
+
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: isEs
+      ? "Categorías de servicios handyman en Valencia"
+      : "Handyman service categories in Valencia",
+    itemListElement: serviceCategories.map((service, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: isEs ? service.es : service.en,
+      url: `${baseUrl}/${locale}/services/${service.slug}`,
+    })),
+  };
+
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: isEs
+      ? "Servicios de handyman en Valencia"
+      : "Handyman services in Valencia",
+    serviceType: isEs
+      ? "Montaje, reparaciones e instalaciones del hogar"
+      : "Home mounting, repair and installation services",
+    provider: {
+      "@type": "HomeAndConstructionBusiness",
+      name: "THEVULGO",
+      telephone: "+34610076942",
+      url: baseUrl,
+      priceRange: "€€",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Valencia",
+        addressRegion: "Valencia",
+        addressCountry: "ES",
+      },
     },
-    {
-      key: "repairs",
-      slug: "repairs",
-      icon: <Wrench className="h-5 w-5" />,
+    areaServed: [
+      "Valencia",
+      "Campanar",
+      "Ruzafa",
+      "Benimaclet",
+      "Patraix",
+      "El Carmen",
+      "Extramurs",
+      "Mislata",
+      "Burjassot",
+      "Paterna",
+      "Torrent",
+      "Sagunto",
+      "Cullera",
+      "Gandía",
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: isEs
+        ? "Catálogo de servicios THEVULGO"
+        : "THEVULGO service catalog",
+      itemListElement: serviceCategories.map((service) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: isEs ? service.es : service.en,
+          url: `${baseUrl}/${locale}/services/${service.slug}`,
+          areaServed: "Valencia",
+        },
+      })),
     },
-    {
-      key: "drywall",
-      slug: "drywall",
-      icon: <Paintbrush className="h-5 w-5" />,
-    },
-    {
-      key: "doors",
-      slug: "doors",
-      icon: <DoorOpen className="h-5 w-5" />,
-    },
-    {
-      key: "smartHome",
-      slug: "smart-home",
-      icon: <ShieldCheck className="h-5 w-5" />,
-    },
-    {
-      key: "kitchen",
-      slug: "kitchen",
-      icon: <ChefHat className="h-5 w-5" />,
-    },
-    {
-      key: "bathroom",
-      slug: "bathroom",
-      icon: <Bath className="h-5 w-5" />,
-    },
-    {
-      key: "moveIn",
-      slug: "move-in",
-      icon: <Home className="h-5 w-5" />,
-    },
-    {
-      key: "exterior",
-      slug: "exterior",
-      icon: <House className="h-5 w-5" />,
-    },
-  ];
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: isEs
+          ? "¿Qué servicios de handyman ofrece THEVULGO en Valencia?"
+          : "What handyman services does THEVULGO offer in Valencia?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isEs
+            ? "THEVULGO ofrece montaje de TV, montaje de muebles, reparaciones del hogar, electricidad básica, fontanería básica, pladur, puertas, cocina, baño, smart home, mudanzas y pequeños trabajos exteriores en Valencia."
+            : "THEVULGO offers TV mounting, furniture assembly, home repairs, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom, smart home, move-in services and small exterior jobs in Valencia.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: isEs
+          ? "¿Trabajáis solo en Valencia ciudad?"
+          : "Do you only work in Valencia city?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isEs
+            ? "Trabajamos en Valencia y zonas cercanas como Campanar, Ruzafa, Benimaclet, Patraix, Mislata, Burjassot, Paterna, Torrent, Sagunto, Cullera y Gandía."
+            : "We work in Valencia and nearby areas including Campanar, Ruzafa, Benimaclet, Patraix, Mislata, Burjassot, Paterna, Torrent, Sagunto, Cullera and Gandía.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: isEs
+          ? "¿Puedo pedir presupuesto por WhatsApp?"
+          : "Can I request an estimate by WhatsApp?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isEs
+            ? "Sí. Puedes enviar fotos, medidas y una breve descripción del trabajo por WhatsApp para recibir una estimación clara antes de confirmar la visita."
+            : "Yes. You can send photos, measurements and a short description of the job by WhatsApp to receive a clear estimate before confirming the visit.",
+        },
+      },
+    ],
+  };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white font-sans text-black">
-      <section className="relative px-4 py-20 sm:py-24">
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute inset-0 bg-white" />
-          <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
-          <div className="absolute right-10 top-24 h-[320px] w-[320px] rounded-full bg-yellow-100/60 blur-3xl" />
-        </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
 
-        <div className="mx-auto w-full max-w-7xl">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-3 py-1 text-xs font-semibold text-black shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-yellow-400" />
-              {t("badge")}
-            </div>
-
-            <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">
-              {t("title")}
-            </h1>
-
-            <p className="mx-auto mt-4 max-w-3xl text-base text-gray-600 sm:text-lg">
-              {t("subtitle")}
-            </p>
-          </div>
-
-          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => (
-              <button
-                key={service.slug}
-                onClick={() => router.push(`/${locale}/services/${service.slug}`)}
-                className="group rounded-2xl border border-yellow-400 bg-white p-6 text-left shadow-lg transition-all duration-200 hover:-translate-y-[2px] hover:scale-[1.02] hover:shadow-2xl"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-                    {service.icon}
-                  </div>
-
-                  <span className="rounded-full bg-red-500 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-                    {t(`items.${service.key}.badge`)}
-                  </span>
-                </div>
-
-                <h2 className="mt-4 text-xl font-extrabold text-black">
-                  {t(`items.${service.key}.title`)}
-                </h2>
-
-                <p
-  className="mt-2 text-sm leading-relaxed text-gray-700"
-  dangerouslySetInnerHTML={{
-    __html: t.raw(`items.${service.key}.desc`) as string,
-  }}
-/>
-
-                <div className="mt-4 text-sm font-extrabold text-yellow-500">
-                  {t(`items.${service.key}.price`)}
-                </div>
-
-                <div className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-black">
-                  {t("viewService")}
-                  <span className="text-yellow-400 transition-transform duration-200 group-hover:translate-x-1">
-                    <ArrowRight className="h-4 w-4" />
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-14 rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
-            <div className="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
-              <div>
-                <p className="text-2xl font-extrabold text-black">
-                  {t("cta.title")}
-                </p>
-                <p className="mt-2 max-w-2xl text-sm text-gray-600 sm:text-base">
-                  {t("cta.text")}
-                </p>
-              </div>
-
-              <button
-                onClick={() => router.push(`/${locale}/estimate`)}
-                className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-6 py-3 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
-              >
-                {t("cta.button")}
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+      <ServicesClient />
+    </>
   );
 }
