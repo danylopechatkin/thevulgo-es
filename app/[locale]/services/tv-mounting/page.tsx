@@ -1,386 +1,226 @@
-"use client";
+import type { Metadata } from "next";
+import TvMountingClient from "./TvMountingClient";
 
-import React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {
-  ArrowRight,
-  Tv,
-  Monitor,
-  Cable,
-  Speaker,
-  Square,
-  CheckCircle2,
-  Clock3,
-  ShieldCheck,
-  BadgeCheck,
-} from "lucide-react";
+type Props = {
+  params: Promise<{ locale: string }>;
+};
 
-export default function TvMountingPage() {
-  const pathname = usePathname();
-  const locale = pathname?.split("/")[1] || "es";
+const baseUrl = "https://www.thevulgo.es";
 
-  const whatsappText = encodeURIComponent(
-    "Hi! I’d like an estimate for TV mounting or wall installations in Valencia."
-  );
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const isEs = locale === "es";
 
-  const whatsappHref = `https://wa.me/34610076942?text=${whatsappText}`;
-  const estimateHref = `/${locale}/estimate?category=tv-mounting`;
+  const title = isEs
+    ? "Montaje de TV en Valencia | Soportes, cables y soundbar | THEVULGO"
+    : "TV Mounting in Valencia | Brackets, Cables & Soundbar | THEVULGO";
 
-  const services = [
-    {
-      title: "TV mounting",
-      desc: "Secure, level TV installation on suitable wall types.",
-      price: "from €49",
-      icon: <Tv className="h-5 w-5" />,
-      href: `/${locale}/montaje-tv-valencia`,
+  const description = isEs
+    ? "Montaje de TV en Valencia: instalación de televisores, TV grandes, soportes, ocultación de cables, soundbar, estantes y proyectores. Presupuesto claro por WhatsApp."
+    : "TV mounting in Valencia: TV installation, large TVs, brackets, cable concealment, soundbar mounting, shelves and projectors. Clear estimate by WhatsApp.";
+
+  return {
+    title,
+    description,
+    keywords: isEs
+      ? [
+          "montaje TV Valencia",
+          "instalar TV pared Valencia",
+          "soporte TV Valencia",
+          "ocultar cables TV Valencia",
+          "montaje soundbar Valencia",
+          "montaje proyector Valencia",
+          "instalación estantes Valencia",
+          "manitas TV Valencia",
+        ]
+      : [
+          "TV mounting Valencia",
+          "TV wall mounting Valencia",
+          "TV bracket installation Valencia",
+          "hide TV cables Valencia",
+          "soundbar mounting Valencia",
+          "projector mounting Valencia",
+          "shelf installation Valencia",
+          "TV handyman Valencia",
+        ],
+    alternates: {
+      canonical: `${baseUrl}/${locale}/services/tv-mounting`,
+      languages: {
+        es: `${baseUrl}/es/services/tv-mounting`,
+        en: `${baseUrl}/en/services/tv-mounting`,
+      },
     },
-    {
-      title: "Large TV mounting",
-      desc: "Installation for larger TVs with careful positioning.",
-      price: "from €69",
-      icon: <Monitor className="h-5 w-5" />,
-      href: `/${locale}/montaje-tv-grande-valencia`,
+    openGraph: {
+      title,
+      description,
+      url: `${baseUrl}/${locale}/services/tv-mounting`,
+      siteName: "THEVULGO",
+      type: "website",
+      locale: isEs ? "es_ES" : "en_US",
     },
-    {
-      title: "Shelf installation",
-      desc: "Clean shelf mounting with proper anchors and alignment.",
-      price: "from €35",
-      icon: <Square className="h-5 w-5" />,
-      href: `/${locale}/instalacion-estanterias-valencia`,
+    robots: {
+      index: true,
+      follow: true,
     },
-    {
-      title: "Projector mounting",
-      desc: "Ceiling or wall projector installation with clean alignment.",
-      price: "from €39",
-      icon: <Monitor className="h-5 w-5" />,
-      href: `/${locale}/montaje-proyector-valencia`,
-    },
-    {
-      title: "Cable concealment",
-      desc: "Cleaner look with raceways or cable routing options.",
-      price: "from €29",
-      icon: <Cable className="h-5 w-5" />,
-      href: `/${locale}/ocultar-cables-valencia`,
-    },
-    {
-      title: "Soundbar mounting",
-      desc: "Soundbar, 5.1, Dolby and home audio installation.",
-      price: "from €29",
-      icon: <Speaker className="h-5 w-5" />,
-      href: `/${locale}/instalar-soundbar-valencia`,
-    },
+  };
+}
+
+export default async function TvMountingPage({ params }: Props) {
+  const { locale } = await params;
+  const isEs = locale === "es";
+  const pageUrl = `${baseUrl}/${locale}/services/tv-mounting`;
+
+  const offers = [
+    "TV mounting",
+    "Large TV mounting",
+    "TV bracket installation",
+    "Cable concealment",
+    "Soundbar mounting",
+    "Projector mounting",
+    "Shelf installation",
+    "Media setup",
   ];
 
-  const trustPoints = [
-    {
-      title: "Fast response",
-      text: "Quick communication and clear next steps before the appointment.",
-      icon: <Clock3 className="h-5 w-5" />,
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: isEs
+      ? "Montaje de TV en Valencia"
+      : "TV mounting services in Valencia",
+    description: isEs
+      ? "Montaje de TV, televisores grandes, soportes, ocultación de cables, soundbar, proyectores, estantes y setups multimedia en Valencia."
+      : "TV mounting, large TVs, brackets, cable concealment, soundbar mounting, projectors, shelves and media setups in Valencia.",
+    serviceType: isEs ? "Montaje de TV" : "TV mounting",
+    url: pageUrl,
+    provider: {
+      "@type": "HomeAndConstructionBusiness",
+      name: "THEVULGO",
+      url: baseUrl,
+      telephone: "+34610076942",
+      priceRange: "€€",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Valencia",
+        addressRegion: "Valencia",
+        addressCountry: "ES",
+      },
     },
-    {
-      title: "Clean finish",
-      text: "Straight alignment, tidy cable routing and a neat final result.",
-      icon: <CheckCircle2 className="h-5 w-5" />,
+    areaServed: [
+      "Valencia",
+      "Campanar",
+      "Ruzafa",
+      "Benimaclet",
+      "Patraix",
+      "El Carmen",
+      "Extramurs",
+      "Mislata",
+      "Burjassot",
+      "Paterna",
+      "Torrent",
+      "Sagunto",
+      "Cullera",
+      "Gandía",
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: isEs
+        ? "Servicios de montaje de TV"
+        : "TV mounting service catalog",
+      itemListElement: offers.map((name) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name,
+          areaServed: "Valencia",
+        },
+      })),
     },
-    {
-      title: "Transparent pricing",
-      text: "Clear starting prices and estimate logic before any drilling starts.",
-      icon: <ShieldCheck className="h-5 w-5" />,
-    },
-  ];
+  };
 
-  const whyChoose = [
-    "Suitable for apartments, homes and offices",
-    "Careful alignment before drilling",
-    "Clean cable routing options available",
-    "Transparent estimate before booking",
-  ];
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: isEs ? "Inicio" : "Home",
+        item: `${baseUrl}/${locale}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: isEs ? "Servicios" : "Services",
+        item: `${baseUrl}/${locale}/services`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: isEs ? "Montaje de TV" : "TV Mounting",
+        item: pageUrl,
+      },
+    ],
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: isEs
+          ? "¿Qué incluye el montaje de TV?"
+          : "What is included in TV mounting?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isEs
+            ? "Incluye instalación nivelada de TV en pared adecuada, revisión de altura, soporte, fijación y opciones para ocultar cables o añadir soundbar."
+            : "Includes level TV wall installation on a suitable wall, height check, bracket fitting and options for cable concealment or soundbar setup.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: isEs
+          ? "¿Se pueden ocultar los cables?"
+          : "Can TV cables be hidden?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isEs
+            ? "Sí. Se pueden usar canaletas o soluciones de ruta de cable según el tipo de pared y el alcance del trabajo."
+            : "Yes. Cable raceways or cable routing options can be used depending on wall type and job scope.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: isEs
+          ? "¿Puedo pedir presupuesto por WhatsApp?"
+          : "Can I request an estimate by WhatsApp?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isEs
+            ? "Sí. Puedes enviar tamaño de TV, fotos de la pared, soporte disponible y si quieres ocultar cables para recibir una estimación clara."
+            : "Yes. You can send TV size, wall photos, available bracket and whether you want cables hidden to receive a clear estimate.",
+        },
+      },
+    ],
+  };
 
   return (
-    <div className="min-h-screen bg-white text-black font-sans">
-      <section className="relative py-16 sm:py-20 px-4">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-white" />
-          <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
-          <div className="absolute right-10 top-24 h-[320px] w-[320px] rounded-full bg-yellow-100/60 blur-3xl" />
-        </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
 
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-3 py-1 text-xs font-semibold text-black shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-yellow-400" />
-              THEVULGO • Valencia
-            </div>
-
-            <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-black">
-              TV Mounting & Wall Installations
-            </h1>
-
-            <p className="mt-4 max-w-3xl mx-auto text-gray-600 text-base sm:text-lg leading-8">
-              Clean, secure installations for TVs, projectors, shelves, soundbars,
-              cable concealment and media setups in Valencia. Transparent starting
-              prices before booking. No mess. No surprises.
-            </p>
-          </div>
-
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {trustPoints.map((point) => (
-              <div
-                key={point.title}
-                className="rounded-2xl border border-yellow-400 bg-white p-6 shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.02]"
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-                  {point.icon}
-                </div>
-                <h3 className="mt-4 text-lg font-extrabold text-black">
-                  {point.title}
-                </h3>
-                <p className="mt-2 text-sm text-gray-600 leading-7">
-                  {point.text}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service) => (
-              <Link
-                key={service.title}
-                href={service.href}
-                className="group rounded-2xl border border-yellow-400 bg-white p-6 text-left shadow-lg transition-all duration-200 hover:shadow-2xl hover:scale-[1.02]"
-              >
-                <div className="flex items-center justify-center h-11 w-11 rounded-xl bg-yellow-400 text-black shadow-md">
-                  {service.icon}
-                </div>
-
-                <h2 className="mt-4 text-xl font-extrabold text-black">
-                  {service.title}
-                </h2>
-
-                <p className="mt-2 text-sm leading-7 text-gray-700">
-                  {service.desc}
-                </p>
-
-                <div className="mt-4 text-sm font-extrabold text-yellow-500">
-                  {service.price}
-                </div>
-
-                <div className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-black opacity-0 transition group-hover:opacity-100">
-                  Open service
-                  <ArrowRight className="h-4 w-4" />
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-12 rounded-3xl border border-yellow-400 bg-white p-6 sm:p-8 shadow-xl">
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-              <div className="max-w-2xl">
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-black">
-                  Need an exact estimate?
-                </h2>
-
-                <p className="mt-3 text-gray-600 leading-8">
-                  Get a fast estimate for TV mounting, projector mounting,
-                  shelves, soundbar setups or cable concealment. Continue to the
-                  calculator or send a request directly on WhatsApp.
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  href={estimateHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-3 text-sm font-extrabold text-black shadow-lg hover:scale-[1.02] transition"
-                >
-                  Get estimate <ArrowRight className="h-4 w-4" />
-                </Link>
-
-                <a
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-black shadow-md hover:scale-[1.02] transition"
-                >
-                  WhatsApp
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <section className="mt-16">
-            <div className="w-full rounded-3xl border border-yellow-400 bg-white p-8 sm:p-10 lg:p-12 shadow-xl">
-              <div className="max-w-4xl mx-auto">
-                <div className="flex justify-center mb-4">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-4 py-1 text-xs font-semibold text-black">
-                    <span className="h-2 w-2 rounded-full bg-yellow-400" />
-                    Professional installations • Valencia
-                  </div>
-                </div>
-
-                <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-black">
-                  TV Mounting Services in Valencia
-                </h2>
-
-                <div className="mt-6 space-y-5 text-gray-700 leading-8 text-[15px] sm:text-base text-center sm:text-left">
-                  <p>
-                    Professional <strong>TV mounting services in Valencia</strong>{" "}
-                    for apartments, homes and offices. THEVULGO installs
-                    televisions securely on brick, concrete and drywall surfaces
-                    using proper anchors, precise alignment and clean cable
-                    management.
-                  </p>
-
-                  <p>
-                    A correctly mounted TV improves both safety and viewing
-                    comfort. Incorrect anchors, poor positioning or uneven
-                    installation can damage walls or equipment. That is why every
-                    installation is planned carefully before drilling.
-                  </p>
-                </div>
-
-                <div className="mt-8">
-                  <h3 className="text-center sm:text-left text-lg font-extrabold text-black mb-4">
-                    What is included
-                  </h3>
-
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-gray-700 text-[15px] sm:text-base">
-                    {[
-                      "TV wall mounting for small and large screens",
-                      "Projector ceiling or wall mounting",
-                      "Soundbar mounting under TVs",
-                      "Cable concealment with raceways or hidden routing",
-                      "Shelf installations near media setups",
-                      "Basic media wall preparation",
-                    ].map((item) => (
-                      <li key={item} className="flex items-start gap-3">
-                        <span className="mt-2 h-2 w-2 rounded-full bg-yellow-400 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-8 space-y-5 text-gray-700 leading-8 text-[15px] sm:text-base">
-                  <p>
-                    Each installation is measured carefully to ensure the correct
-                    height, balanced alignment and a visually clean finish. The
-                    goal is always a result that looks intentional and professional
-                    rather than improvised.
-                  </p>
-
-                  <p>
-                    THEVULGO works mainly in{" "}
-                    <strong>Valencia and nearby areas</strong>, providing quick
-                    response times and clear communication before the appointment.
-                  </p>
-
-                  <p>
-                    Before installation begins, clients receive a transparent price
-                    estimate based on wall type, screen size and mounting
-                    complexity.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="mt-16">
-            <div className="rounded-3xl border border-yellow-400 bg-white p-6 sm:p-8 shadow-xl">
-              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-                <div className="max-w-3xl">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-3 py-1 text-xs font-semibold text-black">
-                    <BadgeCheck className="h-4 w-4" />
-                    Why clients choose this service
-                  </div>
-
-                  <h2 className="mt-4 text-2xl sm:text-3xl font-extrabold text-black">
-                    Clean setup, correct height, no guesswork
-                  </h2>
-
-                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
-                    {whyChoose.map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-start gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3"
-                      >
-                        <span className="mt-1 h-2 w-2 rounded-full bg-yellow-400 shrink-0" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Link
-                    href={estimateHref}
-                    className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-3 text-sm font-extrabold text-black shadow-lg hover:scale-[1.02] transition"
-                  >
-                    Get estimate <ArrowRight className="h-4 w-4" />
-                  </Link>
-
-                  <a
-                    href={whatsappHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-2xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-black shadow-md hover:scale-[1.02] transition"
-                  >
-                    WhatsApp
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="mt-16">
-            <div className="rounded-3xl border border-yellow-400 bg-white p-8 sm:p-10 shadow-xl">
-              <div className="max-w-4xl mx-auto">
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-black mb-10 text-center sm:text-left">
-                  TV Mounting FAQ
-                </h2>
-
-                <div className="space-y-8">
-                  {[
-                    {
-                      q: "What wall types can TVs be mounted on?",
-                      a: "TVs can usually be mounted on brick, concrete and drywall walls using the correct anchors and hardware. The wall type should always be checked before drilling.",
-                    },
-                    {
-                      q: "How high should a TV be mounted?",
-                      a: "In most living rooms the center of the TV should be close to eye level when seated. The ideal height also depends on screen size and viewing distance.",
-                    },
-                    {
-                      q: "Can cables be hidden during installation?",
-                      a: "Yes. Cable concealment can be done with surface raceways or hidden routing depending on the wall structure and setup conditions.",
-                    },
-                    {
-                      q: "Do I need to provide the bracket?",
-                      a: "Not always. If you already have a compatible bracket, it can be installed. If not, suitable mounting options can be discussed before the job.",
-                    },
-                  ].map((item, index) => (
-                    <div
-                      key={item.q}
-                      className={index === 0 ? "" : "border-t border-gray-200 pt-6"}
-                    >
-                      <h3 className="font-extrabold text-black text-lg">
-                        {item.q}
-                      </h3>
-                      <p className="mt-2 text-gray-600 leading-7 text-sm sm:text-base">
-                        {item.a}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <div className="mt-10 text-center text-sm text-gray-500">
-            Final price depends on wall type, screen size, mounting surface and
-            add-ons.
-          </div>
-        </div>
-      </section>
-    </div>
+      <TvMountingClient />
+    </>
   );
 }
