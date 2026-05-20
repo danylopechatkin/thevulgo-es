@@ -32,7 +32,7 @@ export default function ElectricalClient() {
       : "Hi! I’d like an estimate for electrical services in Valencia."
   );
 
-  const whatsappHref = `https://wa.me/14379074913?text=${whatsappText}`;
+  const whatsappHref = `https://wa.me/34610076942?text=${whatsappText}`;
 
   const copy = {
     badge: "THEVULGO • Valencia",

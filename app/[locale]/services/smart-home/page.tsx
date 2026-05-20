@@ -42,7 +42,7 @@ export default function SmartHomePage() {
       : "Hi! I’d like an estimate for smart home and device installation in Valencia."
   );
 
-  const whatsappHref = `https://wa.me/14379074913?text=${whatsappText}`;
+  const whatsappHref = `https://wa.me/34610076942?text=${whatsappText}`;
 
   const copy = {
     badge: "THEVULGO • Valencia",
