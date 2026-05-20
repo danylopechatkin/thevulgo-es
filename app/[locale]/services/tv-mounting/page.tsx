@@ -7,6 +7,23 @@ type Props = {
 
 const baseUrl = "https://www.thevulgo.es";
 
+const serviceAreas = [
+  "Valencia",
+  "Campanar",
+  "Ruzafa",
+  "Benimaclet",
+  "Patraix",
+  "El Carmen",
+  "Extramurs",
+  "Mislata",
+  "Burjassot",
+  "Paterna",
+  "Torrent",
+  "Sagunto",
+  "Cullera",
+  "Gandía",
+];
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
@@ -70,16 +87,46 @@ export default async function TvMountingPage({ params }: Props) {
   const isEs = locale === "es";
   const pageUrl = `${baseUrl}/${locale}/services/tv-mounting`;
 
-  const offers = [
-    "TV mounting",
-    "Large TV mounting",
-    "TV bracket installation",
-    "Cable concealment",
-    "Soundbar mounting",
-    "Projector mounting",
-    "Shelf installation",
-    "Media setup",
-  ];
+  const offers = isEs
+    ? [
+        "Montaje de TV",
+        "Montaje de TV grande",
+        "Instalación de soporte de TV",
+        "Ocultación de cables",
+        "Instalación de soundbar",
+        "Montaje de proyector",
+        "Instalación de estanterías",
+        "Instalación multimedia",
+      ]
+    : [
+        "TV mounting",
+        "Large TV mounting",
+        "TV bracket installation",
+        "Cable concealment",
+        "Soundbar mounting",
+        "Projector mounting",
+        "Shelf installation",
+        "Media setup",
+      ];
+
+  const localBusinessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    name: "THEVULGO",
+    url: baseUrl,
+    telephone: "+34610076942",
+    priceRange: "€€",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Valencia",
+      addressRegion: "Valencia",
+      addressCountry: "ES",
+    },
+    areaServed: serviceAreas,
+    description: isEs
+      ? "Servicios de manitas en Valencia: montaje de TV, muebles, electricidad básica, fontanería, reparaciones e instalaciones limpias."
+      : "Handyman services in Valencia: TV mounting, furniture assembly, basic electrical, plumbing, repairs and clean installations.",
+  };
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
@@ -105,22 +152,7 @@ export default async function TvMountingPage({ params }: Props) {
         addressCountry: "ES",
       },
     },
-    areaServed: [
-      "Valencia",
-      "Campanar",
-      "Ruzafa",
-      "Benimaclet",
-      "Patraix",
-      "El Carmen",
-      "Extramurs",
-      "Mislata",
-      "Burjassot",
-      "Paterna",
-      "Torrent",
-      "Sagunto",
-      "Cullera",
-      "Gandía",
-    ],
+    areaServed: serviceAreas,
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: isEs
@@ -207,6 +239,10 @@ export default async function TvMountingPage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
