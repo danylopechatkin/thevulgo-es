@@ -109,15 +109,26 @@ export default async function LocaleLayout({
                 <Link href={`/${locale}/services`} className="hover:text-black">
                   {t("services")}
                 </Link>
+
+                <Link
+                  href={`/${locale}/handyman-valencia`}
+                  className="font-extrabold text-yellow-500 hover:text-black"
+                >
+                  {locale === "es" ? "Manitas" : "Handyman"}
+                </Link>
+
                 <Link href={`/${locale}/#how`} className="hover:text-black">
                   {t("howItWorks")}
                 </Link>
+
                 <Link href={`/${locale}/#guides`} className="hover:text-black">
                   {t("tips")}
                 </Link>
+
                 <Link href={`/${locale}/#faq`} className="hover:text-black">
                   {t("faq")}
                 </Link>
+
                 <Link href={`/${locale}/estimate`} className="hover:text-black">
                   {t("estimate")}
                 </Link>
