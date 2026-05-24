@@ -39,26 +39,47 @@ export default function DrywallClient() {
   const whatsappHref = `https://wa.me/34610076942?text=${whatsappText}`;
 
   const drywallLinks = [
-  `/${locale}/reparacion-agujero-pequeno-valencia`,
-  `/${locale}/parche-mediano-pared-valencia`,
-  `/${locale}/parche-grande-pladur-valencia`,
-  `/${locale}/reparacion-agujeros-tacos-valencia`,
-  `/${locale}/preparacion-pared-retoque-valencia`,
-  `/${locale}/reparacion-corte-pladur-valencia`,
-  `/${locale}/relleno-grietas-valencia`,
-  `/${locale}/reparacion-esquina-valencia`,
-  `/${locale}/preparacion-nivelacion-pared-valencia`,
-  `/${locale}/alisado-localizado-valencia`,
-  `/${locale}/reparacion-pared-soporte-tv-valencia`,
-  `/${locale}/reparacion-pared-retirar-estante-valencia`,
-  `/${locale}/reparacion-golpe-manilla-valencia`,
-  `/${locale}/parche-pequeno-techo-valencia`,
-  `/${locale}/cierre-agujeros-cable-valencia`,
-  `/${locale}/perforacion-pared-valencia`,
-  `/${locale}/perforacion-hormigon-ladrillo-valencia`,
-  `/${locale}/preparacion-pladur-montaje-valencia`,
-  `/${locale}/parche-lijado-acabado-valencia`,
-  `/${locale}/varias-reparaciones-pared-valencia`,
+
+  `/${locale}/services/drywall/small-hole-repair`,
+
+  `/${locale}/services/drywall/medium-wall-patching`,
+
+  `/${locale}/services/drywall/large-drywall-patch`,
+
+  `/${locale}/services/drywall/anchor-hole-repair`,
+
+  `/${locale}/services/drywall/wall-touch-up-prep`,
+
+  `/${locale}/services/drywall/drywall-cutout-repair`,
+
+  `/${locale}/services/drywall/crack-filling`,
+
+  `/${locale}/services/drywall/corner-repair`,
+
+  `/${locale}/services/drywall/wall-levelling-prep`,
+
+  `/${locale}/services/drywall/skim-coat-area-repair`,
+
+  `/${locale}/services/drywall/tv-bracket-wall-repair`,
+
+  `/${locale}/services/drywall/shelf-removal-wall-repair`,
+
+  `/${locale}/services/drywall/door-handle-wall-damage-repair`,
+
+  `/${locale}/services/drywall/ceiling-spot-patching`,
+
+  `/${locale}/services/drywall/cable-hole-closing`,
+
+  `/${locale}/services/drywall/wall-drilling-service`,
+
+  `/${locale}/services/drywall/concrete-wall-drilling`,
+
+  `/${locale}/services/drywall/drywall-mounting-prep`,
+
+  `/${locale}/services/drywall/patch-and-sand-finish`,
+
+  `/${locale}/services/drywall/multiple-wall-repairs`,
+
 ];
 
   const copy = {
