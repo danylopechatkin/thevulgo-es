@@ -21,9 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const seoServicePages = [
+    // MAIN SEO
+    "handyman-valencia",
+
     // TV
     "montaje-tv-valencia",
-    "large-tv-mounting-valencia",
+    "montaje-tv-grande-valencia",
     "instalacion-estanterias-valencia",
     "montaje-proyector-valencia",
     "ocultar-cables-valencia",
