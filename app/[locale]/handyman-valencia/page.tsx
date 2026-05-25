@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -6,6 +5,7 @@ import {
   BadgeCheck,
   CheckCircle2,
   Clock3,
+  Euro,
   Hammer,
   Home,
   MapPin,
@@ -23,6 +23,23 @@ type Props = {
 const baseUrl = "https://www.thevulgo.es";
 const phone = "34610076942";
 
+const areas = [
+  "Valencia",
+  "Campanar",
+  "Ruzafa",
+  "Benimaclet",
+  "Patraix",
+  "El Carmen",
+  "Extramurs",
+  "Mislata",
+  "Burjassot",
+  "Paterna",
+  "Torrent",
+  "Sagunto",
+  "Cullera",
+  "Gandía",
+];
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
@@ -32,8 +49,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "Handyman in Valencia | Repairs, Installations & Home Maintenance | THEVULGO";
 
   const description = isEs
-    ? "Servicio de manitas en Valencia: montaje de TV, muebles, pladur, pequeñas reparaciones, electricidad básica, fontanería, puertas, cocina, baño y mantenimiento del hogar."
-    : "Professional handyman in Valencia: TV mounting, furniture assembly, drywall, small repairs, basic electrical, plumbing, doors, kitchen, bathroom and home maintenance.";
+    ? "Manitas profesional en Valencia para montaje de TV, muebles IKEA, estanterías, lámparas, enchufes, pladur, pequeñas reparaciones, cocina, baño y mantenimiento de Airbnb."
+    : "Professional handyman in Valencia for TV mounting, IKEA furniture assembly, shelves, lights, outlets, drywall, small repairs, kitchen, bathroom and Airbnb maintenance.";
 
   return {
     title,
@@ -44,30 +61,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "servicio manitas valencia",
           "manitas a domicilio valencia",
           "reparaciones hogar valencia",
-          "manitas urgente valencia",
           "montaje muebles valencia",
           "montaje tv valencia",
-          "pladur valencia",
-          "fontaneria basica valencia",
           "electricidad basica valencia",
+          "pladur valencia",
+          "airbnb mantenimiento valencia",
         ]
       : [
           "handyman valencia",
           "handyman in valencia",
-          "valencia handyman",
-          "handyman near me valencia",
           "home repairs valencia",
           "furniture assembly valencia",
           "tv mounting valencia",
           "drywall repair valencia",
-          "basic plumbing valencia",
           "basic electrical valencia",
+          "airbnb maintenance valencia",
         ],
+    robots: {
+      index: true,
+      follow: true,
+    },
     alternates: {
       canonical: `${baseUrl}/${locale}/handyman-valencia`,
       languages: {
         es: `${baseUrl}/es/handyman-valencia`,
         en: `${baseUrl}/en/handyman-valencia`,
+        "x-default": `${baseUrl}/es/handyman-valencia`,
       },
     },
     openGraph: {
@@ -86,135 +105,117 @@ export default async function HandymanValenciaPage({ params }: Props) {
   const isEs = locale === "es";
 
   const estimateHref = `/${locale}/estimate?category=handyman`;
+
   const whatsappText = encodeURIComponent(
     isEs
       ? "Hola, necesito un manitas en Valencia. Quiero pedir presupuesto para una reparación o instalación."
       : "Hi, I need a handyman in Valencia. I’d like to request an estimate for a repair or installation."
   );
+
   const whatsappHref = `https://wa.me/${phone}?text=${whatsappText}`;
 
-  const services = isEs
+  const moneyLinks = [
+    {
+      title: isEs ? "Montaje de TV" : "TV mounting",
+      desc: isEs ? "TV en pared, soportes, soundbar y cables limpios." : "Wall-mounted TVs, brackets, soundbars and clean cables.",
+      href: `/${locale}/montaje-tv-valencia`,
+    },
+    {
+      title: isEs ? "Montaje de muebles IKEA" : "IKEA furniture assembly",
+      desc: isEs ? "Camas, armarios, cómodas, mesas y muebles auxiliares." : "Beds, wardrobes, drawers, tables and storage furniture.",
+      href: `/${locale}/montaje-muebles-ikea-valencia`,
+    },
+    {
+      title: isEs ? "Cambio de enchufe" : "Outlet replacement",
+      desc: isEs ? "Sustitución de enchufes y pequeños trabajos eléctricos." : "Outlet replacement and small electrical jobs.",
+      href: `/${locale}/cambio-enchufe-valencia`,
+    },
+    {
+      title: isEs ? "Instalación de lámparas" : "Light installation",
+      desc: isEs ? "Lámparas de techo, apliques y luminarias básicas." : "Ceiling lights, wall lights and basic fixtures.",
+      href: `/${locale}/instalacion-lampara-valencia`,
+    },
+    {
+      title: isEs ? "Instalación de estanterías" : "Shelf installation",
+      desc: isEs ? "Estantes nivelados, fijación segura y acabado limpio." : "Level shelves, secure fixing and clean finish.",
+      href: `/${locale}/montaje-estanterias-valencia`,
+    },
+    {
+      title: isEs ? "Reparaciones de pladur" : "Drywall repairs",
+      desc: isEs ? "Agujeros, anclajes, parches, lijado y preparación." : "Holes, anchors, patches, sanding and preparation.",
+      href: `/${locale}/services/drywall`,
+    },
+  ];
+
+  const prices = isEs
     ? [
-        "Montaje de TV en pared",
-        "Montaje de muebles",
-        "Reparaciones de pladur",
-        "Instalación de estantes",
-        "Colocación de espejos",
-        "Cambio de enchufes",
-        "Electricidad básica",
-        "Fontanería básica",
-        "Reparación de puertas",
-        "Cambio de cerraduras",
-        "Instalación de cortinas",
-        "Pequeñas reparaciones del hogar",
-        "Mantenimiento para Airbnb",
-        "Reparaciones de cocina",
-        "Reparaciones de baño",
-        "Instalación de accesorios",
+        ["Montaje de TV", "desde 49 €"],
+        ["Montaje de muebles", "desde 45 €"],
+        ["Cambio de enchufe / interruptor", "desde 35 €"],
+        ["Instalación de lámpara", "desde 39 €"],
+        ["Pequeñas reparaciones", "desde 35 €"],
+        ["Visita / revisión", "desde 49 €"],
       ]
     : [
-        "TV wall mounting",
-        "Furniture assembly",
-        "Drywall repairs",
-        "Shelf installation",
-        "Mirror hanging",
-        "Outlet replacement",
-        "Basic electrical work",
-        "Basic plumbing",
-        "Door repairs",
-        "Lock replacement",
-        "Curtain rail installation",
-        "Small home repairs",
-        "Airbnb maintenance",
-        "Kitchen repairs",
-        "Bathroom repairs",
-        "Accessory installation",
+        ["TV mounting", "from €49"],
+        ["Furniture assembly", "from €45"],
+        ["Outlet / switch replacement", "from €35"],
+        ["Light installation", "from €39"],
+        ["Small repairs", "from €35"],
+        ["Visit / inspection", "from €49"],
       ];
-
-  const areas = [
-    "Valencia",
-    "Campanar",
-    "Ruzafa",
-    "Benimaclet",
-    "Patraix",
-    "El Carmen",
-    "Extramurs",
-    "Mislata",
-    "Burjassot",
-    "Paterna",
-    "Torrent",
-    "Sagunto",
-    "Cullera",
-    "Gandía",
-  ];
 
   const faqs = isEs
     ? [
         {
-          q: "¿Qué hace un manitas en Valencia?",
-          a: "Un manitas ayuda con reparaciones, instalaciones, montaje, mantenimiento y pequeños trabajos del hogar o negocio.",
+          q: "¿Cuánto cuesta un manitas en Valencia?",
+          a: "Depende del trabajo, materiales, tiempo y zona. Los trabajos pequeños suelen empezar desde 35–49 €. Siempre confirmamos el precio antes de empezar.",
         },
         {
-          q: "¿Trabajáis con fotos por WhatsApp?",
-          a: "Sí. Puedes enviar fotos, medidas y una breve descripción para recibir una estimación clara antes de la visita.",
+          q: "¿Puedo enviar fotos por WhatsApp?",
+          a: "Sí. Lo mejor es enviar fotos, medidas y una breve descripción. Así podemos preparar herramientas, materiales y una estimación más clara.",
         },
         {
-          q: "¿Hacéis montaje de TV?",
-          a: "Sí. Instalamos televisores, soportes, soundbars, canaletas y soluciones limpias para cables.",
+          q: "¿Hacéis trabajos pequeños el mismo día?",
+          a: "Cuando hay disponibilidad, sí. Para trabajos urgentes o rápidos, envía fotos y ubicación por WhatsApp.",
         },
         {
-          q: "¿Hacéis trabajos de pladur?",
-          a: "Sí. Realizamos reparaciones, pequeños montajes, ajustes y acabados de pladur.",
+          q: "¿Trabajáis con apartamentos Airbnb?",
+          a: "Sí. Ayudamos con mantenimiento, montaje, reparaciones rápidas y preparación de apartamentos para huéspedes.",
         },
         {
           q: "¿Hacéis electricidad básica?",
-          a: "Sí. Podemos ayudar con enchufes, interruptores, luminarias y pequeñas reparaciones eléctricas no complejas.",
-        },
-        {
-          q: "¿Hacéis fontanería básica?",
-          a: "Sí. Podemos ayudar con grifos, sifones, muebles de baño, lavabos, pequeños cambios y reparaciones básicas.",
-        },
-        {
-          q: "¿Trabajáis para Airbnb?",
-          a: "Sí. Ayudamos con mantenimiento, reparaciones rápidas, montaje y preparación de apartamentos.",
+          a: "Sí, trabajos no complejos como enchufes, interruptores, lámparas, apliques y pequeños ajustes eléctricos.",
         },
         {
           q: "¿En qué zonas trabajáis?",
-          a: "Trabajamos en Valencia ciudad y zonas cercanas como Mislata, Burjassot, Paterna, Torrent, Sagunto, Cullera y Gandía.",
+          a: "Trabajamos en Valencia ciudad y zonas cercanas como Campanar, Ruzafa, Benimaclet, Mislata, Burjassot, Paterna, Torrent, Sagunto, Cullera y Gandía.",
         },
       ]
     : [
         {
-          q: "What does a handyman in Valencia do?",
-          a: "A handyman helps with repairs, installations, assembly, maintenance and small jobs for homes, rentals and businesses.",
+          q: "How much does a handyman in Valencia cost?",
+          a: "It depends on the job, materials, time and area. Small jobs usually start from €35–49. We always confirm the price before starting.",
         },
         {
           q: "Can I send photos by WhatsApp?",
-          a: "Yes. You can send photos, measurements and a short description to get a clear estimate before the visit.",
+          a: "Yes. Send photos, measurements and a short description so we can prepare tools, materials and a clearer estimate.",
         },
         {
-          q: "Do you mount TVs?",
-          a: "Yes. We install TVs, brackets, soundbars, raceways and clean cable solutions.",
-        },
-        {
-          q: "Do you repair drywall?",
-          a: "Yes. We handle drywall repairs, small installations, adjustments and clean finishing work.",
-        },
-        {
-          q: "Do you do basic electrical work?",
-          a: "Yes. We can help with outlets, switches, lights and small non-complex electrical repairs.",
-        },
-        {
-          q: "Do you do basic plumbing?",
-          a: "Yes. We can help with taps, siphons, bathroom furniture, sinks and basic plumbing repairs.",
+          q: "Do you do same-day small jobs?",
+          a: "When availability allows, yes. For urgent or quick jobs, send photos and location by WhatsApp.",
         },
         {
           q: "Do you work with Airbnb apartments?",
-          a: "Yes. We help with maintenance, quick repairs, mounting and apartment preparation.",
+          a: "Yes. We help with maintenance, assembly, quick repairs and apartment preparation for guests.",
+        },
+        {
+          q: "Do you do basic electrical work?",
+          a: "Yes, non-complex jobs like outlets, switches, lights, wall lights and small electrical adjustments.",
         },
         {
           q: "Which areas do you cover?",
-          a: "We work in Valencia city and nearby areas including Mislata, Burjassot, Paterna, Torrent, Sagunto, Cullera and Gandía.",
+          a: "We work in Valencia city and nearby areas including Campanar, Ruzafa, Benimaclet, Mislata, Burjassot, Paterna, Torrent, Sagunto, Cullera and Gandía.",
         },
       ];
 
@@ -227,6 +228,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
         name: "THEVULGO",
         url: baseUrl,
         telephone: `+${phone}`,
+        priceRange: "€€",
         areaServed: areas,
         address: {
           "@type": "PostalAddress",
@@ -237,19 +239,22 @@ export default async function HandymanValenciaPage({ params }: Props) {
       {
         "@type": "Service",
         "@id": `${baseUrl}/${locale}/handyman-valencia#service`,
+        name: isEs ? "Manitas en Valencia" : "Handyman in Valencia",
         serviceType: isEs ? "Servicio de manitas" : "Handyman services",
         provider: {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
+        url: `${baseUrl}/${locale}/handyman-valencia`,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs ? "Servicios de manitas en Valencia" : "Handyman services in Valencia",
-          itemListElement: services.map((service) => ({
+          itemListElement: moneyLinks.map((item) => ({
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: service,
+              name: item.title,
+              url: `${baseUrl}${item.href}`,
             },
           })),
         },
@@ -297,27 +302,19 @@ export default async function HandymanValenciaPage({ params }: Props) {
           <div className="max-w-4xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-2 text-sm font-semibold shadow-sm">
               <MapPin className="h-4 w-4 text-yellow-500" />
-              THEVULGO • Valencia
+              THEVULGO • Valencia & nearby
             </div>
 
             <h1 className="text-4xl font-black tracking-tight sm:text-6xl">
-              {isEs ? (
-                <>
-                  Manitas profesional en Valencia para reparaciones,
-                  instalaciones y mantenimiento del hogar
-                </>
-              ) : (
-                <>
-                  Professional handyman in Valencia for repairs, installations
-                  and home maintenance
-                </>
-              )}
+              {isEs
+                ? "Manitas profesional en Valencia para reparaciones, montaje e instalaciones limpias"
+                : "Professional handyman in Valencia for clean repairs, assembly and installations"}
             </h1>
 
             <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-700">
               {isEs
-                ? "THEVULGO ayuda a propietarios, inquilinos, negocios y apartamentos Airbnb con trabajos limpios, rápidos y bien acabados: montaje de TV, muebles, pladur, electricidad básica, fontanería básica, puertas, cocina, baño y pequeñas reparaciones."
-                : "THEVULGO helps homeowners, renters, businesses and Airbnb apartments with clean, fast and professional work: TV mounting, furniture assembly, drywall, basic electrical, basic plumbing, doors, kitchen, bathroom and small repairs."}
+                ? "THEVULGO ayuda con trabajos reales del día a día: montar una TV, instalar estanterías, montar muebles IKEA, cambiar un enchufe, colgar una lámpara, reparar pladur o preparar un apartamento Airbnb. Trabajo limpio, respuesta rápida y presupuesto claro por WhatsApp."
+                : "THEVULGO helps with real everyday jobs: mounting a TV, installing shelves, assembling IKEA furniture, replacing an outlet, hanging a light, repairing drywall or preparing an Airbnb apartment. Clean work, fast response and clear estimate by WhatsApp."}
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -343,12 +340,12 @@ export default async function HandymanValenciaPage({ params }: Props) {
                 {
                   icon: Clock3,
                   title: isEs ? "Respuesta rápida" : "Fast response",
-                  text: isEs ? "Presupuesto claro antes de empezar." : "Clear estimate before work starts.",
+                  text: isEs ? "Envía fotos y recibe una estimación clara." : "Send photos and get a clear estimate.",
                 },
                 {
                   icon: ShieldCheck,
-                  title: isEs ? "Trabajo limpio" : "Clean finish",
-                  text: isEs ? "Instalación ordenada y sin sorpresas." : "Tidy installation with no surprises.",
+                  title: isEs ? "Acabado limpio" : "Clean finish",
+                  text: isEs ? "Trabajo ordenado, nivelado y sin sorpresas." : "Neat, level work with no surprises.",
                 },
                 {
                   icon: BadgeCheck,
@@ -368,102 +365,94 @@ export default async function HandymanValenciaPage({ params }: Props) {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr]">
-          <div>
-            <h2 className="text-3xl font-black">
-              {isEs ? "¿Qué es un servicio de manitas?" : "What is a handyman service?"}
-            </h2>
-            <p className="mt-5 text-lg leading-8 text-neutral-700">
-              {isEs
-                ? "Un manitas profesional es la persona que resuelve los trabajos pequeños y medianos que normalmente quedan pendientes en una vivienda, oficina, local comercial o apartamento turístico. No siempre necesitas una reforma completa: muchas veces necesitas a alguien que pueda montar, ajustar, reparar, instalar y dejar el espacio funcionando correctamente."
-                : "A professional handyman solves the small and medium jobs that often stay unfinished in a home, office, commercial space or rental apartment. You do not always need a full renovation: often you need someone who can assemble, adjust, repair, install and leave the space working properly."}
-            </p>
-            <p className="mt-5 text-lg leading-8 text-neutral-700">
-              {isEs
-                ? "En THEVULGO nos enfocamos en trabajos prácticos con acabado limpio: revisar el problema, explicar la solución, confirmar materiales si hacen falta y realizar el trabajo de forma ordenada. La idea es simple: menos estrés, menos desorden y un resultado profesional."
-                : "At THEVULGO we focus on practical jobs with a clean finish: checking the problem, explaining the solution, confirming materials if needed and completing the work in an organized way. The idea is simple: less stress, less mess and a professional result."}
-            </p>
-          </div>
+        <h2 className="text-3xl font-black">
+          {isEs ? "Servicios principales" : "Main services"}
+        </h2>
+        <p className="mt-4 max-w-3xl text-neutral-700">
+          {isEs
+            ? "Estas páginas internas ayudan a Google a entender la estructura del sitio y también ayudan al cliente a encontrar exactamente el servicio que necesita."
+            : "These internal pages help Google understand the site structure and help the client find the exact service they need."}
+        </p>
 
-          <div className="rounded-3xl border border-yellow-300 bg-yellow-50 p-6 shadow-xl">
-            <h3 className="text-xl font-black">
-              {isEs ? "Ideal para" : "Ideal for"}
-            </h3>
-            <div className="mt-5 space-y-3">
-              {[
-                isEs ? "Propietarios" : "Homeowners",
-                isEs ? "Inquilinos" : "Renters",
-                isEs ? "Apartamentos Airbnb" : "Airbnb apartments",
-                isEs ? "Oficinas" : "Offices",
-                isEs ? "Bares y restaurantes" : "Bars and restaurants",
-                isEs ? "Gestores de propiedades" : "Property managers",
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-xl bg-white p-3 shadow-sm">
-                  <CheckCircle2 className="h-5 w-5 text-green-600" />
-                  <span className="font-semibold">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {moneyLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="group rounded-2xl border border-yellow-300 bg-white p-6 shadow-md transition hover:scale-105 hover:shadow-xl"
+            >
+              <Wrench className="mb-4 h-6 w-6 text-yellow-500" />
+              <h3 className="text-xl font-black">{item.title}</h3>
+              <p className="mt-3 leading-7 text-neutral-700">{item.desc}</p>
+              <div className="mt-5 inline-flex items-center gap-2 font-bold text-neutral-950">
+                {isEs ? "Ver servicio" : "View service"}
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
       <section className="border-y border-neutral-200 bg-neutral-50">
         <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-          <h2 className="text-3xl font-black">
-            {isEs ? "Servicios de manitas en Valencia" : "Handyman services in Valencia"}
-          </h2>
-          <p className="mt-4 max-w-3xl text-neutral-700">
-            {isEs
-              ? "Estos son algunos de los trabajos más comunes que puedes pedir a THEVULGO."
-              : "These are some of the most common jobs you can request from THEVULGO."}
-          </p>
+          <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr]">
+            <div>
+              <h2 className="text-3xl font-black">
+                {isEs ? "¿Qué tipo de trabajos hacemos?" : "What kind of jobs do we do?"}
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-neutral-700">
+                {isEs
+                  ? "Un servicio de manitas no es una reforma completa. Es la solución para esos trabajos pequeños y medianos que necesitas terminar bien: montar, fijar, ajustar, cambiar, reparar y dejar todo funcionando correctamente."
+                  : "A handyman service is not a full renovation. It is the solution for small and medium jobs that need to be finished properly: assembling, fixing, adjusting, replacing, repairing and leaving everything working correctly."}
+              </p>
+              <p className="mt-5 text-lg leading-8 text-neutral-700">
+                {isEs
+                  ? "Trabajamos con viviendas, habitaciones, apartamentos turísticos, oficinas, bares, locales y pequeños negocios en Valencia. Antes de empezar, revisamos el trabajo, confirmamos materiales y explicamos la solución."
+                  : "We work with homes, rooms, tourist apartments, offices, bars, commercial spaces and small businesses in Valencia. Before starting, we check the job, confirm materials and explain the solution."}
+              </p>
+            </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((service) => (
-              <div
-                key={service}
-                className="rounded-2xl border border-yellow-300 bg-white p-5 shadow-md transition hover:scale-105 hover:shadow-xl"
-              >
-                <Wrench className="mb-4 h-6 w-6 text-yellow-500" />
-                <h3 className="font-bold">{service}</h3>
+            <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
+              <h3 className="flex items-center gap-2 text-xl font-black">
+                <Euro className="h-6 w-6 text-yellow-500" />
+                {isEs ? "Precios orientativos" : "Guide prices"}
+              </h3>
+
+              <div className="mt-5 space-y-3">
+                {prices.map(([name, price]) => (
+                  <div key={name} className="flex items-center justify-between rounded-xl bg-yellow-50 p-4">
+                    <span className="font-semibold">{name}</span>
+                    <span className="font-black">{price}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+
+              <p className="mt-5 text-sm leading-6 text-neutral-600">
+                {isEs
+                  ? "El precio final depende del estado de la pared, dificultad, materiales, altura, acceso y tiempo necesario."
+                  : "Final price depends on wall condition, difficulty, materials, height, access and time required."}
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <h2 className="text-3xl font-black">
-          {isEs ? "Cómo funciona el proceso" : "How the process works"}
+          {isEs ? "Cómo funciona" : "How it works"}
         </h2>
 
         <div className="mt-10 grid gap-5 md:grid-cols-5">
           {[
-            {
-              title: isEs ? "1. Envía fotos" : "1. Send photos",
-              text: isEs ? "Muestra el problema o el trabajo que necesitas." : "Show the problem or the job you need.",
-            },
-            {
-              title: isEs ? "2. Recibe estimación" : "2. Get estimate",
-              text: isEs ? "Te damos una idea clara de precio y materiales." : "You get a clear idea of price and materials.",
-            },
-            {
-              title: isEs ? "3. Confirmamos horario" : "3. Confirm time",
-              text: isEs ? "Elegimos día y hora para la visita." : "We choose day and time for the visit.",
-            },
-            {
-              title: isEs ? "4. Trabajo limpio" : "4. Clean work",
-              text: isEs ? "Realizamos el trabajo con cuidado y orden." : "The job is done carefully and neatly.",
-            },
-            {
-              title: isEs ? "5. Revisión final" : "5. Final check",
-              text: isEs ? "Comprobamos que todo queda correcto." : "We check that everything is correct.",
-            },
-          ].map((step) => (
-            <div key={step.title} className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-md">
-              <h3 className="font-black">{step.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-neutral-600">{step.text}</p>
+            [isEs ? "1. Envía fotos" : "1. Send photos", isEs ? "Muestra el trabajo por WhatsApp." : "Show the job by WhatsApp."],
+            [isEs ? "2. Recibe estimación" : "2. Get estimate", isEs ? "Precio claro antes de empezar." : "Clear price before starting."],
+            [isEs ? "3. Confirmamos horario" : "3. Confirm time", isEs ? "Elegimos día y hora." : "We choose day and time."],
+            [isEs ? "4. Trabajo limpio" : "4. Clean work", isEs ? "Instalación o reparación ordenada." : "Neat installation or repair."],
+            [isEs ? "5. Revisión final" : "5. Final check", isEs ? "Comprobamos que todo queda bien." : "We check everything is correct."],
+          ].map(([title, text]) => (
+            <div key={title} className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-md">
+              <h3 className="font-black">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">{text}</p>
             </div>
           ))}
         </div>
@@ -478,35 +467,26 @@ export default async function HandymanValenciaPage({ params }: Props) {
               </h2>
               <p className="mt-5 text-lg leading-8 text-neutral-300">
                 {isEs
-                  ? "No se trata solo de hacer un agujero, montar un mueble o cambiar una pieza. Se trata de cuidar el espacio del cliente, trabajar limpio, explicar cada paso y dejar un resultado que se vea profesional."
-                  : "It is not just about drilling a hole, assembling furniture or changing a part. It is about respecting the client’s space, working cleanly, explaining each step and leaving a result that looks professional."}
+                  ? "No se trata solo de montar algo rápido. Se trata de cuidar el espacio, usar fijaciones correctas, dejar líneas limpias, revisar el resultado y evitar sorpresas."
+                  : "It is not just about doing something quickly. It is about respecting the space, using proper fixings, leaving clean lines, checking the result and avoiding surprises."}
               </p>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                {
-                  icon: Hammer,
-                  title: isEs ? "Experiencia práctica" : "Practical experience",
-                },
-                {
-                  icon: Home,
-                  title: isEs ? "Trabajos del hogar" : "Home jobs",
-                },
-                {
-                  icon: Zap,
-                  title: isEs ? "Soluciones rápidas" : "Fast solutions",
-                },
-                {
-                  icon: Star,
-                  title: isEs ? "Acabado profesional" : "Professional finish",
-                },
-              ].map((item) => (
-                <div key={item.title} className="rounded-2xl border border-yellow-400 bg-neutral-900 p-5">
-                  <item.icon className="mb-4 h-6 w-6 text-yellow-400" />
-                  <h3 className="font-bold">{item.title}</h3>
-                </div>
-              ))}
+                [Hammer, isEs ? "Experiencia práctica" : "Practical experience"],
+                [Home, isEs ? "Trabajos del hogar" : "Home jobs"],
+                [Zap, isEs ? "Soluciones rápidas" : "Fast solutions"],
+                [Star, isEs ? "Acabado profesional" : "Professional finish"],
+              ].map(([Icon, title]) => {
+                const LucideIcon = Icon as typeof Hammer;
+                return (
+                  <div key={String(title)} className="rounded-2xl border border-yellow-400 bg-neutral-900 p-5">
+                    <LucideIcon className="mb-4 h-6 w-6 text-yellow-400" />
+                    <h3 className="font-bold">{String(title)}</h3>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -514,7 +494,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
 
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <h2 className="text-3xl font-black">
-          {isEs ? "Zonas de servicio" : "Service areas"}
+          {isEs ? "Zonas de servicio en Valencia" : "Service areas in Valencia"}
         </h2>
         <p className="mt-4 max-w-3xl text-neutral-700">
           {isEs
@@ -524,10 +504,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
 
         <div className="mt-8 flex flex-wrap gap-3">
           {areas.map((area) => (
-            <span
-              key={area}
-              className="rounded-full border border-yellow-300 bg-yellow-50 px-4 py-2 text-sm font-semibold"
-            >
+            <span key={area} className="rounded-full border border-yellow-300 bg-yellow-50 px-4 py-2 text-sm font-semibold">
               {area}
             </span>
           ))}
@@ -554,9 +531,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="rounded-3xl border border-yellow-400 bg-yellow-400 p-8 shadow-2xl lg:p-12">
           <h2 className="text-3xl font-black">
-            {isEs
-              ? "¿Necesitas un manitas en Valencia?"
-              : "Need a handyman in Valencia?"}
+            {isEs ? "¿Necesitas un manitas en Valencia?" : "Need a handyman in Valencia?"}
           </h2>
           <p className="mt-4 max-w-3xl text-lg font-medium">
             {isEs
@@ -565,17 +540,11 @@ export default async function HandymanValenciaPage({ params }: Props) {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={whatsappHref}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
-            >
+            <a href={whatsappHref} className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105">
               <MessageCircle className="h-5 w-5" />
               WhatsApp
             </a>
-            <Link
-              href={estimateHref}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-black bg-white px-6 py-4 font-bold text-black shadow-sm transition hover:scale-105"
-            >
+            <Link href={estimateHref} className="inline-flex items-center justify-center gap-2 rounded-xl border border-black bg-white px-6 py-4 font-bold text-black shadow-sm transition hover:scale-105">
               {isEs ? "Pedir presupuesto" : "Request estimate"}
               <ArrowRight className="h-5 w-5" />
             </Link>
