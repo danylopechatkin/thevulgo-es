@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const seoServicePages = [
+    // TV
     "montaje-tv-valencia",
     "large-tv-mounting-valencia",
     "instalacion-estanterias-valencia",
@@ -28,6 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "ocultar-cables-valencia",
     "instalar-soundbar-valencia",
 
+    // Furniture
     "montaje-muebles-ikea-valencia",
     "montaje-armario-valencia",
     "montaje-cama-valencia",
@@ -41,6 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "fijacion-muebles-pared-valencia",
     "preparacion-muebles-mudanza-valencia",
 
+    // Electrical
     "instalacion-lampara-valencia",
     "instalacion-lamparas-colgantes-valencia",
     "instalacion-apliques-pared-valencia",
@@ -51,6 +54,49 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "cambio-extractor-valencia",
     "cambio-luz-bano-valencia",
     "cambio-lampara-techo-valencia",
+  ];
+
+  const nestedServicePages = [
+    // DRYWALL
+    "services/drywall/small-hole-repair",
+    "services/drywall/medium-wall-patching",
+    "services/drywall/large-drywall-patch",
+    "services/drywall/anchor-hole-repair",
+    "services/drywall/wall-touch-up-prep",
+    "services/drywall/drywall-cutout-repair",
+    "services/drywall/crack-filling",
+    "services/drywall/corner-repair",
+    "services/drywall/wall-levelling-prep",
+    "services/drywall/skim-coat-area-repair",
+    "services/drywall/tv-bracket-wall-repair",
+    "services/drywall/shelf-removal-wall-repair",
+    "services/drywall/door-handle-wall-damage-repair",
+    "services/drywall/ceiling-spot-patching",
+    "services/drywall/cable-hole-closing",
+    "services/drywall/wall-drilling-service",
+    "services/drywall/concrete-wall-drilling",
+    "services/drywall/drywall-mounting-prep",
+    "services/drywall/patch-and-sand-finish",
+    "services/drywall/multiple-wall-repairs",
+
+    // REPAIRS
+    "services/repairs/silicone-renewal",
+    "services/repairs/sealing-gap-filling",
+    "services/repairs/minor-wall-fixes",
+    "services/repairs/door-adjustment",
+    "services/repairs/loose-handle-fixing",
+    "services/repairs/curtain-rail-adjustments",
+    "services/repairs/wall-anchor-installation",
+    "services/repairs/shelf-refixing",
+    "services/repairs/mirror-remounting",
+    "services/repairs/furniture-touch-up-fixes",
+    "services/repairs/bathroom-accessory-fixing",
+    "services/repairs/socket-cover-straightening",
+    "services/repairs/cabinet-door-alignment",
+    "services/repairs/small-drilling-jobs",
+    "services/repairs/move-out-touch-ups",
+    "services/repairs/kitchen-minor-fixes",
+    "services/repairs/multiple-small-repairs",
   ];
 
   const pages: MetadataRoute.Sitemap = [];
@@ -78,6 +124,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: locale === "es" ? 0.85 : 0.75,
+      });
+    }
+
+    for (const page of nestedServicePages) {
+      pages.push({
+        url: `${baseUrl}/${locale}/${page}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.8,
       });
     }
   }
