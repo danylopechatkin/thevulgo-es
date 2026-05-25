@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import {
@@ -35,6 +36,27 @@ export default function RepairsClient() {
   );
 
   const whatsappHref = `https://wa.me/34610076942?text=${whatsappText}`;
+
+const repairLinks = [
+  `/${locale}/services/repairs/silicone-renewal`,
+  `/${locale}/services/repairs/sealing-gap-filling`,
+  `/${locale}/services/repairs/minor-wall-fixes`,
+  `/${locale}/services/repairs/door-adjustment`,
+  `/${locale}/services/repairs/loose-handle-fixing`,
+  `/${locale}/services/repairs/curtain-rail-adjustments`,
+  `/${locale}/services/repairs/wall-anchor-installation`,
+  `/${locale}/services/repairs/shelf-refixing`,
+  `/${locale}/services/repairs/mirror-remounting`,
+  `/${locale}/services/repairs/furniture-touch-up-fixes`,
+  `/${locale}/services/repairs/bathroom-accessory-fixing`,
+  `/${locale}/services/repairs/socket-cover-straightening`,
+  `/${locale}/services/repairs/cabinet-door-alignment`,
+  `/${locale}/services/repairs/small-drilling-jobs`,
+  `/${locale}/services/repairs/move-out-touch-ups`,
+  `/${locale}/services/repairs/kitchen-minor-fixes`,
+  `/${locale}/services/repairs/multiple-small-repairs`,
+];
+
 
   const copy = {
     badge: "THEVULGO • Valencia",
@@ -408,32 +430,37 @@ export default function RepairsClient() {
           </div>
 
           <div className="mt-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
-              {services.map((s, index) => (
-                <div
-                  key={`${s.title}-${index}`}
-                  className={`rounded-2xl border border-yellow-400 bg-white p-7 text-left shadow-lg transition-all duration-200 hover:shadow-2xl hover:scale-[1.02] min-h-[210px] ${s.className || ""}`}
-                >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-                    {s.icon}
-                  </div>
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
+    {services.map((s, index) => (
+      <Link
+        key={`${s.title}-${index}`}
+        href={repairLinks[index]}
+        className={`group rounded-2xl border border-yellow-400 bg-white p-7 text-left shadow-lg transition-all duration-200 hover:shadow-2xl hover:scale-[1.02] min-h-[210px] ${s.className || ""}`}
+      >
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
+          {s.icon}
+        </div>
 
-                  <h3 className="mt-4 text-xl font-extrabold text-black">
-                    {s.title}
-                  </h3>
+        <h3 className="mt-4 text-xl font-extrabold text-black">
+          {s.title}
+        </h3>
 
-                  <p className="mt-2 text-sm leading-7 text-gray-700">
-                    {s.desc}
-                  </p>
+        <p className="mt-2 text-sm leading-7 text-gray-700">
+          {s.desc}
+        </p>
 
-                  <div className="mt-4 text-sm font-extrabold text-yellow-500">
-                    {s.price}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="mt-4 text-sm font-extrabold text-yellow-500">
+          {s.price}
+        </div>
 
+        <div className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-black opacity-0 transition group-hover:opacity-100">
+          {isEs ? "Ver servicio" : "Open service"}
+          <ArrowRight className="h-4 w-4" />
+        </div>
+      </Link>
+    ))}
+  </div>
+</div>
           <div className="mt-12 rounded-3xl border border-yellow-400 bg-white p-6 sm:p-8 shadow-xl">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
               <div className="max-w-2xl">
