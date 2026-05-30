@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : "Move-Out Touch-Ups in Valencia | From €39 | THEVULGO";
 
   const description = isEs
-    ? "Retoques visibles antes de entregar un piso en Valencia desde 39€. Pequeñas correcciones de pared, marcas, detalles visibles y preparación para handover."
-    : "Move-out touch-ups in Valencia from €39. Small visible corrections to improve a room before move-out, rental handover or property inspection.";
+    ? "Retoques antes de entregar un piso en Valencia desde 39€. Marcas de pared, pequeños agujeros, detalles visibles, accesorios sueltos y preparación para entrega."
+    : "Move-out touch-ups in Valencia from €39. Wall marks, small holes, visible details, loose fittings and room preparation before rental handover.";
 
   return {
     title,
@@ -44,6 +44,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "marcas pared Valencia",
           "handover piso Valencia",
           "manitas mudanza Valencia",
+          "retoques alquiler Valencia",
+          "arreglar piso antes de entregar Valencia",
         ]
       : [
           "move out touch ups Valencia",
@@ -53,6 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "apartment handover Valencia",
           "move out handyman Valencia",
           "visible room corrections Valencia",
+          "rental apartment touch ups Valencia",
         ],
     alternates: {
       canonical: `${siteUrl}/${locale}/services/repairs/move-out-touch-ups`,
@@ -129,6 +132,10 @@ export default async function MoveOutTouchUpsPage({ params }: PageProps) {
           q: "¿Qué fotos tengo que enviar?",
           a: "Envía fotos generales de cada habitación, fotos de cerca de las zonas dañadas y una lista corta de lo que quieres corregir antes de la entrega.",
         },
+        {
+          q: "¿Este servicio garantiza recuperar la fianza?",
+          a: "No podemos garantizar decisiones del propietario o agencia, pero sí ayuda a mejorar detalles visibles que suelen llamar la atención durante una revisión.",
+        },
       ]
     : [
         {
@@ -150,6 +157,10 @@ export default async function MoveOutTouchUpsPage({ params }: PageProps) {
         {
           q: "What photos should I send?",
           a: "Send general photos of each room, close-up photos of damaged areas and a short list of what you want corrected before handover.",
+        },
+        {
+          q: "Does this service guarantee my deposit back?",
+          a: "We cannot guarantee a landlord or agency decision, but the service helps improve visible details that usually stand out during an inspection.",
         },
       ];
 
@@ -177,7 +188,10 @@ export default async function MoveOutTouchUpsPage({ params }: PageProps) {
         addressCountry: "ES",
       },
     },
-    areaServed: areas,
+    areaServed: areas.map((area) => ({
+      "@type": "Place",
+      name: area,
+    })),
     offers: {
       "@type": "Offer",
       price: "39",
@@ -261,6 +275,122 @@ export default async function MoveOutTouchUpsPage({ params }: PageProps) {
         "Adjustment of loose or misaligned accessories",
         "Cleaner look before handover or inspection",
         "Clear estimate based on photos, list and scope",
+      ];
+
+  const inspectionPoints = isEs
+    ? [
+        "Marcas visibles en paredes por cuadros, estanterías o muebles",
+        "Agujeros pequeños de tacos, tornillos o soportes retirados",
+        "Accesorios sueltos como topes, ganchos, tapas o piezas pequeñas",
+        "Zonas con aspecto descuidado antes de fotos, visita o revisión",
+        "Detalles que pueden llamar la atención en una inspección rápida",
+        "Pequeños desperfectos acumulados durante el uso diario del piso",
+      ]
+    : [
+        "Visible wall marks from pictures, shelves or furniture",
+        "Small holes from plugs, screws or removed brackets",
+        "Loose fittings such as stops, hooks, covers or small parts",
+        "Areas that look neglected before photos, viewing or inspection",
+        "Details that may stand out during a quick property check",
+        "Small defects accumulated during everyday use of the apartment",
+      ];
+
+  const commonProblems = isEs
+    ? [
+        {
+          title: "Marcas en pared",
+          text: "Revisamos roces, señales de muebles, marcas de cuadros y zonas visibles que empeoran el aspecto de la habitación.",
+        },
+        {
+          title: "Agujeros pequeños",
+          text: "Tapamos o preparamos pequeños agujeros de tornillos, tacos o soportes retirados cuando el alcance es sencillo.",
+        },
+        {
+          title: "Accesorios sueltos",
+          text: "Ajustamos pequeños elementos visibles como ganchos, topes, tapas, manillas o piezas que se han aflojado.",
+        },
+        {
+          title: "Detalles de entrega",
+          text: "Ayudamos a dejar la vivienda más presentable antes de entregar llaves, recibir visita o hacer revisión.",
+        },
+      ]
+    : [
+        {
+          title: "Wall marks",
+          text: "We check scuffs, furniture marks, picture marks and visible areas that make the room look less cared for.",
+        },
+        {
+          title: "Small holes",
+          text: "We fill or prepare small holes from screws, wall plugs or removed brackets when the scope is simple.",
+        },
+        {
+          title: "Loose fittings",
+          text: "We adjust small visible elements such as hooks, stops, covers, handles or pieces that have become loose.",
+        },
+        {
+          title: "Handover details",
+          text: "We help make the property look more presentable before key handover, viewing or inspection.",
+        },
+      ];
+
+  const processSteps = isEs
+    ? [
+        "Envías fotos generales y fotos de cerca",
+        "Preparas una lista corta de los detalles a corregir",
+        "Revisamos el alcance, materiales y tiempo estimado",
+        "Te damos un presupuesto claro antes de empezar",
+        "Realizamos los retoques acordados para mejorar el aspecto",
+      ]
+    : [
+        "You send general photos and close-up photos",
+        "You prepare a short list of details to correct",
+        "We check the scope, materials and estimated time",
+        "You receive a clear estimate before the work starts",
+        "We carry out the agreed touch-ups to improve the look",
+      ];
+
+  const rentalUseCases = isEs
+    ? [
+        {
+          title: "Pisos de alquiler",
+          text: "Útil antes de devolver llaves, especialmente si hay marcas de muebles, cuadros, tornillos o pequeños accesorios retirados.",
+        },
+        {
+          title: "Apartamentos turísticos",
+          text: "Ayuda a mejorar el aspecto visual antes de nuevas fotos, visitas o preparación rápida entre estancias.",
+        },
+        {
+          title: "Habitaciones compartidas",
+          text: "Ideal para corregir detalles visibles en habitaciones antes de cambio de inquilino o revisión del propietario.",
+        },
+      ]
+    : [
+        {
+          title: "Rental apartments",
+          text: "Useful before returning keys, especially when there are furniture marks, picture marks, screws or removed small fittings.",
+        },
+        {
+          title: "Tourist apartments",
+          text: "Helps improve the visual condition before new photos, viewings or quick preparation between stays.",
+        },
+        {
+          title: "Shared rooms",
+          text: "Ideal for correcting visible room details before a tenant change or landlord check.",
+        },
+      ];
+
+  const notIncluded = isEs
+    ? [
+        "Reformas completas o trabajos grandes de pintura",
+        "Garantía de recuperación de fianza",
+        "Reparaciones estructurales o daños graves",
+        "Igualación perfecta de pintura si no existe el color original",
+      ]
+    : [
+        "Full renovations or large painting jobs",
+        "Deposit return guarantee",
+        "Structural repairs or serious damage",
+        "Perfect paint matching if the original colour is not available",
       ];
 
   const related = isEs
@@ -482,6 +612,136 @@ export default async function MoveOutTouchUpsPage({ params }: PageProps) {
               ? "Este servicio no sustituye una reforma completa ni garantiza condiciones de depósito, pero ayuda a corregir detalles visibles y mejorar la presentación general del espacio."
               : "This service does not replace a full renovation or guarantee deposit conditions, but it helps correct visible details and improve the overall presentation of the space."}
           </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-5 py-16 md:px-8">
+        <h2 className="text-3xl font-black md:text-4xl">
+          {isEs
+            ? "Retoques para alquileres, mudanzas y entregas de llaves en Valencia"
+            : "Touch-ups for rentals, move-outs and key handovers in Valencia"}
+        </h2>
+
+        <div className="mt-6 space-y-6 text-lg leading-8 text-neutral-700">
+          <p>
+            {isEs
+              ? "Cuando una vivienda se entrega después de meses o años de uso, suelen aparecer pequeños desperfectos que no requieren una reforma, pero sí un repaso práctico. Las paredes pueden tener marcas de muebles, los tornillos retirados pueden dejar agujeros visibles y algunos accesorios pueden quedar sueltos o mal alineados."
+              : "When a property is handed over after months or years of use, small defects often appear that do not require renovation but do need practical touch-ups. Walls may have furniture marks, removed screws may leave visible holes and some fittings may become loose or misaligned."}
+          </p>
+
+          <p>
+            {isEs
+              ? "Este servicio está pensado para resolver esos detalles antes de una revisión del propietario, una visita de agencia, una sesión de fotos o la devolución de llaves. El objetivo es que el espacio se vea más limpio, ordenado y cuidado, sin convertir un trabajo pequeño en una obra grande."
+              : "This service is designed to resolve those details before a landlord check, agency visit, photo session or key return. The goal is to make the space look cleaner, tidier and better cared for without turning a small job into a large project."}
+          </p>
+
+          <p>
+            {isEs
+              ? "En Valencia trabajamos con inquilinos, propietarios, apartamentos turísticos y pequeñas oficinas que necesitan corregir detalles concretos antes de una entrega. Para valorar el trabajo, lo más útil es enviar fotos generales, imágenes de cerca y una lista breve de los puntos que quieres mejorar."
+              : "In Valencia we work with tenants, owners, tourist apartments and small offices that need specific visible details corrected before handover. To assess the job, the most useful approach is to send general photos, close-up images and a short list of the points you want improved."}
+          </p>
+
+          <p>
+            {isEs
+              ? "Si hay que igualar pintura, el resultado depende mucho de tener el color original o una referencia clara. Si no existe el mismo color, se puede valorar una solución visual razonable, pero siempre avisamos antes para evitar expectativas incorrectas."
+              : "If paint matching is needed, the result depends heavily on having the original paint or a clear reference. If the same colour is not available, a reasonable visual solution can be considered, but we always explain this in advance to avoid wrong expectations."}
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-8">
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="rounded-3xl border border-yellow-200 bg-white p-7 shadow-md">
+            <ShieldCheck className="h-10 w-10 text-yellow-500" />
+            <h2 className="mt-4 text-3xl font-black">
+              {isEs ? "Qué revisamos antes de presupuestar" : "What we check before estimating"}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {inspectionPoints.map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
+                  <p className="font-semibold leading-7 text-neutral-800">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-yellow-200 bg-yellow-50 p-7 shadow-md">
+            <Wrench className="h-10 w-10 text-yellow-500" />
+            <h2 className="mt-4 text-3xl font-black">
+              {isEs ? "Proceso de trabajo" : "Work process"}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {processSteps.map((item, index) => (
+                <div key={item} className="flex items-start gap-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-yellow-400 font-black text-black">
+                    {index + 1}
+                  </span>
+                  <p className="font-semibold leading-7 text-neutral-800">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Problemas habituales que corregimos" : "Common problems we correct"}
+          </h2>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-4">
+            {commonProblems.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-yellow-200 bg-yellow-50 p-6 shadow-sm"
+              >
+                <h3 className="text-xl font-black">{item.title}</h3>
+                <p className="mt-3 leading-7 text-neutral-700">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-yellow-50 py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Para qué casos es útil" : "Where this service is useful"}
+          </h2>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {rentalUseCases.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-yellow-200 bg-white p-7 shadow-sm"
+              >
+                <Home className="h-8 w-8 text-yellow-500" />
+                <h3 className="mt-4 text-xl font-black">{item.title}</h3>
+                <p className="mt-3 leading-7 text-neutral-700">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <div className="rounded-3xl border border-yellow-200 bg-white p-7 shadow-md md:p-10">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Qué no incluye este servicio" : "What this service does not include"}
+          </h2>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {notIncluded.map((item) => (
+              <div key={item} className="flex items-start gap-3 rounded-2xl bg-yellow-50 p-5">
+                <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
+                <p className="font-bold leading-7 text-neutral-800">{item}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
