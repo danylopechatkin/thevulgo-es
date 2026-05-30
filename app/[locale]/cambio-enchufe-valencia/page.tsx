@@ -34,12 +34,17 @@ export async function generateMetadata({
       ? "Cambio de enchufe en Valencia desde 29€. Sustitución de enchufes dañados, antiguos o tapas para una instalación más limpia en casas y apartamentos."
       : "Socket replacement in Valencia from €29. Replacement of damaged, old sockets and covers for cleaner installations.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/cambio-enchufe-valencia`,
-      languages: {
-        es: `${siteUrl}/es/cambio-enchufe-valencia`,
-        en: `${siteUrl}/en/socket-replacement-valencia`,
-      },
-    },
+  canonical: `${siteUrl}/${locale}/cambio-enchufe-valencia`,
+  languages: {
+    es: `${siteUrl}/es/cambio-enchufe-valencia`,
+    en: `${siteUrl}/en/cambio-enchufe-valencia`,
+    "x-default": `${siteUrl}/es/cambio-enchufe-valencia`,
+  },
+},
+robots: {
+  index: true,
+  follow: true,
+},
     openGraph: {
       title: isEs
         ? "Cambio de Enchufe en Valencia | Desde 29€"
