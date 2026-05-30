@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : "Curtain Rail Adjustments in Valencia | From €29 | THEVULGO";
 
   const description = isEs
-    ? "Ajuste de rieles de cortina en Valencia desde 29€: pequeñas correcciones, fijaciones simples, soportes flojos y mejoras básicas de uso."
-    : "Curtain rail adjustments in Valencia from €29: minor fixes, simple fittings, loose supports and basic usability corrections.";
+    ? "Ajuste de rieles de cortina en Valencia desde 29€: soportes flojos, rieles desalineados, fijaciones simples y mejoras de uso diario."
+    : "Curtain rail adjustments in Valencia from €29: loose supports, misaligned rails, simple fittings and everyday usability improvements.";
 
   return {
     title,
@@ -43,6 +43,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "arreglar cortinas Valencia",
           "manitas cortinas Valencia",
           "reparación cortinero Valencia",
+          "riel cortina techo Valencia",
+          "riel cortina pared Valencia",
         ]
       : [
           "curtain rail adjustment Valencia",
@@ -51,6 +53,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "curtain fitting repair Valencia",
           "curtain rail handyman Valencia",
           "minor curtain rail fixes Valencia",
+          "ceiling curtain rail repair Valencia",
+          "wall curtain rail repair Valencia",
         ],
     alternates: {
       canonical: `${siteUrl}/${locale}/services/repairs/curtain-rail-adjustments`,
@@ -127,6 +131,14 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
           q: "¿Qué fotos tengo que enviar?",
           a: "Envía una foto general de la cortina, una foto de cerca del riel o soporte suelto, y si puedes, un vídeo corto mostrando el problema.",
         },
+        {
+          q: "¿Hace falta cambiar todo el riel?",
+          a: "No siempre. Muchas veces basta con ajustar soportes, reforzar fijaciones o corregir una pieza suelta. Si el riel está roto o doblado, se valora sustitución.",
+        },
+        {
+          q: "¿Podéis revisar rieles después de una mudanza?",
+          a: "Sí. Este servicio es útil después de mudanzas, cambios de cortina, pisos de alquiler o cuando el riel empieza a moverse con el uso diario.",
+        },
       ]
     : [
         {
@@ -149,6 +161,14 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
           q: "What photos should I send?",
           a: "Send one general photo of the curtain, one close-up photo of the rail or loose support, and if possible, a short video showing the issue.",
         },
+        {
+          q: "Do I need to replace the whole rail?",
+          a: "Not always. Often adjusting supports, reinforcing fixings or correcting a loose part is enough. If the rail is broken or bent, replacement can be checked.",
+        },
+        {
+          q: "Can you check curtain rails after moving in?",
+          a: "Yes. This service is useful after move-ins, curtain changes, rental apartments or when the rail starts moving from everyday use.",
+        },
       ];
 
   const serviceSchema = {
@@ -158,8 +178,8 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
       ? "Ajuste de rieles de cortina en Valencia"
       : "Curtain rail adjustments in Valencia",
     description: isEs
-      ? "Pequeñas correcciones y ajustes de rieles de cortina, soportes flojos, fijaciones simples y mejoras básicas de uso en Valencia."
-      : "Minor fixes and corrections for curtain rails, loose supports, simple fittings and basic usability improvements in Valencia.",
+      ? "Pequeñas correcciones y ajustes de rieles de cortina, soportes flojos, fijaciones simples, rieles desalineados y mejoras básicas de uso en Valencia."
+      : "Minor fixes and corrections for curtain rails, loose supports, simple fittings, misaligned rails and basic usability improvements in Valencia.",
     serviceType: isEs ? "Ajuste de rieles de cortina" : "Curtain rail adjustments",
     url: pageUrl,
     provider: {
@@ -175,7 +195,10 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
         addressCountry: "ES",
       },
     },
-    areaServed: areas,
+    areaServed: areas.map((area) => ({
+      "@type": "Place",
+      name: area,
+    })),
     offers: {
       "@type": "Offer",
       price: "29",
@@ -261,6 +284,122 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
         "Clear estimate based on photos, video and scope",
       ];
 
+  const repairSituations = isEs
+    ? [
+        "El riel se mueve al abrir o cerrar la cortina",
+        "Un soporte está flojo o separado de la pared",
+        "La cortina no corre bien por el riel",
+        "El riel está ligeramente desalineado",
+        "Hay tornillos o tacos que ya no sujetan bien",
+        "El sistema necesita revisión después de una mudanza",
+      ]
+    : [
+        "The rail moves when opening or closing the curtain",
+        "A support is loose or separated from the wall",
+        "The curtain does not slide properly on the rail",
+        "The rail is slightly misaligned",
+        "Screws or wall plugs no longer hold properly",
+        "The system needs checking after a move-in",
+      ];
+
+  const commonProblems = isEs
+    ? [
+        {
+          title: "Soportes flojos",
+          text: "Revisamos soportes que se mueven, vibran o han perdido fuerza por uso diario o mala fijación anterior.",
+        },
+        {
+          title: "Riel desalineado",
+          text: "Ajustamos pequeñas desviaciones que hacen que la cortina no corra bien o se vea torcida.",
+        },
+        {
+          title: "Fijación débil",
+          text: "Comprobamos tacos, tornillos y puntos de anclaje cuando la pared o techo ya no sujeta bien.",
+        },
+        {
+          title: "Uso incómodo",
+          text: "Mejoramos detalles que dificultan abrir o cerrar la cortina en el día a día.",
+        },
+      ]
+    : [
+        {
+          title: "Loose supports",
+          text: "We check supports that move, vibrate or have lost strength from daily use or poor previous fixing.",
+        },
+        {
+          title: "Misaligned rail",
+          text: "We adjust small misalignments that make the curtain slide poorly or look uneven.",
+        },
+        {
+          title: "Weak fixing",
+          text: "We check plugs, screws and anchor points when the wall or ceiling no longer holds well.",
+        },
+        {
+          title: "Uncomfortable use",
+          text: "We improve details that make the curtain harder to open or close every day.",
+        },
+      ];
+
+  const processSteps = isEs
+    ? [
+        "Envías foto general de la cortina",
+        "Envías foto de cerca del soporte o riel",
+        "Mandas un vídeo corto mostrando el problema",
+        "Revisamos si conviene ajustar, reforzar o sustituir",
+        "Te damos presupuesto claro antes de empezar",
+      ]
+    : [
+        "You send a general photo of the curtain",
+        "You send a close-up photo of the support or rail",
+        "You send a short video showing the issue",
+        "We check whether adjustment, reinforcement or replacement is better",
+        "You receive a clear estimate before the work starts",
+      ];
+
+  const railTypes = isEs
+    ? [
+        {
+          title: "Riel de techo",
+          text: "Se revisan soportes, tornillos y puntos de fijación cuando el riel está instalado en techo.",
+        },
+        {
+          title: "Riel de pared",
+          text: "Se comprueba si la pared sujeta bien y si los soportes necesitan ajuste o refuerzo.",
+        },
+        {
+          title: "Cortinero simple",
+          text: "Se revisan piezas visibles, soportes, alineación y funcionamiento básico.",
+        },
+      ]
+    : [
+        {
+          title: "Ceiling rail",
+          text: "Supports, screws and fixing points are checked when the rail is installed on the ceiling.",
+        },
+        {
+          title: "Wall rail",
+          text: "The wall hold is checked and supports are reviewed for adjustment or reinforcement.",
+        },
+        {
+          title: "Simple curtain fitting",
+          text: "Visible parts, supports, alignment and basic function are reviewed.",
+        },
+      ];
+
+  const notIncluded = isEs
+    ? [
+        "Instalación completa de sistema nuevo sin presupuesto previo",
+        "Reparación estructural de techo o pared muy dañada",
+        "Trabajos eléctricos cerca de mecanismos ocultos",
+        "Garantía sobre rieles antiguos, doblados o piezas rotas no sustituibles",
+      ]
+    : [
+        "Complete installation of a new system without prior estimate",
+        "Structural repair of badly damaged ceiling or wall",
+        "Electrical work near hidden mechanisms",
+        "Guarantee on old, bent or non-replaceable broken rail parts",
+      ];
+
   const related = isEs
     ? [
         { title: "Reparaciones en Valencia", href: `/${locale}/services/repairs` },
@@ -288,16 +427,12 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
           <div>
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-white px-4 py-2 text-sm font-black text-neutral-900 shadow-sm">
               <MapPin className="h-4 w-4 text-yellow-600" />
-              {isEs
-                ? "THEVULGO • Reparaciones en Valencia"
-                : "THEVULGO • Repairs in Valencia"}
+              {isEs ? "THEVULGO • Reparaciones en Valencia" : "THEVULGO • Repairs in Valencia"}
             </div>
 
             <h1 className="text-4xl font-black tracking-tight md:text-6xl">
               {isEs ? "Ajuste de rieles de cortina" : "Curtain rail adjustments"}{" "}
-              <span className="text-yellow-500">
-                {isEs ? "en Valencia" : "in Valencia"}
-              </span>
+              <span className="text-yellow-500">{isEs ? "en Valencia" : "in Valencia"}</span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
@@ -353,31 +488,12 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
 
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {[
-                {
-                  title: isEs ? "Rieles" : "Rails",
-                  text: isEs ? "Techo o pared" : "Ceiling or wall",
-                  icon: Ruler,
-                },
-                {
-                  title: isEs ? "Soportes" : "Supports",
-                  text: isEs ? "Piezas flojas" : "Loose pieces",
-                  icon: ShieldCheck,
-                },
-                {
-                  title: isEs ? "Ajuste" : "Adjustment",
-                  text: isEs ? "Corrección simple" : "Simple correction",
-                  icon: Wrench,
-                },
-                {
-                  title: isEs ? "Uso diario" : "Daily use",
-                  text: isEs ? "Más cómodo" : "Easier use",
-                  icon: Sparkles,
-                },
+                { title: isEs ? "Rieles" : "Rails", text: isEs ? "Techo o pared" : "Ceiling or wall", icon: Ruler },
+                { title: isEs ? "Soportes" : "Supports", text: isEs ? "Piezas flojas" : "Loose pieces", icon: ShieldCheck },
+                { title: isEs ? "Ajuste" : "Adjustment", text: isEs ? "Corrección simple" : "Simple correction", icon: Wrench },
+                { title: isEs ? "Uso diario" : "Daily use", text: isEs ? "Más cómodo" : "Easier use", icon: Sparkles },
               ].map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-2xl border border-yellow-200 bg-yellow-50 p-4 shadow-sm"
-                >
+                <div key={item.title} className="rounded-2xl border border-yellow-200 bg-yellow-50 p-4 shadow-sm">
                   <item.icon className="h-6 w-6 text-yellow-500" />
                   <p className="mt-3 font-black">{item.title}</p>
                   <p className="mt-1 text-sm text-neutral-700">{item.text}</p>
@@ -410,10 +526,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
                 : "Send photos and a video to review the rail, wall or ceiling and fixing type.",
             },
           ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl border border-yellow-300 bg-white p-7 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
-            >
+            <div key={item.title} className="rounded-2xl border border-yellow-300 bg-white p-7 shadow-md transition hover:-translate-y-1 hover:shadow-xl">
               <BadgeCheck className="h-8 w-8 text-yellow-500" />
               <h2 className="mt-4 text-xl font-black">{item.title}</h2>
               <p className="mt-3 leading-7 text-neutral-700">{item.text}</p>
@@ -450,6 +563,124 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
         </div>
       </section>
 
+      <section className="mx-auto max-w-5xl px-5 py-16 md:px-8">
+        <h2 className="text-3xl font-black md:text-4xl">
+          {isEs
+            ? "Servicio para rieles de cortina flojos o desalineados en Valencia"
+            : "Service for loose or misaligned curtain rails in Valencia"}
+        </h2>
+
+        <div className="mt-6 space-y-6 text-lg leading-8 text-neutral-700">
+          <p>
+            {isEs
+              ? "Los rieles de cortina soportan movimiento constante: abrir, cerrar, tirar de la tela, limpiar, cambiar cortinas o mover muebles cerca de la ventana. Con el tiempo, los tornillos pueden aflojarse, los tacos pueden perder agarre y el riel puede empezar a moverse o quedar desalineado."
+              : "Curtain rails handle constant movement: opening, closing, pulling the fabric, cleaning, changing curtains or moving furniture near the window. Over time, screws can loosen, wall plugs can lose grip and the rail can start moving or become misaligned."}
+          </p>
+
+          <p>
+            {isEs
+              ? "Este servicio está pensado para problemas pequeños y concretos: un soporte flojo, una pieza que vibra, una zona que se separa del techo o pared, una cortina que no corre bien o un riel que necesita revisión antes de que el daño aumente."
+              : "This service is designed for small and specific problems: one loose support, a part that vibrates, an area separating from the ceiling or wall, a curtain that does not slide well or a rail that needs checking before the damage gets worse."}
+          </p>
+
+          <p>
+            {isEs
+              ? "En Valencia trabajamos con viviendas particulares, pisos de alquiler, apartamentos turísticos y mudanzas donde se necesita dejar la cortina funcionando mejor sin cambiar necesariamente todo el sistema."
+              : "In Valencia we work with private homes, rental apartments, tourist apartments and move-ins where the curtain needs to work better without necessarily replacing the whole system."}
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-8">
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="rounded-3xl border border-yellow-200 bg-white p-7 shadow-md">
+            <ShieldCheck className="h-10 w-10 text-yellow-500" />
+            <h2 className="mt-4 text-3xl font-black">
+              {isEs ? "Cuándo conviene ajustar el riel" : "When rail adjustment makes sense"}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {repairSituations.map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
+                  <p className="font-semibold leading-7 text-neutral-800">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-yellow-200 bg-yellow-50 p-7 shadow-md">
+            <Wrench className="h-10 w-10 text-yellow-500" />
+            <h2 className="mt-4 text-3xl font-black">
+              {isEs ? "Cómo funciona" : "How it works"}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {processSteps.map((step, index) => (
+                <div key={step} className="flex items-start gap-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-yellow-400 font-black text-black">
+                    {index + 1}
+                  </span>
+                  <p className="font-semibold leading-7 text-neutral-800">{step}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Problemas habituales que revisamos" : "Common problems we check"}
+          </h2>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-4">
+            {commonProblems.map((item) => (
+              <div key={item.title} className="rounded-2xl border border-yellow-200 bg-yellow-50 p-6 shadow-sm">
+                <h3 className="text-xl font-black">{item.title}</h3>
+                <p className="mt-3 leading-7 text-neutral-700">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-yellow-50 py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Tipos de rieles y cortineros" : "Types of rails and curtain fittings"}
+          </h2>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {railTypes.map((item) => (
+              <div key={item.title} className="rounded-2xl border border-yellow-200 bg-white p-7 shadow-sm">
+                <Home className="h-8 w-8 text-yellow-500" />
+                <h3 className="mt-4 text-xl font-black">{item.title}</h3>
+                <p className="mt-3 leading-7 text-neutral-700">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <div className="rounded-3xl border border-yellow-200 bg-white p-7 shadow-md md:p-10">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Qué no incluye este servicio" : "What this service does not include"}
+          </h2>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {notIncluded.map((item) => (
+              <div key={item} className="flex items-start gap-3 rounded-2xl bg-yellow-50 p-5">
+                <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
+                <p className="font-bold leading-7 text-neutral-800">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-yellow-50 py-16">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <h2 className="text-3xl font-black md:text-4xl">
@@ -458,10 +689,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
 
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {included.map((item) => (
-              <div
-                key={item}
-                className="flex items-start gap-3 rounded-2xl border border-yellow-200 bg-white p-5 shadow-sm"
-              >
+              <div key={item} className="flex items-start gap-3 rounded-2xl border border-yellow-200 bg-white p-5 shadow-sm">
                 <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
                 <p className="font-bold text-neutral-900">{item}</p>
               </div>
@@ -476,9 +704,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
             {isEs ? "Desde 29€" : "From €29"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
-            {isEs
-              ? "Envía fotos y vídeo para valorar el riel"
-              : "Send photos and video to check the rail"}
+            {isEs ? "Envía fotos y vídeo para valorar el riel" : "Send photos and video to check the rail"}
           </h2>
           <p className="mt-6 text-lg font-medium leading-8 text-neutral-900">
             {isEs
@@ -486,10 +712,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
               : "To estimate the price, send a general photo, close-up photo of the support or rail and a short video showing the movement or issue."}
           </p>
 
-          <a
-            href={whatsappUrl}
-            className="mt-8 inline-flex items-center justify-center rounded-xl bg-black px-7 py-4 font-black text-white shadow-md transition hover:scale-105"
-          >
+          <a href={whatsappUrl} className="mt-8 inline-flex items-center justify-center rounded-xl bg-black px-7 py-4 font-black text-white shadow-md transition hover:scale-105">
             {isEs ? "Pedir precio por WhatsApp" : "Request price by WhatsApp"}
             <ArrowRight className="ml-2 h-5 w-5" />
           </a>
@@ -503,10 +726,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
 
         <div className="mt-8 flex flex-wrap gap-3">
           {areas.map((area) => (
-            <span
-              key={area}
-              className="rounded-full border border-yellow-300 bg-yellow-50 px-4 py-2 font-bold text-neutral-900"
-            >
+            <span key={area} className="rounded-full border border-yellow-300 bg-yellow-50 px-4 py-2 font-bold text-neutral-900">
               {area}
             </span>
           ))}
@@ -521,13 +741,8 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
 
           <div className="mt-8 space-y-4">
             {faqItems.map((item) => (
-              <details
-                key={item.q}
-                className="group rounded-2xl border border-yellow-200 bg-white p-6 shadow-sm"
-              >
-                <summary className="cursor-pointer list-none font-black">
-                  {item.q}
-                </summary>
+              <details key={item.q} className="group rounded-2xl border border-yellow-200 bg-white p-6 shadow-sm">
+                <summary className="cursor-pointer list-none font-black">{item.q}</summary>
                 <p className="mt-4 leading-7 text-neutral-700">{item.a}</p>
               </details>
             ))}
@@ -560,9 +775,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
       <section className="bg-yellow-400 py-16">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <h2 className="text-4xl font-black tracking-tight">
-            {isEs
-              ? "¿Tu riel de cortina está flojo o mal ajustado?"
-              : "Is your curtain rail loose or badly adjusted?"}
+            {isEs ? "¿Tu riel de cortina está flojo o mal ajustado?" : "Is your curtain rail loose or badly adjusted?"}
           </h2>
           <p className="mt-5 text-lg font-medium text-neutral-900">
             {isEs
@@ -570,10 +783,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
               : "Send photos and a short video. Get a clear estimate before the work starts."}
           </p>
 
-          <a
-            href={whatsappUrl}
-            className="mt-8 inline-flex items-center justify-center rounded-xl bg-black px-8 py-4 font-black text-white shadow-xl transition hover:scale-105"
-          >
+          <a href={whatsappUrl} className="mt-8 inline-flex items-center justify-center rounded-xl bg-black px-8 py-4 font-black text-white shadow-xl transition hover:scale-105">
             {isEs ? "Pedir presupuesto ahora" : "Get estimate now"}
             <ArrowRight className="ml-2 h-5 w-5" />
           </a>
