@@ -46,9 +46,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `${baseUrl}/${locale}/services/repairs`,
       languages: {
-        es: `${baseUrl}/es/services/repairs`,
-        en: `${baseUrl}/en/services/repairs`,
-      },
+  es: `${baseUrl}/es/services/repairs`,
+  en: `${baseUrl}/en/services/repairs`,
+  "x-default": `${baseUrl}/es/services/repairs`,
+},
     },
     openGraph: {
       title,
@@ -70,25 +71,45 @@ export default async function RepairsPage({ params }: Props) {
   const isEs = locale === "es";
   const pageUrl = `${baseUrl}/${locale}/services/repairs`;
 
-  const offers = [
-    "Silicone renewal",
-    "Sealing and gap filling",
-    "Minor wall fixes",
-    "Door adjustment",
-    "Loose handle fixing",
-    "Curtain rail adjustments",
-    "Wall anchor installation",
-    "Shelf re-fixing",
-    "Mirror re-mounting",
-    "Furniture touch-up fixes",
-    "Bathroom accessory fixing",
-    "Socket and cover straightening",
-    "Cabinet door alignment",
-    "Small drilling jobs",
-    "Move-out touch-ups",
-    "Kitchen minor fixes",
-    "Multiple small repairs",
-  ];
+  const offers = isEs
+  ? [
+      "Renovación de silicona",
+      "Sellado de juntas y huecos",
+      "Pequeños arreglos de pared",
+      "Ajuste de puerta",
+      "Arreglo de manilla suelta",
+      "Ajustes de riel de cortina",
+      "Instalación de tacos y anclajes",
+      "Recolocación de estante",
+      "Recolocación de espejo",
+      "Retoques de muebles",
+      "Arreglo de accesorios de baño",
+      "Alineación de tapas y embellecedores",
+      "Alineación de puerta de mueble",
+      "Pequeños trabajos de taladro",
+      "Retoques antes de entregar piso",
+      "Pequeños arreglos de cocina",
+      "Varias pequeñas reparaciones",
+    ]
+  : [
+      "Silicone renewal",
+      "Sealing and gap filling",
+      "Minor wall fixes",
+      "Door adjustment",
+      "Loose handle fixing",
+      "Curtain rail adjustments",
+      "Wall anchor installation",
+      "Shelf re-fixing",
+      "Mirror re-mounting",
+      "Furniture touch-up fixes",
+      "Bathroom accessory fixing",
+      "Socket and cover straightening",
+      "Cabinet door alignment",
+      "Small drilling jobs",
+      "Move-out touch-ups",
+      "Kitchen minor fixes",
+      "Multiple small repairs",
+    ];
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
