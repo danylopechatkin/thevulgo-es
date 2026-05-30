@@ -46,9 +46,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `${baseUrl}/${locale}/services/furniture`,
       languages: {
-        es: `${baseUrl}/es/services/furniture`,
-        en: `${baseUrl}/en/services/furniture`,
-      },
+
+  es: `${baseUrl}/es/services/furniture`,
+
+  en: `${baseUrl}/en/services/furniture`,
+
+  "x-default": `${baseUrl}/es/services/furniture`,
+
+},
     },
     openGraph: {
       title,
@@ -70,20 +75,35 @@ export default async function FurniturePage({ params }: Props) {
   const isEs = locale === "es";
   const pageUrl = `${baseUrl}/${locale}/services/furniture`;
 
-  const offers = [
-    "IKEA furniture assembly",
-    "Wardrobe assembly",
-    "Bed frame assembly",
-    "Chest of drawers assembly",
-    "Shelving units assembly",
-    "TV stands and media units",
-    "Desks and workstations",
-    "Dining tables",
-    "Sideboards and cabinets",
-    "Sofa and modular pieces",
-    "Furniture fixing to wall",
-    "Move-in furniture setup",
-  ];
+  const offers = isEs
+  ? [
+      "Montaje de muebles IKEA",
+      "Montaje de armario",
+      "Montaje de cama",
+      "Montaje de cómodas",
+      "Montaje de estanterías",
+      "Muebles TV y multimedia",
+      "Escritorios y zonas de trabajo",
+      "Mesas de comedor",
+      "Aparadores y muebles auxiliares",
+      "Sofás y piezas modulares",
+      "Fijación de muebles a la pared",
+      "Preparación de muebles al mudarse",
+    ]
+  : [
+      "IKEA furniture assembly",
+      "Wardrobe assembly",
+      "Bed frame assembly",
+      "Chest of drawers assembly",
+      "Shelving units assembly",
+      "TV stands and media units",
+      "Desks and workstations",
+      "Dining tables",
+      "Sideboards and cabinets",
+      "Sofa and modular pieces",
+      "Furniture fixing to wall",
+      "Move-in furniture setup",
+    ];
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
