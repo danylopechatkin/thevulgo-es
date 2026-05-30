@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : "Loose Handle Fixing in Valencia | From €25 | THEVULGO";
 
   const description = isEs
-    ? "Reparación y ajuste de tiradores sueltos en Valencia desde 25€: pomos, manillas, tiradores de muebles, puertas, cajones y pequeños accesorios."
-    : "Loose handle fixing in Valencia from €25: tightening and fixing of handles, knobs, furniture pulls, door handles, drawers and small fittings.";
+    ? "Reparación de tiradores sueltos en Valencia desde 25€. Arreglamos pomos, manillas, cajones, puertas, armarios y pequeños accesorios a domicilio."
+    : "Loose handle fixing in Valencia from €25. We fix knobs, door handles, drawers, wardrobes, cabinet handles and small fittings at home.";
 
   return {
     title,
@@ -43,6 +43,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "ajustar tiradores muebles Valencia",
           "reparar manilla puerta Valencia",
           "manitas tiradores Valencia",
+          "reparación tiradores cocina Valencia",
+          "arreglar pomo cajón Valencia",
         ]
       : [
           "loose handle fixing Valencia",
@@ -52,6 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "furniture handle fixing Valencia",
           "drawer handle repair Valencia",
           "handyman handle fixing Valencia",
+          "kitchen handle repair Valencia",
         ],
     alternates: {
       canonical: `${siteUrl}/${locale}/services/repairs/loose-handle-fixing`,
@@ -128,6 +131,10 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
           q: "¿Qué fotos tengo que enviar?",
           a: "Envía una foto general, una foto de cerca del tirador o manilla, y si puedes, un vídeo corto mostrando cómo se mueve o qué parte está suelta.",
         },
+        {
+          q: "¿Hace falta comprar un tirador nuevo?",
+          a: "No siempre. Muchas veces basta con ajustar tornillos, reforzar la fijación o corregir la base. Si la pieza está rota, se puede valorar sustitución.",
+        },
       ]
     : [
         {
@@ -149,6 +156,10 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
         {
           q: "What photos should I send?",
           a: "Send one general photo, one close-up photo of the handle or knob, and if possible, a short video showing how it moves or which part is loose.",
+        },
+        {
+          q: "Do I need to buy a new handle?",
+          a: "Not always. Often tightening screws, reinforcing the fixing or adjusting the base is enough. If the part is broken, replacement can be checked.",
         },
       ];
 
@@ -176,7 +187,10 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
         addressCountry: "ES",
       },
     },
-    areaServed: areas,
+    areaServed: areas.map((area) => ({
+      "@type": "Place",
+      name: area,
+    })),
     offers: {
       "@type": "Offer",
       price: "25",
@@ -262,6 +276,78 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
         "Clear estimate based on photos and scope",
       ];
 
+  const repairCases = isEs
+    ? [
+        "El tirador se mueve, gira o vibra al usarlo",
+        "La manilla de una puerta interior queda floja",
+        "El pomo de un cajón se sale al tirar",
+        "Los tornillos no agarran bien en madera o tablero",
+        "El tirador de cocina o baño está suelto por uso diario",
+        "La pieza no está rota, pero necesita ajuste o refuerzo",
+      ]
+    : [
+        "The handle moves, rotates or vibrates when used",
+        "An interior door handle feels loose",
+        "A drawer knob comes out when pulled",
+        "The screws no longer grip properly in wood or board",
+        "A kitchen or bathroom handle is loose from daily use",
+        "The part is not broken, but needs adjustment or reinforcement",
+      ];
+
+  const commonProblems = isEs
+    ? [
+        {
+          title: "Tornillos flojos",
+          text: "Con el uso diario, los tornillos pueden perder fuerza y dejar el tirador inestable.",
+        },
+        {
+          title: "Agujero desgastado",
+          text: "En muebles de cocina, baño o armarios, el material puede desgastarse y hacer que el tornillo no sujete bien.",
+        },
+        {
+          title: "Manilla mal ajustada",
+          text: "Algunas manillas necesitan ajuste interno, reapriete o revisión de la base de fijación.",
+        },
+        {
+          title: "Pieza dañada",
+          text: "Si el tirador, pomo o mecanismo está roto, se puede valorar sustitución o instalación de una pieza nueva.",
+        },
+      ]
+    : [
+        {
+          title: "Loose screws",
+          text: "With daily use, screws can lose grip and make the handle unstable.",
+        },
+        {
+          title: "Worn fixing hole",
+          text: "In kitchen, bathroom or wardrobe furniture, the material can wear out and stop the screw from holding well.",
+        },
+        {
+          title: "Poorly adjusted handle",
+          text: "Some door handles need internal adjustment, tightening or inspection of the fixing base.",
+        },
+        {
+          title: "Damaged part",
+          text: "If the handle, knob or mechanism is broken, replacement or installation of a new part can be checked.",
+        },
+      ];
+
+  const processSteps = isEs
+    ? [
+        "Envías fotos y un vídeo corto por WhatsApp",
+        "Revisamos el tipo de tirador, material y problema",
+        "Confirmamos si parece reparable o si conviene sustituir",
+        "Te damos un presupuesto claro antes de empezar",
+        "Realizamos el ajuste, apriete o fijación necesaria",
+      ]
+    : [
+        "You send photos and a short video by WhatsApp",
+        "We check the handle type, material and problem",
+        "We confirm whether it looks repairable or needs replacement",
+        "You get a clear estimate before the work starts",
+        "We carry out the needed adjustment, tightening or fixing",
+      ];
+
   const related = isEs
     ? [
         { title: "Ajuste de puertas", href: `/${locale}/services/repairs/door-adjustment` },
@@ -278,9 +364,18 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-white text-black">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
 
       <section className="relative overflow-hidden border-b border-yellow-200 bg-gradient-to-br from-yellow-50 via-white to-white">
         <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-200/40 blur-3xl" />
@@ -448,6 +543,128 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
               ? "Antes de confirmar, puedes enviar fotos y un vídeo corto mostrando cómo se mueve la pieza. Así se puede valorar si basta con ajustar o si hace falta reemplazar algún tornillo, fijación o tirador."
               : "Before confirming, you can send photos and a short video showing how the part moves. This helps check whether tightening is enough or if a screw, fixing or handle needs replacement."}
           </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-5 py-16 md:px-8">
+        <h2 className="text-3xl font-black md:text-4xl">
+          {isEs
+            ? "Servicio profesional para tiradores, pomos y manillas en Valencia"
+            : "Professional handle, knob and door handle service in Valencia"}
+        </h2>
+
+        <div className="mt-6 space-y-6 text-lg leading-8 text-neutral-700">
+          <p>
+            {isEs
+              ? "Los tiradores y manillas son elementos que utilizamos constantemente en casa. Cada apertura de una puerta, cajón o armario genera pequeñas vibraciones que con el tiempo pueden aflojar tornillos y fijaciones. Cuando el problema no se corrige a tiempo, el desgaste puede aumentar y terminar afectando al propio mueble o puerta."
+              : "Handles and knobs are used constantly throughout the home. Every opening of a door, drawer or cabinet creates small vibrations that over time can loosen screws and fixings. If the problem is not corrected in time, wear may increase and eventually affect the furniture or door itself."}
+          </p>
+
+          <p>
+            {isEs
+              ? "THEVULGO ofrece reparación de tiradores sueltos en Valencia para viviendas particulares, pisos turísticos, oficinas y pequeños negocios. El objetivo es recuperar la estabilidad de la pieza y mejorar el uso diario cuando la reparación resulta viable."
+              : "THEVULGO provides loose handle repair services in Valencia for homes, tourist apartments, offices and small businesses. The goal is to restore stability and improve everyday use whenever repair is possible."}
+          </p>
+
+          <p>
+            {isEs
+              ? "Trabajamos con tiradores de cocina, pomos decorativos, manillas de puertas interiores, armarios empotrados, muebles de baño, cómodas, cajoneras y otros elementos similares. Cada caso es diferente y por eso siempre recomendamos enviar fotografías antes de confirmar el servicio."
+              : "We work with kitchen handles, decorative knobs, interior door handles, fitted wardrobes, bathroom furniture, dressers, drawers and similar fittings. Every case is different, which is why we recommend sending photos before confirming the service."}
+          </p>
+
+          <p>
+            {isEs
+              ? "En muchos casos el problema se debe simplemente a tornillos flojos o a una fijación que ha perdido fuerza con el paso del tiempo. Sin embargo, también pueden existir piezas dañadas, materiales desgastados o sistemas de anclaje deteriorados que requieren una solución diferente."
+              : "In many cases the issue is simply caused by loose screws or a fixing that has weakened over time. However, damaged parts, worn materials or deteriorated anchor systems may also require a different solution."}
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          <div className="rounded-3xl border border-yellow-200 bg-yellow-50 p-6">
+            <h3 className="text-2xl font-black">
+              {isEs ? "Situaciones frecuentes" : "Common situations"}
+            </h3>
+
+            <ul className="mt-5 space-y-3 text-neutral-700">
+              <li>• {isEs ? "Tirador que gira al abrir un cajón" : "Handle rotates when opening a drawer"}</li>
+              <li>• {isEs ? "Manilla de puerta con movimiento excesivo" : "Door handle with excessive movement"}</li>
+              <li>• {isEs ? "Pomo que se sale al tirar" : "Knob comes off when pulled"}</li>
+              <li>• {isEs ? "Tornillos que no sujetan correctamente" : "Screws no longer hold correctly"}</li>
+              <li>• {isEs ? "Accesorios aflojados por uso diario" : "Fittings loosened by everyday use"}</li>
+            </ul>
+          </div>
+
+          <div className="rounded-3xl border border-yellow-200 bg-white p-6">
+            <h3 className="text-2xl font-black">
+              {isEs ? "Cómo trabajamos" : "How we work"}
+            </h3>
+
+            <ul className="mt-5 space-y-3 text-neutral-700">
+              <li>1. {isEs ? "Recibimos fotos y vídeo" : "We receive photos and video"}</li>
+              <li>2. {isEs ? "Analizamos la incidencia" : "We analyse the issue"}</li>
+              <li>3. {isEs ? "Confirmamos viabilidad" : "We confirm feasibility"}</li>
+              <li>4. {isEs ? "Indicamos presupuesto" : "We provide an estimate"}</li>
+              <li>5. {isEs ? "Realizamos la reparación" : "We carry out the repair"}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-8">
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="rounded-3xl border border-yellow-200 bg-white p-7 shadow-md">
+            <ShieldCheck className="h-10 w-10 text-yellow-500" />
+            <h2 className="mt-4 text-3xl font-black">
+              {isEs ? "Cuándo merece la pena reparar" : "When repair makes sense"}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {repairCases.map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
+                  <p className="font-semibold leading-7 text-neutral-800">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-yellow-200 bg-yellow-50 p-7 shadow-md">
+            <Wrench className="h-10 w-10 text-yellow-500" />
+            <h2 className="mt-4 text-3xl font-black">
+              {isEs ? "Proceso antes de confirmar" : "Process before confirming"}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {processSteps.map((item, index) => (
+                <div key={item} className="flex items-start gap-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-yellow-400 font-black text-black">
+                    {index + 1}
+                  </span>
+                  <p className="font-semibold leading-7 text-neutral-800">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Problemas habituales que revisamos" : "Common problems we check"}
+          </h2>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-4">
+            {commonProblems.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-yellow-200 bg-yellow-50 p-6 shadow-sm"
+              >
+                <h3 className="text-xl font-black">{item.title}</h3>
+                <p className="mt-3 leading-7 text-neutral-700">{item.text}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
