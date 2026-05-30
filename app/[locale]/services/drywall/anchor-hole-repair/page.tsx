@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : "Anchor Hole Repair in Valencia | From €29 | THEVULGO";
 
   const description = isEs
-    ? "Reparación de agujeros antiguos de tacos, anclajes y marcas de soportes en Valencia desde 29€. Relleno, alisado y corrección visible tras desmontajes."
-    : "Anchor hole repair in Valencia from €29. Repair of old anchor holes, wall plug holes and bracket marks after removals with filling and smoothing.";
+    ? "Reparación de agujeros de tacos, anclajes, tornillos y marcas de soportes en Valencia desde 29€. Relleno, alisado y preparación para pintura."
+    : "Anchor hole repair in Valencia from €29. Wall plug holes, screw holes and bracket marks repaired with filling, smoothing and paint preparation.";
 
   return {
     title,
@@ -44,6 +44,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "rellenar agujeros tacos Valencia",
           "arreglar pared después soporte Valencia",
           "manitas pared Valencia",
+          "tapar agujeros pared Valencia",
+          "reparar marcas soporte TV Valencia",
         ]
       : [
           "anchor hole repair Valencia",
@@ -53,6 +55,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "old anchor holes Valencia",
           "wall hole filling Valencia",
           "drywall repair Valencia",
+          "screw hole repair Valencia",
+          "TV bracket wall repair Valencia",
         ],
     alternates: {
       canonical: `${siteUrl}/${locale}/services/drywall/anchor-hole-repair`,
@@ -133,6 +137,10 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
           q: "¿Qué fotos tengo que enviar?",
           a: "Envía una foto general de la pared, fotos de cerca de los agujeros y una cantidad aproximada de puntos que quieres reparar.",
         },
+        {
+          q: "¿Se puede dejar la pared perfecta?",
+          a: "Depende del tipo de pared, textura, pintura y daño. El objetivo es mejorar mucho el aspecto visible, pero la igualación exacta de color o textura puede requerir pintura adicional.",
+        },
       ]
     : [
         {
@@ -159,6 +167,10 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
           q: "What photos should I send?",
           a: "Send one general photo of the wall, close-up photos of the holes and the approximate number of points you want repaired.",
         },
+        {
+          q: "Can the wall look perfect again?",
+          a: "It depends on wall type, texture, paint and damage. The goal is to greatly improve the visible look, but exact colour or texture matching may require additional painting.",
+        },
       ];
 
   const serviceSchema = {
@@ -168,8 +180,8 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
       ? "Reparación de agujeros de tacos en Valencia"
       : "Anchor hole repair in Valencia",
     description: isEs
-      ? "Reparación de agujeros antiguos de tacos, anclajes y marcas de soportes después de desmontajes en Valencia."
-      : "Repair of old anchor holes, wall plug holes and bracket marks after removals in Valencia.",
+      ? "Reparación de agujeros antiguos de tacos, tornillos, anclajes y marcas de soportes después de desmontajes en Valencia."
+      : "Repair of old wall plug holes, screw holes, anchor holes and bracket marks after removals in Valencia.",
     serviceType: isEs ? "Reparación de agujeros de tacos" : "Anchor hole repair",
     url: pageUrl,
     provider: {
@@ -185,7 +197,10 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
         addressCountry: "ES",
       },
     },
-    areaServed: areas,
+    areaServed: areas.map((area) => ({
+      "@type": "Place",
+      name: area,
+    })),
     offers: {
       "@type": "Offer",
       price: "29",
@@ -269,6 +284,122 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
         "Basic smoothing to improve visible finish",
         "Preparation for painting where applicable",
         "Clear estimate based on photos, quantity and scope",
+      ];
+
+  const repairSituations = isEs
+    ? [
+        "Agujeros después de retirar un soporte de TV",
+        "Marcas visibles de estantes, cuadros o espejos",
+        "Puntos de tacos antiguos en dormitorios o salones",
+        "Agujeros de tornillos antes de entregar un piso",
+        "Paredes con varios puntos pequeños acumulados",
+        "Zonas que necesitan quedar más limpias antes de pintar",
+      ]
+    : [
+        "Holes after removing a TV bracket",
+        "Visible marks from shelves, pictures or mirrors",
+        "Old wall plug points in bedrooms or living rooms",
+        "Screw holes before handing over an apartment",
+        "Walls with several small accumulated points",
+        "Areas that need to look cleaner before painting",
+      ];
+
+  const commonProblems = isEs
+    ? [
+        {
+          title: "Tacos antiguos",
+          text: "Reparamos agujeros de tacos retirados o puntos antiguos que quedan visibles en paredes interiores.",
+        },
+        {
+          title: "Soportes retirados",
+          text: "Trabajamos marcas después de quitar soportes de TV, estantes, cuadros, espejos o accesorios.",
+        },
+        {
+          title: "Pared irregular",
+          text: "Rellenamos y alisamos la zona para reducir el relieve visible antes de pintura o entrega.",
+        },
+        {
+          title: "Entrega de piso",
+          text: "Servicio útil para alquileres, mudanzas y viviendas con agujeros visibles antes de devolver llaves.",
+        },
+      ]
+    : [
+        {
+          title: "Old wall plugs",
+          text: "We repair removed wall plug holes or old fixing points left visible on interior walls.",
+        },
+        {
+          title: "Removed brackets",
+          text: "We work on marks left after removing TV brackets, shelves, pictures, mirrors or accessories.",
+        },
+        {
+          title: "Uneven wall area",
+          text: "We fill and smooth the area to reduce visible relief before painting or handover.",
+        },
+        {
+          title: "Apartment handover",
+          text: "Useful for rentals, move-outs and homes with visible holes before returning keys.",
+        },
+      ];
+
+  const processSteps = isEs
+    ? [
+        "Envías una foto general de la pared",
+        "Envías fotos de cerca de cada zona dañada",
+        "Indicas cantidad aproximada de agujeros o puntos",
+        "Revisamos si hace falta solo relleno o también pintura",
+        "Te damos un presupuesto claro antes de empezar",
+      ]
+    : [
+        "You send a general photo of the wall",
+        "You send close-up photos of each damaged area",
+        "You indicate the approximate number of holes or points",
+        "We check whether filling is enough or painting is also needed",
+        "You receive a clear estimate before the work starts",
+      ];
+
+  const wallTypes = isEs
+    ? [
+        {
+          title: "Pladur",
+          text: "Los agujeros en pladur suelen necesitar relleno cuidadoso y alisado para evitar bultos visibles.",
+        },
+        {
+          title: "Pared pintada",
+          text: "En paredes pintadas, el acabado final depende mucho de tener la pintura original o un color compatible.",
+        },
+        {
+          title: "Pared con textura",
+          text: "Las paredes con gotelé o textura pueden requerir un enfoque diferente para disimular mejor la reparación.",
+        },
+      ]
+    : [
+        {
+          title: "Drywall",
+          text: "Holes in drywall usually need careful filling and smoothing to avoid visible bumps.",
+        },
+        {
+          title: "Painted wall",
+          text: "On painted walls, the final finish depends heavily on having the original paint or a compatible colour.",
+        },
+        {
+          title: "Textured wall",
+          text: "Textured walls may require a different approach to make the repair less noticeable.",
+        },
+      ];
+
+  const notIncluded = isEs
+    ? [
+        "Reparación estructural de daños grandes",
+        "Pintura completa de habitación",
+        "Igualación perfecta de color sin pintura original",
+        "Reparación de humedad, grietas activas o paredes muy dañadas",
+      ]
+    : [
+        "Structural repair of large damage",
+        "Full room painting",
+        "Perfect colour matching without original paint",
+        "Repair of damp, active cracks or heavily damaged walls",
       ];
 
   const related = isEs
@@ -490,6 +621,136 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
               ? "Antes de confirmar, puedes enviar fotos generales y de cerca. Así se puede valorar el número de agujeros, tamaño, tipo de pared y si conviene añadir pintura al trabajo."
               : "Before confirming, you can send general and close-up photos. This helps review the number of holes, size, wall type and whether painting should be added to the job."}
           </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-5 py-16 md:px-8">
+        <h2 className="text-3xl font-black md:text-4xl">
+          {isEs
+            ? "Servicio específico para agujeros de tacos, tornillos y soportes en Valencia"
+            : "Dedicated service for wall plug holes, screw holes and bracket marks in Valencia"}
+        </h2>
+
+        <div className="mt-6 space-y-6 text-lg leading-8 text-neutral-700">
+          <p>
+            {isEs
+              ? "Los agujeros de tacos suelen aparecer después de desmontar muebles, soportes de televisión, barras de cortina, estanterías, espejos, cuadros o pequeños accesorios. Aunque cada punto sea pequeño, varios agujeros juntos pueden hacer que una pared se vea descuidada, especialmente antes de una mudanza, una entrega de llaves o una visita del propietario."
+              : "Wall plug holes usually appear after removing furniture, TV brackets, curtain rails, shelves, mirrors, pictures or small accessories. Even if each point is small, several holes together can make a wall look neglected, especially before a move-out, key handover or landlord visit."}
+          </p>
+
+          <p>
+            {isEs
+              ? "Este servicio se centra en mejorar visualmente esas zonas sin convertir un trabajo pequeño en una reforma completa. Revisamos el tipo de agujero, si quedan restos sueltos, si el borde está roto, si la pared es de pladur o ladrillo, y si el acabado necesita solo relleno o también pintura."
+              : "This service focuses on visually improving those areas without turning a small job into a full renovation. We check the hole type, whether loose remains are present, whether the edge is broken, whether the wall is drywall or masonry, and whether the finish needs filling only or also paint."}
+          </p>
+
+          <p>
+            {isEs
+              ? "En viviendas de alquiler, estos detalles suelen notarse mucho porque normalmente están a la altura de la vista: encima de un escritorio, detrás de una televisión, cerca de una cama, sobre un sofá o junto a ventanas donde antes había barras o soportes. Repararlos ayuda a que la habitación se vea más limpia y preparada."
+              : "In rental homes, these details often stand out because they are usually at eye level: above a desk, behind a TV, near a bed, above a sofa or next to windows where rods or brackets used to be. Repairing them helps the room look cleaner and better prepared."}
+          </p>
+
+          <p>
+            {isEs
+              ? "Si tienes la pintura original, el resultado puede quedar mucho más discreto. Si no la tienes, se puede dejar la zona preparada para pintar o valorar una solución visual razonable según el color, la textura y la luz de la pared."
+              : "If you have the original paint, the result can be much more discreet. If not, the area can be left ready for painting or a reasonable visual solution can be considered depending on the wall colour, texture and light."}
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-8">
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="rounded-3xl border border-yellow-200 bg-white p-7 shadow-md">
+            <ShieldCheck className="h-10 w-10 text-yellow-500" />
+            <h2 className="mt-4 text-3xl font-black">
+              {isEs ? "Cuándo conviene reparar" : "When repair makes sense"}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {repairSituations.map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
+                  <p className="font-semibold leading-7 text-neutral-800">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-yellow-200 bg-yellow-50 p-7 shadow-md">
+            <Wrench className="h-10 w-10 text-yellow-500" />
+            <h2 className="mt-4 text-3xl font-black">
+              {isEs ? "Proceso antes de confirmar" : "Process before confirming"}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {processSteps.map((item, index) => (
+                <div key={item} className="flex items-start gap-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-yellow-400 font-black text-black">
+                    {index + 1}
+                  </span>
+                  <p className="font-semibold leading-7 text-neutral-800">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Problemas habituales que corregimos" : "Common problems we correct"}
+          </h2>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-4">
+            {commonProblems.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-yellow-200 bg-yellow-50 p-6 shadow-sm"
+              >
+                <h3 className="text-xl font-black">{item.title}</h3>
+                <p className="mt-3 leading-7 text-neutral-700">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-yellow-50 py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Tipos de pared que revisamos" : "Wall types we check"}
+          </h2>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {wallTypes.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-yellow-200 bg-white p-7 shadow-sm"
+              >
+                <Sparkles className="h-8 w-8 text-yellow-500" />
+                <h3 className="mt-4 text-xl font-black">{item.title}</h3>
+                <p className="mt-3 leading-7 text-neutral-700">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <div className="rounded-3xl border border-yellow-200 bg-white p-7 shadow-md md:p-10">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Qué no incluye este servicio" : "What this service does not include"}
+          </h2>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {notIncluded.map((item) => (
+              <div key={item} className="flex items-start gap-3 rounded-2xl bg-yellow-50 p-5">
+                <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
+                <p className="font-bold leading-7 text-neutral-800">{item}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
