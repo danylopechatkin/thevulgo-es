@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : "Minor Wall Fixes in Valencia | From €29 | THEVULGO";
 
   const description = isEs
-    ? "Pequeños arreglos de pared en Valencia desde 29€: marcas de tornillos, retoques locales, pequeñas correcciones visibles y detalles de pared."
-    : "Minor wall fixes in Valencia from €29: screw marks, simple local wall touch-ups, small visible corrections and wall detail repairs.";
+    ? "Pequeños arreglos de pared en Valencia desde 29€: marcas de tornillos, agujeros pequeños, retoques locales, roces y correcciones visibles."
+    : "Minor wall fixes in Valencia from €29: screw marks, small holes, local touch-ups, scuffs and visible wall corrections.";
 
   return {
     title,
@@ -44,6 +44,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "correcciones pared Valencia",
           "reparaciones pequeñas pared Valencia",
           "manitas pared Valencia",
+          "arreglar agujeros pequeños pared Valencia",
+          "reparar roces pared Valencia",
         ]
       : [
           "minor wall fixes Valencia",
@@ -52,6 +54,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "small wall repairs Valencia",
           "handyman wall repair Valencia",
           "visible wall corrections Valencia",
+          "small wall hole repair Valencia",
+          "wall scuff repair Valencia",
         ],
     alternates: {
       canonical: `${siteUrl}/${locale}/services/repairs/minor-wall-fixes`,
@@ -128,6 +132,10 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
           q: "¿Qué fotos tengo que enviar?",
           a: "Lo ideal es enviar una foto de cerca, una foto general de la pared y explicar cuántas marcas o zonas quieres corregir.",
         },
+        {
+          q: "¿Sirve antes de entregar un piso de alquiler?",
+          a: "Sí. Es útil antes de entregar llaves, preparar fotos, recibir visitas o mejorar el aspecto general de una habitación.",
+        },
       ]
     : [
         {
@@ -150,6 +158,10 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
           q: "What photos should I send?",
           a: "Ideally, send a close-up photo, one general photo of the wall and explain how many marks or areas need correction.",
         },
+        {
+          q: "Is this useful before handing over a rental apartment?",
+          a: "Yes. It is useful before returning keys, preparing photos, receiving viewings or improving the overall look of a room.",
+        },
       ];
 
   const serviceSchema = {
@@ -159,8 +171,8 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
       ? "Pequeños arreglos de pared en Valencia"
       : "Minor wall fixes in Valencia",
     description: isEs
-      ? "Retoques locales de pared, reparación de marcas de tornillos, pequeños agujeros y correcciones visibles en Valencia."
-      : "Local wall touch-ups, screw mark repair, small hole fixes and visible wall corrections in Valencia.",
+      ? "Retoques locales de pared, reparación de marcas de tornillos, pequeños agujeros, roces y correcciones visibles en Valencia."
+      : "Local wall touch-ups, screw mark repair, small hole fixes, scuffs and visible wall corrections in Valencia.",
     serviceType: isEs ? "Pequeños arreglos de pared" : "Minor wall fixes",
     url: pageUrl,
     provider: {
@@ -176,7 +188,10 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
         addressCountry: "ES",
       },
     },
-    areaServed: areas,
+    areaServed: areas.map((area) => ({
+      "@type": "Place",
+      name: area,
+    })),
     offers: {
       "@type": "Offer",
       price: "29",
@@ -260,6 +275,92 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
         "Basic preparation of the damaged area",
         "Cleaner and more discreet finish where possible",
         "Clear estimate based on photos and scope",
+      ];
+
+  const repairSituations = isEs
+    ? [
+        "Marcas de tornillos después de quitar cuadros o soportes",
+        "Pequeños agujeros visibles en paredes",
+        "Roces de muebles y uso diario",
+        "Paredes antes de entregar un piso",
+        "Correcciones antes de fotografías inmobiliarias",
+        "Detalles visibles que afectan la apariencia general",
+      ]
+    : [
+        "Screw marks after removing pictures or brackets",
+        "Small visible wall holes",
+        "Furniture scuffs and daily wear marks",
+        "Walls before apartment handover",
+        "Corrections before property photos",
+        "Visible details affecting overall appearance",
+      ];
+
+  const processSteps = isEs
+    ? [
+        "Envías fotos de la pared",
+        "Revisamos el alcance del trabajo",
+        "Valoramos materiales y tiempo",
+        "Recibes presupuesto claro",
+        "Realizamos la corrección acordada",
+      ]
+    : [
+        "You send wall photos",
+        "We review the scope of work",
+        "We evaluate materials and time",
+        "You receive a clear estimate",
+        "We perform the agreed correction",
+      ];
+
+  const commonProblems = isEs
+    ? [
+        {
+          title: "Marcas de tornillos",
+          text: "Corregimos marcas pequeñas después de retirar cuadros, soportes, estantes, ganchos o accesorios.",
+        },
+        {
+          title: "Agujeros pequeños",
+          text: "Rellenamos pequeños agujeros de tacos o tornillos cuando el daño es local y sencillo.",
+        },
+        {
+          title: "Roces visibles",
+          text: "Mejoramos zonas con roces, golpes ligeros o marcas que afectan al aspecto general de la pared.",
+        },
+        {
+          title: "Entrega de piso",
+          text: "Servicio útil antes de devolver llaves, preparar fotos, recibir visitas o revisar una vivienda.",
+        },
+      ]
+    : [
+        {
+          title: "Screw marks",
+          text: "We correct small marks after removing pictures, brackets, shelves, hooks or accessories.",
+        },
+        {
+          title: "Small holes",
+          text: "We fill small wall plug or screw holes when the damage is local and simple.",
+        },
+        {
+          title: "Visible scuffs",
+          text: "We improve areas with scuffs, light impacts or marks that affect the overall wall appearance.",
+        },
+        {
+          title: "Apartment handover",
+          text: "Useful before returning keys, preparing photos, receiving viewings or checking a property.",
+        },
+      ];
+
+  const notIncluded = isEs
+    ? [
+        "Reparación estructural de paredes muy dañadas",
+        "Pintura completa de habitación",
+        "Igualación perfecta de color sin pintura original",
+        "Tratamiento de humedad, grietas activas o moho",
+      ]
+    : [
+        "Structural repair of heavily damaged walls",
+        "Full room painting",
+        "Perfect colour matching without original paint",
+        "Treatment of damp, active cracks or mould",
       ];
 
   const related = isEs
@@ -448,6 +549,111 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
               ? "Antes de confirmar, puedes enviar fotos para valorar si se trata de un retoque pequeño, si hace falta material adicional o si conviene hacer una reparación más completa."
               : "Before confirming, you can send photos to check whether it is a small touch-up, whether extra material is needed or whether a more complete repair would be better."}
           </p>
+        </div>
+      </section>
+
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-5xl px-5 md:px-8">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs
+              ? "Pequeñas reparaciones de pared para viviendas en Valencia"
+              : "Small wall repairs for homes in Valencia"}
+          </h2>
+
+          <div className="mt-6 space-y-6 text-lg leading-8 text-neutral-700">
+            <p>
+              {isEs
+                ? "Las pequeñas marcas en una pared suelen acumularse con el paso del tiempo. Tornillos retirados, tacos antiguos, pequeños golpes, roces de muebles o zonas deterioradas pueden hacer que una habitación parezca menos cuidada."
+                : "Small wall marks tend to accumulate over time. Removed screws, old wall plugs, small impacts, furniture scuffs and worn areas can make a room look less maintained."}
+            </p>
+
+            <p>
+              {isEs
+                ? "THEVULGO realiza pequeños arreglos de pared en Valencia para propietarios, inquilinos, viviendas de alquiler, apartamentos turísticos y personas que quieren mejorar la apariencia general de una estancia sin realizar una reforma completa."
+                : "THEVULGO provides minor wall fixes in Valencia for homeowners, tenants, rental properties, tourist apartments and anyone wanting to improve a room without carrying out a full renovation."}
+            </p>
+
+            <p>
+              {isEs
+                ? "Este servicio es especialmente útil antes de mudanzas, devoluciones de vivienda, fotografías inmobiliarias, visitas o simplemente para mejorar el aspecto visual de una pared dañada."
+                : "This service is especially useful before moving out, property handovers, real estate photography, viewings or simply improving the appearance of a damaged wall."}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-8">
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="rounded-3xl border border-yellow-200 bg-white p-7 shadow-md">
+            <ShieldCheck className="h-10 w-10 text-yellow-500" />
+            <h2 className="mt-4 text-3xl font-black">
+              {isEs ? "Situaciones comunes que solucionamos" : "Common wall issues we help with"}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {repairSituations.map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
+                  <p className="font-semibold leading-7 text-neutral-800">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-yellow-200 bg-yellow-50 p-7 shadow-md">
+            <Wrench className="h-10 w-10 text-yellow-500" />
+            <h2 className="mt-4 text-3xl font-black">
+              {isEs ? "Cómo funciona" : "How it works"}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {processSteps.map((step, index) => (
+                <div key={step} className="flex items-start gap-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-yellow-400 font-black text-black">
+                    {index + 1}
+                  </span>
+                  <p className="font-semibold leading-7 text-neutral-800">{step}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Problemas habituales que revisamos" : "Common problems we check"}
+          </h2>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-4">
+            {commonProblems.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-yellow-200 bg-yellow-50 p-6 shadow-sm"
+              >
+                <h3 className="text-xl font-black">{item.title}</h3>
+                <p className="mt-3 leading-7 text-neutral-700">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <div className="rounded-3xl border border-yellow-200 bg-white p-7 shadow-md md:p-10">
+          <h2 className="text-3xl font-black md:text-4xl">
+            {isEs ? "Qué no incluye este servicio" : "What this service does not include"}
+          </h2>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {notIncluded.map((item) => (
+              <div key={item} className="flex items-start gap-3 rounded-2xl bg-yellow-50 p-5">
+                <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
+                <p className="font-bold leading-7 text-neutral-800">{item}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
