@@ -21,43 +21,56 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const seoServicePages = [
-    // MAIN SEO
-    "handyman-valencia",
+  // MAIN SEO
+  "handyman-valencia",
 
-    // TV
-    "montaje-tv-valencia",
-    "montaje-tv-grande-valencia",
-    "instalacion-estanterias-valencia",
-    "montaje-proyector-valencia",
-    "ocultar-cables-valencia",
-    "instalar-soundbar-valencia",
+  // TV & HOME CINEMA
+  "montaje-tv-valencia",
+  "montaje-tv-grande-valencia",
+  "colgar-tv-valencia",
+  "instalacion-soporte-tv-valencia",
+  "instalacion-estanterias-valencia",
+  "montaje-proyector-valencia",
+  "instalacion-proyectores-valencia",
+  "instalar-proyector-techo-valencia",
+  "home-cinema-valencia",
+  "ocultar-cables-valencia",
+  "instalar-soundbar-valencia",
 
-    // Furniture
-    "montaje-muebles-ikea-valencia",
-    "montaje-armario-valencia",
-    "montaje-cama-valencia",
-    "montaje-comodas-cajoneras-valencia",
-    "montaje-estanterias-valencia",
-    "montaje-muebles-tv-multimedia-valencia",
-    "montaje-escritorios-valencia",
-    "montaje-mesas-comedor-valencia",
-    "montaje-aparadores-muebles-auxiliares-valencia",
-    "montaje-sofas-modulares-valencia",
-    "fijacion-muebles-pared-valencia",
-    "preparacion-muebles-mudanza-valencia",
+  // DRYWALL
+  "instalador-pladur-valencia",
+  "techos-pladur-valencia",
+  "paredes-pladur-valencia",
 
-    // Electrical
-    "instalacion-lampara-valencia",
-    "instalacion-lamparas-colgantes-valencia",
-    "instalacion-apliques-pared-valencia",
-    "cambio-interruptor-valencia",
-    "cambio-enchufe-valencia",
-    "montaje-electrico-basico-valencia",
-    "instalacion-tira-led-valencia",
-    "cambio-extractor-valencia",
-    "cambio-luz-bano-valencia",
-    "cambio-lampara-techo-valencia",
-  ];
+  // FURNITURE
+  "montaje-muebles-ikea-valencia",
+  "montaje-armario-valencia",
+  "montaje-armarios-valencia",
+  "instalacion-armarios-valencia",
+  "armarios-empotrados-valencia",
+  "montaje-cama-valencia",
+  "montaje-comodas-cajoneras-valencia",
+  "montaje-estanterias-valencia",
+  "montaje-muebles-tv-multimedia-valencia",
+  "montaje-escritorios-valencia",
+  "montaje-mesas-comedor-valencia",
+  "montaje-aparadores-muebles-auxiliares-valencia",
+  "montaje-sofas-modulares-valencia",
+  "fijacion-muebles-pared-valencia",
+  "preparacion-muebles-mudanza-valencia",
+
+  // ELECTRICAL
+  "instalacion-lampara-valencia",
+  "instalacion-lamparas-colgantes-valencia",
+  "instalacion-apliques-pared-valencia",
+  "cambio-interruptor-valencia",
+  "cambio-enchufe-valencia",
+  "montaje-electrico-basico-valencia",
+  "instalacion-tira-led-valencia",
+  "cambio-extractor-valencia",
+  "cambio-luz-bano-valencia",
+  "cambio-lampara-techo-valencia",
+];
 
   const nestedServicePages = [
     // DRYWALL
