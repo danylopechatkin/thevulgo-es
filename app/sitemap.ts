@@ -24,7 +24,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // MAIN SEO
   "handyman-valencia",
 
-  // TV & HOME CINEMA
+  // NEW TOP SEO
+  "electricista-valencia",
+  "montaje-muebles-valencia",
+  "instalar-lampara-valencia",
+  "colgar-cuadros-valencia",
+
+  // TV
   "montaje-tv-valencia",
   "montaje-tv-grande-valencia",
   "colgar-tv-valencia",
@@ -37,12 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   "ocultar-cables-valencia",
   "instalar-soundbar-valencia",
 
-  // DRYWALL
+  // Drywall
   "instalador-pladur-valencia",
   "techos-pladur-valencia",
   "paredes-pladur-valencia",
 
-  // FURNITURE
+  // Furniture
   "montaje-muebles-ikea-valencia",
   "montaje-armario-valencia",
   "montaje-armarios-valencia",
@@ -59,7 +65,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   "fijacion-muebles-pared-valencia",
   "preparacion-muebles-mudanza-valencia",
 
-  // ELECTRICAL
+  // Electrical
   "instalacion-lampara-valencia",
   "instalacion-lamparas-colgantes-valencia",
   "instalacion-apliques-pared-valencia",
