@@ -3,24 +3,23 @@ import Link from "next/link";
 import {
   CheckCircle2,
   ArrowRight,
-  Video,
+  Bath,
   ShieldCheck,
-  Wrench,
-  Cable,
   Home,
   HelpCircle,
   MapPin,
   Star,
   Ruler,
-  MonitorPlay,
+  Drill,
 } from "lucide-react";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
 };
 
-const siteUrl = "https://www.thevulgo.es"; 
+const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
+const pagePath = "/services/bathroom/cabinet-installation-valencia";
 
 export async function generateMetadata({
   params,
@@ -30,25 +29,26 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Montaje de Proyector en Valencia | Instalación en Techo | THEVULGO"
-      : "Projector Mounting in Valencia | Ceiling Installation | THEVULGO",
+      ? "Instalación de Mueble de Baño en Valencia | Desde 59€ | THEVULGO"
+      : "Bathroom Cabinet Installation in Valencia | From €59 | THEVULGO",
     description: isEs
-      ? "Montaje profesional de proyectores en Valencia. Instalación en techo o pared, nivelación precisa, gestión de cables HDMI, soportes y ajuste básico de imagen."
-      : "Professional projector mounting in Valencia. Ceiling or wall installation, precise alignment, HDMI cable management, brackets and basic image setup.",
+      ? "Instalación de muebles de baño en Valencia desde 59€. Montaje de armarios, muebles auxiliares y unidades de almacenaje con alineación limpia y fijación segura."
+      : "Bathroom cabinet installation in Valencia from €59. Cabinets, storage units and bathroom furniture fitted with clean alignment and secure positioning.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-proyector-valencia`,
+      canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
-        es: `${siteUrl}/es/montaje-proyector-valencia`,
+        es: `${siteUrl}/es${pagePath}`,
+        en: `${siteUrl}/en${pagePath}`,
       },
     },
     openGraph: {
       title: isEs
-        ? "Montaje de Proyector en Valencia | THEVULGO"
-        : "Projector Mounting in Valencia | THEVULGO",
+        ? "Instalación de Mueble de Baño en Valencia | THEVULGO"
+        : "Bathroom Cabinet Installation in Valencia | THEVULGO",
       description: isEs
-        ? "Instalación limpia y segura de proyectores en Valencia y alrededores."
-        : "Clean and safe projector installation in Valencia and nearby areas.",
-      url: `${siteUrl}/${locale}/montaje-proyector-valencia`,
+        ? "Montaje limpio y seguro de muebles de baño, armarios y unidades de almacenaje en Valencia."
+        : "Clean and secure bathroom cabinet, storage unit and bathroom furniture installation in Valencia.",
+      url: `${siteUrl}/${locale}${pagePath}`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -75,32 +75,32 @@ const serviceAreas = [
 
 const faqs = [
   {
-    q: "¿Cuánto cuesta montar un proyector en Valencia?",
-    a: "El precio depende del tipo de proyector, soporte, techo o pared, distancia de proyección, cableado HDMI y dificultad de instalación. Envíanos fotos y te damos un presupuesto claro antes de empezar.",
+    q: "¿Cuánto cuesta instalar un mueble de baño en Valencia?",
+    a: "La instalación de mueble de baño empieza desde 59€. El precio final depende del tipo de mueble, tamaño, pared, fijaciones, nivelación y si hay que montar una unidad completa o solo colocarla.",
   },
   {
-    q: "¿Instalan proyectores en techo?",
-    a: "Sí. Instalamos proyectores en techo con soporte adecuado, medición de distancia, nivelación y orientación hacia la pantalla o pared.",
+    q: "¿Instalan armarios de baño suspendidos?",
+    a: "Sí. Podemos instalar muebles y armarios de baño suspendidos siempre que la pared sea adecuada y el sistema de fijación sea compatible.",
   },
   {
-    q: "¿Pueden pasar cable HDMI para el proyector?",
-    a: "Sí. Podemos ayudarte con cable HDMI, canaleta exterior, organización de cables o planificación del recorrido desde el rack, consola, portátil o decodificador.",
+    q: "¿Pueden montar muebles de baño de IKEA, Leroy Merlin o Amazon?",
+    a: "Sí. Podemos montar e instalar muebles de baño de IKEA, Leroy Merlin, Amazon, Conforama y otras tiendas, siempre revisando las instrucciones y piezas disponibles.",
   },
   {
-    q: "¿Instalan proyectores de corta distancia o ultra short throw?",
-    a: "Sí. Podemos instalar proyectores normales, de corta distancia y ultra short throw, revisando la posición correcta según el modelo y la pantalla.",
+    q: "¿Necesito tener los tornillos y tacos?",
+    a: "Si el mueble incluye fijaciones, las revisamos. Si no son adecuadas para la pared, podemos recomendar o usar fijaciones más apropiadas según el caso.",
   },
   {
-    q: "¿Pueden instalar pantalla de proyector?",
-    a: "Sí. También podemos instalar pantalla de proyector manual, fija o enrollable, dependiendo del tipo de pared o techo.",
+    q: "¿También alinean puertas y cajones del mueble?",
+    a: "Sí. Podemos ajustar puertas, cajones y separación visual para que el mueble quede más limpio, simétrico y cómodo de usar.",
   },
   {
-    q: "¿Qué necesito preparar antes de la visita?",
-    a: "Lo ideal es enviar fotos del techo o pared, modelo del proyector, soporte si ya lo tienes, distancia aproximada y dónde estarán los dispositivos conectados.",
+    q: "¿Pueden instalar otros accesorios del baño en la misma visita?",
+    a: "Sí. Podemos instalar espejo, estantes, toalleros, portarrollos, luz de baño, accesorios y otros pequeños trabajos en una sola visita.",
   },
   {
-    q: "¿Cuánto tarda instalar un proyector?",
-    a: "Una instalación sencilla puede tardar entre 60 y 120 minutos. Si hay cableado largo, canaletas, pantalla o techo complicado, puede tardar más.",
+    q: "¿Qué necesito enviar para pedir presupuesto?",
+    a: "Lo ideal es enviar fotos del baño, foto del mueble, medidas aproximadas, tipo de pared y decir si el mueble ya está montado o viene en caja.",
   },
   {
     q: "¿Trabajan fuera de Valencia ciudad?",
@@ -108,7 +108,7 @@ const faqs = [
   },
 ];
 
-export default async function ProjectorMountingValenciaPage({
+export default async function BathroomCabinetInstallationValenciaPage({
   params,
 }: PageProps) {
   const { locale } = await params;
@@ -116,8 +116,8 @@ export default async function ProjectorMountingValenciaPage({
 
   const whatsappText = encodeURIComponent(
     isEs
-      ? "Hola, quiero un presupuesto para montaje de proyector en Valencia."
-      : "Hi, I would like a quote for projector mounting in Valencia."
+      ? "Hola, quiero un presupuesto para instalación de mueble de baño en Valencia."
+      : "Hi, I would like a quote for bathroom cabinet installation in Valencia."
   );
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappText}`;
@@ -125,8 +125,10 @@ export default async function ProjectorMountingValenciaPage({
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Montaje de Proyector en Valencia",
-    serviceType: "Projector mounting",
+    name: isEs
+      ? "Instalación de Mueble de Baño en Valencia"
+      : "Bathroom Cabinet Installation in Valencia",
+    serviceType: "Bathroom cabinet installation",
     provider: {
       "@type": "LocalBusiness",
       name: "THEVULGO",
@@ -137,6 +139,7 @@ export default async function ProjectorMountingValenciaPage({
     areaServed: serviceAreas,
     offers: {
       "@type": "Offer",
+      price: "59",
       priceCurrency: "EUR",
       availability: "https://schema.org/InStock",
     },
@@ -151,7 +154,7 @@ export default async function ProjectorMountingValenciaPage({
     areaServed: "Valencia",
     priceRange: "€€",
     description:
-      "Montaje de proyectores, pantallas, cableado HDMI, instalación de TV, soportes, estanterías y servicios handyman en Valencia.",
+      "Instalación de muebles de baño, armarios, espejos, estantes, accesorios, iluminación, montaje de TV, muebles y servicios handyman en Valencia.",
   };
 
   const faqSchema = {
@@ -186,36 +189,56 @@ export default async function ProjectorMountingValenciaPage({
       {
         "@type": "ListItem",
         position: 3,
-        name: "Montaje de Proyector en Valencia",
-        item: `${siteUrl}/${locale}/montaje-proyector-valencia`,
+        name: "Bathroom",
+        item: `${siteUrl}/${locale}/services/bathroom`,
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: isEs
+          ? "Instalación de Mueble de Baño en Valencia"
+          : "Bathroom Cabinet Installation in Valencia",
+        item: `${siteUrl}/${locale}${pagePath}`,
       },
     ],
   };
 
   return (
     <main className="bg-white text-neutral-950">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       <section className="relative overflow-hidden border-b border-yellow-200 bg-gradient-to-br from-yellow-50 via-white to-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-2 md:px-8 md:py-24">
           <div>
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-yellow-100 px-4 py-2 text-sm font-black text-neutral-900 shadow-sm">
               <MapPin className="h-4 w-4 text-yellow-600" />
-              Proyectores en techo, pared y home cinema en Valencia
+              Muebles de baño, armarios y almacenaje en Valencia
             </div>
 
             <h1 className="text-4xl font-black tracking-tight md:text-6xl">
-              Montaje de proyector{" "}
+              Instalación de mueble de baño{" "}
               <span className="text-yellow-500">en Valencia</span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Instalación limpia y segura de proyectores en techo o pared.
-              Medición, nivelación, orientación, soporte adecuado y gestión de
-              cables HDMI para home cinema, oficinas, aulas y locales.
+              Montaje e instalación de muebles de baño, armarios y unidades de
+              almacenaje con atención a la alineación, separación, fijación y
+              posición final más limpia.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -237,11 +260,11 @@ export default async function ProjectorMountingValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Instalación en techo o pared",
-                "Soportes para proyector",
-                "Cable HDMI y canaletas",
-                "Pantalla de proyector",
-                "Ajuste básico de imagen",
+                "Desde 59€",
+                "Muebles de baño y armarios",
+                "Alineación limpia",
+                "Fijación segura",
+                "Puertas y cajones ajustados",
                 "Valencia y alrededores",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-2">
@@ -254,25 +277,25 @@ export default async function ProjectorMountingValenciaPage({
 
           <div className="rounded-3xl border border-yellow-300 bg-white p-4 shadow-2xl md:p-6">
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
-              <Video className="mb-6 h-12 w-12 text-black" />
+              <Bath className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
                 THEVULGO Valencia
               </p>
               <h2 className="mt-3 text-3xl font-black">
-                Projector installation. Aligned. Clean. Ready to watch.
+                Bathroom cabinet installation. Clean. Aligned. Ready to use.
               </h2>
               <p className="mt-4 font-medium leading-7 text-neutral-900">
-                Calculamos la posición, instalamos el soporte, orientamos el
-                proyector y dejamos los cables organizados.
+                Revisamos la pared, colocamos el mueble, ajustamos la posición y
+                dejamos el baño más práctico y ordenado.
               </p>
             </div>
 
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {[
-                ["Precise position", "Distancia y altura correctas"],
-                ["Clean cables", "HDMI y alimentación organizados"],
-                ["Safe fixing", "Soporte adecuado para techo o pared"],
-                ["Fast replies", "Respuesta rápida por WhatsApp"],
+                ["Clean alignment", "Mueble nivelado y bien colocado"],
+                ["Secure mounting", "Fijación adecuada según la pared"],
+                ["Better storage", "Más orden para el baño"],
+                ["Fast estimate", "Presupuesto rápido por WhatsApp"],
               ].map(([title, text]) => (
                 <div
                   key={title}
@@ -292,23 +315,23 @@ export default async function ProjectorMountingValenciaPage({
           {[
             {
               icon: ShieldCheck,
-              title: "Instalación segura",
-              text: "Revisamos techo, pared, peso y soporte antes de perforar.",
+              title: "Fijación segura",
+              text: "Revisamos pared, peso, puntos de fijación y estabilidad antes de instalar.",
             },
             {
               icon: Ruler,
-              title: "Alineación precisa",
-              text: "Buscamos buena altura, distancia y orientación de imagen.",
+              title: "Alineación limpia",
+              text: "Buscamos una posición recta, simétrica y visualmente equilibrada.",
             },
             {
-              icon: Cable,
-              title: "Cables organizados",
-              text: "HDMI, alimentación, canaleta y recorrido limpio.",
+              icon: Drill,
+              title: "Montaje práctico",
+              text: "Instalamos armarios, muebles auxiliares y unidades de almacenaje.",
             },
             {
               icon: Star,
               title: "Precio claro",
-              text: "Presupuesto antes del trabajo según fotos y dificultad.",
+              text: "Desde 59€. Presupuesto según fotos, medidas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -325,30 +348,31 @@ export default async function ProjectorMountingValenciaPage({
 
       <section className="mx-auto max-w-4xl px-5 py-10 md:px-8">
         <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-          Instalación profesional de proyectores en Valencia
+          Instalación de muebles de baño en Valencia
         </h2>
 
         <div className="mt-6 space-y-5 text-lg leading-8 text-neutral-700">
           <p>
-            En THEVULGO realizamos montaje de proyector en Valencia para
-            viviendas, salones, home cinema, oficinas, aulas, locales
-            comerciales y espacios de presentación. Podemos instalar proyectores
-            en techo o pared, revisar el soporte, calcular la posición y dejar
-            el cableado lo más limpio posible.
+            En THEVULGO realizamos instalación de muebles de baño en Valencia
+            para pisos, apartamentos, viviendas, alquileres, reformas pequeñas y
+            espacios que necesitan más orden y mejor acabado visual. Podemos
+            ayudarte con armarios de baño, muebles auxiliares, unidades de
+            almacenaje y muebles suspendidos compatibles.
           </p>
 
           <p>
-            Antes de perforar revisamos la distancia de proyección, la altura, el
-            tipo de techo o pared, el punto donde estará la pantalla y la
-            ubicación de los dispositivos conectados. Esto ayuda a evitar una
-            imagen torcida, mal centrada o con cables visibles innecesarios.
+            Antes de perforar o fijar el mueble revisamos el tipo de pared, la
+            posición, la altura, el espacio disponible, la apertura de puertas y
+            la relación con lavabo, espejo, enchufes, luces y otros elementos
+            del baño. El objetivo es que el resultado quede práctico, estable y
+            visualmente limpio.
           </p>
 
           <p>
-            También podemos ayudarte con canaletas para HDMI, instalación de
-            pantalla de proyector, soporte para proyector, organización de
-            cables, conexión con consola, portátil, decodificador, Apple TV,
-            router o sistema de sonido.
+            También podemos combinar esta instalación con otros trabajos del
+            baño: espejo, mueble con espejo, estantes, toallero, portarrollos,
+            accesorios, luz de tocador, sellado de juntas o pequeños ajustes de
+            puertas y cajones.
           </p>
         </div>
       </section>
@@ -356,19 +380,19 @@ export default async function ProjectorMountingValenciaPage({
       <section className="bg-yellow-50 py-16">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <h2 className="text-3xl font-black md:text-4xl">
-            ¿Qué incluye el montaje de proyector?
+            ¿Qué incluye la instalación?
           </h2>
 
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {[
-              "Revisión de techo o pared",
-              "Medición de distancia de proyección",
-              "Marcado de posición correcta",
-              "Instalación del soporte",
-              "Nivelación y orientación del proyector",
-              "Gestión básica de cables",
-              "Canaleta HDMI si hace falta",
-              "Ajuste básico de imagen",
+              "Revisión del mueble y piezas",
+              "Comprobación de pared y posición",
+              "Medición de altura y separación",
+              "Marcado de puntos de fijación",
+              "Montaje o colocación del mueble",
+              "Fijación segura según el caso",
+              "Nivelación y alineación visual",
+              "Ajuste básico de puertas o cajones",
               "Presupuesto claro antes del trabajo",
             ].map((item) => (
               <div
@@ -385,26 +409,26 @@ export default async function ProjectorMountingValenciaPage({
 
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <h2 className="mb-8 text-3xl font-black md:text-4xl">
-          Tipos de instalación de proyector
+          Tipos de muebles de baño que podemos instalar
         </h2>
 
         <div className="grid gap-8 md:grid-cols-4">
           {[
             {
-              title: "Proyector en techo",
-              text: "Instalación clásica para home cinema, salas, oficinas y aulas.",
+              title: "Mueble de baño suspendido",
+              text: "Instalación de muebles fijados a pared cuando la superficie y el sistema son adecuados.",
             },
             {
-              title: "Proyector en pared",
-              text: "Opción práctica cuando el techo no es ideal o el espacio lo permite.",
+              title: "Armario de baño",
+              text: "Montaje y colocación de armarios de baño para almacenamiento diario.",
             },
             {
-              title: "Ultra short throw",
-              text: "Revisión de distancia y posición para proyectores de tiro ultracorto.",
+              title: "Mueble auxiliar",
+              text: "Instalación de columnas, unidades laterales y muebles pequeños de apoyo.",
             },
             {
-              title: "Pantalla de proyector",
-              text: "Instalación de pantalla manual, fija o enrollable según el espacio.",
+              title: "Unidad de almacenaje",
+              text: "Soluciones prácticas para ordenar cosméticos, toallas y artículos de baño.",
             },
           ].map((item) => (
             <div
@@ -412,7 +436,7 @@ export default async function ProjectorMountingValenciaPage({
               className="rounded-3xl border border-yellow-300 bg-white p-7 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-400">
-                <MonitorPlay className="h-8 w-8 text-black" />
+                <Bath className="h-8 w-8 text-black" />
               </div>
               <h3 className="text-2xl font-black">{item.title}</h3>
               <p className="mt-4 leading-7 text-neutral-700">{item.text}</p>
@@ -425,20 +449,20 @@ export default async function ProjectorMountingValenciaPage({
         <div className="grid gap-6 md:grid-cols-4">
           {[
             {
-              title: "HDMI y canaletas",
-              text: "Podemos organizar el recorrido del cable desde tus dispositivos hasta el proyector.",
+              title: "Baños pequeños",
+              text: "Ideal para ganar almacenaje sin perder demasiado espacio útil.",
             },
             {
-              title: "Home cinema",
-              text: "Ideal para salón, dormitorio, sala de cine o zona de entretenimiento.",
+              title: "Pisos de alquiler",
+              text: "Una mejora rápida para dejar el baño más completo y práctico.",
             },
             {
-              title: "Oficinas y locales",
-              text: "Instalación para salas de reuniones, aulas, academias y espacios comerciales.",
+              title: "Muebles nuevos",
+              text: "Podemos instalar muebles comprados en tiendas como IKEA, Leroy Merlin o Amazon.",
             },
             {
               title: "También podemos ayudarte con",
-              text: "TV, soundbar, estanterías, enchufes, soportes, pantallas y cableado.",
+              text: "Espejos, luces, estantes, toalleros, portarrollos y accesorios de baño.",
             },
           ].map((item) => (
             <div
@@ -454,17 +478,17 @@ export default async function ProjectorMountingValenciaPage({
 
       <section className="mx-auto max-w-4xl px-5 py-16 md:px-8">
         <h2 className="text-3xl font-black">
-          ¿Dónde podemos instalar el proyector?
+          ¿Dónde se puede instalar un mueble de baño?
         </h2>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {[
-            "Techo de vivienda",
-            "Pared interior",
-            "Salón o dormitorio",
-            "Oficina o aula",
-            "Local comercial",
-            "Home cinema",
+            "Baño principal",
+            "Baño pequeño",
+            "Aseo de invitados",
+            "Apartamento de alquiler",
+            "Vivienda recién amueblada",
+            "Baño con poco almacenaje",
           ].map((item) => (
             <div
               key={item}
@@ -477,37 +501,37 @@ export default async function ProjectorMountingValenciaPage({
         </div>
 
         <p className="mt-8 text-lg leading-8 text-neutral-700">
-          Si no sabes dónde conviene instalar el proyector, envíanos fotos o un
-          vídeo de la habitación. Podemos ayudarte a elegir la posición según la
-          pantalla, distancia, enchufes y recorrido de cable.
+          Si no sabes cuál es la mejor altura o posición, envíanos fotos del
+          baño y del mueble. Podemos ayudarte a elegir una ubicación más cómoda,
+          limpia y práctica para el uso diario.
         </p>
       </section>
 
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Precio claro
+            Desde 59€
           </p>
           <h2 className="mt-3 text-4xl font-black">
-            Presupuesto para montar proyector en Valencia
+            Precio para instalar mueble de baño en Valencia
           </h2>
           <p className="mt-6 text-lg font-medium leading-8 text-neutral-900">
-            El precio depende del tipo de proyector, soporte, techo, pared,
-            cableado HDMI, pantalla y dificultad. Envíanos fotos y te damos un
-            presupuesto claro antes de empezar.
+            El precio depende del tamaño del mueble, si viene montado o en caja,
+            tipo de pared, fijaciones, nivelación y dificultad. Envíanos fotos y
+            te damos un presupuesto claro antes de empezar.
           </p>
 
           <div className="mt-8 rounded-3xl border border-yellow-600/30 bg-white p-6 text-left shadow-xl">
             <h3 className="text-xl font-black">El precio depende de:</h3>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {[
-                "Tipo de proyector",
-                "Techo o pared",
-                "Tipo de soporte",
-                "Distancia de proyección",
-                "Cable HDMI",
-                "Pantalla de proyector",
-                "Canaleta o cableado",
+                "Tamaño del mueble",
+                "Mueble montado o en caja",
+                "Tipo de pared",
+                "Sistema de fijación",
+                "Puertas y cajones",
+                "Altura y posición",
+                "Otros accesorios del baño",
                 "Distancia fuera de Valencia",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-2">
@@ -533,9 +557,9 @@ export default async function ProjectorMountingValenciaPage({
           Zonas donde trabajamos
         </h2>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-700">
-          Realizamos montaje de proyectores en Valencia ciudad y alrededores. Si
-          estás fuera de Valencia, envíanos tu dirección y te confirmamos
-          disponibilidad.
+          Realizamos instalación de muebles de baño en Valencia ciudad y
+          alrededores. Si estás fuera de Valencia, envíanos tu dirección y te
+          confirmamos disponibilidad.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -581,24 +605,24 @@ export default async function ProjectorMountingValenciaPage({
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {[
             {
-              title: "Montaje de TV en Valencia",
-              href: `/${locale}/montaje-tv-valencia`,
+              title: "Servicios de baño",
+              href: `/${locale}/services/bathroom`,
             },
             {
-              title: "Ocultar cables de TV",
-              href: `/${locale}/ocultar-cables-tv-valencia`,
+              title: "Instalación de espejo de baño",
+              href: `/${locale}/services/bathroom/mirror-installation-valencia`,
             },
             {
-              title: "Instalar enchufe para TV",
-              href: `/${locale}/instalar-enchufe-valencia`,
+              title: "Instalación de estantería de baño",
+              href: `/${locale}/services/bathroom/shelf-installation-valencia`,
             },
             {
-              title: "Instalar soundbar",
-              href: `/${locale}/instalar-soundbar-valencia`,
+              title: "Instalación de toallero",
+              href: `/${locale}/services/bathroom/towel-holder-installation-valencia`,
             },
             {
-              title: "Instalación de estanterías",
-              href: `/${locale}/instalacion-estanterias-valencia`,
+              title: "Renovación de silicona",
+              href: `/${locale}/services/bathroom/silicone-renewal-valencia`,
             },
             {
               title: "Servicios handyman Valencia",
@@ -623,11 +647,12 @@ export default async function ProjectorMountingValenciaPage({
       <section className="bg-yellow-400 py-16">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <h2 className="text-4xl font-black tracking-tight">
-            ¿Quieres montar un proyector en Valencia?
+            ¿Quieres instalar un mueble de baño en Valencia?
           </h2>
           <p className="mt-5 text-lg font-medium text-neutral-900">
-            Envíanos fotos del techo o pared, modelo del proyector, soporte y
-            distancia aproximada. Te damos un presupuesto claro antes de empezar.
+            Envíanos fotos del baño, del mueble, medidas aproximadas y dinos si
+            el mueble viene montado o en caja. Te damos un presupuesto claro
+            antes de empezar.
           </p>
 
           <a
