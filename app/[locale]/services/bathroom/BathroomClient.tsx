@@ -111,162 +111,179 @@ export default function BathroomClient() {
   ];
 
   const services = [
-    {
-      title: isEs ? "Instalación de mueble de baño" : "Bathroom cabinet installation",
-      desc: isEs
-        ? "Instalación de muebles y unidades de almacenamiento de baño con atención a la alineación, separación y posición final."
-        : "Installation of bathroom cabinets and storage units with attention to alignment, spacing and a cleaner final position.",
-      price: isEs ? "desde €59" : "from €59",
-      icon: <Bath className="h-5 w-5" />,
-      className: "lg:col-span-2",
-    },
-    {
-      title: isEs ? "Instalación de espejo" : "Mirror installation",
-      desc: isEs
-        ? "Montaje seguro de espejos de baño con altura correcta, alineación limpia y colocación visual equilibrada."
-        : "Secure wall mounting of bathroom mirrors with proper height, cleaner alignment and more balanced visual placement.",
-      price: isEs ? "desde €35" : "from €35",
-      icon: <Ruler className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Instalación de armario con espejo" : "Mirror cabinet fitting",
-      desc: isEs
-        ? "Instalación de armarios con espejo y unidades prácticas de almacenamiento para mejorar la organización del baño."
-        : "Installation of mirror cabinets and practical storage units for better bathroom organization and everyday use.",
-      price: isEs ? "desde €49" : "from €49",
-      icon: <Package className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Instalación de toallero" : "Towel holder installation",
-      desc: isEs
-        ? "Montaje de barras, ganchos y soportes para toallas con separación limpia y posición práctica."
-        : "Mounting of towel bars, hooks and holder systems with clean spacing and practical everyday positioning.",
-      price: isEs ? "desde €29" : "from €29",
-      icon: <Hammer className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Instalación de portarrollos" : "Toilet paper holder installation",
-      desc: isEs
-        ? "Instalación de portarrollos y pequeños accesorios de baño en posiciones cómodas y prácticas."
-        : "Installation of toilet paper holders and small wall-mounted bathroom accessories in convenient positions.",
-      price: isEs ? "desde €25" : "from €25",
-      icon: <Hammer className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Instalación de estante de baño" : "Bathroom shelf installation",
-      desc: isEs
-        ? "Instalación de estantes de baño para almacenamiento, cosméticos, decoración o uso diario con alineación limpia."
-        : "Installation of bathroom shelves for storage, cosmetics, décor or everyday items with cleaner wall alignment.",
-      price: isEs ? "desde €35" : "from €35",
-      icon: <Drill className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Instalación de mueble bajo lavabo" : "Vanity unit installation",
-      desc: isEs
-        ? "Instalación de muebles bajo lavabo con atención a la posición, alineación y acabado alrededor del lavabo."
-        : "Installation of bathroom vanity units with attention to positioning, alignment and a cleaner final furniture layout around the sink area.",
-      price: isEs ? "desde €59" : "from €59",
-      icon: <Bath className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Instalación de luz para espejo" : "Vanity light installation",
-      desc: isEs
-        ? "Instalación de iluminación compatible para zona de espejo o lavabo, con mejor visibilidad y acabado más completo."
-        : "Installation of compatible vanity or mirror-area lighting for better visibility and a more finished bathroom setup.",
-      price: isEs ? "desde €39" : "from €39",
-      icon: <Lightbulb className="h-5 w-5" />,
-      className: "lg:col-span-2",
-    },
-    {
-      title: isEs ? "Cambio de alcachofa de ducha" : "Shower head replacement",
-      desc: isEs
-        ? "Sustitución de alcachofas de ducha y piezas compatibles para un aspecto más limpio y mejor comodidad diaria."
-        : "Replacement of shower heads and compatible fittings for cleaner look and better everyday comfort.",
-      price: isEs ? "desde €29" : "from €29",
-      icon: <ShowerHead className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Cambio de manguera de ducha" : "Shower hose replacement",
-      desc: isEs
-        ? "Sustitución de mangueras de ducha y conectores visibles cuando la instalación es sencilla y compatible."
-        : "Replacement of shower hoses and visible connectors where the setup is straightforward and compatible.",
-      price: isEs ? "desde €29" : "from €29",
-      icon: <Droplets className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Instalación de accesorios de baño" : "Bathroom accessory installation",
-      desc: isEs
-        ? "Instalación de pequeños accesorios como soportes, barras, ganchos y elementos prácticos de pared."
-        : "Installation of small bathroom accessories such as holders, rails, hooks and practical wall-mounted fittings.",
-      price: isEs ? "desde €29" : "from €29",
-      icon: <Wrench className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Renovación de silicona" : "Silicone renewal",
-      desc: isEs
-        ? "Retirada y sustitución de silicona antigua alrededor de lavabos, muebles, bañeras y zonas de ducha."
-        : "Removal and replacement of old silicone around sinks, vanities, bathtubs and shower areas for cleaner finishing.",
-      price: isEs ? "desde €39" : "from €39",
-      icon: <Droplets className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Sellado de juntas y huecos" : "Seal & gap fixing",
-      desc: isEs
-        ? "Sellado de pequeños huecos visibles alrededor de accesorios y elementos del baño para un acabado más limpio."
-        : "Sealing of small visible gaps around fixtures and bathroom elements for a tidier look and better protection.",
-      price: isEs ? "desde €29" : "from €29",
-      icon: <ShieldCheck className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Alineación de puertas de mueble" : "Cabinet door alignment",
-      desc: isEs
-        ? "Ajuste de puertas de muebles de baño para mejorar simetría, cierre y línea visual del mueble."
-        : "Adjustment of bathroom cabinet doors to improve symmetry, closing feel and the visual line of the furniture.",
-      price: isEs ? "desde €29" : "from €29",
-      icon: <Ruler className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Montaje en pared de elementos de baño" : "Wall mounting for bathroom items",
-      desc: isEs
-        ? "Perforación y montaje de espejos, muebles, estantes y accesorios en paredes adecuadas."
-        : "Drilling and mounting for mirrors, cabinets, shelves and accessories in suitable wall types.",
-      price: isEs ? "desde €35" : "from €35",
-      icon: <SquareDashedMousePointer className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs ? "Instalación de estante de vidrio" : "Glass shelf installation",
-      desc: isEs
-        ? "Instalación de estantes de vidrio para cosméticos, almacenamiento o decoración con separación limpia y montaje seguro."
-        : "Installation of glass bathroom shelves for cosmetics, storage or decorative use with clean spacing and secure mounting.",
-      price: isEs ? "desde €35" : "from €35",
-      icon: <Ruler className="h-5 w-5" />,
-      className: "",
-    },
-    {
-      title: isEs
-        ? "Varias tareas de instalación de baño"
-        : "Multiple bathroom installation tasks",
-      desc: isEs
-        ? "La mejor opción si necesitas varios accesorios, espejos, muebles o pequeñas instalaciones en una sola visita organizada."
-        : "Best option if you need several bathroom fittings, accessories, mirrors, cabinets or small install tasks completed in one organized visit.",
-      price: isEs ? "presupuesto personalizado" : "custom quote",
-      icon: <Bath className="h-5 w-5" />,
-      className: "lg:col-span-2",
-    },
-  ];
+  {
+    title: isEs ? "Instalación de mueble de baño" : "Bathroom cabinet installation",
+    desc: isEs
+      ? "Instalación de muebles y unidades de almacenamiento de baño con atención a la alineación, separación y posición final."
+      : "Installation of bathroom cabinets and storage units with attention to alignment, spacing and a cleaner final position.",
+    price: isEs ? "desde €59" : "from €59",
+    icon: <Bath className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/cabinet-installation-valencia`,
+    className: "lg:col-span-2",
+  },
+
+  {
+    title: isEs ? "Instalación de espejo" : "Mirror installation",
+    desc: isEs
+      ? "Montaje seguro de espejos de baño con altura correcta, alineación limpia y colocación visual equilibrada."
+      : "Secure wall mounting of bathroom mirrors with proper height, cleaner alignment and more balanced visual placement.",
+    price: isEs ? "desde €35" : "from €35",
+    icon: <Ruler className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/mirror-installation-valencia`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Instalación de armario con espejo" : "Mirror cabinet fitting",
+    desc: isEs
+      ? "Instalación de armarios con espejo y unidades prácticas de almacenamiento."
+      : "Installation of mirror cabinets and practical storage units.",
+    price: isEs ? "desde €49" : "from €49",
+    icon: <Package className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/mirror-cabinet-fitting-valencia`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Instalación de toallero" : "Towel holder installation",
+    desc: isEs
+      ? "Montaje de barras, ganchos y soportes para toallas."
+      : "Mounting of towel bars, hooks and holder systems.",
+    price: isEs ? "desde €29" : "from €29",
+    icon: <Hammer className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/towel-holder-installation-valencia`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Instalación de portarrollos" : "Toilet paper holder installation",
+    desc: isEs
+      ? "Instalación de portarrollos y pequeños accesorios."
+      : "Installation of toilet paper holders and small wall-mounted accessories.",
+    price: isEs ? "desde €25" : "from €25",
+    icon: <Hammer className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/toilet-paper-holder-installation-valencia`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Instalación de estante de baño" : "Bathroom shelf installation",
+    desc: isEs
+      ? "Instalación de estantes de baño."
+      : "Installation of bathroom shelves.",
+    price: isEs ? "desde €35" : "from €35",
+    icon: <Drill className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/shelf-installation-valencia`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Instalación de mueble bajo lavabo" : "Vanity unit installation",
+    desc: isEs
+      ? "Instalación de muebles bajo lavabo."
+      : "Installation of bathroom vanity units.",
+    price: isEs ? "desde €59" : "from €59",
+    icon: <Bath className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/vanity-unit-installation-valencia`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Instalación de luz para espejo" : "Vanity light installation",
+    desc: isEs
+      ? "Instalación de iluminación compatible para espejo."
+      : "Installation of compatible vanity or mirror-area lighting.",
+    price: isEs ? "desde €39" : "from €39",
+    icon: <Lightbulb className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/vanity-light-installation`,
+    className: "lg:col-span-2",
+  },
+
+  {
+    title: isEs ? "Cambio de alcachofa de ducha" : "Shower head replacement",
+    desc: isEs ? "Cambio de alcachofa." : "Replacement of shower heads.",
+    price: isEs ? "desde €29" : "from €29",
+    icon: <ShowerHead className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/shower-head-replacement`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Cambio de manguera de ducha" : "Shower hose replacement",
+    desc: isEs ? "Cambio de manguera." : "Replacement of shower hoses.",
+    price: isEs ? "desde €29" : "from €29",
+    icon: <Droplets className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/shower-hose-replacement`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Instalación de accesorios de baño" : "Bathroom accessory installation",
+    desc: isEs ? "Accesorios de baño." : "Bathroom accessories installation.",
+    price: isEs ? "desde €29" : "from €29",
+    icon: <Wrench className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/accessory-installation`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Renovación de silicona" : "Silicone renewal",
+    desc: isEs ? "Cambio de silicona." : "Silicone renewal.",
+    price: isEs ? "desde €39" : "from €39",
+    icon: <Droplets className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/silicone-renewal`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Sellado de juntas y huecos" : "Seal & gap fixing",
+    desc: isEs ? "Sellado de huecos." : "Seal and gap fixing.",
+    price: isEs ? "desde €29" : "from €29",
+    icon: <ShieldCheck className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/seal-gap-fixing`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Alineación de puertas de mueble" : "Cabinet door alignment",
+    desc: isEs ? "Ajuste de puertas." : "Cabinet door alignment.",
+    price: isEs ? "desde €29" : "from €29",
+    icon: <Ruler className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/cabinet-door-alignment`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Montaje en pared de elementos de baño" : "Wall mounting for bathroom items",
+    desc: isEs ? "Montaje en pared." : "Wall mounting.",
+    price: isEs ? "desde €35" : "from €35",
+    icon: <SquareDashedMousePointer className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/wall-mounting`,
+    className: "",
+  },
+
+  {
+    title: isEs ? "Instalación de estante de vidrio" : "Glass shelf installation",
+    desc: isEs ? "Estante de vidrio." : "Glass shelf installation.",
+    price: isEs ? "desde €35" : "from €35",
+    icon: <Ruler className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/glass-shelf-installation`,
+    className: "",
+  },
+
+  {
+    title: isEs
+      ? "Varias tareas de instalación de baño"
+      : "Multiple bathroom installation tasks",
+    desc: isEs
+      ? "Varias tareas en una visita."
+      : "Multiple bathroom installation tasks.",
+    price: isEs ? "presupuesto personalizado" : "custom quote",
+    icon: <Bath className="h-5 w-5" />,
+    href: `/${locale}/services/bathroom/multiple-installation-tasks`,
+    className: "lg:col-span-2",
+  },
+];
 
   const whyChoose = isEs
     ? [
@@ -410,27 +427,36 @@ export default function BathroomClient() {
           <div className="mt-10">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
               {services.map((s, index) => (
-                <div
-                  key={`${s.title}-${index}`}
-                  className={`rounded-2xl border border-yellow-400 bg-white p-7 text-left shadow-lg transition-all duration-200 hover:shadow-2xl hover:scale-[1.02] min-h-[220px] ${s.className || ""}`}
-                >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-                    {s.icon}
-                  </div>
+  <button
+    key={`${s.title}-${index}`}
+    type="button"
+    onClick={() => router.push(s.href)}
+    className={`group rounded-2xl border border-yellow-400 bg-white p-7 text-left shadow-lg transition-all duration-200 hover:shadow-2xl hover:scale-[1.02] min-h-[220px] cursor-pointer ${s.className || ""}`}
+  >
+    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
+      {s.icon}
+    </div>
 
-                  <h3 className="mt-4 text-xl font-extrabold text-black">
-                    {s.title}
-                  </h3>
+    <h3 className="mt-4 text-xl font-extrabold text-black">
+      {s.title}
+    </h3>
 
-                  <p className="mt-2 text-sm leading-7 text-gray-700">
-                    {s.desc}
-                  </p>
+    <p className="mt-2 text-sm leading-7 text-gray-700">
+      {s.desc}
+    </p>
 
-                  <div className="mt-4 text-sm font-extrabold text-yellow-500">
-                    {s.price}
-                  </div>
-                </div>
-              ))}
+    <div className="mt-4 flex items-center justify-between gap-4">
+      <div className="text-sm font-extrabold text-yellow-500">
+        {s.price}
+      </div>
+
+      <span className="inline-flex items-center gap-1 text-xs font-extrabold text-black opacity-70 transition group-hover:opacity-100">
+        {isEs ? "Ver servicio" : "View service"}
+        <ArrowRight className="h-4 w-4" />
+      </span>
+    </div>
+  </button>
+))}
             </div>
           </div>
 
