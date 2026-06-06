@@ -119,7 +119,46 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "services/repairs/move-out-touch-ups",
     "services/repairs/kitchen-minor-fixes",
     "services/repairs/multiple-small-repairs",
+
+
+// DOORS
+"services/doors/door-alignment-adjustment",
+"services/doors/handle-replacement",
+"services/doors/loose-handle-fixing",
+"services/doors/latch-adjustment",
+"services/doors/strike-plate-adjustment",
+"services/doors/hinge-tightening",
+"services/doors/cambio-burlete-puerta",
+"services/doors/cambio-bisagras-puerta",
+"services/doors/ajuste-cierrapuertas",
+"services/doors/instalacion-tope-puerta",
+"services/doors/cambio-bombin-cerradura",
+"services/doors/herrajes-puertas-interiores",
+"services/doors/reparacion-puertas-varios",
+
+
+// BATHROOM
+"services/bathroom/cabinet-installation-valencia",
+"services/bathroom/mirror-installation-valencia",
+"services/bathroom/mirror-cabinet-fitting-valencia",
+"services/bathroom/towel-holder-installation-valencia",
+"services/bathroom/toilet-paper-holder-installation-valencia",
+"services/bathroom/shelf-installation-valencia",
+"services/bathroom/vanity-unit-installation-valencia",
+"services/bathroom/vanity-light-installation",
+"services/bathroom/shower-head-replacement",
+"services/bathroom/shower-hose-replacement",
+"services/bathroom/accessory-installation",
+"services/bathroom/silicone-renewal",
+"services/bathroom/seal-gap-fixing",
+"services/bathroom/cabinet-door-alignment",
+"services/bathroom/wall-mounting",
+"services/bathroom/glass-shelf-installation",
+"services/bathroom/multiple-installation-tasks",
+
   ];
+
+  
 
   const pages: MetadataRoute.Sitemap = [];
 
