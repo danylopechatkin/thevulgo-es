@@ -41,13 +41,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "instalar-soundbar-valencia",
 
     "pladur-valencia",
-    "falsos-techos-valencia",
-    "techos-pladur-valencia",
-    "instalacion-pladur-valencia",
-    "instalador-pladur-valencia",
-    "paredes-pladur-valencia",
 
-    "montaje-muebles-ikea-valencia",
+"falsos-techos-valencia",
+
+"techos-pladur-valencia",
+
+"instalacion-pladur-valencia",
+
+"instalador-pladur-valencia",
+
+"paredes-pladur-valencia",
+
+"reformas-pladur-valencia",
+
+"empresa-pladur-valencia",
+
+"presupuesto-pladur-valencia",
+
+"falso-techo-pladur-valencia",
+
+"reparacion-pladur-valencia",
+
+"techo-registrable-valencia",
+
+"pintar-pladur-valencia",
+
+"tabiques-pladur-valencia",
+
+"montaje-muebles-ikea-valencia",
     "montaje-armario-valencia",
     "montaje-armarios-valencia",
     "instalacion-armarios-valencia",
