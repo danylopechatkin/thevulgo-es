@@ -68,7 +68,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
 "tabiques-pladur-valencia",
 
-"montaje-muebles-ikea-valencia",
+    "montaje-muebles-ikea-valencia",
     "montaje-armario-valencia",
     "montaje-armarios-valencia",
     "instalacion-armarios-valencia",
