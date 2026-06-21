@@ -68,6 +68,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
 "paredes-pladur-valencia",
 
+"contratista-pladur-valencia",
+
 "reformas-pladur-valencia",
 
 "empresa-pladur-valencia",
