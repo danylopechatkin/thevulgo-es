@@ -40,6 +40,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "ocultar-cables-valencia",
     "instalar-soundbar-valencia",
 
+    "montaje-tv-65-pulgadas-valencia",
+
+"montaje-tv-75-pulgadas-valencia",
+
+"montaje-tv-85-pulgadas-valencia",
+
+"montaje-tv-98-pulgadas-valencia",
+
+"montaje-tv-samsung-frame-valencia",
+
+"instalar-samsung-frame-valencia",
+
+"instalar-tv-pared-valencia",
+
+"instalador-tv-valencia",
+
     "pladur-valencia",
 
 "falsos-techos-valencia",

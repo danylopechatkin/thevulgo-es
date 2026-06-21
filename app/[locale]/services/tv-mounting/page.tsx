@@ -88,26 +88,44 @@ export default async function TvMountingPage({ params }: Props) {
   const pageUrl = `${baseUrl}/${locale}/services/tv-mounting`;
 
   const offers = isEs
-    ? [
-        "Montaje de TV",
-        "Montaje de TV grande",
-        "Instalación de soporte de TV",
-        "Ocultación de cables",
-        "Instalación de soundbar",
-        "Montaje de proyector",
-        "Instalación de estanterías",
-        "Instalación multimedia",
-      ]
-    : [
-        "TV mounting",
-        "Large TV mounting",
-        "TV bracket installation",
-        "Cable concealment",
-        "Soundbar mounting",
-        "Projector mounting",
-        "Shelf installation",
-        "Media setup",
-      ];
+  ? [
+      "Montaje de TV",
+      "Montaje de TV grande",
+      "Instalador TV Valencia",
+      "Colgar TV Valencia",
+      "Instalar TV en pared",
+      "Montaje Samsung Frame",
+      "Instalar Samsung Frame",
+      "Montaje TV 65 pulgadas",
+      "Montaje TV 75 pulgadas",
+      "Montaje TV 85 pulgadas",
+      "Montaje TV 98 pulgadas",
+      "Instalación de soporte de TV",
+      "Ocultación de cables",
+      "Instalación de soundbar",
+      "Montaje de proyector",
+      "Instalación de estanterías",
+      "Instalación multimedia",
+    ]
+  : [
+      "TV mounting",
+      "Large TV mounting",
+      "TV installer Valencia",
+      "Hang TV Valencia",
+      "Install TV on wall",
+      "Samsung Frame mounting",
+      "Install Samsung Frame",
+      "65 inch TV mounting",
+      "75 inch TV mounting",
+      "85 inch TV mounting",
+      "98 inch TV mounting",
+      "TV bracket installation",
+      "Cable concealment",
+      "Soundbar mounting",
+      "Projector mounting",
+      "Shelf installation",
+      "Media setup",
+    ];
 
   const localBusinessJsonLd = {
     "@context": "https://schema.org",
