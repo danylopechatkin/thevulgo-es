@@ -14,6 +14,10 @@ import {
   Clock3,
   ShieldCheck,
   BadgeCheck,
+  Ruler,
+  Hammer,
+  Layers,
+  Star,
 } from "lucide-react";
 
 export default function TvMountingClient() {
@@ -38,16 +42,16 @@ export default function TvMountingClient() {
       : "TV Mounting & Wall Installations",
 
     heroSubtitle: isEs
-      ? "Instalaciones limpias y seguras para televisores, proyectores, estanterías, soundbars, ocultación de cables y media setups en Valencia. Precios claros antes de reservar. Sin desorden. Sin sorpresas."
-      : "Clean, secure installations for TVs, projectors, shelves, soundbars, cable concealment and media setups in Valencia. Transparent starting prices before booking. No mess. No surprises.",
+      ? "Instalaciones limpias y seguras para televisores, Samsung Frame, TVs grandes, proyectores, soportes, soundbars y ocultación de cables en Valencia. Precios claros antes de reservar."
+      : "Clean, secure installations for TVs, Samsung Frame, large TVs, projectors, brackets, soundbars and cable concealment in Valencia. Clear prices before booking.",
 
     ctaTitle: isEs
       ? "¿Necesitas un presupuesto exacto?"
       : "Need an exact estimate?",
 
     ctaText: isEs
-      ? "Recibe un presupuesto rápido para montaje de TV, proyectores, estanterías, soundbars, ocultación de cables o instalación multimedia. Continúa al presupuesto o envía una solicitud por WhatsApp."
-      : "Get a fast estimate for TV mounting, projector mounting, shelves, soundbar setups or cable concealment. Continue to the calculator or send a request directly on WhatsApp.",
+      ? "Recibe un presupuesto rápido para montaje de TV, Samsung Frame, TVs grandes, soporte, ocultación de cables, proyector o soundbar. Continúa al presupuesto o envía una solicitud por WhatsApp."
+      : "Get a fast estimate for TV mounting, Samsung Frame, large TVs, brackets, cable concealment, projector or soundbar. Continue to the calculator or send a request on WhatsApp.",
 
     estimateButton: isEs ? "Pedir presupuesto" : "Get estimate",
 
@@ -70,8 +74,8 @@ export default function TvMountingClient() {
       : "Clean setup, correct height, no guesswork",
 
     whyText: isEs
-      ? "Este servicio está pensado para clientes que quieren una instalación visualmente limpia, segura y bien alineada para TV, sonido, proyector o zona multimedia."
-      : "This service is designed for clients who want a visually clean, secure and well-aligned setup for TVs, soundbars, projectors or media areas.",
+      ? "Este servicio está pensado para clientes que quieren una instalación visualmente limpia, segura y bien alineada para TV, Samsung Frame, sonido, proyector o zona multimedia."
+      : "This service is designed for clients who want a visually clean, secure and well-aligned setup for TVs, Samsung Frame, soundbars, projectors or media areas.",
 
     faqTitle: isEs ? "Preguntas frecuentes sobre montaje de TV" : "TV Mounting FAQ",
 
@@ -80,8 +84,8 @@ export default function TvMountingClient() {
       : "Ready to mount your TV?",
 
     finalCtaText: isEs
-      ? "Envía tu solicitud ahora y recibe un presupuesto claro para montaje de TV, ocultación de cables, soundbar, proyector o instalación multimedia en Valencia."
-      : "Send your request now and get a clear estimate for TV mounting, cable concealment, soundbar setup, projector mounting or media installation in Valencia.",
+      ? "Envía tu solicitud ahora y recibe un presupuesto claro para montaje de TV, Samsung Frame, TV grande, ocultación de cables, soundbar, proyector o instalación multimedia en Valencia."
+      : "Send your request now and get a clear estimate for TV mounting, Samsung Frame, large TV, cable concealment, soundbar setup, projector mounting or media installation in Valencia.",
 
     finalNote: isEs
       ? "El precio final depende del tipo de pared, tamaño de pantalla, soporte, altura, ocultación de cables y extras."
@@ -121,7 +125,6 @@ export default function TvMountingClient() {
       price: isEs ? "desde €49" : "from €49",
       icon: <Tv className="h-5 w-5" />,
       href: `/${locale}/montaje-tv-valencia`,
-      className: "",
     },
     {
       title: isEs ? "Montaje de TV grande" : "Large TV mounting",
@@ -131,27 +134,15 @@ export default function TvMountingClient() {
       price: isEs ? "desde €69" : "from €69",
       icon: <Monitor className="h-5 w-5" />,
       href: `/${locale}/montaje-tv-grande-valencia`,
-      className: "",
     },
     {
-      title: isEs ? "Instalación de estanterías" : "Shelf installation",
+      title: isEs ? "Samsung Frame" : "Samsung Frame",
       desc: isEs
-        ? "Montaje limpio de estanterías con anclajes adecuados y buena alineación."
-        : "Clean shelf mounting with proper anchors and alignment.",
-      price: isEs ? "desde €35" : "from €35",
-      icon: <Square className="h-5 w-5" />,
-      href: `/${locale}/instalacion-estanterias-valencia`,
-      className: "",
-    },
-    {
-      title: isEs ? "Montaje de proyector" : "Projector mounting",
-      desc: isEs
-        ? "Instalación de proyector en techo o pared con alineación limpia."
-        : "Ceiling or wall projector installation with clean alignment.",
-      price: isEs ? "desde €39" : "from €39",
-      icon: <Monitor className="h-5 w-5" />,
-      href: `/${locale}/montaje-proyector-valencia`,
-      className: "",
+        ? "Montaje Samsung Frame con One Connect Box, cable invisible y acabado tipo cuadro."
+        : "Samsung Frame mounting with One Connect Box, invisible cable and picture-frame finish.",
+      price: isEs ? "desde €69" : "from €69",
+      icon: <Ruler className="h-5 w-5" />,
+      href: `/${locale}/montaje-tv-samsung-frame-valencia`,
     },
     {
       title: isEs ? "Ocultación de cables" : "Cable concealment",
@@ -161,7 +152,6 @@ export default function TvMountingClient() {
       price: isEs ? "desde €29" : "from €29",
       icon: <Cable className="h-5 w-5" />,
       href: `/${locale}/ocultar-cables-valencia`,
-      className: "",
     },
     {
       title: isEs ? "Instalación de soundbar" : "Soundbar mounting",
@@ -171,7 +161,113 @@ export default function TvMountingClient() {
       price: isEs ? "desde €29" : "from €29",
       icon: <Speaker className="h-5 w-5" />,
       href: `/${locale}/instalar-soundbar-valencia`,
-      className: "",
+    },
+    {
+      title: isEs ? "Montaje de proyector" : "Projector mounting",
+      desc: isEs
+        ? "Instalación de proyector en techo o pared con alineación limpia."
+        : "Ceiling or wall projector installation with clean alignment.",
+      price: isEs ? "desde €39" : "from €39",
+      icon: <Monitor className="h-5 w-5" />,
+      href: `/${locale}/montaje-proyector-valencia`,
+    },
+  ];
+
+  const tvSeoPages = [
+    {
+      title: isEs ? "Instalador TV Valencia" : "TV installer Valencia",
+      desc: isEs
+        ? "Servicio específico para instalar televisores en pared en Valencia."
+        : "Specific service for installing TVs on walls in Valencia.",
+      href: `/${locale}/instalador-tv-valencia`,
+      icon: <Tv className="h-5 w-5" />,
+    },
+    {
+      title: isEs ? "Colgar TV Valencia" : "Hang TV Valencia",
+      desc: isEs
+        ? "Colgar televisión en pared con soporte seguro y acabado limpio."
+        : "Hang a TV on the wall with secure bracket and clean finish.",
+      href: `/${locale}/colgar-tv-valencia`,
+      icon: <Hammer className="h-5 w-5" />,
+    },
+    {
+      title: isEs ? "Instalar TV en pared" : "Install TV on wall",
+      desc: isEs
+        ? "Instalación de TV en pared de ladrillo, hormigón o pladur."
+        : "TV wall installation on brick, concrete or drywall.",
+      href: `/${locale}/instalar-tv-pared-valencia`,
+      icon: <Layers className="h-5 w-5" />,
+    },
+    {
+      title: isEs ? "Instalación soporte TV" : "TV bracket installation",
+      desc: isEs
+        ? "Soportes fijos, inclinables y articulados para TV."
+        : "Fixed, tilting and full-motion TV brackets.",
+      href: `/${locale}/instalacion-soporte-tv-valencia`,
+      icon: <Hammer className="h-5 w-5" />,
+    },
+    {
+      title: isEs ? "Montaje Samsung Frame" : "Samsung Frame mounting",
+      desc: isEs
+        ? "Montaje Samsung Frame con One Connect Box y acabado tipo cuadro."
+        : "Samsung Frame mounting with One Connect Box and picture-frame finish.",
+      href: `/${locale}/montaje-tv-samsung-frame-valencia`,
+      icon: <Ruler className="h-5 w-5" />,
+    },
+    {
+      title: isEs ? "Instalar Samsung Frame" : "Install Samsung Frame",
+      desc: isEs
+        ? "Instalación limpia de Samsung Frame en pared con cable invisible."
+        : "Clean Samsung Frame wall installation with invisible cable.",
+      href: `/${locale}/instalar-samsung-frame-valencia`,
+      icon: <Ruler className="h-5 w-5" />,
+    },
+  ];
+
+  const tvSizePages = [
+    {
+      title: isEs ? "Montaje TV 65 pulgadas" : "65 inch TV mounting",
+      desc: isEs
+        ? "Montaje seguro para televisores de 65 pulgadas en Valencia."
+        : "Safe mounting for 65 inch TVs in Valencia.",
+      price: isEs ? "desde €59" : "from €59",
+      href: `/${locale}/montaje-tv-65-pulgadas-valencia`,
+    },
+    {
+      title: isEs ? "Montaje TV 75 pulgadas" : "75 inch TV mounting",
+      desc: isEs
+        ? "Instalación profesional para TVs grandes de 75 pulgadas."
+        : "Professional installation for large 75 inch TVs.",
+      price: isEs ? "desde €79" : "from €79",
+      href: `/${locale}/montaje-tv-75-pulgadas-valencia`,
+    },
+    {
+      title: isEs ? "Montaje TV 85 pulgadas" : "85 inch TV mounting",
+      desc: isEs
+        ? "Montaje de pantallas grandes de 85 pulgadas con revisión de pared."
+        : "85 inch large screen mounting with wall check.",
+      price: isEs ? "desde €99" : "from €99",
+      href: `/${locale}/montaje-tv-85-pulgadas-valencia`,
+    },
+    {
+      title: isEs ? "Montaje TV 98 pulgadas" : "98 inch TV mounting",
+      desc: isEs
+        ? "Instalación high-ticket para pantallas gigantes de 98 pulgadas."
+        : "High-ticket installation for giant 98 inch screens.",
+      price: isEs ? "desde €129" : "from €129",
+      href: `/${locale}/montaje-tv-98-pulgadas-valencia`,
+    },
+  ];
+
+  const secondaryServices = [
+    {
+      title: isEs ? "Instalación de estanterías" : "Shelf installation",
+      desc: isEs
+        ? "Montaje limpio de estanterías con anclajes adecuados y buena alineación."
+        : "Clean shelf mounting with proper anchors and alignment.",
+      price: isEs ? "desde €35" : "from €35",
+      icon: <Square className="h-5 w-5" />,
+      href: `/${locale}/instalacion-estanterias-valencia`,
     },
   ];
 
@@ -181,18 +277,24 @@ export default function TvMountingClient() {
         "Alineación cuidadosa antes de perforar",
         "Opciones de cableado limpio disponibles",
         "Presupuesto transparente antes de reservar",
+        "Páginas específicas para Samsung Frame y TVs grandes",
+        "Revisión de pared, soporte, altura y cableado",
       ]
     : [
-        "Suitable for apartments, homes and offices",
+        "Suitable for apartments, homes, offices and units",
         "Careful alignment before drilling",
         "Clean cable routing options available",
         "Transparent estimate before booking",
+        "Specific pages for Samsung Frame and large TVs",
+        "Wall, bracket, height and cabling check",
       ];
 
   const includedItems = isEs
     ? [
         "Montaje de TV en pared para pantallas pequeñas y grandes",
         "Instalación de soporte fijo, inclinable o articulado",
+        "Instalación Samsung Frame y One Connect Box",
+        "Montaje de TV 65, 75, 85 y 98 pulgadas",
         "Montaje de proyector en techo o pared",
         "Instalación de soundbar bajo TV o en pared",
         "Ocultación de cables con canaleta o ruta limpia",
@@ -201,6 +303,8 @@ export default function TvMountingClient() {
     : [
         "TV wall mounting for small and large screens",
         "Fixed, tilting or full-motion bracket installation",
+        "Samsung Frame and One Connect Box installation",
+        "65, 75, 85 and 98 inch TV mounting",
         "Projector ceiling or wall mounting",
         "Soundbar mounting under TVs or on wall",
         "Cable concealment with raceways or clean routing",
@@ -234,6 +338,22 @@ export default function TvMountingClient() {
     },
     {
       q: isEs
+        ? "¿Instaláis Samsung Frame?"
+        : "Do you install Samsung Frame TVs?",
+      a: isEs
+        ? "Sí. Se puede instalar Samsung Frame con alineación precisa, cable One Invisible Connection, ubicación del One Connect Box y acabado tipo cuadro."
+        : "Yes. Samsung Frame can be installed with precise alignment, One Invisible Connection cable, One Connect Box planning and picture-frame finish.",
+    },
+    {
+      q: isEs
+        ? "¿Montáis TVs grandes de 75, 85 o 98 pulgadas?"
+        : "Do you mount large 75, 85 or 98 inch TVs?",
+      a: isEs
+        ? "Sí. Las pantallas grandes requieren revisar pared, soporte, peso, altura, acceso y ayuda necesaria antes de confirmar el montaje."
+        : "Yes. Large screens require wall, bracket, weight, height, access and required help checks before confirming the mounting.",
+    },
+    {
+      q: isEs
         ? "¿Tengo que tener el soporte de TV?"
         : "Do I need to provide the bracket?",
       a: isEs
@@ -249,6 +369,42 @@ export default function TvMountingClient() {
         : "Yes. We can install soundbars, basic speakers, 5.1 systems and cleaner audio setups for homes, offices, bars or cafés.",
     },
   ];
+
+  const renderLinkCard = (item: {
+    title: string;
+    desc: string;
+    href: string;
+    icon?: React.ReactNode;
+    price?: string;
+  }) => (
+    <Link
+      key={item.href}
+      href={item.href}
+      className="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-all duration-200 hover:border-yellow-400 hover:shadow-lg hover:scale-[1.01]"
+    >
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          {item.icon && (
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
+              {item.icon}
+            </div>
+          )}
+
+          <h3 className="text-base font-extrabold text-black">{item.title}</h3>
+
+          <p className="mt-2 text-sm leading-6 text-gray-600">{item.desc}</p>
+
+          {item.price && (
+            <div className="mt-3 text-sm font-extrabold text-yellow-500">
+              {item.price}
+            </div>
+          )}
+        </div>
+
+        <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-gray-400 transition group-hover:text-yellow-500" />
+      </div>
+    </Link>
+  );
 
   return (
     <div className="min-h-screen bg-white text-black font-sans">
@@ -273,6 +429,24 @@ export default function TvMountingClient() {
             <p className="mt-4 max-w-3xl mx-auto text-gray-600 text-base sm:text-lg leading-8">
               {copy.heroSubtitle}
             </p>
+
+            <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+              <Link
+                href={estimateHref}
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 text-sm font-extrabold text-black shadow-lg hover:scale-[1.02] transition"
+              >
+                {copy.estimateButton} <ArrowRight className="h-4 w-4" />
+              </Link>
+
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-gray-300 bg-white px-7 py-4 text-sm font-semibold text-black shadow-md hover:scale-[1.02] transition"
+              >
+                WhatsApp
+              </a>
+            </div>
           </div>
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -300,7 +474,7 @@ export default function TvMountingClient() {
                 <Link
                   key={service.title}
                   href={service.href}
-                  className={`group rounded-2xl border border-yellow-400 bg-white p-7 text-left shadow-lg transition-all duration-200 hover:shadow-2xl hover:scale-[1.02] min-h-[220px] ${service.className || ""}`}
+                  className="group rounded-2xl border border-yellow-400 bg-white p-7 text-left shadow-lg transition-all duration-200 hover:shadow-2xl hover:scale-[1.02] min-h-[220px]"
                 >
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
                     {service.icon}
@@ -326,6 +500,60 @@ export default function TvMountingClient() {
               ))}
             </div>
           </div>
+
+          <section className="mt-16">
+            <div className="rounded-3xl border border-yellow-400 bg-white p-8 sm:p-10 shadow-xl">
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-4 py-1 text-xs font-semibold text-black">
+                  <BadgeCheck className="h-4 w-4" />
+                  {isEs ? "Servicios específicos SEO" : "Specific SEO services"}
+                </div>
+
+                <h2 className="mt-4 text-3xl sm:text-4xl font-extrabold text-black">
+                  {isEs
+                    ? "Servicios específicos de montaje de TV en Valencia"
+                    : "Specific TV mounting services in Valencia"}
+                </h2>
+
+                <p className="mt-4 max-w-3xl mx-auto text-gray-600 leading-8">
+                  {isEs
+                    ? "Elige el servicio exacto según tipo de instalación, soporte, pared, Samsung Frame, cableado o tamaño de pantalla."
+                    : "Choose the exact service by installation type, bracket, wall, Samsung Frame, cabling or screen size."}
+                </p>
+              </div>
+
+              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {tvSeoPages.map(renderLinkCard)}
+              </div>
+            </div>
+          </section>
+
+          <section className="mt-16">
+            <div className="rounded-3xl border border-yellow-400 bg-white p-8 sm:p-10 shadow-xl">
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-4 py-1 text-xs font-semibold text-black">
+                  <Star className="h-4 w-4" />
+                  {isEs ? "TVs grandes" : "Large TVs"}
+                </div>
+
+                <h2 className="mt-4 text-3xl sm:text-4xl font-extrabold text-black">
+                  {isEs
+                    ? "Montaje de TV por tamaño de pantalla"
+                    : "TV mounting by screen size"}
+                </h2>
+
+                <p className="mt-4 max-w-3xl mx-auto text-gray-600 leading-8">
+                  {isEs
+                    ? "Las TVs grandes necesitan más cuidado, mejor soporte, revisión de pared y una altura bien calculada."
+                    : "Large TVs need more care, better brackets, wall checking and a well-calculated height."}
+                </p>
+              </div>
+
+              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {tvSizePages.map(renderLinkCard)}
+              </div>
+            </div>
+          </section>
 
           <div className="mt-12 rounded-3xl border border-yellow-400 bg-white p-6 sm:p-8 shadow-xl">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
@@ -377,21 +605,25 @@ export default function TvMountingClient() {
                         Servicios profesionales de{" "}
                         <strong>montaje de TV en Valencia</strong> para pisos,
                         casas, oficinas y locales. THEVULGO instala televisores,
-                        proyectores, estanterías, soundbars y soluciones de cableado
-                        con alineación precisa y acabado limpio.
+                        Samsung Frame, TVs grandes, proyectores, soportes,
+                        soundbars y soluciones de cableado con alineación precisa
+                        y acabado limpio.
                       </p>
 
                       <p>
                         Una TV bien montada mejora la seguridad, la comodidad de
-                        visualización y el aspecto de toda la habitación. Una instalación
-                        incorrecta puede dañar la pared, dejar cables desordenados o crear
-                        una posición incómoda para ver la pantalla.
+                        visualización y el aspecto de toda la habitación. Una
+                        instalación incorrecta puede dañar la pared, dejar cables
+                        desordenados, colocar la pantalla demasiado alta o crear
+                        una posición incómoda para ver.
                       </p>
 
                       <p>
-                        Esta categoría es ideal para montaje de TV estándar, TVs grandes,
-                        ocultación de cables, instalación de soportes, soundbars, proyectores
-                        y pequeños elementos multimedia.
+                        Esta categoría conecta todos los servicios del cluster TV:
+                        montaje de TV estándar, instalar TV en pared, instalador
+                        TV, colgar TV, Samsung Frame, TVs de 65, 75, 85 y 98
+                        pulgadas, soporte TV, ocultación de cables, soundbar,
+                        proyector y media setups.
                       </p>
                     </>
                   ) : (
@@ -399,21 +631,24 @@ export default function TvMountingClient() {
                       <p>
                         Professional{" "}
                         <strong>TV mounting services in Valencia</strong> for
-                        apartments, homes, offices and commercial spaces. THEVULGO installs
-                        televisions, projectors, shelves, soundbars and cable management
+                        apartments, homes, offices and commercial spaces.
+                        THEVULGO installs televisions, Samsung Frame, large TVs,
+                        projectors, brackets, soundbars and cable management
                         solutions with precise alignment and clean finishing.
                       </p>
 
                       <p>
-                        A correctly mounted TV improves safety, viewing comfort and the
-                        overall look of the room. Poor installation can damage walls,
-                        leave cables messy or create an uncomfortable viewing position.
+                        A correctly mounted TV improves safety, viewing comfort
+                        and the overall look of the room. Poor installation can
+                        damage walls, leave cables messy, place the screen too
+                        high or create an uncomfortable viewing position.
                       </p>
 
                       <p>
-                        This category is ideal for standard TV mounting, large TVs,
-                        cable concealment, bracket installation, soundbars, projectors
-                        and small media setup tasks.
+                        This category connects the full TV cluster: standard TV
+                        mounting, install TV on wall, TV installer, hang TV,
+                        Samsung Frame, 65, 75, 85 and 98 inch TVs, TV brackets,
+                        cable concealment, soundbar, projector and media setups.
                       </p>
                     </>
                   )}
@@ -438,40 +673,44 @@ export default function TvMountingClient() {
                   {isEs ? (
                     <>
                       <p>
-                        Cada instalación se mide con cuidado para conseguir la altura
-                        correcta, alineación equilibrada y un resultado visualmente limpio.
-                        El objetivo es que la instalación parezca intencional y profesional,
-                        no improvisada.
+                        Cada instalación se mide con cuidado para conseguir la
+                        altura correcta, alineación equilibrada y un resultado
+                        visualmente limpio. El objetivo es que la instalación
+                        parezca intencional y profesional, no improvisada.
                       </p>
 
                       <p>
                         THEVULGO trabaja principalmente en{" "}
-                        <strong>Valencia y alrededores</strong>, con respuesta rápida y
-                        comunicación clara antes de la cita.
+                        <strong>Valencia y alrededores</strong>, con respuesta
+                        rápida y comunicación clara antes de la cita.
                       </p>
 
                       <p>
-                        Antes de empezar, el cliente recibe un presupuesto transparente
-                        según tipo de pared, tamaño de pantalla, soporte y complejidad.
+                        Antes de empezar, el cliente recibe un presupuesto
+                        transparente según tipo de pared, tamaño de pantalla,
+                        soporte, altura, ocultación de cables y complejidad.
                       </p>
                     </>
                   ) : (
                     <>
                       <p>
-                        Each installation is measured carefully to ensure the correct height,
-                        balanced alignment and a visually clean finish. The goal is always
-                        a result that looks intentional and professional rather than improvised.
+                        Each installation is measured carefully to ensure the
+                        correct height, balanced alignment and a visually clean
+                        finish. The goal is always a result that looks intentional
+                        and professional rather than improvised.
                       </p>
 
                       <p>
                         THEVULGO works mainly in{" "}
-                        <strong>Valencia and nearby areas</strong>, providing quick response
-                        times and clear communication before the appointment.
+                        <strong>Valencia and nearby areas</strong>, providing
+                        quick response times and clear communication before the
+                        appointment.
                       </p>
 
                       <p>
-                        Before installation begins, clients receive a transparent estimate
-                        based on wall type, screen size, bracket and mounting complexity.
+                        Before installation begins, clients receive a transparent
+                        estimate based on wall type, screen size, bracket,
+                        mounting height, cable concealment and complexity.
                       </p>
                     </>
                   )}
@@ -526,6 +765,52 @@ export default function TvMountingClient() {
             </div>
           </section>
 
+          {secondaryServices.length > 0 && (
+            <section className="mt-16">
+              <div className="rounded-3xl border border-yellow-400 bg-white p-8 sm:p-10 shadow-xl">
+                <div className="text-center">
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-black">
+                    {isEs
+                      ? "Otros servicios cerca de tu zona multimedia"
+                      : "Other services near your media area"}
+                  </h2>
+
+                  <p className="mt-4 max-w-3xl mx-auto text-gray-600 leading-8">
+                    {isEs
+                      ? "También podemos ayudarte con estanterías, pequeños accesorios y elementos alrededor de la TV."
+                      : "We can also help with shelves, small accessories and elements around the TV."}
+                  </p>
+                </div>
+
+                <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {secondaryServices.map((service) => (
+                    <Link
+                      key={service.title}
+                      href={service.href}
+                      className="group rounded-2xl border border-gray-200 bg-white p-7 text-left shadow-sm transition hover:border-yellow-400 hover:shadow-md"
+                    >
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
+                        {service.icon}
+                      </div>
+
+                      <h3 className="mt-4 text-xl font-extrabold text-black">
+                        {service.title}
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-7 text-gray-700">
+                        {service.desc}
+                      </p>
+
+                      <div className="mt-4 text-sm font-extrabold text-yellow-500">
+                        {service.price}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
           <section className="mt-16">
             <div className="rounded-3xl border border-yellow-400 bg-white p-8 sm:p-10 shadow-xl">
               <div className="max-w-5xl mx-auto">
@@ -537,7 +822,9 @@ export default function TvMountingClient() {
                   {faqItems.map((item, index) => (
                     <div
                       key={item.q}
-                      className={index === 0 ? "" : "border-t border-gray-200 pt-6"}
+                      className={
+                        index === 0 ? "" : "border-t border-gray-200 pt-6"
+                      }
                     >
                       <h3 className="font-extrabold text-black text-lg">
                         {item.q}
