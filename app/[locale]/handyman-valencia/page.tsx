@@ -46,7 +46,7 @@ import {
 
   Bath,
 
-  Kitchen,
+  CookingPot,
 
   Building2,
 
@@ -484,7 +484,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
 
       href: `/${locale}/services/kitchen`,
 
-      icon: <Kitchen className="h-6 w-6" />,
+      icon: <CookingPot className="h-6 w-6" />,
 
     },
 
