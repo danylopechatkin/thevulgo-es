@@ -36,7 +36,7 @@ type Props = {
 
 const baseUrl = "https://www.thevulgo.es";
 const phone = "34610076942";
-const slug = "handyman-mislata";
+const slug = "handyman-paterna";
 
 const areas = [
   "Campanar",
@@ -69,12 +69,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Manitas en Mislata Valencia | Reparaciones y Montaje | THEVULGO"
-    : "Handyman in Mislata Valencia | Repairs & Installations | THEVULGO";
+    ? "Manitas en Paterna Valencia | Reparaciones y Montaje | THEVULGO"
+    : "Handyman in Paterna Valencia | Repairs & Installations | THEVULGO";
 
   const description = isEs
-    ? "Servicio de manitas en Mislata Valencia. Montaje de TV, muebles IKEA, estanterías, lámparas, enchufes, pladur, pequeñas reparaciones y mantenimiento."
-    : "Handyman service in Mislata Valencia. TV mounting, IKEA furniture assembly, shelves, lights, outlets, drywall, small repairs and maintenance.";
+    ? "Servicio de manitas en Paterna Valencia. Montaje de TV, muebles IKEA, estanterías, lámparas, enchufes, pladur, pequeñas reparaciones y mantenimiento."
+    : "Handyman service in Paterna Valencia. TV mounting, IKEA furniture assembly, shelves, lights, outlets, drywall, small repairs and maintenance.";
 
   return {
     title,
@@ -131,7 +131,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function HandymanMislataPage({ params }: Props) {
+export default async function HandymanPaternaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
@@ -140,15 +140,15 @@ export default async function HandymanMislataPage({ params }: Props) {
 
   const whatsappText = encodeURIComponent(
     isEs
-      ? "Hola, necesito un manitas en Mislata Valencia. Quiero pedir presupuesto para una reparación, montaje o instalación."
-      : "Hi, I need a handyman in Mislata Valencia. I’d like to request an estimate for a repair, assembly or installation."
+      ? "Hola, necesito un manitas en Paterna Valencia. Quiero pedir presupuesto para una reparación, montaje o instalación."
+      : "Hi, I need a handyman in Paterna Valencia. I’d like to request an estimate for a repair, assembly or installation."
   );
 
   const whatsappHref = `https://wa.me/${phone}?text=${whatsappText}`;
 
   const moneyLinks = [
     {
-      title: isEs ? "Montaje de TV en Mislata" : "TV mounting in Mislata",
+      title: isEs ? "Montaje de TV en Paterna" : "TV mounting in Paterna",
       desc: isEs
         ? "TV en pared, soportes, soundbar y ocultación de cables."
         : "Wall-mounted TVs, brackets, soundbars and cable concealment.",
@@ -339,14 +339,14 @@ export default async function HandymanMislataPage({ params }: Props) {
 
   const process = isEs
     ? [
-        ["1. Envía fotos", "Muestra el trabajo por WhatsApp con fotos, medidas y ubicación en Mislata."],
+        ["1. Envía fotos", "Muestra el trabajo por WhatsApp con fotos, medidas y ubicación en Paterna."],
         ["2. Recibe estimación", "Te damos una idea clara del precio, materiales y dificultad."],
         ["3. Confirmamos horario", "Elegimos día y hora según disponibilidad y urgencia."],
         ["4. Trabajo limpio", "Se realiza el montaje, reparación o instalación de forma ordenada."],
         ["5. Revisión final", "Comprobamos que todo queda recto, firme y funcionando correctamente."],
       ]
     : [
-        ["1. Send photos", "Show the job by WhatsApp with photos, measurements and Mislata location."],
+        ["1. Send photos", "Show the job by WhatsApp with photos, measurements and Paterna location."],
         ["2. Get estimate", "We give you a clear idea of price, materials and difficulty."],
         ["3. Confirm time", "We choose day and time depending on availability and urgency."],
         ["4. Clean work", "The assembly, repair or installation is done neatly."],
@@ -356,16 +356,16 @@ export default async function HandymanMislataPage({ params }: Props) {
   const faqs = isEs
     ? [
         {
-          q: "¿Cuánto cuesta un manitas en Mislata?",
+          q: "¿Cuánto cuesta un manitas en Paterna?",
           a: "Depende del trabajo, materiales, tiempo y dificultad. Los trabajos pequeños suelen empezar desde 35–49 €. Siempre confirmamos el precio antes de empezar.",
         },
         {
           q: "¿Puedo enviar fotos por WhatsApp?",
-          a: "Sí. Envía fotos, medidas, ubicación en Mislata y una breve descripción. Así podemos preparar herramientas, materiales y una estimación más clara.",
+          a: "Sí. Envía fotos, medidas, ubicación en Paterna y una breve descripción. Así podemos preparar herramientas, materiales y una estimación más clara.",
         },
         {
           q: "¿Hacéis trabajos pequeños el mismo día?",
-          a: "Cuando hay disponibilidad, sí. Para trabajos urgentes o rápidos en Mislata, envía fotos y ubicación por WhatsApp.",
+          a: "Cuando hay disponibilidad, sí. Para trabajos urgentes o rápidos en Paterna, envía fotos y ubicación por WhatsApp.",
         },
         {
           q: "¿Trabajáis con pisos de alquiler o Airbnb?",
@@ -380,7 +380,7 @@ export default async function HandymanMislataPage({ params }: Props) {
           a: "Sí. Es recomendable enviar una lista completa: TV, estanterías, lámparas, muebles, puertas, baño o reparaciones.",
         },
         {
-          q: "¿Montáis TV en pared en Mislata?",
+          q: "¿Montáis TV en pared en Paterna?",
           a: "Sí. Montamos TV en pared, soportes fijos, inclinables o articulados, soundbars y opciones de ocultación de cables.",
         },
         {
@@ -390,16 +390,16 @@ export default async function HandymanMislataPage({ params }: Props) {
       ]
     : [
         {
-          q: "How much does a handyman in Mislata cost?",
+          q: "How much does a handyman in Paterna cost?",
           a: "It depends on the job, materials, time and difficulty. Small jobs usually start from €35–49. We always confirm the price before starting.",
         },
         {
           q: "Can I send photos by WhatsApp?",
-          a: "Yes. Send photos, measurements, Mislata location and a short description so we can prepare tools, materials and a clearer estimate.",
+          a: "Yes. Send photos, measurements, Paterna location and a short description so we can prepare tools, materials and a clearer estimate.",
         },
         {
           q: "Do you do same-day small jobs?",
-          a: "When availability allows, yes. For urgent or quick jobs in Mislata, send photos and location by WhatsApp.",
+          a: "When availability allows, yes. For urgent or quick jobs in Paterna, send photos and location by WhatsApp.",
         },
         {
           q: "Do you work with rental or Airbnb apartments?",
@@ -414,7 +414,7 @@ export default async function HandymanMislataPage({ params }: Props) {
           a: "Yes. It is best to send a full list: TV, shelves, lights, furniture, doors, bathroom or repairs.",
         },
         {
-          q: "Do you mount TVs on walls in Mislata?",
+          q: "Do you mount TVs on walls in Paterna?",
           a: "Yes. We mount TVs on walls, fixed, tilting or full-motion brackets, soundbars and cable concealment options.",
         },
         {
@@ -444,19 +444,19 @@ export default async function HandymanMislataPage({ params }: Props) {
       {
         "@type": "Service",
         "@id": `${pageUrl}#service`,
-        name: isEs ? "Manitas en Mislata Valencia" : "Handyman in Mislata Valencia",
+        name: isEs ? "Manitas en Paterna Valencia" : "Handyman in Paterna Valencia",
         serviceType: isEs ? "Servicio de manitas" : "Handyman services",
         provider: {
           "@id": `${baseUrl}/#localbusiness`,
         },
-        areaServed: ["Mislata", "Valencia"],
+        areaServed: ["Paterna", "Valencia"],
         url: pageUrl,
         description: isEs
-          ? "Servicio de manitas en Mislata Valencia para montaje de TV, muebles, lámparas, enchufes, estanterías, pladur, pequeñas reparaciones, baño, cocina, Airbnb y mantenimiento."
-          : "Handyman service in Mislata Valencia for TV mounting, furniture, lights, outlets, shelves, drywall, small repairs, bathroom, kitchen, Airbnb and maintenance.",
+          ? "Servicio de manitas en Paterna Valencia para montaje de TV, muebles, lámparas, enchufes, estanterías, pladur, pequeñas reparaciones, baño, cocina, Airbnb y mantenimiento."
+          : "Handyman service in Paterna Valencia for TV mounting, furniture, lights, outlets, shelves, drywall, small repairs, bathroom, kitchen, Airbnb and maintenance.",
         hasOfferCatalog: {
           "@type": "OfferCatalog",
-          name: isEs ? "Servicios de manitas en Mislata" : "Handyman services in Mislata",
+          name: isEs ? "Servicios de manitas en Paterna" : "Handyman services in Paterna",
           itemListElement: moneyLinks.map((item) => ({
             "@type": "Offer",
             itemOffered: {
@@ -496,7 +496,7 @@ export default async function HandymanMislataPage({ params }: Props) {
           {
             "@type": "ListItem",
             position: 3,
-            name: isEs ? "Manitas Mislata" : "Handyman Mislata",
+            name: isEs ? "Manitas Paterna" : "Handyman Paterna",
             item: pageUrl,
           },
         ],
@@ -516,19 +516,19 @@ export default async function HandymanMislataPage({ params }: Props) {
           <div className="max-w-5xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-2 text-sm font-semibold shadow-sm">
               <MapPin className="h-4 w-4 text-yellow-500" />
-              THEVULGO • Mislata Valencia
+              THEVULGO • Paterna Valencia
             </div>
 
             <h1 className="text-4xl font-black tracking-tight sm:text-6xl">
               {isEs
-                ? "Manitas en Mislata Valencia para reparaciones, montaje e instalaciones"
-                : "Handyman in Mislata Valencia for repairs, assembly and installations"}
+                ? "Manitas en Paterna Valencia para reparaciones, montaje e instalaciones"
+                : "Handyman in Paterna Valencia for repairs, assembly and installations"}
             </h1>
 
             <p className="mt-6 max-w-4xl text-lg leading-8 text-neutral-700">
               {isEs
-                ? "Servicio de manitas en Mislata para trabajos reales del día a día: montar una TV, instalar estanterías, montar muebles IKEA, cambiar un enchufe, colgar una lámpara, reparar pladur, ajustar puertas o resolver varias tareas pequeñas en una sola visita."
-                : "Handyman service in Mislata for real everyday jobs: mounting a TV, installing shelves, assembling IKEA furniture, replacing an outlet, hanging a light, repairing drywall, adjusting doors or solving several small tasks in one visit."}
+                ? "Servicio de manitas en Paterna para trabajos reales del día a día: montar una TV, instalar estanterías, montar muebles IKEA, cambiar un enchufe, colgar una lámpara, reparar pladur, ajustar puertas o resolver varias tareas pequeñas en una sola visita."
+                : "Handyman service in Paterna for real everyday jobs: mounting a TV, installing shelves, assembling IKEA furniture, replacing an outlet, hanging a light, repairing drywall, adjusting doors or solving several small tasks in one visit."}
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -548,7 +548,7 @@ export default async function HandymanMislataPage({ params }: Props) {
                 {
                   icon: Clock3,
                   title: isEs ? "Respuesta rápida" : "Fast response",
-                  text: isEs ? "Envía fotos desde Mislata y recibe estimación." : "Send photos from Mislata and get an estimate.",
+                  text: isEs ? "Envía fotos desde Paterna y recibe estimación." : "Send photos from Paterna and get an estimate.",
                 },
                 {
                   icon: ShieldCheck,
@@ -577,17 +577,17 @@ export default async function HandymanMislataPage({ params }: Props) {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-4 py-1 text-xs font-bold">
               <Wrench className="h-4 w-4" />
-              {isEs ? "Servicios en Mislata" : "Services in Mislata"}
+              {isEs ? "Servicios en Paterna" : "Services in Paterna"}
             </div>
 
             <h2 className="mt-4 text-3xl font-black sm:text-4xl">
-              {isEs ? "Servicios de manitas en Mislata" : "Handyman services in Mislata"}
+              {isEs ? "Servicios de manitas en Paterna" : "Handyman services in Paterna"}
             </h2>
 
             <p className="mt-4 max-w-4xl text-neutral-700 leading-8">
               {isEs
-                ? "Mislata combina viviendas, urbanizaciones, pisos familiares, alquileres, oficinas y comercios que necesitan mantenimiento práctico. THEVULGO ayuda con montaje, reparaciones, instalaciones y pequeños arreglos sin complicar el trabajo."
-                : "Mislata combines homes, residential buildings, family apartments, rentals, offices and shops that need practical maintenance. THEVULGO helps with assembly, repairs, installations and small fixes without overcomplicating the job."}
+                ? "Paterna combina viviendas, urbanizaciones, pisos familiares, alquileres, oficinas y comercios que necesitan mantenimiento práctico. THEVULGO ayuda con montaje, reparaciones, instalaciones y pequeños arreglos sin complicar el trabajo."
+                : "Paterna combines homes, residential buildings, family apartments, rentals, offices and shops that need practical maintenance. THEVULGO helps with assembly, repairs, installations and small fixes without overcomplicating the job."}
             </p>
           </div>
 
@@ -626,7 +626,7 @@ export default async function HandymanMislataPage({ params }: Props) {
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
-                {isEs ? "Presupuesto claro para trabajos en Mislata" : "Clear estimate for jobs in Mislata"}
+                {isEs ? "Presupuesto claro para trabajos en Paterna" : "Clear estimate for jobs in Paterna"}
               </h2>
 
               <p className="mt-5 text-lg leading-8 text-neutral-700">
@@ -670,8 +670,8 @@ export default async function HandymanMislataPage({ params }: Props) {
 
           <h2 className="mx-auto mt-4 max-w-5xl text-3xl font-black sm:text-4xl">
             {isEs
-              ? "Trabajos de manitas para pisos, alquileres y viviendas en Mislata"
-              : "Handyman jobs for apartments, rentals and homes in Mislata"}
+              ? "Trabajos de manitas para pisos, alquileres y viviendas en Paterna"
+              : "Handyman jobs for apartments, rentals and homes in Paterna"}
           </h2>
         </div>
 
@@ -703,7 +703,7 @@ export default async function HandymanMislataPage({ params }: Props) {
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
-                {isEs ? "Por qué elegir THEVULGO en Mislata" : "Why choose THEVULGO in Mislata"}
+                {isEs ? "Por qué elegir THEVULGO en Paterna" : "Why choose THEVULGO in Paterna"}
               </h2>
 
               <p className="mt-5 text-lg leading-8 text-neutral-300">
@@ -765,13 +765,13 @@ export default async function HandymanMislataPage({ params }: Props) {
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
-                {isEs ? "Mantenimiento para pisos y viviendas en Mislata" : "Maintenance for apartments and homes in Mislata"}
+                {isEs ? "Mantenimiento para pisos y viviendas en Paterna" : "Maintenance for apartments and homes in Paterna"}
               </h2>
 
               <p className="mt-5 text-lg leading-8 text-neutral-700">
                 {isEs
-                  ? "Mislata tiene pisos familiares, viviendas modernas, alquileres y apartamentos donde los pequeños problemas deben resolverse rápido: una puerta que no cierra, una lámpara suelta, un enchufe roto, una manilla floja, una balda caída o una pared dañada."
-                  : "Mislata has family apartments, modern homes, rentals and apartments where small issues need to be solved quickly: a door that does not close, a loose light, a broken outlet, a loose handle, a fallen shelf or a damaged wall."}
+                  ? "Paterna tiene pisos familiares, viviendas modernas, alquileres y apartamentos donde los pequeños problemas deben resolverse rápido: una puerta que no cierra, una lámpara suelta, un enchufe roto, una manilla floja, una balda caída o una pared dañada."
+                  : "Paterna has family apartments, modern homes, rentals and apartments where small issues need to be solved quickly: a door that does not close, a loose light, a broken outlet, a loose handle, a fallen shelf or a damaged wall."}
               </p>
             </div>
 
@@ -815,7 +815,7 @@ export default async function HandymanMislataPage({ params }: Props) {
             </div>
 
             <h2 className="mt-5 text-3xl font-black">
-              {isEs ? "Fijaciones seguras en paredes de Mislata" : "Secure fixings on Mislata walls"}
+              {isEs ? "Fijaciones seguras en paredes de Paterna" : "Secure fixings on Paterna walls"}
             </h2>
 
             <p className="mt-4 text-lg leading-8 text-neutral-700">
@@ -836,8 +836,8 @@ export default async function HandymanMislataPage({ params }: Props) {
 
             <p className="mt-4 text-lg leading-8 text-neutral-700">
               {isEs
-                ? "Si tienes varias cosas pendientes en Mislata, es mejor enviarlas todas juntas: una lámpara, una estantería, un mueble, una puerta, una reparación de pared o un accesorio de baño."
-                : "If you have several pending jobs in Mislata, it is better to send them all together: a light, a shelf, furniture, a door, a wall repair or a bathroom accessory."}
+                ? "Si tienes varias cosas pendientes en Paterna, es mejor enviarlas todas juntas: una lámpara, una estantería, un mueble, una puerta, una reparación de pared o un accesorio de baño."
+                : "If you have several pending jobs in Paterna, it is better to send them all together: a light, a shelf, furniture, a door, a wall repair or a bathroom accessory."}
             </p>
           </div>
         </div>
@@ -852,7 +852,7 @@ export default async function HandymanMislataPage({ params }: Props) {
             </div>
 
             <h2 className="mx-auto mt-4 max-w-5xl text-3xl font-black sm:text-4xl">
-              {isEs ? "Manitas cerca de Mislata" : "Handyman near Mislata"}
+              {isEs ? "Manitas cerca de Paterna" : "Handyman near Paterna"}
             </h2>
           </div>
 
@@ -882,18 +882,18 @@ export default async function HandymanMislataPage({ params }: Props) {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-4 py-1 text-xs font-bold">
               <Sparkles className="h-4 w-4" />
-              SEO • handyman Mislata
+              SEO • handyman Paterna
             </div>
 
             <h2 className="mt-4 text-3xl font-black sm:text-4xl">
-              {isEs ? "Servicio de manitas en Mislata Valencia" : "Handyman service in Mislata Valencia"}
+              {isEs ? "Servicio de manitas en Paterna Valencia" : "Handyman service in Paterna Valencia"}
             </h2>
 
             <div className="mt-6 space-y-5 text-lg leading-8 text-neutral-700">
               {isEs ? (
                 <>
                   <p>
-                    Si buscas <strong>manitas en Mislata Valencia</strong>,
+                    Si buscas <strong>manitas en Paterna Valencia</strong>,
                     THEVULGO ofrece ayuda práctica para trabajos pequeños y
                     medianos en viviendas, pisos familiares, alquileres,
                     oficinas y pequeños negocios.
@@ -917,7 +917,7 @@ export default async function HandymanMislataPage({ params }: Props) {
                 <>
                   <p>
                     If you are looking for a{" "}
-                    <strong>handyman in Mislata Valencia</strong>, THEVULGO
+                    <strong>handyman in Paterna Valencia</strong>, THEVULGO
                     offers practical help for small and medium jobs in homes,
                     family apartments, rentals, offices and small businesses.
                   </p>
@@ -949,7 +949,7 @@ export default async function HandymanMislataPage({ params }: Props) {
               {(isEs
                 ? [
                     "Envía fotos claras del trabajo",
-                    "Indica dirección o zona de Mislata",
+                    "Indica dirección o zona de Paterna",
                     "Explica si ya tienes materiales",
                     "Manda medidas aproximadas si es montaje",
                     "Di si hay varios trabajos en la misma visita",
@@ -957,7 +957,7 @@ export default async function HandymanMislataPage({ params }: Props) {
                   ]
                 : [
                     "Send clear photos of the job",
-                    "Mention address or area in Mislata",
+                    "Mention address or area in Paterna",
                     "Explain if you already have materials",
                     "Send approximate measurements if it is mounting",
                     "Say if there are several jobs in the same visit",
@@ -1002,7 +1002,7 @@ export default async function HandymanMislataPage({ params }: Props) {
           <div className="grid gap-8 lg:grid-cols-[1fr_0.7fr] lg:items-center">
             <div>
               <h2 className="text-3xl font-black sm:text-4xl">
-                {isEs ? "¿Necesitas un manitas en Mislata?" : "Need a handyman in Mislata?"}
+                {isEs ? "¿Necesitas un manitas en Paterna?" : "Need a handyman in Paterna?"}
               </h2>
 
               <p className="mt-4 max-w-3xl text-lg font-medium leading-8">
