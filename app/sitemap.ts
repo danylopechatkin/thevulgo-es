@@ -22,6 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const seoServicePages = [
     "handyman-valencia",
+    "handyman-benimaclet",
+    "handyman-russafa",
+    "handyman-campanar",
+    "handyman-patraix",
+    "handyman-mislata",
+    "handyman-paterna",
 
     "electricista-valencia",
     "montaje-muebles-valencia",
