@@ -22,7 +22,7 @@ import {
   Star,
   Wrench,
   Drill,
-  Wall,
+  PanelsTopLeft,
   Construction,
   House,
   ClipboardList,
@@ -231,7 +231,7 @@ export default async function WallRepairValenciaPage({ params }: Props) {
         {
           title: "Paredes de yeso",
           text: "Masilla, reparación superficial, nivelado de zonas pequeñas y preparación para pintar.",
-          icon: <Wall className="h-6 w-6" />,
+          icon: <PanelsTopLeft className="h-6 w-6" />,
         },
         {
           title: "Preparación para pintura",
@@ -263,7 +263,7 @@ export default async function WallRepairValenciaPage({ params }: Props) {
         {
           title: "Plaster wall repair",
           text: "Filler, surface repair, small area levelling and preparation for painting.",
-          icon: <Wall className="h-6 w-6" />,
+          icon: <PanelsTopLeft className="h-6 w-6" />,
         },
         {
           title: "Paint preparation",
@@ -822,7 +822,7 @@ export default async function WallRepairValenciaPage({ params }: Props) {
           <div>
 
             <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-4 py-1 text-xs font-bold">
-              <Wall className="h-4 w-4"/>
+              <PanelsTopLeft className="h-4 w-4"/>
               {isEs ? "Problemas habituales":"Common wall problems"}
             </div>
 
