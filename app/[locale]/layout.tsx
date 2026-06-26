@@ -72,19 +72,19 @@ export default async function LocaleLayout({
         className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden bg-white font-sans text-black antialiased`}
       >
         <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17552260425"
-          strategy="afterInteractive"
-        />
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=AW-17552260425"
+  strategy="afterInteractive"
+/>
 
-        <Script id="google-ads-tag" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-17552260425');
-          `}
-        </Script>
+<Script id="google-ads-tag" strategy="afterInteractive">
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17552260425');
+  `}
+</Script>
 
         <NextIntlClientProvider messages={messages}>
           <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-md">
