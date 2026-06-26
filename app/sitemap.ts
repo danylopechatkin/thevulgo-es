@@ -29,6 +29,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "handyman-mislata",
     "handyman-paterna",
 
+    "reparacion-piso-alquiler-valencia",
+"reparaciones-antes-entrega-piso-valencia",
+"reparacion-paredes-valencia",
+"retoques-pintura-valencia",
+"reparacion-agujeros-pared-valencia",
+
+"mantenimiento-airbnb-valencia",
+"reparaciones-airbnb-valencia",
+"preparacion-piso-airbnb-valencia",
+"handyman-airbnb-valencia",
+
+"fin-contrato-alquiler-valencia",
+"devolver-piso-propietario-valencia",
+"puesta-a-punto-piso-valencia",
+"puesta-a-punto-vivienda-valencia",
+
+"pequenas-reparaciones-valencia",
+
     "electricista-valencia",
     "montaje-muebles-valencia",
     "instalar-lampara-valencia",
