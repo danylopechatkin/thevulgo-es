@@ -21,6 +21,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const seoServicePages = [
+
+
+ // Toldos
+
+    "instalacion-toldos-valencia",
+
+    "montaje-toldos-valencia",
+
+    "instalar-toldo-valencia",
+
+    "instalador-toldos-valencia",
+
+    "manitas-instalacion-toldos-valencia",
+
+    "instalacion-toldo-manual-valencia",
+
+    "instalacion-toldo-electrico-valencia",
+
+    "instalacion-toldo-terraza-valencia",
+
+    "instalacion-toldo-balcon-valencia",
+
+    "instalacion-toldo-patio-valencia",
+
+    "instalacion-toldo-leroy-merlin-valencia",
+
+    "montaje-toldo-leroy-merlin-valencia",
+
+
     "handyman-valencia",
     "handyman-benimaclet",
     "handyman-russafa",
