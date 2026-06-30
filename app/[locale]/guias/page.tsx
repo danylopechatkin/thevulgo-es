@@ -231,7 +231,7 @@ export default async function GuiasPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <main className="min-h-screen bg-neutral-950 text-white">
+      <main className="min-h-screen bg-white text-neutral-900">
         <section className="relative overflow-hidden border-b border-white/10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(251,191,36,0.22),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.15),transparent_36%)]" />
 
