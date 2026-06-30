@@ -165,6 +165,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "cambio-extractor-valencia",
     "cambio-luz-bano-valencia",
     "cambio-lampara-techo-valencia",
+    "guias",
   ];
 
   const nestedServicePages = [
