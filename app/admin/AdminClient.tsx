@@ -159,6 +159,31 @@ const handleLogout = async () => {
     }
   };
 
+  const deleteOrder = async (order: Order) => {
+  const confirmed = window.confirm(
+    `Delete order ${formatOrderId(order)} for ${order.full_name}?`
+  );
+
+  if (!confirmed) return;
+
+  const { error } = await supabase
+    .from("orders")
+    .delete()
+    .eq("id", order.id);
+
+  if (error) {
+    console.error("DELETE ORDER ERROR:", error);
+    alert("Error deleting order");
+    return;
+  }
+
+  setOrders((prev) => prev.filter((o) => o.id !== order.id));
+
+  if (selected?.id === order.id) {
+    setSelected(null);
+  }
+};
+
   const saveInternalNotes = async () => {
     if (!selected) return;
 
@@ -461,12 +486,21 @@ setSelected((prev) =>
                       </td>
 
                       <td className="px-6 py-5 align-top text-right">
-                        <button
-                          onClick={() => setSelected(order)}
-                          className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.03] hover:shadow-md"
-                        >
-                          Open
-                        </button>
+                        <div className="flex justify-end gap-2">
+  <button
+    onClick={() => setSelected(order)}
+    className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.03] hover:shadow-md"
+  >
+    Open
+  </button>
+
+  <button
+    onClick={() => deleteOrder(order)}
+    className="rounded-2xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-extrabold text-red-600 shadow-sm transition hover:bg-red-100"
+  >
+    Delete
+  </button>
+</div>
                       </td>
                     </tr>
                   ))
@@ -702,6 +736,17 @@ setSelected((prev) =>
                   >
                     Close
                   </button>
+                  <button
+
+  onClick={() => deleteOrder(selected)}
+
+  className="mt-3 w-full rounded-2xl border border-red-300 bg-red-50 py-3 text-sm font-extrabold text-red-600 transition hover:bg-red-100"
+
+>
+
+  🗑 Delete order
+
+</button>
                 </div>
               </div>
             </div>
