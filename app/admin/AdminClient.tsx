@@ -421,6 +421,49 @@ const calendarDays = useMemo(() => {
     );
   };
 
+  const updateOrderSchedule = async () => {
+  if (!selected) return;
+
+  if (!selected.preferred_date || !selected.preferred_time) {
+    alert("Date and time are required");
+    return;
+  }
+
+  const scheduledAt = new Date(
+    `${selected.preferred_date}T${selected.preferred_time}:00+02:00`
+  ).toISOString();
+
+  const { error } = await supabase
+    .from("orders")
+    .update({
+      preferred_date: selected.preferred_date,
+      preferred_time: selected.preferred_time,
+      scheduled_at: scheduledAt,
+    })
+    .eq("id", selected.id);
+
+  if (error) {
+    console.error("UPDATE SCHEDULE ERROR:", error);
+    alert("Error updating schedule");
+    return;
+  }
+
+  setOrders((prev) =>
+    prev.map((o) =>
+      o.id === selected.id
+        ? {
+            ...o,
+            preferred_date: selected.preferred_date,
+            preferred_time: selected.preferred_time,
+            scheduled_at: scheduledAt,
+          }
+        : o
+    )
+  );
+
+  alert("Schedule updated");
+};
+
   const completeOrder = async () => {
     if (!selected) return;
 
@@ -1113,15 +1156,41 @@ const calendarDays = useMemo(() => {
         </div>
 
         <div className="rounded-2xl border border-gray-200 bg-white p-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-            Schedule
-          </p>
-          <p className="mt-2 text-sm text-black">
-            {selected.scheduled_at
-              ? formatMadridDateTime(selected.scheduled_at).full
-              : "—"}
-          </p>
-        </div>
+  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+    Schedule
+  </p>
+
+  <div className="mt-2 grid grid-cols-1 gap-2">
+    <input
+      type="date"
+      value={selected.preferred_date || ""}
+      onChange={(e) =>
+        setSelected((prev) =>
+          prev ? { ...prev, preferred_date: e.target.value } : prev
+        )
+      }
+      className="rounded-xl border border-gray-300 px-3 py-2 text-sm text-black outline-none focus:border-yellow-400"
+    />
+
+    <input
+      type="time"
+      value={selected.preferred_time || ""}
+      onChange={(e) =>
+        setSelected((prev) =>
+          prev ? { ...prev, preferred_time: e.target.value } : prev
+        )
+      }
+      className="rounded-xl border border-gray-300 px-3 py-2 text-sm text-black outline-none focus:border-yellow-400"
+    />
+
+    <button
+      onClick={updateOrderSchedule}
+      className="rounded-xl bg-yellow-400 px-3 py-2 text-sm font-extrabold text-black transition hover:scale-[1.02]"
+    >
+      Save schedule
+    </button>
+  </div>
+</div>
 
         <div className="rounded-2xl border border-gray-200 bg-white p-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
