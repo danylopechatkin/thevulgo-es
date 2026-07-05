@@ -191,6 +191,29 @@ export default function AdminClient() {
     };
   }, [orders]);
 
+  const calendarDays = useMemo(() => {
+  const today = new Date();
+
+  return Array.from({ length: 7 }).map((_, index) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() + index);
+
+    const dateKey = date.toISOString().slice(0, 10);
+
+    const dayOrders = orders
+      .filter((order) => order.scheduled_at?.slice(0, 10) === dateKey)
+      .sort((a, b) =>
+        String(a.scheduled_at || "").localeCompare(String(b.scheduled_at || ""))
+      );
+
+    return {
+      date,
+      dateKey,
+      orders: dayOrders,
+    };
+  });
+}, [orders]);
+
   const createManualOrder = async () => {
     if (!manualOrder.fullName.trim()) {
       alert("Client name is required");
@@ -507,6 +530,65 @@ export default function AdminClient() {
           <StatusCard title="In Progress" value={metrics.progress} />
           <StatusCard title="Done" value={metrics.done} />
         </div>
+
+        <div className="rounded-[28px] border border-yellow-400 bg-white p-6 shadow-xl">
+  <div>
+    <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
+      Calendar
+    </p>
+    <h2 className="mt-1 text-xl font-extrabold tracking-tight text-black">
+      Next 7 days
+    </h2>
+  </div>
+
+  <div className="overflow-x-auto">
+    <div className="mt-5 grid min-w-[1100px] grid-cols-7 gap-3">
+      {calendarDays.map((day) => (
+        <div
+          key={day.dateKey}
+          className="min-h-[220px] rounded-2xl border border-gray-200 bg-[#fffdf6] p-4"
+        >
+          <p className="text-xs font-bold uppercase tracking-wide text-gray-500">
+            {day.date.toLocaleDateString("en-GB", {
+              weekday: "short",
+              day: "2-digit",
+              month: "2-digit",
+            })}
+          </p>
+
+          <div className="mt-3 space-y-2">
+            {day.orders.length === 0 ? (
+              <p className="text-sm text-gray-400">Free day</p>
+            ) : (
+              day.orders.map((order) => (
+                <button
+                  key={order.id}
+                  onClick={() => setSelected(order)}
+                  className="w-full rounded-xl border border-yellow-400 bg-white p-3 text-left text-sm shadow-sm transition hover:bg-yellow-50"
+                >
+                  <p className="font-extrabold text-black">
+                    {order.scheduled_at
+                      ? formatMadridDateTime(order.scheduled_at).time
+                      : "—"}{" "}
+                    {order.full_name}
+                  </p>
+
+                  <p className="mt-1 text-xs text-gray-500">
+                    {order.area || order.city || "—"}
+                  </p>
+
+                  <p className="mt-1 text-xs font-bold text-black">
+                    €{Number(order.total || 0).toFixed(2)}
+                  </p>
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
 
         <div className="overflow-hidden rounded-[28px] border border-yellow-400 bg-white shadow-xl">
           <div className="border-b border-yellow-400 bg-gradient-to-r from-yellow-50 via-[#fffdf4] to-white px-6 py-4">
