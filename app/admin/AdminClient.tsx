@@ -47,15 +47,18 @@ type Order = {
 };
 
 const MANUAL_CATEGORIES = [
-  "Montaje de TV",
-  "Montaje de muebles",
-  "Electricidad",
-  "Fontanería",
-  "Reparaciones",
-  "Baño",
-  "Cocina",
-  "Pladur",
-  "Otro",
+  "TV Mounting",
+  "Electrical",
+  "Plumbing",
+  "Furniture Assembly",
+  "Drywall",
+  "Repairs",
+  "Doors & Hardware",
+  "Smart Home",
+  "Kitchen",
+  "Bathroom",
+  "Move-In Setup",
+  "Exterior",
 ];
 
 export default function AdminClient() {
@@ -86,7 +89,7 @@ export default function AdminClient() {
     addressDetails: "",
     preferredDate: "",
     preferredTime: "",
-    category: "Montaje de muebles",
+    category: "Furniture Assembly",
     notes: "",
   });
 
@@ -289,7 +292,7 @@ export default function AdminClient() {
         addressDetails: "",
         preferredDate: "",
         preferredTime: "",
-        category: "Montaje de muebles",
+        category: "Furniture Assembly",
         notes: "",
       });
 
