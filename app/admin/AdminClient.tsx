@@ -3,7 +3,6 @@
 import { formatMadridDateTime } from "@/lib/time";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { supabaseBrowser } from "@/lib/supabase-browser";
 
 type OrderStatus = "new" | "in_progress" | "done";
 
@@ -12,6 +11,12 @@ type ServiceItem = {
   qty?: number;
   price?: number;
   subtotal?: number;
+};
+
+type ManualService = {
+  label: string;
+  price: number;
+  qty: number;
 };
 
 type Order = {
@@ -41,37 +46,82 @@ type Order = {
   completed_at?: string | null;
 };
 
+const MANUAL_CATEGORIES = [
+  "Montaje de TV",
+  "Montaje de muebles",
+  "Electricidad",
+  "Fontanería",
+  "Reparaciones",
+  "Baño",
+  "Cocina",
+  "Pladur",
+  "Otro",
+];
+
 export default function AdminClient() {
   const [internalNotes, setInternalNotes] = useState("");
   const [orders, setOrders] = useState<Order[]>([]);
   const [selected, setSelected] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
+
   const [isCompleting, setIsCompleting] = useState(false);
   const [showCompleteConfirm, setShowCompleteConfirm] = useState(false);
+
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  const handleLogout = async () => {
-    console.log("🚪 LOGOUT START");
+  const [showManualForm, setShowManualForm] = useState(false);
+  const [isCreatingManual, setIsCreatingManual] = useState(false);
 
+  const [manualOrder, setManualOrder] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    city: "Valencia",
+    area: "",
+    houseAddress: "",
+    apartmentNumber: "",
+    addressDetails: "",
+    preferredDate: "",
+    preferredTime: "",
+    category: "Montaje de muebles",
+    notes: "",
+  });
+
+  const [manualServices, setManualServices] = useState<ManualService[]>([
+    {
+      label: "Servicio manual",
+      price: 49,
+      qty: 1,
+    },
+  ]);
+
+  const manualSubtotal = useMemo(() => {
+    return manualServices.reduce(
+      (sum, item) => sum + Number(item.price || 0) * Number(item.qty || 0),
+      0
+    );
+  }, [manualServices]);
+
+  const manualIva = Number((manualSubtotal * 0.21).toFixed(2));
+  const manualTotal = Number((manualSubtotal + manualIva).toFixed(2));
+
+  const handleLogout = async () => {
     try {
       setIsLoggingOut(true);
 
       const { error } = await supabase.auth.signOut();
 
-      console.log("🚪 LOGOUT RESULT", { error });
-
       if (error) {
-        console.error("❌ LOGOUT ERROR", error);
+        console.error("LOGOUT ERROR:", error);
         return;
       }
 
-      console.log("✅ LOGOUT SUCCESS → redirect");
-
       window.location.href = "/admin-login";
     } catch (err) {
-      console.error("❌ LOGOUT EXCEPTION", err);
+      console.error("LOGOUT EXCEPTION:", err);
     } finally {
       setIsLoggingOut(false);
     }
@@ -137,6 +187,126 @@ export default function AdminClient() {
       done,
     };
   }, [orders]);
+
+  const createManualOrder = async () => {
+    if (!manualOrder.fullName.trim()) {
+      alert("Client name is required");
+      return;
+    }
+
+    if (!manualOrder.phone.trim() && !manualOrder.email.trim()) {
+      alert("Phone or email is required");
+      return;
+    }
+
+    if (!manualOrder.area.trim()) {
+      alert("Area is required");
+      return;
+    }
+
+    if (!manualOrder.houseAddress.trim()) {
+      alert("Address is required");
+      return;
+    }
+
+    if (!manualOrder.preferredDate || !manualOrder.preferredTime) {
+      alert("Date and time are required");
+      return;
+    }
+
+    const cleanServices = manualServices
+      .filter((s) => s.label.trim() && Number(s.price) > 0 && Number(s.qty) > 0)
+      .map((s) => ({
+        id: s.label.toLowerCase().replace(/\s+/g, "-"),
+        label: s.label.trim(),
+        price: Number(s.price),
+        qty: Number(s.qty),
+        subtotal: Number(s.price) * Number(s.qty),
+        badge: "Manual",
+      }));
+
+    if (cleanServices.length === 0) {
+      alert("Add at least one service");
+      return;
+    }
+
+    const subtotal = Number(
+      cleanServices.reduce((sum, item) => sum + item.subtotal, 0).toFixed(2)
+    );
+
+    const iva = Number((subtotal * 0.21).toFixed(2));
+    const total = Number((subtotal + iva).toFixed(2));
+
+    const scheduledAt = new Date(
+      `${manualOrder.preferredDate}T${manualOrder.preferredTime}:00+02:00`
+    ).toISOString();
+
+    try {
+      setIsCreatingManual(true);
+
+      const { error } = await supabase.from("orders").insert([
+        {
+          full_name: manualOrder.fullName.trim(),
+          email: manualOrder.email.trim(),
+          phone: manualOrder.phone.trim(),
+          city: manualOrder.city.trim() || "Valencia",
+          area: manualOrder.area.trim(),
+          address: manualOrder.houseAddress.trim(),
+          apartment: manualOrder.apartmentNumber.trim(),
+          address_details: manualOrder.addressDetails.trim(),
+          category: manualOrder.category,
+          services: cleanServices,
+          subtotal,
+          iva,
+          total,
+          status: "new",
+          preferred_date: manualOrder.preferredDate,
+          preferred_time: manualOrder.preferredTime,
+          scheduled_at: scheduledAt,
+          notes: manualOrder.notes.trim(),
+          email_sent: false,
+          reminder_sent: false,
+          completed_email_sent: false,
+          referral_code: null,
+          locale: "es",
+        },
+      ]);
+
+      if (error) {
+        console.error("CREATE MANUAL ORDER ERROR:", error);
+        alert("Error creating manual order");
+        return;
+      }
+
+      setManualOrder({
+        fullName: "",
+        email: "",
+        phone: "",
+        city: "Valencia",
+        area: "",
+        houseAddress: "",
+        apartmentNumber: "",
+        addressDetails: "",
+        preferredDate: "",
+        preferredTime: "",
+        category: "Montaje de muebles",
+        notes: "",
+      });
+
+      setManualServices([
+        {
+          label: "Servicio manual",
+          price: 49,
+          qty: 1,
+        },
+      ]);
+
+      setShowManualForm(false);
+      await loadOrders();
+    } finally {
+      setIsCreatingManual(false);
+    }
+  };
 
   const updateStatus = async (id: string, status: OrderStatus) => {
     const { error } = await supabase
@@ -286,7 +456,15 @@ export default function AdminClient() {
   return (
     <div className="min-h-screen bg-white p-6 text-black">
       <div className="mx-auto max-w-7xl space-y-8">
-        <div className="flex justify-end mb-4">
+        <div className="flex flex-wrap items-center justify-end gap-3">
+          <button
+            type="button"
+            onClick={() => setShowManualForm(true)}
+            className="rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.02] hover:shadow-lg"
+          >
+            + Add manual order
+          </button>
+
           <button
             type="button"
             onClick={handleLogout}
@@ -515,348 +693,645 @@ export default function AdminClient() {
           </div>
         </div>
 
-        {selected && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3 sm:p-4">
-            <div className="w-full max-w-[95vw] sm:max-w-[760px] lg:max-w-[1120px] h-[90vh] flex flex-col rounded-3xl bg-white p-4 sm:p-5 lg:p-5 shadow-2xl">
+        {showManualForm && (
+          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 p-4">
+            <div className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
-                    Order details
+                    Manual booking
                   </p>
                   <h2 className="mt-1 text-2xl font-extrabold text-black">
-                    {selected.full_name}
+                    Add WhatsApp client
                   </h2>
                 </div>
 
-                <div className="rounded-2xl border border-yellow-400 bg-yellow-50 px-3 py-2 text-sm font-bold text-black">
-                  {formatStatusLabel(selected.status)}
-                </div>
+                <button
+                  onClick={() => setShowManualForm(false)}
+                  disabled={isCreatingManual}
+                  className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
+                >
+                  Close
+                </button>
               </div>
 
-              <div className="mt-5 flex-1 overflow-y-auto grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 pr-2">
-                <div className="rounded-2xl border border-gray-200 bg-white p-3 text-sm xl:col-span-2">
-                  <div className="space-y-2">
-                    <p>📞 {selected.phone || "—"}</p>
-                    <p>📧 {selected.email || "—"}</p>
-                  </div>
-                </div>
+              <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+                <AdminInput
+                  label="Client name"
+                  value={manualOrder.fullName}
+                  onChange={(v) =>
+                    setManualOrder({ ...manualOrder, fullName: v })
+                  }
+                  placeholder="Antonio Cicuendez"
+                />
 
-                <div className="rounded-2xl border border-gray-200 bg-white p-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Order
-                  </p>
-                  <p className="mt-2 font-bold text-black">
-                    {formatOrderId(selected)}
-                  </p>
-                </div>
+                <AdminInput
+                  label="Phone"
+                  value={manualOrder.phone}
+                  onChange={(v) => setManualOrder({ ...manualOrder, phone: v })}
+                  placeholder="+34 ..."
+                />
 
-                <div className="rounded-2xl border border-gray-200 bg-white p-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Address
-                  </p>
-                  <p className="mt-2 text-sm text-black">
-                    {selected.city || "—"}, {selected.area || "—"},{" "}
-                    {selected.address || "—"}
-                  </p>
-                </div>
+                <AdminInput
+                  label="Email"
+                  value={manualOrder.email}
+                  onChange={(v) => setManualOrder({ ...manualOrder, email: v })}
+                  placeholder="client@email.com"
+                />
 
-                <div className="rounded-2xl border border-gray-200 bg-white p-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Schedule
-                  </p>
-                  <p className="mt-2 text-sm text-black">
-                    {selected.scheduled_at
-                      ? formatMadridDateTime(selected.scheduled_at).full
-                      : "—"}
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-gray-200 bg-white p-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+                  <label className="mb-2 block text-sm font-bold text-black">
                     Category
-                  </p>
-                  <p className="mt-2 text-sm font-semibold text-black">
-                    {selected.category || "—"}
-                  </p>
+                  </label>
+                  <select
+                    value={manualOrder.category}
+                    onChange={(e) =>
+                      setManualOrder({
+                        ...manualOrder,
+                        category: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
+                  >
+                    {MANUAL_CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
-                <div className="rounded-2xl border border-gray-200 bg-white p-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Referral code
-                  </p>
-                  <p className="mt-2 text-sm font-extrabold text-black">
-                    {selected.referral_code || "Not generated yet"}
-                  </p>
-                </div>
+                <AdminInput
+                  label="City"
+                  value={manualOrder.city}
+                  onChange={(v) => setManualOrder({ ...manualOrder, city: v })}
+                  placeholder="Valencia"
+                />
 
-                <div className="rounded-2xl border border-gray-200 bg-white p-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Completed at
-                  </p>
-                  <p className="mt-2 text-sm font-semibold text-black">
-                    {selected.completed_at
-                      ? formatMadridDateTime(selected.completed_at).full
-                      : "Not completed yet"}
-                  </p>
-                </div>
+                <AdminInput
+                  label="Area"
+                  value={manualOrder.area}
+                  onChange={(v) => setManualOrder({ ...manualOrder, area: v })}
+                  placeholder="Patraix, Campanar, Arrancapins..."
+                />
 
-                <div className="rounded-2xl border border-gray-200 bg-white p-3 xl:col-span-2">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Services
-                  </p>
-
-                  <div className="mt-2 max-h-[260px] overflow-y-auto pr-2 space-y-1">
-                    {Array.isArray(selected.services) &&
-                    selected.services.length > 0 ? (
-                      selected.services.map(
-                        (item: ServiceItem, index: number) => (
-                          <div
-                            key={index}
-                            className="flex items-start justify-between gap-3 border-b border-gray-100 py-2 last:border-b-0"
-                          >
-                            <div className="flex min-w-0 flex-col">
-                              <span className="text-sm font-semibold text-black break-words">
-                                {item.label}
-                              </span>
-                              <span className="text-xs text-gray-500">
-                                {item.qty} × €{item.price}
-                              </span>
-                            </div>
-
-                            <span className="shrink-0 text-sm font-bold text-black">
-                              €{Number(item.subtotal || 0).toFixed(2)}
-                            </span>
-                          </div>
-                        )
-                      )
-                    ) : (
-                      <p className="text-sm text-gray-500">
-                        No services listed
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-gray-200 bg-white p-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Client notes
-                  </p>
-                  <p className="mt-2 whitespace-pre-line text-sm text-black">
-                    {selected.notes || "No client notes"}
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-gray-200 bg-white p-3 xl:col-span-2">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Internal notes
-                  </p>
-
-                  <textarea
-                    value={internalNotes}
-                    onChange={(e) => setInternalNotes(e.target.value)}
-                    placeholder="What to bring, tools, wall type, access notes, materials..."
-                    className="mt-2 min-h-[72px] w-full resize-none rounded-xl border border-gray-300 px-3 py-2 text-sm text-black outline-none transition focus:border-yellow-400"
+                <div className="md:col-span-2">
+                  <AdminInput
+                    label="Address"
+                    value={manualOrder.houseAddress}
+                    onChange={(v) =>
+                      setManualOrder({ ...manualOrder, houseAddress: v })
+                    }
+                    placeholder="Street, number"
                   />
+                </div>
 
-                  <button
-                    onClick={saveInternalNotes}
-                    className="mt-2 rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.02]"
-                  >
-                    Save internal notes
-                  </button>
+                <AdminInput
+                  label="Apartment / floor"
+                  value={manualOrder.apartmentNumber}
+                  onChange={(v) =>
+                    setManualOrder({
+                      ...manualOrder,
+                      apartmentNumber: v,
+                    })
+                  }
+                  placeholder="Floor, door, apartment"
+                />
+
+                <AdminInput
+                  label="Address details"
+                  value={manualOrder.addressDetails}
+                  onChange={(v) =>
+                    setManualOrder({
+                      ...manualOrder,
+                      addressDetails: v,
+                    })
+                  }
+                  placeholder="Parking, intercom, access..."
+                />
+
+                <AdminInput
+                  label="Date"
+                  type="date"
+                  value={manualOrder.preferredDate}
+                  onChange={(v) =>
+                    setManualOrder({
+                      ...manualOrder,
+                      preferredDate: v,
+                    })
+                  }
+                />
+
+                <AdminInput
+                  label="Time"
+                  type="time"
+                  value={manualOrder.preferredTime}
+                  onChange={(v) =>
+                    setManualOrder({
+                      ...manualOrder,
+                      preferredTime: v,
+                    })
+                  }
+                />
+
+                <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm md:col-span-2">
+                  <label className="mb-2 block text-sm font-bold text-black">
+                    Client notes
+                  </label>
+                  <textarea
+                    value={manualOrder.notes}
+                    onChange={(e) =>
+                      setManualOrder({
+                        ...manualOrder,
+                        notes: e.target.value,
+                      })
+                    }
+                    placeholder="What the client needs, photos, details, tools..."
+                    className="min-h-[110px] w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
+                  />
                 </div>
               </div>
 
-              <div className="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[1.4fr_0.9fr]">
-                <div className="rounded-2xl border border-yellow-400 bg-yellow-50/60 p-4">
-                  <p className="font-semibold text-black">Pricing</p>
-
-                  <div className="mt-3 space-y-2 text-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Net revenue</span>
-                      <span className="font-semibold text-black">
-                        €{Number(selected.subtotal || 0).toFixed(2)}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">IVA reserve</span>
-                      <span className="font-semibold text-black">
-                        €{Number(selected.iva || 0).toFixed(2)}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between border-t border-yellow-400 pt-2">
-                      <span className="font-bold text-black">Gross total</span>
-                      <span className="text-base font-extrabold text-black">
-                        €{Number(selected.total || 0).toFixed(2)}
-                      </span>
-                    </div>
+              <div className="mt-6 rounded-3xl border border-yellow-400 bg-yellow-50/40 p-4">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <h3 className="font-extrabold text-black">Services</h3>
+                    <p className="mt-1 text-xs text-gray-500">
+                      Same format as website calculator: label, price, qty,
+                      subtotal.
+                    </p>
                   </div>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setManualServices([
+                        ...manualServices,
+                        { label: "", price: 0, qty: 1 },
+                      ])
+                    }
+                    className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.02]"
+                  >
+                    + Add service
+                  </button>
                 </div>
 
-                <div className="rounded-2xl border border-gray-200 bg-white p-4">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Actions
-                  </p>
-
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    <button
-                      onClick={() =>
-                        navigator.clipboard.writeText(
-                          `${selected.city || ""}, ${selected.area || ""}, ${
-                            selected.address || ""
-                          }`
-                        )
-                      }
-                      className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
+                <div className="mt-4 space-y-3">
+                  {manualServices.map((service, index) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-1 gap-3 rounded-2xl border border-gray-200 bg-white p-3 md:grid-cols-[1fr_120px_100px_100px]"
                     >
-                      Copy address
-                    </button>
+                      <input
+                        value={service.label}
+                        onChange={(e) => {
+                          const next = [...manualServices];
+                          next[index].label = e.target.value;
+                          setManualServices(next);
+                        }}
+                        placeholder="Service name"
+                        className="rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none focus:border-yellow-400"
+                      />
 
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                        `${selected.city || ""}, ${selected.area || ""}, ${
-                          selected.address || ""
-                        }`
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black transition hover:scale-[1.02]"
-                    >
-                      Open map
-                    </a>
+                      <input
+                        type="number"
+                        value={service.price}
+                        onChange={(e) => {
+                          const next = [...manualServices];
+                          next[index].price = Number(e.target.value);
+                          setManualServices(next);
+                        }}
+                        placeholder="Price"
+                        className="rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none focus:border-yellow-400"
+                      />
 
-                    <a
-                      href={`tel:${selected.phone}`}
-                      className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
-                    >
-                      Call
-                    </a>
+                      <input
+                        type="number"
+                        value={service.qty}
+                        onChange={(e) => {
+                          const next = [...manualServices];
+                          next[index].qty = Number(e.target.value);
+                          setManualServices(next);
+                        }}
+                        placeholder="Qty"
+                        className="rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none focus:border-yellow-400"
+                      />
 
-                    {selected.status !== "done" && (
                       <button
-                        onClick={() => setShowCompleteConfirm(true)}
-                        className="rounded-2xl bg-black px-4 py-2 text-sm font-extrabold text-white transition hover:scale-[1.02]"
+                        type="button"
+                        onClick={() =>
+                          setManualServices((prev) =>
+                            prev.filter((_, i) => i !== index)
+                          )
+                        }
+                        className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm font-bold text-red-600 transition hover:bg-red-100"
                       >
-                        Mark as done
+                        Delete
                       </button>
-                    )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-5 rounded-2xl border border-yellow-400 bg-white p-4">
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Subtotal</span>
+                    <span>€{manualSubtotal.toFixed(2)}</span>
                   </div>
 
-                  <button
-                    onClick={() => setSelected(null)}
-                    className="mt-4 w-full rounded-2xl border border-gray-300 py-3 text-sm font-bold text-black transition hover:bg-gray-50"
-                  >
-                    Close
-                  </button>
+                  <div className="mt-2 flex justify-between text-sm text-gray-600">
+                    <span>IVA 21%</span>
+                    <span>€{manualIva.toFixed(2)}</span>
+                  </div>
 
-                  <button
-                    onClick={() => setShowDeleteConfirm(true)}
-                    className="mt-3 w-full rounded-2xl border border-red-300 bg-red-50 py-3 text-sm font-extrabold text-red-600 transition hover:bg-red-100"
-                  >
-                    🗑 Delete order
-                  </button>
+                  <div className="mt-2 flex justify-between border-t border-yellow-400 pt-3 text-lg font-extrabold text-black">
+                    <span>Total</span>
+                    <span>€{manualTotal.toFixed(2)}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
 
-        {showCompleteConfirm && selected && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl">
-              <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
-                Confirm action
-              </p>
-
-              <h3 className="mt-2 text-2xl font-extrabold text-black">
-                Complete this order?
-              </h3>
-
-              <p className="mt-3 text-sm leading-7 text-gray-600">
-                This will:
-              </p>
-
-              <div className="mt-3 space-y-2 text-sm text-black">
-                <p>• Change status to Done</p>
-                <p>• Send completed email to the client</p>
-                <p>• Generate referral code</p>
-              </div>
-
-              <div className="mt-6 flex gap-3">
+              <div className="mt-6 flex justify-end gap-3">
                 <button
-                  onClick={() => setShowCompleteConfirm(false)}
-                  disabled={isCompleting}
-                  className="flex-1 rounded-2xl border border-gray-300 bg-white py-3 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
+                  onClick={() => setShowManualForm(false)}
+                  disabled={isCreatingManual}
+                  className="rounded-2xl border border-gray-300 px-5 py-3 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
                 >
                   Cancel
                 </button>
 
                 <button
-                  onClick={completeOrder}
-                  disabled={isCompleting}
-                  className="flex-1 rounded-2xl bg-black py-3 text-sm font-extrabold text-white transition hover:opacity-90 disabled:opacity-60"
+                  onClick={createManualOrder}
+                  disabled={isCreatingManual}
+                  className="rounded-2xl bg-black px-5 py-3 text-sm font-extrabold text-white transition hover:opacity-90 disabled:opacity-60"
                 >
-                  {isCompleting ? "Completing..." : "Yes, complete"}
+                  {isCreatingManual ? "Creating..." : "Create order"}
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {showDeleteConfirm && selected && (
-          <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl">
-              <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-red-500">
-                Warning
-              </p>
+       {selected && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3 sm:p-4">
+    <div className="w-full max-w-[95vw] sm:max-w-[760px] lg:max-w-[1120px] h-[90vh] flex flex-col rounded-3xl bg-white p-4 sm:p-5 lg:p-5 shadow-2xl">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+            Order details
+          </p>
+          <h2 className="mt-1 text-2xl font-extrabold text-black">
+            {selected.full_name}
+          </h2>
+        </div>
 
-              <h3 className="mt-2 text-2xl font-extrabold text-black">
-                Delete this order?
-              </h3>
+        <div className="rounded-2xl border border-yellow-400 bg-yellow-50 px-3 py-2 text-sm font-bold text-black">
+          {formatStatusLabel(selected.status)}
+        </div>
+      </div>
 
-              <div className="mt-5 rounded-2xl border border-red-200 bg-red-50 p-4">
-                <p className="font-bold text-black">{selected.full_name}</p>
+      <div className="mt-5 flex-1 overflow-y-auto grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 pr-2">
+        <div className="rounded-2xl border border-gray-200 bg-white p-3 text-sm xl:col-span-2">
+          <div className="space-y-2">
+            <p>📞 {selected.phone || "—"}</p>
+            <p>📧 {selected.email || "—"}</p>
+          </div>
+        </div>
 
-                <p className="mt-1 text-sm text-gray-600">
-                  {selected.phone || "No phone"}
-                </p>
+        <div className="rounded-2xl border border-gray-200 bg-white p-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Order
+          </p>
+          <p className="mt-2 font-bold text-black">
+            {formatOrderId(selected)}
+          </p>
+        </div>
 
-                <p className="mt-1 text-sm text-gray-600">
-                  €{Number(selected.total || 0).toFixed(2)}
-                </p>
-              </div>
+        <div className="rounded-2xl border border-gray-200 bg-white p-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Address
+          </p>
+          <p className="mt-2 text-sm text-black">
+            {selected.city || "—"}, {selected.area || "—"},{" "}
+            {selected.address || "—"}
+          </p>
+        </div>
 
-              <p className="mt-5 text-sm text-gray-600">
-                This action cannot be undone.
-              </p>
+        <div className="rounded-2xl border border-gray-200 bg-white p-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Schedule
+          </p>
+          <p className="mt-2 text-sm text-black">
+            {selected.scheduled_at
+              ? formatMadridDateTime(selected.scheduled_at).full
+              : "—"}
+          </p>
+        </div>
 
-              <div className="mt-6 flex gap-3">
-                <button
-                  onClick={() => setShowDeleteConfirm(false)}
-                  disabled={isDeleting}
-                  className="flex-1 rounded-2xl border border-gray-300 bg-white py-3 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
+        <div className="rounded-2xl border border-gray-200 bg-white p-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Category
+          </p>
+          <p className="mt-2 text-sm font-semibold text-black">
+            {selected.category || "—"}
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Referral code
+          </p>
+          <p className="mt-2 text-sm font-extrabold text-black">
+            {selected.referral_code || "Not generated yet"}
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Completed at
+          </p>
+          <p className="mt-2 text-sm font-semibold text-black">
+            {selected.completed_at
+              ? formatMadridDateTime(selected.completed_at).full
+              : "Not completed yet"}
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-3 xl:col-span-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Services
+          </p>
+
+          <div className="mt-2 max-h-[260px] overflow-y-auto pr-2 space-y-1">
+            {Array.isArray(selected.services) && selected.services.length > 0 ? (
+              selected.services.map((item: ServiceItem, index: number) => (
+                <div
+                  key={index}
+                  className="flex items-start justify-between gap-3 border-b border-gray-100 py-2 last:border-b-0"
                 >
-                  Cancel
-                </button>
+                  <div className="flex min-w-0 flex-col">
+                    <span className="text-sm font-semibold text-black break-words">
+                      {item.label}
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      {item.qty} × €{item.price}
+                    </span>
+                  </div>
 
-                <button
-                  onClick={deleteOrder}
-                  disabled={isDeleting}
-                  className="flex-1 rounded-2xl bg-red-600 py-3 text-sm font-extrabold text-white transition hover:bg-red-700 disabled:opacity-60"
-                >
-                  {isDeleting ? "Deleting..." : "Delete"}
-                </button>
-              </div>
+                  <span className="shrink-0 text-sm font-bold text-black">
+                    €{Number(item.subtotal || 0).toFixed(2)}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <p className="text-sm text-gray-500">No services listed</p>
+            )}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Client notes
+          </p>
+          <p className="mt-2 whitespace-pre-line text-sm text-black">
+            {selected.notes || "No client notes"}
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-3 xl:col-span-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Internal notes
+          </p>
+
+          <textarea
+            value={internalNotes}
+            onChange={(e) => setInternalNotes(e.target.value)}
+            placeholder="What to bring, tools, wall type, access notes, materials..."
+            className="mt-2 min-h-[72px] w-full resize-none rounded-xl border border-gray-300 px-3 py-2 text-sm text-black outline-none transition focus:border-yellow-400"
+          />
+
+          <button
+            onClick={saveInternalNotes}
+            className="mt-2 rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.02]"
+          >
+            Save internal notes
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[1.4fr_0.9fr]">
+        <div className="rounded-2xl border border-yellow-400 bg-yellow-50/60 p-4">
+          <p className="font-semibold text-black">Pricing</p>
+
+          <div className="mt-3 space-y-2 text-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600">Net revenue</span>
+              <span className="font-semibold text-black">
+                €{Number(selected.subtotal || 0).toFixed(2)}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600">IVA reserve</span>
+              <span className="font-semibold text-black">
+                €{Number(selected.iva || 0).toFixed(2)}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between border-t border-yellow-400 pt-2">
+              <span className="font-bold text-black">Gross total</span>
+              <span className="text-base font-extrabold text-black">
+                €{Number(selected.total || 0).toFixed(2)}
+              </span>
             </div>
           </div>
-        )}
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            Actions
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              onClick={() =>
+                navigator.clipboard.writeText(
+                  `${selected.city || ""}, ${selected.area || ""}, ${
+                    selected.address || ""
+                  }`
+                )
+              }
+              className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
+            >
+              Copy address
+            </button>
+
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                `${selected.city || ""}, ${selected.area || ""}, ${
+                  selected.address || ""
+                }`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black transition hover:scale-[1.02]"
+            >
+              Open map
+            </a>
+
+            <a
+              href={`tel:${selected.phone}`}
+              className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
+            >
+              Call
+            </a>
+
+            {selected.status !== "done" && (
+              <button
+                onClick={() => setShowCompleteConfirm(true)}
+                className="rounded-2xl bg-black px-4 py-2 text-sm font-extrabold text-white transition hover:scale-[1.02]"
+              >
+                Mark as done
+              </button>
+            )}
+          </div>
+
+          <button
+            onClick={() => setSelected(null)}
+            className="mt-4 w-full rounded-2xl border border-gray-300 py-3 text-sm font-bold text-black transition hover:bg-gray-50"
+          >
+            Close
+          </button>
+
+          <button
+            onClick={() => setShowDeleteConfirm(true)}
+            className="mt-3 w-full rounded-2xl border border-red-300 bg-red-50 py-3 text-sm font-extrabold text-red-600 transition hover:bg-red-100"
+          >
+            🗑 Delete order
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+{showCompleteConfirm && selected && (
+  <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
+    <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl">
+      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
+        Confirm action
+      </p>
+
+      <h3 className="mt-2 text-2xl font-extrabold text-black">
+        Complete this order?
+      </h3>
+
+      <p className="mt-3 text-sm leading-7 text-gray-600">This will:</p>
+
+      <div className="mt-3 space-y-2 text-sm text-black">
+        <p>• Change status to Done</p>
+        <p>• Send completed email to the client</p>
+        <p>• Generate referral code</p>
+      </div>
+
+      <div className="mt-6 flex gap-3">
+        <button
+          onClick={() => setShowCompleteConfirm(false)}
+          disabled={isCompleting}
+          className="flex-1 rounded-2xl border border-gray-300 bg-white py-3 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={completeOrder}
+          disabled={isCompleting}
+          className="flex-1 rounded-2xl bg-black py-3 text-sm font-extrabold text-white transition hover:opacity-90 disabled:opacity-60"
+        >
+          {isCompleting ? "Completing..." : "Yes, complete"}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+{showDeleteConfirm && selected && (
+  <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 p-4">
+    <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl">
+      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-red-500">
+        Warning
+      </p>
+
+      <h3 className="mt-2 text-2xl font-extrabold text-black">
+        Delete this order?
+      </h3>
+
+      <div className="mt-5 rounded-2xl border border-red-200 bg-red-50 p-4">
+        <p className="font-bold text-black">{selected.full_name}</p>
+
+        <p className="mt-1 text-sm text-gray-600">
+          {selected.phone || "No phone"}
+        </p>
+
+        <p className="mt-1 text-sm text-gray-600">
+          €{Number(selected.total || 0).toFixed(2)}
+        </p>
+      </div>
+
+      <p className="mt-5 text-sm text-gray-600">
+        This action cannot be undone.
+      </p>
+
+      <div className="mt-6 flex gap-3">
+        <button
+          onClick={() => setShowDeleteConfirm(false)}
+          disabled={isDeleting}
+          className="flex-1 rounded-2xl border border-gray-300 bg-white py-3 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={deleteOrder}
+          disabled={isDeleting}
+          className="flex-1 rounded-2xl bg-red-600 py-3 text-sm font-extrabold text-white transition hover:bg-red-700 disabled:opacity-60"
+        >
+          {isDeleting ? "Deleting..." : "Delete"}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
       </div>
     </div>
   );
 }
 
+function AdminInput({
+  label,
+  value,
+  onChange,
+  placeholder,
+  type = "text",
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  type?: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+      <label className="mb-2 block text-sm font-bold text-black">{label}</label>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
+      />
+    </div>
+  );
+}
 function MetricCard({
   title,
   value,
