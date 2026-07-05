@@ -42,44 +42,43 @@ type Order = {
 };
 
 export default function AdminClient() {
-
   const [internalNotes, setInternalNotes] = useState("");
   const [orders, setOrders] = useState<Order[]>([]);
   const [selected, setSelected] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [isCompleting, setIsCompleting] = useState(false);
   const [showCompleteConfirm, setShowCompleteConfirm] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-const handleLogout = async () => {
-  console.log("🚪 LOGOUT START");
+  const handleLogout = async () => {
+    console.log("🚪 LOGOUT START");
 
-  try {
-    setIsLoggingOut(true);
+    try {
+      setIsLoggingOut(true);
 
-    const { error } = await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut();
 
-    console.log("🚪 LOGOUT RESULT", { error });
+      console.log("🚪 LOGOUT RESULT", { error });
 
-    if (error) {
-      console.error("❌ LOGOUT ERROR", error);
-      return;
+      if (error) {
+        console.error("❌ LOGOUT ERROR", error);
+        return;
+      }
+
+      console.log("✅ LOGOUT SUCCESS → redirect");
+
+      window.location.href = "/admin-login";
+    } catch (err) {
+      console.error("❌ LOGOUT EXCEPTION", err);
+    } finally {
+      setIsLoggingOut(false);
     }
-
-    console.log("✅ LOGOUT SUCCESS → redirect");
-
-    window.location.href = "/admin-login";
-  } catch (err) {
-    console.error("❌ LOGOUT EXCEPTION", err);
-  } finally {
-    setIsLoggingOut(false);
-  }
-};
+  };
 
   const loadOrders = async () => {
     setLoading(true);
-
-  
 
     const { data, error } = await supabase
       .from("orders")
@@ -159,30 +158,37 @@ const handleLogout = async () => {
     }
   };
 
-  const deleteOrder = async (order: Order) => {
-  const confirmed = window.confirm(
-    `Delete order ${formatOrderId(order)} for ${order.full_name}?`
-  );
+  const openDeleteConfirm = (order: Order) => {
+    setSelected(order);
+    setShowDeleteConfirm(true);
+  };
 
-  if (!confirmed) return;
+  const deleteOrder = async () => {
+    if (!selected) return;
 
-  const { error } = await supabase
-    .from("orders")
-    .delete()
-    .eq("id", order.id);
+    try {
+      setIsDeleting(true);
 
-  if (error) {
-    console.error("DELETE ORDER ERROR:", error);
-    alert("Error deleting order");
-    return;
-  }
+      const { error } = await supabase
+        .from("orders")
+        .delete()
+        .eq("id", selected.id);
 
-  setOrders((prev) => prev.filter((o) => o.id !== order.id));
+      if (error) {
+        console.error("DELETE ORDER ERROR:", error);
+        alert("Error deleting order");
+        return;
+      }
 
-  if (selected?.id === order.id) {
-    setSelected(null);
-  }
-};
+      setOrders((prev) => prev.filter((o) => o.id !== selected.id));
+      setSelected(null);
+      setShowDeleteConfirm(false);
+    } catch (error) {
+      console.error("DELETE ORDER EXCEPTION:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   const saveInternalNotes = async () => {
     if (!selected) return;
@@ -231,30 +237,30 @@ const handleLogout = async () => {
       }
 
       setOrders((prev) =>
-  prev.map((o) =>
-    o.id === selected.id
-      ? {
-          ...o,
-          status: "done",
-          completed_email_sent: true,
-          referral_code: result.referralCode || o.referral_code,
-          completed_at: result.completedAt || o.completed_at,
-        }
-      : o
-  )
-);
+        prev.map((o) =>
+          o.id === selected.id
+            ? {
+                ...o,
+                status: "done",
+                completed_email_sent: true,
+                referral_code: result.referralCode || o.referral_code,
+                completed_at: result.completedAt || o.completed_at,
+              }
+            : o
+        )
+      );
 
-setSelected((prev) =>
-  prev
-    ? {
-        ...prev,
-        status: "done",
-        completed_email_sent: true,
-        referral_code: result.referralCode || prev.referral_code,
-        completed_at: result.completedAt || prev.completed_at,
-      }
-    : prev
-);
+      setSelected((prev) =>
+        prev
+          ? {
+              ...prev,
+              status: "done",
+              completed_email_sent: true,
+              referral_code: result.referralCode || prev.referral_code,
+              completed_at: result.completedAt || prev.completed_at,
+            }
+          : prev
+      );
 
       setShowCompleteConfirm(false);
     } catch (error) {
@@ -280,19 +286,18 @@ setSelected((prev) =>
   return (
     <div className="min-h-screen bg-white p-6 text-black">
       <div className="mx-auto max-w-7xl space-y-8">
+        <div className="flex justify-end mb-4">
+          <button
+            type="button"
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="rounded-2xl border border-gray-300 bg-white px-5 py-3 text-sm font-extrabold text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md disabled:opacity-60"
+          >
+            {isLoggingOut ? "Signing out..." : "Log out"}
+          </button>
+        </div>
 
-  <div className="flex justify-end mb-4">
-    <button
-      type="button"
-      onClick={handleLogout}
-      disabled={isLoggingOut}
-      className="rounded-2xl border border-gray-300 bg-white px-5 py-3 text-sm font-extrabold text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md disabled:opacity-60"
-    >
-      {isLoggingOut ? "Signing out..." : "Log out"}
-    </button>
-  </div>
-
-  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-7">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-7">
           <MetricCard
             title="Gross booked"
             value={`€${metrics.grossRevenue.toFixed(2)}`}
@@ -487,20 +492,20 @@ setSelected((prev) =>
 
                       <td className="px-6 py-5 align-top text-right">
                         <div className="flex justify-end gap-2">
-  <button
-    onClick={() => setSelected(order)}
-    className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.03] hover:shadow-md"
-  >
-    Open
-  </button>
+                          <button
+                            onClick={() => setSelected(order)}
+                            className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.03] hover:shadow-md"
+                          >
+                            Open
+                          </button>
 
-  <button
-    onClick={() => deleteOrder(order)}
-    className="rounded-2xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-extrabold text-red-600 shadow-sm transition hover:bg-red-100"
-  >
-    Delete
-  </button>
-</div>
+                          <button
+                            onClick={() => openDeleteConfirm(order)}
+                            className="rounded-2xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-extrabold text-red-600 shadow-sm transition hover:bg-red-100"
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -585,47 +590,52 @@ setSelected((prev) =>
                 </div>
 
                 <div className="rounded-2xl border border-gray-200 bg-white p-3">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Completed at
-  </p>
-  <p className="mt-2 text-sm font-semibold text-black">
-    {selected.completed_at
-      ? formatMadridDateTime(selected.completed_at).full
-      : "Not completed yet"}
-  </p>
-</div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Completed at
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-black">
+                    {selected.completed_at
+                      ? formatMadridDateTime(selected.completed_at).full
+                      : "Not completed yet"}
+                  </p>
+                </div>
 
                 <div className="rounded-2xl border border-gray-200 bg-white p-3 xl:col-span-2">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    Services
-  </p>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Services
+                  </p>
 
-  <div className="mt-2 max-h-[260px] overflow-y-auto pr-2 space-y-1">
-    {Array.isArray(selected.services) && selected.services.length > 0 ? (
-      selected.services.map((item: ServiceItem, index: number) => (
-        <div
-          key={index}
-          className="flex items-start justify-between gap-3 border-b border-gray-100 py-2 last:border-b-0"
-        >
-          <div className="flex min-w-0 flex-col">
-            <span className="text-sm font-semibold text-black break-words">
-              {item.label}
-            </span>
-            <span className="text-xs text-gray-500">
-              {item.qty} × €{item.price}
-            </span>
-          </div>
+                  <div className="mt-2 max-h-[260px] overflow-y-auto pr-2 space-y-1">
+                    {Array.isArray(selected.services) &&
+                    selected.services.length > 0 ? (
+                      selected.services.map(
+                        (item: ServiceItem, index: number) => (
+                          <div
+                            key={index}
+                            className="flex items-start justify-between gap-3 border-b border-gray-100 py-2 last:border-b-0"
+                          >
+                            <div className="flex min-w-0 flex-col">
+                              <span className="text-sm font-semibold text-black break-words">
+                                {item.label}
+                              </span>
+                              <span className="text-xs text-gray-500">
+                                {item.qty} × €{item.price}
+                              </span>
+                            </div>
 
-          <span className="shrink-0 text-sm font-bold text-black">
-            €{Number(item.subtotal || 0).toFixed(2)}
-          </span>
-        </div>
-      ))
-    ) : (
-      <p className="text-sm text-gray-500">No services listed</p>
-    )}
-  </div>
-</div>
+                            <span className="shrink-0 text-sm font-bold text-black">
+                              €{Number(item.subtotal || 0).toFixed(2)}
+                            </span>
+                          </div>
+                        )
+                      )
+                    ) : (
+                      <p className="text-sm text-gray-500">
+                        No services listed
+                      </p>
+                    )}
+                  </div>
+                </div>
 
                 <div className="rounded-2xl border border-gray-200 bg-white p-3">
                   <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
@@ -694,7 +704,9 @@ setSelected((prev) =>
                     <button
                       onClick={() =>
                         navigator.clipboard.writeText(
-                          `${selected.city || ""}, ${selected.area || ""}, ${selected.address || ""}`
+                          `${selected.city || ""}, ${selected.area || ""}, ${
+                            selected.address || ""
+                          }`
                         )
                       }
                       className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
@@ -704,7 +716,9 @@ setSelected((prev) =>
 
                     <a
                       href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                        `${selected.city || ""}, ${selected.area || ""}, ${selected.address || ""}`
+                        `${selected.city || ""}, ${selected.area || ""}, ${
+                          selected.address || ""
+                        }`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -736,17 +750,13 @@ setSelected((prev) =>
                   >
                     Close
                   </button>
+
                   <button
-
-  onClick={() => deleteOrder(selected)}
-
-  className="mt-3 w-full rounded-2xl border border-red-300 bg-red-50 py-3 text-sm font-extrabold text-red-600 transition hover:bg-red-100"
-
->
-
-  🗑 Delete order
-
-</button>
+                    onClick={() => setShowDeleteConfirm(true)}
+                    className="mt-3 w-full rounded-2xl border border-red-300 bg-red-50 py-3 text-sm font-extrabold text-red-600 transition hover:bg-red-100"
+                  >
+                    🗑 Delete order
+                  </button>
                 </div>
               </div>
             </div>
@@ -794,6 +804,54 @@ setSelected((prev) =>
             </div>
           </div>
         )}
+
+        {showDeleteConfirm && selected && (
+          <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 p-4">
+            <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl">
+              <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-red-500">
+                Warning
+              </p>
+
+              <h3 className="mt-2 text-2xl font-extrabold text-black">
+                Delete this order?
+              </h3>
+
+              <div className="mt-5 rounded-2xl border border-red-200 bg-red-50 p-4">
+                <p className="font-bold text-black">{selected.full_name}</p>
+
+                <p className="mt-1 text-sm text-gray-600">
+                  {selected.phone || "No phone"}
+                </p>
+
+                <p className="mt-1 text-sm text-gray-600">
+                  €{Number(selected.total || 0).toFixed(2)}
+                </p>
+              </div>
+
+              <p className="mt-5 text-sm text-gray-600">
+                This action cannot be undone.
+              </p>
+
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={() => setShowDeleteConfirm(false)}
+                  disabled={isDeleting}
+                  className="flex-1 rounded-2xl border border-gray-300 bg-white py-3 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  onClick={deleteOrder}
+                  disabled={isDeleting}
+                  className="flex-1 rounded-2xl bg-red-600 py-3 text-sm font-extrabold text-white transition hover:bg-red-700 disabled:opacity-60"
+                >
+                  {isDeleting ? "Deleting..." : "Delete"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -835,6 +893,7 @@ function StatusCard({
       <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
         {title}
       </p>
+
       <div className="mt-3 text-4xl font-extrabold tracking-tight text-black">
         {value}
       </div>
