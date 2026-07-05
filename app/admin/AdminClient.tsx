@@ -191,17 +191,28 @@ export default function AdminClient() {
     };
   }, [orders]);
 
-  const calendarDays = useMemo(() => {
-  const today = new Date();
+  const getMadridDateKey = (date: Date) => {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Madrid",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
+};
+
+const calendarDays = useMemo(() => {
+  const todayMadridKey = getMadridDateKey(new Date());
+  const [year, month, day] = todayMadridKey.split("-").map(Number);
 
   return Array.from({ length: 7 }).map((_, index) => {
-    const date = new Date(today);
-    date.setDate(today.getDate() + index);
-
-    const dateKey = date.toISOString().slice(0, 10);
+    const date = new Date(Date.UTC(year, month - 1, day + index, 12, 0, 0));
+    const dateKey = getMadridDateKey(date);
 
     const dayOrders = orders
-      .filter((order) => order.scheduled_at?.slice(0, 10) === dateKey)
+      .filter((order) => {
+        if (!order.scheduled_at) return false;
+        return getMadridDateKey(new Date(order.scheduled_at)) === dateKey;
+      })
       .sort((a, b) =>
         String(a.scheduled_at || "").localeCompare(String(b.scheduled_at || ""))
       );
