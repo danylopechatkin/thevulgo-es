@@ -209,12 +209,11 @@ const calendarDays = useMemo(() => {
     const dateKey = getMadridDateKey(date);
 
     const dayOrders = orders
-      .filter((order) => {
-        if (!order.scheduled_at) return false;
-        return getMadridDateKey(new Date(order.scheduled_at)) === dateKey;
-      })
+      .filter((order) => order.preferred_date === dateKey)
       .sort((a, b) =>
-        String(a.scheduled_at || "").localeCompare(String(b.scheduled_at || ""))
+        String(a.preferred_time || "").localeCompare(
+          String(b.preferred_time || "")
+        )
       );
 
     return {
@@ -626,9 +625,7 @@ const calendarDays = useMemo(() => {
                   className="w-full rounded-xl border border-yellow-400 bg-white p-3 text-left text-sm shadow-sm transition hover:bg-yellow-50"
                 >
                   <p className="font-extrabold text-black">
-                    {order.scheduled_at
-                      ? formatMadridDateTime(order.scheduled_at).time
-                      : "—"}{" "}
+                    {order.preferred_time?.slice(0, 5) || "—"}{" "}
                     {order.full_name}
                   </p>
 
@@ -734,9 +731,9 @@ const calendarDays = useMemo(() => {
                       <td className="px-4 py-5 align-top">
                         <div className="flex flex-col">
                           <span className="font-semibold text-black">
-                            {order.scheduled_at
-                              ? formatMadridDateTime(order.scheduled_at).full
-                              : "—"}
+                            {order.preferred_date && order.preferred_time
+  ? `${order.preferred_date} ${order.preferred_time.slice(0, 5)}`
+  : "—"}
                           </span>
                         </div>
                       </td>
