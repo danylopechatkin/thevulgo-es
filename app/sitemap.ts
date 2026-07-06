@@ -18,6 +18,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "services/bathroom",
     "services/move-in",
     "services/exterior",
+    "services/alarm-systems",
+
+"services/access-control",
+
+"services/starlink-internet",
+
+"services/cctv-installation",
+
+"services/network-installation",
   ];
 
   const seoServicePages = [
