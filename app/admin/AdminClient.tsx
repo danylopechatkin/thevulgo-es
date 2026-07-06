@@ -424,25 +424,33 @@ const calendarDays = useMemo(() => {
   const updateOrderSchedule = async () => {
   if (!selected) return;
 
-  if (!selected.preferred_date || !selected.preferred_time) {
+  const cleanDate = selected.preferred_date;
+  const cleanTime = selected.preferred_time?.slice(0, 5);
+
+  if (!cleanDate || !cleanTime) {
     alert("Date and time are required");
     return;
   }
 
-  const cleanTime = selected.preferred_time.slice(0, 5);
+  const scheduledAt = new Date(`${cleanDate}T${cleanTime}:00+02:00`).toISOString();
 
-  const scheduledAt = new Date(
-    `${selected.preferred_date}T${cleanTime}:00+02:00`
-  ).toISOString();
+  const updatedOrder = {
+    ...selected,
+    preferred_date: cleanDate,
+    preferred_time: cleanTime,
+    scheduled_at: scheduledAt,
+  };
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("orders")
     .update({
-      preferred_date: selected.preferred_date,
+      preferred_date: cleanDate,
       preferred_time: cleanTime,
       scheduled_at: scheduledAt,
     })
-    .eq("id", selected.id);
+    .eq("id", selected.id)
+    .select("*")
+    .single();
 
   if (error) {
     console.error("UPDATE SCHEDULE ERROR:", error);
@@ -450,28 +458,13 @@ const calendarDays = useMemo(() => {
     return;
   }
 
+  const freshOrder = (data as Order) || updatedOrder;
+
   setOrders((prev) =>
-    prev.map((o) =>
-      o.id === selected.id
-        ? {
-            ...o,
-            preferred_date: selected.preferred_date,
-            preferred_time: cleanTime,
-            scheduled_at: scheduledAt,
-          }
-        : o
-    )
+    prev.map((order) => (order.id === selected.id ? freshOrder : order))
   );
 
-  setSelected((prev) =>
-    prev
-      ? {
-          ...prev,
-          preferred_time: cleanTime,
-          scheduled_at: scheduledAt,
-        }
-      : prev
-  );
+  setSelected(freshOrder);
 
   alert("Schedule updated");
 };
