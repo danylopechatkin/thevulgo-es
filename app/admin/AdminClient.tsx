@@ -429,15 +429,17 @@ const calendarDays = useMemo(() => {
     return;
   }
 
+  const cleanTime = selected.preferred_time.slice(0, 5);
+
   const scheduledAt = new Date(
-    `${selected.preferred_date}T${selected.preferred_time}:00+02:00`
+    `${selected.preferred_date}T${cleanTime}:00+02:00`
   ).toISOString();
 
   const { error } = await supabase
     .from("orders")
     .update({
       preferred_date: selected.preferred_date,
-      preferred_time: selected.preferred_time,
+      preferred_time: cleanTime,
       scheduled_at: scheduledAt,
     })
     .eq("id", selected.id);
@@ -454,11 +456,21 @@ const calendarDays = useMemo(() => {
         ? {
             ...o,
             preferred_date: selected.preferred_date,
-            preferred_time: selected.preferred_time,
+            preferred_time: cleanTime,
             scheduled_at: scheduledAt,
           }
         : o
     )
+  );
+
+  setSelected((prev) =>
+    prev
+      ? {
+          ...prev,
+          preferred_time: cleanTime,
+          scheduled_at: scheduledAt,
+        }
+      : prev
   );
 
   alert("Schedule updated");
@@ -1174,7 +1186,7 @@ const calendarDays = useMemo(() => {
 
     <input
       type="time"
-      value={selected.preferred_time || ""}
+     value={selected.preferred_time?.slice(0, 5) || ""}
       onChange={(e) =>
         setSelected((prev) =>
           prev ? { ...prev, preferred_time: e.target.value } : prev
