@@ -49,6 +49,36 @@ const serviceCategories = [
     en: "Smart home installations in Valencia",
   },
   {
+    slug: "networking",
+    es: "WiFi, redes e internet en Valencia",
+    en: "WiFi, networking and internet in Valencia",
+  },
+  {
+    slug: "cctv",
+    es: "Cámaras de seguridad CCTV en Valencia",
+    en: "CCTV security cameras in Valencia",
+  },
+  {
+    slug: "alarm-systems",
+    es: "Alarmas y sistemas de seguridad en Valencia",
+    en: "Alarm systems and security in Valencia",
+  },
+  {
+    slug: "access-control",
+    es: "Control de acceso en Valencia",
+    en: "Access control systems in Valencia",
+  },
+  {
+    slug: "starlink-internet",
+    es: "Starlink, antenas e internet exterior en Valencia",
+    en: "Starlink, antennas and outdoor internet in Valencia",
+  },
+  {
+    slug: "commercial-security",
+    es: "Seguridad para negocios en Valencia",
+    en: "Commercial security systems in Valencia",
+  },
+  {
     slug: "kitchen",
     es: "Trabajos de cocina en Valencia",
     en: "Kitchen handyman jobs in Valencia",
@@ -75,40 +105,46 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Servicios de handyman en Valencia | TV, muebles, reparaciones | THEVULGO"
-    : "Handyman Services in Valencia | TV, Furniture, Repairs | THEVULGO";
+    ? "Servicios en Valencia | Manitas, redes, cámaras, alarmas | THEVULGO"
+    : "Services in Valencia | Handyman, WiFi, CCTV, Alarms | THEVULGO";
 
   const description = isEs
-    ? "Servicios de handyman en Valencia: montaje de TV, montaje de muebles, electricidad básica, fontanería básica, pladur, puertas, cocina, baño, mudanzas y pequeñas reparaciones. Presupuesto claro y acabado limpio."
-    : "Handyman services in Valencia: TV mounting, furniture assembly, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom, move-in jobs and small repairs. Clear estimate and clean finish.";
+    ? "Servicios en Valencia: montaje de TV, muebles, electricidad, reparaciones, pladur, WiFi, redes, cámaras CCTV, alarmas, control de acceso, Starlink y seguridad para negocios."
+    : "Services in Valencia: TV mounting, furniture assembly, electrical, repairs, drywall, WiFi, networking, CCTV cameras, alarms, access control, Starlink and commercial security.";
 
   return {
     title,
     description,
     keywords: isEs
       ? [
-          "servicios handyman Valencia",
+          "servicios Valencia",
           "manitas Valencia",
           "montaje TV Valencia",
           "montaje muebles Valencia",
-          "reparaciones hogar Valencia",
-          "electricidad básica Valencia",
-          "fontanería básica Valencia",
-          "pladur Valencia",
-          "puertas Valencia",
-          "cocina baño Valencia",
+          "electricista Valencia",
+          "WiFi Valencia",
+          "redes Valencia",
+          "instalación cámaras Valencia",
+          "CCTV Valencia",
+          "alarmas Valencia",
+          "control de acceso Valencia",
+          "Starlink Valencia",
+          "seguridad negocios Valencia",
         ]
       : [
-          "handyman services Valencia",
+          "services Valencia",
           "handyman Valencia",
           "TV mounting Valencia",
           "furniture assembly Valencia",
-          "home repairs Valencia",
-          "basic electrical Valencia",
-          "basic plumbing Valencia",
-          "drywall Valencia",
-          "doors Valencia",
-          "kitchen bathroom Valencia",
+          "electrician Valencia",
+          "WiFi Valencia",
+          "networking Valencia",
+          "CCTV Valencia",
+          "camera installation Valencia",
+          "alarm systems Valencia",
+          "access control Valencia",
+          "Starlink Valencia",
+          "commercial security Valencia",
         ],
     alternates: {
       canonical: `${baseUrl}/${locale}/services`,
@@ -141,12 +177,10 @@ export default async function ServicesPage({ params }: Props) {
   const collectionPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: isEs
-      ? "Servicios de handyman en Valencia"
-      : "Handyman services in Valencia",
+    name: isEs ? "Servicios en Valencia" : "Services in Valencia",
     description: isEs
-      ? "Página de servicios de THEVULGO para trabajos de handyman en Valencia: montaje de TV, muebles, electricidad básica, fontanería básica, pladur, puertas, cocina, baño, mudanzas y reparaciones."
-      : "THEVULGO services page for handyman jobs in Valencia: TV mounting, furniture assembly, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom, move-in jobs and repairs.",
+      ? "Página de servicios de THEVULGO en Valencia: manitas, montaje de TV, muebles, electricidad básica, pladur, WiFi, redes, cámaras CCTV, alarmas, control de acceso, Starlink y seguridad para negocios."
+      : "THEVULGO services page in Valencia: handyman, TV mounting, furniture assembly, basic electrical, drywall, WiFi, networking, CCTV cameras, alarms, access control, Starlink and commercial security.",
     url: pageUrl,
     inLanguage: isEs ? "es" : "en",
   };
@@ -173,9 +207,7 @@ export default async function ServicesPage({ params }: Props) {
   const itemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: isEs
-      ? "Categorías de servicios handyman en Valencia"
-      : "Handyman service categories in Valencia",
+    name: isEs ? "Categorías de servicios en Valencia" : "Service categories in Valencia",
     itemListElement: serviceCategories.map((service, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -187,12 +219,10 @@ export default async function ServicesPage({ params }: Props) {
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: isEs
-      ? "Servicios de handyman en Valencia"
-      : "Handyman services in Valencia",
+    name: isEs ? "Servicios en Valencia" : "Services in Valencia",
     serviceType: isEs
-      ? "Montaje, reparaciones e instalaciones del hogar"
-      : "Home mounting, repair and installation services",
+      ? "Montaje, reparaciones, redes, internet y seguridad"
+      : "Mounting, repairs, networking, internet and security",
     provider: {
       "@type": "HomeAndConstructionBusiness",
       name: "THEVULGO",
@@ -224,9 +254,7 @@ export default async function ServicesPage({ params }: Props) {
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: isEs
-        ? "Catálogo de servicios THEVULGO"
-        : "THEVULGO service catalog",
+      name: isEs ? "Catálogo de servicios THEVULGO" : "THEVULGO service catalog",
       itemListElement: serviceCategories.map((service) => ({
         "@type": "Offer",
         itemOffered: {
@@ -246,25 +274,25 @@ export default async function ServicesPage({ params }: Props) {
       {
         "@type": "Question",
         name: isEs
-          ? "¿Qué servicios de handyman ofrece THEVULGO en Valencia?"
-          : "What handyman services does THEVULGO offer in Valencia?",
+          ? "¿Qué servicios ofrece THEVULGO en Valencia?"
+          : "What services does THEVULGO offer in Valencia?",
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "THEVULGO ofrece montaje de TV, montaje de muebles, reparaciones del hogar, electricidad básica, fontanería básica, pladur, puertas, cocina, baño, smart home, mudanzas y pequeños trabajos exteriores en Valencia."
-            : "THEVULGO offers TV mounting, furniture assembly, home repairs, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom, smart home, move-in services and small exterior jobs in Valencia.",
+            ? "THEVULGO ofrece montaje de TV, montaje de muebles, reparaciones, electricidad básica, fontanería básica, pladur, puertas, cocina, baño, smart home, WiFi, redes, cámaras CCTV, alarmas, control de acceso, Starlink y seguridad para negocios."
+            : "THEVULGO offers TV mounting, furniture assembly, repairs, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom, smart home, WiFi, networking, CCTV cameras, alarms, access control, Starlink and commercial security.",
         },
       },
       {
         "@type": "Question",
         name: isEs
-          ? "¿Trabajáis solo en Valencia ciudad?"
-          : "Do you only work in Valencia city?",
+          ? "¿Trabajáis con locales comerciales?"
+          : "Do you work with commercial premises?",
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "Trabajamos en Valencia y zonas cercanas como Campanar, Ruzafa, Benimaclet, Patraix, Mislata, Burjassot, Paterna, Torrent, Sagunto, Cullera y Gandía."
-            : "We work in Valencia and nearby areas including Campanar, Ruzafa, Benimaclet, Patraix, Mislata, Burjassot, Paterna, Torrent, Sagunto, Cullera and Gandía.",
+            ? "Sí. Trabajamos con oficinas, bares, restaurantes, cafés, tiendas, gimnasios y otros negocios para instalaciones de WiFi, redes, cámaras, alarmas y control de acceso."
+            : "Yes. We work with offices, bars, restaurants, cafes, shops, gyms and other businesses for WiFi, networking, CCTV, alarms and access control installations.",
         },
       },
       {

@@ -16,6 +16,12 @@ import {
   Bath,
   Home,
   House,
+  Wifi,
+  Camera,
+  Siren,
+  KeyRound,
+  Satellite,
+  Building2,
 } from "lucide-react";
 
 export default function ServicesClient() {
@@ -63,6 +69,36 @@ export default function ServicesClient() {
       key: "smartHome",
       slug: "smart-home",
       icon: <ShieldCheck className="h-5 w-5" />,
+    },
+    {
+      key: "networking",
+      slug: "networking",
+      icon: <Wifi className="h-5 w-5" />,
+    },
+    {
+      key: "cctv",
+      slug: "cctv",
+      icon: <Camera className="h-5 w-5" />,
+    },
+    {
+      key: "alarmSystems",
+      slug: "alarm-systems",
+      icon: <Siren className="h-5 w-5" />,
+    },
+    {
+      key: "accessControl",
+      slug: "access-control",
+      icon: <KeyRound className="h-5 w-5" />,
+    },
+    {
+      key: "starlinkInternet",
+      slug: "starlink-internet",
+      icon: <Satellite className="h-5 w-5" />,
+    },
+    {
+      key: "commercialSecurity",
+      slug: "commercial-security",
+      icon: <Building2 className="h-5 w-5" />,
     },
     {
       key: "kitchen",
@@ -133,11 +169,11 @@ export default function ServicesClient() {
                 </h2>
 
                 <p
-  className="mt-2 text-sm leading-relaxed text-gray-700"
-  dangerouslySetInnerHTML={{
-    __html: t.raw(`items.${service.key}.desc`) as string,
-  }}
-/>
+                  className="mt-2 text-sm leading-relaxed text-gray-700"
+                  dangerouslySetInnerHTML={{
+                    __html: t.raw(`items.${service.key}.desc`) as string,
+                  }}
+                />
 
                 <div className="mt-4 text-sm font-extrabold text-yellow-500">
                   {t(`items.${service.key}.price`)}
