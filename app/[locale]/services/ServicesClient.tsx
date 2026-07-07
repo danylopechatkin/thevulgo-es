@@ -72,7 +72,7 @@ export default function ServicesClient() {
     },
     {
       key: "networking",
-      slug: "networking",
+      slug: "redes",
       icon: <Wifi className="h-5 w-5" />,
     },
     {
@@ -82,22 +82,22 @@ export default function ServicesClient() {
     },
     {
       key: "alarmSystems",
-      slug: "alarm-systems",
+      slug: "alarmas",
       icon: <Siren className="h-5 w-5" />,
     },
     {
       key: "accessControl",
-      slug: "access-control",
+      slug: "control-de-acceso",
       icon: <KeyRound className="h-5 w-5" />,
     },
     {
       key: "starlinkInternet",
-      slug: "starlink-internet",
+      slug: "starlink",
       icon: <Satellite className="h-5 w-5" />,
     },
     {
       key: "commercialSecurity",
-      slug: "commercial-security",
+      slug: "seguridad-comercial",
       icon: <Building2 className="h-5 w-5" />,
     },
     {
