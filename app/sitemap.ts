@@ -248,6 +248,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "services/bathroom/wall-mounting",
     "services/bathroom/glass-shelf-installation",
     "services/bathroom/multiple-installation-tasks",
+
+        // Ceiling fans
+    "services/instalacion-ventilador-techo-valencia",
+    "services/montaje-ventilador-techo",
+    "services/instalar-ventilador-techo",
+    "services/ventilador-techo-con-luz",
+    "services/cambio-lampara-por-ventilador",
+    "services/reemplazo-ventilador-techo",
+    "services/instalacion-ventilador-control-remoto",
+    "services/instalacion-ventilador-smart",
+
   ];
 
   const pages: MetadataRoute.Sitemap = [];
