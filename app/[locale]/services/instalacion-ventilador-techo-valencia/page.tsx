@@ -7,6 +7,7 @@ import {
   CheckCircle2,
   Clock3,
   Euro,
+  Phone,
   Fan,
   Home,
   Lightbulb,
@@ -611,15 +612,27 @@ export default async function CeilingFanInstallationPage({
 
 </p>
 
-<p className="mt-4 text-base font-black text-neutral-950">
+<div className="mt-5 flex flex-wrap gap-3 text-sm font-bold">
 
-  {isEs
+  <span className="rounded-full bg-yellow-100 px-4 py-2 text-neutral-950">
 
-    ? "Desmontaje incluido • Conexión incluida • Desde 45 €"
+    {isEs ? "✓ Desmontaje incluido" : "✓ Removal included"}
 
-    : "Removal included • Connection included • From €45"}
+  </span>
 
-</p>
+  <span className="rounded-full bg-yellow-100 px-4 py-2 text-neutral-950">
+
+    {isEs ? "✓ Conexión incluida" : "✓ Connection included"}
+
+  </span>
+
+  <span className="rounded-full bg-yellow-400 px-4 py-2 text-black shadow-sm">
+
+    {isEs ? "Desde 45 €" : "From €45"}
+
+  </span>
+
+</div>
 
             <div className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-3">
               <div className="rounded-2xl border border-yellow-300 bg-white p-5 shadow-md">
@@ -645,50 +658,38 @@ export default async function CeilingFanInstallationPage({
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-
   <a
-
     href={whatsappHref}
-
     className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-lg transition hover:scale-105"
-
   >
-
     <MessageCircle className="h-5 w-5" />
-
     {isEs ? "WhatsApp rápido" : "Fast WhatsApp"}
-
   </a>
 
   <a
-
     href={`tel:+${phone}`}
-
-    className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
-
+    className="inline-flex items-center justify-center gap-2 rounded-xl border border-yellow-400 bg-white px-6 py-4 font-bold text-black shadow-md transition hover:scale-105"
   >
-
+    <Phone className="h-5 w-5 text-yellow-500" />
     +34 610 076 942
-
   </a>
 
   <Link
-
     href={estimateHref}
-
-    className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-6 py-4 font-bold shadow-sm transition hover:scale-105"
-
+    className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
   >
-
     {isEs ? "Abrir formulario" : "Open estimate form"}
-
     <ArrowRight className="h-5 w-5" />
-
   </Link>
-
 </div>
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+<p className="mt-4 text-sm font-semibold text-neutral-600">
+  {isEs
+    ? "Respuesta rápida por WhatsApp • Trabajamos los 7 días según disponibilidad"
+    : "Fast WhatsApp reply • We work 7 days depending on availability"}
+</p>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {[
                 {
                   icon: Clock3,
