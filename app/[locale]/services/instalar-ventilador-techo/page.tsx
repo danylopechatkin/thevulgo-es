@@ -4,10 +4,8 @@ import {
   ArrowRight,
   BadgeCheck,
   CheckCircle2,
-  Clock3,
   Euro,
   Fan,
-  Home,
   Lightbulb,
   MapPin,
   MessageCircle,
@@ -16,7 +14,6 @@ import {
   Settings,
   ShieldCheck,
   Sparkles,
-  Star,
   Wrench,
 } from "lucide-react";
 
@@ -26,7 +23,6 @@ type Props = {
 
 const baseUrl = "https://www.thevulgo.es";
 const phone = "34610076942";
-
 const slug = "instalar-ventilador-techo";
 
 const areas = [
@@ -235,9 +231,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
         : "Yes, connection to the existing electrical point is included if the point is ready and safe.",
     },
     {
-      q: isEs
-        ? "¿Qué fotos tengo que enviar?"
-        : "What photos should I send?",
+      q: isEs ? "¿Qué fotos tengo que enviar?" : "What photos should I send?",
       a: isEs
         ? "Foto del techo, del punto de luz, del ventilador comprado y, si es posible, de la caja o instrucciones."
         : "A photo of the ceiling, light point, fan you bought and, if possible, the box or manual.",
@@ -265,9 +259,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      name: isEs
-        ? "Instalar ventilador de techo"
-        : "Install ceiling fan",
+      name: isEs ? "Instalar ventilador de techo" : "Install ceiling fan",
       serviceType: isEs
         ? "Instalación de ventiladores de techo"
         : "Ceiling fan installation",
@@ -324,9 +316,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
         {
           "@type": "ListItem",
           position: 3,
-          name: isEs
-            ? "Instalar ventilador de techo"
-            : "Install ceiling fan",
+          name: isEs ? "Instalar ventilador de techo" : "Install ceiling fan",
           item: `${baseUrl}/${locale}/services/${slug}`,
         },
       ],
@@ -334,31 +324,34 @@ export default async function InstallCeilingFanPage({ params }: Props) {
   ];
 
   return (
-    <main className="min-h-screen bg-[#f6f1e8] text-[#1f1a14]">
+    <main className="bg-white text-neutral-950">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <section className="relative overflow-hidden border-b border-[#dfd2bf]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#f3c96b55,transparent_36%),radial-gradient(circle_at_bottom_right,#c86b3c33,transparent_42%)]" />
+      <section className="relative overflow-hidden border-b border-yellow-200 bg-gradient-to-b from-yellow-50 via-white to-white">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-yellow-200/40 blur-3xl" />
+          <div className="absolute right-10 top-20 h-[320px] w-[320px] rounded-full bg-yellow-100/70 blur-3xl" />
+        </div>
 
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-24">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-28">
           <div>
-            <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-[#d8c4a8] bg-white/60 px-4 py-2 text-sm font-black text-[#7a4b1f] shadow-sm backdrop-blur">
-              <Fan className="h-4 w-4" />
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-2 text-sm font-semibold shadow-sm">
+              <Fan className="h-4 w-4 text-yellow-500" />
               {isEs
                 ? "Instalar ventilador de techo en Valencia"
                 : "Install ceiling fan in Valencia"}
             </div>
 
-            <h1 className="max-w-4xl text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">
               {isEs
                 ? "Instalar ventilador de techo desde 45 €"
                 : "Install a ceiling fan from €45"}
             </h1>
 
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#5f554a] sm:text-xl">
+            <p className="mt-6 max-w-4xl text-lg leading-8 text-neutral-700">
               {isEs
                 ? "Instalamos ventiladores de techo con luz, mando, aspas retráctiles o modelos clásicos. Incluye desmontaje de lámpara antigua, conexión al punto eléctrico existente y prueba final."
                 : "We install ceiling fans with light, remote control, retractable blades or classic models. Includes old lamp removal, connection to the existing electrical point and final test."}
@@ -367,7 +360,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href={whatsappUrl}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#1f1a14] px-6 py-4 text-base font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-[#2d251c]"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-lg transition hover:scale-105"
               >
                 <MessageCircle className="h-5 w-5" />
                 {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
@@ -375,14 +368,14 @@ export default async function InstallCeilingFanPage({ params }: Props) {
 
               <a
                 href="#precios"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#d2b48c] bg-white/70 px-6 py-4 text-base font-bold text-[#1f1a14] shadow-sm transition hover:-translate-y-0.5 hover:bg-white"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-6 py-4 font-bold shadow-sm transition hover:scale-105"
               >
                 <Euro className="h-5 w-5" />
                 {isEs ? "Ver precios" : "See prices"}
               </a>
             </div>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
                 isEs ? "Desde 45 €" : "From €45",
                 isEs ? "2 ventiladores 85 €" : "2 fans €85",
@@ -390,20 +383,20 @@ export default async function InstallCeilingFanPage({ params }: Props) {
               ].map((item) => (
                 <div
                   key={item}
-                  className="rounded-2xl border border-[#ddcbb4] bg-white/65 p-4 text-sm font-bold text-[#4d4032] shadow-sm backdrop-blur"
+                  className="rounded-2xl border border-yellow-300 bg-white p-5 shadow-md"
                 >
-                  <CheckCircle2 className="mb-2 h-5 w-5 text-[#8a5a23]" />
-                  {item}
+                  <CheckCircle2 className="mb-3 h-6 w-6 text-yellow-500" />
+                  <p className="text-sm font-bold">{item}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="rounded-[2.5rem] border border-[#d8c4a8] bg-[#fffaf1]/80 p-5 shadow-2xl shadow-[#6b4a2b]/10 backdrop-blur">
-            <div className="rounded-[2rem] bg-[#1f1a14] p-6 text-white">
+          <div className="rounded-3xl border border-yellow-300 bg-white p-5 shadow-xl">
+            <div className="rounded-3xl bg-black p-6 text-white">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-sm font-black text-[#f3c96b]">THEVULGO</p>
+                  <p className="text-sm font-black text-yellow-400">THEVULGO</p>
                   <h2 className="mt-2 text-2xl font-black">
                     {isEs
                       ? "Instalación clara y sin sorpresas"
@@ -411,7 +404,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
                   </h2>
                 </div>
 
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f3c96b] text-[#1f1a14]">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-yellow-400 text-black">
                   <Fan className="h-7 w-7" />
                 </div>
               </div>
@@ -420,20 +413,20 @@ export default async function InstallCeilingFanPage({ params }: Props) {
                 {priceCards.map((card) => (
                   <div
                     key={card.title}
-                    className="rounded-3xl border border-white/10 bg-white/8 p-5"
+                    className="rounded-2xl border border-neutral-700 bg-neutral-900 p-5"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <p className="text-sm font-semibold text-[#f3c96b]">
+                        <p className="text-sm font-bold text-yellow-400">
                           {card.badge}
                         </p>
                         <h3 className="mt-1 text-xl font-black">{card.title}</h3>
-                        <p className="mt-2 text-sm leading-6 text-white/70">
+                        <p className="mt-2 text-sm leading-6 text-neutral-300">
                           {card.text}
                         </p>
                       </div>
 
-                      <p className="whitespace-nowrap text-3xl font-black text-[#f3c96b]">
+                      <p className="whitespace-nowrap text-3xl font-black text-yellow-400">
                         {card.price}
                       </p>
                     </div>
@@ -441,7 +434,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
                 ))}
               </div>
 
-              <div className="mt-6 rounded-3xl bg-[#f3c96b] p-5 text-[#1f1a14]">
+              <div className="mt-6 rounded-2xl bg-yellow-400 p-5 text-black">
                 <div className="flex items-center gap-3">
                   <ShieldCheck className="h-6 w-6" />
                   <p className="font-black">
@@ -450,7 +443,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
                       : "Removal and basic connection included"}
                   </p>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-[#3d2a15]">
+                <p className="mt-2 text-sm font-medium leading-6">
                   {isEs
                     ? "Siempre que el techo tenga un punto eléctrico existente y el ventilador venga completo."
                     : "As long as the ceiling has an existing electrical point and the fan comes complete."}
@@ -461,20 +454,21 @@ export default async function InstallCeilingFanPage({ params }: Props) {
         </div>
       </section>
 
-      <section id="precios" className="border-b border-[#dfd2bf] bg-[#fffaf1]">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
-          <div className="max-w-3xl">
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-[#8a5a23]">
+      <section id="precios" className="border-b border-neutral-200 bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-4 py-1 text-xs font-bold">
+              <Euro className="h-4 w-4 text-yellow-500" />
               {isEs ? "Precios" : "Prices"}
-            </p>
+            </div>
 
-            <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-black sm:text-4xl">
               {isEs
                 ? "Precio para instalar ventilador de techo"
                 : "Price to install a ceiling fan"}
             </h2>
 
-            <p className="mt-4 text-lg leading-8 text-[#5f554a]">
+            <p className="mt-4 text-lg leading-8 text-neutral-700">
               {isEs
                 ? "Precio cerrado cuando el punto eléctrico ya existe, el techo permite una fijación segura y el ventilador trae sus piezas completas."
                 : "Fixed price when the electrical point already exists, the ceiling allows safe fixing and the fan includes all required parts."}
@@ -485,23 +479,23 @@ export default async function InstallCeilingFanPage({ params }: Props) {
             {priceCards.map((card) => (
               <article
                 key={card.title}
-                className="rounded-[2rem] border border-[#dfd2bf] bg-[#f6f1e8] p-6 shadow-sm"
+                className="rounded-2xl border border-yellow-300 bg-white p-6 shadow-md transition hover:scale-[1.02] hover:shadow-xl"
               >
-                <div className="mb-5 inline-flex rounded-full bg-[#1f1a14] px-4 py-2 text-sm font-bold text-[#f3c96b]">
+                <div className="mb-5 inline-flex rounded-full bg-black px-4 py-2 text-sm font-bold text-yellow-400">
                   {card.badge}
                 </div>
 
                 <h3 className="text-2xl font-black">{card.title}</h3>
 
-                <p className="mt-4 text-5xl font-black tracking-tight text-[#8a5a23]">
+                <p className="mt-4 text-5xl font-black tracking-tight">
                   {card.price}
                 </p>
 
-                <p className="mt-5 leading-7 text-[#5f554a]">{card.text}</p>
+                <p className="mt-5 leading-7 text-neutral-700">{card.text}</p>
 
                 <a
                   href={whatsappUrl}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#1f1a14] px-5 py-4 font-bold text-white transition hover:bg-[#2d251c]"
+                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-black px-5 py-4 font-bold text-white transition hover:scale-105"
                 >
                   <MessageCircle className="h-5 w-5" />
                   {isEs ? "Reservar instalación" : "Book installation"}
@@ -512,21 +506,22 @@ export default async function InstallCeilingFanPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-b border-[#dfd2bf] bg-[#f6f1e8]">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <section className="border-b border-neutral-200 bg-neutral-50">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-[#8a5a23]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
+                <Wrench className="h-4 w-4 text-yellow-500" />
                 {isEs ? "Incluido" : "Included"}
-              </p>
+              </div>
 
-              <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+              <h2 className="mt-4 text-3xl font-black sm:text-4xl">
                 {isEs
                   ? "Qué incluye la instalación"
                   : "What the installation includes"}
               </h2>
 
-              <p className="mt-5 text-lg leading-8 text-[#5f554a]">
+              <p className="mt-5 text-lg leading-8 text-neutral-700">
                 {isEs
                   ? "No es solo colgar el ventilador. Revisamos el soporte, hacemos el montaje, conectamos al punto existente y probamos el funcionamiento contigo."
                   : "It is not just hanging the fan. We check the bracket, assemble the fan, connect it to the existing point and test everything with you."}
@@ -569,14 +564,14 @@ export default async function InstallCeilingFanPage({ params }: Props) {
                 return (
                   <article
                     key={item.title}
-                    className="rounded-[2rem] border border-[#dfd2bf] bg-white p-6 shadow-sm"
+                    className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-md"
                   >
-                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f3c96b] text-[#1f1a14]">
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
                       <Icon className="h-6 w-6" />
                     </div>
 
                     <h3 className="text-xl font-black">{item.title}</h3>
-                    <p className="mt-3 leading-7 text-[#5f554a]">{item.text}</p>
+                    <p className="mt-3 leading-7 text-neutral-700">{item.text}</p>
                   </article>
                 );
               })}
@@ -585,19 +580,19 @@ export default async function InstallCeilingFanPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-b border-[#dfd2bf] bg-[#fffaf1]">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <section className="border-b border-neutral-200 bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-2">
-            <div className="rounded-[2rem] border border-[#dfd2bf] bg-white p-6 shadow-sm lg:p-8">
-              <BadgeCheck className="h-12 w-12 text-[#8a5a23]" />
+            <div className="rounded-3xl border border-yellow-300 bg-white p-8 shadow-xl">
+              <BadgeCheck className="h-12 w-12 text-yellow-500" />
 
-              <h2 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl">
+              <h2 className="mt-5 text-3xl font-black sm:text-4xl">
                 {isEs
                   ? "Antes de darte hora pedimos fotos"
                   : "Before booking, we ask for photos"}
               </h2>
 
-              <p className="mt-5 text-lg leading-8 text-[#5f554a]">
+              <p className="mt-5 text-lg leading-8 text-neutral-700">
                 {isEs
                   ? "Así confirmamos si el techo tiene punto eléctrico, si el ventilador trae soporte y si hace falta alguna preparación especial."
                   : "This helps us confirm whether the ceiling has an electrical point, whether the fan includes the bracket and whether any special preparation is needed."}
@@ -610,18 +605,18 @@ export default async function InstallCeilingFanPage({ params }: Props) {
                   isEs ? "Foto de la caja o instrucciones" : "Photo of the box or manual",
                   isEs ? "Dirección o zona de Valencia" : "Address or area in Valencia",
                 ].map((item) => (
-                  <div key={item} className="flex gap-3 rounded-2xl bg-[#f6f1e8] p-4">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8a5a23]" />
-                    <p className="font-semibold leading-6 text-[#4d4032]">{item}</p>
+                  <div key={item} className="flex gap-3 rounded-xl bg-yellow-50 p-4">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-yellow-500" />
+                    <p className="font-semibold leading-6 text-neutral-800">{item}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-[#dfd2bf] bg-[#1f1a14] p-6 text-white shadow-sm lg:p-8">
-              <Fan className="h-12 w-12 text-[#f3c96b]" />
+            <div className="rounded-3xl bg-black p-8 text-white shadow-xl">
+              <Fan className="h-12 w-12 text-yellow-400" />
 
-              <h2 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl">
+              <h2 className="mt-5 text-3xl font-black sm:text-4xl">
                 {isEs
                   ? "Tipos de ventiladores que instalamos"
                   : "Types of fans we install"}
@@ -640,7 +635,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
                 ].map((item) => (
                   <div
                     key={item}
-                    className="rounded-2xl border border-white/10 bg-white/8 p-4 font-bold"
+                    className="rounded-xl border border-neutral-700 bg-neutral-900 p-4 font-bold"
                   >
                     {item}
                   </div>
@@ -651,14 +646,15 @@ export default async function InstallCeilingFanPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-b border-[#dfd2bf] bg-[#f6f1e8]">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
-          <div className="max-w-3xl">
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-[#8a5a23]">
+      <section className="border-b border-neutral-200 bg-neutral-50">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
+              <MapPin className="h-4 w-4 text-yellow-500" />
               {isEs ? "Zonas" : "Areas"}
-            </p>
+            </div>
 
-            <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-black sm:text-4xl">
               {isEs
                 ? "Instalación de ventiladores en Valencia y alrededores"
                 : "Fan installation in Valencia and nearby areas"}
@@ -669,9 +665,9 @@ export default async function InstallCeilingFanPage({ params }: Props) {
             {areas.map((area) => (
               <div
                 key={area}
-                className="flex items-center gap-3 rounded-2xl border border-[#dfd2bf] bg-white p-4 font-bold text-[#4d4032]"
+                className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white p-4 font-bold shadow-sm"
               >
-                <MapPin className="h-5 w-5 text-[#8a5a23]" />
+                <MapPin className="h-5 w-5 text-yellow-500" />
                 {area}
               </div>
             ))}
@@ -679,21 +675,20 @@ export default async function InstallCeilingFanPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-b border-[#dfd2bf] bg-[#fffaf1]">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <section className="border-b border-neutral-200 bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
             <div>
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-[#8a5a23]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-4 py-1 text-xs font-bold">
+                <Sparkles className="h-4 w-4" />
                 {isEs ? "Servicios relacionados" : "Related services"}
-              </p>
+              </div>
 
-              <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
-                {isEs
-                  ? "Más páginas de ventiladores"
-                  : "More ceiling fan pages"}
+              <h2 className="mt-4 text-3xl font-black sm:text-4xl">
+                {isEs ? "Más páginas de ventiladores" : "More ceiling fan pages"}
               </h2>
 
-              <p className="mt-5 text-lg leading-8 text-[#5f554a]">
+              <p className="mt-5 text-lg leading-8 text-neutral-700">
                 {isEs
                   ? "Páginas específicas para diferentes búsquedas, modelos y tipos de instalación."
                   : "Specific pages for different searches, models and installation types."}
@@ -708,19 +703,19 @@ export default async function InstallCeilingFanPage({ params }: Props) {
                   <Link
                     key={page.slug}
                     href={`/${locale}/services/${page.slug}`}
-                    className="group rounded-[2rem] border border-[#dfd2bf] bg-[#f6f1e8] p-6 transition hover:-translate-y-1 hover:bg-white hover:shadow-xl hover:shadow-[#6b4a2b]/10"
+                    className="group rounded-2xl border border-yellow-300 bg-white p-6 shadow-md transition hover:scale-[1.02] hover:shadow-xl"
                   >
-                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f3c96b] text-[#1f1a14]">
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
                       <Icon className="h-6 w-6" />
                     </div>
 
                     <h3 className="text-xl font-black">{isEs ? page.es : page.en}</h3>
 
-                    <p className="mt-3 leading-7 text-[#5f554a]">
+                    <p className="mt-3 leading-7 text-neutral-700">
                       {isEs ? page.descEs : page.descEn}
                     </p>
 
-                    <div className="mt-5 inline-flex items-center gap-2 font-black text-[#8a5a23]">
+                    <div className="mt-5 inline-flex items-center gap-2 font-black">
                       {isEs ? "Ver servicio" : "View service"}
                       <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                     </div>
@@ -732,20 +727,20 @@ export default async function InstallCeilingFanPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-b border-[#dfd2bf] bg-[#fffaf1]">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <section className="border-b border-neutral-200 bg-neutral-50">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
           <div className="max-w-4xl">
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-[#8a5a23]">
-              {isEs ? "Texto SEO" : "SEO text"}
-            </p>
+            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
+              SEO
+            </div>
 
-            <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-black sm:text-4xl">
               {isEs
                 ? "Instalar ventilador de techo en Valencia"
                 : "Installing a ceiling fan in Valencia"}
             </h2>
 
-            <div className="mt-6 space-y-5 text-lg leading-8 text-[#5f554a]">
+            <div className="mt-6 space-y-5 text-lg leading-8 text-neutral-700">
               <p>
                 {isEs
                   ? "Instalar un ventilador de techo en Valencia es una solución práctica para mejorar la comodidad en casa durante los meses de calor. Un ventilador bien colocado ayuda a mover el aire en dormitorios, salones, despachos y viviendas de alquiler."
@@ -768,66 +763,69 @@ export default async function InstallCeilingFanPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-b border-[#dfd2bf] bg-[#f6f1e8]">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
-          <div className="max-w-3xl">
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-[#8a5a23]">
-              {isEs ? "Preguntas frecuentes" : "FAQ"}
-            </p>
+      <section className="border-b border-neutral-200 bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-4 py-1 text-xs font-bold">
+              <BadgeCheck className="h-4 w-4" />
+              FAQ
+            </div>
 
-            <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-black sm:text-4xl">
               {isEs
                 ? "Dudas sobre instalar ventiladores de techo"
                 : "Questions about installing ceiling fans"}
             </h2>
           </div>
 
-          <div className="mt-10 grid gap-4">
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
             {faq.map((item) => (
               <article
                 key={item.q}
-                className="rounded-[2rem] border border-[#dfd2bf] bg-white p-6 shadow-sm"
+                className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
               >
-                <h3 className="text-xl font-black">{item.q}</h3>
-                <p className="mt-3 leading-7 text-[#5f554a]">{item.a}</p>
+                <h3 className="font-black">{item.q}</h3>
+                <p className="mt-3 leading-7 text-neutral-700">{item.a}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-[#1f1a14] text-white">
-        <div className="mx-auto max-w-7xl px-5 py-16 text-center sm:px-6 lg:px-8 lg:py-24">
-          <Fan className="mx-auto h-12 w-12 text-[#f3c96b]" />
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div className="rounded-3xl border border-yellow-400 bg-yellow-400 p-8 shadow-2xl lg:p-12">
+          <div className="grid gap-8 lg:grid-cols-[1fr_0.7fr] lg:items-center">
+            <div>
+              <h2 className="text-3xl font-black sm:text-4xl">
+                {isEs
+                  ? "¿Quieres instalar tu ventilador de techo?"
+                  : "Want to install your ceiling fan?"}
+              </h2>
 
-          <h2 className="mt-6 text-3xl font-black tracking-tight sm:text-5xl">
-            {isEs
-              ? "¿Quieres instalar tu ventilador de techo?"
-              : "Want to install your ceiling fan?"}
-          </h2>
+              <p className="mt-4 max-w-3xl text-lg font-medium leading-8">
+                {isEs
+                  ? "Envíanos fotos del techo y del ventilador por WhatsApp. Te confirmamos precio, disponibilidad y hora."
+                  : "Send us photos of the ceiling and the fan on WhatsApp. We will confirm price, availability and time."}
+              </p>
+            </div>
 
-          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-white/70">
-            {isEs
-              ? "Envíanos fotos del techo y del ventilador por WhatsApp. Te confirmamos precio, disponibilidad y hora."
-              : "Send us photos of the ceiling and the fan on WhatsApp. We will confirm price, availability and time."}
-          </p>
+            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+              <a
+                href={whatsappUrl}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
+              >
+                <MessageCircle className="h-5 w-5" />
+                WhatsApp
+              </a>
 
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <a
-              href={whatsappUrl}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#f3c96b] px-7 py-4 font-black text-[#1f1a14] shadow-xl shadow-black/20 transition hover:-translate-y-0.5"
-            >
-              <MessageCircle className="h-5 w-5" />
-              {isEs ? "Pedir presupuesto" : "Request quote"}
-            </a>
-
-            <a
-              href={`tel:+${phone}`}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/8 px-7 py-4 font-black text-white transition hover:-translate-y-0.5 hover:bg-white/12"
-            >
-              <Phone className="h-5 w-5" />
-              +34 610 076 942
-            </a>
+              <a
+                href={`tel:+${phone}`}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-black bg-white px-6 py-4 font-bold text-black shadow-sm transition hover:scale-105"
+              >
+                <Phone className="h-5 w-5" />
+                +34 610 076 942
+              </a>
+            </div>
           </div>
         </div>
       </section>
