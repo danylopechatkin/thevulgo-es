@@ -588,7 +588,7 @@ export default async function CeilingFanInstallationPage({
           <div className="absolute right-10 top-20 h-[320px] w-[320px] rounded-full bg-yellow-100/70 blur-3xl" />
         </div>
 
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 pt-8 pb-14 lg:px-8 lg:pt-10 lg:pb-20">
           <div className="max-w-5xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-2 text-sm font-semibold shadow-sm">
               <MapPin className="h-4 w-4 text-yellow-500" />
