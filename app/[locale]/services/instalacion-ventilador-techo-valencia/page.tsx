@@ -588,7 +588,7 @@ export default async function CeilingFanInstallationPage({
           <div className="absolute right-10 top-20 h-[320px] w-[320px] rounded-full bg-yellow-100/70 blur-3xl" />
         </div>
 
-        <div className="mx-auto max-w-7xl px-6 pt-8 pb-14 lg:px-8 lg:pt-10 lg:pb-20">
+        <div className="mx-auto max-w-7xl px-6 pt-8 pb-10 lg:px-8 lg:pt-10 lg:pb-14">
           <div className="max-w-5xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-2 text-sm font-semibold shadow-sm">
               <MapPin className="h-4 w-4 text-yellow-500" />
@@ -602,10 +602,24 @@ export default async function CeilingFanInstallationPage({
             </h1>
 
             <p className="mt-6 max-w-4xl text-lg leading-8 text-neutral-700">
-              {isEs
-                ? "Instalamos ventiladores de techo en Valencia de forma limpia, segura y con precio claro. Montaje de ventiladores con luz, mando a distancia, aspas retráctiles, modelos CREATE, Cecotec y otros. El desmontaje de la lámpara o ventilador antiguo y la conexión al punto eléctrico existente están incluidos."
-                : "We install ceiling fans in Valencia with a clean finish, safe mounting and clear pricing. Installation of fans with light, remote control, retractable blades, CREATE, Cecotec and other models. Old light or fan removal and connection to the existing electrical point are included."}
-            </p>
+
+  {isEs
+
+    ? "Instalamos ventiladores de techo en Valencia con montaje limpio, precio claro y prueba final. Trabajamos con ventiladores con luz, mando, aspas retráctiles, CREATE, Cecotec y otros modelos."
+
+    : "We install ceiling fans in Valencia with clean mounting, clear pricing and final testing. We work with fans with light, remote control, retractable blades, CREATE, Cecotec and other models."}
+
+</p>
+
+<p className="mt-4 text-base font-black text-neutral-950">
+
+  {isEs
+
+    ? "Desmontaje incluido • Conexión incluida • Desde 45 €"
+
+    : "Removal included • Connection included • From €45"}
+
+</p>
 
             <div className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-3">
               <div className="rounded-2xl border border-yellow-300 bg-white p-5 shadow-md">
@@ -631,24 +645,48 @@ export default async function CeilingFanInstallationPage({
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={whatsappHref}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-lg transition hover:scale-105"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs
-                  ? "Pedir presupuesto por WhatsApp"
-                  : "Request estimate by WhatsApp"}
-              </a>
 
-              <Link
-                href={estimateHref}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-6 py-4 font-bold shadow-sm transition hover:scale-105"
-              >
-                {isEs ? "Abrir formulario" : "Open estimate form"}
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </div>
+  <a
+
+    href={whatsappHref}
+
+    className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-lg transition hover:scale-105"
+
+  >
+
+    <MessageCircle className="h-5 w-5" />
+
+    {isEs ? "WhatsApp rápido" : "Fast WhatsApp"}
+
+  </a>
+
+  <a
+
+    href={`tel:+${phone}`}
+
+    className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
+
+  >
+
+    +34 610 076 942
+
+  </a>
+
+  <Link
+
+    href={estimateHref}
+
+    className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-6 py-4 font-bold shadow-sm transition hover:scale-105"
+
+  >
+
+    {isEs ? "Abrir formulario" : "Open estimate form"}
+
+    <ArrowRight className="h-5 w-5" />
+
+  </Link>
+
+</div>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
