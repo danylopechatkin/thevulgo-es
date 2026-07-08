@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import {
   ArrowRight,
   BadgeCheck,
@@ -424,13 +425,13 @@ export default async function ChangeLampToFanPage({ params }: Props) {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={whatsappUrl}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 text-base font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 text-base font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
+</WhatsAppConversionLink>
 
               <a
                 href="#precios"
@@ -558,13 +559,13 @@ export default async function ChangeLampToFanPage({ params }: Props) {
                 </p>
                 <p className="mt-4 leading-7 text-white/70">{card.text}</p>
 
-                <a
-                  href={whatsappUrl}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  {isEs ? "Reservar por WhatsApp" : "Book on WhatsApp"}
-                </a>
+                <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Reservar por WhatsApp" : "Book on WhatsApp"}
+</WhatsAppConversionLink>
               </div>
             ))}
           </div>
@@ -610,13 +611,13 @@ export default async function ChangeLampToFanPage({ params }: Props) {
                   : "A fan weighs more than a normal lamp and creates movement. That is why we check the fixing, bracket, connection and stability before finishing."}
               </p>
 
-              <a
-                href={whatsappUrl}
-                className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-black text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
-              >
-                <Phone className="h-5 w-5" />
-                {isEs ? "Consultar disponibilidad" : "Check availability"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-black text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <Phone className="h-5 w-5" />
+  {isEs ? "Consultar disponibilidad" : "Check availability"}
+</WhatsAppConversionLink>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
@@ -758,13 +759,13 @@ export default async function ChangeLampToFanPage({ params }: Props) {
                 </ul>
               </div>
 
-              <a
-                href={whatsappUrl}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs ? "Enviar fotos por WhatsApp" : "Send photos on WhatsApp"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Enviar fotos por WhatsApp" : "Send photos on WhatsApp"}
+</WhatsAppConversionLink>
             </div>
           </div>
         </div>
@@ -929,13 +930,13 @@ export default async function ChangeLampToFanPage({ params }: Props) {
                   : "We work in Valencia city and nearby areas. Send us your location on WhatsApp and we confirm availability."}
               </p>
 
-              <a
-                href={whatsappUrl}
-                className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-black text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs ? "Consultar mi zona" : "Check my area"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-black text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Consultar mi zona" : "Check my area"}
+</WhatsAppConversionLink>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -1053,13 +1054,13 @@ export default async function ChangeLampToFanPage({ params }: Props) {
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <a
-              href={whatsappUrl}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-7 py-4 text-base font-black text-white shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-neutral-800"
-            >
-              <MessageCircle className="h-5 w-5" />
-              {isEs ? "Pedir presupuesto ahora" : "Request quote now"}
-            </a>
+            <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-7 py-4 text-base font-black text-white shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Pedir presupuesto ahora" : "Request quote now"}
+</WhatsAppConversionLink>
 
             <a
               href={`tel:+${phone}`}
