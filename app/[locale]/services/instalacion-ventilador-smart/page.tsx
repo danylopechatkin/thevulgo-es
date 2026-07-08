@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import {
   ArrowRight,
   BadgeCheck,
@@ -451,13 +452,13 @@ export default async function SmartFanPage({ params }: Props) {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={whatsappUrl}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 text-base font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 text-base font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
+</WhatsAppConversionLink>
 
               <a
                 href="#precios"
@@ -592,13 +593,13 @@ export default async function SmartFanPage({ params }: Props) {
 
                 <p className="mt-4 leading-7 text-white/70">{card.text}</p>
 
-                <a
-                  href={whatsappUrl}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  {isEs ? "Reservar por WhatsApp" : "Book on WhatsApp"}
-                </a>
+                <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Reservar por WhatsApp" : "Book on WhatsApp"}
+</WhatsAppConversionLink>
               </div>
             ))}
           </div>
@@ -619,13 +620,13 @@ export default async function SmartFanPage({ params }: Props) {
                 </p>
               </div>
 
-              <a
-                href={whatsappUrl}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-yellow-400 bg-transparent px-5 py-4 font-black text-yellow-400 transition hover:-translate-y-0.5 hover:bg-yellow-400 hover:text-neutral-950"
-              >
-                <Smartphone className="h-5 w-5" />
-                {isEs ? "Enviar modelo" : "Send model"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-yellow-400 bg-transparent px-5 py-4 font-black text-yellow-400 transition hover:-translate-y-0.5 hover:bg-yellow-400 hover:text-neutral-950"
+>
+  <Smartphone className="h-5 w-5" />
+  {isEs ? "Enviar modelo" : "Send model"}
+</WhatsAppConversionLink>
             </div>
           </div>
         </div>
@@ -652,13 +653,13 @@ export default async function SmartFanPage({ params }: Props) {
                   : "We mount the structure, connect the wiring, place the module or receiver and test the main functions: remote, light, speeds, app and WiFi."}
               </p>
 
-              <a
-                href={whatsappUrl}
-                className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-black text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
-              >
-                <Phone className="h-5 w-5" />
-                {isEs ? "Consultar disponibilidad" : "Check availability"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-black text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <Phone className="h-5 w-5" />
+  {isEs ? "Consultar disponibilidad" : "Check availability"}
+</WhatsAppConversionLink>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
@@ -792,13 +793,13 @@ export default async function SmartFanPage({ params }: Props) {
                 ))}
               </div>
 
-              <a
-                href={whatsappUrl}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs ? "Enviar fotos por WhatsApp" : "Send photos on WhatsApp"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Enviar fotos por WhatsApp" : "Send photos on WhatsApp"}
+</WhatsAppConversionLink>
             </div>
           </div>
         </div>
@@ -960,13 +961,13 @@ export default async function SmartFanPage({ params }: Props) {
                   : "The base price applies when we install the smart fan on an existing electrical point, for example where there was previously a lamp or an old fan."}
               </p>
 
-              <a
-                href={whatsappUrl}
-                className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-4 font-black text-neutral-950 shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-yellow-300"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs ? "Enviar foto del techo" : "Send ceiling photo"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-4 font-black text-neutral-950 shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-yellow-300"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Enviar foto del techo" : "Send ceiling photo"}
+</WhatsAppConversionLink>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
@@ -1126,13 +1127,13 @@ export default async function SmartFanPage({ params }: Props) {
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <a
-              href={whatsappUrl}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-7 py-4 text-base font-black text-white shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-neutral-800"
-            >
-              <MessageCircle className="h-5 w-5" />
-              {isEs ? "Pedir presupuesto ahora" : "Request quote now"}
-            </a>
+            <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-7 py-4 text-base font-black text-white shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Pedir presupuesto ahora" : "Request quote now"}
+</WhatsAppConversionLink>
 
             <a
               href={`tel:+${phone}`}
