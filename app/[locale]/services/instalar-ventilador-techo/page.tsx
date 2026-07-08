@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import {
   ArrowRight,
   BadgeCheck,
@@ -358,13 +359,13 @@ export default async function InstallCeilingFanPage({ params }: Props) {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={whatsappUrl}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-lg transition hover:scale-105"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-lg transition hover:scale-105"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
+</WhatsAppConversionLink>
 
               <a
                 href="#precios"
@@ -493,13 +494,13 @@ export default async function InstallCeilingFanPage({ params }: Props) {
 
                 <p className="mt-5 leading-7 text-neutral-700">{card.text}</p>
 
-                <a
-                  href={whatsappUrl}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-black px-5 py-4 font-bold text-white transition hover:scale-105"
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  {isEs ? "Reservar instalación" : "Book installation"}
-                </a>
+                <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-black px-5 py-4 font-bold text-white transition hover:scale-105"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Reservar instalación" : "Book installation"}
+</WhatsAppConversionLink>
               </article>
             ))}
           </div>
@@ -810,13 +811,13 @@ export default async function InstallCeilingFanPage({ params }: Props) {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <a
-                href={whatsappUrl}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
-              >
-                <MessageCircle className="h-5 w-5" />
-                WhatsApp
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
+>
+  <MessageCircle className="h-5 w-5" />
+  WhatsApp
+</WhatsAppConversionLink>
 
               <a
                 href={`tel:+${phone}`}
