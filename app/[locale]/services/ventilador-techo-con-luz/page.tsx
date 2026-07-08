@@ -2,6 +2,7 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
+import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import {
   ArrowRight,
   BadgeCheck,
@@ -342,13 +343,13 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={whatsappUrl}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 text-base font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 text-base font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
+</WhatsAppConversionLink>
 
               <a
                 href="#precios"
@@ -479,13 +480,13 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
 
                 <p className="mt-5 leading-7 text-neutral-600">{card.text}</p>
 
-                <a
-                  href={whatsappUrl}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-black px-5 py-4 font-bold text-white transition hover:bg-neutral-800"
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  {isEs ? "Reservar por WhatsApp" : "Book on WhatsApp"}
-                </a>
+                <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-black px-5 py-4 font-bold text-white transition hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Reservar por WhatsApp" : "Book on WhatsApp"}
+</WhatsAppConversionLink>
               </article>
             ))}
           </div>
@@ -728,13 +729,13 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
                   : "A fan with light must be properly fixed because the motor creates movement. We check the base, bracket and operation before finishing the job."}
               </p>
 
-              <a
-                href={whatsappUrl}
-                className="mt-7 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-bold text-white transition hover:bg-neutral-800"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs ? "Enviar fotos por WhatsApp" : "Send photos on WhatsApp"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-7 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-bold text-white transition hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Enviar fotos por WhatsApp" : "Send photos on WhatsApp"}
+</WhatsAppConversionLink>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
@@ -1055,13 +1056,13 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
               </div>
 
               <div className="flex flex-col gap-3">
-                <a
-                  href={whatsappUrl}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:bg-neutral-800"
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  {isEs ? "Pedir presupuesto" : "Request quote"}
-                </a>
+                <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Pedir presupuesto" : "Request quote"}
+</WhatsAppConversionLink>
 
                 <a
                   href={`tel:+${phone}`}
