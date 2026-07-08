@@ -2,6 +2,7 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
+import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import {
   ArrowRight,
   BadgeCheck,
@@ -445,13 +446,13 @@ export default async function RemoteControlFanPage({ params }: Props) {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={whatsappUrl}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 text-base font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
-              </a>
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 text-base font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp"}
+</WhatsAppConversionLink>
 
               <a
                 href="#precios"
@@ -542,6 +543,353 @@ export default async function RemoteControlFanPage({ params }: Props) {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+          <section id="precios" className="bg-neutral-950 py-16 text-white lg:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400/40 bg-yellow-400/10 px-4 py-2 text-sm font-bold text-yellow-400">
+              <Euro className="h-4 w-4" />
+              {isEs ? "Precios claros" : "Clear prices"}
+            </div>
+
+            <h2 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+              {isEs
+                ? "Precio para instalar ventilador con control remoto"
+                : "Price to install a fan with remote control"}
+            </h2>
+
+            <p className="mt-5 text-lg leading-8 text-white/70">
+              {isEs
+                ? "Incluye montaje del ventilador, conexión al punto eléctrico existente, instalación del receptor del mando y prueba final."
+                : "Includes fan mounting, connection to the existing electrical point, remote receiver installation and final test."}
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {priceCards.map((card) => (
+              <div
+                key={card.title}
+                className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 shadow-xl shadow-black/20"
+              >
+                <p className="text-sm font-bold text-yellow-400">{card.badge}</p>
+                <h3 className="mt-3 text-2xl font-black">{card.title}</h3>
+                <p className="mt-4 text-5xl font-black text-yellow-400">
+                  {card.price}
+                </p>
+                <p className="mt-4 leading-7 text-white/70">{card.text}</p>
+
+                <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Reservar por WhatsApp" : "Book on WhatsApp"}
+</WhatsAppConversionLink>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-yellow-50 px-4 py-2 text-sm font-bold text-yellow-600">
+                <Wrench className="h-4 w-4" />
+                {isEs ? "Servicio completo" : "Complete service"}
+              </div>
+
+              <h2 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl">
+                {isEs
+                  ? "Instalamos el ventilador y dejamos el mando funcionando"
+                  : "We install the fan and leave the remote working"}
+              </h2>
+
+              <p className="mt-5 text-lg leading-8 text-neutral-600">
+                {isEs
+                  ? "Montamos el soporte, conectamos el receptor, revisamos el cableado y probamos luz, velocidades, temporizador y estabilidad."
+                  : "We mount the bracket, connect the receiver, check the wiring and test light, speeds, timer and stability."}
+              </p>
+
+              <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-6 py-4 font-black text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <Phone className="h-5 w-5" />
+  {isEs ? "Consultar disponibilidad" : "Check availability"}
+</WhatsAppConversionLink>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              {includedItems.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <div
+                    key={item.title}
+                    className="rounded-[2rem] border border-yellow-300 bg-neutral-50 p-6 shadow-sm"
+                  >
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-neutral-950">
+                      <Icon className="h-6 w-6" />
+                    </div>
+
+                    <h3 className="text-xl font-black">{item.title}</h3>
+                    <p className="mt-3 leading-7 text-neutral-600">{item.text}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-yellow-300 bg-yellow-50 py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-white px-4 py-2 text-sm font-bold text-yellow-600">
+              <Clock3 className="h-4 w-4" />
+              {isEs ? "Proceso rápido" : "Fast process"}
+            </div>
+
+            <h2 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+              {isEs
+                ? "Cómo instalamos un ventilador con mando"
+                : "How we install a fan with remote"}
+            </h2>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-4">
+            {processSteps.map((item) => (
+              <div
+                key={item.step}
+                className="rounded-[2rem] border border-yellow-300 bg-white p-6 shadow-sm"
+              >
+                <p className="text-4xl font-black text-yellow-400">
+                  {item.step}
+                </p>
+                <h3 className="mt-5 text-xl font-black">{item.title}</h3>
+                <p className="mt-3 leading-7 text-neutral-600">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-neutral-50 py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-white px-4 py-2 text-sm font-bold text-yellow-600">
+                <Radio className="h-4 w-4" />
+                {isEs ? "Receptor y mando" : "Receiver and remote"}
+              </div>
+
+              <h2 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+                {isEs
+                  ? "Revisamos que el mando responda correctamente"
+                  : "We check that the remote responds correctly"}
+              </h2>
+
+              <p className="mt-5 text-lg leading-8 text-neutral-600">
+                {isEs
+                  ? "Antes de terminar comprobamos el emparejamiento, las pilas, la respuesta del receptor y las funciones principales del ventilador."
+                  : "Before finishing, we check pairing, batteries, receiver response and the main fan functions."}
+              </p>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {[
+                  isEs ? "Encendido y apagado" : "On and off",
+                  isEs ? "Luz LED" : "LED light",
+                  isEs ? "Velocidades" : "Speeds",
+                  isEs ? "Temporizador" : "Timer",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-3 rounded-2xl border border-yellow-300 bg-white p-4 font-bold"
+                  >
+                    <CheckCircle2 className="h-5 w-5 shrink-0 text-yellow-500" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-yellow-300 bg-neutral-950 p-6 text-white shadow-2xl shadow-black/10">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-400 text-neutral-950">
+                <Settings className="h-7 w-7" />
+              </div>
+
+              <h3 className="mt-6 text-2xl font-black">
+                {isEs ? "Antes de la visita" : "Before the visit"}
+              </h3>
+
+              <p className="mt-4 leading-8 text-white/75">
+                {isEs
+                  ? "Para confirmar el precio, envíanos fotos del techo, del ventilador nuevo, del mando, receptor e instrucciones."
+                  : "To confirm the price, send us photos of the ceiling, new fan, remote, receiver and instructions."}
+              </p>
+
+             <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Enviar fotos por WhatsApp" : "Send photos on WhatsApp"}
+</WhatsAppConversionLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-yellow-300 bg-yellow-50 py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-white px-4 py-2 text-sm font-bold text-yellow-600">
+                <MapPin className="h-4 w-4" />
+                {isEs ? "Zonas de servicio" : "Service areas"}
+              </div>
+
+              <h2 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+                {isEs
+                  ? "Instalación de ventiladores con mando en Valencia"
+                  : "Remote-control fan installation in Valencia"}
+              </h2>
+
+              <p className="mt-5 text-lg leading-8 text-neutral-600">
+                {isEs
+                  ? "Trabajamos en Valencia ciudad y alrededores. Envíanos tu ubicación y confirmamos disponibilidad."
+                  : "We work in Valencia city and nearby areas. Send us your location and we confirm availability."}
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {areas.map((area) => (
+                <div
+                  key={area}
+                  className="flex items-center gap-3 rounded-2xl border border-yellow-300 bg-white p-4 font-bold text-neutral-800 shadow-sm"
+                >
+                  <MapPin className="h-5 w-5 shrink-0 text-yellow-500" />
+                  {area}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-yellow-50 px-4 py-2 text-sm font-bold text-yellow-600">
+              <ArrowRight className="h-4 w-4" />
+              {isEs ? "Servicios relacionados" : "Related services"}
+            </div>
+
+            <h2 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+              {isEs
+                ? "Más servicios para ventiladores de techo"
+                : "More services for ceiling fans"}
+            </h2>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {relatedPages.map((page) => {
+              const Icon = page.icon;
+
+              return (
+                <Link
+                  key={page.slug}
+                  href={`/${locale}/services/${page.slug}`}
+                  className="group rounded-[2rem] border border-yellow-300 bg-neutral-50 p-6 shadow-sm transition hover:-translate-y-1 hover:bg-yellow-50 hover:shadow-xl"
+                >
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-neutral-950">
+                    <Icon className="h-6 w-6" />
+                  </div>
+
+                  <h3 className="text-xl font-black">
+                    {isEs ? page.es : page.en}
+                  </h3>
+
+                  <p className="mt-3 leading-7 text-neutral-600">
+                    {isEs ? page.descEs : page.descEn}
+                  </p>
+
+                  <div className="mt-5 inline-flex items-center gap-2 font-black text-neutral-950">
+                    {isEs ? "Ver servicio" : "View service"}
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-neutral-950 py-16 text-white lg:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400/40 bg-yellow-400/10 px-4 py-2 text-sm font-bold text-yellow-400">
+              <BadgeCheck className="h-4 w-4" />
+              FAQ
+            </div>
+
+            <h2 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+              {isEs
+                ? "Preguntas frecuentes sobre ventiladores con control remoto"
+                : "Frequently asked questions about remote-control ceiling fans"}
+            </h2>
+          </div>
+
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+            {faq.map((item) => (
+              <div
+                key={item.q}
+                className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6"
+              >
+                <h3 className="text-xl font-black text-yellow-400">
+                  {item.q}
+                </h3>
+                <p className="mt-4 leading-8 text-white/75">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-yellow-400 py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-5 text-center sm:px-6 lg:px-8">
+          <h2 className="mx-auto max-w-4xl text-3xl font-black tracking-tight text-neutral-950 sm:text-4xl lg:text-6xl">
+            {isEs
+              ? "¿Quieres instalar un ventilador con control remoto?"
+              : "Want to install a fan with remote control?"}
+          </h2>
+
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-neutral-800">
+            {isEs
+              ? "Envíanos fotos del techo, punto de luz, ventilador, mando y receptor. Te confirmamos precio y disponibilidad por WhatsApp."
+              : "Send us photos of the ceiling, light point, fan, remote and receiver. We confirm price and availability on WhatsApp."}
+          </p>
+
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <WhatsAppConversionLink
+  href={whatsappUrl}
+  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-7 py-4 text-base font-black text-white shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-neutral-800"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs ? "Pedir presupuesto ahora" : "Request quote now"}
+</WhatsAppConversionLink>
+
+            <a
+              href={`tel:+${phone}`}
+              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-black bg-yellow-400 px-7 py-4 text-base font-black text-neutral-950 transition hover:-translate-y-0.5 hover:bg-yellow-300"
+            >
+              <Phone className="h-5 w-5" />
+              +34 610 076 942
+            </a>
           </div>
         </div>
       </section>
