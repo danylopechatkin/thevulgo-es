@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 import Link from "next/link";
 
+import HandymanWhatsAppConversionLink from "@/app/components/HandymanWhatsAppConversionLink";
+
 import {
 
   ArrowRight,
@@ -932,15 +934,15 @@ export default async function HandymanValenciaPage({ params }: Props) {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={whatsappHref}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-lg transition hover:scale-105"
-              >
-                <MessageCircle className="h-5 w-5" />
-                {isEs
-                  ? "Pedir presupuesto por WhatsApp"
-                  : "Request estimate by WhatsApp"}
-              </a>
+              <HandymanWhatsAppConversionLink
+  href={whatsappHref}
+  className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-lg transition hover:scale-105"
+>
+  <MessageCircle className="h-5 w-5" />
+  {isEs
+    ? "Pedir presupuesto por WhatsApp"
+    : "Request estimate by WhatsApp"}
+</HandymanWhatsAppConversionLink>
 
               <Link
                 href={estimateHref}
@@ -1599,13 +1601,13 @@ export default async function HandymanValenciaPage({ params }: Props) {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <a
-                href={whatsappHref}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
-              >
-                <MessageCircle className="h-5 w-5" />
-                WhatsApp
-              </a>
+              <HandymanWhatsAppConversionLink
+  href={whatsappHref}
+  className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
+>
+  <MessageCircle className="h-5 w-5" />
+  WhatsApp
+</HandymanWhatsAppConversionLink>
 
               <Link
                 href={estimateHref}
