@@ -60,12 +60,41 @@ const MANUAL_CATEGORIES = [
   "Move-In Setup",
   "Exterior",
 ];
+const MADRID_TIME_ZONE = "Europe/Madrid";
+
+function getMadridDateKey(date: Date) {
+
+  return new Intl.DateTimeFormat("en-CA", {
+
+    timeZone: MADRID_TIME_ZONE,
+
+    year: "numeric",
+
+    month: "2-digit",
+
+    day: "2-digit",
+
+  }).format(date);
+
+}
+
+function getMonthDate(monthKey: string) {
+
+  const [year, month] = monthKey.split("-").map(Number);
+
+  return new Date(Date.UTC(year, month - 1, 1, 12, 0, 0));
+
+}
 
 export default function AdminClient() {
   const [internalNotes, setInternalNotes] = useState("");
   const [orders, setOrders] = useState<Order[]>([]);
   const [selected, setSelected] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [calendarMonth, setCalendarMonth] = useState(() =>
+  getMadridDateKey(new Date()).slice(0, 7)
+);
 
   const [isCompleting, setIsCompleting] = useState(false);
   const [showCompleteConfirm, setShowCompleteConfirm] = useState(false);
@@ -191,39 +220,100 @@ export default function AdminClient() {
     };
   }, [orders]);
 
-  const getMadridDateKey = (date: Date) => {
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Europe/Madrid",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(date);
-};
+  const ordersByDate = useMemo(() => {
+  const grouped = new Map<string, Order[]>();
+
+  orders.forEach((order) => {
+    if (!order.preferred_date) return;
+
+    const existingOrders = grouped.get(order.preferred_date) || [];
+    existingOrders.push(order);
+    grouped.set(order.preferred_date, existingOrders);
+  });
+
+  grouped.forEach((dayOrders) => {
+    dayOrders.sort((a, b) =>
+      String(a.preferred_time || "").localeCompare(
+        String(b.preferred_time || "")
+      )
+    );
+  });
+
+  return grouped;
+}, [orders]);
 
 const calendarDays = useMemo(() => {
-  const todayMadridKey = getMadridDateKey(new Date());
-  const [year, month, day] = todayMadridKey.split("-").map(Number);
+  const [year, month] = calendarMonth.split("-").map(Number);
 
-  return Array.from({ length: 7 }).map((_, index) => {
-    const date = new Date(Date.UTC(year, month - 1, day + index, 12, 0, 0));
+  const firstDayOfMonth = new Date(
+    Date.UTC(year, month - 1, 1, 12, 0, 0)
+  );
+
+  const daysInMonth = new Date(
+    Date.UTC(year, month, 0, 12, 0, 0)
+  ).getUTCDate();
+
+  // Переводим воскресенье = 0 в формат:
+  // понедельник = 0, вторник = 1 ... воскресенье = 6
+  const mondayBasedWeekday = (firstDayOfMonth.getUTCDay() + 6) % 7;
+
+  // Количество ячеек: 35 или 42, чтобы показать полные недели
+  const totalCalendarCells =
+    Math.ceil((mondayBasedWeekday + daysInMonth) / 7) * 7;
+
+  const calendarStartDate = new Date(
+    Date.UTC(
+      year,
+      month - 1,
+      1 - mondayBasedWeekday,
+      12,
+      0,
+      0
+    )
+  );
+
+  return Array.from({ length: totalCalendarCells }).map((_, index) => {
+    const date = new Date(calendarStartDate);
+    date.setUTCDate(calendarStartDate.getUTCDate() + index);
+
     const dateKey = getMadridDateKey(date);
-
-    const dayOrders = orders
-      .filter((order) => order.preferred_date === dateKey)
-      .sort((a, b) =>
-        String(a.preferred_time || "").localeCompare(
-          String(b.preferred_time || "")
-        )
-      );
+    const cellMonthKey = dateKey.slice(0, 7);
 
     return {
       date,
       dateKey,
-      orders: dayOrders,
+      isCurrentMonth: cellMonthKey === calendarMonth,
+      isToday: dateKey === getMadridDateKey(new Date()),
+      orders: ordersByDate.get(dateKey) || [],
     };
   });
-}, [orders]);
+}, [calendarMonth, ordersByDate]);
 
+const calendarMonthTitle = useMemo(() => {
+  return getMonthDate(calendarMonth).toLocaleDateString("en-GB", {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}, [calendarMonth]);
+
+const changeCalendarMonth = (offset: number) => {
+  setCalendarMonth((currentMonth) => {
+    const [year, month] = currentMonth.split("-").map(Number);
+
+    const newDate = new Date(
+      Date.UTC(year, month - 1 + offset, 1, 12, 0, 0)
+    );
+
+    return `${newDate.getUTCFullYear()}-${String(
+      newDate.getUTCMonth() + 1
+    ).padStart(2, "0")}`;
+  });
+};
+
+const goToCurrentMonth = () => {
+  setCalendarMonth(getMadridDateKey(new Date()).slice(0, 7));
+};
   const createManualOrder = async () => {
     if (!manualOrder.fullName.trim()) {
       alert("Client name is required");
@@ -589,59 +679,137 @@ const calendarDays = useMemo(() => {
           <StatusCard title="Done" value={metrics.done} />
         </div>
 
-        <div className="rounded-[28px] border border-yellow-400 bg-white p-6 shadow-xl">
-  <div>
-    <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
-      Calendar
-    </p>
-    <h2 className="mt-1 text-xl font-extrabold tracking-tight text-black">
-      Next 7 days
-    </h2>
+        <div className="rounded-[28px] border border-yellow-400 bg-white p-4 shadow-xl sm:p-6">
+  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
+        Calendar
+      </p>
+
+      <h2 className="mt-1 text-2xl font-extrabold capitalize tracking-tight text-black">
+        {calendarMonthTitle}
+      </h2>
+
+      <p className="mt-1 text-sm text-gray-500">
+        {calendarDays
+          .filter((day) => day.isCurrentMonth)
+          .reduce((sum, day) => sum + day.orders.length, 0)}{" "}
+        bookings this month
+      </p>
+    </div>
+
+    <div className="flex flex-wrap items-center gap-2">
+      <button
+        type="button"
+        onClick={() => changeCalendarMonth(-1)}
+        className="rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-black shadow-sm transition hover:border-yellow-400 hover:bg-yellow-50"
+      >
+        ← Previous
+      </button>
+
+      <button
+        type="button"
+        onClick={goToCurrentMonth}
+        className="rounded-xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.02]"
+      >
+        Today
+      </button>
+
+      <button
+        type="button"
+        onClick={() => changeCalendarMonth(1)}
+        className="rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-black shadow-sm transition hover:border-yellow-400 hover:bg-yellow-50"
+      >
+        Next →
+      </button>
+    </div>
   </div>
 
-  <div className="overflow-x-auto">
-    <div className="mt-5 grid min-w-[1100px] grid-cols-7 gap-3">
-      {calendarDays.map((day) => (
-        <div
-          key={day.dateKey}
-          className="min-h-[220px] rounded-2xl border border-gray-200 bg-[#fffdf6] p-4"
-        >
-          <p className="text-xs font-bold uppercase tracking-wide text-gray-500">
-            {day.date.toLocaleDateString("en-GB", {
-              weekday: "short",
-              day: "2-digit",
-              month: "2-digit",
-            })}
-          </p>
+  <div className="mt-6 overflow-x-auto">
+    <div className="min-w-[1050px]">
+      <div className="grid grid-cols-7 gap-2">
+        {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(
+          (weekday) => (
+            <div
+              key={weekday}
+              className="rounded-xl bg-[#fffdf4] px-3 py-3 text-center text-xs font-extrabold uppercase tracking-wide text-gray-500"
+            >
+              {weekday}
+            </div>
+          )
+        )}
+      </div>
 
-          <div className="mt-3 space-y-2">
-            {day.orders.length === 0 ? (
-              <p className="text-sm text-gray-400">Free day</p>
-            ) : (
-              day.orders.map((order) => (
-                <button
-                  key={order.id}
-                  onClick={() => setSelected(order)}
-                  className="w-full rounded-xl border border-yellow-400 bg-white p-3 text-left text-sm shadow-sm transition hover:bg-yellow-50"
-                >
-                  <p className="font-extrabold text-black">
-                    {order.preferred_time?.slice(0, 5) || "—"}{" "}
-                    {order.full_name}
-                  </p>
+      <div className="mt-2 grid grid-cols-7 gap-2">
+        {calendarDays.map((day) => (
+          <div
+            key={day.dateKey}
+            className={`min-h-[190px] rounded-2xl border p-3 transition ${
+              day.isToday
+                ? "border-black bg-yellow-50 shadow-md"
+                : day.isCurrentMonth
+                ? "border-gray-200 bg-[#fffdf6]"
+                : "border-gray-100 bg-gray-50/70"
+            }`}
+          >
+            <div className="flex items-center justify-between gap-2">
+              <div
+                className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-extrabold ${
+                  day.isToday
+                    ? "bg-black text-white"
+                    : day.isCurrentMonth
+                    ? "text-black"
+                    : "text-gray-400"
+                }`}
+              >
+                {day.date.getUTCDate()}
+              </div>
 
-                  <p className="mt-1 text-xs text-gray-500">
-                    {order.area || order.city || "—"}
-                  </p>
+              {day.orders.length > 0 && (
+                <span className="rounded-full bg-yellow-400 px-2 py-1 text-[10px] font-extrabold text-black">
+                  {day.orders.length}
+                </span>
+              )}
+            </div>
 
-                  <p className="mt-1 text-xs font-bold text-black">
-                    €{Number(order.total || 0).toFixed(2)}
-                  </p>
-                </button>
-              ))
-            )}
+            <div className="mt-3 max-h-[145px] space-y-2 overflow-y-auto pr-1">
+              {day.orders.length === 0 ? (
+                day.isCurrentMonth && (
+                  <p className="text-xs text-gray-400">Free</p>
+                )
+              ) : (
+                day.orders.map((order) => (
+                  <button
+                    key={order.id}
+                    type="button"
+                    onClick={() => setSelected(order)}
+                    className="w-full rounded-xl border border-yellow-400 bg-white p-2.5 text-left shadow-sm transition hover:bg-yellow-50 hover:shadow-md"
+                  >
+                    <p className="truncate text-xs font-extrabold text-black">
+                      {order.preferred_time?.slice(0, 5) || "—"}{" "}
+                      {order.full_name}
+                    </p>
+
+                    <p className="mt-1 truncate text-[11px] text-gray-500">
+                      {order.area || order.city || "—"}
+                    </p>
+
+                    <div className="mt-1 flex items-center justify-between gap-2">
+                      <span className="truncate text-[10px] font-semibold uppercase text-gray-400">
+                        {formatStatusLabel(order.status)}
+                      </span>
+
+                      <span className="shrink-0 text-[11px] font-extrabold text-black">
+                        €{Number(order.total || 0).toFixed(2)}
+                      </span>
+                    </div>
+                  </button>
+                ))
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
