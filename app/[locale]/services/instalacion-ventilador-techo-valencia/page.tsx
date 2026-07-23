@@ -212,17 +212,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     keywords: isEs
-      ? [
-          "instalacion ventilador techo valencia",
-          "instalar ventilador de techo valencia",
-          "montaje ventilador techo valencia",
-          "ventilador de techo con luz valencia",
-          "cambiar lampara por ventilador valencia",
-          "instalar ventilador create valencia",
-          "instalar ventilador cecotec valencia",
-          "manitas ventilador techo valencia",
-          "precio instalar ventilador techo valencia",
-        ]
+  ? [
+      "instalacion ventilador techo valencia",
+      "instalar ventilador de techo valencia",
+      "montaje ventilador techo valencia",
+      "ventilador de techo con luz valencia",
+      "cambiar lampara por ventilador valencia",
+      "instalar ventilador create valencia",
+      "instalar ventilador cecotec valencia",
+      "manitas ventilador techo valencia",
+      "precio instalar ventilador techo valencia",
+
+      // Добавить:
+      "instalar ventilador techo",
+      "instalar ventilador de techo",
+      "instalar ventilador",
+      "instalador ventilador techo",
+    ]
       : [
           "ceiling fan installation valencia",
           "install ceiling fan valencia",
@@ -403,6 +409,10 @@ export default async function CeilingFanInstallationPage({
           a: "La instalación de un ventilador cuesta 45 €. Dos ventiladores cuestan 85 € y tres ventiladores 125 €.",
         },
         {
+  q: "¿Quién puede instalar un ventilador de techo en Valencia?",
+  a: "En THEVULGO realizamos la instalación profesional de ventiladores de techo en Valencia. Instalamos ventiladores con luz, mando, WiFi, aspas retráctiles y modelos de diferentes marcas."
+},
+        {
           q: "¿Está incluido desmontar la lámpara antigua?",
           a: "Sí. El desmontaje de la lámpara o del ventilador antiguo está incluido en el precio.",
         },
@@ -490,7 +500,7 @@ export default async function CeilingFanInstallationPage({
           ? "Instalación de ventilador de techo en Valencia"
           : "Ceiling fan installation in Valencia",
         serviceType: isEs
-          ? "Instalación de ventiladores de techo"
+          ? "Instalación e instalación de ventiladores de techo"
           : "Ceiling fan installation",
         provider: {
           "@id": `${baseUrl}/#localbusiness`,
@@ -604,13 +614,9 @@ export default async function CeilingFanInstallationPage({
             </h1>
 
             <p className="mt-6 max-w-4xl text-lg leading-8 text-neutral-700">
-
   {isEs
-
-    ? "Instalamos ventiladores de techo en Valencia con montaje limpio, precio claro y prueba final. Trabajamos con ventiladores con luz, mando, aspas retráctiles, CREATE, Cecotec y otros modelos."
-
-    : "We install ceiling fans in Valencia with clean mounting, clear pricing and final testing. We work with fans with light, remote control, retractable blades, CREATE, Cecotec and other models."}
-
+    ? "¿Necesitas instalar un ventilador de techo en Valencia? En THEVULGO realizamos la instalación de ventiladores de techo desde 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles, CREATE, Cecotec y otras marcas. El servicio incluye montaje, conexión al punto eléctrico existente y prueba final."
+    : "Need to install a ceiling fan in Valencia? THEVULGO provides professional ceiling fan installation from €45. We install ceiling fans with lights, remote controls, WiFi and retractable blades. Installation includes mounting, connection to the existing electrical point and final testing."}
 </p>
 
 <div className="mt-5 flex flex-wrap gap-3 text-sm font-bold">
@@ -733,6 +739,23 @@ export default async function CeilingFanInstallationPage({
           </div>
         </div>
       </section>
+
+<section className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+  <div className="max-w-5xl">
+    <h2 className="text-3xl font-black">
+      {isEs
+        ? "Instalar ventilador de techo en Valencia"
+        : "Install a ceiling fan in Valencia"}
+    </h2>
+
+    <p className="mt-5 text-lg leading-8 text-neutral-700">
+      {isEs
+        ? "Si necesitas instalar un ventilador de techo en Valencia, THEVULGO ofrece un servicio profesional desde 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles y modelos de todas las marcas. El servicio incluye el montaje, la conexión al punto eléctrico existente, el desmontaje de la lámpara o ventilador anterior y la prueba final de funcionamiento."
+        : "If you need to install a ceiling fan in Valencia, THEVULGO provides professional installation from €45. We install fans with lights, remote controls, WiFi, retractable blades and all major brands. The service includes mounting, connection to the existing electrical point, removal of the old light or fan and full testing."}
+    </p>
+  </div>
+</section>
+
             <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div>
@@ -1344,7 +1367,19 @@ export default async function CeilingFanInstallationPage({
           </div>
         </div>
       </section>
+<div className="mx-auto max-w-5xl px-6 pb-10">
 
+  <p className="text-lg leading-8 text-neutral-700">
+
+    {isEs
+
+      ? "Si buscas instalar un ventilador de techo en Valencia, THEVULGO ofrece un servicio profesional desde 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles y modelos de todas las marcas. Confirmamos el precio antes de la visita y dejamos el ventilador completamente instalado, conectado y probado."
+
+      : "If you are looking to install a ceiling fan in Valencia, THEVULGO provides professional installation from €45. We install fans with lights, remote controls, WiFi, retractable blades and all major brands. We confirm the price before the visit and leave the fan fully installed, connected and tested."}
+
+  </p>
+
+</div>
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="rounded-3xl border border-yellow-400 bg-yellow-400 p-8 shadow-2xl lg:p-12">
           <div className="grid gap-8 lg:grid-cols-[1fr_0.7fr] lg:items-center">
