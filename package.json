@@ -16,9 +16,11 @@
     "lucide-react": "^0.564.0",
     "next": "16.1.6",
     "next-intl": "^4.9.0",
+    "openai": "^7.0.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "resend": "^6.9.4"
+    "resend": "^6.9.4",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
