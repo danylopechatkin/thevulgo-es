@@ -19,6 +19,46 @@ type ManualService = {
   qty: number;
 };
 
+type AiParsedOrder = {
+  fullName: string | null;
+  phone: string | null;
+  email: string | null;
+
+  category:
+    | "TV Mounting"
+    | "Electrical"
+    | "Plumbing"
+    | "Furniture Assembly"
+    | "Drywall"
+    | "Repairs"
+    | "Doors & Hardware"
+    | "Smart Home"
+    | "Kitchen"
+    | "Bathroom"
+    | "Move-In Setup"
+    | "Exterior";
+
+  city: string | null;
+  area: string | null;
+  houseAddress: string | null;
+  apartmentNumber: string | null;
+  addressDetails: string | null;
+
+  preferredDate: string | null;
+  preferredTime: string | null;
+
+  notes: string | null;
+
+  services: Array<{
+    label: string;
+    price: number | null;
+    qty: number;
+  }>;
+
+  missingFields: string[];
+  warnings: string[];
+};
+
 type Order = {
   id: string;
   order_number: number | null;
@@ -106,6 +146,16 @@ export default function AdminClient() {
 
   const [showManualForm, setShowManualForm] = useState(false);
   const [isCreatingManual, setIsCreatingManual] = useState(false);
+
+  const [aiOrderText, setAiOrderText] = useState("");
+
+const [isParsingAiOrder, setIsParsingAiOrder] = useState(false);
+
+const [aiOrderError, setAiOrderError] = useState("");
+
+const [aiMissingFields, setAiMissingFields] = useState<string[]>([]);
+
+const [aiWarnings, setAiWarnings] = useState<string[]>([]);
 
   const [manualOrder, setManualOrder] = useState({
     fullName: "",
@@ -314,6 +364,101 @@ const changeCalendarMonth = (offset: number) => {
 const goToCurrentMonth = () => {
   setCalendarMonth(getMadridDateKey(new Date()).slice(0, 7));
 };
+
+const parseOrderWithAi = async () => {
+  const cleanText = aiOrderText.trim();
+
+  if (!cleanText) {
+    setAiOrderError("Paste the client message or order details first.");
+    return;
+  }
+
+  try {
+    setIsParsingAiOrder(true);
+    setAiOrderError("");
+    setAiMissingFields([]);
+    setAiWarnings([]);
+
+    const {
+  data: { session },
+  error: sessionError,
+} = await supabase.auth.getSession();
+
+if (sessionError) {
+  throw new Error(sessionError.message);
+}
+
+if (!session?.access_token) {
+  throw new Error("Admin session not found. Please log in again.");
+}
+
+const response = await fetch("/api/admin/ai/parse-order", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${session.access_token}`,
+  },
+      body: JSON.stringify({
+        text: cleanText,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || "Failed to parse order");
+    }
+
+    const parsed = result.order as AiParsedOrder;
+
+    setManualOrder({
+      fullName: parsed.fullName || "",
+      email: parsed.email || "",
+      phone: parsed.phone || "",
+      city: parsed.city || "Valencia",
+      area: parsed.area || "",
+      houseAddress: parsed.houseAddress || "",
+      apartmentNumber: parsed.apartmentNumber || "",
+      addressDetails: parsed.addressDetails || "",
+      preferredDate: parsed.preferredDate || "",
+      preferredTime: parsed.preferredTime || "",
+      category: parsed.category || "Repairs",
+      notes: parsed.notes || "",
+    });
+
+    const parsedServices: ManualService[] = parsed.services.map((service) => ({
+      label: service.label || "Servicio manual",
+      price: service.price ?? 0,
+      qty: service.qty || 1,
+    }));
+
+    setManualServices(
+      parsedServices.length > 0
+        ? parsedServices
+        : [
+            {
+              label: "Servicio manual",
+              price: 0,
+              qty: 1,
+            },
+          ]
+    );
+
+    setAiMissingFields(parsed.missingFields || []);
+    setAiWarnings(parsed.warnings || []);
+  } catch (error) {
+    console.error("AI ORDER PARSE ERROR:", error);
+
+    setAiOrderError(
+      error instanceof Error
+        ? error.message
+        : "Unexpected error while parsing the order."
+    );
+  } finally {
+    setIsParsingAiOrder(false);
+  }
+};
+
   const createManualOrder = async () => {
     if (!manualOrder.fullName.trim()) {
       alert("Client name is required");
@@ -1023,6 +1168,71 @@ const goToCurrentMonth = () => {
                   Close
                 </button>
               </div>
+
+              <div className="mt-6 rounded-3xl border border-black bg-[#fffdf4] p-4 shadow-sm">
+  <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
+    <div className="flex-1">
+      <label className="mb-2 block text-sm font-extrabold text-black">
+        AI order assistant
+      </label>
+
+      <textarea
+        value={aiOrderText}
+        onChange={(e) => setAiOrderText(e.target.value)}
+        placeholder="Paste the full WhatsApp conversation or order details here..."
+        className="min-h-[150px] w-full resize-y rounded-2xl border border-gray-300 bg-white px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
+      />
+    </div>
+
+    <button
+      type="button"
+      onClick={parseOrderWithAi}
+      disabled={isParsingAiOrder || !aiOrderText.trim()}
+      className="rounded-2xl bg-black px-5 py-3 text-sm font-extrabold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 lg:mt-7"
+    >
+      {isParsingAiOrder ? "Analysing..." : "Fill form with AI"}
+    </button>
+  </div>
+
+  {aiOrderError && (
+    <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">
+      {aiOrderError}
+    </div>
+  )}
+
+  {aiMissingFields.length > 0 && (
+    <div className="mt-4 rounded-2xl border border-orange-200 bg-orange-50 p-3">
+      <p className="text-sm font-extrabold text-orange-800">
+        Missing information
+      </p>
+
+      <div className="mt-2 flex flex-wrap gap-2">
+        {aiMissingFields.map((field) => (
+          <span
+            key={field}
+            className="rounded-full bg-white px-3 py-1 text-xs font-bold text-orange-700"
+          >
+            {field}
+          </span>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {aiWarnings.length > 0 && (
+    <div className="mt-4 rounded-2xl border border-yellow-300 bg-yellow-50 p-3">
+      <p className="text-sm font-extrabold text-black">AI warnings</p>
+
+      <div className="mt-2 space-y-1">
+        {aiWarnings.map((warning, index) => (
+          <p key={`${warning}-${index}`} className="text-sm text-gray-700">
+            • {warning}
+          </p>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
 
               <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
                 <AdminInput
