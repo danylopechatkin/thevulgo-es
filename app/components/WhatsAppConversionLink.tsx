@@ -31,7 +31,7 @@ export default function WhatsAppConversionLink({
   const handleClick = () => {
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "conversion", {
-        send_to: "AW-17552260425/5pZICI6dgM0cEMn6yLFB",
+        send_to: "AW-18261040714/5pZICI6dgM0cEMn6yLFB",
       });
     }
   };
