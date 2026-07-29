@@ -379,24 +379,11 @@ const parseOrderWithAi = async () => {
     setAiMissingFields([]);
     setAiWarnings([]);
 
-    const {
-  data: { session },
-  error: sessionError,
-} = await supabase.auth.getSession();
-
-if (sessionError) {
-  throw new Error(sessionError.message);
-}
-
-if (!session?.access_token) {
-  throw new Error("Admin session not found. Please log in again.");
-}
-
-const response = await fetch("/api/admin/ai/parse-order", {
+    const response = await fetch("/api/admin/ai/parse-order", {
   method: "POST",
+  credentials: "same-origin",
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${session.access_token}`,
   },
       body: JSON.stringify({
         text: cleanText,
