@@ -42,6 +42,7 @@ const ParsedOrderSchema = z.object({
   city: z.string().nullable(),
   area: z.string().nullable(),
   houseAddress: z.string().nullable(),
+  postalCode: z.string().nullable(),
   apartmentNumber: z.string().nullable(),
   addressDetails: z.string().nullable(),
 
@@ -55,6 +56,8 @@ const ParsedOrderSchema = z.object({
   missingFields: z.array(z.string()),
   warnings: z.array(z.string()),
 });
+
+type ParsedOrder = z.infer<typeof ParsedOrderSchema>;
 
 async function isAdminAuthenticated() {
   const cookieStore = await cookies();
@@ -118,6 +121,116 @@ function getMadridContext() {
     time,
     weekday,
   };
+}
+
+function cleanNullableString(value: string | null): string | null {
+  if (value === null) {
+    return null;
+  }
+
+  const cleaned = value.trim();
+
+  if (!cleaned) {
+    return null;
+  }
+
+  const normalized = cleaned
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/^\/+/, "");
+
+  const invalidValues = new Set([
+    "null",
+    "undefined",
+    "none",
+    "n/a",
+    "na",
+    "unknown",
+    "notprovided",
+    "notavailable",
+  ]);
+
+  if (invalidValues.has(normalized)) {
+    return null;
+  }
+
+  return cleaned;
+}
+
+function normalizeParsedOrder(parsed: ParsedOrder): ParsedOrder {
+  const normalized: ParsedOrder = {
+    ...parsed,
+
+    fullName: cleanNullableString(parsed.fullName),
+    phone: cleanNullableString(parsed.phone),
+    email: cleanNullableString(parsed.email),
+
+    city: cleanNullableString(parsed.city),
+    area: cleanNullableString(parsed.area),
+    houseAddress: cleanNullableString(parsed.houseAddress),
+    postalCode: cleanNullableString(parsed.postalCode),
+    apartmentNumber: cleanNullableString(parsed.apartmentNumber),
+    addressDetails: cleanNullableString(parsed.addressDetails),
+
+    preferredDate: cleanNullableString(parsed.preferredDate),
+    preferredTime: cleanNullableString(parsed.preferredTime),
+
+    notes: cleanNullableString(parsed.notes),
+
+    services: parsed.services.map((service) => ({
+      label:
+        cleanNullableString(service.label) ||
+        "Servicio manual",
+      price: service.price,
+      qty:
+        Number.isFinite(service.qty) && service.qty > 0
+          ? service.qty
+          : 1,
+    })),
+
+    missingFields: Array.from(
+      new Set(
+        parsed.missingFields
+          .map((field) => field.trim())
+          .filter(Boolean)
+      )
+    ),
+
+    warnings: Array.from(
+      new Set(
+        parsed.warnings
+          .map((warning) => warning.trim())
+          .filter(Boolean)
+      )
+    ),
+  };
+
+  if (normalized.area) {
+    normalized.missingFields = normalized.missingFields.filter(
+      (field) => field.toLowerCase() !== "area"
+    );
+  }
+
+  if (!normalized.area) {
+    const alreadyMissing = normalized.missingFields.some(
+      (field) => field.toLowerCase() === "area"
+    );
+
+    if (!alreadyMissing) {
+      normalized.missingFields.push("area");
+    }
+  }
+
+  if (!normalized.postalCode) {
+    normalized.missingFields = normalized.missingFields.filter(
+      (field) =>
+        !["postalcode", "postal code"].includes(
+          field.toLowerCase()
+        )
+    );
+  }
+
+  return normalized;
 }
 
 export async function POST(request: Request) {
@@ -198,32 +311,125 @@ The input may contain copied WhatsApp messages or the administrator's own notes.
 
 STRICT RULES:
 
-1. Never invent a client name, phone, email, address, date, time or price.
+1. Never invent a client name, phone, email, street address, date, time or price.
+
 2. Use null when information is missing.
-3. Resolve relative dates such as today, tomorrow, hoy, mañana and weekdays
+
+3. Never return strings such as:
+   "null", "/null", "undefined", "none", "unknown" or "n/a".
+   Return actual null instead.
+
+4. Resolve relative dates such as:
+   today, tomorrow, hoy, mañana and weekdays
    using the Madrid date above.
-4. preferredDate must be YYYY-MM-DD or null.
-5. preferredTime must be HH:mm in 24-hour format or null.
-6. Default city to Valencia only when no other city is given.
-7. Do not guess the district or area.
-8. Preserve international phone prefixes when present.
-9. The stated price is the service price entered by the administrator.
-10. Do not add IVA.
-11. Do not calculate IVA.
-12. Do not change a stated price.
-13. If no price is stated, use null.
-14. "2 ventiladores por 85 euros" means:
+
+5. preferredDate must be YYYY-MM-DD or null.
+
+6. preferredTime must be HH:mm in 24-hour format or null.
+
+7. General periods such as:
+   morning, afternoon, evening,
+   mañana, tarde, noche
+   are not exact times.
+   Do not invent an exact time from these expressions.
+   Use null for preferredTime and add preferredTime to missingFields.
+
+8. Default city to Valencia only when no other city is given.
+
+9. Extract the Spanish postal code when present.
+   postalCode must contain only the five-digit postal code,
+   for example "46004".
+   If no postal code is present, use null.
+
+10. Determine the area, neighbourhood or district when it can be identified
+    confidently from one or more of the following:
+    - the complete street address;
+    - the Spanish postal code;
+    - an area explicitly stated by the client;
+    - a well-known street and city combination.
+
+11. For Valencia addresses, prefer the commonly used district or neighbourhood
+    name that is useful for organising handyman orders.
+
+12. Examples of acceptable Valencia areas include:
+    - Ciutat Vella
+    - L'Eixample
+    - Extramurs
+    - Campanar
+    - La Saïdia
+    - El Pla del Real
+    - L'Olivereta
+    - Patraix
+    - Jesús
+    - Quatre Carreres
+    - Poblats Marítims
+    - Camins al Grau
+    - Algirós
+    - Benimaclet
+    - Rascanya
+    - Benicalap
+    - Pobles del Nord
+    - Pobles de l'Oest
+    - Pobles del Sud
+    - Russafa
+    - El Carmen
+    - Cabanyal
+    - Malvarrosa
+
+13. Use a neighbourhood name such as Russafa, El Carmen or Cabanyal
+    when that is more natural and useful than the larger administrative district.
+
+14. Do not invent an area when the address or postal code is insufficient,
+    incomplete or ambiguous.
+    In that case:
+    - area must be null;
+    - add "area" to missingFields;
+    - add a concise warning when useful.
+
+15. If both an address and postal code are provided, use both together
+    to determine the area.
+
+16. If the address and postal code appear inconsistent:
+    - do not choose one arbitrarily;
+    - set area to null;
+    - add a warning describing the inconsistency.
+
+17. Preserve international phone prefixes when present.
+
+18. The stated price is the service price entered by the administrator.
+
+19. Do not add IVA.
+
+20. Do not calculate IVA.
+
+21. Do not change a stated price.
+
+22. If no price is stated, use null.
+
+23. "2 ventiladores por 85 euros" means:
     one service line,
     label describing installation of 2 fans,
     price 85,
     qty 1.
-15. Do not convert package price into price per unit.
-16. Put useful installation details into notes.
-17. Keep notes concise.
-18. missingFields should list important missing information.
-19. warnings should list uncertainty or contradictions.
-20. Return at least one service.
-21. If service is unclear, use:
+
+24. Do not convert a package price into a price per unit.
+
+25. Put useful installation details into notes.
+
+26. Keep notes concise.
+
+27. missingFields should contain important information that still needs
+    to be provided before the order can be created.
+
+28. Do not add postalCode to missingFields unless the postal code is genuinely
+    necessary to understand an otherwise incomplete address.
+
+29. warnings should list uncertainty, conflicting information
+    or anything requiring administrator review.
+
+30. Return at least one service.
+
+31. If the service is unclear, use:
     label: "Servicio manual"
     price: null
     qty: 1
@@ -232,18 +438,25 @@ CATEGORY RULES:
 
 - Ceiling fan, lamp, socket, switch or wiring:
   Electrical
+
 - Furniture assembly:
   Furniture Assembly
+
 - TV mounting:
   TV Mounting
+
 - Door, lock, hinge or handle:
   Doors & Hardware
+
 - Wall, plasterboard or drywall:
   Drywall
+
 - Sink, tap, toilet or water:
   Plumbing
+
 - Bathroom installation:
   Bathroom
+
 - General handyman work:
   Repairs
           `.trim(),
@@ -276,9 +489,11 @@ CATEGORY RULES:
       );
     }
 
+    const normalizedOrder = normalizeParsedOrder(parsed);
+
     return NextResponse.json({
       success: true,
-      order: parsed,
+      order: normalizedOrder,
     });
   } catch (error) {
     console.error("AI PARSE ORDER ERROR:", error);

@@ -41,7 +41,10 @@ type AiParsedOrder = {
   city: string | null;
   area: string | null;
   houseAddress: string | null;
-  apartmentNumber: string | null;
+
+postalCode: string | null;
+
+apartmentNumber: string | null;
   addressDetails: string | null;
 
   preferredDate: string | null;
@@ -404,7 +407,20 @@ const parseOrderWithAi = async () => {
       phone: parsed.phone || "",
       city: parsed.city || "Valencia",
       area: parsed.area || "",
-      houseAddress: parsed.houseAddress || "",
+      houseAddress: [parsed.houseAddress, parsed.postalCode]
+  .filter(
+    (value): value is string =>
+      Boolean(value?.trim())
+  )
+  .filter(
+    (value, index, values) =>
+      values.findIndex(
+        (item) =>
+          item.trim().toLowerCase() ===
+          value.trim().toLowerCase()
+      ) === index
+  )
+  .join(", "),
       apartmentNumber: parsed.apartmentNumber || "",
       addressDetails: parsed.addressDetails || "",
       preferredDate: parsed.preferredDate || "",
