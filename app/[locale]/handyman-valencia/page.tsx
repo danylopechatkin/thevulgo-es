@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import Link from "next/link";
 
-import HandymanWhatsAppConversionLink from "@/app/components/HandymanWhatsAppConversionLink";
 
 import {
 
@@ -934,24 +933,26 @@ export default async function HandymanValenciaPage({ params }: Props) {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <HandymanWhatsAppConversionLink
-  href={whatsappHref}
-  className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-lg transition hover:scale-105"
->
-  <MessageCircle className="h-5 w-5" />
-  {isEs
-    ? "Pedir presupuesto por WhatsApp"
-    : "Request estimate by WhatsApp"}
-</HandymanWhatsAppConversionLink>
+  <a
+    href={whatsappHref}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-bold text-black shadow-lg transition hover:scale-105"
+  >
+    <MessageCircle className="h-5 w-5" />
+    {isEs
+      ? "Pedir presupuesto por WhatsApp"
+      : "Request estimate by WhatsApp"}
+  </a>
 
-              <Link
-                href={estimateHref}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-6 py-4 font-bold shadow-sm transition hover:scale-105"
-              >
-                {isEs ? "Abrir formulario" : "Open estimate form"}
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </div>
+  <Link
+    href={estimateHref}
+    className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-6 py-4 font-bold shadow-sm transition hover:scale-105"
+  >
+    {isEs ? "Abrir formulario" : "Open estimate form"}
+    <ArrowRight className="h-5 w-5" />
+  </Link>
+</div>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
@@ -1601,22 +1602,24 @@ export default async function HandymanValenciaPage({ params }: Props) {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <HandymanWhatsAppConversionLink
-  href={whatsappHref}
-  className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
->
-  <MessageCircle className="h-5 w-5" />
-  WhatsApp
-</HandymanWhatsAppConversionLink>
+  <a
+    href={whatsappHref}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-bold text-white shadow-lg transition hover:scale-105"
+  >
+    <MessageCircle className="h-5 w-5" />
+    WhatsApp
+  </a>
 
-              <Link
-                href={estimateHref}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-black bg-white px-6 py-4 font-bold text-black shadow-sm transition hover:scale-105"
-              >
-                {isEs ? "Pedir presupuesto" : "Request estimate"}
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </div>
+  <Link
+    href={estimateHref}
+    className="inline-flex items-center justify-center gap-2 rounded-xl border border-black bg-white px-6 py-4 font-bold text-black shadow-sm transition hover:scale-105"
+  >
+    {isEs ? "Pedir presupuesto" : "Request estimate"}
+    <ArrowRight className="h-5 w-5" />
+  </Link>
+</div>
           </div>
         </div>
       </section>
