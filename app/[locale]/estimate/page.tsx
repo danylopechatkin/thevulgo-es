@@ -8,6 +8,7 @@ import {
   ClipboardList,
   Hammer,
   Tv,
+  Fan,
   Zap,
   Droplets,
   Trash2,
@@ -24,6 +25,7 @@ import {
 
 type CategoryKey =
   | "tv-mounting"
+  | "ceiling-fans"
   | "electrical"
   | "plumbing"
   | "furniture"
@@ -64,6 +66,7 @@ const POPULAR = { badge: "Popular", badgeEs: "Popular" };
 
 const CATEGORY_KEYS: CategoryKey[] = [
   "tv-mounting",
+  "ceiling-fans",
   "electrical",
   "plumbing",
   "furniture",
@@ -97,6 +100,47 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
       { id: "remove-old-tv", label: "Remove old TV", labelEs: "Retirar TV antiguo", price: 19, ...ADDON },
       { id: "inspection", label: "Visit & inspection", labelEs: "Visita e inspección", price: 49, ...BASE },
       { id: "custom-job", label: "Custom job / Not listed", labelEs: "Trabajo personalizado / No está en la lista", price: 49, ...POPULAR },
+    ],
+  },
+  "ceiling-fans": {
+    title: "Ceiling Fans",
+    titleEs: "Ventiladores de techo",
+    icon: <Fan className="h-5 w-5" />,
+    subtitle: "Installation and replacement of ceiling fans in Valencia.",
+    subtitleEs: "Instalación y sustitución de ventiladores de techo en Valencia.",
+    badge: "Popular",
+    badgeEs: "Popular",
+    services: [
+      {
+        id: "ceiling-fan-one",
+        label: "1 ceiling fan — complete installation",
+        labelEs: "1 ventilador — montaje completo",
+        price: 45,
+      },
+      {
+        id: "ceiling-fan-two",
+        label: "2 ceiling fans — double installation",
+        labelEs: "2 ventiladores — instalación doble",
+        price: 85,
+      },
+      {
+        id: "ceiling-fan-three",
+        label: "3 ceiling fans — pack of 3 units",
+        labelEs: "3 ventiladores — pack de 3 unidades",
+        price: 125,
+      },
+      {
+        id: "ceiling-fan-from-light",
+        label: "Replace a light with a ceiling fan",
+        labelEs: "Cambio de lámpara a ventilador",
+        price: 45,
+      },
+      {
+        id: "ceiling-fan-replacement",
+        label: "Ceiling fan replacement — removal and installation",
+        labelEs: "Reemplazo de ventilador — quitamos e instalamos",
+        price: 45,
+      },
     ],
   },
   electrical: {
