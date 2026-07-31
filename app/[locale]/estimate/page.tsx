@@ -485,6 +485,9 @@ function EstimatePageContent() {
   const [isSending, setIsSending] = useState(false);
   const [sendError, setSendError] = useState("");
   const [hasTriedNext, setHasTriedNext] = useState(false);
+  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
+  const [availabilityError, setAvailabilityError] = useState("");
 
   const [client, setClient] = useState({
     fullName: "",
@@ -516,6 +519,60 @@ function EstimatePageContent() {
   ];
 
   const TIME_OPTIONS = ["07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
+
+  useEffect(() => {
+    if (!client.preferredDate) {
+      setBookedTimes([]);
+      setAvailabilityError("");
+      return;
+    }
+
+    const controller = new AbortController();
+
+    const loadAvailability = async () => {
+      try {
+        setIsAvailabilityLoading(true);
+        setAvailabilityError("");
+
+        const response = await fetch(
+          `/api/availability?date=${encodeURIComponent(client.preferredDate)}`,
+          {
+            cache: "no-store",
+            signal: controller.signal,
+          }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || "Failed to load availability");
+        }
+
+        setBookedTimes(
+          Array.isArray(result.bookedTimes)
+            ? result.bookedTimes.map((time: string) => time.slice(0, 5))
+            : []
+        );
+      } catch (error) {
+        if ((error as Error).name === "AbortError") return;
+        console.error("AVAILABILITY ERROR:", error);
+        setBookedTimes([]);
+        setAvailabilityError(
+          isEs
+            ? "No se pudo comprobar la disponibilidad. Inténtalo de nuevo."
+            : "Could not check availability. Please try again."
+        );
+      } finally {
+        if (!controller.signal.aborted) {
+          setIsAvailabilityLoading(false);
+        }
+      }
+    };
+
+    loadAvailability();
+
+    return () => controller.abort();
+  }, [client.preferredDate, isEs]);
 
   useEffect(() => {
     const raw = searchParams.get("category");
@@ -587,9 +644,17 @@ function EstimatePageContent() {
   const nextAvailableHour = madridCurrentMinute > 0 ? madridCurrentHour + 1 : madridCurrentHour;
 
   const availableTimeOptions =
-    client.preferredDate === todayDateString
-      ? TIME_OPTIONS.filter((time) => Number(time.split(":")[0]) >= nextAvailableHour)
-      : TIME_OPTIONS;
+    !client.preferredDate || isAvailabilityLoading || availabilityError
+      ? []
+      : TIME_OPTIONS.filter((time) => {
+          if (bookedTimes.includes(time)) return false;
+
+          if (client.preferredDate === todayDateString) {
+            return Number(time.split(":")[0]) >= nextAvailableHour;
+          }
+
+          return true;
+        });
 
   const isValidEmail = (value: string) => {
     if (!value.trim()) return true;
@@ -839,6 +904,17 @@ function EstimatePageContent() {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
+        if (response.status === 409) {
+          setSubmitStage("build");
+          setClient((prev) => ({ ...prev, preferredTime: "" }));
+          setFieldErrors((prev) => ({
+            ...prev,
+            preferredTime:
+              isEs
+                ? "Esta hora acaba de ser reservada. Elige otra hora."
+                : "This time was just booked. Please choose another time.",
+          }));
+        }
         throw new Error(result.error || "Failed to send request");
       }
 
@@ -852,11 +928,7 @@ function EstimatePageContent() {
   };
 
   useEffect(() => {
-    if (
-      client.preferredDate === todayDateString &&
-      client.preferredTime &&
-      !availableTimeOptions.includes(client.preferredTime)
-    ) {
+    if (client.preferredTime && !availableTimeOptions.includes(client.preferredTime)) {
       setClient((prev) => ({ ...prev, preferredTime: "" }));
     }
   }, [client.preferredDate, client.preferredTime, todayDateString, availableTimeOptions]);
@@ -1308,6 +1380,11 @@ function EstimatePageContent() {
 
                       <select
                         value={client.preferredTime}
+                        disabled={
+                          !client.preferredDate ||
+                          isAvailabilityLoading ||
+                          Boolean(availabilityError)
+                        }
                         onChange={(e) => setFieldValue("preferredTime", e.target.value)}
                         onBlur={() => setFieldSuccessIfValid("preferredTime")}
                         className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition appearance-none ${
@@ -1318,7 +1395,13 @@ function EstimatePageContent() {
                             : "border-gray-300 focus:border-yellow-400"
                         }`}
                       >
-                        <option value="">{t("form.chooseTime")}</option>
+                        <option value="">
+                          {isAvailabilityLoading
+                            ? isEs
+                              ? "Comprobando disponibilidad..."
+                              : "Checking availability..."
+                            : t("form.chooseTime")}
+                        </option>
                         {availableTimeOptions.map((time) => (
                           <option key={time} value={time}>
                             {time}
@@ -1326,7 +1409,11 @@ function EstimatePageContent() {
                         ))}
                       </select>
 
-                      {fieldErrors.preferredTime ? (
+                      {availabilityError ? (
+                        <p className="mt-2 text-xs font-medium text-red-600">
+                          {availabilityError}
+                        </p>
+                      ) : fieldErrors.preferredTime ? (
                         <p className="mt-2 text-xs font-medium text-red-600">{fieldErrors.preferredTime}</p>
                       ) : (
                         <p className="mt-3 text-xs leading-6 text-gray-500">

@@ -1,7 +1,17 @@
 import { Resend } from "resend";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  }
+);
 
 function formatMadridFromUTC(date: string) {
   return new Intl.DateTimeFormat("en-GB", {
@@ -82,6 +92,47 @@ export async function POST(req: Request) {
       );
     }
 
+    const preferredDate = String(data.preferredDate).trim();
+    const preferredTime = String(data.preferredTime).trim().slice(0, 5);
+
+    if (
+      !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate) ||
+      !/^\d{2}:\d{2}$/.test(preferredTime)
+    ) {
+      return Response.json(
+        { success: false, error: "Invalid date or time" },
+        { status: 400 }
+      );
+    }
+
+    const { data: existingOrder, error: slotCheckError } =
+      await supabaseAdmin
+        .from("orders")
+        .select("id")
+        .eq("preferred_date", preferredDate)
+        .eq("preferred_time", preferredTime)
+        .limit(1)
+        .maybeSingle();
+
+    if (slotCheckError) {
+      console.error("❌ AVAILABILITY CHECK ERROR:", slotCheckError);
+      return Response.json(
+        { success: false, error: "Could not check availability" },
+        { status: 500 }
+      );
+    }
+
+    if (existingOrder) {
+      return Response.json(
+        {
+          success: false,
+          error: "This time is already booked",
+          code: "SLOT_TAKEN",
+        },
+        { status: 409 }
+      );
+    }
+
     const subtotal = Number(data.subtotal || 0);
     const iva = Number(data.iva || 0);
     const total = Number(data.total || 0);
@@ -94,7 +145,7 @@ export async function POST(req: Request) {
       locale,
     });
 
-    const { data: insertedOrder, error: orderInsertError } = await supabase
+    const { data: insertedOrder, error: orderInsertError } = await supabaseAdmin
       .from("orders")
       .insert([
         {
@@ -112,8 +163,8 @@ export async function POST(req: Request) {
           iva,
           total,
           status: "new",
-          preferred_date: data.preferredDate || null,
-          preferred_time: data.preferredTime || "",
+          preferred_date: preferredDate,
+          preferred_time: preferredTime,
           scheduled_at: data.scheduledAt || null,
           notes: data.notes || "",
           email_sent: false,
@@ -128,6 +179,17 @@ export async function POST(req: Request) {
 
     if (orderInsertError) {
       console.error("❌ SUPABASE INSERT ERROR:", orderInsertError);
+
+      if (orderInsertError.code === "23505") {
+        return Response.json(
+          {
+            success: false,
+            error: "This time is already booked",
+            code: "SLOT_TAKEN",
+          },
+          { status: 409 }
+        );
+      }
 
       return Response.json(
         { success: false, error: "Failed to save order to CRM" },
@@ -404,7 +466,7 @@ ${labels.footer}
     }
 
     if (insertedOrder?.id) {
-      await supabase
+      await supabaseAdmin
         .from("orders")
         .update({
           email_sent: true,
