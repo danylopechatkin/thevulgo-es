@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Script from "next/script";
 import LanguageSwitcher from "@/app/components/LanguageSwitcher";
+import WhatsAppConversionTracker from "@/app/components/WhatsAppConversionTracker";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -85,6 +86,8 @@ export default async function LocaleLayout({
     gtag('config', 'AW-18261040714');
   `}
 </Script>
+
+        <WhatsAppConversionTracker />
 
         <NextIntlClientProvider messages={messages}>
           <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-md">
