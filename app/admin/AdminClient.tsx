@@ -1866,8 +1866,8 @@ const parseOrderWithAi = async () => {
         )}
 
         {showManualForm && (
-          <div className="fixed inset-0 z-[80] flex items-start justify-center overflow-y-auto bg-black/50 p-3 pt-[max(1rem,env(safe-area-inset-top))] sm:items-center sm:p-4">
-            <div className="max-h-[calc(100dvh-2rem)] w-full max-w-5xl overflow-y-auto rounded-3xl bg-white p-4 shadow-2xl sm:p-6">
+          <div className="fixed inset-0 z-[80] flex touch-pan-y items-start justify-center overflow-x-hidden overflow-y-auto overscroll-x-none bg-black/50 p-3 pt-[max(1rem,env(safe-area-inset-top))] sm:items-center sm:p-4">
+            <div className="min-w-0 max-w-[calc(100vw-1.5rem)] max-h-[calc(100dvh-2rem)] w-full overflow-x-hidden overflow-y-auto overscroll-x-none rounded-3xl bg-white p-4 shadow-2xl sm:max-w-5xl sm:p-6">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
