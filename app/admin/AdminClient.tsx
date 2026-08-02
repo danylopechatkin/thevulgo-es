@@ -171,6 +171,7 @@ export default function AdminClient() {
   const [showClients, setShowClients] = useState(false);
   const [selectedClient, setSelectedClient] = useState<ClientProfile | null>(null);
   const [clientSearch, setClientSearch] = useState("");
+  const [showMobileMetrics, setShowMobileMetrics] = useState(false);
 
   const [aiOrderText, setAiOrderText] = useState("");
 
@@ -909,13 +910,13 @@ const parseOrderWithAi = async () => {
   };
 
   return (
-    <div className="min-h-screen bg-white p-6 text-black">
-      <div className="mx-auto max-w-7xl space-y-8">
-        <div className="flex flex-wrap items-center justify-end gap-3">
+    <div className="min-h-screen bg-white px-3 py-4 text-black sm:p-6">
+      <div className="mx-auto max-w-7xl space-y-5 sm:space-y-8">
+        <div className="grid grid-cols-2 gap-2 rounded-3xl border border-gray-100 bg-[#fffdf7] p-3 shadow-sm sm:flex sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none">
           <button
             type="button"
             onClick={() => setShowClients(true)}
-            className="rounded-2xl border border-yellow-400 bg-white px-5 py-3 text-sm font-extrabold text-black shadow-sm transition hover:bg-yellow-50 hover:shadow-md"
+            className="rounded-2xl border border-yellow-400 bg-white px-3 py-3 text-sm font-extrabold text-black shadow-sm transition hover:bg-yellow-50 hover:shadow-md sm:px-5"
           >
             Clients ({clientProfiles.length})
           </button>
@@ -923,22 +924,58 @@ const parseOrderWithAi = async () => {
           <button
             type="button"
             onClick={() => setShowManualForm(true)}
-            className="rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.02] hover:shadow-lg"
+            className="rounded-2xl bg-yellow-400 px-3 py-3 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.02] hover:shadow-lg sm:px-5"
           >
-            + Add manual order
+            <span className="sm:hidden">+ Add order</span>
+            <span className="hidden sm:inline">+ Add manual order</span>
           </button>
 
           <button
             type="button"
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="rounded-2xl border border-gray-300 bg-white px-5 py-3 text-sm font-extrabold text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md disabled:opacity-60"
+            className="col-span-2 justify-self-end rounded-2xl border border-gray-300 bg-white px-5 py-2.5 text-sm font-extrabold text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md disabled:opacity-60 sm:col-span-1 sm:justify-self-auto sm:py-3"
           >
             {isLoggingOut ? "Signing out..." : "Log out"}
           </button>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-7">
+        <button
+          type="button"
+          onClick={() => setShowMobileMetrics((current) => !current)}
+          aria-expanded={showMobileMetrics}
+          className="w-full rounded-3xl border border-yellow-400 bg-[#fffdf6] p-5 text-left shadow-md transition active:scale-[0.99] sm:hidden"
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
+                Overview
+              </p>
+              <p className="mt-2 text-3xl font-extrabold tracking-tight text-black">
+                €{metrics.netRevenue.toFixed(2)}
+              </p>
+              <p className="mt-1 text-xs text-gray-500">Net revenue</p>
+            </div>
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-400 text-xl font-extrabold text-black">
+              {showMobileMetrics ? "−" : "+"}
+            </span>
+          </div>
+
+          <div className="mt-5 grid grid-cols-4 gap-2 border-t border-yellow-200 pt-4 text-center">
+            <MobileOverviewValue label="Orders" value={metrics.totalOrders} />
+            <MobileOverviewValue label="New" value={metrics.newCount} />
+            <MobileOverviewValue label="Active" value={metrics.progress} />
+            <MobileOverviewValue label="Done" value={metrics.done} />
+          </div>
+
+          <p className="mt-4 text-center text-xs font-bold text-gray-500">
+            {showMobileMetrics ? "Hide all statistics" : "Tap to show all statistics"}
+          </p>
+        </button>
+
+        <div
+          className={`${showMobileMetrics ? "grid" : "hidden"} grid-cols-2 gap-3 sm:grid sm:grid-cols-2 sm:gap-4 xl:grid-cols-7`}
+        >
           <MetricCard
             title="Gross booked"
             value={`€${metrics.grossRevenue.toFixed(2)}`}
@@ -2347,6 +2384,23 @@ function ClientStatCard({ label, value }: { label: string; value: string }) {
   );
 }
 
+function MobileOverviewValue({
+  label,
+  value,
+}: {
+  label: string;
+  value: React.ReactNode;
+}) {
+  return (
+    <div>
+      <p className="text-lg font-extrabold text-black">{value}</p>
+      <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wide text-gray-500">
+        {label}
+      </p>
+    </div>
+  );
+}
+
 function MetricCard({
   title,
   value,
@@ -2357,16 +2411,18 @@ function MetricCard({
   subtitle: string;
 }) {
   return (
-    <div className="rounded-3xl border border-yellow-400 bg-white p-5 shadow-md transition-all duration-200 hover:-translate-y-[1px] hover:shadow-xl">
+    <div className="min-w-0 rounded-2xl border border-yellow-400 bg-white p-4 shadow-md transition-all duration-200 hover:-translate-y-[1px] hover:shadow-xl sm:rounded-3xl sm:p-5">
       <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
         {title}
       </p>
 
-      <div className="mt-3 text-4xl font-extrabold tracking-tight text-black">
+      <div className="mt-2 break-words text-2xl font-extrabold tracking-tight text-black sm:mt-3 sm:text-4xl">
         {value}
       </div>
 
-      <p className="mt-3 text-xs leading-5 text-gray-500">{subtitle}</p>
+      <p className="mt-2 text-[11px] leading-4 text-gray-500 sm:mt-3 sm:text-xs sm:leading-5">
+        {subtitle}
+      </p>
     </div>
   );
 }
@@ -2379,12 +2435,12 @@ function StatusCard({
   value: React.ReactNode;
 }) {
   return (
-    <div className="rounded-3xl border border-yellow-400 bg-[#fffdf6] p-5 shadow-md transition-all duration-200 hover:-translate-y-[1px] hover:shadow-xl">
+    <div className="min-w-0 rounded-2xl border border-yellow-400 bg-[#fffdf6] p-4 shadow-md transition-all duration-200 hover:-translate-y-[1px] hover:shadow-xl sm:rounded-3xl sm:p-5">
       <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
         {title}
       </p>
 
-      <div className="mt-3 text-4xl font-extrabold tracking-tight text-black">
+      <div className="mt-2 text-2xl font-extrabold tracking-tight text-black sm:mt-3 sm:text-4xl">
         {value}
       </div>
     </div>
