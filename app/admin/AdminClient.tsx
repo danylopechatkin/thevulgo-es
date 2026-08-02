@@ -168,6 +168,8 @@ export default function AdminClient() {
 
   const [showManualForm, setShowManualForm] = useState(false);
   const [isCreatingManual, setIsCreatingManual] = useState(false);
+  const [manualIncludeIva, setManualIncludeIva] = useState(true);
+  const [isSavingPricing, setIsSavingPricing] = useState(false);
   const [showClientSuggestions, setShowClientSuggestions] = useState(false);
   const [showClients, setShowClients] = useState(false);
   const [selectedClient, setSelectedClient] = useState<ClientProfile | null>(null);
@@ -218,7 +220,9 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
     );
   }, [manualServices]);
 
-  const manualIva = Number((manualSubtotal * 0.21).toFixed(2));
+  const manualIva = manualIncludeIva
+    ? Number((manualSubtotal * 0.21).toFixed(2))
+    : 0;
   const manualTotal = Number((manualSubtotal + manualIva).toFixed(2));
 
   const clientProfiles = useMemo(() => {
@@ -687,7 +691,9 @@ const parseOrderWithAi = async () => {
       cleanServices.reduce((sum, item) => sum + item.subtotal, 0).toFixed(2)
     );
 
-    const iva = Number((subtotal * 0.21).toFixed(2));
+    const iva = manualIncludeIva
+      ? Number((subtotal * 0.21).toFixed(2))
+      : 0;
     const total = Number((subtotal + iva).toFixed(2));
 
     const scheduledAt = new Date(
@@ -753,6 +759,7 @@ const parseOrderWithAi = async () => {
           qty: 1,
         },
       ]);
+      setManualIncludeIva(true);
 
       setShowManualForm(false);
       await loadOrders();
@@ -835,6 +842,100 @@ const parseOrderWithAi = async () => {
     setSelected((prev) =>
       prev ? { ...prev, internal_notes: internalNotes } : prev
     );
+  };
+
+  const recalculateSelectedPricing = (
+    order: Order,
+    services: ServiceItem[],
+    includeIva: boolean
+  ): Order => {
+    const normalizedServices = services.map((service) => {
+      const price = Number(service.price || 0);
+      const qty = Number(service.qty || 0);
+      return { ...service, price, qty, subtotal: price * qty };
+    });
+    const subtotal = Number(
+      normalizedServices
+        .reduce((sum, service) => sum + Number(service.subtotal || 0), 0)
+        .toFixed(2)
+    );
+    const iva = includeIva ? Number((subtotal * 0.21).toFixed(2)) : 0;
+
+    return {
+      ...order,
+      services: normalizedServices,
+      subtotal,
+      iva,
+      total: Number((subtotal + iva).toFixed(2)),
+    };
+  };
+
+  const updateSelectedService = (
+    index: number,
+    field: "label" | "price" | "qty",
+    value: string | number
+  ) => {
+    setSelected((current) => {
+      if (!current) return current;
+      const services = [...(current.services || [])];
+      services[index] = { ...services[index], [field]: value };
+      return recalculateSelectedPricing(current, services, current.iva > 0);
+    });
+  };
+
+  const setSelectedIvaEnabled = (includeIva: boolean) => {
+    setSelected((current) =>
+      current
+        ? recalculateSelectedPricing(
+            current,
+            current.services || [],
+            includeIva
+          )
+        : current
+    );
+  };
+
+  const saveOrderPricing = async () => {
+    if (!selected) return;
+
+    const services = (selected.services || []).map((service) => ({
+      ...service,
+      label: service.label?.trim() || "Servicio manual",
+      price: Number(service.price || 0),
+      qty: Number(service.qty || 0),
+      subtotal: Number(service.subtotal || 0),
+    }));
+
+    try {
+      setIsSavingPricing(true);
+      const { data, error } = await supabase
+        .from("orders")
+        .update({
+          services,
+          subtotal: selected.subtotal,
+          iva: selected.iva,
+          total: selected.total,
+        })
+        .eq("id", selected.id)
+        .select("*")
+        .single();
+
+      if (error) throw error;
+
+      const updatedOrder = data as Order;
+      setOrders((current) =>
+        current.map((order) =>
+          order.id === updatedOrder.id ? updatedOrder : order
+        )
+      );
+      setSelected(updatedOrder);
+      alert("Pricing updated");
+    } catch (error) {
+      console.error("UPDATE PRICING ERROR:", error);
+      alert("Error updating pricing");
+    } finally {
+      setIsSavingPricing(false);
+    }
   };
 
   const updateOrderSchedule = async () => {
@@ -2011,6 +2112,25 @@ const parseOrderWithAi = async () => {
                 </div>
 
                 <div className="mt-5 rounded-2xl border border-yellow-400 bg-white p-4">
+                  <label className="mb-4 flex cursor-pointer items-center justify-between gap-4 rounded-xl bg-yellow-50 px-3 py-3">
+                    <span>
+                      <span className="block text-sm font-extrabold text-black">
+                        Add IVA 21%
+                      </span>
+                      <span className="block text-xs text-gray-500">
+                        Turn off to create this order without IVA
+                      </span>
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={manualIncludeIva}
+                      onChange={(event) =>
+                        setManualIncludeIva(event.target.checked)
+                      }
+                      className="h-5 w-5 accent-yellow-400"
+                    />
+                  </label>
+
                   <div className="flex justify-between text-sm text-gray-600">
                     <span>Subtotal</span>
                     <span>€{manualSubtotal.toFixed(2)}</span>
@@ -2170,20 +2290,55 @@ const parseOrderWithAi = async () => {
               selected.services.map((item: ServiceItem, index: number) => (
                 <div
                   key={index}
-                  className="flex items-start justify-between gap-3 border-b border-gray-100 py-2 last:border-b-0"
+                  className="grid grid-cols-[1fr_82px_64px] gap-2 border-b border-gray-100 py-2 last:border-b-0"
                 >
-                  <div className="flex min-w-0 flex-col">
-                    <span className="text-sm font-semibold text-black break-words">
-                      {item.label}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      {item.qty} × €{item.price}
-                    </span>
-                  </div>
-
-                  <span className="shrink-0 text-sm font-bold text-black">
-                    €{Number(item.subtotal || 0).toFixed(2)}
-                  </span>
+                  <input
+                    value={item.label || ""}
+                    onChange={(event) =>
+                      updateSelectedService(index, "label", event.target.value)
+                    }
+                    aria-label="Service name"
+                    className="min-w-0 rounded-lg border border-gray-300 px-2 py-2 text-sm font-semibold text-black outline-none focus:border-yellow-400"
+                  />
+                  <label className="min-w-0">
+                    <span className="sr-only">Price</span>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={Number(item.price || 0)}
+                      onChange={(event) =>
+                        updateSelectedService(
+                          index,
+                          "price",
+                          Number(event.target.value)
+                        )
+                      }
+                      aria-label="Service price"
+                      className="w-full rounded-lg border border-gray-300 px-2 py-2 text-sm text-black outline-none focus:border-yellow-400"
+                    />
+                  </label>
+                  <label className="min-w-0">
+                    <span className="sr-only">Quantity</span>
+                    <input
+                      type="number"
+                      min="1"
+                      step="1"
+                      value={Number(item.qty || 0)}
+                      onChange={(event) =>
+                        updateSelectedService(
+                          index,
+                          "qty",
+                          Number(event.target.value)
+                        )
+                      }
+                      aria-label="Service quantity"
+                      className="w-full rounded-lg border border-gray-300 px-2 py-2 text-sm text-black outline-none focus:border-yellow-400"
+                    />
+                  </label>
+                  <p className="col-span-3 text-right text-xs font-bold text-gray-500">
+                    Service total: €{Number(item.subtotal || 0).toFixed(2)}
+                  </p>
                 </div>
               ))
             ) : (
@@ -2224,7 +2379,20 @@ const parseOrderWithAi = async () => {
 
       <div className="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[1.4fr_0.9fr]">
         <div className="rounded-2xl border border-yellow-400 bg-yellow-50/60 p-4">
-          <p className="font-semibold text-black">Pricing</p>
+          <div className="flex items-center justify-between gap-3">
+            <p className="font-semibold text-black">Pricing</p>
+            <label className="flex cursor-pointer items-center gap-2 text-xs font-bold text-black">
+              <input
+                type="checkbox"
+                checked={Number(selected.iva || 0) > 0}
+                onChange={(event) =>
+                  setSelectedIvaEnabled(event.target.checked)
+                }
+                className="h-4 w-4 accent-yellow-400"
+              />
+              IVA 21%
+            </label>
+          </div>
 
           <div className="mt-3 space-y-2 text-sm">
             <div className="flex items-center justify-between">
@@ -2248,6 +2416,15 @@ const parseOrderWithAi = async () => {
               </span>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={saveOrderPricing}
+            disabled={isSavingPricing}
+            className="mt-4 w-full rounded-xl bg-yellow-400 px-4 py-2.5 text-sm font-extrabold text-black transition hover:scale-[1.01] disabled:opacity-60"
+          >
+            {isSavingPricing ? "Saving..." : "Save pricing"}
+          </button>
         </div>
 
         <div className="rounded-2xl border border-gray-200 bg-white p-4">
