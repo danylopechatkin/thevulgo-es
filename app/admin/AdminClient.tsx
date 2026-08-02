@@ -71,6 +71,8 @@ type Order = {
   city: string;
   area: string;
   address: string;
+  apartment?: string;
+  address_details?: string;
   preferred_date: string | null;
   preferred_time: string;
   subtotal: number;
@@ -149,6 +151,7 @@ export default function AdminClient() {
 
   const [showManualForm, setShowManualForm] = useState(false);
   const [isCreatingManual, setIsCreatingManual] = useState(false);
+  const [showClientSuggestions, setShowClientSuggestions] = useState(false);
 
   const [aiOrderText, setAiOrderText] = useState("");
 
@@ -192,6 +195,50 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
 
   const manualIva = Number((manualSubtotal * 0.21).toFixed(2));
   const manualTotal = Number((manualSubtotal + manualIva).toFixed(2));
+
+  const knownClients = useMemo(() => {
+    const clients = new Map<string, Order>();
+
+    for (const order of orders) {
+      const phone = order.phone?.trim().toLowerCase();
+      const email = order.email?.trim().toLowerCase();
+      const name = order.full_name?.trim().toLowerCase();
+      const key = phone || email || name;
+
+      if (key && !clients.has(key)) clients.set(key, order);
+    }
+
+    return Array.from(clients.values());
+  }, [orders]);
+
+  const clientSuggestions = useMemo(() => {
+    const query = manualOrder.fullName.trim().toLowerCase();
+
+    return knownClients
+      .filter((client) => {
+        if (!query) return true;
+
+        return [client.full_name, client.phone, client.email].some((value) =>
+          value?.toLowerCase().includes(query)
+        );
+      })
+      .slice(0, 8);
+  }, [knownClients, manualOrder.fullName]);
+
+  const selectKnownClient = (client: Order) => {
+    setManualOrder((current) => ({
+      ...current,
+      fullName: client.full_name || "",
+      phone: client.phone || "",
+      email: client.email || "",
+      city: client.city || "Valencia",
+      area: client.area || "",
+      houseAddress: client.address || "",
+      apartmentNumber: client.apartment || "",
+      addressDetails: client.address_details || "",
+    }));
+    setShowClientSuggestions(false);
+  };
 
   const handleLogout = async () => {
     try {
@@ -1238,13 +1285,18 @@ const parseOrderWithAi = async () => {
 </div>
 
               <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-                <AdminInput
-                  label="Client name"
+                <ClientAutocomplete
                   value={manualOrder.fullName}
-                  onChange={(v) =>
-                    setManualOrder({ ...manualOrder, fullName: v })
+                  suggestions={clientSuggestions}
+                  open={showClientSuggestions}
+                  onOpenChange={setShowClientSuggestions}
+                  onChange={(value) =>
+                    setManualOrder((current) => ({
+                      ...current,
+                      fullName: value,
+                    }))
                   }
-                  placeholder="Antonio Cicuendez"
+                  onSelect={selectKnownClient}
                 />
 
                 <AdminInput
@@ -1877,6 +1929,88 @@ function AdminInput({
         placeholder={placeholder}
         className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
       />
+    </div>
+  );
+}
+
+function ClientAutocomplete({
+  value,
+  suggestions,
+  open,
+  onOpenChange,
+  onChange,
+  onSelect,
+}: {
+  value: string;
+  suggestions: Order[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onChange: (value: string) => void;
+  onSelect: (client: Order) => void;
+}) {
+  return (
+    <div className="relative rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+      <label
+        htmlFor="manual-client-name"
+        className="mb-2 block text-sm font-bold text-black"
+      >
+        Client name
+      </label>
+      <input
+        id="manual-client-name"
+        type="text"
+        value={value}
+        onFocus={() => onOpenChange(true)}
+        onChange={(event) => {
+          onChange(event.target.value);
+          onOpenChange(true);
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") onOpenChange(false);
+        }}
+        onBlur={() => window.setTimeout(() => onOpenChange(false), 120)}
+        placeholder="Start typing a client name..."
+        autoComplete="off"
+        role="combobox"
+        aria-expanded={open}
+        aria-controls="known-client-suggestions"
+        className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
+      />
+
+      {open && (
+        <div
+          id="known-client-suggestions"
+          role="listbox"
+          className="absolute left-4 right-4 top-[94px] z-50 max-h-72 overflow-y-auto rounded-xl border border-gray-200 bg-white p-1 shadow-xl"
+        >
+          {suggestions.length > 0 ? (
+            suggestions.map((client) => (
+              <button
+                key={client.id}
+                type="button"
+                role="option"
+                aria-selected="false"
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => onSelect(client)}
+                className="block w-full rounded-lg px-3 py-2.5 text-left transition hover:bg-yellow-50 focus:bg-yellow-50 focus:outline-none"
+              >
+                <span className="block text-sm font-extrabold text-black">
+                  {client.full_name}
+                </span>
+                <span className="mt-0.5 block truncate text-xs text-gray-500">
+                  {[client.phone, client.email, client.area]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </span>
+              </button>
+            ))
+          ) : (
+            <p className="px-3 py-3 text-sm text-gray-500">
+              No matching clients. A new client will be created.
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
