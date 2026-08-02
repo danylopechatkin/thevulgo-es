@@ -102,8 +102,8 @@ type ClientProfile = {
   apartment: string;
   addressDetails: string;
   orders: Order[];
-  completedRevenue: number;
-  bookedRevenue: number;
+  completedNetPrice: number;
+  bookedNetPrice: number;
   lastVisit: string | null;
 };
 
@@ -243,17 +243,18 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
           apartment: order.apartment || "",
           addressDetails: order.address_details || "",
           orders: [order],
-          completedRevenue: order.status === "done" ? Number(order.total || 0) : 0,
-          bookedRevenue: Number(order.total || 0),
+          completedNetPrice:
+            order.status === "done" ? Number(order.subtotal || 0) : 0,
+          bookedNetPrice: Number(order.subtotal || 0),
           lastVisit: visitDate,
         });
         continue;
       }
 
       existing.orders.push(order);
-      existing.bookedRevenue += Number(order.total || 0);
+      existing.bookedNetPrice += Number(order.subtotal || 0);
       if (order.status === "done") {
-        existing.completedRevenue += Number(order.total || 0);
+        existing.completedNetPrice += Number(order.subtotal || 0);
       }
 
       if (
@@ -1357,9 +1358,9 @@ const parseOrderWithAi = async () => {
                             </span>
                           </div>
                           <div className="mt-3 flex items-center justify-between text-xs">
-                            <span className="text-gray-500">Revenue</span>
+                            <span className="text-gray-500">Net price</span>
                             <span className="font-extrabold text-black">
-                              €{client.completedRevenue.toFixed(2)}
+                              €{client.completedNetPrice.toFixed(2)}
                             </span>
                           </div>
                         </button>
@@ -1389,7 +1390,7 @@ const parseOrderWithAi = async () => {
                           Select a client
                         </p>
                         <p className="mt-2 text-sm text-gray-500">
-                          Their contact details, revenue and visit history will appear here.
+                          Their contact details, net price and visit history will appear here.
                         </p>
                       </div>
                     </div>
@@ -2283,16 +2284,17 @@ function ClientDetails({
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <ClientStatCard
-          label="Revenue received"
-          value={`€${client.completedRevenue.toFixed(2)}`}
+          label="Net price received"
+          value={`€${client.completedNetPrice.toFixed(2)}`}
         />
         <ClientStatCard label="Total orders" value={String(client.orders.length)} />
         <ClientStatCard label="Last visit" value={lastVisitLabel} />
       </div>
 
-      {client.bookedRevenue !== client.completedRevenue && (
+      {client.bookedNetPrice !== client.completedNetPrice && (
         <p className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-800">
-          Total booked including unfinished orders: <strong>€{client.bookedRevenue.toFixed(2)}</strong>
+          Total net price including unfinished orders:{" "}
+          <strong>€{client.bookedNetPrice.toFixed(2)}</strong>
         </p>
       )}
 
@@ -2324,7 +2326,7 @@ function ClientDetails({
                 </p>
               </div>
               <span className="shrink-0 text-lg font-extrabold text-black">
-                €{Number(order.total || 0).toFixed(2)}
+                €{Number(order.subtotal || 0).toFixed(2)}
               </span>
             </button>
           ))}
