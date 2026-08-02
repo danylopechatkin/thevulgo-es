@@ -3,6 +3,7 @@
 import { formatMadridDateTime } from "@/lib/time";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { LogOut } from "lucide-react";
 
 type OrderStatus = "new" | "in_progress" | "done";
 
@@ -922,7 +923,7 @@ const parseOrderWithAi = async () => {
   return (
     <div className="min-h-screen bg-white px-3 py-4 text-black sm:p-6">
       <div className="mx-auto max-w-7xl space-y-5 sm:space-y-8">
-        <div className="grid grid-cols-2 gap-2 rounded-3xl border border-gray-100 bg-[#fffdf7] p-3 shadow-sm sm:flex sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none">
+        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_44px] items-center gap-2 rounded-3xl border border-gray-100 bg-[#fffdf7] p-3 shadow-sm sm:flex sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none">
           <button
             type="button"
             onClick={() => setShowClients(true)}
@@ -944,9 +945,17 @@ const parseOrderWithAi = async () => {
             type="button"
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="col-span-2 justify-self-end rounded-2xl border border-gray-300 bg-white px-5 py-2.5 text-sm font-extrabold text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md disabled:opacity-60 sm:col-span-1 sm:justify-self-auto sm:py-3"
+            aria-label="Log out"
+            title="Log out"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md disabled:opacity-60 sm:h-auto sm:w-auto sm:rounded-2xl sm:px-5 sm:py-3 sm:text-sm sm:font-extrabold"
           >
-            {isLoggingOut ? "Signing out..." : "Log out"}
+            <LogOut
+              aria-hidden="true"
+              className={`h-5 w-5 sm:hidden ${isLoggingOut ? "animate-pulse" : ""}`}
+            />
+            <span className="hidden sm:inline">
+              {isLoggingOut ? "Signing out..." : "Log out"}
+            </span>
           </button>
         </div>
 
