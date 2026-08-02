@@ -13,6 +13,7 @@ const openai = new OpenAI({
 
 const CategorySchema = z.enum([
   "TV Mounting",
+  "Ceiling Fans",
   "Electrical",
   "Plumbing",
   "Furniture Assembly",
@@ -457,7 +458,10 @@ STRICT RULES:
 
 CATEGORY RULES:
 
-- Ceiling fan, lamp, socket, switch or wiring:
+- Ceiling fan installation or replacement:
+  Ceiling Fans
+
+- Lamp, socket, switch or wiring:
   Electrical
 
 - Furniture assembly:

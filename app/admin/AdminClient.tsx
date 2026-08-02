@@ -27,6 +27,7 @@ type AiParsedOrder = {
 
   category:
     | "TV Mounting"
+    | "Ceiling Fans"
     | "Electrical"
     | "Plumbing"
     | "Furniture Assembly"
@@ -110,6 +111,7 @@ type ClientProfile = {
 
 const MANUAL_CATEGORIES = [
   "TV Mounting",
+  "Ceiling Fans",
   "Electrical",
   "Plumbing",
   "Furniture Assembly",
