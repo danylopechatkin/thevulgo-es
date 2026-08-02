@@ -91,6 +91,22 @@ type Order = {
   completed_at?: string | null;
 };
 
+type ClientProfile = {
+  key: string;
+  fullName: string;
+  phone: string;
+  email: string;
+  city: string;
+  area: string;
+  address: string;
+  apartment: string;
+  addressDetails: string;
+  orders: Order[];
+  completedRevenue: number;
+  bookedRevenue: number;
+  lastVisit: string | null;
+};
+
 const MANUAL_CATEGORIES = [
   "TV Mounting",
   "Electrical",
@@ -152,6 +168,9 @@ export default function AdminClient() {
   const [showManualForm, setShowManualForm] = useState(false);
   const [isCreatingManual, setIsCreatingManual] = useState(false);
   const [showClientSuggestions, setShowClientSuggestions] = useState(false);
+  const [showClients, setShowClients] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<ClientProfile | null>(null);
+  const [clientSearch, setClientSearch] = useState("");
 
   const [aiOrderText, setAiOrderText] = useState("");
 
@@ -196,20 +215,86 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
   const manualIva = Number((manualSubtotal * 0.21).toFixed(2));
   const manualTotal = Number((manualSubtotal + manualIva).toFixed(2));
 
-  const knownClients = useMemo(() => {
-    const clients = new Map<string, Order>();
+  const clientProfiles = useMemo(() => {
+    const profiles = new Map<string, ClientProfile>();
 
     for (const order of orders) {
-      const phone = order.phone?.trim().toLowerCase();
-      const email = order.email?.trim().toLowerCase();
-      const name = order.full_name?.trim().toLowerCase();
-      const key = phone || email || name;
+      const normalizedPhone = order.phone?.replace(/\D/g, "");
+      const normalizedEmail = order.email?.trim().toLowerCase();
+      const normalizedName = order.full_name?.trim().toLowerCase();
+      const key = normalizedPhone || normalizedEmail || normalizedName;
+      if (!key) continue;
 
-      if (key && !clients.has(key)) clients.set(key, order);
+      const existing = profiles.get(key);
+      const visitDate =
+        order.completed_at ||
+        order.scheduled_at ||
+        (order.preferred_date ? `${order.preferred_date}T12:00:00` : null);
+
+      if (!existing) {
+        profiles.set(key, {
+          key,
+          fullName: order.full_name || "Unknown client",
+          phone: order.phone || "",
+          email: order.email || "",
+          city: order.city || "",
+          area: order.area || "",
+          address: order.address || "",
+          apartment: order.apartment || "",
+          addressDetails: order.address_details || "",
+          orders: [order],
+          completedRevenue: order.status === "done" ? Number(order.total || 0) : 0,
+          bookedRevenue: Number(order.total || 0),
+          lastVisit: visitDate,
+        });
+        continue;
+      }
+
+      existing.orders.push(order);
+      existing.bookedRevenue += Number(order.total || 0);
+      if (order.status === "done") {
+        existing.completedRevenue += Number(order.total || 0);
+      }
+
+      if (
+        visitDate &&
+        (!existing.lastVisit || new Date(visitDate) > new Date(existing.lastVisit))
+      ) {
+        existing.lastVisit = visitDate;
+        existing.fullName = order.full_name || existing.fullName;
+        existing.phone = order.phone || existing.phone;
+        existing.email = order.email || existing.email;
+        existing.city = order.city || existing.city;
+        existing.area = order.area || existing.area;
+        existing.address = order.address || existing.address;
+        existing.apartment = order.apartment || existing.apartment;
+        existing.addressDetails =
+          order.address_details || existing.addressDetails;
+      }
     }
 
-    return Array.from(clients.values());
+    return Array.from(profiles.values()).sort((a, b) => {
+      if (!a.lastVisit) return 1;
+      if (!b.lastVisit) return -1;
+      return new Date(b.lastVisit).getTime() - new Date(a.lastVisit).getTime();
+    });
   }, [orders]);
+
+  const knownClients = useMemo(
+    () => clientProfiles.map((client) => client.orders[0]),
+    [clientProfiles]
+  );
+
+  const filteredClientProfiles = useMemo(() => {
+    const query = clientSearch.trim().toLowerCase();
+    if (!query) return clientProfiles;
+
+    return clientProfiles.filter((client) =>
+      [client.fullName, client.phone, client.email, client.area, client.address]
+        .filter(Boolean)
+        .some((value) => value.toLowerCase().includes(query))
+    );
+  }, [clientProfiles, clientSearch]);
 
   const clientSuggestions = useMemo(() => {
     const query = manualOrder.fullName.trim().toLowerCase();
@@ -828,6 +913,14 @@ const parseOrderWithAi = async () => {
         <div className="flex flex-wrap items-center justify-end gap-3">
           <button
             type="button"
+            onClick={() => setShowClients(true)}
+            className="rounded-2xl border border-yellow-400 bg-white px-5 py-3 text-sm font-extrabold text-black shadow-sm transition hover:bg-yellow-50 hover:shadow-md"
+          >
+            Clients ({clientProfiles.length})
+          </button>
+
+          <button
+            type="button"
             onClick={() => setShowManualForm(true)}
             className="rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.02] hover:shadow-lg"
           >
@@ -1196,6 +1289,116 @@ const parseOrderWithAi = async () => {
             </table>
           </div>
         </div>
+
+        {showClients && (
+          <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/55 p-3 backdrop-blur-sm sm:p-6">
+            <div className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-[30px] bg-[#fffdf7] shadow-2xl">
+              <div className="flex flex-col gap-4 border-b border-gray-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.15em] text-gray-500">
+                    CRM
+                  </p>
+                  <h2 className="mt-1 text-3xl font-extrabold text-black">
+                    Clients
+                  </h2>
+                  <p className="mt-1 text-sm text-gray-500">
+                    {clientProfiles.length} clients from existing orders
+                  </p>
+                </div>
+
+                <div className="flex w-full gap-3 sm:w-auto">
+                  <input
+                    type="search"
+                    value={clientSearch}
+                    onChange={(event) => setClientSearch(event.target.value)}
+                    placeholder="Search name, phone, email or address..."
+                    className="min-w-0 flex-1 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-yellow-400 sm:w-80"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowClients(false);
+                      setSelectedClient(null);
+                      setClientSearch("");
+                    }}
+                    className="rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-extrabold hover:bg-gray-50"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[360px_1fr]">
+                <div className="min-h-0 overflow-y-auto border-r border-gray-200 bg-white p-3">
+                  {filteredClientProfiles.length > 0 ? (
+                    <div className="space-y-2">
+                      {filteredClientProfiles.map((client) => (
+                        <button
+                          key={client.key}
+                          type="button"
+                          onClick={() => setSelectedClient(client)}
+                          className={`w-full rounded-2xl border p-4 text-left transition ${
+                            selectedClient?.key === client.key
+                              ? "border-yellow-400 bg-yellow-50 shadow-sm"
+                              : "border-gray-200 bg-white hover:border-yellow-300 hover:bg-[#fffdf4]"
+                          }`}
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0">
+                              <p className="truncate font-extrabold text-black">
+                                {client.fullName}
+                              </p>
+                              <p className="mt-1 truncate text-xs text-gray-500">
+                                {client.phone || client.email || "No contact details"}
+                              </p>
+                            </div>
+                            <span className="shrink-0 rounded-full bg-black px-2.5 py-1 text-xs font-bold text-white">
+                              {client.orders.length}
+                            </span>
+                          </div>
+                          <div className="mt-3 flex items-center justify-between text-xs">
+                            <span className="text-gray-500">Revenue</span>
+                            <span className="font-extrabold text-black">
+                              €{client.completedRevenue.toFixed(2)}
+                            </span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="p-5 text-center text-sm text-gray-500">
+                      No clients found.
+                    </p>
+                  )}
+                </div>
+
+                <div className="min-h-0 overflow-y-auto p-5 sm:p-7">
+                  {selectedClient ? (
+                    <ClientDetails
+                      client={selectedClient}
+                      formatOrderId={formatOrderId}
+                      onOpenOrder={(order) => {
+                        setSelected(order);
+                        setShowClients(false);
+                      }}
+                    />
+                  ) : (
+                    <div className="flex h-full min-h-80 items-center justify-center rounded-3xl border border-dashed border-gray-300 bg-white p-8 text-center">
+                      <div>
+                        <p className="text-xl font-extrabold text-black">
+                          Select a client
+                        </p>
+                        <p className="mt-2 text-sm text-gray-500">
+                          Their contact details, revenue and visit history will appear here.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {showManualForm && (
           <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 p-4">
@@ -2014,6 +2217,134 @@ function ClientAutocomplete({
     </div>
   );
 }
+
+function ClientDetails({
+  client,
+  formatOrderId,
+  onOpenOrder,
+}: {
+  client: ClientProfile;
+  formatOrderId: (order: Order) => string;
+  onOpenOrder: (order: Order) => void;
+}) {
+  const lastVisitLabel = client.lastVisit
+    ? new Date(client.lastVisit).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+    : "No visits yet";
+
+  return (
+    <div className="space-y-5">
+      <div className="rounded-3xl border border-yellow-400 bg-white p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">
+              Client card
+            </p>
+            <h3 className="mt-2 text-3xl font-extrabold text-black">
+              {client.fullName}
+            </h3>
+            <div className="mt-4 space-y-1.5 text-sm text-gray-700">
+              <p>📞 {client.phone || "—"}</p>
+              <p>📧 {client.email || "—"}</p>
+              <p>
+                📍 {[client.address, client.apartment, client.area, client.city]
+                  .filter(Boolean)
+                  .join(", ") || "—"}
+              </p>
+              {client.addressDetails && <p>ℹ️ {client.addressDetails}</p>}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {client.phone && (
+              <a
+                href={`tel:${client.phone}`}
+                className="rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm font-extrabold text-black hover:bg-gray-50"
+              >
+                Call
+              </a>
+            )}
+            {client.phone && (
+              <a
+                href={`https://wa.me/${client.phone.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl bg-[#25D366] px-4 py-2.5 text-sm font-extrabold text-white hover:brightness-95"
+              >
+                WhatsApp
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <ClientStatCard
+          label="Revenue received"
+          value={`€${client.completedRevenue.toFixed(2)}`}
+        />
+        <ClientStatCard label="Total orders" value={String(client.orders.length)} />
+        <ClientStatCard label="Last visit" value={lastVisitLabel} />
+      </div>
+
+      {client.bookedRevenue !== client.completedRevenue && (
+        <p className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-800">
+          Total booked including unfinished orders: <strong>€{client.bookedRevenue.toFixed(2)}</strong>
+        </p>
+      )}
+
+      <div className="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div className="flex items-center justify-between gap-3">
+          <h4 className="text-xl font-extrabold text-black">Order history</h4>
+          <span className="text-sm text-gray-500">{client.orders.length} orders</span>
+        </div>
+
+        <div className="mt-4 space-y-3">
+          {client.orders.map((order) => (
+            <button
+              key={order.id}
+              type="button"
+              onClick={() => onOpenOrder(order)}
+              className="flex w-full flex-col gap-3 rounded-2xl border border-gray-200 p-4 text-left transition hover:border-yellow-400 hover:bg-yellow-50 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-extrabold text-black">
+                    {formatOrderId(order)}
+                  </span>
+                  <span className="rounded-full bg-gray-100 px-2.5 py-1 text-[11px] font-bold uppercase text-gray-600">
+                    {order.status.replace("_", " ")}
+                  </span>
+                </div>
+                <p className="mt-1 truncate text-sm text-gray-600">
+                  {order.category || "Service"} · {order.preferred_date || "No date"}
+                </p>
+              </div>
+              <span className="shrink-0 text-lg font-extrabold text-black">
+                €{Number(order.total || 0).toFixed(2)}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ClientStatCard({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
+      <p className="text-xs font-bold uppercase tracking-wide text-gray-500">
+        {label}
+      </p>
+      <p className="mt-2 text-2xl font-extrabold text-black">{value}</p>
+    </div>
+  );
+}
+
 function MetricCard({
   title,
   value,
