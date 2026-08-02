@@ -1208,9 +1208,9 @@ const parseOrderWithAi = async () => {
 
                 <div className="mt-5 space-y-3">
                   {selectedDayOrders.length > 0 ? (
-                    selectedDayOrders.map((order) => (
+                    selectedDayOrders.map((order, orderIndex) => (
+                      <div key={order.id}>
                       <button
-                        key={order.id}
                         type="button"
                         onClick={() => setSelected(order)}
                         className="w-full rounded-2xl border border-yellow-400 bg-[#fffdf6] p-4 text-left shadow-sm transition active:scale-[0.99]"
@@ -1232,6 +1232,13 @@ const parseOrderWithAi = async () => {
                           {formatStatusLabel(order.status)}
                         </span>
                       </button>
+                      {orderIndex < selectedDayOrders.length - 1 && (
+                        <TransitTimeBetweenOrders
+                          fromOrder={order}
+                          toOrder={selectedDayOrders[orderIndex + 1]}
+                        />
+                      )}
+                      </div>
                     ))
                   ) : (
                     <div className="rounded-2xl border border-dashed border-gray-300 bg-[#fffdf7] px-4 py-10 text-center">
@@ -1338,9 +1345,9 @@ const parseOrderWithAi = async () => {
                   <p className="text-xs text-gray-400">Free</p>
                 )
               ) : (
-                day.orders.map((order) => (
+                day.orders.map((order, orderIndex) => (
+                  <div key={order.id}>
                   <button
-                    key={order.id}
                     type="button"
                     onClick={() => setSelected(order)}
                     className="w-full rounded-xl border border-yellow-400 bg-white p-2.5 text-left shadow-sm transition hover:bg-yellow-50 hover:shadow-md"
@@ -1364,6 +1371,14 @@ const parseOrderWithAi = async () => {
                       </span>
                     </div>
                   </button>
+                  {orderIndex < day.orders.length - 1 && (
+                    <TransitTimeBetweenOrders
+                      fromOrder={order}
+                      toOrder={day.orders[orderIndex + 1]}
+                      compact
+                    />
+                  )}
+                  </div>
                 ))
               )}
             </div>
@@ -2603,6 +2618,109 @@ function ClientDetails({
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+function getOrderRouteAddress(order: Order) {
+  return [order.address, order.apartment, order.area, order.city, "Spain"]
+    .map((part) => part?.trim())
+    .filter(Boolean)
+    .join(", ");
+}
+
+function TransitTimeBetweenOrders({
+  fromOrder,
+  toOrder,
+  compact = false,
+}: {
+  fromOrder: Order;
+  toOrder: Order;
+  compact?: boolean;
+}) {
+  const [state, setState] = useState<
+    | { status: "idle" }
+    | { status: "loading" }
+    | { status: "success"; durationText: string; mapsUrl: string }
+    | { status: "error"; message: string }
+  >({ status: "idle" });
+
+  const calculateTransitTime = async () => {
+    const origin = getOrderRouteAddress(fromOrder);
+    const destination = getOrderRouteAddress(toOrder);
+
+    if (!origin || !destination) {
+      setState({ status: "error", message: "Address missing" });
+      return;
+    }
+
+    setState({ status: "loading" });
+    try {
+      const response = await fetch("/api/admin/transit-time", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          origin,
+          destination,
+          arrivalTime: toOrder.scheduled_at,
+        }),
+      });
+      const result = (await response.json()) as {
+        durationText?: string;
+        mapsUrl?: string;
+        error?: string;
+      };
+
+      if (!response.ok || !result.durationText || !result.mapsUrl) {
+        throw new Error(result.error || "Route unavailable");
+      }
+
+      setState({
+        status: "success",
+        durationText: result.durationText,
+        mapsUrl: result.mapsUrl,
+      });
+    } catch (error) {
+      setState({
+        status: "error",
+        message: error instanceof Error ? error.message : "Route unavailable",
+      });
+    }
+  };
+
+  const baseClass = compact
+    ? "mt-1 rounded-lg bg-blue-50 px-2 py-1.5 text-[10px]"
+    : "mx-2 rounded-b-2xl border-x border-b border-blue-200 bg-blue-50 px-3 py-2 text-xs";
+
+  return (
+    <div className={`${baseClass} text-blue-800`}>
+      {state.status === "success" ? (
+        <a
+          href={state.mapsUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center justify-between gap-2 font-bold hover:underline"
+        >
+          <span className="truncate">
+            🚌 {state.durationText} to {toOrder.full_name}
+          </span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      ) : (
+        <button
+          type="button"
+          onClick={calculateTransitTime}
+          disabled={state.status === "loading"}
+          className="w-full text-left font-bold disabled:cursor-wait disabled:opacity-60"
+          title={state.status === "error" ? state.message : undefined}
+        >
+          {state.status === "loading"
+            ? "🚌 Calculating transit…"
+            : state.status === "error"
+              ? `🚌 ${state.message} — try again`
+              : `🚌 Check transit to ${toOrder.full_name}`}
+        </button>
+      )}
     </div>
   );
 }
