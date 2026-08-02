@@ -173,6 +173,10 @@ export default function AdminClient() {
   const [selectedClient, setSelectedClient] = useState<ClientProfile | null>(null);
   const [clientSearch, setClientSearch] = useState("");
   const [showMobileMetrics, setShowMobileMetrics] = useState(false);
+  const [showMobileMonthCalendar, setShowMobileMonthCalendar] = useState(false);
+  const [selectedCalendarDate, setSelectedCalendarDate] = useState(() =>
+    getMadridDateKey(new Date())
+  );
 
   const [aiOrderText, setAiOrderText] = useState("");
 
@@ -495,6 +499,22 @@ const calendarMonthTitle = useMemo(() => {
   });
 }, [calendarMonth]);
 
+const selectedDayOrders = ordersByDate.get(selectedCalendarDate) || [];
+
+const selectedDayTitle = useMemo(() => {
+  const [year, month, day] = selectedCalendarDate.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day, 12)).toLocaleDateString(
+    "en-GB",
+    {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    }
+  );
+}, [selectedCalendarDate]);
+
 const changeCalendarMonth = (offset: number) => {
   setCalendarMonth((currentMonth) => {
     const [year, month] = currentMonth.split("-").map(Number);
@@ -511,6 +531,20 @@ const changeCalendarMonth = (offset: number) => {
 
 const goToCurrentMonth = () => {
   setCalendarMonth(getMadridDateKey(new Date()).slice(0, 7));
+};
+
+const changeCalendarDay = (offset: number) => {
+  const [year, month, day] = selectedCalendarDate.split("-").map(Number);
+  const nextDate = new Date(Date.UTC(year, month - 1, day + offset, 12));
+  const nextDateKey = getMadridDateKey(nextDate);
+  setSelectedCalendarDate(nextDateKey);
+  setCalendarMonth(nextDateKey.slice(0, 7));
+};
+
+const goToToday = () => {
+  const today = getMadridDateKey(new Date());
+  setSelectedCalendarDate(today);
+  setCalendarMonth(today.slice(0, 7));
 };
 
 const parseOrderWithAi = async () => {
@@ -1084,52 +1118,174 @@ const parseOrderWithAi = async () => {
         </div>
 
         <div className="rounded-[28px] border border-yellow-400 bg-white p-4 shadow-xl sm:p-6">
-  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-    <div>
-      <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
-        Calendar
-      </p>
+          <div className="sm:hidden">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
+                  Calendar
+                </p>
+                <h2 className="mt-1 text-xl font-extrabold capitalize tracking-tight text-black">
+                  {showMobileMonthCalendar ? calendarMonthTitle : selectedDayTitle}
+                </h2>
+                <p className="mt-1 text-sm text-gray-500">
+                  {showMobileMonthCalendar
+                    ? `${calendarDays
+                        .filter((day) => day.isCurrentMonth)
+                        .reduce((sum, day) => sum + day.orders.length, 0)} bookings this month`
+                    : `${selectedDayOrders.length} bookings this day`}
+                </p>
+              </div>
 
-      <h2 className="mt-1 text-2xl font-extrabold capitalize tracking-tight text-black">
-        {calendarMonthTitle}
-      </h2>
+              <button
+                type="button"
+                onClick={() => {
+                  if (showMobileMonthCalendar) {
+                    goToToday();
+                    setShowMobileMonthCalendar(false);
+                  } else {
+                    setShowMobileMonthCalendar(true);
+                  }
+                }}
+                className="shrink-0 rounded-xl bg-yellow-400 px-3 py-2.5 text-xs font-extrabold text-black shadow-sm"
+              >
+                {showMobileMonthCalendar ? "Day view" : "Month view"}
+              </button>
+            </div>
 
-      <p className="mt-1 text-sm text-gray-500">
-        {calendarDays
-          .filter((day) => day.isCurrentMonth)
-          .reduce((sum, day) => sum + day.orders.length, 0)}{" "}
-        bookings this month
-      </p>
-    </div>
+            {showMobileMonthCalendar && (
+              <div className="mt-5 grid grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  onClick={() => changeCalendarMonth(-1)}
+                  className="rounded-xl border border-gray-300 bg-white px-2 py-2.5 text-xs font-extrabold shadow-sm"
+                >
+                  ← Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={goToCurrentMonth}
+                  className="rounded-xl bg-yellow-400 px-2 py-2.5 text-xs font-extrabold text-black shadow-sm"
+                >
+                  Today
+                </button>
+                <button
+                  type="button"
+                  onClick={() => changeCalendarMonth(1)}
+                  className="rounded-xl border border-gray-300 bg-white px-2 py-2.5 text-xs font-extrabold shadow-sm"
+                >
+                  Next →
+                </button>
+              </div>
+            )}
 
-    <div className="flex flex-wrap items-center gap-2">
-      <button
-        type="button"
-        onClick={() => changeCalendarMonth(-1)}
-        className="rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-black shadow-sm transition hover:border-yellow-400 hover:bg-yellow-50"
-      >
-        ← Previous
-      </button>
+            {!showMobileMonthCalendar && (
+              <>
+                <div className="mt-5 grid grid-cols-[44px_1fr_44px] items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => changeCalendarDay(-1)}
+                    aria-label="Previous day"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-yellow-400 bg-white text-xl font-extrabold shadow-sm"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    onClick={goToToday}
+                    className="rounded-xl bg-yellow-400 px-4 py-3 text-sm font-extrabold text-black shadow-sm"
+                  >
+                    Today
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => changeCalendarDay(1)}
+                    aria-label="Next day"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-yellow-400 bg-white text-xl font-extrabold shadow-sm"
+                  >
+                    ›
+                  </button>
+                </div>
 
-      <button
-        type="button"
-        onClick={goToCurrentMonth}
-        className="rounded-xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.02]"
-      >
-        Today
-      </button>
+                <div className="mt-5 space-y-3">
+                  {selectedDayOrders.length > 0 ? (
+                    selectedDayOrders.map((order) => (
+                      <button
+                        key={order.id}
+                        type="button"
+                        onClick={() => setSelected(order)}
+                        className="w-full rounded-2xl border border-yellow-400 bg-[#fffdf6] p-4 text-left shadow-sm transition active:scale-[0.99]"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="truncate text-base font-extrabold text-black">
+                              {order.preferred_time?.slice(0, 5) || "—"} {order.full_name}
+                            </p>
+                            <p className="mt-1 truncate text-sm text-gray-500">
+                              {order.area || order.city || "—"}
+                            </p>
+                          </div>
+                          <span className="shrink-0 text-base font-extrabold text-black">
+                            €{Number(order.total || 0).toFixed(2)}
+                          </span>
+                        </div>
+                        <span className="mt-3 inline-flex rounded-full bg-white px-2.5 py-1 text-[10px] font-bold uppercase text-gray-500">
+                          {formatStatusLabel(order.status)}
+                        </span>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="rounded-2xl border border-dashed border-gray-300 bg-[#fffdf7] px-4 py-10 text-center">
+                      <p className="text-lg font-extrabold text-black">Free day</p>
+                      <p className="mt-1 text-sm text-gray-500">No bookings scheduled</p>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
 
-      <button
-        type="button"
-        onClick={() => changeCalendarMonth(1)}
-        className="rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-black shadow-sm transition hover:border-yellow-400 hover:bg-yellow-50"
-      >
-        Next →
-      </button>
-    </div>
-  </div>
+          <div className="hidden flex-col gap-4 sm:flex sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
+                Calendar
+              </p>
+              <h2 className="mt-1 text-2xl font-extrabold capitalize tracking-tight text-black">
+                {calendarMonthTitle}
+              </h2>
+              <p className="mt-1 text-sm text-gray-500">
+                {calendarDays
+                  .filter((day) => day.isCurrentMonth)
+                  .reduce((sum, day) => sum + day.orders.length, 0)}{" "}
+                bookings this month
+              </p>
+            </div>
 
-  <div className="mt-6 overflow-x-auto">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => changeCalendarMonth(-1)}
+                className="rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-black shadow-sm transition hover:border-yellow-400 hover:bg-yellow-50"
+              >
+                ← Previous
+              </button>
+              <button
+                type="button"
+                onClick={goToCurrentMonth}
+                className="rounded-xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.02]"
+              >
+                Today
+              </button>
+              <button
+                type="button"
+                onClick={() => changeCalendarMonth(1)}
+                className="rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-black shadow-sm transition hover:border-yellow-400 hover:bg-yellow-50"
+              >
+                Next →
+              </button>
+            </div>
+          </div>
+
+  <div className={`${showMobileMonthCalendar ? "mt-6 block" : "hidden"} overflow-x-auto sm:mt-6 sm:block`}>
     <div className="min-w-[1050px]">
       <div className="grid grid-cols-7 gap-2">
         {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(
