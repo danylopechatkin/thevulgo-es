@@ -2882,9 +2882,13 @@ function TransitTimeBetweenOrders({
     }
   };
 
-  const baseClass = compact
-    ? "mt-1 rounded-lg bg-blue-50 px-2 py-1.5 text-[10px]"
-    : "mx-2 rounded-b-2xl border-x border-b border-blue-200 bg-blue-50 px-3 py-2 text-xs";
+  const baseClass = useStartAddress
+    ? compact
+      ? "mb-2 rounded-xl border border-blue-200 bg-blue-50 px-2.5 py-2 text-[10px] shadow-sm"
+      : "mb-4 rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-xs shadow-sm"
+    : compact
+      ? "mt-1 rounded-lg bg-blue-50 px-2 py-1.5 text-[10px]"
+      : "mx-2 rounded-b-2xl border-x border-b border-blue-200 bg-blue-50 px-3 py-2 text-xs";
 
   return (
     <div className={`${baseClass} text-blue-800`}>
