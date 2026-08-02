@@ -55,7 +55,7 @@ const areas = [
 
 const relatedPages = [
   {
-    slug: "montaje-ventilador-techo",
+    slug: "instalacion-ventilador-techo-valencia",
     en: "Ceiling Fan Mounting",
     es: "Montaje de ventilador de techo",
     descEn: "General ceiling fan mounting service in Valencia.",

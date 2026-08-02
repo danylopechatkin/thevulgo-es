@@ -173,8 +173,6 @@ const serviceSeoPages = [
 
   // Ceiling fans
   "services/instalacion-ventilador-techo-valencia",
-  "services/montaje-ventilador-techo",
-  "services/instalar-ventilador-techo",
   "services/ventilador-techo-con-luz",
   "services/cambio-lampara-por-ventilador",
   "services/reemplazo-ventilador-techo",

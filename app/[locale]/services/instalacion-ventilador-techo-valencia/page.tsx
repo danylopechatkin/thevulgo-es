@@ -51,7 +51,7 @@ const areas = [
 
 const fanPages = [
   {
-    slug: "instalar-ventilador-techo-luz-valencia",
+    slug: "ventilador-techo-con-luz",
     en: "Ceiling Fan With Light",
     es: "Ventilador de techo con luz",
     descEn: "Installation of ceiling fans with LED light, remote control and final testing.",
@@ -59,7 +59,7 @@ const fanPages = [
     icon: Lightbulb,
   },
   {
-    slug: "cambiar-lampara-por-ventilador-valencia",
+    slug: "cambio-lampara-por-ventilador",
     en: "Replace Lamp With Fan",
     es: "Cambiar lámpara por ventilador",
     descEn: "Old lamp removal and ceiling fan installation on the existing electrical point.",
@@ -67,132 +67,28 @@ const fanPages = [
     icon: Plug,
   },
   {
-    slug: "instalar-ventilador-mando-valencia",
+    slug: "instalacion-ventilador-control-remoto",
     en: "Fan With Remote Control",
     es: "Ventilador con mando",
     descEn: "Fan installation with receiver, remote control setup and speed testing.",
     descEs: "Instalación con receptor, configuración del mando y prueba de velocidades.",
-    icon: Fan,
+    icon: Settings,
   },
   {
-    slug: "instalar-ventilador-aspas-retractiles-valencia",
-    en: "Retractable Blade Fan",
-    es: "Ventilador con aspas retráctiles",
-    descEn: "Installation of modern fans that look like a normal ceiling light when off.",
-    descEs: "Instalación de ventiladores modernos que parecen una lámpara cuando están apagados.",
+    slug: "reemplazo-ventilador-techo",
+    en: "Ceiling Fan Replacement",
+    es: "Reemplazo de ventilador de techo",
+    descEn: "Old fan removal, new fan installation and final testing.",
+    descEs: "Retirada del ventilador antiguo, instalación del nuevo y prueba final.",
+    icon: Wrench,
+  },
+  {
+    slug: "instalacion-ventilador-smart",
+    en: "Smart Ceiling Fan",
+    es: "Ventilador de techo smart",
+    descEn: "Installation and basic app setup for smart ceiling fans.",
+    descEs: "Instalación y configuración básica de app para ventiladores smart.",
     icon: Sparkles,
-  },
-  {
-    slug: "instalar-ventilador-create-valencia",
-    en: "CREATE Fan Installation",
-    es: "Instalación ventilador CREATE",
-    descEn: "Assembly and installation of CREATE / IKOHS ceiling fans in Valencia.",
-    descEs: "Montaje e instalación de ventiladores CREATE / IKOHS en Valencia.",
-    icon: BadgeCheck,
-  },
-  {
-    slug: "instalar-ventilador-cecotec-valencia",
-    en: "Cecotec Fan Installation",
-    es: "Instalación ventilador Cecotec",
-    descEn: "Installation of Cecotec EnergySilence and similar ceiling fan models.",
-    descEs: "Instalación de ventiladores Cecotec EnergySilence y modelos similares.",
-    icon: BadgeCheck,
-  },
-  {
-    slug: "instalacion-2-ventiladores-techo-valencia",
-    en: "Two Ceiling Fans",
-    es: "Instalación de 2 ventiladores",
-    descEn: "Pack for two ceiling fans installed in the same visit.",
-    descEs: "Pack para instalar dos ventiladores de techo en la misma visita.",
-    icon: Fan,
-  },
-  {
-    slug: "instalacion-3-ventiladores-techo-valencia",
-    en: "Three Ceiling Fans",
-    es: "Instalación de 3 ventiladores",
-    descEn: "Pack for three ceiling fans installed in one home.",
-    descEs: "Pack para instalar tres ventiladores de techo en una vivienda.",
-    icon: Home,
-  },
-  {
-    slug: "ventilador-techo-dormitorio-valencia",
-    en: "Bedroom Ceiling Fan",
-    es: "Ventilador para dormitorio",
-    descEn: "Quiet, centered and clean fan installation for bedrooms.",
-    descEs: "Instalación silenciosa, centrada y limpia para dormitorios.",
-    icon: Home,
-  },
-  {
-    slug: "ventilador-techo-salon-valencia",
-    en: "Living Room Ceiling Fan",
-    es: "Ventilador para salón",
-    descEn: "Safe ceiling fan installation for living rooms and main areas.",
-    descEs: "Instalación segura de ventiladores para salones y zonas principales.",
-    icon: Home,
-  },
-  {
-    slug: "ventilador-techo-pladur-valencia",
-    en: "Fan On Plasterboard Ceiling",
-    es: "Ventilador en techo de pladur",
-    descEn: "We check the ceiling and use suitable fixings for plasterboard when possible.",
-    descEs: "Revisamos el techo y usamos fijaciones adecuadas para pladur cuando es posible.",
-    icon: ShieldCheck,
-  },
-  {
-    slug: "ventilador-techo-hormigon-valencia",
-    en: "Fan On Concrete Ceiling",
-    es: "Ventilador en techo de hormigón",
-    descEn: "Strong installation on concrete ceilings with proper drilling and anchors.",
-    descEs: "Instalación firme en techo de hormigón con taladro y tacos adecuados.",
-    icon: Wrench,
-  },
-  {
-    slug: "ventilador-techo-alto-valencia",
-    en: "High Ceiling Fan",
-    es: "Ventilador en techo alto",
-    descEn: "Ceiling fan installation on higher ceilings when access is possible.",
-    descEs: "Instalación de ventiladores en techos altos cuando el acceso lo permite.",
-    icon: ArrowRight,
-  },
-  {
-    slug: "instalar-ventilador-wifi-valencia",
-    en: "WiFi Ceiling Fan",
-    es: "Ventilador WiFi",
-    descEn: "Installation and basic app check for WiFi ceiling fans.",
-    descEs: "Instalación y prueba básica de app para ventiladores WiFi.",
-    icon: Plug,
-  },
-  {
-    slug: "montaje-lampara-ventilador-valencia",
-    en: "Fan Lamp Installation",
-    es: "Montaje lámpara ventilador",
-    descEn: "Combined lighting and fan installation with clean finish.",
-    descEs: "Montaje de lámpara ventilador con acabado limpio y prueba final.",
-    icon: Lightbulb,
-  },
-  {
-    slug: "cambiar-ventilador-techo-valencia",
-    en: "Replace Old Ceiling Fan",
-    es: "Cambiar ventilador antiguo",
-    descEn: "Removal of old ceiling fan and installation of the new one.",
-    descEs: "Retirada del ventilador antiguo e instalación del nuevo.",
-    icon: Wrench,
-  },
-  {
-    slug: "presupuesto-ventilador-techo-valencia",
-    en: "Ceiling Fan Estimate",
-    es: "Presupuesto ventilador de techo",
-    descEn: "Clear estimate before confirming the visit.",
-    descEs: "Presupuesto claro antes de confirmar la visita.",
-    icon: Euro,
-  },
-  {
-    slug: "manitas-ventilador-techo-valencia",
-    en: "Handyman For Ceiling Fan",
-    es: "Manitas para ventilador de techo",
-    descEn: "Local handyman service for ceiling fan installation in Valencia.",
-    descEs: "Servicio local de manitas para instalar ventiladores de techo en Valencia.",
-    icon: Wrench,
   },
 ];
 
@@ -275,7 +171,7 @@ export default async function CeilingFanInstallationPage({
 
   const pageUrl = `${baseUrl}/${locale}/services/instalacion-ventilador-techo-valencia`;
 
-  const estimateHref = `/${locale}/estimate?category=ceiling-fan`;
+  const estimateHref = `/${locale}/estimate?category=ceiling-fans`;
 
   const whatsappText = encodeURIComponent(
     isEs
