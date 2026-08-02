@@ -263,12 +263,13 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     const text = String(body?.text || "").trim();
+    const imageDataUrl = String(body?.imageDataUrl || "").trim();
 
-    if (!text) {
+    if (!text && !imageDataUrl) {
       return NextResponse.json(
         {
           success: false,
-          error: "Order text is required",
+          error: "Order text or a screenshot is required",
         },
         {
           status: 400,
@@ -285,6 +286,23 @@ export async function POST(request: Request) {
         {
           status: 400,
         }
+      );
+    }
+
+    if (
+      imageDataUrl &&
+      !/^data:image\/(jpeg|png|webp);base64,/i.test(imageDataUrl)
+    ) {
+      return NextResponse.json(
+        { success: false, error: "Unsupported screenshot format" },
+        { status: 400 }
+      );
+    }
+
+    if (imageDataUrl.length > 6_000_000) {
+      return NextResponse.json(
+        { success: false, error: "Screenshot is too large" },
+        { status: 400 }
       );
     }
 
@@ -307,7 +325,10 @@ Weekday: ${madrid.weekday}
 Timezone: Europe/Madrid
 
 The input may be in Russian, Ukrainian, Spanish or English.
-The input may contain copied WhatsApp messages or the administrator's own notes.
+The input may contain copied WhatsApp messages, screenshots of WhatsApp
+conversations, or the administrator's own notes. Read all visible text in an
+attached screenshot. Ignore WhatsApp interface labels, timestamps that are not
+appointment times, battery indicators and other phone interface elements.
 
 STRICT RULES:
 
@@ -463,7 +484,23 @@ CATEGORY RULES:
         },
         {
           role: "user",
-          content: text,
+          content: imageDataUrl
+            ? [
+                {
+                  type: "text" as const,
+                  text:
+                    text ||
+                    "Extract the handyman order details from this WhatsApp screenshot.",
+                },
+                {
+                  type: "image_url" as const,
+                  image_url: {
+                    url: imageDataUrl,
+                    detail: "high" as const,
+                  },
+                },
+              ]
+            : text,
         },
       ],
 

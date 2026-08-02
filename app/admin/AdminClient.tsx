@@ -148,6 +148,45 @@ function getMonthDate(monthKey: string) {
 
 }
 
+function resizeScreenshot(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    if (!file.type.startsWith("image/")) {
+      reject(new Error("Choose an image file."));
+      return;
+    }
+
+    if (file.size > 12 * 1024 * 1024) {
+      reject(new Error("The screenshot is too large. Maximum size is 12 MB."));
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Could not read this screenshot."));
+    reader.onload = () => {
+      const image = new Image();
+      image.onerror = () => reject(new Error("Could not open this screenshot."));
+      image.onload = () => {
+        const maxSide = 1800;
+        const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+        const context = canvas.getContext("2d");
+
+        if (!context) {
+          reject(new Error("Could not prepare this screenshot."));
+          return;
+        }
+
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.86));
+      };
+      image.src = String(reader.result || "");
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 export default function AdminClient() {
   const [internalNotes, setInternalNotes] = useState("");
   const [orders, setOrders] = useState<Order[]>([]);
@@ -181,6 +220,8 @@ export default function AdminClient() {
   );
 
   const [aiOrderText, setAiOrderText] = useState("");
+  const [aiOrderImage, setAiOrderImage] = useState("");
+  const [aiOrderImageName, setAiOrderImageName] = useState("");
 
 const [isParsingAiOrder, setIsParsingAiOrder] = useState(false);
 
@@ -551,11 +592,28 @@ const goToToday = () => {
   setCalendarMonth(today.slice(0, 7));
 };
 
+const handleAiScreenshot = async (file?: File) => {
+  if (!file) return;
+
+  try {
+    setAiOrderError("");
+    const resizedImage = await resizeScreenshot(file);
+    setAiOrderImage(resizedImage);
+    setAiOrderImageName(file.name || "WhatsApp screenshot");
+  } catch (error) {
+    setAiOrderImage("");
+    setAiOrderImageName("");
+    setAiOrderError(
+      error instanceof Error ? error.message : "Could not add this screenshot."
+    );
+  }
+};
+
 const parseOrderWithAi = async () => {
   const cleanText = aiOrderText.trim();
 
-  if (!cleanText) {
-    setAiOrderError("Paste the client message or order details first.");
+  if (!cleanText && !aiOrderImage) {
+    setAiOrderError("Paste a client message or add a WhatsApp screenshot first.");
     return;
   }
 
@@ -573,6 +631,7 @@ const parseOrderWithAi = async () => {
   },
       body: JSON.stringify({
         text: cleanText,
+        imageDataUrl: aiOrderImage,
       }),
     });
 
@@ -632,6 +691,8 @@ const parseOrderWithAi = async () => {
 
     setAiMissingFields(parsed.missingFields || []);
     setAiWarnings(parsed.warnings || []);
+    setAiOrderImage("");
+    setAiOrderImageName("");
   } catch (error) {
     console.error("AI ORDER PARSE ERROR:", error);
 
@@ -760,6 +821,8 @@ const parseOrderWithAi = async () => {
         },
       ]);
       setManualIncludeIva(true);
+      setAiOrderImage("");
+      setAiOrderImageName("");
 
       setShowManualForm(false);
       await loadOrders();
@@ -1803,8 +1866,8 @@ const parseOrderWithAi = async () => {
         )}
 
         {showManualForm && (
-          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 p-4">
-            <div className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl">
+          <div className="fixed inset-0 z-[80] flex items-start justify-center overflow-y-auto bg-black/50 p-3 pt-[max(1rem,env(safe-area-inset-top))] sm:items-center sm:p-4">
+            <div className="max-h-[calc(100dvh-2rem)] w-full max-w-5xl overflow-y-auto rounded-3xl bg-white p-4 shadow-2xl sm:p-6">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
@@ -1816,7 +1879,11 @@ const parseOrderWithAi = async () => {
                 </div>
 
                 <button
-                  onClick={() => setShowManualForm(false)}
+                  onClick={() => {
+                    setShowManualForm(false);
+                    setAiOrderImage("");
+                    setAiOrderImageName("");
+                  }}
                   disabled={isCreatingManual}
                   className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
                 >
@@ -1837,12 +1904,49 @@ const parseOrderWithAi = async () => {
         placeholder="Paste the full WhatsApp conversation or order details here..."
         className="min-h-[150px] w-full resize-y rounded-2xl border border-gray-300 bg-white px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
       />
+
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <label className="cursor-pointer rounded-xl border border-yellow-400 bg-white px-4 py-2.5 text-sm font-extrabold text-black shadow-sm transition hover:bg-yellow-50">
+          📷 Add screenshot
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={(event) => {
+              void handleAiScreenshot(event.target.files?.[0]);
+              event.target.value = "";
+            }}
+            className="sr-only"
+          />
+        </label>
+
+        {aiOrderImage && (
+          <div className="flex min-w-0 flex-1 items-center justify-between gap-2 rounded-xl bg-green-50 px-3 py-2 text-xs font-bold text-green-800">
+            <span className="truncate">✓ {aiOrderImageName}</span>
+            <button
+              type="button"
+              onClick={() => {
+                setAiOrderImage("");
+                setAiOrderImageName("");
+              }}
+              className="shrink-0 rounded-lg px-2 py-1 hover:bg-green-100"
+              aria-label="Remove screenshot"
+            >
+              Remove
+            </button>
+          </div>
+        )}
+      </div>
+
+      <p className="mt-2 text-[11px] leading-4 text-gray-500">
+        The selected image is sent securely to OpenAI for one-time recognition
+        and is not saved with the order.
+      </p>
     </div>
 
     <button
       type="button"
       onClick={parseOrderWithAi}
-      disabled={isParsingAiOrder || !aiOrderText.trim()}
+      disabled={isParsingAiOrder || (!aiOrderText.trim() && !aiOrderImage)}
       className="rounded-2xl bg-black px-5 py-3 text-sm font-extrabold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 lg:mt-7"
     >
       {isParsingAiOrder ? "Analysing..." : "Fill form with AI"}
