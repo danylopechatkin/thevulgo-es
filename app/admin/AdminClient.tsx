@@ -374,27 +374,37 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
     }
   }, [selected]);
 
-  const metrics = useMemo(() => {
-    const totalOrders = orders.length;
+  const metricOrders = useMemo(
+    () =>
+      orders.filter((order) =>
+        order.preferred_date?.startsWith(calendarMonth)
+      ),
+    [orders, calendarMonth]
+  );
 
-    const grossRevenue = orders.reduce(
+  const metrics = useMemo(() => {
+    const totalOrders = metricOrders.length;
+
+    const grossRevenue = metricOrders.reduce(
       (sum, o) => sum + Number(o.total || 0),
       0
     );
 
-    const ivaReserve = orders.reduce(
+    const ivaReserve = metricOrders.reduce(
       (sum, o) => sum + Number(o.iva || 0),
       0
     );
 
-    const netRevenue = orders.reduce(
+    const netRevenue = metricOrders.reduce(
       (sum, o) => sum + Number(o.subtotal || 0),
       0
     );
 
-    const newCount = orders.filter((o) => o.status === "new").length;
-    const progress = orders.filter((o) => o.status === "in_progress").length;
-    const done = orders.filter((o) => o.status === "done").length;
+    const newCount = metricOrders.filter((o) => o.status === "new").length;
+    const progress = metricOrders.filter(
+      (o) => o.status === "in_progress"
+    ).length;
+    const done = metricOrders.filter((o) => o.status === "done").length;
 
     return {
       totalOrders,
@@ -405,7 +415,7 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
       progress,
       done,
     };
-  }, [orders]);
+  }, [metricOrders]);
 
   const ordersByDate = useMemo(() => {
   const grouped = new Map<string, Order[]>();
@@ -940,38 +950,97 @@ const parseOrderWithAi = async () => {
           </button>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setShowMobileMetrics((current) => !current)}
-          aria-expanded={showMobileMetrics}
-          className="w-full rounded-3xl border border-yellow-400 bg-[#fffdf6] p-5 text-left shadow-md transition active:scale-[0.99] sm:hidden"
-        >
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
+        <div className="w-full rounded-3xl border border-yellow-400 bg-[#fffdf6] p-5 text-left shadow-md sm:hidden">
+          <div className="flex items-center justify-between gap-2 border-b border-yellow-200 pb-4">
+            <button
+              type="button"
+              onClick={() => changeCalendarMonth(-1)}
+              aria-label="Previous month"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-yellow-400 bg-white text-xl font-extrabold text-black shadow-sm active:scale-95"
+            >
+              ‹
+            </button>
+
+            <button
+              type="button"
+              onClick={goToCurrentMonth}
+              className="min-w-0 flex-1 text-center"
+            >
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-gray-500">
                 Overview
               </p>
-              <p className="mt-2 text-3xl font-extrabold tracking-tight text-black">
-                €{metrics.netRevenue.toFixed(2)}
+              <p className="mt-1 truncate text-base font-extrabold capitalize text-black">
+                {calendarMonthTitle}
               </p>
-              <p className="mt-1 text-xs text-gray-500">Net revenue</p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => changeCalendarMonth(1)}
+              aria-label="Next month"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-yellow-400 bg-white text-xl font-extrabold text-black shadow-sm active:scale-95"
+            >
+              ›
+            </button>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setShowMobileMetrics((current) => !current)}
+            aria-expanded={showMobileMetrics}
+            className="mt-4 w-full text-left transition active:scale-[0.99]"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-3xl font-extrabold tracking-tight text-black">
+                  €{metrics.netRevenue.toFixed(2)}
+                </p>
+                <p className="mt-1 text-xs text-gray-500">Net revenue this month</p>
+              </div>
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-400 text-xl font-extrabold text-black">
+                {showMobileMetrics ? "−" : "+"}
+              </span>
             </div>
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-400 text-xl font-extrabold text-black">
-              {showMobileMetrics ? "−" : "+"}
+
+            <div className="mt-5 grid grid-cols-4 gap-2 border-t border-yellow-200 pt-4 text-center">
+              <MobileOverviewValue label="Orders" value={metrics.totalOrders} />
+              <MobileOverviewValue label="New" value={metrics.newCount} />
+              <MobileOverviewValue label="Active" value={metrics.progress} />
+              <MobileOverviewValue label="Done" value={metrics.done} />
+            </div>
+
+            <p className="mt-4 text-center text-xs font-bold text-gray-500">
+              {showMobileMetrics
+                ? "Hide all statistics"
+                : "Tap to show all statistics"}
+            </p>
+          </button>
+        </div>
+
+        <div className="hidden items-center justify-between rounded-2xl border border-gray-200 bg-white p-3 shadow-sm sm:flex">
+          <button
+            type="button"
+            onClick={() => changeCalendarMonth(-1)}
+            className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-bold hover:border-yellow-400 hover:bg-yellow-50"
+          >
+            ← Previous
+          </button>
+          <button type="button" onClick={goToCurrentMonth} className="text-center">
+            <span className="block text-[10px] font-bold uppercase tracking-widest text-gray-500">
+              Overview
             </span>
-          </div>
-
-          <div className="mt-5 grid grid-cols-4 gap-2 border-t border-yellow-200 pt-4 text-center">
-            <MobileOverviewValue label="Orders" value={metrics.totalOrders} />
-            <MobileOverviewValue label="New" value={metrics.newCount} />
-            <MobileOverviewValue label="Active" value={metrics.progress} />
-            <MobileOverviewValue label="Done" value={metrics.done} />
-          </div>
-
-          <p className="mt-4 text-center text-xs font-bold text-gray-500">
-            {showMobileMetrics ? "Hide all statistics" : "Tap to show all statistics"}
-          </p>
-        </button>
+            <span className="mt-1 block text-lg font-extrabold capitalize text-black">
+              {calendarMonthTitle}
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={() => changeCalendarMonth(1)}
+            className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-bold hover:border-yellow-400 hover:bg-yellow-50"
+          >
+            Next →
+          </button>
+        </div>
 
         <div
           className={`${showMobileMetrics ? "grid" : "hidden"} grid-cols-2 gap-3 sm:grid sm:grid-cols-2 sm:gap-4 xl:grid-cols-7`}
@@ -979,25 +1048,25 @@ const parseOrderWithAi = async () => {
           <MetricCard
             title="Gross booked"
             value={`€${metrics.grossRevenue.toFixed(2)}`}
-            subtitle="Total including IVA"
+            subtitle="This month including IVA"
           />
 
           <MetricCard
             title="IVA reserve"
             value={`€${metrics.ivaReserve.toFixed(2)}`}
-            subtitle="Set aside for tax"
+            subtitle="This month tax reserve"
           />
 
           <MetricCard
             title="Net revenue"
             value={`€${metrics.netRevenue.toFixed(2)}`}
-            subtitle="Before other expenses"
+            subtitle="This month before expenses"
           />
 
           <MetricCard
             title="Orders"
             value={metrics.totalOrders}
-            subtitle="All orders"
+            subtitle="Orders this month"
           />
 
           <StatusCard title="New" value={metrics.newCount} />
