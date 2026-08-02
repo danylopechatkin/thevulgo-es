@@ -52,15 +52,23 @@ export async function POST(request: Request) {
 
   const body = (await request.json()) as {
     origin?: string;
+    useStartAddress?: boolean;
     destination?: string;
     arrivalTime?: string;
   };
-  const origin = body.origin?.trim();
+  const origin = body.useStartAddress
+    ? process.env.ADMIN_START_ADDRESS?.trim()
+    : body.origin?.trim();
   const destination = body.destination?.trim();
 
   if (!origin || !destination) {
     return NextResponse.json(
-      { error: "Both client addresses are required." },
+      {
+        error:
+          body.useStartAddress && !origin
+            ? "The start address is not configured yet."
+            : "Both client addresses are required.",
+      },
       { status: 400 }
     );
   }

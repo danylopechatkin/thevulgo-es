@@ -1208,38 +1208,45 @@ const parseOrderWithAi = async () => {
 
                 <div className="mt-5 space-y-3">
                   {selectedDayOrders.length > 0 ? (
-                    selectedDayOrders.map((order, orderIndex) => (
-                      <div key={order.id}>
-                      <button
-                        type="button"
-                        onClick={() => setSelected(order)}
-                        className="w-full rounded-2xl border border-yellow-400 bg-[#fffdf6] p-4 text-left shadow-sm transition active:scale-[0.99]"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="min-w-0">
-                            <p className="truncate text-base font-extrabold text-black">
-                              {order.preferred_time?.slice(0, 5) || "—"} {order.full_name}
-                            </p>
-                            <p className="mt-1 truncate text-sm text-gray-500">
-                              {order.area || order.city || "—"}
-                            </p>
+                    <>
+                      <TransitTimeBetweenOrders
+                        toOrder={selectedDayOrders[0]}
+                        useStartAddress
+                      />
+                      {selectedDayOrders.map((order, orderIndex) => (
+                        <div key={order.id}>
+                          <button
+                            type="button"
+                            onClick={() => setSelected(order)}
+                            className="w-full rounded-2xl border border-yellow-400 bg-[#fffdf6] p-4 text-left shadow-sm transition active:scale-[0.99]"
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="min-w-0">
+                                <p className="truncate text-base font-extrabold text-black">
+                                  {order.preferred_time?.slice(0, 5) || "—"}{" "}
+                                  {order.full_name}
+                                </p>
+                                <p className="mt-1 truncate text-sm text-gray-500">
+                                  {order.area || order.city || "—"}
+                                </p>
+                              </div>
+                              <span className="shrink-0 text-base font-extrabold text-black">
+                                €{Number(order.total || 0).toFixed(2)}
+                              </span>
+                            </div>
+                            <span className="mt-3 inline-flex rounded-full bg-white px-2.5 py-1 text-[10px] font-bold uppercase text-gray-500">
+                              {formatStatusLabel(order.status)}
+                            </span>
+                          </button>
+                          {orderIndex < selectedDayOrders.length - 1 && (
+                            <TransitTimeBetweenOrders
+                              fromOrder={order}
+                              toOrder={selectedDayOrders[orderIndex + 1]}
+                            />
+                          )}
                           </div>
-                          <span className="shrink-0 text-base font-extrabold text-black">
-                            €{Number(order.total || 0).toFixed(2)}
-                          </span>
-                        </div>
-                        <span className="mt-3 inline-flex rounded-full bg-white px-2.5 py-1 text-[10px] font-bold uppercase text-gray-500">
-                          {formatStatusLabel(order.status)}
-                        </span>
-                      </button>
-                      {orderIndex < selectedDayOrders.length - 1 && (
-                        <TransitTimeBetweenOrders
-                          fromOrder={order}
-                          toOrder={selectedDayOrders[orderIndex + 1]}
-                        />
-                      )}
-                      </div>
-                    ))
+                      ))}
+                    </>
                   ) : (
                     <div className="rounded-2xl border border-dashed border-gray-300 bg-[#fffdf7] px-4 py-10 text-center">
                       <p className="text-lg font-extrabold text-black">Free day</p>
@@ -1345,13 +1352,19 @@ const parseOrderWithAi = async () => {
                   <p className="text-xs text-gray-400">Free</p>
                 )
               ) : (
-                day.orders.map((order, orderIndex) => (
-                  <div key={order.id}>
-                  <button
-                    type="button"
-                    onClick={() => setSelected(order)}
-                    className="w-full rounded-xl border border-yellow-400 bg-white p-2.5 text-left shadow-sm transition hover:bg-yellow-50 hover:shadow-md"
-                  >
+                <>
+                  <TransitTimeBetweenOrders
+                    toOrder={day.orders[0]}
+                    useStartAddress
+                    compact
+                  />
+                  {day.orders.map((order, orderIndex) => (
+                    <div key={order.id}>
+                      <button
+                        type="button"
+                        onClick={() => setSelected(order)}
+                        className="w-full rounded-xl border border-yellow-400 bg-white p-2.5 text-left shadow-sm transition hover:bg-yellow-50 hover:shadow-md"
+                      >
                     <p className="truncate text-xs font-extrabold text-black">
                       {order.preferred_time?.slice(0, 5) || "—"}{" "}
                       {order.full_name}
@@ -1370,16 +1383,17 @@ const parseOrderWithAi = async () => {
                         €{Number(order.total || 0).toFixed(2)}
                       </span>
                     </div>
-                  </button>
-                  {orderIndex < day.orders.length - 1 && (
-                    <TransitTimeBetweenOrders
-                      fromOrder={order}
-                      toOrder={day.orders[orderIndex + 1]}
-                      compact
-                    />
-                  )}
-                  </div>
-                ))
+                      </button>
+                      {orderIndex < day.orders.length - 1 && (
+                        <TransitTimeBetweenOrders
+                          fromOrder={order}
+                          toOrder={day.orders[orderIndex + 1]}
+                          compact
+                        />
+                      )}
+                    </div>
+                  ))}
+                </>
               )}
             </div>
           </div>
@@ -2633,10 +2647,12 @@ function TransitTimeBetweenOrders({
   fromOrder,
   toOrder,
   compact = false,
+  useStartAddress = false,
 }: {
-  fromOrder: Order;
+  fromOrder?: Order;
   toOrder: Order;
   compact?: boolean;
+  useStartAddress?: boolean;
 }) {
   const [state, setState] = useState<
     | { status: "idle" }
@@ -2646,10 +2662,10 @@ function TransitTimeBetweenOrders({
   >({ status: "idle" });
 
   const calculateTransitTime = async () => {
-    const origin = getOrderRouteAddress(fromOrder);
+    const origin = fromOrder ? getOrderRouteAddress(fromOrder) : "";
     const destination = getOrderRouteAddress(toOrder);
 
-    if (!origin || !destination) {
+    if ((!useStartAddress && !origin) || !destination) {
       setState({ status: "error", message: "Address missing" });
       return;
     }
@@ -2661,6 +2677,7 @@ function TransitTimeBetweenOrders({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           origin,
+          useStartAddress,
           destination,
           arrivalTime: toOrder.scheduled_at,
         }),
@@ -2718,7 +2735,9 @@ function TransitTimeBetweenOrders({
             ? "🚌 Calculating transit…"
             : state.status === "error"
               ? `🚌 ${state.message} — try again`
-              : `🚌 Check transit to ${toOrder.full_name}`}
+              : useStartAddress
+                ? `🏠 Check transit from home to ${toOrder.full_name}`
+                : `🚌 Check transit to ${toOrder.full_name}`}
         </button>
       )}
     </div>
