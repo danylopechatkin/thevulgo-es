@@ -3,11 +3,13 @@
 import { formatMadridDateTime } from "@/lib/time";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { findCatalogService, getCatalogServices } from "@/lib/serviceCatalog";
 import { LogOut } from "lucide-react";
 
 type OrderStatus = "new" | "in_progress" | "done";
 
 type ServiceItem = {
+  id?: string;
   label?: string;
   qty?: number;
   price?: number;
@@ -15,6 +17,7 @@ type ServiceItem = {
 };
 
 type ManualService = {
+  id: string;
   label: string;
   price: number;
   qty: number;
@@ -124,6 +127,24 @@ const MANUAL_CATEGORIES = [
   "Move-In Setup",
   "Exterior",
 ];
+
+function createServiceForCategory(category: string): ManualService {
+  const firstService = getCatalogServices(category)[0];
+
+  return firstService
+    ? {
+        id: firstService.id,
+        label: firstService.label,
+        price: firstService.price,
+        qty: 1,
+      }
+    : {
+        id: "manual",
+        label: "Servicio manual",
+        price: 0,
+        qty: 1,
+      };
+}
 const MADRID_TIME_ZONE = "Europe/Madrid";
 
 function getMadridDateKey(date: Date) {
@@ -249,12 +270,13 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
   });
 
   const [manualServices, setManualServices] = useState<ManualService[]>([
-    {
-      label: "Servicio manual",
-      price: 49,
-      qty: 1,
-    },
+    createServiceForCategory("Furniture Assembly"),
   ]);
+
+  const manualCatalogServices = useMemo(
+    () => getCatalogServices(manualOrder.category),
+    [manualOrder.category]
+  );
 
   const manualSubtotal = useMemo(() => {
     return manualServices.reduce(
@@ -673,17 +695,26 @@ const parseOrderWithAi = async () => {
       notes: parsed.notes || "",
     });
 
-    const parsedServices: ManualService[] = parsed.services.map((service) => ({
-      label: service.label || "Servicio manual",
-      price: service.price ?? 0,
-      qty: service.qty || 1,
-    }));
+    const parsedServices: ManualService[] = parsed.services.map((service) => {
+      const catalogService = findCatalogService(
+        parsed.category,
+        service.label || ""
+      );
+
+      return {
+        id: catalogService?.id || "manual",
+        label: catalogService?.label || service.label || "Servicio manual",
+        price: service.price ?? catalogService?.price ?? 0,
+        qty: service.qty || 1,
+      };
+    });
 
     setManualServices(
       parsedServices.length > 0
         ? parsedServices
         : [
             {
+              id: "manual",
               label: "Servicio manual",
               price: 0,
               qty: 1,
@@ -737,7 +768,10 @@ const parseOrderWithAi = async () => {
     const cleanServices = manualServices
       .filter((s) => s.label.trim() && Number(s.price) > 0 && Number(s.qty) > 0)
       .map((s) => ({
-        id: s.label.toLowerCase().replace(/\s+/g, "-"),
+        id:
+          s.id === "manual"
+            ? `manual-${s.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`
+            : s.id,
         label: s.label.trim(),
         price: Number(s.price),
         qty: Number(s.qty),
@@ -815,13 +849,7 @@ const parseOrderWithAi = async () => {
         notes: "",
       });
 
-      setManualServices([
-        {
-          label: "Servicio manual",
-          price: 49,
-          qty: 1,
-        },
-      ]);
+      setManualServices([createServiceForCategory("Furniture Assembly")]);
       setManualIncludeIva(true);
       setAiOrderImage("");
       setAiOrderImageName("");
@@ -2030,12 +2058,14 @@ const parseOrderWithAi = async () => {
                   </label>
                   <select
                     value={manualOrder.category}
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      const category = e.target.value;
                       setManualOrder({
                         ...manualOrder,
-                        category: e.target.value,
-                      })
-                    }
+                        category,
+                      });
+                      setManualServices([createServiceForCategory(category)]);
+                    }}
                     className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
                   >
                     {MANUAL_CATEGORIES.map((cat) => (
@@ -2152,7 +2182,7 @@ const parseOrderWithAi = async () => {
                     onClick={() =>
                       setManualServices([
                         ...manualServices,
-                        { label: "", price: 0, qty: 1 },
+                        createServiceForCategory(manualOrder.category),
                       ])
                     }
                     className="rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-extrabold text-black shadow-sm transition hover:scale-[1.02]"
@@ -2167,16 +2197,53 @@ const parseOrderWithAi = async () => {
                       key={index}
                       className="grid grid-cols-1 gap-3 rounded-2xl border border-gray-200 bg-white p-3 md:grid-cols-[1fr_120px_100px_100px]"
                     >
-                      <input
-                        value={service.label}
-                        onChange={(e) => {
-                          const next = [...manualServices];
-                          next[index].label = e.target.value;
-                          setManualServices(next);
-                        }}
-                        placeholder="Service name"
-                        className="rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none focus:border-yellow-400"
-                      />
+                      <div className="space-y-2">
+                        <select
+                          value={service.id}
+                          onChange={(e) => {
+                            const next = [...manualServices];
+                            const selected = manualCatalogServices.find(
+                              (item) => item.id === e.target.value
+                            );
+                            next[index] = selected
+                              ? {
+                                  id: selected.id,
+                                  label: selected.label,
+                                  price: selected.price,
+                                  qty: next[index].qty || 1,
+                                }
+                              : {
+                                  ...next[index],
+                                  id: "manual",
+                                  label: "Servicio manual",
+                                };
+                            setManualServices(next);
+                          }}
+                          className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none focus:border-yellow-400"
+                        >
+                          {manualCatalogServices.map((item) => (
+                            <option key={item.id} value={item.id}>
+                              {item.label} · €{item.price}
+                            </option>
+                          ))}
+                          <option value="manual">
+                            Custom service / manual price
+                          </option>
+                        </select>
+
+                        {service.id === "manual" && (
+                          <input
+                            value={service.label}
+                            onChange={(e) => {
+                              const next = [...manualServices];
+                              next[index].label = e.target.value;
+                              setManualServices(next);
+                            }}
+                            placeholder="Service name"
+                            className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none focus:border-yellow-400"
+                          />
+                        )}
+                      </div>
 
                       <input
                         type="number"
