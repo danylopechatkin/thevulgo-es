@@ -68,9 +68,9 @@ export default async function LocaleLayout({
   const t = await getTranslations("nav");
 
   return (
-    <html lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden bg-white font-sans text-black antialiased`}
+      <div
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen overflow-x-hidden bg-white font-sans text-black antialiased`}
+        data-locale={locale}
       >
         <Script
   async
@@ -170,7 +170,6 @@ export default async function LocaleLayout({
           <Analytics />
           <SpeedInsights />
         </NextIntlClientProvider>
-      </body>
-    </html>
+      </div>
   );
 }
