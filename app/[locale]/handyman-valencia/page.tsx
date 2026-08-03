@@ -244,11 +244,11 @@ export default async function HandymanValenciaPage({ params }: Props) {
           </div>
           <div className="mt-9 grid gap-5 lg:grid-cols-3">
             {reviews.map((review) => (
-              <article key={review.name} className={`rounded-2xl border p-6 ${review.placeholder ? "border-dashed border-yellow-500/60 bg-yellow-400/10" : "border-neutral-700 bg-neutral-900"}`}>
+              <article key={review.name} className="rounded-2xl border border-neutral-700 bg-neutral-900 p-6">
                 <div className="flex gap-1 text-yellow-400">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}</div>
                 <blockquote className="mt-5 leading-7 text-neutral-100">“{review.text}”</blockquote>
                 <p className="mt-5 font-black">{review.name}</p>
-                <p className={`mt-1 text-xs leading-5 ${review.placeholder ? "font-bold text-yellow-300" : "text-neutral-400"}`}>{review.note}</p>
+                <p className="mt-1 text-xs leading-5 text-neutral-400">{review.note}</p>
               </article>
             ))}
           </div>
