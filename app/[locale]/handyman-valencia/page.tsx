@@ -90,10 +90,9 @@ export default async function HandymanValenciaPage({ params }: Props) {
           note: "Reseña real de Google · traducción mostrada por Google",
         },
         {
-          name: "Reseña de ejemplo",
-          text: "Necesitaba montar una TV y ajustar una puerta. La comunicación fue rápida, el presupuesto claro y el trabajo quedó limpio.",
-          note: "EJEMPLO — sustituir por una reseña real antes de publicar",
-          placeholder: true,
+          name: "Catherine Salisbury",
+          text: "Como gestora de más de 45 propiedades, dependo de profesionales de confianza, y Dany ha demostrado ser exactamente eso. Le he encargado muchos trabajos durante el último año: siempre es puntual, fiable, comunicativo y minucioso. Trabaja de forma limpia y profesional, con precios justos. Muy recomendable.",
+          note: "Reseña real de Google · traducción del original",
         },
       ]
     : [
@@ -108,10 +107,9 @@ export default async function HandymanValenciaPage({ params }: Props) {
           note: "Real Google review",
         },
         {
-          name: "Sample review",
-          text: "I needed a TV mounted and a door adjusted. Communication was fast, the quote was clear and the work was left clean.",
-          note: "SAMPLE — replace with a real review before publishing",
-          placeholder: true,
+          name: "Catherine Salisbury",
+          text: "As a property and rental manager overseeing more than 45 properties, I rely heavily on trustworthy professionals—and Dany has proven to be exactly that. I’ve called on Dany many times over the past year for a wide range of tasks. He is always punctual, reliable, communicative, and thorough. His workmanship is clean and professional, his pricing is fair, and he is a great person to work with. Highly recommended.",
+          note: "Real Google review",
         },
       ];
 
