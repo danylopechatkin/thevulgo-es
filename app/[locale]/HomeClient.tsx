@@ -81,7 +81,7 @@ export default function HomePage() {
       {/* HERO */}
       <section
         id="top"
-        className="relative min-h-[88vh] overflow-hidden bg-white px-4 pt-24 text-center flex flex-col items-center justify-center"
+        className="relative flex min-h-0 flex-col items-center justify-center overflow-hidden bg-white px-4 pb-10 pt-10 text-center sm:min-h-[88vh] sm:pb-0 sm:pt-24"
       >
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-white" />
