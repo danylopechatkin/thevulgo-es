@@ -134,8 +134,8 @@ export async function POST(req: Request) {
     }
 
     const subtotal = Number(data.subtotal || 0);
-    const iva = Number(data.iva || 0);
-    const total = Number(data.total || 0);
+    const iva = 0;
+    const total = subtotal;
 
     console.log("💾 SAVING TO DB:", {
       scheduled_at: data.scheduledAt,
@@ -237,8 +237,8 @@ export async function POST(req: Request) {
         : "Once they book, you also get 10% off your next job.",
 
       footer: isEs
-        ? "El total final incluye IVA (21%).<br/>Precio claro. Sin sorpresas.<br/>Valencia y alrededores · Respuesta rápida"
-        : "Final total includes IVA (21%).<br/>Clear pricing. No surprises.<br/>Valencia & nearby · Fast response",
+        ? "Precio claro. Sin sorpresas.<br/>Valencia y alrededores · Respuesta rápida"
+        : "Clear pricing. No surprises.<br/>Valencia & nearby · Fast response",
     };
 
     const servicesHtml = (Array.isArray(data.services) ? data.services : [])
@@ -277,8 +277,6 @@ export async function POST(req: Request) {
         <p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>
         <p><b>Scheduled UTC:</b> ${data.scheduledAt || "—"}</p>
         <p><b>Notes:</b> ${data.notes || "—"}</p>
-        <p><b>Subtotal:</b> €${subtotal.toFixed(2)}</p>
-        <p><b>IVA (21%):</b> €${iva.toFixed(2)}</p>
         <p><b>Total:</b> €${total.toFixed(2)}</p>
         <h3>Selected services</h3>
         <ul>
@@ -347,24 +345,6 @@ ${data.category || "—"}
 </tr>
 
 ${servicesHtml}
-
-<tr>
-<td style="padding:15px;font-size:13px;color:#555;">
-${labels.subtotal}
-</td>
-<td style="padding:15px;text-align:right;font-size:13px;">
-€${subtotal.toFixed(2)}
-</td>
-</tr>
-
-<tr>
-<td style="padding:15px;font-size:13px;color:#555;">
-IVA (21%)
-</td>
-<td style="padding:15px;text-align:right;font-size:13px;">
-€${iva.toFixed(2)}
-</td>
-</tr>
 
 <tr>
 <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">

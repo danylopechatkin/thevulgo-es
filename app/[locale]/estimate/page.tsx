@@ -369,8 +369,7 @@ function EstimatePageContent() {
   const estimatedTotal = useMemo(() => selectedServices.reduce((sum, item) => sum + item.subtotal, 0), [selectedServices]);
 
   const subtotal = Number(estimatedTotal.toFixed(2));
-  const iva = Number((subtotal * 0.21).toFixed(2));
-  const totalWithTax = Number((subtotal + iva).toFixed(2));
+  const total = subtotal;
 
   const setQty = (id: string, value: number) => {
     setQuantities((prev) => {
@@ -652,8 +651,8 @@ function EstimatePageContent() {
           badge: service.displayBadge,
         })),
         subtotal,
-        iva,
-        total: totalWithTax,
+        iva: 0,
+        total,
         locale,
         scheduledAt:
           client.preferredDate && client.preferredTime
@@ -1268,7 +1267,7 @@ function EstimatePageContent() {
                 )}
 
                 {submitStage === "build" && (
-                  <TotalBox subtotal={subtotal} iva={iva} totalWithTax={totalWithTax} t={t} />
+                  <TotalBox total={total} t={t} />
                 )}
 
                 {submitStage === "build" && (
@@ -1345,30 +1344,17 @@ function EstimatePageContent() {
                         </div>
 
                         <div className="mt-4 space-y-2 border-t border-gray-300 pt-4">
-                          <div className="flex items-center justify-between text-sm text-gray-600">
-                            <span>{t("summary.subtotal")}</span>
-                            <span>€{subtotal.toFixed(2)}</span>
-                          </div>
-
-                          <div className="flex items-center justify-between text-sm text-gray-600">
-                            <span>{t("summary.iva")}</span>
-                            <span>€{iva.toFixed(2)}</span>
-                          </div>
-
                           <div className="flex items-center justify-between">
                             <span className="text-sm font-bold uppercase tracking-wide text-gray-500">
                               {t("summary.total")}
                             </span>
 
                             <span className="text-xl font-extrabold text-black">
-                              €{totalWithTax.toFixed(2)}
+                              €{total.toFixed(2)}
                             </span>
                           </div>
                         </div>
 
-                        <p className="mt-2 text-xs text-gray-500">
-                          {isEs ? "El total final incluye IVA." : "Final total includes IVA."}
-                        </p>
                       </ReviewCard>
 
                       <ReviewCard title={t("review.address")}>
@@ -1509,34 +1495,18 @@ export default function EstimatePage() {
 }
 
 function TotalBox({
-  subtotal,
-  iva,
-  totalWithTax,
+  total,
   t,
 }: {
-  subtotal: number;
-  iva: number;
-  totalWithTax: number;
+  total: number;
   t: (key: string) => string;
 }) {
   return (
     <div className="mt-6 shrink-0 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
-      <div className="flex justify-between text-sm text-gray-600">
-        <span>{t("summary.subtotal")}</span>
-        <span>€{subtotal.toFixed(2)}</span>
-      </div>
-
-      <div className="flex justify-between text-sm text-gray-600">
-        <span>{t("summary.iva")}</span>
-        <span>€{iva.toFixed(2)}</span>
-      </div>
-
-      <div className="flex justify-between text-lg font-extrabold text-black border-t border-yellow-400 pt-2">
+      <div className="flex justify-between text-lg font-extrabold text-black">
         <span>{t("summary.total")}</span>
-        <span>€{totalWithTax.toFixed(2)}</span>
+        <span>€{total.toFixed(2)}</span>
       </div>
-
-      <p className="text-xs text-gray-500">{t("summary.pricesNote")}</p>
     </div>
   );
 }

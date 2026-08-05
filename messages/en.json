@@ -461,10 +461,7 @@
     "description": "Add services on the left and your estimate will update instantly here.",
     "selectedCategory": "Selected category",
     "empty": "No services added yet. Start by choosing one or more items from the estimate builder.",
-    "subtotal": "Subtotal",
-    "iva": "IVA (21%)",
     "total": "Total",
-    "pricesNote": "Service prices exclude IVA. The final total already includes IVA (21%).",
     "next": "Next step: review request"
   },
   "form": {

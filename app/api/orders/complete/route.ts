@@ -196,20 +196,6 @@ export async function POST(req: Request) {
               ${servicesHtml}
 
               <tr>
-                <td style="padding:15px;font-size:13px;color:#555;">${labels.net}</td>
-                <td style="padding:15px;text-align:right;font-size:13px;">
-                  €${Number(order.subtotal || 0).toFixed(2)}
-                </td>
-              </tr>
-
-              <tr>
-                <td style="padding:15px;font-size:13px;color:#555;">IVA (21%)</td>
-                <td style="padding:15px;text-align:right;font-size:13px;">
-                  €${Number(order.iva || 0).toFixed(2)}
-                </td>
-              </tr>
-
-              <tr>
                 <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">${labels.total}</td>
                 <td style="padding:15px;border-top:1px solid #ddd;text-align:right;font-weight:800;">
                   €${Number(order.total || 0).toFixed(2)}

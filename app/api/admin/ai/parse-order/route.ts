@@ -438,15 +438,11 @@ STRICT RULES:
 
 18. The stated price is the service price entered by the administrator.
 
-19. Do not add IVA.
+19. Do not change a stated price.
 
-20. Do not calculate IVA.
+20. If no price is stated, use null.
 
-21. Do not change a stated price.
-
-22. If no price is stated, use null.
-
-23. "2 ventiladores por 85 euros" means:
+21. "2 ventiladores por 85 euros" means:
     one service line,
     label describing installation of 2 fans,
     price 85,

@@ -460,10 +460,7 @@
     "description": "Añade servicios a la izquierda y el presupuesto se actualizará aquí al instante.",
     "selectedCategory": "Categoría seleccionada",
     "empty": "Todavía no has añadido servicios. Empieza eligiendo uno o varios servicios.",
-    "subtotal": "Subtotal",
-    "iva": "IVA (21%)",
     "total": "Total",
-    "pricesNote": "Los precios de los servicios no incluyen IVA. El total final ya incluye IVA (21%).",
     "next": "Siguiente paso: revisar solicitud"
   },
   "form": {
@@ -540,4 +537,4 @@
     "sendError": "La solicitud no se ha enviado. Inténtalo de nuevo."
   }
 }
-} 
+}

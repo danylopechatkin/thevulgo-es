@@ -244,7 +244,6 @@ export default function AdminClient() {
 
   const [showManualForm, setShowManualForm] = useState(false);
   const [isCreatingManual, setIsCreatingManual] = useState(false);
-  const [manualIncludeIva, setManualIncludeIva] = useState(true);
   const [isSavingPricing, setIsSavingPricing] = useState(false);
   const [showClientSuggestions, setShowClientSuggestions] = useState(false);
   const [showClients, setShowClients] = useState(false);
@@ -300,10 +299,7 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
     );
   }, [manualServices]);
 
-  const manualIva = manualIncludeIva
-    ? Number((manualSubtotal * 0.21).toFixed(2))
-    : 0;
-  const manualTotal = Number((manualSubtotal + manualIva).toFixed(2));
+  const manualTotal = Number(manualSubtotal.toFixed(2));
 
   const clientProfiles = useMemo(() => {
     const profiles = new Map<string, ClientProfile>();
@@ -527,16 +523,6 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
       0
     );
 
-    const ivaReserve = metricOrders.reduce(
-      (sum, o) => sum + Number(o.iva || 0),
-      0
-    );
-
-    const netRevenue = metricOrders.reduce(
-      (sum, o) => sum + Number(o.subtotal || 0),
-      0
-    );
-
     const newCount = metricOrders.filter((o) => o.status === "new").length;
     const progress = metricOrders.filter(
       (o) => o.status === "in_progress"
@@ -546,8 +532,6 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
     return {
       totalOrders,
       grossRevenue,
-      ivaReserve,
-      netRevenue,
       newCount,
       progress,
       done,
@@ -929,10 +913,8 @@ const parseOrderWithAi = async () => {
       cleanServices.reduce((sum, item) => sum + item.subtotal, 0).toFixed(2)
     );
 
-    const iva = manualIncludeIva
-      ? Number((subtotal * 0.21).toFixed(2))
-      : 0;
-    const total = Number((subtotal + iva).toFixed(2));
+    const iva = 0;
+    const total = subtotal;
 
     const scheduledAt = new Date(
       `${manualOrder.preferredDate}T${manualOrder.preferredTime}:00+02:00`
@@ -1006,7 +988,6 @@ const parseOrderWithAi = async () => {
       });
 
       setManualServices([createServiceForCategory("Furniture Assembly")]);
-      setManualIncludeIva(true);
       setAiOrderImages([]);
       setAiChatFileName("");
 
@@ -1095,8 +1076,7 @@ const parseOrderWithAi = async () => {
 
   const recalculateSelectedPricing = (
     order: Order,
-    services: ServiceItem[],
-    includeIva: boolean
+    services: ServiceItem[]
   ): Order => {
     const normalizedServices = services.map((service) => {
       const price = Number(service.price || 0);
@@ -1108,14 +1088,12 @@ const parseOrderWithAi = async () => {
         .reduce((sum, service) => sum + Number(service.subtotal || 0), 0)
         .toFixed(2)
     );
-    const iva = includeIva ? Number((subtotal * 0.21).toFixed(2)) : 0;
-
     return {
       ...order,
       services: normalizedServices,
       subtotal,
-      iva,
-      total: Number((subtotal + iva).toFixed(2)),
+      iva: 0,
+      total: subtotal,
     };
   };
 
@@ -1128,20 +1106,8 @@ const parseOrderWithAi = async () => {
       if (!current) return current;
       const services = [...(current.services || [])];
       services[index] = { ...services[index], [field]: value };
-      return recalculateSelectedPricing(current, services, current.iva > 0);
+      return recalculateSelectedPricing(current, services);
     });
-  };
-
-  const setSelectedIvaEnabled = (includeIva: boolean) => {
-    setSelected((current) =>
-      current
-        ? recalculateSelectedPricing(
-            current,
-            current.services || [],
-            includeIva
-          )
-        : current
-    );
   };
 
   const saveOrderPricing = async () => {
@@ -1162,8 +1128,8 @@ const parseOrderWithAi = async () => {
         .update({
           services,
           subtotal: selected.subtotal,
-          iva: selected.iva,
-          total: selected.total,
+          iva: 0,
+          total: selected.subtotal,
         })
         .eq("id", selected.id)
         .select("*")
@@ -1400,9 +1366,9 @@ const parseOrderWithAi = async () => {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-3xl font-extrabold tracking-tight text-black">
-                  €{metrics.netRevenue.toFixed(2)}
+                  €{metrics.grossRevenue.toFixed(2)}
                 </p>
-                <p className="mt-1 text-xs text-gray-500">Net revenue this month</p>
+                <p className="mt-1 text-xs text-gray-500">Revenue this month</p>
               </div>
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-400 text-xl font-extrabold text-black">
                 {showMobileMetrics ? "−" : "+"}
@@ -1450,24 +1416,12 @@ const parseOrderWithAi = async () => {
         </div>
 
         <div
-          className={`${showMobileMetrics ? "grid" : "hidden"} grid-cols-2 gap-3 sm:grid sm:grid-cols-2 sm:gap-4 xl:grid-cols-7`}
+          className={`${showMobileMetrics ? "grid" : "hidden"} grid-cols-2 gap-3 sm:grid sm:grid-cols-2 sm:gap-4 xl:grid-cols-5`}
         >
           <MetricCard
             title="Gross booked"
             value={`€${metrics.grossRevenue.toFixed(2)}`}
-            subtitle="This month including IVA"
-          />
-
-          <MetricCard
-            title="IVA reserve"
-            value={`€${metrics.ivaReserve.toFixed(2)}`}
-            subtitle="This month tax reserve"
-          />
-
-          <MetricCard
-            title="Net revenue"
-            value={`€${metrics.netRevenue.toFixed(2)}`}
-            subtitle="This month before expenses"
+            subtitle="This month"
           />
 
           <MetricCard
@@ -2502,36 +2456,7 @@ const parseOrderWithAi = async () => {
                 </div>
 
                 <div className="mt-5 rounded-2xl border border-yellow-400 bg-white p-4">
-                  <label className="mb-4 flex cursor-pointer items-center justify-between gap-4 rounded-xl bg-yellow-50 px-3 py-3">
-                    <span>
-                      <span className="block text-sm font-extrabold text-black">
-                        Add IVA 21%
-                      </span>
-                      <span className="block text-xs text-gray-500">
-                        Turn off to create this order without IVA
-                      </span>
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={manualIncludeIva}
-                      onChange={(event) =>
-                        setManualIncludeIva(event.target.checked)
-                      }
-                      className="h-5 w-5 accent-yellow-400"
-                    />
-                  </label>
-
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>Subtotal</span>
-                    <span>€{manualSubtotal.toFixed(2)}</span>
-                  </div>
-
-                  <div className="mt-2 flex justify-between text-sm text-gray-600">
-                    <span>IVA 21%</span>
-                    <span>€{manualIva.toFixed(2)}</span>
-                  </div>
-
-                  <div className="mt-2 flex justify-between border-t border-yellow-400 pt-3 text-lg font-extrabold text-black">
+                  <div className="flex justify-between text-lg font-extrabold text-black">
                     <span>Total</span>
                     <span>€{manualTotal.toFixed(2)}</span>
                   </div>
@@ -2771,36 +2696,18 @@ const parseOrderWithAi = async () => {
         <div className="rounded-2xl border border-yellow-400 bg-yellow-50/60 p-4">
           <div className="flex items-center justify-between gap-3">
             <p className="font-semibold text-black">Pricing</p>
-            <label className="flex cursor-pointer items-center gap-2 text-xs font-bold text-black">
-              <input
-                type="checkbox"
-                checked={Number(selected.iva || 0) > 0}
-                onChange={(event) =>
-                  setSelectedIvaEnabled(event.target.checked)
-                }
-                className="h-4 w-4 accent-yellow-400"
-              />
-              IVA 21%
-            </label>
           </div>
 
           <div className="mt-3 space-y-2 text-sm">
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Net revenue</span>
+              <span className="text-gray-600">Services total</span>
               <span className="font-semibold text-black">
                 €{Number(selected.subtotal || 0).toFixed(2)}
               </span>
             </div>
 
-            <div className="flex items-center justify-between">
-              <span className="text-gray-600">IVA reserve</span>
-              <span className="font-semibold text-black">
-                €{Number(selected.iva || 0).toFixed(2)}
-              </span>
-            </div>
-
             <div className="flex items-center justify-between border-t border-yellow-400 pt-2">
-              <span className="font-bold text-black">Gross total</span>
+              <span className="font-bold text-black">Total</span>
               <span className="text-base font-extrabold text-black">
                 €{Number(selected.total || 0).toFixed(2)}
               </span>
