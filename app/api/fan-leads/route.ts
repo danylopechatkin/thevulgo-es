@@ -123,6 +123,7 @@ export async function POST(request: Request) {
     const serviceSummary = locale === "es"
       ? `${fanCount} ${fanCount === 1 ? "ventilador" : "ventiladores"} de techo — ${price} €`
       : `${fanCount} ceiling ${fanCount === 1 ? "fan" : "fans"} — €${price}`;
+    const followUpAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
     const details = [
       `Zona: ${area}`,
       installationType && `Instalación: ${installationType}`,
@@ -143,6 +144,7 @@ export async function POST(request: Request) {
       category: "Ceiling Fans",
       status: "new",
       next_action: "Contactar al cliente y confirmar la instalación",
+      follow_up_at: followUpAt,
       potential_value: price,
       notes: details,
       source: "website-fan-form",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import Link from "next/link";
 import FanLeadForm from "./FanLeadForm";
+import StickyFanQuoteButton from "./StickyFanQuoteButton";
 import {
   ArrowRight,
   BadgeCheck,
@@ -486,6 +487,7 @@ export default async function CeilingFanInstallationPage({
 
   return (
     <main className="bg-white text-neutral-950">
+      <StickyFanQuoteButton locale={locale} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
