@@ -328,25 +328,29 @@ const faqs = [
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const isEs = locale === "es";
   const pageUrl = `${baseUrl}/${locale}/services/seguridad-comercial`;
+  const title = isEs
+    ? "Seguridad para negocios en Valencia | THEVULGO"
+    : "Business Security in Valencia | THEVULGO";
+  const description = isEs
+    ? "Instalación de cámaras, alarmas, control de acceso, cableado y redes para oficinas, tiendas, bares y otros negocios en Valencia."
+    : "CCTV, alarms, access control, cabling and network installation for offices, shops, bars and other businesses in Valencia.";
 
   return {
-    title:
-      "Commercial Security Valencia | CCTV, Alarm & Access Control | THEVULGO",
-    description:
-      "Commercial security installation in Valencia. CCTV cameras, alarm systems, access control, NVR/DVR, Wi-Fi, cabling and network security for offices, bars, shops and businesses from €99.",
+    title,
+    description,
     alternates: {
       canonical: pageUrl,
       languages: {
         en: `${baseUrl}/en/services/seguridad-comercial`,
         es: `${baseUrl}/es/services/seguridad-comercial`,
+        "x-default": `${baseUrl}/es/services/seguridad-comercial`,
       },
     },
     openGraph: {
-      title:
-        "Commercial Security Valencia | CCTV, Alarm & Access Control | THEVULGO",
-      description:
-        "CCTV, alarm, access control and network security installation for businesses in Valencia.",
+      title,
+      description,
       url: pageUrl,
       siteName: "THEVULGO",
       locale: locale === "es" ? "es_ES" : "en_US",
@@ -362,10 +366,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title:
-        "Commercial Security Valencia | CCTV, Alarm & Access Control | THEVULGO",
-      description:
-        "Security solutions for offices, bars, shops and businesses in Valencia.",
+      title,
+      description,
       images: [`${baseUrl}/og/commercial-security-valencia.jpg`],
     },
     robots: {

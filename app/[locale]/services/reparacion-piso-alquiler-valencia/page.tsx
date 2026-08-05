@@ -86,7 +86,7 @@ const clusterLinks = [
     en: "Airbnb maintenance",
   },
   {
-    slug: "preparacion-vivienda-alquiler-valencia",
+    slug: "puesta-a-punto-vivienda-valencia",
     es: "Preparación de vivienda para alquiler",
     en: "Rental property preparation",
   },

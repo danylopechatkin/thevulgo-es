@@ -57,7 +57,7 @@ const clusterLinks = [
     en: "Wall repair",
   },
   {
-    slug: "tapar-agujeros-pared-valencia",
+    slug: "reparacion-agujeros-pared-valencia",
     es: "Tapar agujeros en paredes",
     en: "Fill wall holes",
   },
@@ -67,7 +67,7 @@ const clusterLinks = [
     en: "Paint touch-ups",
   },
   {
-    slug: "reparacion-desperfectos-paredes-valencia",
+    slug: "reparacion-paredes-valencia",
     es: "Reparación de desperfectos",
     en: "Wall damage repair",
   },

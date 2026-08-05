@@ -82,7 +82,7 @@ const categories = [
 
 const articles = [
   {
-    href: "como-elegir-soporte-tv",
+    href: "montaje-tv-valencia",
     categoryEs: "TV",
     categoryEn: "TV",
     titleEs: "Cómo elegir un soporte para TV",
@@ -92,7 +92,7 @@ const articles = [
     icon: Tv,
   },
   {
-    href: "que-tacos-usar-en-pladur",
+    href: "services/furniture/instalacion-estanterias-valencia",
     categoryEs: "Pladur",
     categoryEn: "Drywall",
     titleEs: "Qué tacos usar en una pared de pladur",
@@ -102,7 +102,7 @@ const articles = [
     icon: Drill,
   },
   {
-    href: "como-tapar-agujeros-pared",
+    href: "services/reparacion-agujeros-pared-valencia",
     categoryEs: "Paredes",
     categoryEn: "Walls",
     titleEs: "Cómo tapar agujeros en la pared",
@@ -112,7 +112,7 @@ const articles = [
     icon: Brush,
   },
   {
-    href: "cuanto-cuesta-instalar-toldo-valencia",
+    href: "services/instalacion-toldos-valencia",
     categoryEs: "Toldos",
     categoryEn: "Awnings",
     titleEs: "Cuánto cuesta instalar un toldo en Valencia",
@@ -122,7 +122,7 @@ const articles = [
     icon: Umbrella,
   },
   {
-    href: "errores-al-montar-muebles-ikea",
+    href: "montaje-muebles-ikea-valencia",
     categoryEs: "Muebles",
     categoryEn: "Furniture",
     titleEs: "Errores comunes al montar muebles IKEA",
@@ -132,7 +132,7 @@ const articles = [
     icon: Sofa,
   },
   {
-    href: "como-preparar-piso-para-alquilar",
+    href: "services/puesta-a-punto-piso-valencia",
     categoryEs: "Alquiler",
     categoryEn: "Rental",
     titleEs: "Cómo preparar un piso para alquilar",
@@ -366,7 +366,7 @@ export default async function GuiasPage({ params }: Props) {
                 return (
                   <Link
                     key={article.href}
-                    href={`/${locale}/guias/${article.href}`}
+                    href={`/${locale}/${article.href}`}
                     className="group rounded-3xl border border-white/10 bg-neutral-950 p-6 transition hover:border-amber-400/30 hover:bg-white/[0.04]"
                   >
                     <div className="mb-5 flex items-center justify-between">

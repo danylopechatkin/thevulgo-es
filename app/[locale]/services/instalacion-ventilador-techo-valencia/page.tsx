@@ -99,12 +99,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de ventilador de techo en Valencia desde 45 € | THEVULGO"
-    : "Ceiling Fan Installation in Valencia From €45 | THEVULGO";
+    ? "Instalar ventilador de techo en Valencia | Desde 45 €"
+    : "Ceiling Fan Installation Valencia | From €45";
 
   const description = isEs
-    ? "Instalación de ventiladores de techo en Valencia desde 45 €. 2 ventiladores 85 €, 3 ventiladores 125 €. Desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente incluidos."
-    : "Ceiling fan installation in Valencia from €45. 2 fans €85, 3 fans €125. Old lamp or fan removal and connection to the existing electrical point included.";
+    ? "Instalación de ventiladores de techo en Valencia desde 45 €. Desmontaje del anterior, conexión y prueba incluidos. Precio rápido online."
+    : "Ceiling fan installation in Valencia from €45. Removal of the old fitting, connection and final testing included. Check your price online.";
 
   return {
     title,

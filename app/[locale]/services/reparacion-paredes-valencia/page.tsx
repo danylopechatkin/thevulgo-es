@@ -63,7 +63,7 @@ const clusterLinks = [
     en: "Wall hole repair",
   },
   {
-    slug: "tapar-agujeros-pared-valencia",
+    slug: "reparacion-agujeros-pared-valencia",
     es: "Tapar agujeros en paredes",
     en: "Fill wall holes",
   },
@@ -73,17 +73,17 @@ const clusterLinks = [
     en: "Paint touch-ups",
   },
   {
-    slug: "reparacion-desperfectos-paredes-valencia",
+    slug: "reparacion-paredes-valencia",
     es: "Reparación de desperfectos en paredes",
     en: "Wall damage repair",
   },
   {
-    slug: "arreglar-paredes-valencia",
+    slug: "reparacion-paredes-valencia",
     es: "Arreglar paredes",
     en: "Fix walls",
   },
   {
-    slug: "pintura-pequenos-arreglos-valencia",
+    slug: "retoques-pintura-valencia",
     es: "Pintura y pequeños arreglos",
     en: "Painting and small repairs",
   },
@@ -113,7 +113,7 @@ const clusterLinks = [
     en: "Airbnb maintenance",
   },
   {
-    slug: "preparacion-vivienda-alquiler-valencia",
+    slug: "puesta-a-punto-vivienda-valencia",
     es: "Preparación de vivienda para alquiler",
     en: "Rental property preparation",
   },

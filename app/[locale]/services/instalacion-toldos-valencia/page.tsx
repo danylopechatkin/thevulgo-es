@@ -87,11 +87,14 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const isEs = locale === "es";
 
-  const title =
-    "Instalación de Toldos en Valencia | Desde 99€ | THEVULGO";
-  const description =
-    "Instalación de toldos en Valencia desde 99€. Montaje de toldos manuales, Leroy Merlin, Naterial, Calima, terraza y patio. Presupuesto rápido por WhatsApp.";
+  const title = isEs
+    ? "Instalación de toldos en Valencia desde 99 € | THEVULGO"
+    : "Awning Installation in Valencia From €99 | THEVULGO";
+  const description = isEs
+    ? "Instalación de toldos manuales y eléctricos en Valencia desde 99 €. Montaje en balcón, terraza o patio. Presupuesto rápido por WhatsApp."
+    : "Manual and electric awning installation in Valencia from €99. Installation on balconies, terraces and patios. Fast WhatsApp estimate.";
 
   return {
     title,
@@ -101,6 +104,7 @@ export async function generateMetadata({
       languages: {
         es: `${baseUrl}/es/${slug}`,
         en: `${baseUrl}/en/${slug}`,
+        "x-default": `${baseUrl}/es/${slug}`,
       },
     },
     openGraph: {

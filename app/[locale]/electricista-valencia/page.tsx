@@ -45,12 +45,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Electricista en Valencia | Enchufes, Interruptores y Lámparas | THEVULGO"
-    : "Electrician in Valencia | Outlets, Switches & Lights | THEVULGO";
+    ? "Pequeños trabajos eléctricos en Valencia | THEVULGO"
+    : "Small Electrical Jobs in Valencia | THEVULGO";
 
   const description = isEs
-    ? "Electricista en Valencia para cambio de enchufes, interruptores, lámparas, apliques, tiras LED, extractores y pequeñas instalaciones eléctricas. Presupuesto por WhatsApp."
-    : "Electrician in Valencia for outlet replacement, switches, lights, wall lamps, LED strips, extractor fans and small electrical jobs. Estimate by WhatsApp.";
+    ? "Cambio de enchufes, interruptores, lámparas, apliques, tiras LED y extractores en Valencia. Presupuesto rápido por WhatsApp."
+    : "Sockets, switches, lights, wall lamps, LED strips and extractor fans in Valencia. Fast estimate by WhatsApp.";
 
   return {
     title,

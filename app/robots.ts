@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: ["/admin", "/admin/", "/admin-login", "/api/admin/"],
     },
     sitemap: "https://www.thevulgo.es/sitemap.xml",
   };

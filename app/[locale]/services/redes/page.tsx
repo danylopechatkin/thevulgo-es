@@ -751,7 +751,7 @@ export default async function NetworkingPage({ params }: Props) {
           {networkingPages.map((item) => (
             <Link
               key={item.slug}
-              href={`/${locale}/services/redes/${item.slug}`}
+              href={`/${locale}/services/redes`}
               className="group rounded-2xl border border-yellow-300 bg-white p-6 shadow-md transition hover:scale-[1.02] hover:shadow-xl"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">

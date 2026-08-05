@@ -79,7 +79,7 @@ const clusterLinks = [
     en: "Wall hole repair",
   },
   {
-    slug: "tapar-agujeros-pared-valencia",
+    slug: "reparacion-agujeros-pared-valencia",
     es: "Tapar agujeros en paredes",
     en: "Fill wall holes",
   },
@@ -114,7 +114,7 @@ const clusterLinks = [
     en: "Fast Airbnb repairs",
   },
   {
-    slug: "preparacion-vivienda-alquiler-valencia",
+    slug: "puesta-a-punto-vivienda-valencia",
     es: "Preparación de vivienda para alquiler",
     en: "Rental property preparation",
   },

@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
+import { getLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
 
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 
   children,
 
@@ -17,10 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 
 }) {
+  const locale = await getLocale();
+  const documentLanguage = locale === "es" ? "es" : "en";
 
   return (
 
-    <html lang="en">
+    <html lang={documentLanguage}>
 
       <body>{children}</body>
 
