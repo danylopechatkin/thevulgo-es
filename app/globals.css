@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@layer components {
+  .input-style {
+    @apply h-14 w-full rounded-xl border border-neutral-300 bg-white px-4 text-base text-neutral-950 outline-none transition placeholder:text-neutral-400 focus:border-yellow-500 focus:ring-4 focus:ring-yellow-100;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

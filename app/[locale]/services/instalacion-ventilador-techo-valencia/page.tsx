@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import Link from "next/link";
+import FanLeadForm from "./FanLeadForm";
 import {
   ArrowRight,
   BadgeCheck,
@@ -171,7 +172,7 @@ export default async function CeilingFanInstallationPage({
 
   const pageUrl = `${baseUrl}/${locale}/services/instalacion-ventilador-techo-valencia`;
 
-  const estimateHref = `/${locale}/estimate?category=ceiling-fans`;
+  const estimateHref = "#fan-quote";
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -635,6 +636,8 @@ export default async function CeilingFanInstallationPage({
           </div>
         </div>
       </section>
+
+      <FanLeadForm locale={locale} />
 
 <section className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
   <div className="max-w-5xl">

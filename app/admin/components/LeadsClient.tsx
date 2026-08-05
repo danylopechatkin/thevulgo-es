@@ -276,7 +276,7 @@ export default function LeadsClient({ mode }: { mode: Mode }) {
               {mode === "today" ? "Daily focus" : "WhatsApp pipeline"}
             </p>
             <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              {mode === "today" ? "What needs attention today" : "WhatsApp leads"}
+              {mode === "today" ? "What needs attention today" : "Leads"}
             </h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600">
               {mode === "today"
@@ -289,7 +289,7 @@ export default function LeadsClient({ mode }: { mode: Mode }) {
             onClick={openCreate}
             className="rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-extrabold shadow-md transition hover:scale-[1.01]"
           >
-            + Add WhatsApp lead
+            + Add lead
           </button>
         </header>
 
@@ -337,7 +337,7 @@ export default function LeadsClient({ mode }: { mode: Mode }) {
           <div className="rounded-3xl border border-dashed border-gray-300 bg-white p-10 text-center">
             <p className="text-xl font-extrabold">Nothing needs attention</p>
             <p className="mt-2 text-sm text-gray-500">
-              {mode === "today" ? "Your follow-up list is clear." : "Add the first WhatsApp lead."}
+              {mode === "today" ? "Your follow-up list is clear." : "Add the first lead."}
             </p>
           </div>
         ) : (
@@ -467,7 +467,7 @@ function LeadForm({ form, setForm, editing, saving, aiLeadText, setAiLeadText, p
     <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/50 p-3 pt-[max(1rem,env(safe-area-inset-top))] sm:items-center sm:p-6">
       <div className="max-h-[calc(100dvh-2rem)] w-full max-w-3xl overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-7">
         <div className="flex items-start justify-between gap-4">
-          <div><p className="text-[11px] font-bold uppercase tracking-wider text-gray-500">WhatsApp pipeline</p><h2 className="mt-1 text-2xl font-extrabold">{editing ? "Edit lead" : "Add WhatsApp lead"}</h2></div>
+          <div><p className="text-[11px] font-bold uppercase tracking-wider text-gray-500">Sales pipeline</p><h2 className="mt-1 text-2xl font-extrabold">{editing ? "Edit lead" : "Add lead"}</h2></div>
           <button type="button" onClick={onClose} className="rounded-xl border border-gray-300 px-3 py-2 text-sm font-bold">Close</button>
         </div>
         {!editing && (
