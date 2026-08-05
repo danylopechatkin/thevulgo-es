@@ -139,6 +139,30 @@ export default function LeadsClient({ mode }: { mode: Mode }) {
     };
   }, [leads, referenceNow]);
 
+  const fanStats = useMemo(() => {
+    const fanLeads = leads.filter((lead) => lead.source === "website-fan-form");
+    const countFor = (count: number) => fanLeads.filter((lead) => lead.service_summary.startsWith(`${count} `)).length;
+    const responseTimes = fanLeads
+      .filter((lead) => lead.last_contacted_at)
+      .map((lead) => new Date(lead.last_contacted_at!).getTime() - new Date(lead.created_at).getTime())
+      .filter((value) => value >= 0);
+    const averageResponseMinutes = responseTimes.length
+      ? Math.round(responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length / 60_000)
+      : null;
+    const converted = fanLeads.filter((lead) => lead.status === "converted").length;
+    return {
+      total: fanLeads.length,
+      potential: fanLeads.reduce((sum, lead) => sum + Number(lead.potential_value || 0), 0),
+      converted,
+      lost: fanLeads.filter((lead) => lead.status === "lost").length,
+      conversion: fanLeads.length ? Math.round((converted / fanLeads.length) * 100) : 0,
+      one: countFor(1),
+      two: countFor(2),
+      three: countFor(3),
+      averageResponseMinutes,
+    };
+  }, [leads]);
+
   const openCreate = () => {
     setEditing(null);
     setForm({ ...emptyForm, follow_up_at: getDefaultFollowUp() });
@@ -301,6 +325,28 @@ export default function LeadsClient({ mode }: { mode: Mode }) {
           </section>
         )}
 
+        {mode === "leads" && (
+          <section className="rounded-3xl border border-yellow-400 bg-yellow-50/60 p-4 shadow-sm sm:p-5">
+            <div className="mb-4">
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">Website funnel</p>
+              <h2 className="mt-1 text-xl font-extrabold">Ceiling fan leads</h2>
+            </div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6">
+              <Stat label="Leads" value={fanStats.total} />
+              <Stat label="Potential" value={`€${fanStats.potential.toFixed(0)}`} />
+              <Stat label="Booked" value={fanStats.converted} />
+              <Stat label="Conversion" value={`${fanStats.conversion}%`} />
+              <Stat label="Lost" value={fanStats.lost} danger={fanStats.lost > 0} />
+              <Stat label="First response" value={fanStats.averageResponseMinutes === null ? "—" : `${fanStats.averageResponseMinutes} min`} />
+            </div>
+            <div className="mt-3 grid grid-cols-3 gap-3">
+              <Stat label="1 fan" value={fanStats.one} />
+              <Stat label="2 fans" value={fanStats.two} />
+              <Stat label="3 fans" value={fanStats.three} />
+            </div>
+          </section>
+        )}
+
         <section className="rounded-3xl border border-gray-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex flex-col gap-3 sm:flex-row">
             <input
@@ -394,6 +440,9 @@ function LeadCard({
   const isFanWebsiteLead = lead.source === "website-fan-form";
   const fanCount = lead.service_summary.match(/^(\d+)/)?.[1] || "";
   const area = lead.notes.match(/^Zona:\s*(.+)$/m)?.[1]?.trim() || "Valencia";
+  const campaign = lead.notes.match(/^UTM campaign:\s*(.+)$/m)?.[1]?.trim();
+  const keyword = lead.notes.match(/^UTM term:\s*(.+)$/m)?.[1]?.trim();
+  const gclid = lead.notes.match(/^GCLID:\s*(.+)$/m)?.[1]?.trim();
   const whatsappMessage = isFanWebsiteLead
     ? `Hola ${lead.full_name || ""}, hemos recibido tu solicitud para instalar ${fanCount || "el"} ${fanCount === "1" ? "ventilador de techo" : "ventiladores de techo"} en ${area}. ¿Podrías confirmarme cuándo te viene bien la instalación?`
     : `Hola ${lead.full_name || ""}, quería hacer seguimiento sobre ${lead.service_summary || "el servicio"}.`;
@@ -414,6 +463,14 @@ function LeadCard({
       </div>
 
       <p className="mt-4 text-base font-bold">{lead.service_summary || "Service not specified"}</p>
+      {isFanWebsiteLead && (campaign || keyword || gclid) && (
+        <div className="mt-3 rounded-xl border border-blue-200 bg-blue-50 px-3 py-2 text-xs leading-5 text-blue-900">
+          <span className="font-extrabold">Google Ads</span>
+          {campaign && <span> · {campaign}</span>}
+          {keyword && <span> · {keyword}</span>}
+          {!campaign && !keyword && gclid && <span> · tracked click</span>}
+        </div>
+      )}
       {lead.notes && <p className="mt-2 line-clamp-3 whitespace-pre-line text-sm leading-6 text-gray-600">{lead.notes}</p>}
       {photoUrls.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
@@ -435,7 +492,16 @@ function LeadCard({
 
       <div className="mt-4 flex flex-wrap gap-2">
         {whatsappHref && (
-          <a href={whatsappHref} target="_blank" rel="noreferrer" className="rounded-xl bg-green-600 px-3 py-2 text-sm font-extrabold text-white">
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => onUpdate({
+              status: lead.status === "new" ? "talking" : lead.status,
+              last_contacted_at: lead.last_contacted_at || new Date().toISOString(),
+            })}
+            className="rounded-xl bg-green-600 px-3 py-2 text-sm font-extrabold text-white"
+          >
             WhatsApp
           </a>
         )}

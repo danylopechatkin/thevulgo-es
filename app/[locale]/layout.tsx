@@ -5,6 +5,7 @@ import Link from "next/link";
 import Script from "next/script";
 import LanguageSwitcher from "@/app/components/LanguageSwitcher";
 import WhatsAppConversionTracker from "@/app/components/WhatsAppConversionTracker";
+import HeaderEstimateLink from "@/app/components/HeaderEstimateLink";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -142,12 +143,12 @@ export default async function LocaleLayout({
                   <LanguageSwitcher locale={locale} />
                 </div>
 
-                <Link
-                  href={`/${locale}/estimate`}
+                <HeaderEstimateLink
+                  locale={locale}
                   className="whitespace-nowrap rounded-xl bg-yellow-400 px-3 py-2 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:rounded-2xl sm:px-5 sm:py-2.5 sm:text-base"
                 >
                   {t("getEstimate")}
-                </Link>
+                </HeaderEstimateLink>
 
                 <a
                   href={`https://wa.me/34610076942?text=${encodeURIComponent(

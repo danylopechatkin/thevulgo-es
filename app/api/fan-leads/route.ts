@@ -16,6 +16,13 @@ function validPhone(value: string) {
   return digits.length >= 9 && digits.length <= 15;
 }
 
+function normalizePhone(value: string) {
+  const digits = value.replace(/\D/g, "");
+  if (digits.length === 9) return `+34${digits}`;
+  if (digits.length === 11 && digits.startsWith("34")) return `+${digits}`;
+  return value.startsWith("+") ? `+${digits}` : digits;
+}
+
 async function ensurePhotoBucket(supabase: SupabaseClient) {
   const { data } = await supabase.storage.getBucket(PHOTO_BUCKET);
   if (data) return;
@@ -65,7 +72,7 @@ export async function POST(request: Request) {
     if (clean(body.website, 200)) return Response.json({ success: true });
 
     const fullName = clean(body.fullName, 160);
-    const phone = clean(body.phone, 80);
+    const submittedPhone = clean(body.phone, 80);
     const email = clean(body.email, 240);
     const area = clean(body.area, 160);
     const installationType = clean(body.installationType, 120);
@@ -77,12 +84,13 @@ export async function POST(request: Request) {
     const fanCount = Number(body.fanCount);
     const price = prices[fanCount];
 
-    if (!fullName || !phone || !area || !price || !submissionKey || body.privacyAccepted !== true) {
+    if (!fullName || !submittedPhone || !area || !price || !submissionKey || body.privacyAccepted !== true) {
       return Response.json({ success: false, error: "Missing required fields" }, { status: 400 });
     }
-    if (!validPhone(phone)) {
+    if (!validPhone(submittedPhone)) {
       return Response.json({ success: false, error: "Invalid phone" }, { status: 400 });
     }
+    const phone = normalizePhone(submittedPhone);
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return Response.json({ success: false, error: "Invalid email" }, { status: 400 });
     }
@@ -92,6 +100,19 @@ export async function POST(request: Request) {
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
       { auth: { persistSession: false, autoRefreshToken: false } },
     );
+
+    const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+    const clientIp = clean(forwardedFor || request.headers.get("x-real-ip") || "unknown", 80);
+    const hourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { count: recentIpCount } = await supabase
+      .from("leads")
+      .select("id", { count: "exact", head: true })
+      .eq("source", "website-fan-form")
+      .gte("created_at", hourAgo)
+      .ilike("notes", `%IP: ${clientIp}%`);
+    if ((recentIpCount || 0) >= 5) {
+      return Response.json({ success: false, error: "Too many requests" }, { status: 429 });
+    }
 
     const duplicateSince = new Date(Date.now() - 10 * 60 * 1000).toISOString();
     const { data: duplicate } = await supabase
@@ -124,6 +145,18 @@ export async function POST(request: Request) {
       ? `${fanCount} ${fanCount === 1 ? "ventilador" : "ventiladores"} de techo — ${price} €`
       : `${fanCount} ceiling ${fanCount === 1 ? "fan" : "fans"} — €${price}`;
     const followUpAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
+    const attribution = typeof body.attribution === "object" && body.attribution ? body.attribution : {};
+    const attributionDetails = [
+      clean(attribution.gclid, 300) && `GCLID: ${clean(attribution.gclid, 300)}`,
+      clean(attribution.utm_source, 200) && `UTM source: ${clean(attribution.utm_source, 200)}`,
+      clean(attribution.utm_medium, 200) && `UTM medium: ${clean(attribution.utm_medium, 200)}`,
+      clean(attribution.utm_campaign, 300) && `UTM campaign: ${clean(attribution.utm_campaign, 300)}`,
+      clean(attribution.utm_term, 300) && `UTM term: ${clean(attribution.utm_term, 300)}`,
+      clean(attribution.utm_content, 300) && `UTM content: ${clean(attribution.utm_content, 300)}`,
+      clean(attribution.landing_page, 500) && `Landing page: ${clean(attribution.landing_page, 500)}`,
+      clean(attribution.referrer, 500) && `Referrer: ${clean(attribution.referrer, 500)}`,
+      clean(attribution.captured_at, 80) && `Attribution captured: ${clean(attribution.captured_at, 80)}`,
+    ].filter(Boolean);
     const details = [
       `Zona: ${area}`,
       installationType && `Instalación: ${installationType}`,
@@ -132,6 +165,8 @@ export async function POST(request: Request) {
       notes && `Comentario: ${notes}`,
       photoUrls.length && `Fotos:\n${photoUrls.join("\n")}`,
       `Consentimiento de privacidad: aceptado ${new Date().toISOString()}`,
+      ...attributionDetails,
+      `IP: ${clientIp}`,
       "Origen: formulario corto de ventiladores",
     ].filter(Boolean).join("\n");
 
@@ -173,12 +208,17 @@ export async function POST(request: Request) {
       if (adminResult.error) emailErrors.push(`Admin email: ${adminResult.error.message}`);
 
       if (email) {
+        const clientWhatsappText = encodeURIComponent(
+          locale === "es"
+            ? `Hola, soy ${fullName}. Quiero añadir información a mi solicitud de ${fanCount} ventilador${fanCount === 1 ? "" : "es"}.`
+            : `Hi, this is ${fullName}. I would like to add information to my request for ${fanCount} ceiling fan${fanCount === 1 ? "" : "s"}.`,
+        );
         const clientResult = await resend.emails.send({
           from: "TheVulgo <info@thevulgo.es>",
           to: [email],
           replyTo: "info@thevulgo.es",
           subject: locale === "es" ? "Hemos recibido tu solicitud de instalación" : "We received your installation request",
-          html: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;color:#111"><div style="background:#facc15;padding:24px;border-radius:18px 18px 0 0"><h1 style="margin:0;font-size:26px">THEVULGO</h1></div><div style="border:1px solid #e5e7eb;border-top:0;padding:26px;border-radius:0 0 18px 18px"><h2>${locale === "es" ? `Gracias, ${escapeHtml(fullName)}` : `Thank you, ${escapeHtml(fullName)}`}</h2><p>${locale === "es" ? "Hemos recibido tu solicitud y te contactaremos por WhatsApp o teléfono para confirmar los detalles." : "We received your request and will contact you by WhatsApp or phone to confirm the details."}</p><div style="background:#fafafa;border-radius:14px;padding:18px;margin:20px 0"><b>${escapeHtml(serviceSummary)}</b><br>${escapeHtml(area)}</div><p>${locale === "es" ? "No necesitas realizar ningún pago ahora." : "You do not need to make any payment now."}</p><p>THEVULGO · +34 610 076 942 · info@thevulgo.es</p></div></div>`,
+          html: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;color:#111"><div style="background:#facc15;padding:24px;border-radius:18px 18px 0 0"><h1 style="margin:0;font-size:26px">THEVULGO</h1></div><div style="border:1px solid #e5e7eb;border-top:0;padding:26px;border-radius:0 0 18px 18px"><h2>${locale === "es" ? `Gracias, ${escapeHtml(fullName)}` : `Thank you, ${escapeHtml(fullName)}`}</h2><p>${locale === "es" ? "Hemos recibido tu solicitud y te contactaremos por WhatsApp o teléfono para confirmar los detalles." : "We received your request and will contact you by WhatsApp or phone to confirm the details."}</p><div style="background:#fafafa;border-radius:14px;padding:18px;margin:20px 0"><b>${escapeHtml(serviceSummary)}</b><br>${escapeHtml(area)}</div><p>${locale === "es" ? "No necesitas realizar ningún pago ahora." : "You do not need to make any payment now."}</p><p style="margin:24px 0"><a href="https://wa.me/34610076942?text=${clientWhatsappText}" style="display:inline-block;background:#16a34a;color:#fff;text-decoration:none;padding:13px 18px;border-radius:12px;font-weight:700;margin:0 8px 8px 0">WhatsApp</a><a href="tel:+34610076942" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:13px 18px;border-radius:12px;font-weight:700">${locale === "es" ? "Llamar" : "Call"}</a></p><p>THEVULGO · +34 610 076 942 · info@thevulgo.es</p></div></div>`,
         });
         clientEmailSent = !clientResult.error;
         if (clientResult.error) emailErrors.push(`Client email: ${clientResult.error.message}`);

@@ -1,9 +1,18 @@
 import { Resend } from "resend";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  { auth: { persistSession: false, autoRefreshToken: false } },
+);
+const LEAD_REMINDER_MARKER = "[lead-reminder-email-sent]";
+const escapeHtml = (value: unknown) => String(value || "").replace(/[&<>\"]/g, (character) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '\"': "&quot;",
+})[character] || character);
 
 export async function GET() {
   try {
@@ -170,15 +179,47 @@ export async function GET() {
       }
     }
 
+    const { data: dueLeads, error: leadsError } = await supabase
+      .from("leads")
+      .select("id, full_name, phone, email, service_summary, potential_value, notes, follow_up_at, status")
+      .eq("source", "website-fan-form")
+      .not("status", "in", "(converted,lost)")
+      .is("last_contacted_at", null)
+      .not("follow_up_at", "is", null)
+      .lte("follow_up_at", new Date().toISOString());
+
+    if (leadsError) throw leadsError;
+    const sentLeads: string[] = [];
+    for (const lead of dueLeads || []) {
+      if (String(lead.notes || "").includes(LEAD_REMINDER_MARKER)) continue;
+      const emailResult = await resend.emails.send({
+        from: "TheVulgo <info@thevulgo.es>",
+        to: ["info@thevulgo.es"],
+        replyTo: lead.email || "info@thevulgo.es",
+        subject: `Recordatorio: contactar a ${lead.full_name || lead.phone}`,
+        html: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;color:#111"><div style="background:#facc15;padding:22px;border-radius:18px 18px 0 0"><div style="font-size:12px;font-weight:700;letter-spacing:1.2px">LEAD SIN CERRAR · VENTILADORES</div><h1 style="margin:8px 0 0">Contactar al cliente</h1></div><div style="border:1px solid #e5e7eb;border-top:0;padding:24px;border-radius:0 0 18px 18px"><p><b>Cliente:</b> ${escapeHtml(lead.full_name)}</p><p><b>Teléfono:</b> ${escapeHtml(lead.phone)}</p><p><b>Solicitud:</b> ${escapeHtml(lead.service_summary)}</p><p><b>Valor potencial:</b> €${Number(lead.potential_value || 0).toFixed(2)}</p><p style="margin-top:24px"><a href="https://www.thevulgo.es/admin/leads" style="display:inline-block;background:#111;color:white;text-decoration:none;padding:13px 18px;border-radius:12px;font-weight:700">Abrir Lead en CRM</a></p></div></div>`,
+      });
+      if (!emailResult.error) {
+        await supabase.from("leads").update({
+          notes: `${lead.notes || ""}\n${LEAD_REMINDER_MARKER} ${new Date().toISOString()}`.trim(),
+        }).eq("id", lead.id);
+        sentLeads.push(lead.id);
+      }
+    }
+
     return Response.json({
       success: true,
       sentCount: sent.length,
       sentOrders: sent,
+      sentLeadCount: sentLeads.length,
+      sentLeads,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    const stack = error instanceof Error ? error.stack : undefined;
     console.error("❌ REMINDER JOB ERROR:", {
-      message: error?.message,
-      stack: error?.stack,
+      message,
+      stack,
     });
 
     return Response.json(

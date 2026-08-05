@@ -89,10 +89,34 @@ export default function FanLeadForm({ locale }: { locale: string }) {
     }
     setSending(true);
     try {
+      const params = new URLSearchParams(window.location.search);
+      const attribution = {
+        gclid: params.get("gclid") || "",
+        utm_source: params.get("utm_source") || "",
+        utm_medium: params.get("utm_medium") || "",
+        utm_campaign: params.get("utm_campaign") || "",
+        utm_term: params.get("utm_term") || "",
+        utm_content: params.get("utm_content") || "",
+        landing_page: window.location.pathname,
+        referrer: document.referrer,
+        captured_at: new Date().toISOString(),
+      };
+      const hasCampaignData = Object.entries(attribution).some(
+        ([key, value]) => key !== "landing_page" && key !== "referrer" && Boolean(value),
+      );
+      if (hasCampaignData) localStorage.setItem("thevulgo_fan_attribution", JSON.stringify(attribution));
+      let savedAttribution: typeof attribution | null = null;
+      try {
+        const stored = JSON.parse(localStorage.getItem("thevulgo_fan_attribution") || "null");
+        const capturedAt = new Date(stored?.captured_at || 0).getTime();
+        if (stored && Date.now() - capturedAt <= 30 * 24 * 60 * 60 * 1000) savedAttribution = stored;
+      } catch {
+        localStorage.removeItem("thevulgo_fan_attribution");
+      }
       const response = await fetch("/api/fan-leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, fanCount, locale, photos, privacyAccepted, submissionKey }),
+        body: JSON.stringify({ ...form, fanCount, locale, photos, privacyAccepted, submissionKey, attribution: savedAttribution || attribution }),
       });
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.error);
