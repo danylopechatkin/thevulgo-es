@@ -264,13 +264,13 @@ export default async function WallAnchorInstallationPage({ params }: PageProps) 
 
   const related = isEs
     ? [
-        { title: "Instalación de estantes", href: `/${locale}/services/shelf-installation` },
+        { title: "Instalación de estantes", href: `/${locale}/services/furniture/instalacion-estanterias-valencia` },
         { title: "Reparaciones en Valencia", href: `/${locale}/services/repairs` },
         { title: "Pladur y paredes", href: `/${locale}/services/drywall` },
         { title: "Servicios handyman", href: `/${locale}/services` },
       ]
     : [
-        { title: "Shelf installation", href: `/${locale}/services/shelf-installation` },
+        { title: "Shelf installation", href: `/${locale}/services/furniture/instalacion-estanterias-valencia` },
         { title: "Repairs in Valencia", href: `/${locale}/services/repairs` },
         { title: "Drywall and walls", href: `/${locale}/services/drywall` },
         { title: "Handyman services", href: `/${locale}/services` },

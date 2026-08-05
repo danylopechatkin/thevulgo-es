@@ -674,11 +674,11 @@ export default async function ManualAwningPage({ params }: Props) {
                     label: isEs ? "Handyman Valencia" : "Handyman Valencia",
                   },
                   {
-                    href: `/${locale}/services/montaje-tv-valencia`,
+                    href: `/${locale}/montaje-tv-valencia`,
                     label: isEs ? "Montaje TV Valencia" : "TV mounting Valencia",
                   },
                   {
-                    href: `/${locale}/services/montaje-muebles-valencia`,
+                    href: `/${locale}/montaje-muebles-valencia`,
                     label: isEs
                       ? "Montaje de muebles Valencia"
                       : "Furniture assembly Valencia",

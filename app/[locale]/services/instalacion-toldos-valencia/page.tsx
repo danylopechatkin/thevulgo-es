@@ -806,17 +806,17 @@ export default async function InstalacionToldosValenciaPage({
               {[
                 {
                   title: "Montaje de TV",
-                  href: `/${locale}/services/montaje-tv-valencia`,
+                  href: `/${locale}/montaje-tv-valencia`,
                   icon: Home,
                 },
                 {
                   title: "Montaje de muebles",
-                  href: `/${locale}/services/montaje-muebles-valencia`,
+                  href: `/${locale}/montaje-muebles-valencia`,
                   icon: Hammer,
                 },
                 {
                   title: "Instalar lámparas",
-                  href: `/${locale}/services/instalacion-lampara-valencia`,
+                  href: `/${locale}/instalacion-lampara-valencia`,
                   icon: Sparkles,
                 },
                 {

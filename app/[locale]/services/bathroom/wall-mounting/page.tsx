@@ -559,15 +559,15 @@ export default async function BathroomWallMountingPage({
             },
             {
               title: "Instalación de espejo de baño",
-              href: `/${locale}/services/bathroom/mirror-installation`,
+              href: `/${locale}/services/bathroom/mirror-installation-valencia`,
             },
             {
               title: "Instalación de mueble de baño",
-              href: `/${locale}/services/bathroom/cabinet-installation`,
+              href: `/${locale}/services/bathroom/cabinet-installation-valencia`,
             },
             {
               title: "Instalación de estantería de baño",
-              href: `/${locale}/services/bathroom/shelf-installation`,
+              href: `/${locale}/services/bathroom/shelf-installation-valencia`,
             },
             {
               title: "Instalación de accesorios de baño",

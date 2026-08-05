@@ -562,19 +562,19 @@ export default async function VanityLightInstallationPage({
             },
             {
               title: "Instalación de espejo de baño",
-              href: `/${locale}/services/bathroom/mirror-installation`,
+              href: `/${locale}/services/bathroom/mirror-installation-valencia`,
             },
             {
               title: "Instalación de armario con espejo",
-              href: `/${locale}/services/bathroom/mirror-cabinet-fitting`,
+              href: `/${locale}/services/bathroom/mirror-cabinet-fitting-valencia`,
             },
             {
               title: "Instalación de mueble de baño",
-              href: `/${locale}/services/bathroom/cabinet-installation`,
+              href: `/${locale}/services/bathroom/cabinet-installation-valencia`,
             },
             {
               title: "Instalación de mueble bajo lavabo",
-              href: `/${locale}/services/bathroom/vanity-unit-installation`,
+              href: `/${locale}/services/bathroom/vanity-unit-installation-valencia`,
             },
             {
               title: "Servicios handyman",

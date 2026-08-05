@@ -559,7 +559,7 @@ export default async function HingeTighteningPage({ params }: PageProps) {
             },
             {
               title: "Ajuste de cerradero",
-              href: `/${locale}/services/doors/strike-plate-adjustment`,
+              href: `/${locale}/services/doors/latch-adjustment`,
             },
             {
               title: "Ajuste de puerta desalineada",

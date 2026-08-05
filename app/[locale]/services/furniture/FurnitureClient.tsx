@@ -128,7 +128,7 @@ export default function FurnitureClient() {
       price: isEs ? "desde €49" : "from €49",
       icon: <BedDouble className="h-5 w-5" />,
       className: "",
-      href: `/${locale}/montaje-cama-valencia`,
+      href: `/${locale}/services/furniture/montaje-cama-valencia`,
     },
     {
       title: isEs ? "Cómodas y cajoneras" : "Chest of drawers",
@@ -138,7 +138,7 @@ export default function FurnitureClient() {
       price: isEs ? "desde €45" : "from €45",
       icon: <FolderOpen className="h-5 w-5" />,
       className: "",
-      href: `/${locale}/montaje-comodas-cajoneras-valencia`,
+      href: `/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
     },
     {
       title: isEs ? "Estanterías" : "Shelving units",
@@ -148,7 +148,7 @@ export default function FurnitureClient() {
       price: isEs ? "desde €39" : "from €39",
       icon: <Boxes className="h-5 w-5" />,
       className: "",
-      href: `/${locale}/montaje-estanterias-valencia`,
+      href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
     },
     {
       title: isEs ? "Muebles TV y multimedia" : "TV stands & media units",
@@ -158,7 +158,7 @@ export default function FurnitureClient() {
       price: isEs ? "desde €45" : "from €45",
       icon: <Package className="h-5 w-5" />,
       className: "lg:col-span-2",
-      href: `/${locale}/montaje-muebles-tv-multimedia-valencia`,
+      href: `/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
     },
     {
       title: isEs ? "Escritorios y zonas de trabajo" : "Desks & workstations",
@@ -168,7 +168,7 @@ export default function FurnitureClient() {
       price: isEs ? "desde €39" : "from €39",
       icon: <LampDesk className="h-5 w-5" />,
       className: "",
-      href: `/${locale}/montaje-escritorios-valencia`,
+      href: `/${locale}/services/furniture/montaje-escritorios-valencia`,
     },
     {
       title: isEs ? "Mesas de comedor" : "Dining tables",
@@ -178,7 +178,7 @@ export default function FurnitureClient() {
       price: isEs ? "desde €35" : "from €35",
       icon: <Package className="h-5 w-5" />,
       className: "",
-      href: `/${locale}/montaje-mesas-comedor-valencia`,
+      href: `/${locale}/services/furniture/montaje-mesas-comedor-valencia`,
     },
     {
       title: isEs ? "Aparadores y muebles auxiliares" : "Sideboards & cabinets",
@@ -188,7 +188,7 @@ export default function FurnitureClient() {
       price: isEs ? "desde €49" : "from €49",
       icon: <Boxes className="h-5 w-5" />,
       className: "",
-      href: `/${locale}/montaje-aparadores-muebles-auxiliares-valencia`,
+      href: `/${locale}/services/furniture/montaje-aparadores-muebles-auxiliares-valencia`,
     },
     {
       title: isEs ? "Sofás y piezas modulares" : "Sofa & modular pieces",
@@ -198,7 +198,7 @@ export default function FurnitureClient() {
       price: isEs ? "desde €39" : "from €39",
       icon: <Package className="h-5 w-5" />,
       className: "",
-      href: `/${locale}/montaje-sofas-modulares-valencia`,
+      href: `/${locale}/services/furniture/montaje-sofas-modulares-valencia`,
     },
     {
       title: isEs ? "Fijación de muebles a la pared" : "Furniture fixing to wall",
@@ -208,7 +208,7 @@ export default function FurnitureClient() {
       price: isEs ? "desde €29" : "from €29",
       icon: <ShieldCheck className="h-5 w-5" />,
       className: "lg:col-span-2",
-      href: `/${locale}/fijacion-muebles-pared-valencia`,
+      href: `/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
     },
     {
       title: isEs ? "Preparación de muebles al mudarse" : "Move-in furniture setup",
@@ -218,7 +218,7 @@ export default function FurnitureClient() {
       price: isEs ? "presupuesto personalizado" : "custom quote",
       icon: <Package className="h-5 w-5" />,
       className: "",
-      href: `/${locale}/preparacion-muebles-mudanza-valencia`,
+      href: `/${locale}/services/furniture/preparacion-muebles-mudanza-valencia`,
     },
   ];
 

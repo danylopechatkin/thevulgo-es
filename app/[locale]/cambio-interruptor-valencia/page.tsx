@@ -516,7 +516,7 @@ export default async function SwitchReplacementValenciaPage({
           {[
             {
               title: "Instalación de enchufes",
-              href: `/${locale}/instalacion-enchufes-valencia`,
+              href: `/${locale}/cambio-enchufe-valencia`,
             },
             {
               title: "Instalación de lámpara",
@@ -524,7 +524,7 @@ export default async function SwitchReplacementValenciaPage({
             },
             {
               title: "Apliques de pared",
-              href: `/${locale}/instalacion-apliques-pared-valencia`,
+              href: `/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
             },
             {
               title: "Lámparas colgantes",

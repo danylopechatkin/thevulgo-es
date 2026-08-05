@@ -132,14 +132,14 @@ export default async function ColgarCuadrosValenciaPage({ params }: Props) {
       desc: isEs
         ? "Estanterías, baldas, librerías y fijación segura a pared."
         : "Shelving units, shelves, bookcases and secure wall fixing.",
-      href: `/${locale}/montaje-estanterias-valencia`,
+      href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
     },
     {
       title: isEs ? "Fijación de muebles a pared" : "Wall furniture fixing",
       desc: isEs
         ? "Fijación segura para muebles altos, armarios y estanterías."
         : "Secure fixing for tall furniture, wardrobes and shelves.",
-      href: `/${locale}/fijacion-muebles-pared-valencia`,
+      href: `/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
     },
     {
       title: isEs ? "Colgar TV" : "TV wall mounting",

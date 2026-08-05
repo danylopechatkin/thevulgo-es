@@ -34,9 +34,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje de muebles TV, consolas multimedia y unidades de entretenimiento en Valencia desde 45€. Alineación cuidada, posición estable y organización de cables."
       : "TV stands, media consoles and entertainment unit assembly in Valencia from €45. Careful alignment, stable positioning and cable organization.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-muebles-tv-multimedia-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
       languages: {
-        es: `${siteUrl}/es/montaje-muebles-tv-multimedia-valencia`,
+        es: `${siteUrl}/es/services/furniture/montaje-muebles-tv-multimedia-valencia`,
       },
     },
     openGraph: {
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje limpio de muebles TV, consolas multimedia y unidades de entretenimiento en Valencia."
         : "Clean assembly of TV stands, media consoles and entertainment units in Valencia.",
-      url: `${siteUrl}/${locale}/montaje-muebles-tv-multimedia-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -186,7 +186,7 @@ export default async function TvMediaFurnitureAssemblyValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Muebles TV y Multimedia en Valencia",
-        item: `${siteUrl}/${locale}/montaje-muebles-tv-multimedia-valencia`,
+        item: `${siteUrl}/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
       },
     ],
   };
@@ -526,7 +526,7 @@ export default async function TvMediaFurnitureAssemblyValenciaPage({
             },
             {
               title: "Instalar soundbar",
-              href: `/${locale}/instalar-soundbar-valencia`,
+              href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
             },
             {
               title: "Ocultar cables en Valencia",
@@ -538,7 +538,7 @@ export default async function TvMediaFurnitureAssemblyValenciaPage({
             },
             {
               title: "Montaje de estanterías",
-              href: `/${locale}/montaje-estanterias-valencia`,
+              href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
             },
             {
               title: "Servicios handyman Valencia",

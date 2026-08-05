@@ -570,11 +570,11 @@ export default async function MultipleBathroomInstallationTasksPage({
             },
             {
               title: "Instalación de espejo de baño",
-              href: `/${locale}/services/bathroom/mirror-installation`,
+              href: `/${locale}/services/bathroom/mirror-installation-valencia`,
             },
             {
               title: "Instalación de mueble de baño",
-              href: `/${locale}/services/bathroom/cabinet-installation`,
+              href: `/${locale}/services/bathroom/cabinet-installation-valencia`,
             },
             {
               title: "Servicios handyman",

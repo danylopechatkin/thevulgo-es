@@ -54,16 +54,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: {
-      canonical: `${siteUrl}/${locale}/cambio-extractor-valencia`,
+      canonical: `${siteUrl}/${locale}/services/electrical/cambio-extractor-valencia`,
       languages: {
-        es: `${siteUrl}/es/cambio-extractor-valencia`,
-        en: `${siteUrl}/en/cambio-extractor-valencia`,
+        es: `${siteUrl}/es/services/electrical/cambio-extractor-valencia`,
+        en: `${siteUrl}/en/services/electrical/cambio-extractor-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/cambio-extractor-valencia`,
+      url: `${siteUrl}/${locale}/services/electrical/cambio-extractor-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -384,7 +384,7 @@ export default async function ExtractorReplacementValenciaPage({
     ? [
         {
           title: "Montaje eléctrico básico",
-          href: `/${locale}/montaje-electrico-basico-valencia`,
+          href: `/${locale}/services/electrical/montaje-electrico-basico-valencia`,
         },
         {
           title: "Cambio de enchufe",
@@ -400,7 +400,7 @@ export default async function ExtractorReplacementValenciaPage({
         },
         {
           title: "Instalación de tira LED",
-          href: `/${locale}/instalacion-tira-led-valencia`,
+          href: `/${locale}/services/electrical/instalacion-tira-led-valencia`,
         },
         {
           title: "Servicios handyman Valencia",
@@ -410,7 +410,7 @@ export default async function ExtractorReplacementValenciaPage({
     : [
         {
           title: "Basic electrical installation",
-          href: `/${locale}/montaje-electrico-basico-valencia`,
+          href: `/${locale}/services/electrical/montaje-electrico-basico-valencia`,
         },
         {
           title: "Socket replacement",
@@ -426,7 +426,7 @@ export default async function ExtractorReplacementValenciaPage({
         },
         {
           title: "LED strip installation",
-          href: `/${locale}/instalacion-tira-led-valencia`,
+          href: `/${locale}/services/electrical/instalacion-tira-led-valencia`,
         },
         {
           title: "Handyman services Valencia",
@@ -509,7 +509,7 @@ export default async function ExtractorReplacementValenciaPage({
         name: isEs
           ? "Cambio de Extractor en Valencia"
           : "Extractor Fan Replacement in Valencia",
-        item: `${siteUrl}/${locale}/cambio-extractor-valencia`,
+        item: `${siteUrl}/${locale}/services/electrical/cambio-extractor-valencia`,
       },
     ],
   };

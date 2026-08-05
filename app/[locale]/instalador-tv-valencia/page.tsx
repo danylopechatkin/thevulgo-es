@@ -235,7 +235,7 @@ export default function InstaladorTvClient() {
         ? "Montaje de barra de sonido bajo la TV o en pared con cableado ordenado."
         : "Soundbar mounting below the TV or on the wall with tidy cabling.",
       price: isEs ? "desde €29" : "from €29",
-      href: `/${locale}/instalar-soundbar-valencia`,
+      href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
       icon: <Speaker className="h-5 w-5" />,
     },
     {
@@ -479,7 +479,7 @@ export default function InstaladorTvClient() {
     },
     {
       label: isEs ? "Instalar soundbar Valencia" : "Soundbar mounting Valencia",
-      href: `/${locale}/instalar-soundbar-valencia`,
+      href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
     },
     {
       label: isEs ? "Montaje proyector Valencia" : "Projector mounting Valencia",

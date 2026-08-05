@@ -49,8 +49,6 @@ type Props = {
 const baseUrl = "https://www.thevulgo.es";
 const phone = "34610076942";
 
-const pageUrl = `${baseUrl}/en/services/commercial-security`;
-
 const whatsappText =
   "Hello THEVULGO, I need commercial security service for my business in Valencia. I can send photos/videos of the place and explain what I need.";
 
@@ -330,6 +328,7 @@ const faqs = [
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const pageUrl = `${baseUrl}/${locale}/services/seguridad-comercial`;
 
   return {
     title:
@@ -339,7 +338,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: pageUrl,
       languages: {
-        en: pageUrl,
+        en: `${baseUrl}/en/services/seguridad-comercial`,
         es: `${baseUrl}/es/services/seguridad-comercial`,
       },
     },
@@ -384,7 +383,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CommercialSecurityPage({ params }: Props) {
-  await params;
+  const { locale } = await params;
+  const pageUrl = `${baseUrl}/${locale}/services/seguridad-comercial`;
 
   const localBusinessJsonLd = {
     "@context": "https://schema.org",

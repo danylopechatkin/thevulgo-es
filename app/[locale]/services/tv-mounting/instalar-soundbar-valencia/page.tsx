@@ -37,9 +37,9 @@ export async function generateMetadata({
       ? "Instalación de soundbar y sistemas de sonido en Valencia. Montaje bajo TV, pared, soportes, altavoces 5.1, Dolby, home cinema, cableado y configuración básica."
       : "Soundbar and home audio installation in Valencia. Under-TV mounting, wall brackets, 5.1 speakers, Dolby, home cinema, cable management and basic setup.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/instalar-soundbar-valencia`,
+      canonical: `${siteUrl}/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
       languages: {
-        es: `${siteUrl}/es/instalar-soundbar-valencia`,
+        es: `${siteUrl}/es/services/tv-mounting/instalar-soundbar-valencia`,
       },
     },
     openGraph: {
@@ -49,7 +49,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje limpio de soundbar, altavoces, cableado y sistemas de sonido en Valencia."
         : "Clean soundbar, speaker, cable and home audio installation in Valencia.",
-      url: `${siteUrl}/${locale}/instalar-soundbar-valencia`,
+      url: `${siteUrl}/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -188,7 +188,7 @@ export default async function SoundbarMountingValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Instalar Soundbar en Valencia",
-        item: `${siteUrl}/${locale}/instalar-soundbar-valencia`,
+        item: `${siteUrl}/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
       },
     ],
   };
@@ -596,7 +596,7 @@ export default async function SoundbarMountingValenciaPage({
             },
             {
               title: "Instalar enchufe para TV",
-              href: `/${locale}/instalar-enchufe-valencia`,
+              href: `/${locale}/cambio-enchufe-valencia`,
             },
             {
               title: "Montaje de TV grande",

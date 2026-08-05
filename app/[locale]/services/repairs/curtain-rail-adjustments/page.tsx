@@ -403,13 +403,13 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
   const related = isEs
     ? [
         { title: "Reparaciones en Valencia", href: `/${locale}/services/repairs` },
-        { title: "Instalación de cortinas", href: `/${locale}/services/curtain-installation` },
+        { title: "Instalación de cortinas", href: `/${locale}/services/repairs/curtain-rail-adjustments` },
         { title: "Sellado de huecos", href: `/${locale}/services/repairs/sealing-gap-filling` },
         { title: "Servicios handyman", href: `/${locale}/services` },
       ]
     : [
         { title: "Repairs in Valencia", href: `/${locale}/services/repairs` },
-        { title: "Curtain installation", href: `/${locale}/services/curtain-installation` },
+        { title: "Curtain installation", href: `/${locale}/services/repairs/curtain-rail-adjustments` },
         { title: "Sealing & gap filling", href: `/${locale}/services/repairs/sealing-gap-filling` },
         { title: "Handyman services", href: `/${locale}/services` },
       ];

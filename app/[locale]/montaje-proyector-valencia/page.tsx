@@ -586,19 +586,19 @@ export default async function ProjectorMountingValenciaPage({
             },
             {
               title: "Ocultar cables de TV",
-              href: `/${locale}/ocultar-cables-tv-valencia`,
+              href: `/${locale}/ocultar-cables-valencia`,
             },
             {
               title: "Instalar enchufe para TV",
-              href: `/${locale}/instalar-enchufe-valencia`,
+              href: `/${locale}/cambio-enchufe-valencia`,
             },
             {
               title: "Instalar soundbar",
-              href: `/${locale}/instalar-soundbar-valencia`,
+              href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
             },
             {
               title: "Instalación de estanterías",
-              href: `/${locale}/instalacion-estanterias-valencia`,
+              href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
             },
             {
               title: "Servicios handyman Valencia",

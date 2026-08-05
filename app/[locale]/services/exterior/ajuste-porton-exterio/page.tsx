@@ -19,7 +19,7 @@ type PageProps = {
 
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
-const pagePath = "/services/exterior/ajuste-porton-exterior";
+const pagePath = "/services/exterior/ajuste-porton-exterio";
 
 export async function generateMetadata({
   params,
@@ -567,11 +567,11 @@ export default async function AjustePortonExteriorPage({
             },
             {
               title: "Sellado exterior",
-              href: `/${locale}/services/exterior/sellado-exterior`,
+              href: `/${locale}/services/exterior/sellado-impermeable-exterior`,
             },
             {
               title: "Instalación de buzón",
-              href: `/${locale}/services/exterior/instalacion-buzon`,
+              href: `/${locale}/services/exterior/montaje-pared-exterior`,
             },
             {
               title: "Servicios handyman",

@@ -717,19 +717,19 @@ export default async function TerraceAwningPage({ params }: Props) {
                       : "Balcony awning installation",
                   },
                   {
-                    href: `/${locale}/services/instalacion-toldo-brazo-articulado-valencia`,
+                    href: `/${locale}/services/instalacion-toldos-valencia`,
                     label: isEs
                       ? "Toldo de brazo articulado"
                       : "Folding arm awning",
                   },
                   {
-                    href: `/${locale}/services/reparacion-toldo-valencia`,
+                    href: `/${locale}/services/instalacion-toldos-valencia`,
                     label: isEs
                       ? "Reparación de toldo"
                       : "Awning repair",
                   },
                   {
-                    href: `/${locale}/services/montaje-tv-valencia`,
+                    href: `/${locale}/montaje-tv-valencia`,
                     label: isEs ? "Montaje TV Valencia" : "TV mounting Valencia",
                   },
                   {

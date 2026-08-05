@@ -160,7 +160,7 @@ export default function TvMountingClient() {
         : "Soundbar, 5.1, Dolby and home audio installation for homes, offices, bars or cafés.",
       price: isEs ? "desde €29" : "from €29",
       icon: <Speaker className="h-5 w-5" />,
-      href: `/${locale}/instalar-soundbar-valencia`,
+      href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
     },
     {
       title: isEs ? "Montaje de proyector" : "Projector mounting",
@@ -267,7 +267,7 @@ export default function TvMountingClient() {
         : "Clean shelf mounting with proper anchors and alignment.",
       price: isEs ? "desde €35" : "from €35",
       icon: <Square className="h-5 w-5" />,
-      href: `/${locale}/instalacion-estanterias-valencia`,
+      href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
     },
   ];
 

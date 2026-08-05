@@ -54,16 +54,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: {
-      canonical: `${siteUrl}/${locale}/cambio-luz-bano-valencia`,
+      canonical: `${siteUrl}/${locale}/services/electrical/cambio-luz-bano-valencia`,
       languages: {
-        es: `${siteUrl}/es/cambio-luz-bano-valencia`,
-        en: `${siteUrl}/en/cambio-luz-bano-valencia`,
+        es: `${siteUrl}/es/services/electrical/cambio-luz-bano-valencia`,
+        en: `${siteUrl}/en/services/electrical/cambio-luz-bano-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/cambio-luz-bano-valencia`,
+      url: `${siteUrl}/${locale}/services/electrical/cambio-luz-bano-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -384,7 +384,7 @@ export default async function BathroomLightReplacementValenciaPage({
     ? [
         {
           title: "Montaje eléctrico básico",
-          href: `/${locale}/montaje-electrico-basico-valencia`,
+          href: `/${locale}/services/electrical/montaje-electrico-basico-valencia`,
         },
         {
           title: "Instalación de lámpara",
@@ -392,11 +392,11 @@ export default async function BathroomLightReplacementValenciaPage({
         },
         {
           title: "Apliques de pared",
-          href: `/${locale}/instalacion-apliques-pared-valencia`,
+          href: `/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
         },
         {
           title: "Cambio de extractor",
-          href: `/${locale}/cambio-extractor-valencia`,
+          href: `/${locale}/services/electrical/cambio-extractor-valencia`,
         },
         {
           title: "Cambio de enchufe",
@@ -410,7 +410,7 @@ export default async function BathroomLightReplacementValenciaPage({
     : [
         {
           title: "Basic electrical installation",
-          href: `/${locale}/montaje-electrico-basico-valencia`,
+          href: `/${locale}/services/electrical/montaje-electrico-basico-valencia`,
         },
         {
           title: "Lamp installation",
@@ -418,11 +418,11 @@ export default async function BathroomLightReplacementValenciaPage({
         },
         {
           title: "Wall light installation",
-          href: `/${locale}/instalacion-apliques-pared-valencia`,
+          href: `/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
         },
         {
           title: "Extractor fan replacement",
-          href: `/${locale}/cambio-extractor-valencia`,
+          href: `/${locale}/services/electrical/cambio-extractor-valencia`,
         },
         {
           title: "Socket replacement",
@@ -509,7 +509,7 @@ export default async function BathroomLightReplacementValenciaPage({
         name: isEs
           ? "Cambio de Luz de Baño en Valencia"
           : "Bathroom Light Replacement in Valencia",
-        item: `${siteUrl}/${locale}/cambio-luz-bano-valencia`,
+        item: `${siteUrl}/${locale}/services/electrical/cambio-luz-bano-valencia`,
       },
     ],
   };

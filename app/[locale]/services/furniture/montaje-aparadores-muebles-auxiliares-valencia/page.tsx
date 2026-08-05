@@ -57,16 +57,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "furniture assembler Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-aparadores-muebles-auxiliares-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/montaje-aparadores-muebles-auxiliares-valencia`,
       languages: {
-        es: `${siteUrl}/es/montaje-aparadores-muebles-auxiliares-valencia`,
-        en: `${siteUrl}/en/montaje-aparadores-muebles-auxiliares-valencia`,
+        es: `${siteUrl}/es/services/furniture/montaje-aparadores-muebles-auxiliares-valencia`,
+        en: `${siteUrl}/en/services/furniture/montaje-aparadores-muebles-auxiliares-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/montaje-aparadores-muebles-auxiliares-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/montaje-aparadores-muebles-auxiliares-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -101,7 +101,7 @@ export default async function SideboardAssemblyValenciaPage({
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/montaje-aparadores-muebles-auxiliares-valencia`;
+  const pageUrl = `${siteUrl}/${locale}/services/furniture/montaje-aparadores-muebles-auxiliares-valencia`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -744,17 +744,17 @@ export default async function SideboardAssemblyValenciaPage({
             ? [
                 { title: "Montaje de muebles IKEA", href: `/${locale}/montaje-muebles-ikea-valencia` },
                 { title: "Montaje de armario", href: `/${locale}/montaje-armario-valencia` },
-                { title: "Montaje de cómodas y cajoneras", href: `/${locale}/montaje-comodas-cajoneras-valencia` },
-                { title: "Montaje de estanterías", href: `/${locale}/montaje-estanterias-valencia` },
-                { title: "Montaje de muebles TV y multimedia", href: `/${locale}/montaje-muebles-tv-multimedia-valencia` },
+                { title: "Montaje de cómodas y cajoneras", href: `/${locale}/services/furniture/montaje-comodas-cajoneras-valencia` },
+                { title: "Montaje de estanterías", href: `/${locale}/services/furniture/montaje-estanterias-valencia` },
+                { title: "Montaje de muebles TV y multimedia", href: `/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia` },
                 { title: "Servicios handyman Valencia", href: `/${locale}/services` },
               ]
             : [
                 { title: "IKEA furniture assembly", href: `/${locale}/montaje-muebles-ikea-valencia` },
                 { title: "Wardrobe assembly", href: `/${locale}/montaje-armario-valencia` },
-                { title: "Dresser and drawer assembly", href: `/${locale}/montaje-comodas-cajoneras-valencia` },
-                { title: "Shelf assembly", href: `/${locale}/montaje-estanterias-valencia` },
-                { title: "TV and media furniture assembly", href: `/${locale}/montaje-muebles-tv-multimedia-valencia` },
+                { title: "Dresser and drawer assembly", href: `/${locale}/services/furniture/montaje-comodas-cajoneras-valencia` },
+                { title: "Shelf assembly", href: `/${locale}/services/furniture/montaje-estanterias-valencia` },
+                { title: "TV and media furniture assembly", href: `/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia` },
                 { title: "Handyman services Valencia", href: `/${locale}/services` },
               ]
           ).map((item) => (

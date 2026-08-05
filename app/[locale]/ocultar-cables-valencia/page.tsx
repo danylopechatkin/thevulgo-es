@@ -591,11 +591,11 @@ export default async function CableConcealmentValenciaPage({
             },
             {
               title: "Instalar enchufe para TV",
-              href: `/${locale}/instalar-enchufe-valencia`,
+              href: `/${locale}/cambio-enchufe-valencia`,
             },
             {
               title: "Instalar soundbar",
-              href: `/${locale}/instalar-soundbar-valencia`,
+              href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
             },
             {
               title: "Montaje de TV grande",

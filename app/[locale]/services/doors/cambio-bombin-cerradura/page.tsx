@@ -569,7 +569,7 @@ export default async function CambioBombinCerraduraPage({
             },
             {
               title: "Ajuste de cerradero",
-              href: `/${locale}/services/doors/strike-plate-adjustment`,
+              href: `/${locale}/services/doors/latch-adjustment`,
             },
             {
               title: "Reparar manilla suelta",

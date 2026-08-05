@@ -126,14 +126,14 @@ export default async function InstalacionArmariosValenciaPage({
       desc: isEs
         ? "Montaje de armarios IKEA, Pax, dormitorio y almacenaje."
         : "Assembly of IKEA, Pax, bedroom and storage wardrobes.",
-      href: `/${locale}/montaje-armarios-valencia`,
+      href: `/${locale}/instalacion-armarios-valencia`,
     },
     {
       title: isEs ? "Montaje de armario Pax" : "Pax wardrobe assembly",
       desc: isEs
         ? "Estructuras Pax, puertas, cajones, baldas, barras y accesorios."
         : "Pax frames, doors, drawers, shelves, rails and accessories.",
-      href: `/${locale}/montaje-armario-pax-valencia`,
+      href: `/${locale}/instalacion-armarios-valencia`,
     },
     {
       title: isEs ? "Montaje de muebles IKEA" : "IKEA furniture assembly",
@@ -154,7 +154,7 @@ export default async function InstalacionArmariosValenciaPage({
       desc: isEs
         ? "Fijación segura en pared, nivelación y acabado limpio."
         : "Secure wall fixing, leveling and clean finish.",
-      href: `/${locale}/colgar-estanterias-valencia`,
+      href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
     },
     {
       title: isEs ? "Manitas en Valencia" : "Handyman in Valencia",

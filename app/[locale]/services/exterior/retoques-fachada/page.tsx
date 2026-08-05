@@ -558,7 +558,7 @@ export default async function RetoquesFachadaPage({ params }: PageProps) {
             },
             {
               title: "Sellado exterior",
-              href: `/${locale}/services/exterior/sellado-exterior`,
+              href: `/${locale}/services/exterior/sellado-impermeable-exterior`,
             },
             {
               title: "Montaje exterior en pared",

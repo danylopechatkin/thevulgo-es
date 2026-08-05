@@ -184,7 +184,7 @@ export default async function HandymanCampanarPage({ params }: Props) {
       desc: isEs
         ? "Estantes, espejos, cuadros, cortinas y accesorios de baño."
         : "Shelves, mirrors, pictures, curtains and bathroom accessories.",
-      href: `/${locale}/montaje-estanterias-valencia`,
+      href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
       icon: <Ruler className="h-6 w-6" />,
     },
     {

@@ -571,7 +571,7 @@ export default async function DoorSealReplacementPage({
             },
             {
               title: "Ajuste de cerradero",
-              href: `/${locale}/services/doors/strike-plate-adjustment`,
+              href: `/${locale}/services/doors/latch-adjustment`,
             },
             {
               title: "Cambio de manilla",

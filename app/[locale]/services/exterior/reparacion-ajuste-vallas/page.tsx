@@ -561,7 +561,7 @@ export default async function ReparacionAjusteVallasPage({
             },
             {
               title: "Ajuste de puerta exterior",
-              href: `/${locale}/services/exterior/ajuste-puerta-exterior`,
+              href: `/${locale}/services/exterior/ajuste-porton-exterio`,
             },
             {
               title: "Montaje exterior en pared",
@@ -569,11 +569,11 @@ export default async function ReparacionAjusteVallasPage({
             },
             {
               title: "Sellado exterior",
-              href: `/${locale}/services/exterior/sellado-exterior`,
+              href: `/${locale}/services/exterior/sellado-impermeable-exterior`,
             },
             {
               title: "Instalación de buzón",
-              href: `/${locale}/services/exterior/instalacion-buzon`,
+              href: `/${locale}/services/exterior/montaje-pared-exterior`,
             },
             {
               title: "Servicios handyman",

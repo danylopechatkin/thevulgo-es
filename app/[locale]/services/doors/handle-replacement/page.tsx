@@ -568,7 +568,7 @@ export default async function HandleReplacementPage({ params }: PageProps) {
             },
             {
               title: "Cambio de cilindro",
-              href: `/${locale}/services/doors/lock-cylinder-replacement`,
+              href: `/${locale}/services/doors/cambio-bombin-cerradura`,
             },
             {
               title: "Servicios handyman",

@@ -52,16 +52,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: {
-      canonical: `${siteUrl}/${locale}/instalacion-tira-led-valencia`,
+      canonical: `${siteUrl}/${locale}/services/electrical/instalacion-tira-led-valencia`,
       languages: {
-        es: `${siteUrl}/es/instalacion-tira-led-valencia`,
-        en: `${siteUrl}/en/instalacion-tira-led-valencia`,
+        es: `${siteUrl}/es/services/electrical/instalacion-tira-led-valencia`,
+        en: `${siteUrl}/en/services/electrical/instalacion-tira-led-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/instalacion-tira-led-valencia`,
+      url: `${siteUrl}/${locale}/services/electrical/instalacion-tira-led-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -380,7 +380,7 @@ export default async function LedStripInstallationValenciaPage({
     ? [
         {
           title: "Montaje eléctrico básico",
-          href: `/${locale}/montaje-electrico-basico-valencia`,
+          href: `/${locale}/services/electrical/montaje-electrico-basico-valencia`,
         },
         {
           title: "Cambio de enchufe",
@@ -396,7 +396,7 @@ export default async function LedStripInstallationValenciaPage({
         },
         {
           title: "Muebles TV y multimedia",
-          href: `/${locale}/montaje-muebles-tv-multimedia-valencia`,
+          href: `/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
         },
         {
           title: "Servicios handyman Valencia",
@@ -406,7 +406,7 @@ export default async function LedStripInstallationValenciaPage({
     : [
         {
           title: "Basic electrical installation",
-          href: `/${locale}/montaje-electrico-basico-valencia`,
+          href: `/${locale}/services/electrical/montaje-electrico-basico-valencia`,
         },
         {
           title: "Socket replacement",
@@ -422,7 +422,7 @@ export default async function LedStripInstallationValenciaPage({
         },
         {
           title: "TV and media furniture",
-          href: `/${locale}/montaje-muebles-tv-multimedia-valencia`,
+          href: `/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
         },
         {
           title: "Handyman services Valencia",
@@ -505,7 +505,7 @@ export default async function LedStripInstallationValenciaPage({
         name: isEs
           ? "Instalación de Tira LED en Valencia"
           : "LED Strip Installation in Valencia",
-        item: `${siteUrl}/${locale}/instalacion-tira-led-valencia`,
+        item: `${siteUrl}/${locale}/services/electrical/instalacion-tira-led-valencia`,
       },
     ],
   };

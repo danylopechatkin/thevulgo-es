@@ -572,11 +572,11 @@ export default async function InstalacionSoportesExterioresPage({
             },
             {
               title: "Sellado exterior",
-              href: `/${locale}/services/exterior/sellado-exterior`,
+              href: `/${locale}/services/exterior/sellado-impermeable-exterior`,
             },
             {
               title: "Instalación de buzón",
-              href: `/${locale}/services/exterior/instalacion-buzon`,
+              href: `/${locale}/services/exterior/montaje-pared-exterior`,
             },
             {
               title: "Servicios handyman",

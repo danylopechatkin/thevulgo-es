@@ -561,11 +561,11 @@ export default async function MontajeParedExteriorPage({
             },
             {
               title: "Instalación de buzón",
-              href: `/${locale}/services/exterior/instalacion-buzon`,
+              href: `/${locale}/services/exterior/montaje-pared-exterior`,
             },
             {
               title: "Números de casa y señales",
-              href: `/${locale}/services/exterior/instalacion-numero-casa`,
+              href: `/${locale}/services/exterior/montaje-pared-exterior`,
             },
             {
               title: "Reparación de herrajes exteriores",
@@ -573,7 +573,7 @@ export default async function MontajeParedExteriorPage({
             },
             {
               title: "Sellado exterior",
-              href: `/${locale}/services/exterior/sellado-exterior`,
+              href: `/${locale}/services/exterior/sellado-impermeable-exterior`,
             },
             {
               title: "Servicios handyman",

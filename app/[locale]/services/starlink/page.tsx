@@ -207,7 +207,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/starlink-internet`,
+      canonical: `${baseUrl}/${locale}/services/starlink`,
       languages: {
         es: `${baseUrl}/es/services/starlink-internet`,
         en: `${baseUrl}/en/services/starlink-internet`,

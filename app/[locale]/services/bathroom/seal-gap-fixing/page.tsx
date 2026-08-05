@@ -565,7 +565,7 @@ export default async function SealGapFixingPage({ params }: PageProps) {
             },
             {
               title: "Instalación de mueble bajo lavabo",
-              href: `/${locale}/services/bathroom/vanity-unit-installation`,
+              href: `/${locale}/services/bathroom/vanity-unit-installation-valencia`,
             },
             {
               title: "Instalación de accesorios de baño",

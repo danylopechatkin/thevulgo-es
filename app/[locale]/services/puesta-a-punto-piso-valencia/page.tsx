@@ -338,16 +338,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/${locale}/${slug}`,
+      canonical: `${baseUrl}/${locale}/services/${slug}`,
       languages: {
-        es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        es: `${baseUrl}/es/services/${slug}`,
+        en: `${baseUrl}/en/services/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/${slug}`,
+      url: `${baseUrl}/${locale}/services/${slug}`,
       type: "website",
     },
   };
@@ -487,7 +487,7 @@ export default async function PuestaAPuntoPisoValenciaPage({ params }: Props) {
         "@type": "ListItem",
         position: 3,
         name: isEs ? "Puesta a punto de viviendas" : "Apartment preparation",
-        item: `${baseUrl}/${locale}/${slug}`,
+        item: `${baseUrl}/${locale}/services/${slug}`,
       },
     ],
   };
@@ -1046,4 +1046,3 @@ export default async function PuestaAPuntoPisoValenciaPage({ params }: Props) {
     </main>
   );
 }
-

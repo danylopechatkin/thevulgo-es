@@ -562,19 +562,19 @@ export default async function BathroomAccessoryInstallationPage({
             },
             {
               title: "Instalación de toallero",
-              href: `/${locale}/services/bathroom/towel-holder-installation`,
+              href: `/${locale}/services/bathroom/towel-holder-installation-valencia`,
             },
             {
               title: "Instalación de portarrollos",
-              href: `/${locale}/services/bathroom/toilet-paper-holder-installation`,
+              href: `/${locale}/services/bathroom/toilet-paper-holder-installation-valencia`,
             },
             {
               title: "Instalación de estantería de baño",
-              href: `/${locale}/services/bathroom/shelf-installation`,
+              href: `/${locale}/services/bathroom/shelf-installation-valencia`,
             },
             {
               title: "Instalación de espejo de baño",
-              href: `/${locale}/services/bathroom/mirror-installation`,
+              href: `/${locale}/services/bathroom/mirror-installation-valencia`,
             },
             {
               title: "Servicios handyman",

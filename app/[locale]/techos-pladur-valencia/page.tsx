@@ -130,7 +130,7 @@ export default async function TechosPladurValenciaPage({ params }: Props) {
       desc: isEs
         ? "Paredes interiores, separaciones, trasdosados y ajustes."
         : "Interior walls, partitions, linings and adjustments.",
-      href: `/${locale}/paredes-pladur-valencia`,
+      href: `/${locale}/pladur-valencia`,
     },
     {
       title: isEs ? "Reparación de pladur" : "Drywall repair",

@@ -899,21 +899,21 @@ export default async function InstalarToldoValenciaPage({ params }: Props) {
               {[
                 {
                   title: content.isEs ? "Montaje de TV" : "TV mounting",
-                  href: `/${locale}/services/montaje-tv-valencia`,
+                  href: `/${locale}/montaje-tv-valencia`,
                   icon: Home,
                 },
                 {
                   title: content.isEs
                     ? "Montaje de muebles"
                     : "Furniture assembly",
-                  href: `/${locale}/services/montaje-muebles-valencia`,
+                  href: `/${locale}/montaje-muebles-valencia`,
                   icon: Hammer,
                 },
                 {
                   title: content.isEs
                     ? "Instalar lámparas"
                     : "Light installation",
-                  href: `/${locale}/services/instalacion-lampara-valencia`,
+                  href: `/${locale}/instalacion-lampara-valencia`,
                   icon: Sparkles,
                 },
                 {

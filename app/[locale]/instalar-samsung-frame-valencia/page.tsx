@@ -503,7 +503,7 @@ export default async function Page({ params }: Props) {
     },
     {
       label: isEs ? "Instalar soundbar Valencia" : "Soundbar mounting Valencia",
-      href: `/${locale}/instalar-soundbar-valencia`,
+      href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
     },
     {
       label: isEs ? "Montaje TV 65 pulgadas" : "65 inch TV mounting",

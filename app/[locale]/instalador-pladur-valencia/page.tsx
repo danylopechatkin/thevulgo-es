@@ -134,7 +134,7 @@ export default async function InstaladorPladurValenciaPage({ params }: Props) {
       desc: isEs
         ? "Tabiques, trasdosados, cerramientos ligeros y ajustes."
         : "Partitions, wall linings, light enclosures and adjustments.",
-      href: `/${locale}/paredes-pladur-valencia`,
+      href: `/${locale}/pladur-valencia`,
     },
     {
       title: isEs ? "Reparación de pladur" : "Drywall repair",

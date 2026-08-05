@@ -572,7 +572,7 @@ export default async function CambioBisagrasPuertaPage({
             },
             {
               title: "Ajuste de cerradero",
-              href: `/${locale}/services/doors/strike-plate-adjustment`,
+              href: `/${locale}/services/doors/latch-adjustment`,
             },
             {
               title: "Cambio de manilla",

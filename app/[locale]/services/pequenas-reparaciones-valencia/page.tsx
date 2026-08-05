@@ -106,7 +106,7 @@ const relatedLinks = [
     en: "Picture and mirror hanging",
   },
   {
-    href: "/instalacion-estanterias-valencia",
+    href: "/services/furniture/instalacion-estanterias-valencia",
     es: "Instalación de estanterías",
     en: "Shelf installation",
   },

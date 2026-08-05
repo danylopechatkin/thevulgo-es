@@ -578,11 +578,11 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
           {[
             {
               title: "Instalar enchufe para TV",
-              href: `/${locale}/instalar-enchufe-valencia`,
+              href: `/${locale}/cambio-enchufe-valencia`,
             },
             {
               title: "Ocultar cables de TV",
-              href: `/${locale}/ocultar-cables-tv-valencia`,
+              href: `/${locale}/ocultar-cables-valencia`,
             },
             {
               title: "Montaje de proyector",
@@ -590,7 +590,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             },
             {
               title: "Instalar soundbar",
-              href: `/${locale}/instalar-soundbar-valencia`,
+              href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
             },
             {
               title: "Montaje de muebles",

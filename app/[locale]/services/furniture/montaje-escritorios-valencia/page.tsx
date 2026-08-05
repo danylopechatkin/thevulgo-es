@@ -34,9 +34,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje de escritorios, mesas de trabajo y zonas compactas de oficina en casa en Valencia desde 39€. Alineación, estabilidad y organización básica de cables."
       : "Desk, work table and compact home office assembly in Valencia from €39. Careful alignment, stable setup and basic cable organization.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-escritorios-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/montaje-escritorios-valencia`,
       languages: {
-        es: `${siteUrl}/es/montaje-escritorios-valencia`,
+        es: `${siteUrl}/es/services/furniture/montaje-escritorios-valencia`,
       },
     },
     openGraph: {
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje limpio de escritorios, mesas de trabajo y zonas de oficina en casa en Valencia."
         : "Clean assembly of desks, work tables and home office setups in Valencia.",
-      url: `${siteUrl}/${locale}/montaje-escritorios-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/montaje-escritorios-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -184,7 +184,7 @@ export default async function DeskAssemblyValenciaPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Escritorios en Valencia",
-        item: `${siteUrl}/${locale}/montaje-escritorios-valencia`,
+        item: `${siteUrl}/${locale}/services/furniture/montaje-escritorios-valencia`,
       },
     ],
   };
@@ -523,11 +523,11 @@ export default async function DeskAssemblyValenciaPage({ params }: PageProps) {
             },
             {
               title: "Montaje de cómodas y cajoneras",
-              href: `/${locale}/montaje-comodas-cajoneras-valencia`,
+              href: `/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
             },
             {
               title: "Montaje de estanterías",
-              href: `/${locale}/montaje-estanterias-valencia`,
+              href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
             },
             {
               title: "Ocultar cables en Valencia",
@@ -535,7 +535,7 @@ export default async function DeskAssemblyValenciaPage({ params }: PageProps) {
             },
             {
               title: "Montaje de muebles TV y multimedia",
-              href: `/${locale}/montaje-muebles-tv-multimedia-valencia`,
+              href: `/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
             },
             {
               title: "Servicios handyman Valencia",

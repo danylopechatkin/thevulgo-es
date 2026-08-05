@@ -1280,12 +1280,12 @@ export default async function InstalacionToldoBalconValenciaPage({
                 titleEn: "Manual awning installation",
               },
               {
-                href: `/${locale}/services/instalacion-estanterias-valencia`,
+                href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
                 titleEs: "Instalación de estanterías",
                 titleEn: "Shelf installation",
               },
               {
-                href: `/${locale}/services/instalacion-cortinas-valencia`,
+                href: `/${locale}/services/repairs/curtain-rail-adjustments`,
                 titleEs: "Instalación de cortinas",
                 titleEn: "Curtain installation",
               },

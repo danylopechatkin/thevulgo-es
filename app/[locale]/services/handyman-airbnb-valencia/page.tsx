@@ -150,16 +150,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/${locale}/${slug}`,
+      canonical: `${baseUrl}/${locale}/services/${slug}`,
       languages: {
-        es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        es: `${baseUrl}/es/services/${slug}`,
+        en: `${baseUrl}/en/services/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/${slug}`,
+      url: `${baseUrl}/${locale}/services/${slug}`,
       type: "website",
     },
   };

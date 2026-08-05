@@ -566,7 +566,7 @@ export default async function ReparacionHerrajesExteriorPage({
             },
             {
               title: "Ajuste de portón exterior",
-              href: `/${locale}/services/exterior/ajuste-porton-exterior`,
+              href: `/${locale}/services/exterior/ajuste-porton-exterio`,
             },
             {
               title: "Montaje exterior en pared",
@@ -574,7 +574,7 @@ export default async function ReparacionHerrajesExteriorPage({
             },
             {
               title: "Sellado exterior",
-              href: `/${locale}/services/exterior/sellado-exterior`,
+              href: `/${locale}/services/exterior/sellado-impermeable-exterior`,
             },
             {
               title: "Servicios handyman",

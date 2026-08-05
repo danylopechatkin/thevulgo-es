@@ -35,9 +35,9 @@ export async function generateMetadata({
       ? "Instalación profesional de estanterías en Valencia. Montaje de baldas, estantes flotantes, repisas y muebles de pared con nivelación precisa y acabado limpio."
       : "Professional shelf installation in Valencia. Wall shelves, floating shelves, ledges and wall-mounted storage with precise leveling and clean finish.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/instalacion-estanterias-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/instalacion-estanterias-valencia`,
       languages: {
-        es: `${siteUrl}/es/instalacion-estanterias-valencia`,
+        es: `${siteUrl}/es/services/furniture/instalacion-estanterias-valencia`,
       },
     },
     openGraph: {
@@ -47,7 +47,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje limpio y seguro de estanterías, baldas y estantes flotantes en Valencia."
         : "Clean and safe shelf mounting in Valencia.",
-      url: `${siteUrl}/${locale}/instalacion-estanterias-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/instalacion-estanterias-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -186,7 +186,7 @@ export default async function ShelfInstallationValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Instalación de Estanterías en Valencia",
-        item: `${siteUrl}/${locale}/instalacion-estanterias-valencia`,
+        item: `${siteUrl}/${locale}/services/furniture/instalacion-estanterias-valencia`,
       },
     ],
   };
@@ -589,7 +589,7 @@ export default async function ShelfInstallationValenciaPage({
             },
             {
               title: "Instalar espejo en pared",
-              href: `/${locale}/instalar-espejo-valencia`,
+              href: `/${locale}/services/bathroom/mirror-installation-valencia`,
             },
             {
               title: "Montaje de TV en Valencia",
@@ -597,7 +597,7 @@ export default async function ShelfInstallationValenciaPage({
             },
             {
               title: "Instalar barra de cortina",
-              href: `/${locale}/instalar-barra-cortina-valencia`,
+              href: `/${locale}/services/repairs/curtain-rail-adjustments`,
             },
             {
               title: "Servicios handyman Valencia",

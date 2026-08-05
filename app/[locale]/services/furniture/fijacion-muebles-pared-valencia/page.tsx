@@ -33,9 +33,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Fijación profesional anti-vuelco de muebles a la pared en Valencia desde 29€. Armarios, estanterías, muebles altos y almacenamiento con anclajes adecuados."
       : "Professional anti-tip furniture wall anchoring in Valencia from €29. Wardrobes, shelves, tall cabinets and storage units with suitable anchors.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/fijacion-muebles-pared-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
       languages: {
-        es: `${siteUrl}/es/fijacion-muebles-pared-valencia`,
+        es: `${siteUrl}/es/services/furniture/fijacion-muebles-pared-valencia`,
       },
     },
     openGraph: {
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Fijación anti-vuelco para armarios, estanterías y muebles altos en Valencia."
         : "Anti-tip anchoring for wardrobes, shelves and tall furniture in Valencia.",
-      url: `${siteUrl}/${locale}/fijacion-muebles-pared-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -185,7 +185,7 @@ export default async function FurnitureWallAnchoringValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Fijación de Muebles a la Pared en Valencia",
-        item: `${siteUrl}/${locale}/fijacion-muebles-pared-valencia`,
+        item: `${siteUrl}/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
       },
     ],
   };
@@ -521,11 +521,11 @@ export default async function FurnitureWallAnchoringValenciaPage({
             },
             {
               title: "Montaje de estanterías",
-              href: `/${locale}/montaje-estanterias-valencia`,
+              href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
             },
             {
               title: "Montaje de cómodas y cajoneras",
-              href: `/${locale}/montaje-comodas-cajoneras-valencia`,
+              href: `/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
             },
             {
               title: "Montaje de muebles IKEA",
@@ -533,7 +533,7 @@ export default async function FurnitureWallAnchoringValenciaPage({
             },
             {
               title: "Instalación de estanterías en pared",
-              href: `/${locale}/instalacion-estanterias-valencia`,
+              href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
             },
             {
               title: "Servicios handyman Valencia",

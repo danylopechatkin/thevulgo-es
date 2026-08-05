@@ -569,7 +569,7 @@ export default async function LatchAdjustmentPage({ params }: PageProps) {
             },
             {
               title: "Ajuste de cerradero",
-              href: `/${locale}/services/doors/strike-plate-adjustment`,
+              href: `/${locale}/services/doors/latch-adjustment`,
             },
             {
               title: "Apriete de bisagras",

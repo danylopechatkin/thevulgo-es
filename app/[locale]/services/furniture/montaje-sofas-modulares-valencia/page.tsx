@@ -33,9 +33,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje simple de sofás y piezas modulares en Valencia desde 39€. Unión de módulos, patas, chaise longue, ajuste de piezas y posición estable."
       : "Simple sofa and modular piece assembly in Valencia from €39. Module connection, legs, chaise longue, piece adjustment and stable positioning.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-sofas-modulares-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/montaje-sofas-modulares-valencia`,
       languages: {
-        es: `${siteUrl}/es/montaje-sofas-modulares-valencia`,
+        es: `${siteUrl}/es/services/furniture/montaje-sofas-modulares-valencia`,
       },
     },
     openGraph: {
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje simple de sofás, chaise longue y piezas modulares en Valencia."
         : "Simple assembly of sofas, chaise longue and modular pieces in Valencia.",
-      url: `${siteUrl}/${locale}/montaje-sofas-modulares-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/montaje-sofas-modulares-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -185,7 +185,7 @@ export default async function ModularSofaAssemblyValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Sofás Modulares en Valencia",
-        item: `${siteUrl}/${locale}/montaje-sofas-modulares-valencia`,
+        item: `${siteUrl}/${locale}/services/furniture/montaje-sofas-modulares-valencia`,
       },
     ],
   };
@@ -523,19 +523,19 @@ export default async function ModularSofaAssemblyValenciaPage({
             },
             {
               title: "Montaje de cama",
-              href: `/${locale}/montaje-cama-valencia`,
+              href: `/${locale}/services/furniture/montaje-cama-valencia`,
             },
             {
               title: "Montaje de mesas de comedor",
-              href: `/${locale}/montaje-mesas-comedor-valencia`,
+              href: `/${locale}/services/furniture/montaje-mesas-comedor-valencia`,
             },
             {
               title: "Montaje de aparadores",
-              href: `/${locale}/montaje-aparadores-muebles-auxiliares-valencia`,
+              href: `/${locale}/services/furniture/montaje-aparadores-muebles-auxiliares-valencia`,
             },
             {
               title: "Montaje de muebles TV",
-              href: `/${locale}/montaje-muebles-tv-multimedia-valencia`,
+              href: `/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
             },
             {
               title: "Servicios handyman Valencia",

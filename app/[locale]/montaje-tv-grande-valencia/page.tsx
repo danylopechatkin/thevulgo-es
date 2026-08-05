@@ -585,19 +585,19 @@ export default async function LargeTvMountingValenciaPage({
             },
             {
               title: "Ocultar cables de TV",
-              href: `/${locale}/ocultar-cables-tv-valencia`,
+              href: `/${locale}/ocultar-cables-valencia`,
             },
             {
               title: "Instalar enchufe para TV",
-              href: `/${locale}/instalar-enchufe-valencia`,
+              href: `/${locale}/cambio-enchufe-valencia`,
             },
             {
               title: "Instalar soundbar",
-              href: `/${locale}/instalar-soundbar-valencia`,
+              href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
             },
             {
               title: "Montaje Samsung Frame",
-              href: `/${locale}/montaje-samsung-frame-valencia`,
+              href: `/${locale}/montaje-tv-samsung-frame-valencia`,
             },
             {
               title: "Servicios handyman Valencia",

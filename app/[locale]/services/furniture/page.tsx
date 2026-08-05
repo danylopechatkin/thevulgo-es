@@ -178,15 +178,15 @@ export default async function FurniturePage({ params }: Props) {
       },
       {
         name: isEs ? "Montaje de cama Valencia" : "Bed assembly Valencia",
-        url: `${baseUrl}/${locale}/montaje-cama-valencia`,
+        url: `${baseUrl}/${locale}/services/furniture/montaje-cama-valencia`,
       },
       {
         name: isEs ? "Montaje de estanterías Valencia" : "Shelving assembly Valencia",
-        url: `${baseUrl}/${locale}/montaje-estanterias-valencia`,
+        url: `${baseUrl}/${locale}/services/furniture/montaje-estanterias-valencia`,
       },
       {
         name: isEs ? "Fijación de muebles a pared Valencia" : "Furniture wall fixing Valencia",
-        url: `${baseUrl}/${locale}/fijacion-muebles-pared-valencia`,
+        url: `${baseUrl}/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
       },
     ].map((item, index) => ({
       "@type": "ListItem",

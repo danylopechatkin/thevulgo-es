@@ -518,7 +518,7 @@ export default async function SocketReplacementPage({
             },
             {
               title: "Apliques de pared",
-              href: `/${locale}/instalacion-apliques-pared-valencia`,
+              href: `/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
             },
             {
               title: "Lámparas colgantes",

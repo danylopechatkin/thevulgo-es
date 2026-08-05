@@ -33,9 +33,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje profesional de camas en Valencia desde 49€. Camas estándar, camas IKEA, estructuras, somier, cabecero, cajones, ajuste y alineación estable."
       : "Professional bed assembly in Valencia from €49. Standard beds, IKEA beds, frames, slats, headboards, drawers, careful adjustment and stable alignment.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-cama-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/montaje-cama-valencia`,
       languages: {
-        es: `${siteUrl}/es/montaje-cama-valencia`,
+        es: `${siteUrl}/es/services/furniture/montaje-cama-valencia`,
       },
     },
     openGraph: {
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje limpio y estable de camas estándar, IKEA y estructuras flat-pack en Valencia."
         : "Clean and stable bed assembly for standard, IKEA and flat-pack bed frames in Valencia.",
-      url: `${siteUrl}/${locale}/montaje-cama-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/montaje-cama-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -183,7 +183,7 @@ export default async function BedAssemblyValenciaPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Cama en Valencia",
-        item: `${siteUrl}/${locale}/montaje-cama-valencia`,
+        item: `${siteUrl}/${locale}/services/furniture/montaje-cama-valencia`,
       },
     ],
   };
@@ -529,7 +529,7 @@ export default async function BedAssemblyValenciaPage({ params }: PageProps) {
             },
             {
               title: "Instalación de estanterías",
-              href: `/${locale}/instalacion-estanterias-valencia`,
+              href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
             },
             {
               title: "Montaje de TV en Valencia",

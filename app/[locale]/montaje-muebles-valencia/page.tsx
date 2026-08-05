@@ -135,7 +135,7 @@ export default async function MontajeMueblesValenciaPage({ params }: Props) {
       desc: isEs
         ? "Armarios de dormitorio, Pax, puertas, cajones y accesorios."
         : "Bedroom wardrobes, Pax, doors, drawers and accessories.",
-      href: `/${locale}/montaje-armarios-valencia`,
+      href: `/${locale}/instalacion-armarios-valencia`,
     },
     {
       title: isEs ? "Instalación de armarios" : "Wardrobe installation",
@@ -149,21 +149,21 @@ export default async function MontajeMueblesValenciaPage({ params }: Props) {
       desc: isEs
         ? "Camas, canapés, estructuras, cabeceros y muebles de dormitorio."
         : "Beds, storage beds, frames, headboards and bedroom furniture.",
-      href: `/${locale}/montaje-cama-valencia`,
+      href: `/${locale}/services/furniture/montaje-cama-valencia`,
     },
     {
       title: isEs ? "Montaje de estanterías" : "Shelf assembly",
       desc: isEs
         ? "Estanterías, baldas, librerías y fijación a pared."
         : "Shelving units, shelves, bookcases and wall fixing.",
-      href: `/${locale}/montaje-estanterias-valencia`,
+      href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
     },
     {
       title: isEs ? "Fijación de muebles a pared" : "Wall furniture fixing",
       desc: isEs
         ? "Fijación segura para muebles altos, armarios y estanterías."
         : "Secure fixing for tall furniture, wardrobes and shelves.",
-      href: `/${locale}/fijacion-muebles-pared-valencia`,
+      href: `/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
     },
   ];
 

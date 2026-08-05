@@ -130,7 +130,7 @@ export default async function InstalarLamparaValenciaPage({ params }: Props) {
       desc: isEs
         ? "Apliques de pared, luces decorativas y puntos de luz."
         : "Wall lights, decorative lights and light points.",
-      href: `/${locale}/instalacion-apliques-pared-valencia`,
+      href: `/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
     },
     {
       title: isEs ? "Cambio de lámpara de techo" : "Ceiling light replacement",
@@ -144,7 +144,7 @@ export default async function InstalarLamparaValenciaPage({ params }: Props) {
       desc: isEs
         ? "Tiras LED, iluminación decorativa y pequeños ajustes."
         : "LED strips, decorative lighting and small adjustments.",
-      href: `/${locale}/instalacion-tira-led-valencia`,
+      href: `/${locale}/services/electrical/instalacion-tira-led-valencia`,
     },
     {
       title: isEs ? "Electricista en Valencia" : "Electrician in Valencia",

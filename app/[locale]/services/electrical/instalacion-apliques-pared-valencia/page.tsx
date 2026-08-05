@@ -34,9 +34,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Instalación limpia y segura de apliques de pared en Valencia desde 35€. Iluminación montada en pared para casas, apartamentos, dormitorios, pasillos y salones."
       : "Clean and safe wall light installation in Valencia from €35. Wall-mounted lighting for homes, apartments, bedrooms, hallways and living rooms.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/instalacion-apliques-pared-valencia`,
+      canonical: `${siteUrl}/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
       languages: {
-        es: `${siteUrl}/es/instalacion-apliques-pared-valencia`,
+        es: `${siteUrl}/es/services/electrical/instalacion-apliques-pared-valencia`,
       },
     },
     openGraph: {
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Instalación limpia y segura de iluminación montada en pared en Valencia."
         : "Clean and safe wall-mounted lighting installation in Valencia.",
-      url: `${siteUrl}/${locale}/instalacion-apliques-pared-valencia`,
+      url: `${siteUrl}/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -186,7 +186,7 @@ export default async function WallLightInstallationValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Instalación de Apliques de Pared en Valencia",
-        item: `${siteUrl}/${locale}/instalacion-apliques-pared-valencia`,
+        item: `${siteUrl}/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
       },
     ],
   };
@@ -524,11 +524,11 @@ export default async function WallLightInstallationValenciaPage({
             },
             {
               title: "Instalación de enchufes",
-              href: `/${locale}/instalacion-enchufes-valencia`,
+              href: `/${locale}/cambio-enchufe-valencia`,
             },
             {
               title: "Instalación de interruptores",
-              href: `/${locale}/instalacion-interruptores-valencia`,
+              href: `/${locale}/cambio-interruptor-valencia`,
             },
             {
               title: "Ocultar cables en Valencia",

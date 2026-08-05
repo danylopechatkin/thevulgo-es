@@ -712,19 +712,19 @@ export default async function ElectricAwningPage({ params }: Props) {
                       : "Manual awning installation",
                   },
                   {
-                    href: `/${locale}/services/motorizacion-toldo-valencia`,
+                    href: `/${locale}/services/instalacion-toldo-electrico-valencia`,
                     label: isEs
                       ? "Motorización de toldo"
                       : "Awning motorization",
                   },
                   {
-                    href: `/${locale}/services/instalacion-toldo-brazo-articulado-valencia`,
+                    href: `/${locale}/services/instalacion-toldos-valencia`,
                     label: isEs
                       ? "Toldo de brazo articulado"
                       : "Folding arm awning",
                   },
                   {
-                    href: `/${locale}/services/reparacion-toldo-valencia`,
+                    href: `/${locale}/services/instalacion-toldos-valencia`,
                     label: isEs
                       ? "Reparación de toldo"
                       : "Awning repair",
@@ -734,11 +734,11 @@ export default async function ElectricAwningPage({ params }: Props) {
                     label: isEs ? "Handyman Valencia" : "Handyman Valencia",
                   },
                   {
-                    href: `/${locale}/services/montaje-tv-valencia`,
+                    href: `/${locale}/montaje-tv-valencia`,
                     label: isEs ? "Montaje TV Valencia" : "TV mounting Valencia",
                   },
                   {
-                    href: `/${locale}/services/montaje-muebles-valencia`,
+                    href: `/${locale}/montaje-muebles-valencia`,
                     label: isEs
                       ? "Montaje de muebles Valencia"
                       : "Furniture assembly Valencia",
@@ -823,4 +823,4 @@ export default async function ElectricAwningPage({ params }: Props) {
       </section>
     </main>
   );
-}   
+}

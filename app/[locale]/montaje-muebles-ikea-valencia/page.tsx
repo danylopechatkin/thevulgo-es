@@ -816,7 +816,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
                 },
                 {
                   title: "Instalación de estanterías",
-                  href: `/${locale}/instalacion-estanterias-valencia`,
+                  href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
                 },
                 {
                   title: "Colgar cuadros en Valencia",
@@ -824,7 +824,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
                 },
                 {
                   title: "Instalar espejo en pared",
-                  href: `/${locale}/instalar-espejo-valencia`,
+                  href: `/${locale}/services/bathroom/mirror-installation-valencia`,
                 },
                 {
                   title: "Montaje de TV en Valencia",
@@ -842,7 +842,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
                 },
                 {
                   title: "Shelf installation",
-                  href: `/${locale}/instalacion-estanterias-valencia`,
+                  href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
                 },
                 {
                   title: "Picture hanging in Valencia",
@@ -850,7 +850,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
                 },
                 {
                   title: "Mirror installation",
-                  href: `/${locale}/instalar-espejo-valencia`,
+                  href: `/${locale}/services/bathroom/mirror-installation-valencia`,
                 },
                 {
                   title: "TV mounting in Valencia",

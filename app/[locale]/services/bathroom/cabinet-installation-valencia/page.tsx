@@ -622,7 +622,7 @@ export default async function BathroomCabinetInstallationValenciaPage({
             },
             {
               title: "Renovación de silicona",
-              href: `/${locale}/services/bathroom/silicone-renewal-valencia`,
+              href: `/${locale}/services/bathroom/silicone-renewal`,
             },
             {
               title: "Servicios handyman Valencia",

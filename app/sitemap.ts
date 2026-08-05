@@ -32,6 +32,7 @@ const categoryPages = [
   "services/redes",
   "services/seguridad-comercial",
   "services/starlink",
+
 ] as const;
 
 /**
@@ -43,6 +44,9 @@ const categoryPages = [
  * app/[locale]/handyman-valencia/page.tsx
  */
 const rootSeoPages = [
+  // Legal
+  "privacy",
+
   // Handyman
   "handyman-valencia",
   "handyman-benimaclet",
@@ -57,18 +61,12 @@ const rootSeoPages = [
   "instalar-lampara-valencia",
   "instalacion-lampara-valencia",
   "instalacion-lamparas-colgantes-valencia",
-  "instalacion-apliques-pared-valencia",
   "cambio-interruptor-valencia",
   "cambio-enchufe-valencia",
-  "montaje-electrico-basico-valencia",
-  "instalacion-tira-led-valencia",
-  "cambio-extractor-valencia",
-  "cambio-luz-bano-valencia",
   "cambio-lampara-techo-valencia",
 
   // Pictures and shelves
   "colgar-cuadros-valencia",
-  "instalacion-estanterias-valencia",
 
   // TV mounting and home cinema
   "montaje-tv-valencia",
@@ -80,7 +78,6 @@ const rootSeoPages = [
   "instalar-proyector-techo-valencia",
   "home-cinema-valencia",
   "ocultar-cables-valencia",
-  "instalar-soundbar-valencia",
 
   // TV sizes and special models
   "montaje-tv-65-pulgadas-valencia",
@@ -98,7 +95,6 @@ const rootSeoPages = [
   "techos-pladur-valencia",
   "instalacion-pladur-valencia",
   "instalador-pladur-valencia",
-  "paredes-pladur-valencia",
   "contratista-pladur-valencia",
   "reformas-pladur-valencia",
   "empresa-pladur-valencia",
@@ -113,19 +109,7 @@ const rootSeoPages = [
   "montaje-muebles-valencia",
   "montaje-muebles-ikea-valencia",
   "montaje-armario-valencia",
-  "montaje-armarios-valencia",
   "instalacion-armarios-valencia",
-  "armarios-empotrados-valencia",
-  "montaje-cama-valencia",
-  "montaje-comodas-cajoneras-valencia",
-  "montaje-estanterias-valencia",
-  "montaje-muebles-tv-multimedia-valencia",
-  "montaje-escritorios-valencia",
-  "montaje-mesas-comedor-valencia",
-  "montaje-aparadores-muebles-auxiliares-valencia",
-  "montaje-sofas-modulares-valencia",
-  "fijacion-muebles-pared-valencia",
-  "preparacion-muebles-mudanza-valencia",
 
   // Guides
   "guias",
@@ -168,7 +152,6 @@ const serviceSeoPages = [
   // Airbnb
   "services/mantenimiento-airbnb-valencia",
   "services/reparaciones-airbnb-valencia",
-  "services/preparacion-piso-airbnb-valencia",
   "services/handyman-airbnb-valencia",
 
   // Ceiling fans
@@ -184,6 +167,29 @@ const serviceSeoPages = [
  * Вложенные страницы внутри стандартных категорий services.
  */
 const nestedServicePages = [
+  // Electrical
+  "services/electrical/instalacion-apliques-pared-valencia",
+  "services/electrical/montaje-electrico-basico-valencia",
+  "services/electrical/instalacion-tira-led-valencia",
+  "services/electrical/cambio-extractor-valencia",
+  "services/electrical/cambio-luz-bano-valencia",
+
+  // Furniture
+  "services/furniture/instalacion-estanterias-valencia",
+  "services/furniture/montaje-cama-valencia",
+  "services/furniture/montaje-comodas-cajoneras-valencia",
+  "services/furniture/montaje-estanterias-valencia",
+  "services/furniture/montaje-muebles-tv-multimedia-valencia",
+  "services/furniture/montaje-escritorios-valencia",
+  "services/furniture/montaje-mesas-comedor-valencia",
+  "services/furniture/montaje-aparadores-muebles-auxiliares-valencia",
+  "services/furniture/montaje-sofas-modulares-valencia",
+  "services/furniture/fijacion-muebles-pared-valencia",
+  "services/furniture/preparacion-muebles-mudanza-valencia",
+
+  // TV mounting
+  "services/tv-mounting/instalar-soundbar-valencia",
+
   // Drywall
   "services/drywall/small-hole-repair",
   "services/drywall/medium-wall-patching",
@@ -230,15 +236,24 @@ const nestedServicePages = [
   "services/doors/handle-replacement",
   "services/doors/loose-handle-fixing",
   "services/doors/latch-adjustment",
-  "services/doors/strike-plate-adjustment",
   "services/doors/hinge-tightening",
-  "services/doors/cambio-burlete-puerta",
   "services/doors/cambio-bisagras-puerta",
   "services/doors/ajuste-cierrapuertas",
   "services/doors/instalacion-tope-puerta",
   "services/doors/cambio-bombin-cerradura",
   "services/doors/herrajes-puertas-interiores",
   "services/doors/reparacion-puertas-varios",
+  "services/doors/door-seal-replacement",
+
+  // Exterior
+  "services/exterior/ajuste-accesorios-pergola-sombra",
+  "services/exterior/ajuste-porton-exterio",
+  "services/exterior/instalacion-soportes-exteriores",
+  "services/exterior/montaje-pared-exterior",
+  "services/exterior/reparacion-ajuste-vallas",
+  "services/exterior/reparacion-herrajes-exterior",
+  "services/exterior/retoques-fachada",
+  "services/exterior/sellado-impermeable-exterior",
 
   // Bathroom
   "services/bathroom/cabinet-installation-valencia",

@@ -142,14 +142,14 @@ export default async function InstalacionSoporteTvValenciaPage({
       desc: isEs
         ? "Canaletas, organización de cables y acabado visual más limpio."
         : "Cable channels, cable organization and cleaner visual finish.",
-      href: `/${locale}/ocultar-cables-tv-valencia`,
+      href: `/${locale}/ocultar-cables-valencia`,
     },
     {
       title: isEs ? "Instalación de soundbar" : "Soundbar installation",
       desc: isEs
         ? "Montaje de barra de sonido bajo la TV o en pared."
         : "Soundbar mounting under the TV or on the wall.",
-      href: `/${locale}/instalacion-soundbar-valencia`,
+      href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
     },
     {
       title: isEs ? "Home cinema" : "Home cinema",

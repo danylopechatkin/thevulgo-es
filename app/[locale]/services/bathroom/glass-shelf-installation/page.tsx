@@ -563,7 +563,7 @@ export default async function GlassShelfInstallationPage({
             },
             {
               title: "Instalación de estantería de baño",
-              href: `/${locale}/services/bathroom/shelf-installation`,
+              href: `/${locale}/services/bathroom/shelf-installation-valencia`,
             },
             {
               title: "Montaje en pared para baño",
@@ -571,7 +571,7 @@ export default async function GlassShelfInstallationPage({
             },
             {
               title: "Instalación de espejo de baño",
-              href: `/${locale}/services/bathroom/mirror-installation`,
+              href: `/${locale}/services/bathroom/mirror-installation-valencia`,
             },
             {
               title: "Instalación de accesorios de baño",

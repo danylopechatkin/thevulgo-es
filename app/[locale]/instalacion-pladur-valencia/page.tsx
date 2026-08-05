@@ -151,7 +151,7 @@ export default async function InstalacionPladurValenciaPage({ params }: Props) {
       desc: isEs
         ? "Paredes, tabiques, cierres y trabajos interiores de pladur."
         : "Walls, partitions, closures and interior plasterboard work.",
-      href: `/${locale}/paredes-pladur-valencia`,
+      href: `/${locale}/pladur-valencia`,
     },
     {
       title: isEs ? "Servicios de pladur" : "Drywall services",

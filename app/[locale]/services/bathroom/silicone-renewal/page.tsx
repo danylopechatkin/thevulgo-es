@@ -564,7 +564,7 @@ export default async function SiliconeRenewalPage({ params }: PageProps) {
             },
             {
               title: "Instalación de mueble bajo lavabo",
-              href: `/${locale}/services/bathroom/vanity-unit-installation`,
+              href: `/${locale}/services/bathroom/vanity-unit-installation-valencia`,
             },
             {
               title: "Sellado de huecos",

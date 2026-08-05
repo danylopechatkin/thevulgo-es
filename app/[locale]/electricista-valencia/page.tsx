@@ -147,14 +147,14 @@ export default async function ElectricistaValenciaPage({ params }: Props) {
       desc: isEs
         ? "Pequeños trabajos eléctricos no complejos para vivienda y local."
         : "Small non-complex electrical jobs for homes and businesses.",
-      href: `/${locale}/montaje-electrico-basico-valencia`,
+      href: `/${locale}/services/electrical/montaje-electrico-basico-valencia`,
     },
     {
       title: isEs ? "Instalación de tira LED" : "LED strip installation",
       desc: isEs
         ? "Tiras LED, iluminación decorativa y pequeños ajustes de luz."
         : "LED strips, decorative lighting and small lighting adjustments.",
-      href: `/${locale}/instalacion-tira-led-valencia`,
+      href: `/${locale}/services/electrical/instalacion-tira-led-valencia`,
     },
     {
       title: isEs ? "Manitas en Valencia" : "Handyman in Valencia",

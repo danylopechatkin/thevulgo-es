@@ -33,9 +33,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje profesional de cómodas y cajoneras en Valencia desde 45€. Cajones, guías, alineación, ajuste correcto y estructura estable para uso diario."
       : "Professional dresser and drawer assembly in Valencia from €45. Drawers, runners, alignment, correct adjustment and stable structure for daily use.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-comodas-cajoneras-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
       languages: {
-        es: `${siteUrl}/es/montaje-comodas-cajoneras-valencia`,
+        es: `${siteUrl}/es/services/furniture/montaje-comodas-cajoneras-valencia`,
       },
     },
     openGraph: {
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje limpio de cajoneras con guías y ajuste correcto de cajones en Valencia."
         : "Clean drawer unit assembly with correct runner and drawer adjustment in Valencia.",
-      url: `${siteUrl}/${locale}/montaje-comodas-cajoneras-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -183,7 +183,7 @@ export default async function DrawerAssemblyValenciaPage({ params }: PageProps) 
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Cómodas y Cajoneras en Valencia",
-        item: `${siteUrl}/${locale}/montaje-comodas-cajoneras-valencia`,
+        item: `${siteUrl}/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
       },
     ],
   };
@@ -524,7 +524,7 @@ export default async function DrawerAssemblyValenciaPage({ params }: PageProps) 
             },
             {
               title: "Montaje de cama",
-              href: `/${locale}/montaje-cama-valencia`,
+              href: `/${locale}/services/furniture/montaje-cama-valencia`,
             },
             {
               title: "Montaje de muebles en Valencia",
@@ -532,7 +532,7 @@ export default async function DrawerAssemblyValenciaPage({ params }: PageProps) 
             },
             {
               title: "Instalación de estanterías",
-              href: `/${locale}/instalacion-estanterias-valencia`,
+              href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
             },
             {
               title: "Servicios handyman Valencia",

@@ -217,7 +217,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/access-control`,
+      canonical: `${baseUrl}/${locale}/services/control-de-acceso`,
       languages: {
         es: `${baseUrl}/es/services/access-control`,
         en: `${baseUrl}/en/services/access-control`,

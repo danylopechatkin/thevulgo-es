@@ -33,9 +33,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje profesional de estanterías, librerías y unidades independientes en Valencia desde 39€. Alineación correcta, estructura estable y fijación a pared si hace falta."
       : "Professional shelf, bookcase and freestanding unit assembly in Valencia from €39. Correct alignment, stable structure and wall fixing if needed.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-estanterias-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/montaje-estanterias-valencia`,
       languages: {
-        es: `${siteUrl}/es/montaje-estanterias-valencia`,
+        es: `${siteUrl}/es/services/furniture/montaje-estanterias-valencia`,
       },
     },
     openGraph: {
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje de estanterías, librerías y unidades independientes en Valencia."
         : "Shelf, bookcase and freestanding unit assembly in Valencia.",
-      url: `${siteUrl}/${locale}/montaje-estanterias-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/montaje-estanterias-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -185,7 +185,7 @@ export default async function ShelvingAssemblyValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Estanterías en Valencia",
-        item: `${siteUrl}/${locale}/montaje-estanterias-valencia`,
+        item: `${siteUrl}/${locale}/services/furniture/montaje-estanterias-valencia`,
       },
     ],
   };
@@ -518,7 +518,7 @@ export default async function ShelvingAssemblyValenciaPage({
           {[
             {
               title: "Instalación de estanterías en pared",
-              href: `/${locale}/instalacion-estanterias-valencia`,
+              href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
             },
             {
               title: "Montaje de muebles IKEA",
@@ -530,7 +530,7 @@ export default async function ShelvingAssemblyValenciaPage({
             },
             {
               title: "Montaje de cómodas y cajoneras",
-              href: `/${locale}/montaje-comodas-cajoneras-valencia`,
+              href: `/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
             },
             {
               title: "Montaje de TV en Valencia",

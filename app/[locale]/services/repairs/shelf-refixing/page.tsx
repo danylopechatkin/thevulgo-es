@@ -271,13 +271,13 @@ export default async function ShelfRefixingPage({ params }: PageProps) {
 
   const related = isEs
     ? [
-        { title: "Instalación de estantes", href: `/${locale}/services/shelf-installation` },
+        { title: "Instalación de estantes", href: `/${locale}/services/furniture/instalacion-estanterias-valencia` },
         { title: "Instalación de tacos y anclajes", href: `/${locale}/services/repairs/wall-anchor-installation` },
         { title: "Reparaciones en Valencia", href: `/${locale}/services/repairs` },
         { title: "Pladur y paredes", href: `/${locale}/services/drywall` },
       ]
     : [
-        { title: "Shelf installation", href: `/${locale}/services/shelf-installation` },
+        { title: "Shelf installation", href: `/${locale}/services/furniture/instalacion-estanterias-valencia` },
         { title: "Wall anchor installation", href: `/${locale}/services/repairs/wall-anchor-installation` },
         { title: "Repairs in Valencia", href: `/${locale}/services/repairs` },
         { title: "Drywall and walls", href: `/${locale}/services/drywall` },

@@ -305,16 +305,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/${locale}/${slug}`,
+      canonical: `${baseUrl}/${locale}/services/${slug}`,
       languages: {
-        es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        es: `${baseUrl}/es/services/${slug}`,
+        en: `${baseUrl}/en/services/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/${slug}`,
+      url: `${baseUrl}/${locale}/services/${slug}`,
       type: "website",
     },
   };
@@ -338,14 +338,14 @@ const jsonLd = {
     },
     {
       "@type": "Service",
-      "@id": `${baseUrl}/es/${slug}#service`,
+      "@id": `${baseUrl}/es/services/${slug}#service`,
       name: "Puesta a punto de vivienda en Valencia",
       serviceType: "Handyman, pequeñas reparaciones y preparación de vivienda",
       provider: {
         "@id": `${baseUrl}/#business`,
       },
       areaServed: areas,
-      url: `${baseUrl}/es/${slug}`,
+      url: `${baseUrl}/es/services/${slug}`,
       offers: {
         "@type": "Offer",
         priceCurrency: "EUR",
@@ -355,7 +355,7 @@ const jsonLd = {
     },
     {
       "@type": "FAQPage",
-      "@id": `${baseUrl}/es/${slug}#faq`,
+      "@id": `${baseUrl}/es/services/${slug}#faq`,
       mainEntity: faqs.map((faq) => ({
         "@type": "Question",
         name: faq.qEs,
@@ -367,7 +367,7 @@ const jsonLd = {
     },
     {
       "@type": "BreadcrumbList",
-      "@id": `${baseUrl}/es/${slug}#breadcrumb`,
+      "@id": `${baseUrl}/es/services/${slug}#breadcrumb`,
       itemListElement: [
         {
           "@type": "ListItem",
@@ -385,7 +385,7 @@ const jsonLd = {
           "@type": "ListItem",
           position: 3,
           name: "Puesta a punto de vivienda",
-          item: `${baseUrl}/es/${slug}`,
+          item: `${baseUrl}/es/services/${slug}`,
         },
       ],
     },

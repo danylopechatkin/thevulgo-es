@@ -376,7 +376,7 @@ export default async function InstalacionToldoLeroyMerlinValenciaPage({
       label: isEs ? "Toldo manual" : "Manual awning installation",
     },
     {
-      href: `/${locale}/services/handyman-valencia`,
+      href: `/${locale}/handyman-valencia`,
       label: isEs ? "Handyman en Valencia" : "Handyman in Valencia",
     },
   ];

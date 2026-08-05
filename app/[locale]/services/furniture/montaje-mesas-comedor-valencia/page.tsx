@@ -33,9 +33,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje profesional de mesas de comedor en Valencia desde 35€. Estructuras, tableros y patas con resultado final estable, alineado y limpio."
       : "Professional dining table assembly in Valencia from €35. Frames, tabletops and legs with a stable, aligned and clean final result.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-mesas-comedor-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/montaje-mesas-comedor-valencia`,
       languages: {
-        es: `${siteUrl}/es/montaje-mesas-comedor-valencia`,
+        es: `${siteUrl}/es/services/furniture/montaje-mesas-comedor-valencia`,
       },
     },
     openGraph: {
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje limpio de mesas de comedor, tableros, patas y estructuras en Valencia."
         : "Clean dining table assembly, tabletops, legs and frames in Valencia.",
-      url: `${siteUrl}/${locale}/montaje-mesas-comedor-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/montaje-mesas-comedor-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -185,7 +185,7 @@ export default async function DiningTableAssemblyValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Mesas de Comedor en Valencia",
-        item: `${siteUrl}/${locale}/montaje-mesas-comedor-valencia`,
+        item: `${siteUrl}/${locale}/services/furniture/montaje-mesas-comedor-valencia`,
       },
     ],
   };
@@ -522,19 +522,19 @@ export default async function DiningTableAssemblyValenciaPage({
             },
             {
               title: "Montaje de escritorios",
-              href: `/${locale}/montaje-escritorios-valencia`,
+              href: `/${locale}/services/furniture/montaje-escritorios-valencia`,
             },
             {
               title: "Montaje de sillas",
-              href: `/${locale}/montaje-sillas-valencia`,
+              href: `/${locale}/montaje-muebles-valencia`,
             },
             {
               title: "Montaje de estanterías",
-              href: `/${locale}/montaje-estanterias-valencia`,
+              href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
             },
             {
               title: "Montaje de muebles TV y multimedia",
-              href: `/${locale}/montaje-muebles-tv-multimedia-valencia`,
+              href: `/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
             },
             {
               title: "Servicios handyman Valencia",

@@ -516,11 +516,11 @@ export default async function LampInstallationValenciaPage({
           {[
             {
               title: "Instalación de enchufes",
-              href: `/${locale}/instalacion-enchufes-valencia`,
+              href: `/${locale}/cambio-enchufe-valencia`,
             },
             {
               title: "Instalación de interruptores",
-              href: `/${locale}/instalacion-interruptores-valencia`,
+              href: `/${locale}/cambio-interruptor-valencia`,
             },
             {
               title: "Montaje de TV en Valencia",
@@ -532,7 +532,7 @@ export default async function LampInstallationValenciaPage({
             },
             {
               title: "Montaje de estanterías",
-              href: `/${locale}/montaje-estanterias-valencia`,
+              href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
             },
             {
               title: "Servicios handyman Valencia",

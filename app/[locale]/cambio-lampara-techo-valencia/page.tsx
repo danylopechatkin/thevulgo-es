@@ -391,11 +391,11 @@ export default async function CeilingLampReplacementValenciaPage({
         },
         {
           title: "Apliques de pared",
-          href: `/${locale}/instalacion-apliques-pared-valencia`,
+          href: `/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
         },
         {
           title: "Montaje eléctrico básico",
-          href: `/${locale}/montaje-electrico-basico-valencia`,
+          href: `/${locale}/services/electrical/montaje-electrico-basico-valencia`,
         },
         {
           title: "Cambio de interruptor",
@@ -417,11 +417,11 @@ export default async function CeilingLampReplacementValenciaPage({
         },
         {
           title: "Wall light installation",
-          href: `/${locale}/instalacion-apliques-pared-valencia`,
+          href: `/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
         },
         {
           title: "Basic electrical installation",
-          href: `/${locale}/montaje-electrico-basico-valencia`,
+          href: `/${locale}/services/electrical/montaje-electrico-basico-valencia`,
         },
         {
           title: "Switch replacement",

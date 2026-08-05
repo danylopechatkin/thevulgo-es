@@ -56,16 +56,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "home setup Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/preparacion-muebles-mudanza-valencia`,
+      canonical: `${siteUrl}/${locale}/services/furniture/preparacion-muebles-mudanza-valencia`,
       languages: {
-        es: `${siteUrl}/es/preparacion-muebles-mudanza-valencia`,
-        en: `${siteUrl}/en/preparacion-muebles-mudanza-valencia`,
+        es: `${siteUrl}/es/services/furniture/preparacion-muebles-mudanza-valencia`,
+        en: `${siteUrl}/en/services/furniture/preparacion-muebles-mudanza-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/preparacion-muebles-mudanza-valencia`,
+      url: `${siteUrl}/${locale}/services/furniture/preparacion-muebles-mudanza-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -100,7 +100,7 @@ export default async function MoveInFurnitureSetupValenciaPage({
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/preparacion-muebles-mudanza-valencia`;
+  const pageUrl = `${siteUrl}/${locale}/services/furniture/preparacion-muebles-mudanza-valencia`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -815,7 +815,7 @@ export default async function MoveInFurnitureSetupValenciaPage({
                 },
                 {
                   title: "Montaje de cama",
-                  href: `/${locale}/montaje-cama-valencia`,
+                  href: `/${locale}/services/furniture/montaje-cama-valencia`,
                 },
                 {
                   title: "Montaje de armario",
@@ -823,11 +823,11 @@ export default async function MoveInFurnitureSetupValenciaPage({
                 },
                 {
                   title: "Montaje de escritorios",
-                  href: `/${locale}/montaje-escritorios-valencia`,
+                  href: `/${locale}/services/furniture/montaje-escritorios-valencia`,
                 },
                 {
                   title: "Fijación de muebles a la pared",
-                  href: `/${locale}/fijacion-muebles-pared-valencia`,
+                  href: `/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
                 },
                 {
                   title: "Servicios handyman Valencia",
@@ -841,7 +841,7 @@ export default async function MoveInFurnitureSetupValenciaPage({
                 },
                 {
                   title: "Bed assembly",
-                  href: `/${locale}/montaje-cama-valencia`,
+                  href: `/${locale}/services/furniture/montaje-cama-valencia`,
                 },
                 {
                   title: "Wardrobe assembly",
@@ -849,11 +849,11 @@ export default async function MoveInFurnitureSetupValenciaPage({
                 },
                 {
                   title: "Desk assembly",
-                  href: `/${locale}/montaje-escritorios-valencia`,
+                  href: `/${locale}/services/furniture/montaje-escritorios-valencia`,
                 },
                 {
                   title: "Furniture wall fixing",
-                  href: `/${locale}/fijacion-muebles-pared-valencia`,
+                  href: `/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
                 },
                 {
                   title: "Handyman services Valencia",

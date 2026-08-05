@@ -563,11 +563,11 @@ export default async function ShowerHoseReplacementPage({
             },
             {
               title: "Instalación de mueble bajo lavabo",
-              href: `/${locale}/services/bathroom/vanity-unit-installation`,
+              href: `/${locale}/services/bathroom/vanity-unit-installation-valencia`,
             },
             {
               title: "Instalación de espejo de baño",
-              href: `/${locale}/services/bathroom/mirror-installation`,
+              href: `/${locale}/services/bathroom/mirror-installation-valencia`,
             },
             {
               title: "Renovación de silicona",

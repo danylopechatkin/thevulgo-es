@@ -155,7 +155,7 @@ export default function DoorsClient() {
       : "Adjustment of strike plates and related visible hardware.",
     price: isEs ? "desde €29" : "from €29",
     icon: <SquareDashedMousePointer className="h-5 w-5" />,
-    href: `/${locale}/services/doors/strike-plate-adjustment`,
+    href: `/${locale}/services/doors/latch-adjustment`,
     className: "",
   },
   {
@@ -175,7 +175,7 @@ export default function DoorsClient() {
       : "Replacement or adjustment of worn door seals.",
     price: isEs ? "desde €29" : "from €29",
     icon: <ShieldCheck className="h-5 w-5" />,
-    href: `/${locale}/services/doors/cambio-burlete-puerta`,
+    href: `/${locale}/services/doors/door-seal-replacement`,
     className: "",
   },
   {

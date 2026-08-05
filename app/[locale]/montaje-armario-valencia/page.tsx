@@ -486,11 +486,11 @@ export default async function WardrobeAssemblyValenciaPage({
                 },
                 {
                   title: "Montaje de estanterías",
-                  href: `/${locale}/montaje-estanterias-valencia`,
+                  href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
                 },
                 {
                   title: "Preparación muebles mudanza",
-                  href: `/${locale}/preparacion-muebles-mudanza-valencia`,
+                  href: `/${locale}/services/furniture/preparacion-muebles-mudanza-valencia`,
                 },
                 {
                   title: "Servicios handyman",
@@ -512,11 +512,11 @@ export default async function WardrobeAssemblyValenciaPage({
                 },
                 {
                   title: "Shelf assembly",
-                  href: `/${locale}/montaje-estanterias-valencia`,
+                  href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
                 },
                 {
                   title: "Furniture moving preparation",
-                  href: `/${locale}/preparacion-muebles-mudanza-valencia`,
+                  href: `/${locale}/services/furniture/preparacion-muebles-mudanza-valencia`,
                 },
                 {
                   title: "Handyman services",

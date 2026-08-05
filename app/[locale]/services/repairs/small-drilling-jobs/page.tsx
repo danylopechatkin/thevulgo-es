@@ -382,7 +382,7 @@ export default async function SmallDrillingJobsPage({ params }: PageProps) {
         },
         {
           title: "Instalación de estantes",
-          href: `/${locale}/services/shelf-installation`,
+          href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
         },
         {
           title: "Servicios handyman",
@@ -400,7 +400,7 @@ export default async function SmallDrillingJobsPage({ params }: PageProps) {
         },
         {
           title: "Shelf installation",
-          href: `/${locale}/services/shelf-installation`,
+          href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
         },
         {
           title: "Handyman services",
