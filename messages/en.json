@@ -325,6 +325,12 @@
     "button": "Get estimate"
   },
   "items": {
+    "ceilingFans": {
+      "title": "Ceiling fans",
+      "desc": "Installation, light replacement, fans with lighting, remote control or WiFi.",
+      "price": "from €45",
+      "badge": "Popular"
+    },
     "tvMounting": {
       "title": "TV Mounting",
       "desc": "TVs, brackets, shelves, mirrors and clean cable routing.",

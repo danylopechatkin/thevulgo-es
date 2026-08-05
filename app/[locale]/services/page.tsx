@@ -9,6 +9,11 @@ const baseUrl = "https://www.thevulgo.es";
 
 const serviceCategories = [
   {
+    slug: "instalacion-ventilador-techo-valencia",
+    es: "Instalación de ventiladores de techo en Valencia",
+    en: "Ceiling fan installation in Valencia",
+  },
+  {
     slug: "tv-mounting",
     es: "Montaje de TV en Valencia",
     en: "TV mounting in Valencia",
@@ -109,8 +114,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "Services in Valencia | Handyman, WiFi, CCTV, Alarms | THEVULGO";
 
   const description = isEs
-    ? "Servicios en Valencia: montaje de TV, muebles, electricidad, reparaciones, pladur, WiFi, redes, cámaras CCTV, alarmas, control de acceso, Starlink y seguridad para negocios."
-    : "Services in Valencia: TV mounting, furniture assembly, electrical, repairs, drywall, WiFi, networking, CCTV cameras, alarms, access control, Starlink and commercial security.";
+    ? "Servicios en Valencia: instalación de ventiladores, montaje de TV y muebles, electricidad, reparaciones, WiFi, cámaras CCTV, alarmas, Starlink y más."
+    : "Services in Valencia: ceiling fan installation, TV mounting, furniture assembly, electrical, repairs, WiFi, CCTV, alarms, Starlink and more.";
 
   return {
     title,
@@ -119,6 +124,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? [
           "servicios Valencia",
           "manitas Valencia",
+          "instalación ventilador techo Valencia",
           "montaje TV Valencia",
           "montaje muebles Valencia",
           "electricista Valencia",
@@ -134,6 +140,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : [
           "services Valencia",
           "handyman Valencia",
+          "ceiling fan installation Valencia",
           "TV mounting Valencia",
           "furniture assembly Valencia",
           "electrician Valencia",
@@ -179,8 +186,8 @@ export default async function ServicesPage({ params }: Props) {
     "@type": "CollectionPage",
     name: isEs ? "Servicios en Valencia" : "Services in Valencia",
     description: isEs
-      ? "Página de servicios de THEVULGO en Valencia: manitas, montaje de TV, muebles, electricidad básica, pladur, WiFi, redes, cámaras CCTV, alarmas, control de acceso, Starlink y seguridad para negocios."
-      : "THEVULGO services page in Valencia: handyman, TV mounting, furniture assembly, basic electrical, drywall, WiFi, networking, CCTV cameras, alarms, access control, Starlink and commercial security.",
+      ? "Página de servicios de THEVULGO en Valencia: ventiladores de techo, manitas, montaje de TV, muebles, electricidad básica, WiFi, cámaras, alarmas y más."
+      : "THEVULGO services page in Valencia: ceiling fans, handyman, TV mounting, furniture assembly, basic electrical, WiFi, CCTV, alarms and more.",
     url: pageUrl,
     inLanguage: isEs ? "es" : "en",
   };
@@ -279,8 +286,8 @@ export default async function ServicesPage({ params }: Props) {
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "THEVULGO ofrece montaje de TV, montaje de muebles, reparaciones, electricidad básica, fontanería básica, pladur, puertas, cocina, baño, smart home, WiFi, redes, cámaras CCTV, alarmas, control de acceso, Starlink y seguridad para negocios."
-            : "THEVULGO offers TV mounting, furniture assembly, repairs, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom, smart home, WiFi, networking, CCTV cameras, alarms, access control, Starlink and commercial security.",
+            ? "THEVULGO ofrece instalación de ventiladores de techo, montaje de TV, montaje de muebles, reparaciones, electricidad básica, fontanería básica, puertas, cocina, baño, WiFi, cámaras CCTV, alarmas, Starlink y otros trabajos pequeños."
+            : "THEVULGO offers ceiling fan installation, TV mounting, furniture assembly, repairs, basic electrical, plumbing, doors, kitchen, bathroom, WiFi, CCTV, alarms, Starlink and other small jobs.",
         },
       },
       {

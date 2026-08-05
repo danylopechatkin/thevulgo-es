@@ -22,6 +22,7 @@ import {
   KeyRound,
   Satellite,
   Building2,
+  Fan,
 } from "lucide-react";
 
 export default function ServicesClient() {
@@ -31,6 +32,11 @@ export default function ServicesClient() {
   const t = useTranslations("services");
 
   const services = [
+    {
+      key: "ceilingFans",
+      slug: "instalacion-ventilador-techo-valencia",
+      icon: <Fan className="h-5 w-5" />,
+    },
     {
       key: "tvMounting",
       slug: "tv-mounting",

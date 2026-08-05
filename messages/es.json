@@ -323,6 +323,12 @@
     "button": "Pedir presupuesto"
   },
   "items": {
+    "ceilingFans": {
+      "title": "Ventiladores de techo",
+      "desc": "Instalación, sustitución de lámpara, ventiladores con luz, mando o WiFi.",
+      "price": "desde 45€",
+      "badge": "Popular"
+    },
     "tvMounting": {
       "title": "Montaje de TV",
       "desc": "TVs, soportes, estantes, espejos y organización limpia del cableado.",
