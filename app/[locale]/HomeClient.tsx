@@ -355,16 +355,32 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <GuideCard title={t("guides.items.0.title")} text={t("guides.items.0.text")} />
-            <GuideCard title={t("guides.items.1.title")} text={t("guides.items.1.text")} />
-            <GuideCard title={t("guides.items.2.title")} text={t("guides.items.2.text")} />
-            <GuideCard title={t("guides.items.3.title")} text={t("guides.items.3.text")} />
-            <GuideCard title={t("guides.items.4.title")} text={t("guides.items.4.text")} />
-            <GuideCard title={t("guides.items.5.title")} text={t("guides.items.5.text")} />
-            <GuideCard title={t("guides.items.6.title")} text={t("guides.items.6.text")} />
-            <GuideCard title={t("guides.items.7.title")} text={t("guides.items.7.text")} />
-            <GuideCard title={t("guides.items.8.title")} text={t("guides.items.8.text")} />
+          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <GuideCard
+              title={locale === "es" ? "Cuánto cuesta instalar un ventilador" : "How much does fan installation cost?"}
+              text={locale === "es" ? "Precio, techo, punto eléctrico y qué fotos enviar." : "Price, ceiling, electrical point and which photos to send."}
+              onClick={() => router.push(`/${locale}/guias/cuanto-cuesta-instalar-ventilador-techo-valencia`)}
+            />
+            <GuideCard
+              title={locale === "es" ? "Cómo elegir soporte para TV" : "How to choose a TV wall mount"}
+              text={locale === "es" ? "VESA, peso, pared y soporte fijo o articulado." : "VESA, weight, wall and fixed or full-motion mount."}
+              onClick={() => router.push(`/${locale}/guias/como-elegir-soporte-tv-pared`)}
+            />
+            <GuideCard
+              title={locale === "es" ? "Preparar un montaje IKEA" : "Prepare for IKEA assembly"}
+              text={locale === "es" ? "Espacio, cajas y detalles que ahorran tiempo." : "Space, boxes and details that save time."}
+              onClick={() => router.push(`/${locale}/guias/preparar-habitacion-montaje-muebles-ikea`)}
+            />
+          </div>
+
+          <div className="mt-8 text-center">
+            <button
+              onClick={() => router.push(`/${locale}/guias`)}
+              className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 font-extrabold text-black shadow-lg transition hover:bg-yellow-300"
+            >
+              {locale === "es" ? "Ver las 20 guías" : "View all 20 guides"}
+              <ArrowRight className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </section>
@@ -565,12 +581,19 @@ function StepCard({
   );
 }
 
-function GuideCard({ title, text }: { title: string; text: string }) {
+function GuideCard({ title, text, onClick }: { title: string; text: string; onClick: () => void }) {
   return (
-    <div className="bg-white border border-yellow-400 rounded-2xl p-6 shadow-xl md:hover:shadow-2xl transition md:hover:scale-[1.02] text-left">
+    <button
+      type="button"
+      onClick={onClick}
+      className="group bg-white border border-yellow-400 rounded-2xl p-6 shadow-xl md:hover:shadow-2xl transition md:hover:scale-[1.02] text-left"
+    >
       <h3 className="text-lg font-extrabold text-black">{title}</h3>
       <p className="mt-2 text-sm text-gray-600 leading-relaxed">{text}</p>
-    </div>
+      <span className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-black">
+        {"→"}
+      </span>
+    </button>
   );
 }
 

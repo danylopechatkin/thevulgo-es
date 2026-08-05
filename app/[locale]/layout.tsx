@@ -128,7 +128,7 @@ export default async function LocaleLayout({
                   {locale === "es" ? "Ventiladores" : "Ceiling fans"}
                 </Link>
 
-                <Link href={`/${locale}/#guides`} className="hover:text-black">
+                <Link href={`/${locale}/guias`} className="hover:text-black">
                   {t("tips")}
                 </Link>
 

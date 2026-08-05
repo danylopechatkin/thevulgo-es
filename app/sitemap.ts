@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { guides } from "./[locale]/guias/guides-data";
 
 const baseUrl = "https://www.thevulgo.es";
 
@@ -362,6 +363,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       {
         changeFrequency: "monthly",
         priority: locale === "es" ? 0.8 : 0.7,
+      },
+    );
+
+    addRoutes(
+      pages,
+      locale,
+      guides.map((guide) => `guias/${guide.slug}`),
+      {
+        changeFrequency: "monthly",
+        priority: locale === "es" ? 0.75 : 0.65,
       },
     );
   }
