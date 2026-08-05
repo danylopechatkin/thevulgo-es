@@ -288,12 +288,10 @@ function addRoutes(
   locale: (typeof locales)[number],
   routes: readonly string[],
   options: SitemapOptions,
-  lastModified: Date,
 ) {
   for (const route of routes) {
     sitemap.push({
       url: `${baseUrl}/${locale}/${route}`,
-      lastModified,
       changeFrequency: options.changeFrequency,
       priority: options.priority,
     });
@@ -302,7 +300,6 @@ function addRoutes(
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages: MetadataRoute.Sitemap = [];
-  const lastModified = new Date();
 
   for (const locale of locales) {
     /**
@@ -310,7 +307,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
      */
     pages.push({
       url: `${baseUrl}/${locale}`,
-      lastModified,
       changeFrequency: "weekly",
       priority: locale === "es" ? 1 : 0.9,
     });
@@ -326,7 +322,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "weekly",
         priority: locale === "es" ? 0.9 : 0.8,
       },
-      lastModified,
     );
 
     /**
@@ -340,7 +335,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "monthly",
         priority: locale === "es" ? 0.85 : 0.75,
       },
-      lastModified,
     );
 
     /**
@@ -354,7 +348,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "monthly",
         priority: locale === "es" ? 0.85 : 0.75,
       },
-      lastModified,
     );
 
     /**
@@ -368,7 +361,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "monthly",
         priority: locale === "es" ? 0.8 : 0.7,
       },
-      lastModified,
     );
   }
 
