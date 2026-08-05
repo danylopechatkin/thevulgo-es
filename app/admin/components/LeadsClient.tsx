@@ -389,6 +389,7 @@ function LeadCard({
 }) {
   const overdue = !lead.follow_up_at || new Date(lead.follow_up_at).getTime() < now;
   const phoneDigits = lead.phone.replace(/[^\d+]/g, "");
+  const photoUrls = lead.notes.match(/https:\/\/[^\s]+/g) || [];
   const whatsappHref = phoneDigits
     ? `https://wa.me/${phoneDigits.replace(/^\+/, "")}?text=${encodeURIComponent(
         `Hola ${lead.full_name || ""}, quería hacer seguimiento sobre ${lead.service_summary || "el servicio"}.`
@@ -409,6 +410,15 @@ function LeadCard({
 
       <p className="mt-4 text-base font-bold">{lead.service_summary || "Service not specified"}</p>
       {lead.notes && <p className="mt-2 line-clamp-3 whitespace-pre-line text-sm leading-6 text-gray-600">{lead.notes}</p>}
+      {photoUrls.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {photoUrls.map((url, index) => (
+            <a key={url} href={url} target="_blank" rel="noreferrer" className="rounded-xl border border-yellow-400 bg-yellow-50 px-3 py-2 text-xs font-extrabold text-black">
+              Open photo {index + 1}
+            </a>
+          ))}
+        </div>
+      )}
 
       <div className={`mt-4 rounded-2xl p-3 ${overdue ? "bg-red-50" : "bg-[#fffbea]"}`}>
         <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">Next action</p>

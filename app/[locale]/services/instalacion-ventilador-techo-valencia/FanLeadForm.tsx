@@ -1,13 +1,48 @@
 "use client";
 
 import { useState } from "react";
-import { BadgeCheck, CheckCircle2, Fan, Loader2, MapPin, Phone, Send } from "lucide-react";
+import Link from "next/link";
+import { BadgeCheck, CheckCircle2, Fan, ImagePlus, Loader2, MapPin, Phone, Send, X } from "lucide-react";
 
 const packages = [
   { count: 1, price: 45 },
   { count: 2, price: 85 },
   { count: 3, price: 125 },
 ];
+
+async function compressPhoto(file: File) {
+  const source = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+  const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const element = new Image();
+    element.onload = () => resolve(element);
+    element.onerror = reject;
+    element.src = source;
+  });
+  const maxSide = 1400;
+  const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(image.width * scale);
+  canvas.height = Math.round(image.height * scale);
+  canvas.getContext("2d")?.drawImage(image, 0, 0, canvas.width, canvas.height);
+  let quality = 0.78;
+  let result = canvas.toDataURL("image/jpeg", quality);
+  while (result.length > 950_000 && quality > 0.42) {
+    quality -= 0.08;
+    result = canvas.toDataURL("image/jpeg", quality);
+  }
+  if (result.length > 1_050_000) throw new Error("Photo too large");
+  return result;
+}
+
+function validPhone(value: string) {
+  const digits = value.replace(/\D/g, "");
+  return digits.length >= 9 && digits.length <= 15;
+}
 
 export default function FanLeadForm({ locale }: { locale: string }) {
   const isEs = locale === "es";
@@ -24,8 +59,17 @@ export default function FanLeadForm({ locale }: { locale: string }) {
     website: "",
   });
   const [sending, setSending] = useState(false);
+  const [processingPhotos, setProcessingPhotos] = useState(false);
+  const [photos, setPhotos] = useState<string[]>([]);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
+  const [clientEmailSent, setClientEmailSent] = useState(true);
+  const [submissionKey] = useState(() =>
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+  );
   const selectedPackage = packages.find((item) => item.count === fanCount)!;
 
   const update = (field: keyof typeof form, value: string) =>
@@ -34,15 +78,24 @@ export default function FanLeadForm({ locale }: { locale: string }) {
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError("");
+    if (!validPhone(form.phone)) {
+      setError(isEs ? "Introduce un teléfono válido de 9 a 15 números." : "Enter a valid phone number with 9 to 15 digits.");
+      return;
+    }
+    if (!privacyAccepted) {
+      setError(isEs ? "Debes aceptar la política de privacidad." : "You must accept the privacy policy.");
+      return;
+    }
     setSending(true);
     try {
       const response = await fetch("/api/fan-leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, fanCount, locale }),
+        body: JSON.stringify({ ...form, fanCount, locale, photos, privacyAccepted, submissionKey }),
       });
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.error);
+      setClientEmailSent(result.clientEmailSent !== false);
       setSent(true);
     } catch {
       setError(isEs
@@ -50,6 +103,26 @@ export default function FanLeadForm({ locale }: { locale: string }) {
         : "We could not send it. Check your details or contact us on WhatsApp.");
     } finally {
       setSending(false);
+    }
+  };
+
+  const addPhotos = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    event.target.value = "";
+    if (!files.length) return;
+    if (photos.length + files.length > 4) {
+      setError(isEs ? "Puedes añadir un máximo de 4 fotos." : "You can add up to 4 photos.");
+      return;
+    }
+    setProcessingPhotos(true);
+    setError("");
+    try {
+      const compressed = await Promise.all(files.map(compressPhoto));
+      setPhotos((current) => [...current, ...compressed]);
+    } catch {
+      setError(isEs ? "Una foto es demasiado grande o no se puede leer." : "One photo is too large or cannot be read.");
+    } finally {
+      setProcessingPhotos(false);
     }
   };
 
@@ -64,6 +137,11 @@ export default function FanLeadForm({ locale }: { locale: string }) {
               ? "Ya aparece en nuestra CRM. Revisaremos los datos y te contactaremos por WhatsApp o teléfono para confirmar la instalación."
               : "It is now in our CRM. We will review it and contact you by WhatsApp or phone to confirm the installation."}
           </p>
+          {!clientEmailSent && (
+            <p className="mx-auto mt-5 max-w-xl rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm font-bold text-amber-900">
+              {isEs ? "La solicitud está guardada, pero no pudimos enviar el email de confirmación. Te contactaremos igualmente." : "Your request is saved, but we could not send the confirmation email. We will still contact you."}
+            </p>
+          )}
         </div>
       </section>
     );
@@ -112,7 +190,7 @@ export default function FanLeadForm({ locale }: { locale: string }) {
               <input required value={form.fullName} onChange={(e) => update("fullName", e.target.value)} placeholder={isEs ? "Tu nombre" : "Your name"} className="input-style" />
             </Field>
             <Field label={isEs ? "Teléfono / WhatsApp" : "Phone / WhatsApp"} required>
-              <div className="relative"><Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" /><input required type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+34 ..." className="input-style pl-11" /></div>
+              <div className="relative"><Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" /><input required type="tel" inputMode="tel" minLength={9} maxLength={24} value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+34 600 000 000" className="input-style pl-11" /></div>
             </Field>
             <Field label={isEs ? "Zona o municipio" : "Area or town"} required>
               <div className="relative"><MapPin className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" /><input required value={form.area} onChange={(e) => update("area", e.target.value)} placeholder={isEs ? "Ej. Benimaclet, Mislata..." : "E.g. Benimaclet, Mislata..."} className="input-style pl-11" /></div>
@@ -150,6 +228,35 @@ export default function FanLeadForm({ locale }: { locale: string }) {
             </Field>
           </div>
 
+          <div className="mt-6 rounded-2xl border border-yellow-300 bg-yellow-50/60 p-4 sm:p-5">
+            <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+              <div>
+                <p className="font-extrabold">{isEs ? "Fotos del techo y del ventilador" : "Photos of the ceiling and fan"}</p>
+                <p className="mt-1 text-xs leading-5 text-neutral-600">{isEs ? "Opcional · hasta 4 fotos · las reducimos antes de enviarlas" : "Optional · up to 4 photos · compressed before upload"}</p>
+              </div>
+              <label className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-black bg-white px-4 py-3 text-sm font-black transition hover:bg-yellow-400">
+                {processingPhotos ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImagePlus className="h-4 w-4" />}
+                {processingPhotos ? (isEs ? "Preparando..." : "Preparing...") : (isEs ? "Añadir fotos" : "Add photos")}
+                <input type="file" accept="image/*" multiple disabled={processingPhotos || photos.length >= 4} onChange={addPhotos} className="sr-only" />
+              </label>
+            </div>
+            {photos.length > 0 && (
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {photos.map((photo, index) => (
+                  <div key={`${photo.slice(-30)}-${index}`} className="relative aspect-square overflow-hidden rounded-xl border border-yellow-300 bg-white">
+                    <div className="h-full w-full bg-cover bg-center" style={{ backgroundImage: `url(${photo})` }} />
+                    <button type="button" onClick={() => setPhotos((current) => current.filter((_, itemIndex) => itemIndex !== index))} aria-label={isEs ? "Eliminar foto" : "Remove photo"} className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black text-white shadow-lg"><X className="h-4 w-4" /></button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-xl border border-neutral-200 p-4 text-sm leading-6 text-neutral-700">
+            <input required type="checkbox" checked={privacyAccepted} onChange={(event) => setPrivacyAccepted(event.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-yellow-400" />
+            <span>{isEs ? "Acepto que THEVULGO use mis datos y fotos para responder y gestionar esta solicitud." : "I agree that THEVULGO may use my details and photos to respond to and manage this request."} {" "}<Link href={`/${locale}/privacy`} target="_blank" className="font-bold underline decoration-yellow-400 decoration-2 underline-offset-2">{isEs ? "Política de privacidad" : "Privacy policy"}</Link>.</span>
+          </label>
+
           <input tabIndex={-1} autoComplete="off" value={form.website} onChange={(e) => update("website", e.target.value)} className="hidden" aria-hidden="true" />
 
           {error && <p className="mt-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-700">{error}</p>}
@@ -159,7 +266,7 @@ export default function FanLeadForm({ locale }: { locale: string }) {
               <p className="text-xs font-bold uppercase tracking-wider text-neutral-400">{isEs ? "Precio seleccionado" : "Selected price"}</p>
               <p className="mt-1 text-3xl font-black">{selectedPackage.price} €</p>
             </div>
-            <button disabled={sending} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-400 px-7 py-4 font-black text-black transition hover:scale-[1.02] disabled:opacity-60 sm:w-auto">
+            <button disabled={sending || processingPhotos} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-400 px-7 py-4 font-black text-black transition hover:scale-[1.02] disabled:opacity-60 sm:w-auto">
               {sending ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
               {sending ? (isEs ? "Enviando..." : "Sending...") : (isEs ? "Enviar solicitud" : "Send request")}
             </button>
