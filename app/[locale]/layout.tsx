@@ -143,15 +143,15 @@ export default async function LocaleLayout({
               </nav>
 
               <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-                <MobileHeaderMenu locale={locale} />
-
-                <div className="sm:mr-2">
+                <div>
                   <LanguageSwitcher locale={locale} />
                 </div>
 
+                <MobileHeaderMenu locale={locale} />
+
                 <HeaderEstimateLink
                   locale={locale}
-                  className="whitespace-nowrap rounded-xl bg-yellow-400 px-3 py-2 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:rounded-2xl sm:px-5 sm:py-2.5 sm:text-base"
+                  className="inline-flex h-10 items-center whitespace-nowrap rounded-xl bg-yellow-400 px-3 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:rounded-2xl sm:h-auto sm:px-5 sm:py-2.5 sm:text-base"
                 >
                   {t("getEstimate")}
                 </HeaderEstimateLink>
