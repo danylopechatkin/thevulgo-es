@@ -6,6 +6,7 @@ import Script from "next/script";
 import LanguageSwitcher from "@/app/components/LanguageSwitcher";
 import WhatsAppConversionTracker from "@/app/components/WhatsAppConversionTracker";
 import HeaderEstimateLink from "@/app/components/HeaderEstimateLink";
+import MobileHeaderMenu from "@/app/components/MobileHeaderMenu";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -101,7 +102,7 @@ export default async function LocaleLayout({
                   V
                 </div>
 
-                <div className="min-w-0 font-extrabold leading-none text-yellow-400">
+                <div className="hidden min-w-0 font-extrabold leading-none text-yellow-400 sm:block">
                   <span className="block truncate">THEVULGO</span>
                   <span className="ml-0 mt-0.5 hidden text-sm font-semibold text-gray-500 sm:block">
                     Valencia
@@ -142,7 +143,9 @@ export default async function LocaleLayout({
               </nav>
 
               <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-                <div className="mr-3 sm:mr-4">
+                <MobileHeaderMenu locale={locale} />
+
+                <div className="sm:mr-2">
                   <LanguageSwitcher locale={locale} />
                 </div>
 
