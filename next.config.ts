@@ -54,6 +54,23 @@ const movedNestedPages = {
 const nextConfig: NextConfig = {
   async redirects() {
     return [
+      // Old URLs without a language prefix. Send them directly to the final
+      // English page to avoid a locale redirect followed by another redirect.
+      {
+        source: "/instalar-soundbar-valencia",
+        destination: "/en/services/tv-mounting/instalar-soundbar-valencia",
+        permanent: true,
+      },
+      {
+        source: "/montaje-estanterias-valencia",
+        destination: "/en/services/furniture/montaje-estanterias-valencia",
+        permanent: true,
+      },
+      {
+        source: "/instalacion-tira-led-valencia",
+        destination: "/en/services/electrical/instalacion-tira-led-valencia",
+        permanent: true,
+      },
       ...legacyServiceSlugs.map((slug) => ({
         source: `/:locale/${slug}`,
         destination: `/:locale/services/${slug}`,
@@ -117,6 +134,36 @@ const nextConfig: NextConfig = {
       {
         source: "/:locale/services/starlink-internet",
         destination: "/:locale/services/starlink",
+        permanent: true,
+      },
+      {
+        source: "/:locale/instalar-espejo-valencia",
+        destination: "/:locale/services/bathroom/mirror-installation-valencia",
+        permanent: true,
+      },
+      {
+        source: "/:locale/services/cctv-installation",
+        destination: "/:locale/services/cctv",
+        permanent: true,
+      },
+      {
+        source: "/:locale/services/bathroom/vanity-unit-installation",
+        destination: "/:locale/services/bathroom/vanity-unit-installation-valencia",
+        permanent: true,
+      },
+      {
+        source: "/:locale/preparacion-piso-airbnb-valencia",
+        destination: "/:locale/services/mantenimiento-airbnb-valencia",
+        permanent: true,
+      },
+      {
+        source: "/:locale/large-tv-mounting-valencia",
+        destination: "/:locale/montaje-tv-grande-valencia",
+        permanent: true,
+      },
+      {
+        source: "/:locale/instalacion-enchufes-valencia",
+        destination: "/:locale/cambio-enchufe-valencia",
         permanent: true,
       },
       {
