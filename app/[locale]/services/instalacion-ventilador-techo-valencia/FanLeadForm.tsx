@@ -64,6 +64,7 @@ export default function FanLeadForm({ locale }: { locale: string }) {
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [clientEmailSent, setClientEmailSent] = useState(true);
   const [submissionKey] = useState(() =>
     typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -97,6 +98,7 @@ export default function FanLeadForm({ locale }: { locale: string }) {
       if (!response.ok || !result.success) throw new Error(result.error);
       setClientEmailSent(result.clientEmailSent !== false);
       setSent(true);
+      setSuccessModalOpen(true);
     } catch {
       setError(isEs
         ? "No se pudo enviar. Revisa los datos o escríbenos por WhatsApp."
@@ -129,6 +131,59 @@ export default function FanLeadForm({ locale }: { locale: string }) {
   if (sent) {
     return (
       <section id="fan-quote" className="scroll-mt-24 border-y border-yellow-300 bg-yellow-50 px-6 py-14">
+        {successModalOpen && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="fan-success-title"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-4 py-8 backdrop-blur-sm"
+          >
+            <div className="w-full max-w-md overflow-hidden rounded-[2rem] border-2 border-yellow-400 bg-white shadow-2xl">
+              <div className="bg-yellow-400 px-6 py-7 text-center">
+                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border-4 border-white bg-green-600 text-white shadow-lg">
+                  <CheckCircle2 className="h-11 w-11" />
+                </div>
+                <p className="mt-4 text-xs font-black uppercase tracking-[0.18em] text-black/60">
+                  {isEs ? "Enviado correctamente" : "Sent successfully"}
+                </p>
+                <h2 id="fan-success-title" className="mt-2 text-3xl font-black text-black">
+                  {isEs ? "¡Solicitud recibida!" : "Request received!"}
+                </h2>
+              </div>
+
+              <div className="p-6 text-center sm:p-8">
+                <div className="rounded-2xl border border-yellow-300 bg-yellow-50 p-4">
+                  <p className="text-sm font-bold text-neutral-600">
+                    {fanCount} {isEs ? (fanCount === 1 ? "ventilador" : "ventiladores") : (fanCount === 1 ? "fan" : "fans")}
+                  </p>
+                  <p className="mt-1 text-3xl font-black">{selectedPackage.price} €</p>
+                </div>
+                <p className="mt-5 text-base leading-7 text-neutral-700">
+                  {isEs
+                    ? `Gracias, ${form.fullName}. Revisaremos la información y te contactaremos por WhatsApp o teléfono para confirmar la instalación.`
+                    : `Thank you, ${form.fullName}. We will review the information and contact you by WhatsApp or phone to confirm the installation.`}
+                </p>
+                {form.email && clientEmailSent && (
+                  <p className="mt-3 text-sm font-semibold text-green-700">
+                    {isEs ? "También te hemos enviado una confirmación por email." : "We have also sent you an email confirmation."}
+                  </p>
+                )}
+                {!clientEmailSent && (
+                  <p className="mt-4 rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm font-bold text-amber-900">
+                    {isEs ? "La solicitud está guardada, aunque el email de confirmación no pudo enviarse." : "Your request is saved, although the confirmation email could not be sent."}
+                  </p>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setSuccessModalOpen(false)}
+                  className="mt-6 w-full rounded-xl bg-black px-6 py-4 text-base font-black text-white shadow-lg transition hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  {isEs ? "Entendido" : "Done"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="mx-auto max-w-3xl rounded-[2rem] border-2 border-yellow-400 bg-white p-8 text-center shadow-xl sm:p-12">
           <CheckCircle2 className="mx-auto h-16 w-16 text-green-600" />
           <h2 className="mt-5 text-3xl font-black">{isEs ? "Solicitud recibida" : "Request received"}</h2>
