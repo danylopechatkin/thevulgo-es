@@ -87,20 +87,12 @@ const relatedPages = [
     icon: Wrench,
   },
   {
-    slug: "instalar-ventilador-aspas-retractiles-valencia",
-    en: "Retractable Blade Fan",
-    es: "Ventilador con aspas retráctiles",
-    descEn: "Modern retractable blade fan installation.",
-    descEs: "Montaje de ventiladores modernos con aspas retráctiles.",
+    slug: "instalacion-ventilador-smart",
+    en: "Smart Ceiling Fan",
+    es: "Ventilador de techo smart",
+    descEn: "Installation and basic app setup for smart fans.",
+    descEs: "Instalación y configuración básica de app para ventiladores smart.",
     icon: Sparkles,
-  },
-  {
-    slug: "instalacion-2-ventiladores-techo-valencia",
-    en: "Two Ceiling Fans",
-    es: "Instalación de 2 ventiladores",
-    descEn: "Package for installing two fans in one visit.",
-    descEs: "Pack para instalar dos ventiladores en una misma visita.",
-    icon: Fan,
   },
 ];
 

@@ -94,14 +94,6 @@ const relatedPages = [
     descEs: "Retirada del ventilador antiguo e instalación del nuevo.",
     icon: Wrench,
   },
-  {
-    slug: "instalar-ventilador-aspas-retractiles-valencia",
-    en: "Retractable Blade Fan",
-    es: "Ventilador con aspas retráctiles",
-    descEn: "Modern fan installation with hidden retractable blades.",
-    descEs: "Montaje de ventiladores modernos con aspas retráctiles.",
-    icon: Sparkles,
-  },
 ];
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
