@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { findCatalogService, getCatalogServices } from "@/lib/serviceCatalog";
 import { LogOut } from "lucide-react";
+import { strFromU8, unzipSync } from "fflate";
 
 type OrderStatus = "new" | "in_progress" | "done";
 
@@ -30,6 +31,8 @@ type AiOrderImage = {
 
 const MAX_AI_ORDER_IMAGES = 10;
 const MAX_AI_ORDER_IMAGES_SIZE = 4_000_000;
+const MAX_AI_CHAT_FILE_SIZE = 20 * 1024 * 1024;
+const MAX_AI_CHAT_TEXT_LENGTH = 100_000;
 
 type AiParsedOrder = {
   fullName: string | null;
@@ -252,6 +255,7 @@ export default function AdminClient() {
 
   const [aiOrderText, setAiOrderText] = useState("");
   const [aiOrderImages, setAiOrderImages] = useState<AiOrderImage[]>([]);
+  const [aiChatFileName, setAiChatFileName] = useState("");
 
 const [isParsingAiOrder, setIsParsingAiOrder] = useState(false);
 
@@ -667,6 +671,57 @@ const handleAiScreenshots = async (files: File[]) => {
   }
 };
 
+const handleAiChatExport = async (file?: File) => {
+  if (!file) return;
+
+  try {
+    setAiOrderError("");
+
+    if (file.size > MAX_AI_CHAT_FILE_SIZE) {
+      throw new Error("The WhatsApp export is too large. Maximum size is 20 MB.");
+    }
+
+    const lowerName = file.name.toLowerCase();
+    let chatText = "";
+
+    if (lowerName.endsWith(".zip")) {
+      const archive = unzipSync(new Uint8Array(await file.arrayBuffer()), {
+        filter: (entry) => entry.name.toLowerCase().endsWith(".txt"),
+      });
+      const chatEntry = Object.entries(archive).find(([name]) =>
+        name.toLowerCase().endsWith(".txt")
+      );
+
+      if (!chatEntry) {
+        throw new Error("This ZIP does not contain a WhatsApp text chat.");
+      }
+
+      chatText = strFromU8(chatEntry[1]);
+    } else if (lowerName.endsWith(".txt") || file.type === "text/plain") {
+      chatText = await file.text();
+    } else {
+      throw new Error("Choose a WhatsApp chat exported as a TXT or ZIP file.");
+    }
+
+    chatText = chatText.replace(/^\uFEFF/, "").trim();
+
+    if (!chatText) {
+      throw new Error("The exported WhatsApp chat is empty.");
+    }
+
+    if (chatText.length > MAX_AI_CHAT_TEXT_LENGTH) {
+      chatText = chatText.slice(-MAX_AI_CHAT_TEXT_LENGTH);
+    }
+
+    setAiOrderText(chatText);
+    setAiChatFileName(file.name || "WhatsApp chat");
+  } catch (error) {
+    setAiOrderError(
+      error instanceof Error ? error.message : "Could not read this WhatsApp chat."
+    );
+  }
+};
+
 const parseOrderWithAi = async () => {
   const cleanText = aiOrderText.trim();
 
@@ -759,6 +814,7 @@ const parseOrderWithAi = async () => {
     setAiMissingFields(parsed.missingFields || []);
     setAiWarnings(parsed.warnings || []);
     setAiOrderImages([]);
+    setAiChatFileName("");
   } catch (error) {
     console.error("AI ORDER PARSE ERROR:", error);
 
@@ -885,6 +941,7 @@ const parseOrderWithAi = async () => {
       setManualServices([createServiceForCategory("Furniture Assembly")]);
       setManualIncludeIva(true);
       setAiOrderImages([]);
+      setAiChatFileName("");
 
       setShowManualForm(false);
       await loadOrders();
@@ -1944,6 +2001,7 @@ const parseOrderWithAi = async () => {
                   onClick={() => {
                     setShowManualForm(false);
                     setAiOrderImages([]);
+                    setAiChatFileName("");
                   }}
                   disabled={isCreatingManual}
                   className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
@@ -1981,12 +2039,42 @@ const parseOrderWithAi = async () => {
           />
         </label>
 
+        <label className="cursor-pointer rounded-xl border border-green-600 bg-white px-4 py-2.5 text-sm font-extrabold text-black shadow-sm transition hover:bg-green-50">
+          💬 Upload WhatsApp chat
+          <input
+            type="file"
+            accept=".txt,.zip,text/plain,application/zip"
+            onChange={(event) => {
+              void handleAiChatExport(event.target.files?.[0]);
+              event.target.value = "";
+            }}
+            className="sr-only"
+          />
+        </label>
+
         {aiOrderImages.length > 0 && (
           <span className="rounded-xl bg-green-50 px-3 py-2 text-xs font-bold text-green-800">
             {aiOrderImages.length}/{MAX_AI_ORDER_IMAGES} selected
           </span>
         )}
       </div>
+
+      {aiChatFileName && (
+        <div className="mt-2 flex min-w-0 items-center justify-between gap-2 rounded-xl bg-green-50 px-3 py-2 text-xs font-bold text-green-800">
+          <span className="truncate">✓ Chat loaded: {aiChatFileName}</span>
+          <button
+            type="button"
+            onClick={() => {
+              setAiOrderText("");
+              setAiChatFileName("");
+            }}
+            className="shrink-0 rounded-lg px-2 py-1 hover:bg-green-100"
+            aria-label="Remove WhatsApp chat"
+          >
+            Remove
+          </button>
+        </div>
+      )}
 
       {aiOrderImages.length > 0 && (
         <div className="mt-2 space-y-2">

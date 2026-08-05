@@ -282,7 +282,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (text.length > 15000) {
+    if (text.length > 100_000) {
       return NextResponse.json(
         {
           success: false,
