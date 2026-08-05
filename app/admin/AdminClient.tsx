@@ -256,6 +256,7 @@ export default function AdminClient() {
   const [aiOrderText, setAiOrderText] = useState("");
   const [aiOrderImages, setAiOrderImages] = useState<AiOrderImage[]>([]);
   const [aiChatFileName, setAiChatFileName] = useState("");
+  const [isPastingAiChat, setIsPastingAiChat] = useState(false);
 
 const [isParsingAiOrder, setIsParsingAiOrder] = useState(false);
 
@@ -719,6 +720,75 @@ const handleAiChatExport = async (file?: File) => {
     setAiOrderError(
       error instanceof Error ? error.message : "Could not read this WhatsApp chat."
     );
+  }
+};
+
+const pasteAiChatFromClipboard = async () => {
+  try {
+    setIsPastingAiChat(true);
+    setAiOrderError("");
+
+    if (!navigator.clipboard) {
+      throw new Error(
+        "Clipboard access is not available here. Use Upload WhatsApp chat instead."
+      );
+    }
+
+    if (typeof navigator.clipboard.read === "function") {
+      const items = await navigator.clipboard.read();
+      const supportedFileTypes = [
+        "application/zip",
+        "application/x-zip-compressed",
+        "application/octet-stream",
+      ];
+
+      for (const item of items) {
+        const fileType = supportedFileTypes.find((type) =>
+          item.types.includes(type)
+        );
+
+        if (fileType) {
+          const blob = await item.getType(fileType);
+          await handleAiChatExport(
+            new File([blob], "WhatsApp chat.zip", { type: fileType })
+          );
+          return;
+        }
+
+        if (item.types.includes("text/plain")) {
+          const blob = await item.getType("text/plain");
+          await handleAiChatExport(
+            new File([blob], "WhatsApp chat.txt", { type: "text/plain" })
+          );
+          return;
+        }
+      }
+    }
+
+    if (typeof navigator.clipboard.readText === "function") {
+      const clipboardText = (await navigator.clipboard.readText()).trim();
+
+      if (clipboardText) {
+        await handleAiChatExport(
+          new File([clipboardText], "WhatsApp chat.txt", {
+            type: "text/plain",
+          })
+        );
+        return;
+      }
+    }
+
+    throw new Error(
+      "No WhatsApp chat was found in the clipboard. Copy the exported chat and try again."
+    );
+  } catch (error) {
+    setAiOrderError(
+      error instanceof Error && error.name !== "NotAllowedError"
+        ? error.message
+        : "Clipboard access was blocked. Allow Paste when iPhone asks, or use Upload WhatsApp chat."
+    );
+  } finally {
+    setIsPastingAiChat(false);
   }
 };
 
@@ -2051,6 +2121,15 @@ const parseOrderWithAi = async () => {
             className="sr-only"
           />
         </label>
+
+        <button
+          type="button"
+          onClick={pasteAiChatFromClipboard}
+          disabled={isPastingAiChat}
+          className="rounded-xl border border-blue-500 bg-white px-4 py-2.5 text-sm font-extrabold text-black shadow-sm transition hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {isPastingAiChat ? "Pasting…" : "📋 Paste WhatsApp chat"}
+        </button>
 
         {aiOrderImages.length > 0 && (
           <span className="rounded-xl bg-green-50 px-3 py-2 text-xs font-bold text-green-800">
