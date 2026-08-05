@@ -108,15 +108,27 @@ export default async function GuidesPage({ params }: Props) {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 py-10 sm:px-8">
+        <section className="border-b border-yellow-200 bg-white">
+          <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8">
           <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <span key={category} className="rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-bold">{category}</span>
+            {categories.map((category, index) => (
+              <span
+                key={category}
+                className={`rounded-full border px-4 py-2 text-sm font-black shadow-sm ${
+                  index === 0
+                    ? "border-yellow-400 bg-yellow-400"
+                    : "border-yellow-300 bg-[#fffbe5]"
+                }`}
+              >
+                {category}
+              </span>
             ))}
+          </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8 sm:pb-24">
+        <section className="bg-[linear-gradient(180deg,#fffdf0_0%,#ffffff_42%)] px-5 pb-16 pt-12 sm:px-8 sm:pb-24">
+          <div className="mx-auto max-w-7xl">
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 text-sm font-black uppercase tracking-[0.16em] text-gray-500"><Search className="h-4 w-4" /> {isEs ? "Biblioteca" : "Library"}</div>
@@ -130,19 +142,26 @@ export default async function GuidesPage({ params }: Props) {
               <Link
                 key={guide.slug}
                 href={`/${locale}/guias/${guide.slug}`}
-                className="group flex min-h-[300px] flex-col rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-yellow-400 hover:shadow-xl"
+                className={`group relative flex min-h-[300px] flex-col overflow-hidden rounded-3xl border p-6 shadow-md transition hover:-translate-y-1 hover:shadow-xl ${
+                  index % 5 === 0
+                    ? "border-yellow-400 bg-[#fff8cc]"
+                    : "border-yellow-300 bg-white"
+                }`}
               >
+                <span className="absolute inset-x-0 top-0 h-2 bg-yellow-400" />
                 <div className="flex items-center justify-between gap-3">
-                  <span className="rounded-full bg-yellow-100 px-3 py-1.5 text-xs font-black">{textFor(guide.category, locale)}</span>
-                  <span className="text-sm font-black text-gray-300">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="rounded-full border border-yellow-300 bg-yellow-100 px-3 py-1.5 text-xs font-black">{textFor(guide.category, locale)}</span>
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-yellow-400 text-sm font-black text-black shadow-sm">{String(index + 1).padStart(2, "0")}</span>
                 </div>
                 <h3 className="mt-6 text-2xl font-black leading-tight group-hover:underline">{textFor(guide.title, locale)}</h3>
                 <p className="mt-4 line-clamp-3 text-sm leading-6 text-gray-600">{textFor(guide.description, locale)}</p>
                 <div className="mt-auto flex items-center justify-between pt-7 text-sm font-black">
-                  <span>{isEs ? "Leer guía" : "Read guide"}</span><ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
+                  <span className="rounded-xl bg-yellow-400 px-4 py-2 transition group-hover:bg-black group-hover:text-white">{isEs ? "Leer guía" : "Read guide"}</span>
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full border border-yellow-400 bg-white"><ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></span>
                 </div>
               </Link>
             ))}
+          </div>
           </div>
         </section>
 
