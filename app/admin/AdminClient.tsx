@@ -6,6 +6,8 @@ import { supabase } from "@/lib/supabase";
 import { findCatalogService, getCatalogServices } from "@/lib/serviceCatalog";
 import { LogOut } from "lucide-react";
 import { strFromU8, unzipSync } from "fflate";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 type OrderStatus = "new" | "in_progress" | "done";
 
@@ -222,6 +224,7 @@ function resizeScreenshot(file: File): Promise<string> {
 }
 
 export default function AdminClient() {
+  const searchParams = useSearchParams();
   const [internalNotes, setInternalNotes] = useState("");
   const [orders, setOrders] = useState<Order[]>([]);
   const [selected, setSelected] = useState<Order | null>(null);
@@ -256,6 +259,7 @@ export default function AdminClient() {
   const [aiOrderText, setAiOrderText] = useState("");
   const [aiOrderImages, setAiOrderImages] = useState<AiOrderImage[]>([]);
   const [aiChatFileName, setAiChatFileName] = useState("");
+  const [importedLeadId, setImportedLeadId] = useState("");
 
 const [isParsingAiOrder, setIsParsingAiOrder] = useState(false);
 
@@ -458,6 +462,54 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
       setInternalNotes(selected.internal_notes || "");
     }
   }, [selected]);
+
+  useEffect(() => {
+    const leadId = searchParams.get("lead");
+    if (!leadId) return;
+
+    const loadLeadForBooking = async () => {
+      try {
+        const response = await fetch(`/api/admin/leads/${leadId}`);
+        const result = await response.json();
+        if (!response.ok || !result.lead) return;
+        const lead = result.lead as {
+          full_name?: string;
+          phone?: string;
+          email?: string;
+          category?: string;
+          service_summary?: string;
+          potential_value?: number;
+          notes?: string;
+        };
+        const category = MANUAL_CATEGORIES.includes(lead.category || "")
+          ? String(lead.category)
+          : "Repairs";
+
+        setManualOrder((current) => ({
+          ...current,
+          fullName: lead.full_name || "",
+          phone: lead.phone || "",
+          email: lead.email || "",
+          category,
+          notes: [lead.service_summary, lead.notes].filter(Boolean).join("\n\n"),
+        }));
+        setManualServices([
+          {
+            id: "manual",
+            label: lead.service_summary || "Servicio manual",
+            price: Number(lead.potential_value || 0),
+            qty: 1,
+          },
+        ]);
+        setImportedLeadId(leadId);
+        setShowManualForm(true);
+      } catch (error) {
+        console.error("LOAD LEAD FOR BOOKING ERROR:", error);
+      }
+    };
+
+    void loadLeadForBooking();
+  }, [searchParams]);
 
   const metricOrders = useMemo(
     () =>
@@ -889,7 +941,7 @@ const parseOrderWithAi = async () => {
     try {
       setIsCreatingManual(true);
 
-      const { error } = await supabase.from("orders").insert([
+      const { data: createdOrder, error } = await supabase.from("orders").insert([
         {
           full_name: manualOrder.fullName.trim(),
           email: manualOrder.email.trim(),
@@ -915,12 +967,27 @@ const parseOrderWithAi = async () => {
           referral_code: null,
           locale: "es",
         },
-      ]);
+      ]).select("id").single();
 
       if (error) {
         console.error("CREATE MANUAL ORDER ERROR:", error);
         alert("Error creating manual order");
         return;
+      }
+
+      if (importedLeadId) {
+        await fetch(`/api/admin/leads/${importedLeadId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            status: "converted",
+            converted_order_id: createdOrder?.id || null,
+            follow_up_at: null,
+            next_action: "",
+          }),
+        });
+        setImportedLeadId("");
+        window.history.replaceState({}, "", "/admin");
       }
 
       setManualOrder({
@@ -1241,6 +1308,20 @@ const parseOrderWithAi = async () => {
     <div className="min-h-screen bg-white px-3 py-4 text-black sm:p-6">
       <div className="mx-auto max-w-7xl space-y-5 sm:space-y-8">
         <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_44px] items-center gap-2 rounded-3xl border border-gray-100 bg-[#fffdf7] p-3 shadow-sm sm:flex sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none">
+          <Link
+            href="/admin/today"
+            className="rounded-2xl border border-red-200 bg-white px-3 py-3 text-center text-sm font-extrabold text-black shadow-sm transition hover:bg-red-50 sm:px-5"
+          >
+            Today
+          </Link>
+
+          <Link
+            href="/admin/leads"
+            className="rounded-2xl border border-green-300 bg-white px-3 py-3 text-center text-sm font-extrabold text-black shadow-sm transition hover:bg-green-50 sm:px-5"
+          >
+            Leads
+          </Link>
+
           <button
             type="button"
             onClick={() => setShowClients(true)}
