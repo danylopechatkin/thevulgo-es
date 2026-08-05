@@ -37,7 +37,7 @@ export async function generateMetadata({
       canonical: `${siteUrl}/${locale}/montaje-tv-valencia`,
       languages: {
         es: `${siteUrl}/es/montaje-tv-valencia`,
-        en: `${siteUrl}/en/tv-mounting-valencia`,
+        en: `${siteUrl}/en/montaje-tv-valencia`,
       },
     },
     openGraph: {

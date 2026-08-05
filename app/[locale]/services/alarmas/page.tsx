@@ -226,15 +226,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `${baseUrl}/${locale}/services/alarmas`,
       languages: {
-        es: `${baseUrl}/es/services/alarm-systems`,
-        en: `${baseUrl}/en/services/alarm-systems`,
-        "x-default": `${baseUrl}/es/services/alarm-systems`,
+        es: `${baseUrl}/es/services/alarmas`,
+        en: `${baseUrl}/en/services/alarmas`,
+        "x-default": `${baseUrl}/es/services/alarmas`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/alarm-systems`,
+      url: `${baseUrl}/${locale}/services/alarmas`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -245,7 +245,7 @@ export default async function AlarmSystemsPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/services/alarm-systems`;
+  const pageUrl = `${baseUrl}/${locale}/services/alarmas`;
   const estimateHref = `/${locale}/estimate?category=alarm-systems`;
 
   const whatsappText = encodeURIComponent(
@@ -462,7 +462,7 @@ export default async function AlarmSystemsPage({ params }: Props) {
             itemOffered: {
               "@type": "Service",
               name: isEs ? item.es : item.en,
-              url: `${baseUrl}/${locale}/services/alarm-systems/${item.slug}`,
+              url: `${baseUrl}/${locale}/services/alarmas/${item.slug}`,
             },
           })),
         },
@@ -627,7 +627,7 @@ export default async function AlarmSystemsPage({ params }: Props) {
           {alarmPages.map((item) => (
             <Link
               key={item.slug}
-              href={`/${locale}/services/alarm-systems/${item.slug}`}
+              href={`/${locale}/services/alarmas/${item.slug}`}
               className="group rounded-2xl border border-yellow-300 bg-white p-6 shadow-md transition hover:scale-[1.02] hover:shadow-xl"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">

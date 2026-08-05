@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: `${siteUrl}/${locale}/services/electrical/montaje-electrico-basico-valencia`,
       languages: {
         es: `${siteUrl}/es/services/electrical/montaje-electrico-basico-valencia`,
-        en: `${siteUrl}/en/basic-electrical-installation-valencia`,
+        en: `${siteUrl}/en/services/electrical/montaje-electrico-basico-valencia`,
       },
     },
     openGraph: {

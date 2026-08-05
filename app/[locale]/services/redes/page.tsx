@@ -358,15 +358,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `${baseUrl}/${locale}/services/redes`,
       languages: {
-        es: `${baseUrl}/es/services/networking`,
-        en: `${baseUrl}/en/services/networking`,
-        "x-default": `${baseUrl}/es/services/networking`,
+        es: `${baseUrl}/es/services/redes`,
+        en: `${baseUrl}/en/services/redes`,
+        "x-default": `${baseUrl}/es/services/redes`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/networking`,
+      url: `${baseUrl}/${locale}/services/redes`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -377,7 +377,7 @@ export default async function NetworkingPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/services/networking`;
+  const pageUrl = `${baseUrl}/${locale}/services/redes`;
   const estimateHref = `/${locale}/estimate?category=networking`;
 
   const whatsappText = encodeURIComponent(
@@ -588,7 +588,7 @@ export default async function NetworkingPage({ params }: Props) {
             itemOffered: {
               "@type": "Service",
               name: isEs ? item.es : item.en,
-              url: `${baseUrl}/${locale}/services/networking/${item.slug}`,
+              url: `${baseUrl}/${locale}/services/redes/${item.slug}`,
             },
           })),
         },
@@ -751,7 +751,7 @@ export default async function NetworkingPage({ params }: Props) {
           {networkingPages.map((item) => (
             <Link
               key={item.slug}
-              href={`/${locale}/services/networking/${item.slug}`}
+              href={`/${locale}/services/redes/${item.slug}`}
               className="group rounded-2xl border border-yellow-300 bg-white p-6 shadow-md transition hover:scale-[1.02] hover:shadow-xl"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
