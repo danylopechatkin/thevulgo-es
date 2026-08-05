@@ -43,6 +43,17 @@ const formatDateTime = (value: string | null) =>
       }).format(new Date(value))
     : "No reminder set";
 
+const madridDateKey = (date: Date) => {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Madrid",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const value = (type: string) => parts.find((part) => part.type === type)?.value || "";
+  return `${value("year")}-${value("month")}-${value("day")}`;
+};
+
 const getDefaultFollowUp = () => {
   const date = new Date();
   date.setDate(date.getDate() + 1);
@@ -264,6 +275,9 @@ export default function LeadsClient({ mode }: { mode: Mode }) {
 
   const updateLead = async (lead: Lead, updates: Record<string, unknown>) => {
     setError("");
+    setLeads((current) => current.map((item) =>
+      item.id === lead.id ? { ...item, ...updates } as Lead : item
+    ));
     try {
       const response = await fetch(`/api/admin/leads/${lead.id}`, {
         method: "PATCH",
@@ -278,6 +292,7 @@ export default function LeadsClient({ mode }: { mode: Mode }) {
           : current.map((item) => (item.id === lead.id ? result.lead : item))
       );
     } catch (updateError) {
+      setLeads((current) => current.map((item) => item.id === lead.id ? lead : item));
       setError(updateError instanceof Error ? updateError.message : "Could not update lead");
     }
   };
@@ -449,6 +464,11 @@ function LeadCard({
   const whatsappHref = phoneDigits
     ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent(whatsappMessage)}`
     : "";
+  const reminderMatches = (days: number) => {
+    if (!lead.follow_up_at) return false;
+    const target = new Date(now + days * 24 * 60 * 60 * 1000);
+    return madridDateKey(new Date(lead.follow_up_at)) === madridDateKey(target);
+  };
 
   return (
     <article className={`rounded-3xl border bg-white p-5 shadow-md ${overdue ? "border-red-300" : "border-yellow-400"}`}>
@@ -514,11 +534,21 @@ function LeadCard({
 
       <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-gray-100 pt-3">
         <span className="text-xs font-bold text-gray-500">Remind:</span>
-        {[1, 3, 7].map((days) => (
-          <button key={days} type="button" onClick={() => onSnooze(days)} className="rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-bold">
-            {days === 1 ? "Tomorrow" : `${days} days`}
-          </button>
-        ))}
+        {[1, 3, 7].map((days) => {
+          const active = reminderMatches(days);
+          return (
+            <button
+              key={days}
+              type="button"
+              onClick={() => onSnooze(days)}
+              aria-pressed={active}
+              className={`rounded-lg border px-2.5 py-1.5 text-xs font-extrabold transition active:scale-95 ${active ? "border-black bg-yellow-400 text-black shadow-sm" : "border-transparent bg-gray-100 text-black hover:border-yellow-400"}`}
+            >
+              {active && <span aria-hidden="true">✓ </span>}
+              {days === 1 ? "Tomorrow" : `${days} days`}
+            </button>
+          );
+        })}
         <select
           value={lead.status}
           onChange={(event) => onUpdate({ status: event.target.value })}
