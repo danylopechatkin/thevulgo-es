@@ -33,8 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? "Manitas en Valencia | Montaje y Reparaciones | THEVULGO"
     : "Handyman in Valencia | Assembly and Repairs | THEVULGO";
   const description = isEs
-    ? "Manitas profesional en Valencia para montaje de TV y muebles, puertas, espejos, enchufes y pequeñas reparaciones. Presupuesto por WhatsApp."
-    : "Professional handyman in Valencia for TV and furniture assembly, doors, mirrors, outlets and small repairs. Quote by WhatsApp.";
+    ? "Manitas en Valencia para montar muebles, colgar TV, espejos, cuadros y estantes, instalar ventiladores, lámparas, cortinas y hacer pequeñas reparaciones."
+    : "Handyman in Valencia for furniture assembly, TV, mirrors, pictures, shelves, ceiling fans, lights, curtains and small home repairs.";
   return {
     title,
     description,
@@ -71,9 +71,15 @@ export default async function HandymanValenciaPage({ params }: Props) {
   const services = [
     { title: isEs ? "Montaje de TV" : "TV mounting", price: "49 €", href: `/${locale}/montaje-tv-valencia`, icon: Tv },
     { title: isEs ? "Montaje de muebles" : "Furniture assembly", price: "45 €", href: `/${locale}/montaje-muebles-valencia`, icon: Sofa },
+    { title: isEs ? "Instalación de ventiladores" : "Ceiling fan installation", price: "45 €", href: `/${locale}/services/instalacion-ventilador-techo-valencia`, icon: Wrench },
+    { title: isEs ? "Lámparas y apliques" : "Lights and wall lamps", price: "35 €", href: `/${locale}/instalacion-lampara-valencia`, icon: Plug },
+    { title: isEs ? "Colgar espejos" : "Mirror hanging", price: "35 €", href: `/${locale}/colgar-espejos-valencia`, icon: ImageIcon },
+    { title: isEs ? "Estanterías y baldas" : "Shelves and ledges", price: "35 €", href: `/${locale}/services/furniture/instalacion-estanterias-valencia`, icon: Wrench },
+    { title: isEs ? "Cuadros y decoración" : "Pictures and wall decor", price: "29 €", href: `/${locale}/colgar-cuadros-valencia`, icon: ImageIcon },
+    { title: isEs ? "Barras y rieles de cortina" : "Curtain rods and rails", price: "35 €", href: `/${locale}/instalacion-barras-cortina-valencia`, icon: Wrench },
     { title: isEs ? "Ajuste de puertas" : "Door adjustments", price: "35 €", href: `/${locale}/services/doors`, icon: DoorOpen },
     { title: isEs ? "Enchufes e interruptores" : "Outlets and switches", price: "35 €", href: `/${locale}/cambio-enchufe-valencia`, icon: Plug },
-    { title: isEs ? "Espejos y estanterías" : "Mirrors and shelves", price: "35 €", href: `/${locale}/services/bathroom/mirror-installation-valencia`, icon: Wrench },
+    { title: isEs ? "Accesorios de baño" : "Bathroom accessories", price: "29 €", href: `/${locale}/services/bathroom/accessory-installation`, icon: ShieldCheck },
     { title: isEs ? "Pequeñas reparaciones" : "Small repairs", price: "35 €", href: `/${locale}/services/pequenas-reparaciones-valencia`, icon: ShieldCheck },
   ];
 
@@ -134,6 +140,18 @@ export default async function HandymanValenciaPage({ params }: Props) {
     url: `${baseUrl}/${locale}/handyman-valencia`,
     provider: { "@type": "LocalBusiness", name: "THEVULGO", telephone: `+${phone}`, areaServed: "Valencia" },
     areaServed: "Valencia",
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: isEs ? "Servicios de manitas" : "Handyman services",
+      itemListElement: services.map((service) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: service.title,
+          url: `${baseUrl}${service.href}`,
+        },
+      })),
+    },
   };
 
   return (

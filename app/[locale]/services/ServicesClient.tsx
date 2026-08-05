@@ -27,6 +27,7 @@ import {
 export default function ServicesClient() {
   const router = useRouter();
   const locale = useLocale();
+  const isEs = locale === "es";
   const t = useTranslations("services");
 
   const services = [
@@ -146,6 +147,28 @@ export default function ServicesClient() {
               {t("subtitle")}
             </p>
           </div>
+
+          <button
+            onClick={() => router.push(`/${locale}/handyman-valencia`)}
+            className="group mt-10 grid w-full gap-5 rounded-3xl border-2 border-yellow-400 bg-neutral-950 p-6 text-left text-white shadow-xl transition hover:-translate-y-1 sm:grid-cols-[1fr_auto] sm:items-center sm:p-8"
+          >
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-yellow-400 px-3 py-1 text-xs font-black uppercase tracking-wide text-black">
+                <Wrench className="h-4 w-4" /> {isEs ? "Todos los trabajos pequeños" : "All small jobs"}
+              </div>
+              <h2 className="mt-4 text-2xl font-black sm:text-3xl">
+                {isEs ? "Manitas en Valencia" : "Handyman in Valencia"}
+              </h2>
+              <p className="mt-2 max-w-3xl leading-7 text-neutral-300">
+                {isEs
+                  ? "Muebles, TV, ventiladores, lámparas, espejos, estantes, cortinas, puertas, accesorios y varias tareas pequeñas en una sola visita."
+                  : "Furniture, TVs, ceiling fans, lights, mirrors, shelves, curtains, doors, accessories and several small tasks in one visit."}
+              </p>
+            </div>
+            <span className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 font-black text-black">
+              {isEs ? "Ver trabajos" : "View jobs"} <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
+            </span>
+          </button>
 
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (

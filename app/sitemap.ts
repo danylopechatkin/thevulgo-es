@@ -67,6 +67,8 @@ const rootSeoPages = [
 
   // Pictures and shelves
   "colgar-cuadros-valencia",
+  "colgar-espejos-valencia",
+  "instalacion-barras-cortina-valencia",
 
   // TV mounting and home cinema
   "montaje-tv-valencia",
