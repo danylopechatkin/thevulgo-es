@@ -264,9 +264,13 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     const text = String(body?.text || "").trim();
-    const imageDataUrl = String(body?.imageDataUrl || "").trim();
+    const imageDataUrls = Array.isArray(body?.imageDataUrls)
+      ? body.imageDataUrls.map((value: unknown) => String(value || "").trim())
+      : body?.imageDataUrl
+        ? [String(body.imageDataUrl).trim()]
+        : [];
 
-    if (!text && !imageDataUrl) {
+    if (!text && imageDataUrls.length === 0) {
       return NextResponse.json(
         {
           success: false,
@@ -290,9 +294,18 @@ export async function POST(request: Request) {
       );
     }
 
+    if (imageDataUrls.length > 10) {
+      return NextResponse.json(
+        { success: false, error: "You can add up to 10 screenshots" },
+        { status: 400 }
+      );
+    }
+
     if (
-      imageDataUrl &&
-      !/^data:image\/(jpeg|png|webp);base64,/i.test(imageDataUrl)
+      imageDataUrls.some(
+        (imageDataUrl: string) =>
+          !/^data:image\/(jpeg|png|webp);base64,/i.test(imageDataUrl)
+      )
     ) {
       return NextResponse.json(
         { success: false, error: "Unsupported screenshot format" },
@@ -300,9 +313,14 @@ export async function POST(request: Request) {
       );
     }
 
-    if (imageDataUrl.length > 6_000_000) {
+    if (
+      imageDataUrls.reduce(
+        (total: number, imageDataUrl: string) => total + imageDataUrl.length,
+        0
+      ) > 4_000_000
+    ) {
       return NextResponse.json(
-        { success: false, error: "Screenshot is too large" },
+        { success: false, error: "Screenshots are too large together" },
         { status: 400 }
       );
     }
@@ -488,21 +506,21 @@ CATEGORY RULES:
         },
         {
           role: "user",
-          content: imageDataUrl
+          content: imageDataUrls.length > 0
             ? [
                 {
                   type: "text" as const,
                   text:
                     text ||
-                    "Extract the handyman order details from this WhatsApp screenshot.",
+                    "Extract the handyman order details from these WhatsApp screenshots. Read them in the attached order.",
                 },
-                {
+                ...imageDataUrls.map((imageDataUrl: string) => ({
                   type: "image_url" as const,
                   image_url: {
                     url: imageDataUrl,
                     detail: "high" as const,
                   },
-                },
+                })),
               ]
             : text,
         },

@@ -23,6 +23,14 @@ type ManualService = {
   qty: number;
 };
 
+type AiOrderImage = {
+  name: string;
+  dataUrl: string;
+};
+
+const MAX_AI_ORDER_IMAGES = 10;
+const MAX_AI_ORDER_IMAGES_SIZE = 4_000_000;
+
 type AiParsedOrder = {
   fullName: string | null;
   phone: string | null;
@@ -189,7 +197,7 @@ function resizeScreenshot(file: File): Promise<string> {
       const image = new Image();
       image.onerror = () => reject(new Error("Could not open this screenshot."));
       image.onload = () => {
-        const maxSide = 1800;
+        const maxSide = 1400;
         const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
         const canvas = document.createElement("canvas");
         canvas.width = Math.max(1, Math.round(image.width * scale));
@@ -202,7 +210,7 @@ function resizeScreenshot(file: File): Promise<string> {
         }
 
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL("image/jpeg", 0.86));
+        resolve(canvas.toDataURL("image/jpeg", 0.76));
       };
       image.src = String(reader.result || "");
     };
@@ -243,8 +251,7 @@ export default function AdminClient() {
   );
 
   const [aiOrderText, setAiOrderText] = useState("");
-  const [aiOrderImage, setAiOrderImage] = useState("");
-  const [aiOrderImageName, setAiOrderImageName] = useState("");
+  const [aiOrderImages, setAiOrderImages] = useState<AiOrderImage[]>([]);
 
 const [isParsingAiOrder, setIsParsingAiOrder] = useState(false);
 
@@ -616,19 +623,46 @@ const goToToday = () => {
   setCalendarMonth(today.slice(0, 7));
 };
 
-const handleAiScreenshot = async (file?: File) => {
-  if (!file) return;
+const handleAiScreenshots = async (files: File[]) => {
+  if (files.length === 0) return;
+
+  const availableSlots = MAX_AI_ORDER_IMAGES - aiOrderImages.length;
+  if (availableSlots <= 0) {
+    setAiOrderError(`You can add up to ${MAX_AI_ORDER_IMAGES} screenshots.`);
+    return;
+  }
+
+  if (files.length > availableSlots) {
+    setAiOrderError(
+      `You can add ${availableSlots} more screenshot${availableSlots === 1 ? "" : "s"}.`
+    );
+    return;
+  }
 
   try {
     setAiOrderError("");
-    const resizedImage = await resizeScreenshot(file);
-    setAiOrderImage(resizedImage);
-    setAiOrderImageName(file.name || "WhatsApp screenshot");
+    const resizedImages = await Promise.all(
+      files.map(async (file) => ({
+        name: file.name || "WhatsApp screenshot",
+        dataUrl: await resizeScreenshot(file),
+      }))
+    );
+    const nextImages = [...aiOrderImages, ...resizedImages];
+    const totalSize = nextImages.reduce(
+      (sum, image) => sum + image.dataUrl.length,
+      0
+    );
+
+    if (totalSize > MAX_AI_ORDER_IMAGES_SIZE) {
+      throw new Error(
+        "These screenshots are too large together. Add fewer images or crop them first."
+      );
+    }
+
+    setAiOrderImages(nextImages);
   } catch (error) {
-    setAiOrderImage("");
-    setAiOrderImageName("");
     setAiOrderError(
-      error instanceof Error ? error.message : "Could not add this screenshot."
+      error instanceof Error ? error.message : "Could not add these screenshots."
     );
   }
 };
@@ -636,7 +670,7 @@ const handleAiScreenshot = async (file?: File) => {
 const parseOrderWithAi = async () => {
   const cleanText = aiOrderText.trim();
 
-  if (!cleanText && !aiOrderImage) {
+  if (!cleanText && aiOrderImages.length === 0) {
     setAiOrderError("Paste a client message or add a WhatsApp screenshot first.");
     return;
   }
@@ -655,7 +689,7 @@ const parseOrderWithAi = async () => {
   },
       body: JSON.stringify({
         text: cleanText,
-        imageDataUrl: aiOrderImage,
+        imageDataUrls: aiOrderImages.map((image) => image.dataUrl),
       }),
     });
 
@@ -724,8 +758,7 @@ const parseOrderWithAi = async () => {
 
     setAiMissingFields(parsed.missingFields || []);
     setAiWarnings(parsed.warnings || []);
-    setAiOrderImage("");
-    setAiOrderImageName("");
+    setAiOrderImages([]);
   } catch (error) {
     console.error("AI ORDER PARSE ERROR:", error);
 
@@ -851,8 +884,7 @@ const parseOrderWithAi = async () => {
 
       setManualServices([createServiceForCategory("Furniture Assembly")]);
       setManualIncludeIva(true);
-      setAiOrderImage("");
-      setAiOrderImageName("");
+      setAiOrderImages([]);
 
       setShowManualForm(false);
       await loadOrders();
@@ -1911,8 +1943,7 @@ const parseOrderWithAi = async () => {
                 <button
                   onClick={() => {
                     setShowManualForm(false);
-                    setAiOrderImage("");
-                    setAiOrderImageName("");
+                    setAiOrderImages([]);
                   }}
                   disabled={isCreatingManual}
                   className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-bold text-black transition hover:bg-gray-50 disabled:opacity-60"
@@ -1937,46 +1968,63 @@ const parseOrderWithAi = async () => {
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <label className="cursor-pointer rounded-xl border border-yellow-400 bg-white px-4 py-2.5 text-sm font-extrabold text-black shadow-sm transition hover:bg-yellow-50">
-          📷 Add screenshot
+          📷 Add screenshots
           <input
             type="file"
             accept="image/jpeg,image/png,image/webp"
+            multiple
             onChange={(event) => {
-              void handleAiScreenshot(event.target.files?.[0]);
+              void handleAiScreenshots(Array.from(event.target.files || []));
               event.target.value = "";
             }}
             className="sr-only"
           />
         </label>
 
-        {aiOrderImage && (
-          <div className="flex min-w-0 flex-1 items-center justify-between gap-2 rounded-xl bg-green-50 px-3 py-2 text-xs font-bold text-green-800">
-            <span className="truncate">✓ {aiOrderImageName}</span>
-            <button
-              type="button"
-              onClick={() => {
-                setAiOrderImage("");
-                setAiOrderImageName("");
-              }}
-              className="shrink-0 rounded-lg px-2 py-1 hover:bg-green-100"
-              aria-label="Remove screenshot"
-            >
-              Remove
-            </button>
-          </div>
+        {aiOrderImages.length > 0 && (
+          <span className="rounded-xl bg-green-50 px-3 py-2 text-xs font-bold text-green-800">
+            {aiOrderImages.length}/{MAX_AI_ORDER_IMAGES} selected
+          </span>
         )}
       </div>
 
+      {aiOrderImages.length > 0 && (
+        <div className="mt-2 space-y-2">
+          {aiOrderImages.map((image, index) => (
+            <div
+              key={`${image.name}-${index}`}
+              className="flex min-w-0 items-center justify-between gap-2 rounded-xl bg-green-50 px-3 py-2 text-xs font-bold text-green-800"
+            >
+              <span className="truncate">✓ {index + 1}. {image.name}</span>
+              <button
+                type="button"
+                onClick={() =>
+                  setAiOrderImages((current) =>
+                    current.filter((_, imageIndex) => imageIndex !== index)
+                  )
+                }
+                className="shrink-0 rounded-lg px-2 py-1 hover:bg-green-100"
+                aria-label={`Remove screenshot ${index + 1}`}
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
       <p className="mt-2 text-[11px] leading-4 text-gray-500">
-        The selected image is sent securely to OpenAI for one-time recognition
-        and is not saved with the order.
+        Select up to {MAX_AI_ORDER_IMAGES} images. They are sent securely to
+        OpenAI for one-time recognition and are not saved with the order.
       </p>
     </div>
 
     <button
       type="button"
       onClick={parseOrderWithAi}
-      disabled={isParsingAiOrder || (!aiOrderText.trim() && !aiOrderImage)}
+      disabled={
+        isParsingAiOrder || (!aiOrderText.trim() && aiOrderImages.length === 0)
+      }
       className="rounded-2xl bg-black px-5 py-3 text-sm font-extrabold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 lg:mt-7"
     >
       {isParsingAiOrder ? "Analysing..." : "Fill form with AI"}
