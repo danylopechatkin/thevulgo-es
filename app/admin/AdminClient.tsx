@@ -1307,17 +1307,17 @@ const parseOrderWithAi = async () => {
   return (
     <div className="min-h-screen bg-white px-3 py-4 text-black sm:p-6">
       <div className="mx-auto max-w-7xl space-y-5 sm:space-y-8">
-        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_44px] items-center gap-2 rounded-3xl border border-gray-100 bg-[#fffdf7] p-3 shadow-sm sm:flex sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none">
+        <div className="grid grid-cols-3 items-stretch gap-2 rounded-3xl border border-yellow-200 bg-[#fffdf7] p-3 shadow-sm sm:flex sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none">
           <Link
             href="/admin/today"
-            className="rounded-2xl border border-red-200 bg-white px-3 py-3 text-center text-sm font-extrabold text-black shadow-sm transition hover:bg-red-50 sm:px-5"
+            className="flex min-w-0 items-center justify-center rounded-2xl border border-yellow-400 bg-white px-2 py-3 text-center text-sm font-extrabold text-black shadow-sm transition hover:bg-yellow-50 hover:shadow-md sm:px-5"
           >
             Today
           </Link>
 
           <Link
             href="/admin/leads"
-            className="rounded-2xl border border-green-300 bg-white px-3 py-3 text-center text-sm font-extrabold text-black shadow-sm transition hover:bg-green-50 sm:px-5"
+            className="flex min-w-0 items-center justify-center rounded-2xl border border-yellow-400 bg-white px-2 py-3 text-center text-sm font-extrabold text-black shadow-sm transition hover:bg-yellow-50 hover:shadow-md sm:px-5"
           >
             Leads
           </Link>
@@ -1325,7 +1325,7 @@ const parseOrderWithAi = async () => {
           <button
             type="button"
             onClick={() => setShowClients(true)}
-            className="rounded-2xl border border-yellow-400 bg-white px-3 py-3 text-sm font-extrabold text-black shadow-sm transition hover:bg-yellow-50 hover:shadow-md sm:px-5"
+            className="min-w-0 rounded-2xl border border-yellow-400 bg-white px-2 py-3 text-center text-sm font-extrabold text-black shadow-sm transition hover:bg-yellow-50 hover:shadow-md sm:px-5"
           >
             Clients ({clientProfiles.length})
           </button>
@@ -1333,7 +1333,7 @@ const parseOrderWithAi = async () => {
           <button
             type="button"
             onClick={() => setShowManualForm(true)}
-            className="rounded-2xl bg-yellow-400 px-3 py-3 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.02] hover:shadow-lg sm:px-5"
+            className="col-span-2 rounded-2xl bg-yellow-400 px-3 py-3 text-sm font-extrabold text-black shadow-md transition hover:scale-[1.01] hover:shadow-lg sm:col-auto sm:px-5"
           >
             <span className="sm:hidden">+ Add order</span>
             <span className="hidden sm:inline">+ Add manual order</span>
@@ -1345,7 +1345,7 @@ const parseOrderWithAi = async () => {
             disabled={isLoggingOut}
             aria-label="Log out"
             title="Log out"
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-300 bg-white text-black shadow-sm transition hover:bg-gray-50 hover:shadow-md disabled:opacity-60 sm:h-auto sm:w-auto sm:rounded-2xl sm:px-5 sm:py-3 sm:text-sm sm:font-extrabold"
+            className="flex min-h-11 w-full items-center justify-center rounded-2xl bg-black text-white shadow-md transition hover:opacity-85 disabled:opacity-60 sm:min-h-0 sm:w-auto sm:px-5 sm:py-3 sm:text-sm sm:font-extrabold"
           >
             <LogOut
               aria-hidden="true"
