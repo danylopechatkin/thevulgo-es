@@ -388,12 +388,17 @@ function LeadCard({
   now: number;
 }) {
   const overdue = !lead.follow_up_at || new Date(lead.follow_up_at).getTime() < now;
-  const phoneDigits = lead.phone.replace(/[^\d+]/g, "");
+  const rawPhoneDigits = lead.phone.replace(/\D/g, "");
+  const phoneDigits = rawPhoneDigits.length === 9 ? `34${rawPhoneDigits}` : rawPhoneDigits;
   const photoUrls = lead.notes.match(/https:\/\/[^\s]+/g) || [];
+  const isFanWebsiteLead = lead.source === "website-fan-form";
+  const fanCount = lead.service_summary.match(/^(\d+)/)?.[1] || "";
+  const area = lead.notes.match(/^Zona:\s*(.+)$/m)?.[1]?.trim() || "Valencia";
+  const whatsappMessage = isFanWebsiteLead
+    ? `Hola ${lead.full_name || ""}, hemos recibido tu solicitud para instalar ${fanCount || "el"} ${fanCount === "1" ? "ventilador de techo" : "ventiladores de techo"} en ${area}. ¿Podrías confirmarme cuándo te viene bien la instalación?`
+    : `Hola ${lead.full_name || ""}, quería hacer seguimiento sobre ${lead.service_summary || "el servicio"}.`;
   const whatsappHref = phoneDigits
-    ? `https://wa.me/${phoneDigits.replace(/^\+/, "")}?text=${encodeURIComponent(
-        `Hola ${lead.full_name || ""}, quería hacer seguimiento sobre ${lead.service_summary || "el servicio"}.`
-      )}`
+    ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent(whatsappMessage)}`
     : "";
 
   return (
