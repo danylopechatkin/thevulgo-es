@@ -8,6 +8,58 @@ export type CatalogService = {
 };
 
 export const SERVICE_CATALOG: Record<string, CatalogService[]> = {
+  Handyman: [
+    {
+      id: "handyman-small-repair",
+      label: "Small home repair",
+      labelEs: "Pequeña reparación del hogar",
+      price: 35,
+      badge: "Popular",
+      badgeEs: "Popular",
+    },
+    {
+      id: "handyman-assembly",
+      label: "Assembly or installation",
+      labelEs: "Montaje o instalación",
+      price: 49,
+    },
+    {
+      id: "handyman-wall-mounting",
+      label: "Hang a shelf, mirror or accessory",
+      labelEs: "Colgar estante, espejo o accesorio",
+      price: 35,
+    },
+    {
+      id: "handyman-adjustment",
+      label: "Door, handle, hinge or furniture adjustment",
+      labelEs: "Ajuste de puerta, manilla, bisagra o mueble",
+      price: 35,
+    },
+    {
+      id: "handyman-multiple-jobs",
+      label: "Multiple small jobs in one visit",
+      labelEs: "Varios trabajos pequeños en una visita",
+      price: 49,
+      badge: "Best value",
+      badgeEs: "Mejor opción",
+    },
+    {
+      id: "handyman-inspection",
+      label: "Visit and inspection",
+      labelEs: "Visita y revisión",
+      price: 49,
+      badge: "Base",
+      badgeEs: "Base",
+    },
+    {
+      id: "handyman-custom-job",
+      label: "Other handyman job / Send details",
+      labelEs: "Otro trabajo handyman / Enviar detalles",
+      price: 49,
+      badge: "Not listed?",
+      badgeEs: "¿No está en la lista?",
+    },
+  ],
   "TV Mounting": [
     {
       id: "tv-small",

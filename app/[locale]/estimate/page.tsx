@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 
 type CategoryKey =
+  | "handyman"
   | "tv-mounting"
   | "ceiling-fans"
   | "electrical"
@@ -56,6 +57,7 @@ type SelectOption = string | { value: string; label: string };
 
 const CATEGORY_KEYS: CategoryKey[] = [
   "tv-mounting",
+  "handyman",
   "ceiling-fans",
   "electrical",
   "plumbing",
@@ -71,6 +73,16 @@ const CATEGORY_KEYS: CategoryKey[] = [
 ];
 
 const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
+  handyman: {
+    title: "Handyman",
+    titleEs: "Handyman / Manitas",
+    icon: <Hammer className="h-5 w-5" />,
+    subtitle: "General home repairs, assembly, installation and maintenance.",
+    subtitleEs: "Reparaciones, montaje, instalaciones y mantenimiento del hogar.",
+    badge: "All-in-one",
+    badgeEs: "Todo en uno",
+    services: getCatalogServices("Handyman"),
+  },
   "tv-mounting": {
     title: "TV Mounting",
     titleEs: "Instalación de TV",
@@ -238,6 +250,10 @@ function EstimatePageContent() {
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
   const [availabilityError, setAvailabilityError] = useState("");
+  const orderedCategoryKeys = [
+    category,
+    ...CATEGORY_KEYS.filter((key) => key !== category),
+  ];
 
   const [client, setClient] = useState({
     fullName: "",
@@ -719,7 +735,7 @@ function EstimatePageContent() {
                 <div className="mt-6">
                   <div className="overflow-x-auto px-1 pb-5 pt-1 sm:hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                     <div className="flex w-max snap-x snap-mandatory gap-4 pl-1 pr-6">
-                      {CATEGORY_KEYS.map((key) => {
+                      {orderedCategoryKeys.map((key) => {
                         const active = category === key;
                         const cfg = CATEGORY_DATA[key];
 
@@ -759,7 +775,7 @@ function EstimatePageContent() {
                   </div>
 
                   <div className="hidden sm:grid sm:grid-cols-2 xl:grid-cols-4 gap-3">
-                    {CATEGORY_KEYS.map((key) => {
+                    {orderedCategoryKeys.map((key) => {
                       const active = category === key;
                       const cfg = CATEGORY_DATA[key];
 
