@@ -54,5 +54,6 @@ export function orderRowToEmailData(
     depositRequired: Boolean(order.deposit_required),
     depositAmount: Number(order.deposit_amount || 0),
     source,
+    locale: String(order.locale || "en"),
   };
 }

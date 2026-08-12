@@ -77,4 +77,7 @@ export function madridLocalDateTimeToUtc(date: string, time: string) {
 
 export const BUSINESS_TIMEZONE = "Europe/Madrid";
 export const torontoLocalToUtc = madridLocalDateTimeToUtc;
-export const formatValenciaDateTime = formatMadridDateTime;
+// Legacy email helper. Email templates interpolate this value directly, so it
+// must remain a formatted string rather than the structured CRM date object.
+export const formatValenciaDateTime = (date: string | Date) =>
+  formatMadridDateTime(date).full;

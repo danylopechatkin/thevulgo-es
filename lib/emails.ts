@@ -18,6 +18,7 @@ export type OrderEmailData = {
   depositRequired?: boolean;
   depositAmount?: number;
   source?: "estimate" | "manual";
+  locale?: string;
 };
 
 const escapeHtml = (value: unknown) =>
@@ -48,17 +49,37 @@ function config() {
   return { resend: new Resend(apiKey), from, replyTo, businessEmail };
 }
 
-function serviceRows(quote: CalculatedQuote) {
+function emailDateTime(date: string | Date, locale = "en") {
+  return new Intl.DateTimeFormat(locale.toLowerCase().startsWith("es") ? "es-ES" : "en-GB", {
+    timeZone: "Europe/Madrid",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).format(new Date(date));
+}
+
+function serviceRows(quote: CalculatedQuote, spanish = false) {
   return quote.services
     .map(
       (item) =>
-        `<tr><td style="padding:14px 0;border-bottom:1px solid #ece9df;color:#202020;font-size:15px;line-height:1.45"><strong>${escapeHtml(item.label)}</strong><br><span style="color:#707070;font-size:13px">Quantity: ${item.qty}</span></td><td style="padding:14px 0 14px 14px;border-bottom:1px solid #ece9df;text-align:right;vertical-align:top;white-space:nowrap;font-size:15px;font-weight:800">${money(item.subtotal)}</td></tr>`,
+        `<tr><td style="padding:14px 0;border-bottom:1px solid #ece9df;color:#202020;font-size:15px;line-height:1.45"><strong>${escapeHtml(item.label)}</strong><br><span style="color:#707070;font-size:13px">${spanish ? "Cantidad" : "Quantity"}: ${item.qty}</span></td><td style="padding:14px 0 14px 14px;border-bottom:1px solid #ece9df;text-align:right;vertical-align:top;white-space:nowrap;font-size:15px;font-weight:800">${money(item.subtotal)}</td></tr>`,
     )
     .join("");
 }
 
-function shell(title: string, preheader: string, content: string) {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title></head><body style="margin:0;padding:0;background:#f4f4f0;color:#111;font-family:Arial,Helvetica,sans-serif"><div style="display:none;max-height:0;overflow:hidden;opacity:0">${escapeHtml(preheader)}</div><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f0"><tr><td align="center" style="padding:28px 12px"><table role="presentation" width="620" cellpadding="0" cellspacing="0" style="width:100%;max-width:620px"><tr><td style="padding:0 0 12px;text-align:center;color:#5f6572;font-size:12px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase">Spain</td></tr><tr><td style="overflow:hidden;border:1px solid #e7c000;border-radius:26px;background:#fff;box-shadow:0 12px 32px rgba(17,17,17,.08)"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="background:#111;padding:28px 30px;color:#fff"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="font-size:23px;font-weight:900;letter-spacing:.3px">THEVULGO</td><td align="right"><span style="display:inline-block;border-radius:999px;background:#facc15;padding:8px 12px;color:#111;font-size:11px;font-weight:900;letter-spacing:.7px;text-transform:uppercase">Spain operations</span></td></tr></table></td></tr><tr><td style="padding:34px 30px"><h1 style="margin:0 0 14px;font-size:30px;line-height:1.12;letter-spacing:-.7px">${escapeHtml(title)}</h1>${content}</td></tr><tr><td style="border-top:1px solid #eee9d9;background:#fffdf5;padding:20px 30px;color:#626262;font-size:12px;line-height:1.6">THEVULGO · Handyman services in Spain<br>Prices are shown in euros (EUR). Appointment times use Europe/Madrid.</td></tr></table></td></tr><tr><td style="padding:18px 12px 0;text-align:center;color:#858585;font-size:11px;line-height:1.5">This transactional email was sent about a THEVULGO service request.</td></tr></table></td></tr></table></body></html>`;
+function shell(title: string, preheader: string, content: string, locale = "en") {
+  const spanish = locale.toLowerCase().startsWith("es");
+  const operations = spanish ? "Operaciones en España" : "Spain operations";
+  const footer = spanish
+    ? "THEVULGO · Servicios profesionales en España<br>Los precios se muestran en euros (EUR). Los horarios usan Europe/Madrid."
+    : "THEVULGO · Handyman services in Spain<br>Prices are shown in euros (EUR). Appointment times use Europe/Madrid.";
+  const legal = spanish
+    ? "Este correo transaccional se envió sobre una solicitud de servicio de THEVULGO."
+    : "This transactional email was sent about a THEVULGO service request.";
+  return `<!doctype html><html lang="${spanish ? "es" : "en"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title></head><body style="margin:0;padding:0;background:#f4f4f0;color:#111;font-family:Arial,Helvetica,sans-serif"><div style="display:none;max-height:0;overflow:hidden;opacity:0">${escapeHtml(preheader)}</div><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f0"><tr><td align="center" style="padding:28px 12px"><table role="presentation" width="620" cellpadding="0" cellspacing="0" style="width:100%;max-width:620px"><tr><td style="padding:0 0 12px;text-align:center;color:#5f6572;font-size:12px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase">${spanish ? "España" : "Spain"}</td></tr><tr><td style="overflow:hidden;border:1px solid #e7c000;border-radius:26px;background:#fff;box-shadow:0 12px 32px rgba(17,17,17,.08)"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="background:#111;padding:28px 30px;color:#fff"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="font-size:23px;font-weight:900;letter-spacing:.3px">THEVULGO</td><td align="right"><span style="display:inline-block;border-radius:999px;background:#facc15;padding:8px 12px;color:#111;font-size:11px;font-weight:900;letter-spacing:.7px;text-transform:uppercase">${operations}</span></td></tr></table></td></tr><tr><td style="padding:34px 30px"><h1 style="margin:0 0 14px;font-size:30px;line-height:1.12;letter-spacing:-.7px">${escapeHtml(title)}</h1>${content}</td></tr><tr><td style="border-top:1px solid #eee9d9;background:#fffdf5;padding:20px 30px;color:#626262;font-size:12px;line-height:1.6">${footer}</td></tr></table></td></tr><tr><td style="padding:18px 12px 0;text-align:center;color:#858585;font-size:11px;line-height:1.5">${legal}</td></tr></table></td></tr></table></body></html>`;
 }
 
 function detailRow(label: string, value: string) {
@@ -66,14 +87,15 @@ function detailRow(label: string, value: string) {
 }
 
 function orderSummary(order: OrderEmailData, orderLabel: string) {
+  const spanish = order.locale?.toLowerCase().startsWith("es") ?? false;
   const location = [order.address, order.area, order.city, order.postalCode]
     .filter(Boolean)
     .join(", ");
   const deposit = order.depositRequired
-    ? `<div style="margin-top:18px;border:1px solid #e7c000;border-radius:16px;background:#fff9d8;padding:16px 18px;color:#111;font-size:14px;line-height:1.55"><strong>Deposit: ${money(order.depositAmount || 0)}</strong><br>THEVULGO will provide secure payment instructions separately.</div>`
-    : `<div style="margin-top:18px;border-radius:16px;background:#f4f4f0;padding:16px 18px;color:#343434;font-size:14px;line-height:1.55"><strong>Payment after the work</strong><br>Pay by secure link or cash after the service is completed.</div>`;
+    ? `<div style="margin-top:18px;border:1px solid #e7c000;border-radius:16px;background:#fff9d8;padding:16px 18px;color:#111;font-size:14px;line-height:1.55"><strong>${spanish ? "Depósito" : "Deposit"}: ${money(order.depositAmount || 0)}</strong><br>${spanish ? "THEVULGO enviará las instrucciones de pago seguro por separado." : "THEVULGO will provide secure payment instructions separately."}</div>`
+    : `<div style="margin-top:18px;border-radius:16px;background:#f4f4f0;padding:16px 18px;color:#343434;font-size:14px;line-height:1.55"><strong>${spanish ? "Pago después del trabajo" : "Payment after the work"}</strong><br>${spanish ? "Paga mediante enlace seguro o en efectivo al finalizar el servicio." : "Pay by secure link or cash after the service is completed."}</div>`;
 
-  return `<div style="margin:22px 0;border-radius:18px;background:#f7f7f4;padding:16px 18px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${detailRow("Order", orderLabel)}${detailRow("Customer", order.fullName)}${detailRow("Phone", order.phone)}${detailRow("Email", order.email || "—")}${detailRow("Service address", location)}${detailRow("Appointment", `${formatValenciaDateTime(order.scheduledAt)} (Madrid time)`)}${detailRow("Category", order.quote.category)}</table></div><div style="margin-top:18px;border:1px solid #e7c000;border-radius:18px;padding:4px 18px 16px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${serviceRows(order.quote)}<tr><td style="padding:18px 0 2px;font-size:17px;font-weight:900">Total</td><td style="padding:18px 0 2px;text-align:right;white-space:nowrap;font-size:19px;font-weight:900">${money(order.quote.total)}</td></tr></table></div>${deposit}${order.notes ? `<div style="margin-top:18px"><p style="margin:0 0 6px;color:#71717a;font-size:12px;font-weight:900;letter-spacing:.8px;text-transform:uppercase">Notes</p><p style="margin:0;color:#333;font-size:14px;line-height:1.55">${escapeHtml(order.notes)}</p></div>` : ""}`;
+  return `<div style="margin:22px 0;border-radius:18px;background:#f7f7f4;padding:16px 18px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${detailRow(spanish ? "Pedido" : "Order", orderLabel)}${detailRow(spanish ? "Cliente" : "Customer", order.fullName)}${detailRow(spanish ? "Teléfono" : "Phone", order.phone)}${detailRow("Email", order.email || "—")}${detailRow(spanish ? "Dirección del servicio" : "Service address", location)}${detailRow(spanish ? "Cita" : "Appointment", `${emailDateTime(order.scheduledAt, order.locale)} (${spanish ? "hora de Madrid" : "Madrid time"})`)}${detailRow(spanish ? "Categoría" : "Category", order.quote.category)}</table></div><div style="margin-top:18px;border:1px solid #e7c000;border-radius:18px;padding:4px 18px 16px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${serviceRows(order.quote, spanish)}<tr><td style="padding:18px 0 2px;font-size:17px;font-weight:900">Total</td><td style="padding:18px 0 2px;text-align:right;white-space:nowrap;font-size:19px;font-weight:900">${money(order.quote.total)}</td></tr></table></div>${deposit}${order.notes ? `<div style="margin-top:18px"><p style="margin:0 0 6px;color:#71717a;font-size:12px;font-weight:900;letter-spacing:.8px;text-transform:uppercase">${spanish ? "Notas" : "Notes"}</p><p style="margin:0;color:#333;font-size:14px;line-height:1.55">${escapeHtml(order.notes)}</p></div>` : ""}`;
 }
 
 export function renderCustomerOrderConfirmation(
@@ -82,14 +104,20 @@ export function renderCustomerOrderConfirmation(
 ) {
   const orderLabel = `TVG-ES-${String(order.orderNumber).padStart(5, "0")}`;
   const manual = order.source === "manual";
-  const customerTitle = manual
-    ? "Your service request is confirmed"
-    : "We received your estimate request";
-  const subject = `${manual ? "THEVULGO booking confirmation" : "We received your estimate request"} · ${orderLabel}`;
+  const spanish = order.locale?.toLowerCase().startsWith("es") ?? false;
+  const customerTitle = spanish
+    ? manual
+      ? "Tu solicitud de servicio está confirmada"
+      : "Hemos recibido tu solicitud"
+    : manual
+      ? "Your service request is confirmed"
+      : "We received your estimate request";
+  const subject = `${spanish ? (manual ? "Confirmación de reserva THEVULGO" : "Hemos recibido tu solicitud") : manual ? "THEVULGO booking confirmation" : "We received your estimate request"} · ${orderLabel}`;
   const html = shell(
     customerTitle,
-    `${orderLabel} · ${formatValenciaDateTime(order.scheduledAt)} · ${money(order.quote.total)}`,
-    `<p style="margin:0 0 12px;font-size:17px;line-height:1.6">Hi ${escapeHtml(order.fullName)},</p><p style="margin:0;color:#4b5563;font-size:15px;line-height:1.7">${manual ? "Your THEVULGO service request has been added to our Spain schedule. Please review the details below." : "We received your handyman estimate request for Spain. We will review the scope and contact you if any detail needs clarification."}</p>${orderSummary(order, orderLabel)}<div style="margin-top:24px;border-top:1px solid #ece9df;padding-top:20px"><p style="margin:0 0 14px;color:#4b5563;font-size:14px;line-height:1.6">Need to change the address, appointment or scope? Reply to this email and include your order number.</p><a href="mailto:${escapeHtml(replyTo)}?subject=${encodeURIComponent(`Change request for ${orderLabel}`)}" style="display:inline-block;border-radius:13px;background:#facc15;padding:14px 20px;color:#111;text-decoration:none;font-size:14px;font-weight:900">Reply about this order</a></div>`,
+    `${orderLabel} · ${emailDateTime(order.scheduledAt, order.locale)} · ${money(order.quote.total)}`,
+    `<p style="margin:0 0 12px;font-size:17px;line-height:1.6">${spanish ? "Hola" : "Hi"} ${escapeHtml(order.fullName)},</p><p style="margin:0;color:#4b5563;font-size:15px;line-height:1.7">${spanish ? (manual ? "Tu solicitud de servicio THEVULGO se ha añadido a nuestra agenda en España. Revisa los detalles a continuación." : "Hemos recibido tu solicitud de presupuesto. Revisaremos el trabajo y contactaremos contigo si necesitamos aclarar algún detalle.") : manual ? "Your THEVULGO service request has been added to our Spain schedule. Please review the details below." : "We received your handyman estimate request for Spain. We will review the scope and contact you if any detail needs clarification."}</p>${orderSummary(order, orderLabel)}<div style="margin-top:24px;border-top:1px solid #ece9df;padding-top:20px"><p style="margin:0 0 14px;color:#4b5563;font-size:14px;line-height:1.6">${spanish ? "¿Necesitas cambiar la dirección, la cita o el alcance? Responde a este correo e incluye el número de pedido." : "Need to change the address, appointment or scope? Reply to this email and include your order number."}</p><a href="mailto:${escapeHtml(replyTo)}?subject=${encodeURIComponent(`${spanish ? "Cambio solicitado para" : "Change request for"} ${orderLabel}`)}" style="display:inline-block;border-radius:13px;background:#facc15;padding:14px 20px;color:#111;text-decoration:none;font-size:14px;font-weight:900">${spanish ? "Responder sobre este pedido" : "Reply about this order"}</a></div>`,
+    order.locale,
   );
   return { subject, html };
 }
