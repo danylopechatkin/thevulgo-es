@@ -96,10 +96,10 @@ export default async function LocaleLayout({
 
         <NextIntlClientProvider messages={messages}>
           <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-md">
-            <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:px-4">
+            <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-1.5 px-3 py-3 sm:gap-3 sm:px-4">
               <Link
                 href={`/${locale}`}
-                className="flex min-w-0 items-center gap-2 sm:gap-3"
+                className="flex shrink-0 items-center gap-2 sm:gap-3"
               >
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-yellow-400 font-extrabold text-black shadow-sm">
                   V
@@ -113,7 +113,7 @@ export default async function LocaleLayout({
 
               <MarketDesktopNav locale={locale} labels={{ services: t("services"), tips: t("tips"), faq: t("faq"), estimate: t("estimate") }} />
 
-              <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+              <div className="flex min-w-0 flex-1 items-center justify-end gap-1 sm:flex-initial sm:gap-2">
                 <CitySwitcher locale={locale} />
                 <div>
                   <LanguageSwitcher locale={locale} />
@@ -123,7 +123,7 @@ export default async function LocaleLayout({
 
                 <HeaderEstimateLink
                   locale={locale}
-                  className="inline-flex h-10 items-center whitespace-nowrap rounded-xl bg-yellow-400 px-3 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:rounded-2xl sm:h-auto sm:px-5 sm:py-2.5 sm:text-base"
+                  className="hidden h-10 items-center whitespace-nowrap rounded-xl bg-yellow-400 px-3 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:inline-flex sm:h-auto sm:rounded-2xl sm:px-5 sm:py-2.5 sm:text-base"
                 >
                   {t("getEstimate")}
                 </HeaderEstimateLink>

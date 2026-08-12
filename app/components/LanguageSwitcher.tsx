@@ -16,10 +16,10 @@ export default function LanguageSwitcher({locale}: {locale: string}) {
   };
 
   const baseBtn =
-    "inline-flex h-8 min-w-[40px] items-center justify-center rounded-md px-2.5 text-center text-xs font-semibold transition-all duration-200 sm:min-w-[44px] sm:px-3 sm:text-sm";
+    "inline-flex h-8 min-w-[32px] items-center justify-center rounded-lg px-1.5 text-center text-[11px] font-extrabold transition-all duration-200 sm:min-w-[44px] sm:px-3 sm:text-sm";
 
   return (
-    <div className="flex h-10 items-center gap-1 rounded-xl bg-gray-100 p-1">
+    <div className="flex h-10 items-center gap-0.5 rounded-xl bg-gray-100 p-1 sm:gap-1 sm:rounded-2xl">
       <Link
         href={switchLocale("es")}
         className={`${baseBtn} ${
