@@ -185,6 +185,15 @@ export async function POST(req: Request) {
           completed_email_sent: false,
           referral_code: null,
           locale,
+          analytics_session_id: data.analyticsSessionId || null,
+          landing_page: data.landingPage || null,
+          utm_source: data.utmSource || null,
+          utm_medium: data.utmMedium || null,
+          utm_campaign: data.utmCampaign || null,
+          utm_term: data.utmTerm || null,
+          utm_content: data.utmContent || null,
+          attribution_source: "calculator",
+          attribution_page_path: `/${locale}/estimate`,
         },
       ])
       .select("id")

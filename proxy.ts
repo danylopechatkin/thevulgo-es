@@ -11,9 +11,13 @@ const handleI18nRouting = createIntlMiddleware({
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // ADMIN routes — оставляем твой старый Supabase flow
-  if (pathname.startsWith("/admin") || pathname === "/admin-login") {
-    let response = NextResponse.next({
+  // CRM, worker portal and payment routes are intentionally outside locale routing.
+  if (
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/worker") ||
+    pathname.startsWith("/pay/")
+  ) {
+    const response = NextResponse.next({
       request,
     });
 
@@ -50,5 +54,8 @@ export const config = {
     "/((?!api|_next|_vercel|.*\\..*).*)",
     "/admin/:path*",
     "/admin-login",
+    "/worker/:path*",
+    "/worker-login",
+    "/pay/:path*",
   ],
 };

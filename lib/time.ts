@@ -74,3 +74,7 @@ export function madridLocalDateTimeToUtc(date: string, time: string) {
 
   return new Date(utcTimestamp).toISOString();
 }
+
+export const BUSINESS_TIMEZONE = "Europe/Madrid";
+export const torontoLocalToUtc = madridLocalDateTimeToUtc;
+export const formatValenciaDateTime = formatMadridDateTime;

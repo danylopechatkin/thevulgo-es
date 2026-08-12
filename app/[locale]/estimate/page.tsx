@@ -24,6 +24,7 @@ import {
   Home,
 } from "lucide-react";
 import { ALICANTE_DISTRICTS, AVAILABLE_CITIES, BARCELONA_DISTRICTS, MADRID_DISTRICTS, marketFromCity } from "@/lib/cities";
+import { getClientAttribution, trackMarketingEvent } from "@/lib/client-attribution";
 
 type CategoryKey =
   | "handyman"
@@ -621,6 +622,7 @@ function EstimatePageContent() {
       setIsSending(true);
       setSendError("");
 
+      const attribution = getClientAttribution();
       const payload = {
         fullName: client.fullName,
         email: client.email,
@@ -648,6 +650,13 @@ function EstimatePageContent() {
         locale,
         sourceUrl: window.location.href,
         market: marketFromCity(displayCity),
+        analyticsSessionId: attribution.sessionId,
+        landingPage: attribution.landingPage,
+        utmSource: attribution.utmSource,
+        utmMedium: attribution.utmMedium,
+        utmCampaign: attribution.utmCampaign,
+        utmTerm: attribution.utmTerm,
+        utmContent: attribution.utmContent,
       };
 
       const response = await fetch("/api/send", {
@@ -674,6 +683,11 @@ function EstimatePageContent() {
       }
 
       setSubmitStage("success");
+      trackMarketingEvent("estimate_submitted", {
+        source: "calculator",
+        service: categoryTitle,
+        metadata: { city: displayCity, locale },
+      });
     } catch (error) {
       console.error("SEND REQUEST ERROR:", error);
       setSendError(t("errors.sendError"));

@@ -10,6 +10,7 @@ import CitySwitcher from "@/app/components/CitySwitcher";
 import { MarketLabel, MarketWhatsApp } from "@/app/components/MarketHeaderDetails";
 import MarketDesktopNav from "@/app/components/MarketDesktopNav";
 import MarketHomeLink from "@/app/components/MarketHomeLink";
+import MarketingTracker from "@/app/components/MarketingTracker";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -93,6 +94,7 @@ export default async function LocaleLayout({
 </Script>
 
         <WhatsAppConversionTracker />
+        <MarketingTracker />
 
         <NextIntlClientProvider messages={messages}>
           <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-md">

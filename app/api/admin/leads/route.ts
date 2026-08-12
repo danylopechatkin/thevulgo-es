@@ -1,52 +1,53 @@
-import { getAdminSupabase } from "@/lib/adminAuth";
+import { getAdminSession } from "@/lib/admin-auth";
 import { LEAD_STATUSES, type LeadStatus } from "@/lib/leads";
 import { NextResponse } from "next/server";
 
-const clean = (value: unknown, max = 2000) => String(value || "").trim().slice(0, max);
+const clean = (value: unknown, limit: number) =>
+  String(value || "")
+    .trim()
+    .slice(0, limit);
 
 export async function GET(request: Request) {
-  const admin = await getAdminSupabase();
-  if (!admin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  const url = new URL(request.url);
-  const scope = url.searchParams.get("scope");
+  const admin = await getAdminSession();
+  if (!admin)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const today = new Intl.DateTimeFormat("en-IE", {
+    timeZone: "Europe/Madrid",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+  const scope = new URL(request.url).searchParams.get("scope");
   let query = admin.supabase.from("leads").select("*");
-
-  if (scope === "today") {
-    const tomorrow = new Date();
-    tomorrow.setHours(24, 0, 0, 0);
-    query = query
-      .not("status", "in", "(converted,lost)")
-      .or(`follow_up_at.is.null,follow_up_at.lte.${tomorrow.toISOString()}`)
-      .order("follow_up_at", { ascending: true });
-  } else {
-    query = query.order("updated_at", { ascending: false });
-  }
-
+  query =
+    scope === "today"
+      ? query
+          .not("status", "in", "(converted,lost)")
+          .or(`follow_up_at.is.null,follow_up_at.lte.${today}T23:59:59.999Z`)
+          .order("follow_up_at", { ascending: true })
+      : query.order("updated_at", { ascending: false });
   const { data, error } = await query;
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error)
+    return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ leads: data || [] });
 }
 
 export async function POST(request: Request) {
-  const admin = await getAdminSupabase();
-  if (!admin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
+  const admin = await getAdminSession();
+  if (!admin)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const body = await request.json();
-  const fullName = clean(body.full_name, 160);
-  const phone = clean(body.phone, 80);
-  const email = clean(body.email, 240);
   const status = LEAD_STATUSES.includes(body.status as LeadStatus)
     ? (body.status as LeadStatus)
     : "new";
-
-  if (!fullName && !phone && !email) {
+  const fullName = clean(body.full_name, 160),
+    phone = clean(body.phone, 80),
+    email = clean(body.email, 240);
+  if (!fullName && !phone && !email)
     return NextResponse.json(
       { error: "Add a client name, phone or email" },
-      { status: 400 }
+      { status: 400 },
     );
-  }
-
   const { data, error } = await admin.supabase
     .from("leads")
     .insert({
@@ -61,11 +62,11 @@ export async function POST(request: Request) {
       follow_up_at: body.follow_up_at || null,
       potential_value: Math.max(0, Number(body.potential_value) || 0),
       notes: clean(body.notes, 5000),
-      source: "whatsapp",
+      source: clean(body.source, 120) || "whatsapp",
     })
     .select("*")
     .single();
-
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error)
+    return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ lead: data }, { status: 201 });
 }

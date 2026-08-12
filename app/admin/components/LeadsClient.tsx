@@ -1,186 +1,204 @@
 "use client";
 
-import { SERVICE_CATALOG } from "@/lib/serviceCatalog";
+import AdminNav from "./AdminNav";
 import {
   ACTIVE_LEAD_STATUSES,
-  LEAD_STATUSES,
   LEAD_STATUS_LABELS,
-  type Lead,
+  LEAD_STATUSES,
   type LeadStatus,
 } from "@/lib/leads";
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import AdminSectionNav from "./AdminSectionNav";
+import { Clock3, Plus, Search } from "lucide-react";
+import {
+  ActivityBars,
+  CrmHero,
+  CrmMetric,
+  CrmPanel,
+  EmptyCrm,
+  MiniBars,
+} from "./CrmVisuals";
 
-type Mode = "leads" | "today";
-
-const emptyForm = {
+type Lead = {
+  id: string;
+  full_name: string;
+  phone: string;
+  email: string;
+  service_summary: string;
+  category: string;
+  status: LeadStatus;
+  next_action: string;
+  follow_up_at: string | null;
+  potential_value: number;
+  notes: string;
+  source: string;
+  lost_reason: string;
+  created_at: string;
+  updated_at: string;
+};
+type Form = Omit<Lead, "id" | "created_at" | "updated_at" | "follow_up_at"> & {
+  follow_up_at: string;
+};
+const empty: Form = {
   full_name: "",
   phone: "",
   email: "",
   service_summary: "",
   category: "Repairs",
-  status: "new" as LeadStatus,
+  status: "new",
   next_action: "Reply to the client",
   follow_up_at: "",
-  potential_value: "",
+  potential_value: 0,
   notes: "",
+  source: "whatsapp",
+  lost_reason: "",
 };
-
-const toLocalInput = (value: string | null) => {
-  if (!value) return "";
-  const date = new Date(value);
-  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60_000);
-  return local.toISOString().slice(0, 16);
-};
-
-const formatDateTime = (value: string | null) =>
+const money = (value: number) =>
+  new Intl.NumberFormat("en-IE", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }).format(value || 0);
+const localDate = (value: string | null) =>
   value
-    ? new Intl.DateTimeFormat("en-GB", {
+    ? new Intl.DateTimeFormat("en-IE", {
+        timeZone: "Europe/Madrid",
         dateStyle: "medium",
         timeStyle: "short",
-        timeZone: "Europe/Madrid",
       }).format(new Date(value))
-    : "No reminder set";
+    : "No follow-up set";
 
-const madridDateKey = (date: Date) => {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Europe/Madrid",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(date);
-  const value = (type: string) => parts.find((part) => part.type === type)?.value || "";
-  return `${value("year")}-${value("month")}-${value("day")}`;
-};
-
-const getDefaultFollowUp = () => {
-  const date = new Date();
-  date.setDate(date.getDate() + 1);
-  date.setHours(10, 0, 0, 0);
-  return toLocalInput(date.toISOString());
-};
-
-export default function LeadsClient({ mode }: { mode: Mode }) {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [query, setQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<LeadStatus | "active" | "all">("active");
-  const [showForm, setShowForm] = useState(false);
-  const [editing, setEditing] = useState<Lead | null>(null);
-  const [form, setForm] = useState({ ...emptyForm, follow_up_at: getDefaultFollowUp() });
-  const [saving, setSaving] = useState(false);
-  const [referenceNow] = useState(() => Date.now());
-  const [aiLeadText, setAiLeadText] = useState("");
-  const [parsingLead, setParsingLead] = useState(false);
-
-  const loadLeads = async () => {
+export default function LeadsClient({ mode }: { mode: "leads" | "today" }) {
+  const [leads, setLeads] = useState<Lead[]>([]),
+    [loading, setLoading] = useState(true),
+    [error, setError] = useState(""),
+    [filter, setFilter] = useState<LeadStatus | "active" | "all">("active"),
+    [search, setSearch] = useState(""),
+    [form, setForm] = useState<Form>(empty),
+    [editing, setEditing] = useState<Lead | null>(null),
+    [showForm, setShowForm] = useState(false),
+    [saving, setSaving] = useState(false);
+  const load = async () => {
     setLoading(true);
-    setError("");
-    try {
-      const response = await fetch(`/api/admin/leads${mode === "today" ? "?scope=today" : ""}`);
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "Could not load leads");
-      setLeads(result.leads || []);
-    } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : "Could not load leads");
-    } finally {
-      setLoading(false);
-    }
+    const response = await fetch(
+      `/api/admin/leads${mode === "today" ? "?scope=today" : ""}`,
+    );
+    const result = await response.json();
+    if (!response.ok) setError(result.error || "Could not load leads");
+    else setLeads(result.leads || []);
+    setLoading(false);
   };
-
+  const [referenceNow] = useState(() => Date.now());
   useEffect(() => {
     let active = true;
-    const endpoint = `/api/admin/leads${mode === "today" ? "?scope=today" : ""}`;
-
-    fetch(endpoint)
-      .then(async (response) => {
-        const result = await response.json();
-        if (!response.ok) throw new Error(result.error || "Could not load leads");
-        return result.leads || [];
+    void fetch(`/api/admin/leads${mode === "today" ? "?scope=today" : ""}`)
+      .then(async (response) => ({ response, result: await response.json() }))
+      .then(({ response, result }) => {
+        if (!active) return;
+        if (!response.ok) setError(result.error || "Could not load leads");
+        else setLeads(result.leads || []);
+        setLoading(false);
       })
-      .then((data) => {
-        if (active) setLeads(data);
-      })
-      .catch((loadError: unknown) => {
+      .catch(() => {
         if (active) {
-          setError(loadError instanceof Error ? loadError.message : "Could not load leads");
+          setError("Could not load leads");
+          setLoading(false);
         }
-      })
-      .finally(() => {
-        if (active) setLoading(false);
       });
-
     return () => {
       active = false;
     };
   }, [mode]);
-
-  const filteredLeads = useMemo(() => {
-    const cleanQuery = query.trim().toLowerCase();
-    return leads.filter((lead) => {
-      const matchesQuery =
-        !cleanQuery ||
-        [lead.full_name, lead.phone, lead.email, lead.service_summary, lead.notes]
-          .filter(Boolean)
-          .some((value) => value.toLowerCase().includes(cleanQuery));
-      const matchesStatus =
-        mode === "today" ||
-        statusFilter === "all" ||
-        (statusFilter === "active"
-          ? ACTIVE_LEAD_STATUSES.includes(lead.status)
-          : lead.status === statusFilter);
-      return matchesQuery && matchesStatus;
-    });
-  }, [leads, mode, query, statusFilter]);
-
-  const todayStats = useMemo(() => {
-    const now = referenceNow;
-    const endToday = new Date(referenceNow);
-    endToday.setHours(23, 59, 59, 999);
-    return {
-      overdue: leads.filter((lead) => !lead.follow_up_at || new Date(lead.follow_up_at).getTime() < now).length,
-      dueToday: leads.filter((lead) => {
-        if (!lead.follow_up_at) return false;
-        const time = new Date(lead.follow_up_at).getTime();
-        return time >= now && time <= endToday.getTime();
-      }).length,
-      value: leads.reduce((sum, lead) => sum + Number(lead.potential_value || 0), 0),
-    };
-  }, [leads, referenceNow]);
-
-  const fanStats = useMemo(() => {
-    const fanLeads = leads.filter((lead) => lead.source === "website-fan-form");
-    const countFor = (count: number) => fanLeads.filter((lead) => lead.service_summary.startsWith(`${count} `)).length;
-    const responseTimes = fanLeads
-      .filter((lead) => lead.last_contacted_at)
-      .map((lead) => new Date(lead.last_contacted_at!).getTime() - new Date(lead.created_at).getTime())
-      .filter((value) => value >= 0);
-    const averageResponseMinutes = responseTimes.length
-      ? Math.round(responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length / 60_000)
-      : null;
-    const converted = fanLeads.filter((lead) => lead.status === "converted").length;
-    return {
-      total: fanLeads.length,
-      potential: fanLeads.reduce((sum, lead) => sum + Number(lead.potential_value || 0), 0),
-      converted,
-      lost: fanLeads.filter((lead) => lead.status === "lost").length,
-      conversion: fanLeads.length ? Math.round((converted / fanLeads.length) * 100) : 0,
-      one: countFor(1),
-      two: countFor(2),
-      three: countFor(3),
-      averageResponseMinutes,
-    };
-  }, [leads]);
-
-  const openCreate = () => {
+  const isActive = (status: LeadStatus) =>
+    (ACTIVE_LEAD_STATUSES as readonly LeadStatus[]).includes(status);
+  const visible = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return leads.filter(
+      (lead) =>
+        (!query ||
+          [
+            lead.full_name,
+            lead.phone,
+            lead.email,
+            lead.service_summary,
+            lead.notes,
+          ]
+            .join(" ")
+            .toLowerCase()
+            .includes(query)) &&
+        (mode === "today" ||
+          filter === "all" ||
+          (filter === "active"
+            ? isActive(lead.status)
+            : lead.status === filter)),
+    );
+  }, [leads, search, filter, mode]);
+  const stats = useMemo(
+    () => ({
+      open: leads.filter((lead) => isActive(lead.status)).length,
+      due: leads.filter(
+        (lead) =>
+          !lead.follow_up_at ||
+          new Date(lead.follow_up_at).getTime() <= referenceNow,
+      ).length,
+      value: leads
+        .filter((lead) => isActive(lead.status))
+        .reduce((sum, lead) => sum + Number(lead.potential_value || 0), 0),
+    }),
+    [leads, referenceNow],
+  );
+  const statusBreakdown = useMemo(
+    () =>
+      Object.entries(
+        leads.reduce<Record<string, number>>((total, lead) => {
+          const label = LEAD_STATUS_LABELS[lead.status];
+          total[label] = (total[label] || 0) + 1;
+          return total;
+        }, {}),
+      )
+        .map(([label, value]) => ({ label, value }))
+        .sort((a, b) => b.value - a.value),
+    [leads],
+  );
+  const sourceBreakdown = useMemo(
+    () =>
+      Object.entries(
+        leads.reduce<Record<string, number>>((total, lead) => {
+          const label = lead.source || "Unknown";
+          total[label] = (total[label] || 0) + 1;
+          return total;
+        }, {}),
+      )
+        .map(([label, value]) => ({ label, value }))
+        .sort((a, b) => b.value - a.value),
+    [leads],
+  );
+  const activity = useMemo(
+    () =>
+      Array.from({ length: 14 }, (_, index) => {
+        const date = new Date();
+        date.setDate(date.getDate() - (13 - index));
+        const key = date.toISOString().slice(0, 10);
+        return {
+          label: date.toLocaleDateString("en-IE", {
+            month: "short",
+            day: "numeric",
+          }),
+          value: leads.filter((lead) => lead.created_at.slice(0, 10) === key)
+            .length,
+        };
+      }),
+    [leads],
+  );
+  const converted = leads.filter((lead) => lead.status === "converted").length;
+  const closed =
+    converted + leads.filter((lead) => lead.status === "lost").length;
+  const set = (key: keyof Form, value: string | number) =>
+    setForm((current) => ({ ...current, [key]: value }));
+  const openNew = () => {
     setEditing(null);
-    setForm({ ...emptyForm, follow_up_at: getDefaultFollowUp() });
-    setAiLeadText("");
+    setForm(empty);
     setShowForm(true);
   };
-
   const openEdit = (lead: Lead) => {
     setEditing(lead);
     setForm({
@@ -191,440 +209,384 @@ export default function LeadsClient({ mode }: { mode: Mode }) {
       category: lead.category,
       status: lead.status,
       next_action: lead.next_action,
-      follow_up_at: toLocalInput(lead.follow_up_at),
-      potential_value: String(lead.potential_value || ""),
+      follow_up_at: lead.follow_up_at ? lead.follow_up_at.slice(0, 16) : "",
+      potential_value: Number(lead.potential_value || 0),
       notes: lead.notes,
+      source: lead.source,
+      lost_reason: lead.lost_reason || "",
     });
-    setAiLeadText("");
     setShowForm(true);
   };
-
-  const saveLead = async () => {
-    if (!form.full_name.trim() && !form.phone.trim() && !form.email.trim()) {
-      setError("Add a client name, phone or email");
+  async function save(event: React.FormEvent) {
+    event.preventDefault();
+    if (!form.full_name && !form.phone && !form.email) {
+      setError("Add a client name, phone or email.");
       return;
     }
     setSaving(true);
     setError("");
-    try {
-      const response = await fetch(editing ? `/api/admin/leads/${editing.id}` : "/api/admin/leads", {
+    const response = await fetch(
+      editing ? `/api/admin/leads/${editing.id}` : "/api/admin/leads",
+      {
         method: editing ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
-          follow_up_at: form.follow_up_at ? new Date(form.follow_up_at).toISOString() : null,
-          potential_value: Number(form.potential_value || 0),
+          follow_up_at: form.follow_up_at
+            ? new Date(form.follow_up_at).toISOString()
+            : null,
         }),
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "Could not save lead");
-      setShowForm(false);
-      await loadLeads();
-    } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : "Could not save lead");
-    } finally {
-      setSaving(false);
+      },
+    );
+    const result = await response.json();
+    setSaving(false);
+    if (!response.ok) {
+      setError(result.error || "Could not save lead");
+      return;
     }
-  };
-
-  const fillLeadWithAi = async () => {
-    if (!aiLeadText.trim()) return;
-    setParsingLead(true);
+    setShowForm(false);
+    await load();
+  }
+  async function update(lead: Lead, updates: Record<string, unknown>) {
     setError("");
-    try {
-      const response = await fetch("/api/admin/ai/parse-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: aiLeadText.trim(), imageDataUrls: [] }),
-      });
-      const result = await response.json();
-      if (!response.ok || !result.order) throw new Error(result.error || "AI could not read this conversation");
-      const order = result.order as {
-        fullName?: string | null;
-        phone?: string | null;
-        email?: string | null;
-        category?: string;
-        notes?: string | null;
-        services?: Array<{ label?: string; price?: number | null; qty?: number }>;
-      };
-      const services = order.services || [];
-      const serviceSummary = services
-        .map((service) => service.label)
-        .filter(Boolean)
-        .join(", ");
-      const potentialValue = services.reduce(
-        (sum, service) => sum + Number(service.price || 0) * Number(service.qty || 1),
-        0
-      );
-      setForm((current) => ({
-        ...current,
-        full_name: order.fullName || current.full_name,
-        phone: order.phone || current.phone,
-        email: order.email || current.email,
-        category: order.category || current.category,
-        service_summary: serviceSummary || current.service_summary,
-        potential_value: potentialValue ? String(potentialValue) : current.potential_value,
-        notes: order.notes || aiLeadText.trim(),
-      }));
-    } catch (parseError) {
-      setError(parseError instanceof Error ? parseError.message : "AI could not read this conversation");
-    } finally {
-      setParsingLead(false);
+    const response = await fetch(`/api/admin/leads/${lead.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updates),
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      setError(result.error || "Could not update lead");
+      return;
     }
-  };
-
-  const updateLead = async (lead: Lead, updates: Record<string, unknown>) => {
-    setError("");
-    setLeads((current) => current.map((item) =>
-      item.id === lead.id ? { ...item, ...updates } as Lead : item
-    ));
-    try {
-      const response = await fetch(`/api/admin/leads/${lead.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updates),
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "Could not update lead");
-      setLeads((current) =>
-        mode === "today" && ["converted", "lost"].includes(result.lead.status)
-          ? current.filter((item) => item.id !== lead.id)
-          : current.map((item) => (item.id === lead.id ? result.lead : item))
-      );
-    } catch (updateError) {
-      setLeads((current) => current.map((item) => item.id === lead.id ? lead : item));
-      setError(updateError instanceof Error ? updateError.message : "Could not update lead");
-    }
-  };
-
-  const snooze = (lead: Lead, days: number) => {
-    const date = new Date();
-    date.setDate(date.getDate() + days);
-    date.setHours(10, 0, 0, 0);
-    void updateLead(lead, { follow_up_at: date.toISOString() });
-  };
-
+    setLeads((current) =>
+      current.map((item) => (item.id === lead.id ? result.lead : item)),
+    );
+  }
   return (
-    <main className="min-h-screen bg-[#fffdf7] px-3 py-4 text-black sm:p-6">
+    <main className="min-h-screen overflow-x-clip bg-[#f4f4f0] p-3 pb-[max(1rem,env(safe-area-inset-bottom))] text-black sm:p-6">
       <div className="mx-auto max-w-7xl space-y-5">
-        <AdminSectionNav />
-
-        <header className="flex flex-col gap-4 rounded-3xl border border-yellow-400 bg-white p-5 shadow-md sm:flex-row sm:items-end sm:justify-between sm:p-7">
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
-              {mode === "today" ? "Daily focus" : "WhatsApp pipeline"}
-            </p>
-            <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              {mode === "today" ? "What needs attention today" : "Leads"}
-            </h1>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600">
-              {mode === "today"
-                ? "Overdue follow-ups and conversations that need your next action."
-                : "Keep every potential client until they book or clearly decline."}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={openCreate}
-            className="rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-extrabold shadow-md transition hover:scale-[1.01]"
-          >
-            + Add lead
-          </button>
-        </header>
-
-        {mode === "today" && (
-          <section className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <Stat label="Overdue / no date" value={todayStats.overdue} danger />
-            <Stat label="Due later today" value={todayStats.dueToday} />
-            <Stat label="Potential value" value={`€${todayStats.value.toFixed(0)}`} />
+        <AdminNav />
+        <CrmHero
+          eyebrow={
+            mode === "today" ? "Daily command centre" : "Spain operations pipeline"
+          }
+          title={mode === "today" ? "Today’s follow-ups" : "Lead pipeline"}
+          description={
+            mode === "today"
+              ? "Everything that needs a reply, decision or follow-up today."
+              : "Turn WhatsApp conversations and quote requests into scheduled Spain jobs."
+          }
+          action={
+            <button
+              onClick={openNew}
+              className="flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-3.5 font-black text-black shadow-lg"
+            >
+              <Plus className="h-5 w-5" />
+              Add lead
+            </button>
+          }
+        />
+        {error ? (
+          <p className="rounded-2xl bg-red-50 p-4 text-sm text-red-700">
+            {error}
+          </p>
+        ) : null}
+        <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <CrmMetric
+            label="Open leads"
+            value={stats.open}
+            note="Active pipeline"
+          />
+          <CrmMetric
+            label="Needs attention"
+            value={stats.due}
+            note="Due now or unscheduled"
+            accent
+          />
+          <CrmMetric
+            label="Potential EUR"
+            value={money(stats.value)}
+            note="Open opportunity value"
+          />
+          <CrmMetric
+            label="Close rate"
+            value={closed ? `${Math.round((converted / closed) * 100)}%` : "—"}
+            note={`${converted} converted`}
+          />
+        </section>
+        {mode === "leads" ? (
+          <section className="grid gap-5 lg:grid-cols-3">
+            <CrmPanel
+              title="Lead activity"
+              subtitle="New leads during the last 14 days"
+            >
+              <ActivityBars values={activity} />
+            </CrmPanel>
+            <CrmPanel
+              title="Pipeline stages"
+              subtitle="Current leads by status"
+            >
+              <MiniBars items={statusBreakdown} />
+            </CrmPanel>
+            <CrmPanel
+              title="Lead sources"
+              subtitle="Where conversations originate"
+            >
+              <MiniBars items={sourceBreakdown} />
+            </CrmPanel>
           </section>
-        )}
-
-        {mode === "leads" && (
-          <section className="rounded-3xl border border-yellow-400 bg-yellow-50/60 p-4 shadow-sm sm:p-5">
-            <div className="mb-4">
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">Website funnel</p>
-              <h2 className="mt-1 text-xl font-extrabold">Ceiling fan leads</h2>
-            </div>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6">
-              <Stat label="Leads" value={fanStats.total} />
-              <Stat label="Potential" value={`€${fanStats.potential.toFixed(0)}`} />
-              <Stat label="Booked" value={fanStats.converted} />
-              <Stat label="Conversion" value={`${fanStats.conversion}%`} />
-              <Stat label="Lost" value={fanStats.lost} danger={fanStats.lost > 0} />
-              <Stat label="First response" value={fanStats.averageResponseMinutes === null ? "—" : `${fanStats.averageResponseMinutes} min`} />
-            </div>
-            <div className="mt-3 grid grid-cols-3 gap-3">
-              <Stat label="1 fan" value={fanStats.one} />
-              <Stat label="2 fans" value={fanStats.two} />
-              <Stat label="3 fans" value={fanStats.three} />
-            </div>
-          </section>
-        )}
-
-        <section className="rounded-3xl border border-gray-200 bg-white p-4 shadow-sm sm:p-5">
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search name, phone or service…"
-              className="min-w-0 flex-1 rounded-2xl border border-gray-300 px-4 py-3 text-sm outline-none focus:border-yellow-400"
-            />
-            {mode === "leads" && (
+        ) : null}
+        <section className="rounded-[1.75rem] border border-black/5 bg-white p-4 shadow-sm sm:rounded-[2rem] sm:p-5">
+          <div className="flex flex-wrap gap-3">
+            <label className="flex min-w-56 flex-1 items-center gap-2 rounded-2xl border border-black/10 bg-[#f7f7f4] px-4">
+              <Search className="h-4 w-4 text-gray-400" />
+              <input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Search customer, service…"
+                className="w-full bg-transparent py-3 outline-none"
+              />
+            </label>
+            {mode === "leads" ? (
               <select
-                value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value as LeadStatus | "active" | "all")}
-                className="rounded-2xl border border-gray-300 bg-white px-4 py-3 text-sm font-bold outline-none focus:border-yellow-400"
+                value={filter}
+                onChange={(event) =>
+                  setFilter(event.target.value as LeadStatus | "active" | "all")
+                }
+                className="w-full rounded-2xl border border-black/10 bg-[#f7f7f4] px-4 py-3 font-bold sm:w-auto"
               >
                 <option value="active">Active leads</option>
                 <option value="all">All leads</option>
                 {LEAD_STATUSES.map((status) => (
-                  <option key={status} value={status}>{LEAD_STATUS_LABELS[status]}</option>
+                  <option key={status} value={status}>
+                    {LEAD_STATUS_LABELS[status]}
+                  </option>
                 ))}
               </select>
+            ) : null}
+          </div>
+          <div className="mt-4 grid gap-3">
+            {loading ? (
+              <p>Loading…</p>
+            ) : visible.length ? (
+              visible.map((lead) => (
+                <article
+                  key={lead.id}
+                  className="rounded-3xl border border-black/8 bg-[#fafaf7] p-5 transition hover:border-yellow-400 hover:shadow-md"
+                >
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <div className="mb-2 flex items-center gap-2">
+                        <span className="rounded-full bg-yellow-100 px-2.5 py-1 text-[10px] font-black uppercase text-yellow-800">
+                          {LEAD_STATUS_LABELS[lead.status]}
+                        </span>
+                        <span className="text-xs font-bold text-gray-400">
+                          {lead.source}
+                        </span>
+                      </div>
+                      <p className="text-lg font-black">
+                        {lead.full_name ||
+                          lead.phone ||
+                          lead.email ||
+                          "Unnamed lead"}
+                      </p>
+                      <p className="mt-1 text-sm text-gray-600">
+                        {lead.service_summary ||
+                          lead.category ||
+                          "No service details"}
+                      </p>
+                      <p className="mt-3 flex items-center gap-1.5 text-xs font-bold text-gray-500">
+                        <Clock3 className="h-3.5 w-3.5" />
+                        {localDate(lead.follow_up_at)} ·{" "}
+                        {money(Number(lead.potential_value))}
+                      </p>
+                    </div>
+                    <div className="grid w-full grid-cols-3 gap-2 sm:flex sm:w-auto sm:flex-wrap">
+                      <select
+                        value={lead.status}
+                        onChange={(event) =>
+                          void update(lead, {
+                            status: event.target.value,
+                            last_contacted_at: new Date().toISOString(),
+                          })
+                        }
+                        className="min-w-0 rounded-xl border px-2 py-2 text-xs sm:px-3 sm:text-sm"
+                      >
+                        {LEAD_STATUSES.map((status) => (
+                          <option key={status} value={status}>
+                            {LEAD_STATUS_LABELS[status]}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        onClick={() => openEdit(lead)}
+                        className="rounded-xl border border-yellow-400 px-2 py-2 text-xs font-bold sm:px-3 sm:text-sm"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() =>
+                          void update(lead, {
+                            follow_up_at: new Date(
+                              Date.now() + 24 * 60 * 60 * 1000,
+                            ).toISOString(),
+                            next_action: "Follow up",
+                          })
+                        }
+                        className="rounded-xl border px-2 py-2 text-xs font-bold sm:px-3 sm:text-sm"
+                      >
+                        Tomorrow
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <EmptyCrm
+                title={
+                  mode === "today"
+                    ? "Nothing needs attention today"
+                    : "No leads in this view"
+                }
+                text={
+                  mode === "today"
+                    ? "Your daily follow-up queue is clear."
+                    : "New conversations will appear here as you add them."
+                }
+              />
             )}
           </div>
         </section>
-
-        {error && (
-          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">
-            {error}
+        {showForm ? (
+          <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 p-2 backdrop-blur-sm sm:p-8">
+            <form
+              onSubmit={save}
+              className="mx-auto max-w-2xl overflow-hidden rounded-[1.75rem] bg-[#f4f4f0] shadow-2xl sm:rounded-[2rem]"
+            >
+              <div className="flex items-center justify-between gap-3 bg-[#111] p-5 text-white sm:p-6">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[.14em] text-yellow-400">
+                    Spain operations pipeline
+                  </p>
+                  <h2 className="mt-1 text-2xl font-black">
+                    {editing ? "Edit lead" : "New lead"}
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowForm(false)}
+                  className="rounded-xl border border-white/30 px-3 py-2 text-sm font-bold"
+                >
+                  Close
+                </button>
+              </div>
+              <div className="p-4 sm:p-6">
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Field label="Name">
+                    <input
+                      value={form.full_name}
+                      onChange={(event) => set("full_name", event.target.value)}
+                    />
+                  </Field>
+                  <Field label="Phone">
+                    <input
+                      value={form.phone}
+                      onChange={(event) => set("phone", event.target.value)}
+                    />
+                  </Field>
+                  <Field label="Email">
+                    <input
+                      type="email"
+                      value={form.email}
+                      onChange={(event) => set("email", event.target.value)}
+                    />
+                  </Field>
+                  <Field label="Category">
+                    <input
+                      value={form.category}
+                      onChange={(event) => set("category", event.target.value)}
+                    />
+                  </Field>
+                  <Field label="Potential value (EUR)">
+                    <input
+                      type="number"
+                      min="0"
+                      value={form.potential_value}
+                      onChange={(event) =>
+                        set("potential_value", Number(event.target.value))
+                      }
+                    />
+                  </Field>
+                  <Field label="Follow-up">
+                    <input
+                      type="datetime-local"
+                      value={form.follow_up_at}
+                      onChange={(event) =>
+                        set("follow_up_at", event.target.value)
+                      }
+                    />
+                  </Field>
+                </div>
+                <Field label="Service summary">
+                  <input
+                    value={form.service_summary}
+                    onChange={(event) =>
+                      set("service_summary", event.target.value)
+                    }
+                  />
+                </Field>
+                <Field label="Next action">
+                  <input
+                    value={form.next_action}
+                    onChange={(event) => set("next_action", event.target.value)}
+                  />
+                </Field>
+                <Field label="Notes">
+                  <textarea
+                    value={form.notes}
+                    onChange={(event) => set("notes", event.target.value)}
+                    className="min-h-28"
+                  />
+                </Field>
+                {form.status === "lost" ? (
+                  <Field label="Why was this lead lost?">
+                    <input
+                      value={form.lost_reason}
+                      onChange={(event) =>
+                        set("lost_reason", event.target.value)
+                      }
+                      placeholder="Price, no response, timing, competitor…"
+                    />
+                  </Field>
+                ) : null}
+                <button
+                  disabled={saving}
+                  className="mt-5 w-full rounded-2xl bg-yellow-400 px-5 py-3.5 font-extrabold"
+                >
+                  {saving ? "Saving…" : "Save lead"}
+                </button>
+              </div>
+            </form>
           </div>
-        )}
-
-        {loading ? (
-          <div className="rounded-3xl bg-white p-10 text-center text-sm font-bold text-gray-500">Loading leads…</div>
-        ) : filteredLeads.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-gray-300 bg-white p-10 text-center">
-            <p className="text-xl font-extrabold">Nothing needs attention</p>
-            <p className="mt-2 text-sm text-gray-500">
-              {mode === "today" ? "Your follow-up list is clear." : "Add the first lead."}
-            </p>
-          </div>
-        ) : (
-          <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {filteredLeads.map((lead) => (
-              <LeadCard
-                key={lead.id}
-                lead={lead}
-                onEdit={() => openEdit(lead)}
-                onUpdate={(updates) => void updateLead(lead, updates)}
-                onSnooze={(days) => snooze(lead, days)}
-                now={referenceNow}
-              />
-            ))}
-          </section>
-        )}
+        ) : null}
       </div>
-
-      {showForm && (
-        <LeadForm
-          form={form}
-          setForm={setForm}
-          editing={Boolean(editing)}
-          saving={saving}
-          aiLeadText={aiLeadText}
-          setAiLeadText={setAiLeadText}
-          parsingLead={parsingLead}
-          onParse={() => void fillLeadWithAi()}
-          onClose={() => setShowForm(false)}
-          onSave={() => void saveLead()}
-        />
-      )}
     </main>
   );
 }
-
-function LeadCard({
-  lead,
-  onEdit,
-  onUpdate,
-  onSnooze,
-  now,
+function Field({
+  label,
+  children,
 }: {
-  lead: Lead;
-  onEdit: () => void;
-  onUpdate: (updates: Record<string, unknown>) => void;
-  onSnooze: (days: number) => void;
-  now: number;
+  label: string;
+  children: React.ReactNode;
 }) {
-  const overdue = !lead.follow_up_at || new Date(lead.follow_up_at).getTime() < now;
-  const rawPhoneDigits = lead.phone.replace(/\D/g, "");
-  const phoneDigits = rawPhoneDigits.length === 9 ? `34${rawPhoneDigits}` : rawPhoneDigits;
-  const photoUrls = lead.notes.match(/https:\/\/[^\s]+/g) || [];
-  const isFanWebsiteLead = lead.source === "website-fan-form";
-  const fanCount = lead.service_summary.match(/^(\d+)/)?.[1] || "";
-  const area = lead.notes.match(/^Zona:\s*(.+)$/m)?.[1]?.trim() || "Valencia";
-  const campaign = lead.notes.match(/^UTM campaign:\s*(.+)$/m)?.[1]?.trim();
-  const keyword = lead.notes.match(/^UTM term:\s*(.+)$/m)?.[1]?.trim();
-  const gclid = lead.notes.match(/^GCLID:\s*(.+)$/m)?.[1]?.trim();
-  const whatsappMessage = isFanWebsiteLead
-    ? `Hola ${lead.full_name || ""}, hemos recibido tu solicitud para instalar ${fanCount || "el"} ${fanCount === "1" ? "ventilador de techo" : "ventiladores de techo"} en ${area}. ¿Podrías confirmarme cuándo te viene bien la instalación?`
-    : `Hola ${lead.full_name || ""}, quería hacer seguimiento sobre ${lead.service_summary || "el servicio"}.`;
-  const whatsappHref = phoneDigits
-    ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent(whatsappMessage)}`
-    : "";
-  const reminderMatches = (days: number) => {
-    if (!lead.follow_up_at) return false;
-    const target = new Date(now + days * 24 * 60 * 60 * 1000);
-    return madridDateKey(new Date(lead.follow_up_at)) === madridDateKey(target);
-  };
-
   return (
-    <article className={`rounded-3xl border bg-white p-5 shadow-md ${overdue ? "border-red-300" : "border-yellow-400"}`}>
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="truncate text-xl font-extrabold">{lead.full_name || lead.phone || lead.email}</p>
-          <p className="mt-1 text-sm text-gray-500">{lead.phone || lead.email || "No contact details"}</p>
-        </div>
-        <span className="shrink-0 rounded-full bg-yellow-100 px-3 py-1 text-[11px] font-extrabold uppercase">
-          {LEAD_STATUS_LABELS[lead.status]}
-        </span>
-      </div>
-
-      <p className="mt-4 text-base font-bold">{lead.service_summary || "Service not specified"}</p>
-      {isFanWebsiteLead && (campaign || keyword || gclid) && (
-        <div className="mt-3 rounded-xl border border-blue-200 bg-blue-50 px-3 py-2 text-xs leading-5 text-blue-900">
-          <span className="font-extrabold">Google Ads</span>
-          {campaign && <span> · {campaign}</span>}
-          {keyword && <span> · {keyword}</span>}
-          {!campaign && !keyword && gclid && <span> · tracked click</span>}
-        </div>
-      )}
-      {lead.notes && <p className="mt-2 line-clamp-3 whitespace-pre-line text-sm leading-6 text-gray-600">{lead.notes}</p>}
-      {photoUrls.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-2">
-          {photoUrls.map((url, index) => (
-            <a key={url} href={url} target="_blank" rel="noreferrer" className="rounded-xl border border-yellow-400 bg-yellow-50 px-3 py-2 text-xs font-extrabold text-black">
-              Open photo {index + 1}
-            </a>
-          ))}
-        </div>
-      )}
-
-      <div className={`mt-4 rounded-2xl p-3 ${overdue ? "bg-red-50" : "bg-[#fffbea]"}`}>
-        <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">Next action</p>
-        <p className="mt-1 font-extrabold">{lead.next_action || "Set the next action"}</p>
-        <p className={`mt-1 text-sm font-bold ${overdue ? "text-red-700" : "text-gray-600"}`}>
-          {formatDateTime(lead.follow_up_at)}
-        </p>
-      </div>
-
-      <div className="mt-4 flex flex-wrap gap-2">
-        {whatsappHref && (
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => onUpdate({
-              status: lead.status === "new" ? "talking" : lead.status,
-              last_contacted_at: lead.last_contacted_at || new Date().toISOString(),
-            })}
-            className="rounded-xl bg-green-600 px-3 py-2 text-sm font-extrabold text-white"
-          >
-            WhatsApp
-          </a>
-        )}
-        {lead.phone && <a href={`tel:${lead.phone}`} className="rounded-xl border border-gray-300 px-3 py-2 text-sm font-bold">Call</a>}
-        <button type="button" onClick={onEdit} className="rounded-xl border border-gray-300 px-3 py-2 text-sm font-bold">Edit</button>
-        <Link href={`/admin?lead=${lead.id}`} className="rounded-xl bg-black px-3 py-2 text-sm font-extrabold text-white">
-          Convert to booking
-        </Link>
-      </div>
-
-      <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-gray-100 pt-3">
-        <span className="text-xs font-bold text-gray-500">Remind:</span>
-        {[1, 3, 7].map((days) => {
-          const active = reminderMatches(days);
-          return (
-            <button
-              key={days}
-              type="button"
-              onClick={() => onSnooze(days)}
-              aria-pressed={active}
-              className={`rounded-lg border px-2.5 py-1.5 text-xs font-extrabold transition active:scale-95 ${active ? "border-black bg-yellow-400 text-black shadow-sm" : "border-transparent bg-gray-100 text-black hover:border-yellow-400"}`}
-            >
-              {active && <span aria-hidden="true">✓ </span>}
-              {days === 1 ? "Tomorrow" : `${days} days`}
-            </button>
-          );
-        })}
-        <select
-          value={lead.status}
-          onChange={(event) => onUpdate({ status: event.target.value })}
-          className="ml-auto rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-xs font-bold"
-        >
-          {LEAD_STATUSES.map((status) => <option key={status} value={status}>{LEAD_STATUS_LABELS[status]}</option>)}
-        </select>
-      </div>
-    </article>
+    <label className="mt-3 block min-w-0 text-sm font-bold">
+      {label}
+      <span className="mt-1 block [&_input]:min-h-12 [&_input]:w-full [&_input]:min-w-0 [&_input]:rounded-xl [&_input]:border [&_input]:bg-white [&_input]:p-3 [&_textarea]:w-full [&_textarea]:min-w-0 [&_textarea]:rounded-xl [&_textarea]:border [&_textarea]:bg-white [&_textarea]:p-3">
+        {children}
+      </span>
+    </label>
   );
-}
-
-function LeadForm({ form, setForm, editing, saving, aiLeadText, setAiLeadText, parsingLead, onParse, onClose, onSave }: {
-  form: typeof emptyForm;
-  setForm: React.Dispatch<React.SetStateAction<typeof emptyForm>>;
-  editing: boolean;
-  saving: boolean;
-  aiLeadText: string;
-  setAiLeadText: (value: string) => void;
-  parsingLead: boolean;
-  onParse: () => void;
-  onClose: () => void;
-  onSave: () => void;
-}) {
-  const set = (key: keyof typeof emptyForm, value: string) => setForm((current) => ({ ...current, [key]: value }));
-  return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/50 p-3 pt-[max(1rem,env(safe-area-inset-top))] sm:items-center sm:p-6">
-      <div className="max-h-[calc(100dvh-2rem)] w-full max-w-3xl overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-7">
-        <div className="flex items-start justify-between gap-4">
-          <div><p className="text-[11px] font-bold uppercase tracking-wider text-gray-500">Sales pipeline</p><h2 className="mt-1 text-2xl font-extrabold">{editing ? "Edit lead" : "Add lead"}</h2></div>
-          <button type="button" onClick={onClose} className="rounded-xl border border-gray-300 px-3 py-2 text-sm font-bold">Close</button>
-        </div>
-        {!editing && (
-          <div className="mt-6 rounded-2xl border border-yellow-400 bg-[#fffdf4] p-4">
-            <label className="block text-sm font-extrabold">Quick fill from WhatsApp</label>
-            <textarea
-              value={aiLeadText}
-              onChange={(event) => setAiLeadText(event.target.value)}
-              placeholder="Paste the client message or conversation here…"
-              className="mt-2 min-h-24 w-full resize-y rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-yellow-400"
-            />
-            <button
-              type="button"
-              onClick={onParse}
-              disabled={parsingLead || !aiLeadText.trim()}
-              className="mt-2 rounded-xl bg-black px-4 py-2.5 text-sm font-extrabold text-white disabled:opacity-50"
-            >
-              {parsingLead ? "Reading conversation…" : "Fill lead with AI"}
-            </button>
-          </div>
-        )}
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <Field label="Client name"><input value={form.full_name} onChange={(e) => set("full_name", e.target.value)} placeholder="Name" className="input" /></Field>
-          <Field label="Phone"><input value={form.phone} onChange={(e) => set("phone", e.target.value)} placeholder="+34…" className="input" /></Field>
-          <Field label="Email"><input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="Optional" className="input" /></Field>
-          <Field label="Category"><select value={form.category} onChange={(e) => set("category", e.target.value)} className="input">{Object.keys(SERVICE_CATALOG).map((category) => <option key={category}>{category}</option>)}</select></Field>
-          <div className="sm:col-span-2"><Field label="What does the client need?"><input value={form.service_summary} onChange={(e) => set("service_summary", e.target.value)} placeholder="Install a ceiling fan…" className="input" /></Field></div>
-          <Field label="Status"><select value={form.status} onChange={(e) => set("status", e.target.value)} className="input">{LEAD_STATUSES.map((status) => <option key={status} value={status}>{LEAD_STATUS_LABELS[status]}</option>)}</select></Field>
-          <Field label="Potential value"><input type="number" min="0" step="1" value={form.potential_value} onChange={(e) => set("potential_value", e.target.value)} placeholder="€" className="input" /></Field>
-          <Field label="Next action"><input value={form.next_action} onChange={(e) => set("next_action", e.target.value)} placeholder="Write again when the fan arrives" className="input" /></Field>
-          <Field label="Reminder"><input type="datetime-local" value={form.follow_up_at} onChange={(e) => set("follow_up_at", e.target.value)} className="input" /></Field>
-          <div className="sm:col-span-2"><Field label="Conversation notes"><textarea value={form.notes} onChange={(e) => set("notes", e.target.value)} placeholder="Important details from WhatsApp…" className="input min-h-28 resize-y" /></Field></div>
-        </div>
-        <button type="button" onClick={onSave} disabled={saving} className="mt-6 w-full rounded-2xl bg-yellow-400 px-5 py-4 text-sm font-extrabold shadow-md disabled:opacity-60">
-          {saving ? "Saving…" : editing ? "Save changes" : "Save lead"}
-        </button>
-      </div>
-      <style jsx>{`.input{width:100%;border:1px solid #d1d5db;border-radius:1rem;padding:.75rem 1rem;font-size:.875rem;outline:none;background:white;color:black}.input:focus{border-color:#facc15}`}</style>
-    </div>
-  );
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return <label className="block"><span className="mb-2 block text-sm font-extrabold">{label}</span>{children}</label>;
-}
-
-function Stat({ label, value, danger = false }: { label: string; value: string | number; danger?: boolean }) {
-  return <div className={`rounded-2xl border bg-white p-4 shadow-sm ${danger ? "border-red-300" : "border-yellow-400"}`}><p className="text-xs font-bold text-gray-500">{label}</p><p className={`mt-1 text-3xl font-extrabold ${danger ? "text-red-600" : "text-black"}`}>{value}</p></div>;
 }

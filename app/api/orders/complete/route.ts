@@ -267,7 +267,8 @@ export async function POST(req: Request) {
     const { error: updateError } = await supabase
       .from("orders")
       .update({
-        status: "done",
+        status: "completed",
+        completed_email_status: order.email ? "sent" : "not_required",
         completed_email_sent: true,
         referral_code: referralCode,
         completed_at: completedAt,
