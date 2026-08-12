@@ -1,3 +1,4 @@
+
 "use client";
 
 import AdminNav from "./components/AdminNav";
@@ -455,10 +456,6 @@ export default function AdminClient() {
   }
 
   async function deleteOrder(order: Order) {
-    const confirmation = prompt(
-      `Type DELETE to permanently remove TVG-ES-${String(order.order_number).padStart(5, "0")}. Its audit history will be retained.`,
-    );
-    if (confirmation !== "DELETE") return;
     setSaving(true);
     setError("");
     const { error: deleteError } = await getSupabaseBrowser()
@@ -775,6 +772,9 @@ function OrderPanel({
     order.completed_email_delivery_status || null,
   );
   const [completedDeliveryMessage, setCompletedDeliveryMessage] = useState("");
+  const [deleteConfirmation, setDeleteConfirmation] = useState<string | null>(
+    null,
+  );
   const currentAssignment = assignments.find(
     (assignment) =>
       !assignment.access_revoked_at &&
@@ -1756,13 +1756,61 @@ function OrderPanel({
               )}
             </div>
           </section>
-          <button
-            disabled={saving}
-            onClick={() => void onDelete(order)}
-            className="mt-6 w-full rounded-2xl border border-red-300 bg-red-50 px-5 py-3.5 font-extrabold text-red-700"
-          >
-            Delete order permanently
-          </button>
+          {deleteConfirmation === null ? (
+            <button
+              disabled={saving}
+              onClick={() => setDeleteConfirmation("")}
+              className="mt-6 w-full rounded-2xl border border-red-300 bg-red-50 px-5 py-3.5 font-extrabold text-red-700"
+            >
+              Delete order permanently
+            </button>
+          ) : (
+            <section
+              role="dialog"
+              aria-label="Confirm permanent order deletion"
+              className="mt-6 rounded-2xl border border-red-300 bg-red-50 p-4"
+            >
+              <h3 className="font-black text-red-800">
+                Permanently delete TVG-ES-
+                {String(order.order_number).padStart(5, "0")}?
+              </h3>
+              <p className="mt-1 text-sm text-red-700">
+                The order will be removed from CRM. Its protected audit history
+                will be retained. Type DELETE to confirm.
+              </p>
+              <label className="mt-4 block text-sm font-black text-red-900">
+                Confirmation
+                <input
+                  autoFocus
+                  value={deleteConfirmation}
+                  onChange={(event) =>
+                    setDeleteConfirmation(event.target.value)
+                  }
+                  placeholder="DELETE"
+                  autoComplete="off"
+                  className="mt-1 w-full rounded-xl border border-red-300 bg-white p-3 text-black"
+                />
+              </label>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  disabled={saving}
+                  onClick={() => setDeleteConfirmation(null)}
+                  className="rounded-xl border border-gray-300 bg-white px-4 py-3 font-extrabold text-gray-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  disabled={saving || deleteConfirmation !== "DELETE"}
+                  onClick={() => void onDelete(order)}
+                  className="rounded-xl bg-red-700 px-4 py-3 font-extrabold text-white disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  {saving ? "Deleting…" : "Delete permanently"}
+                </button>
+              </div>
+            </section>
+          )}
         </div>
       </section>
     </div>
@@ -3083,3 +3131,5 @@ function Field({
     </label>
   );
 }
+
+  
