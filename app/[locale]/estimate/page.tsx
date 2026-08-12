@@ -23,7 +23,7 @@ import {
   Package,
   Home,
 } from "lucide-react";
-import { BARCELONA_DISTRICTS, MADRID_DISTRICTS } from "@/lib/cities";
+import { ALICANTE_DISTRICTS, BARCELONA_DISTRICTS, MADRID_DISTRICTS } from "@/lib/cities";
 
 type CategoryKey =
   | "handyman"
@@ -234,8 +234,8 @@ function EstimatePageContent() {
   const locale = useLocale();
   const isEs = locale === "es";
   const requestedMarket = searchParams.get("market");
-  const cityMarket = requestedMarket === "madrid" || requestedMarket === "barcelona";
-  const defaultCity = requestedMarket === "madrid" ? "Madrid" : requestedMarket === "barcelona" ? "Barcelona" : "Valencia";
+  const cityMarket = requestedMarket === "madrid" || requestedMarket === "barcelona" || requestedMarket === "alicante";
+  const defaultCity = requestedMarket === "madrid" ? "Madrid" : requestedMarket === "barcelona" ? "Barcelona" : requestedMarket === "alicante" ? "Alicante" : "Valencia";
 
   const initialCategory = (() => {
     const raw = searchParams.get("category");
@@ -278,6 +278,7 @@ function EstimatePageContent() {
   const CITY_AREA_OPTIONS: Record<string, string[]> = {
     Madrid: [...MADRID_DISTRICTS],
     Barcelona: [...BARCELONA_DISTRICTS],
+    Alicante: [...ALICANTE_DISTRICTS],
     Valencia: ["Ciutat Vella", "Russafa", "El Pla del Remei", "La Gran Via", "Campanar", "Marxalenes", "Morvedre", "Trinitat", "Benimaclet", "Algirós", "El Cabanyal - El Canyamelar", "La Malva-rosa", "Aiora", "Amistat", "Mestalla", "Patraix", "Safranar", "Favara", "Arrancapins", "Botànic", "La Roqueta", "La Petxina", "Benicalap", "Torrefiel", "Orriols", "Sant Antoni", "Jesús", "Sant Marcel·lí", "Camí Real", "Malilla", "Monteolivete", "En Corts", "Natzaret", "Quatre Carreres", "Beniferri", "Benimàmet"],
     Torrent: ["Centre", "El Vedat", "Parc Central"],
     Paterna: ["Centro", "La Canyada", "Valterna", "Terramelar", "Campamento"],
@@ -662,7 +663,7 @@ function EstimatePageContent() {
         total,
         locale,
         sourceUrl: window.location.href,
-        market: requestedMarket === "madrid" || requestedMarket === "barcelona" ? requestedMarket : "valencia",
+        market: requestedMarket === "madrid" || requestedMarket === "barcelona" || requestedMarket === "alicante" ? requestedMarket : "valencia",
         scheduledAt:
           client.preferredDate && client.preferredTime
             ? new Date(`${client.preferredDate}T${client.preferredTime}:00+02:00`).toISOString()

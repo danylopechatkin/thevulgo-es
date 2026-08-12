@@ -341,6 +341,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { changeFrequency: "monthly", priority: locale === "es" ? 0.8 : 0.7 },
     );
 
+    pages.push({
+      url: `${baseUrl}/${locale}/alicante`,
+      changeFrequency: "weekly",
+      priority: locale === "es" ? 0.95 : 0.85,
+    });
+
+    addRoutes(
+      pages,
+      locale,
+      MADRID_ROUTES.map((route) => `alicante/${route.path}`),
+      { changeFrequency: "monthly", priority: locale === "es" ? 0.8 : 0.7 },
+    );
+
     /**
      * Category pages
      */

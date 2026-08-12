@@ -1,6 +1,6 @@
 "use client";
 
-import { marketFromPath, marketName, toBarcelonaPath, toMadridPath, toValenciaPath } from "@/lib/cities";
+import { marketFromPath, marketName, toAlicantePath, toBarcelonaPath, toMadridPath, toValenciaPath } from "@/lib/cities";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -16,6 +16,7 @@ export default function CitySwitcher({ locale }: { locale: string }) {
         <Link href={toValenciaPath(pathname, locale)} className={`block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-gray-100 ${market === "valencia" ? "bg-yellow-100" : ""}`}>Valencia</Link>
         <Link href={toMadridPath(pathname, locale)} className={`block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-gray-100 ${market === "madrid" ? "bg-yellow-100" : ""}`}>Madrid</Link>
         <Link href={toBarcelonaPath(pathname, locale)} className={`block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-gray-100 ${market === "barcelona" ? "bg-yellow-100" : ""}`}>Barcelona</Link>
+        <Link href={toAlicantePath(pathname, locale)} className={`block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-gray-100 ${market === "alicante" ? "bg-yellow-100" : ""}`}>Alicante</Link>
       </div>
     </details>
   );

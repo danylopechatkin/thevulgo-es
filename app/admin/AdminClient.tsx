@@ -254,7 +254,7 @@ export default function AdminClient() {
   const [selectedCalendarDate, setSelectedCalendarDate] = useState(() =>
     getMadridDateKey(new Date())
   );
-  const [cityFilter, setCityFilter] = useState<"all" | "Valencia" | "Madrid" | "Barcelona">("all");
+  const [cityFilter, setCityFilter] = useState<"all" | "Valencia" | "Madrid" | "Barcelona" | "Alicante">("all");
 
   const [aiOrderText, setAiOrderText] = useState("");
   const [aiOrderImages, setAiOrderImages] = useState<AiOrderImage[]>([]);
@@ -1282,11 +1282,12 @@ const parseOrderWithAi = async () => {
         <div className="grid grid-cols-3 items-stretch gap-2 rounded-3xl border border-yellow-200 bg-[#fffdf7] p-3 shadow-sm sm:flex sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none">
           <label className="col-span-3 flex items-center gap-2 rounded-2xl border border-yellow-400 bg-white px-3 py-2 text-sm font-extrabold shadow-sm sm:col-auto">
             City
-            <select value={cityFilter} onChange={(event) => setCityFilter(event.target.value as "all" | "Valencia" | "Madrid" | "Barcelona")} className="min-w-28 bg-transparent py-1 font-bold outline-none">
+            <select value={cityFilter} onChange={(event) => setCityFilter(event.target.value as "all" | "Valencia" | "Madrid" | "Barcelona" | "Alicante")} className="min-w-28 bg-transparent py-1 font-bold outline-none">
               <option value="all">All cities</option>
               <option value="Valencia">Valencia</option>
               <option value="Madrid">Madrid</option>
               <option value="Barcelona">Barcelona</option>
+              <option value="Alicante">Alicante</option>
             </select>
           </label>
           <Link
