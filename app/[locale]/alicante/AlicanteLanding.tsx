@@ -2,8 +2,9 @@ import Link from "next/link";
 import { ArrowRight, BadgeCheck, CheckCircle2, Clock3, Euro, MapPin, MessageCircle, ShieldCheck, Wrench } from "lucide-react";
 import { ALICANTE_DISTRICTS, humanizeServicePath } from "@/lib/cities";
 import { MADRID_ROUTES } from "@/lib/madridRoutes";
+import { marketWhatsAppHref, WHATSAPP_NUMBER } from "@/lib/marketLinks";
 
-const phone = "34610076942";
+const phone = WHATSAPP_NUMBER;
 
 const categoryCards = [
   ["handyman", "Handyman", "Manitas y reparaciones"],
@@ -33,7 +34,7 @@ export default function AlicanteLanding({ locale, servicePath }: { locale: strin
     ? isEs ? "Servicios de manitas en Alicante" : "Handyman services in Alicante"
     : `${serviceName} ${isEs ? "en" : "in"} Alicante`;
   const estimateHref = `/${locale}/estimate?market=alicante${servicePath ? `&service=${encodeURIComponent(servicePath)}` : ""}`;
-  const whatsapp = `https://wa.me/${phone}?text=${encodeURIComponent(isEs ? `Hola, necesito ${serviceName.toLowerCase()} en Alicante. Zona: ` : `Hi, I need ${serviceName.toLowerCase()} in Alicante. Area: `)}`;
+  const whatsapp = marketWhatsAppHref({ locale, market: "alicante", serviceName });
   const related = servicePath
     ? MADRID_ROUTES.filter((route) => route.path !== servicePath && categoryFor(route.path) === categoryFor(servicePath)).slice(0, 12)
     : [];
@@ -149,4 +150,3 @@ export default function AlicanteLanding({ locale, servicePath }: { locale: strin
     </main>
   );
 }
-

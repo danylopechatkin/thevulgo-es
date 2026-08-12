@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BookOpen, Fan, Menu, MessageCircle, Wrench, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { marketBasePath, marketFromPath, marketName } from "@/lib/cities";
+import { marketWhatsAppHref } from "@/lib/marketLinks";
 
 type Props = {
   locale: "es" | "en";
@@ -85,11 +86,7 @@ export default function MobileHeaderMenu({ locale }: Props) {
             </nav>
 
             <a
-              href={`https://wa.me/34610076942?text=${encodeURIComponent(
-                isEs
-                  ? `Hola, me gustaría pedir presupuesto para un servicio en ${city}.`
-                  : `Hi! I’d like an estimate for a service in ${city}.`
-              )}`}
+              href={marketWhatsAppHref({ locale, market })}
               target="_blank"
               rel="noopener noreferrer"
               onClick={close}

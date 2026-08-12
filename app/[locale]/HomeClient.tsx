@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import {
   Sparkles,
@@ -18,6 +18,7 @@ import {
   Camera,
 } from "lucide-react";
 import { marketBasePath, type AvailableCity, type Market } from "@/lib/cities";
+import { marketEstimateHref, marketServiceHref, marketWhatsAppHref } from "@/lib/marketLinks";
 
 export default function HomePage({
   city = "Valencia",
@@ -26,31 +27,17 @@ export default function HomePage({
   city?: AvailableCity;
   market?: Market;
 }) {
-  const router = useRouter();
   const locale = useLocale();
   const translate = useTranslations("home");
   const cityText = (text: string) => text.replaceAll("Valencia", city);
   const t = (key: Parameters<typeof translate>[0]) => cityText(translate(key));
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const cityBasePath = marketBasePath(locale, market);
-  const marketQuery = market === "valencia" ? "" : `?market=${market}`;
-
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const goEstimate = () => router.push(`/${locale}/estimate${marketQuery}`);
+  const estimateHref = marketEstimateHref(locale, market);
 
   const whatsappEnabled = true;
 
-  const WHATSAPP_NUMBER = "14379074913";
-
-  const whatsappText = encodeURIComponent(
-    t("whatsappText")
-  );
-
-  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
+  const whatsappHref = marketWhatsAppHref({ locale, market });
 
   const FAQS = [
     {
@@ -125,19 +112,19 @@ export default function HomePage({
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <button
-              onClick={() => router.push(`${cityBasePath}/services`)}
+            <Link
+              href={marketServiceHref(locale, market)}
               className="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold shadow-md md:hover:scale-105 transition"
             >
               {t("hero.exploreServices")}
-            </button>
+            </Link>
 
-            <button
-              onClick={goEstimate}
+            <Link
+              href={estimateHref}
               className="bg-white border border-gray-300 text-black px-8 py-4 rounded-2xl font-semibold shadow-md md:hover:scale-105 transition"
             >
               {t("hero.estimatePrice")}
-            </button>
+            </Link>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-gray-700">
@@ -220,12 +207,12 @@ export default function HomePage({
           </div>
 
           <div className="mt-10 text-center">
-            <button
-              onClick={() => router.push(`${cityBasePath}/services`)}
+            <Link
+              href={marketServiceHref(locale, market)}
               className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
             >
               {t("featured.viewAll")} <ArrowRight className="h-4 w-4" />
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -345,12 +332,12 @@ export default function HomePage({
                 </p>
               </div>
 
-              <button
-                onClick={goEstimate}
+              <Link
+                href={estimateHref}
                 className="inline-flex items-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 text-sm font-extrabold text-black shadow-lg transition-transform duration-200 hover:scale-[1.02]"
               >
                 {t("why.ctaButton")} <ArrowRight className="h-4 w-4" />
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -370,28 +357,28 @@ export default function HomePage({
             <GuideCard
               title={locale === "es" ? "Cuánto cuesta instalar un ventilador" : "How much does fan installation cost?"}
               text={locale === "es" ? "Precio, techo, punto eléctrico y qué fotos enviar." : "Price, ceiling, electrical point and which photos to send."}
-              onClick={() => router.push(`/${locale}/guias/cuanto-cuesta-instalar-ventilador-techo-valencia`)}
+              href={`/${locale}/guias/cuanto-cuesta-instalar-ventilador-techo-valencia`}
             />
             <GuideCard
               title={locale === "es" ? "Cómo elegir soporte para TV" : "How to choose a TV wall mount"}
               text={locale === "es" ? "VESA, peso, pared y soporte fijo o articulado." : "VESA, weight, wall and fixed or full-motion mount."}
-              onClick={() => router.push(`/${locale}/guias/como-elegir-soporte-tv-pared`)}
+              href={`/${locale}/guias/como-elegir-soporte-tv-pared`}
             />
             <GuideCard
               title={locale === "es" ? "Preparar un montaje IKEA" : "Prepare for IKEA assembly"}
               text={locale === "es" ? "Espacio, cajas y detalles que ahorran tiempo." : "Space, boxes and details that save time."}
-              onClick={() => router.push(`/${locale}/guias/preparar-habitacion-montaje-muebles-ikea`)}
+              href={`/${locale}/guias/preparar-habitacion-montaje-muebles-ikea`}
             />
           </div>
 
           <div className="mt-8 text-center">
-            <button
-              onClick={() => router.push(`/${locale}/guias`)}
+            <Link
+              href={`/${locale}/guias`}
               className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 font-extrabold text-black shadow-lg transition hover:bg-yellow-300"
             >
               {locale === "es" ? "Ver las 20 guías" : "View all 20 guides"}
               <ArrowRight className="h-5 w-5" />
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -443,8 +430,7 @@ export default function HomePage({
       {/* CONTACT / PICKER */}
       <section id="contact" className="relative overflow-hidden py-16 sm:py-20">
         <ServicePickerSection
-          onPick={(slug) => router.push(`${cityBasePath}/services/${slug}`)}
-          onOpenEstimate={() => router.push(`${cityBasePath}/services`)}
+          serviceBasePath={`${cityBasePath}/services`}
           whatsappEnabled={whatsappEnabled}
           whatsappHref={whatsappHref}
         />
@@ -592,11 +578,10 @@ function StepCard({
   );
 }
 
-function GuideCard({ title, text, onClick }: { title: string; text: string; onClick: () => void }) {
+function GuideCard({ title, text, href }: { title: string; text: string; href: string }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
+    <Link
+      href={href}
       className="group bg-white border border-yellow-400 rounded-2xl p-6 shadow-xl md:hover:shadow-2xl transition md:hover:scale-[1.02] text-left"
     >
       <h3 className="text-lg font-extrabold text-black">{title}</h3>
@@ -604,7 +589,7 @@ function GuideCard({ title, text, onClick }: { title: string; text: string; onCl
       <span className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-black">
         {"→"}
       </span>
-    </button>
+    </Link>
   );
 }
 
@@ -686,13 +671,11 @@ function FaqItem({
 /* ===== Service Picker ===== */
 
 function ServicePickerSection({
-  onPick,
-  onOpenEstimate,
+  serviceBasePath,
   whatsappEnabled,
   whatsappHref,
 }: {
-  onPick: (slug: string) => void;
-  onOpenEstimate: () => void;
+  serviceBasePath: string;
   whatsappEnabled: boolean;
   whatsappHref: string;
 }) {
@@ -798,12 +781,12 @@ function ServicePickerSection({
             </p>
 
             <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
-              <button
-                onClick={onOpenEstimate}
+              <Link
+                href={serviceBasePath}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-3 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
               >
                 {t("picker.openAll")} <ArrowRight className="h-4 w-4" />
-              </button>
+              </Link>
 
               {whatsappEnabled ? (
                 <a
@@ -826,9 +809,9 @@ function ServicePickerSection({
 
           <div className="mt-6 max-[720px]:mt-5 flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-[720px]:gap-3 max-[640px]:gap-2 content-start pb-1">
             {items.map((x) => (
-              <button
+              <Link
                 key={x.slug}
-                onClick={() => onPick(x.slug)}
+                href={`${serviceBasePath}/${x.slug}`}
                 className="group relative rounded-2xl border border-yellow-400 bg-white text-left shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-[2px] hover:bg-yellow-50/40 hover:border-yellow-500 p-6 max-[720px]:p-4 max-[640px]:p-3 flex flex-col justify-between min-h-[152px] max-[720px]:min-h-[126px] max-[640px]:min-h-[110px]"
               >
                 <div className="flex items-start justify-between gap-3">
@@ -858,7 +841,7 @@ function ServicePickerSection({
                     </span>
                   </div>
                 </div>
-              </button>
+              </Link>
             ))}
           </div>
 

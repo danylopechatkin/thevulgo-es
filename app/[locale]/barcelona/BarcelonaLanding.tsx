@@ -2,8 +2,9 @@ import Link from "next/link";
 import { ArrowRight, BadgeCheck, CheckCircle2, Clock3, Euro, MapPin, MessageCircle, ShieldCheck, Wrench } from "lucide-react";
 import { BARCELONA_DISTRICTS, humanizeServicePath } from "@/lib/cities";
 import { MADRID_ROUTES } from "@/lib/madridRoutes";
+import { marketWhatsAppHref, WHATSAPP_NUMBER } from "@/lib/marketLinks";
 
-const phone = "34610076942";
+const phone = WHATSAPP_NUMBER;
 
 const categoryCards = [
   ["handyman", "Handyman", "Manitas y reparaciones"],
@@ -33,7 +34,7 @@ export default function BarcelonaLanding({ locale, servicePath }: { locale: stri
     ? isEs ? "Servicios de manitas en Barcelona" : "Handyman services in Barcelona"
     : `${serviceName} ${isEs ? "en" : "in"} Barcelona`;
   const estimateHref = `/${locale}/estimate?market=barcelona${servicePath ? `&service=${encodeURIComponent(servicePath)}` : ""}`;
-  const whatsapp = `https://wa.me/${phone}?text=${encodeURIComponent(isEs ? `Hola, necesito ${serviceName.toLowerCase()} en Barcelona. Zona: ` : `Hi, I need ${serviceName.toLowerCase()} in Barcelona. Area: `)}`;
+  const whatsapp = marketWhatsAppHref({ locale, market: "barcelona", serviceName });
   const related = servicePath
     ? MADRID_ROUTES.filter((route) => route.path !== servicePath && categoryFor(route.path) === categoryFor(servicePath)).slice(0, 12)
     : [];
