@@ -359,6 +359,17 @@ function buildReport(data: AnalyticsData | null, days: number) {
       .filter((order) => order.analytics_session_id)
       .map((order) => [order.analytics_session_id!, order]),
   );
+  const trackedOrderSessions = new Set(sessions.map((session) => session.session_id));
+  const trackedOrders = orders.filter(
+    (order) =>
+      order.analytics_session_id && trackedOrderSessions.has(order.analytics_session_id),
+  );
+  const trackedConfirmed = trackedOrders.filter((order) =>
+    ["confirmed", "in_progress", "completed", "done"].includes(order.status),
+  ).length;
+  const trackedCompleted = trackedOrders.filter((order) =>
+    ["completed", "done"].includes(order.status),
+  ).length;
   const rank = <T,>(
     items: T[],
     label: (item: T) => string,
@@ -514,8 +525,8 @@ function buildReport(data: AnalyticsData | null, days: number) {
         ).size,
       },
       { label: "Estimate submitted", value: submitted },
-      { label: "Confirmed jobs", value: confirmed },
-      { label: "Completed jobs", value: completed.length },
+      { label: "Confirmed jobs", value: trackedConfirmed },
+      { label: "Completed jobs", value: trackedCompleted },
     ],
     journeys,
   };
