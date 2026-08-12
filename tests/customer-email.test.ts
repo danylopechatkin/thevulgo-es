@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { renderCustomerOrderConfirmation } from "../lib/emails";
+import {
+  renderCompletedOrderEmail,
+  renderCustomerOrderConfirmation,
+} from "../lib/emails";
 
 const spanishOrder = {
   id: "test-order",
@@ -48,4 +51,25 @@ test("Spanish CRM confirmation uses Spanish copy and a real Madrid timestamp", (
   assert.match(rendered.html, /15 ago 2026, 12:00/);
   assert.doesNotMatch(rendered.html, /\[object Object\]/);
   assert.match(rendered.html, /Responder sobre este pedido/);
+});
+
+test("Spanish completed email is localized and uses a real Madrid timestamp", () => {
+  const rendered = renderCompletedOrderEmail(
+    {
+      ...spanishOrder,
+      referralCode: "MADRID10-10001",
+      referralLink:
+        "https://www.thevulgo.es/es/estimate?ref=MADRID10-10001&market=madrid",
+    },
+    "info@thevulgo.es",
+  );
+
+  assert.match(rendered.subject, /Tu servicio THEVULGO está completado/);
+  assert.match(rendered.html, /Tu servicio está completado/);
+  assert.match(rendered.html, /15 ago 2026, 12:00/);
+  assert.doesNotMatch(rendered.html, /\[object Object\]/);
+  assert.match(rendered.html, /TVG-ES-10001/);
+  assert.match(rendered.html, /Responder sobre este servicio/);
+  assert.match(rendered.html, /MADRID10-10001/);
+  assert.match(rendered.html, /10%/);
 });

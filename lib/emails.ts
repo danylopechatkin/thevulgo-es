@@ -202,31 +202,41 @@ export async function sendReminderEmail(order: {
 
 type CompletedOrderEmailData = OrderEmailData & {
   paymentMethod?: "paypal" | "e_transfer" | "cash" | "other" | null;
+  referralCode?: string | null;
+  referralLink?: string | null;
 };
 
 export function renderCompletedOrderEmail(
   order: CompletedOrderEmailData,
   replyTo: string,
 ) {
+  const spanish = order.locale?.toLowerCase().startsWith("es") ?? false;
   const orderLabel = `TVG-ES-${String(order.orderNumber).padStart(5, "0")}`;
   const location = [order.address, order.area, order.city, order.postalCode]
     .filter(Boolean)
     .join(", ");
   const paymentLabel = order.paymentMethod
       ? {
-          paypal: "PayPal / card",
-          e_transfer: "Bank transfer / Bizum",
-        cash: "Cash",
-        other: "Other arrangement",
+          paypal: spanish ? "PayPal / tarjeta" : "PayPal / card",
+          e_transfer: spanish ? "Transferencia bancaria / Bizum" : "Bank transfer / Bizum",
+          cash: spanish ? "Efectivo" : "Cash",
+          other: spanish ? "Otro acuerdo" : "Other arrangement",
       }[order.paymentMethod]
-    : "As arranged with THEVULGO";
-  const summary = `<div style="margin:22px 0;border-radius:18px;background:#f7f7f4;padding:16px 18px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${detailRow("Order", orderLabel)}${detailRow("Service", order.quote.category)}${detailRow("Service address", location)}${detailRow("Appointment", `${formatValenciaDateTime(order.scheduledAt)} (Madrid time)`)}</table></div><div style="margin-top:18px;border:1px solid #e7c000;border-radius:18px;padding:4px 18px 16px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${serviceRows(order.quote)}<tr><td style="padding:18px 0 2px;font-size:17px;font-weight:900">Final total</td><td style="padding:18px 0 2px;text-align:right;white-space:nowrap;font-size:19px;font-weight:900">${money(order.quote.total)}</td></tr></table></div><div style="margin-top:18px;border-radius:16px;background:#f4f4f0;padding:16px 18px;color:#343434;font-size:14px;line-height:1.55"><strong>Payment method</strong><br>${escapeHtml(paymentLabel)}</div>`;
+    : spanish ? "Según lo acordado con THEVULGO" : "As arranged with THEVULGO";
+  const appointment = `${emailDateTime(order.scheduledAt, order.locale)} (${spanish ? "hora de Madrid" : "Madrid time"})`;
+  const summary = `<div style="margin:22px 0;border-radius:18px;background:#f7f7f4;padding:16px 18px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${detailRow(spanish ? "Pedido" : "Order", orderLabel)}${detailRow(spanish ? "Servicio" : "Service", order.quote.category)}${detailRow(spanish ? "Dirección del servicio" : "Service address", location)}${detailRow(spanish ? "Cita" : "Appointment", appointment)}</table></div><div style="margin-top:18px;border:1px solid #e7c000;border-radius:18px;padding:4px 18px 16px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${serviceRows(order.quote, spanish)}<tr><td style="padding:18px 0 2px;font-size:17px;font-weight:900">${spanish ? "Total final" : "Final total"}</td><td style="padding:18px 0 2px;text-align:right;white-space:nowrap;font-size:19px;font-weight:900">${money(order.quote.total)}</td></tr></table></div><div style="margin-top:18px;border-radius:16px;background:#f4f4f0;padding:16px 18px;color:#343434;font-size:14px;line-height:1.55"><strong>${spanish ? "Método de pago" : "Payment method"}</strong><br>${escapeHtml(paymentLabel)}</div>`;
+  const referral = order.referralCode
+    ? `<div style="margin-top:18px;border:1px solid #e7c000;border-radius:18px;background:#fffbea;padding:18px;color:#343434;font-size:14px;line-height:1.6"><strong style="font-size:17px;color:#111">${spanish ? "Comparte THEVULGO y recibe recompensa" : "Share THEVULGO and earn a reward"}</strong><br>${spanish ? "Tu código personal de recomendación es" : "Your personal referral code is"} <strong>${escapeHtml(order.referralCode)}</strong>. ${spanish ? "Tu amigo recibe un 10% de descuento en su primer servicio y tú recibes un 10% en tu próximo trabajo cuando reserve." : "Your friend receives 10% off their first service, and you receive 10% off your next job when they book."}${order.referralLink ? `<br><a href="${escapeHtml(order.referralLink)}" style="display:inline-block;margin-top:12px;border-radius:12px;background:#111;padding:12px 16px;color:#fff;text-decoration:none;font-weight:800">${spanish ? "Compartir mi código" : "Share my code"}</a>` : ""}</div>`
+    : "";
   return {
-    subject: `Your THEVULGO service is complete · ${orderLabel}`,
+    subject: spanish
+      ? `Tu servicio THEVULGO está completado · ${orderLabel}`
+      : `Your THEVULGO service is complete · ${orderLabel}`,
     html: shell(
-      "Your service is complete",
-      `${orderLabel} · Service completed · ${money(order.quote.total)}`,
-      `<p style="margin:0 0 12px;font-size:17px;line-height:1.6">Hi ${escapeHtml(order.fullName)},</p><p style="margin:0;color:#4b5563;font-size:15px;line-height:1.7">Thank you for choosing THEVULGO. Your Spain operations service has been marked complete. Here is the final summary for your records.</p>${summary}<div style="margin-top:24px;border-top:1px solid #ece9df;padding-top:20px"><p style="margin:0 0 14px;color:#4b5563;font-size:14px;line-height:1.6">Have a question about the completed work? Reply to this email and include your order number.</p><a href="mailto:${escapeHtml(replyTo)}?subject=${encodeURIComponent(`Question about completed order ${orderLabel}`)}" style="display:inline-block;border-radius:13px;background:#facc15;padding:14px 20px;color:#111;text-decoration:none;font-size:14px;font-weight:900">Reply about this service</a></div>`,
+      spanish ? "Tu servicio está completado" : "Your service is complete",
+      `${orderLabel} · ${spanish ? "Servicio completado" : "Service completed"} · ${money(order.quote.total)}`,
+      `<p style="margin:0 0 12px;font-size:17px;line-height:1.6">${spanish ? "Hola" : "Hi"} ${escapeHtml(order.fullName)},</p><p style="margin:0;color:#4b5563;font-size:15px;line-height:1.7">${spanish ? "Gracias por elegir THEVULGO. Tu servicio se ha marcado como completado. Aquí tienes el resumen final." : "Thank you for choosing THEVULGO. Your Spain operations service has been marked complete. Here is the final summary for your records."}</p>${summary}${referral}<div style="margin-top:24px;border-top:1px solid #ece9df;padding-top:20px"><p style="margin:0 0 14px;color:#4b5563;font-size:14px;line-height:1.6">${spanish ? "¿Tienes alguna pregunta sobre el trabajo realizado? Responde a este correo e incluye tu número de pedido." : "Have a question about the completed work? Reply to this email and include your order number."}</p><a href="mailto:${escapeHtml(replyTo)}?subject=${encodeURIComponent(`${spanish ? "Consulta sobre el pedido completado" : "Question about completed order"} ${orderLabel}`)}" style="display:inline-block;border-radius:13px;background:#facc15;padding:14px 20px;color:#111;text-decoration:none;font-size:14px;font-weight:900">${spanish ? "Responder sobre este servicio" : "Reply about this service"}</a></div>`,
+      order.locale,
     ),
   };
 }
@@ -234,6 +244,8 @@ export function renderCompletedOrderEmail(
 export async function sendCompletedOrderEmail(
   order: OrderEmailData & {
     paymentMethod?: "paypal" | "e_transfer" | "cash" | "other" | null;
+    referralCode?: string | null;
+    referralLink?: string | null;
   },
 ) {
   const { resend, from, replyTo, businessEmail } = config();
