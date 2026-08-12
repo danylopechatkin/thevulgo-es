@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { isAvailableCity } from "@/lib/cities";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,13 @@ export async function GET(request: Request) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return Response.json(
       { success: false, error: "Invalid date" },
+      { status: 400 }
+    );
+  }
+
+  if (!isAvailableCity(city)) {
+    return Response.json(
+      { success: false, error: "Unsupported city" },
       { status: 400 }
     );
   }

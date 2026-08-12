@@ -23,7 +23,7 @@ import {
   Package,
   Home,
 } from "lucide-react";
-import { ALICANTE_DISTRICTS, BARCELONA_DISTRICTS, MADRID_DISTRICTS } from "@/lib/cities";
+import { ALICANTE_DISTRICTS, AVAILABLE_CITIES, BARCELONA_DISTRICTS, MADRID_DISTRICTS, marketFromCity } from "@/lib/cities";
 
 type CategoryKey =
   | "handyman"
@@ -98,8 +98,8 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
     title: "Ceiling Fans",
     titleEs: "Ventiladores de techo",
     icon: <Fan className="h-5 w-5" />,
-    subtitle: "Installation and replacement of ceiling fans in Valencia.",
-    subtitleEs: "Instalación y sustitución de ventiladores de techo en Valencia.",
+    subtitle: "Installation and replacement of ceiling fans in your city.",
+    subtitleEs: "Instalación y sustitución de ventiladores de techo en tu ciudad.",
     badge: "Popular",
     badgeEs: "Popular",
     services: getCatalogServices("Ceiling Fans"),
@@ -234,7 +234,6 @@ function EstimatePageContent() {
   const locale = useLocale();
   const isEs = locale === "es";
   const requestedMarket = searchParams.get("market");
-  const cityMarket = requestedMarket === "madrid" || requestedMarket === "barcelona" || requestedMarket === "alicante";
   const defaultCity = requestedMarket === "madrid" ? "Madrid" : requestedMarket === "barcelona" ? "Barcelona" : requestedMarket === "alicante" ? "Alicante" : "Valencia";
 
   const initialCategory = (() => {
@@ -264,7 +263,6 @@ function EstimatePageContent() {
     email: "",
     phone: "",
     city: defaultCity,
-    customCity: "",
     area: "",
     houseAddress: "",
     apartmentNumber: "",
@@ -273,24 +271,16 @@ function EstimatePageContent() {
     preferredTime: "",
     notes: "",
   });
-  const availabilityCity = client.city === "My city is not listed" ? client.customCity : client.city;
+  const availabilityCity = client.city;
 
   const CITY_AREA_OPTIONS: Record<string, string[]> = {
     Madrid: [...MADRID_DISTRICTS],
     Barcelona: [...BARCELONA_DISTRICTS],
     Alicante: [...ALICANTE_DISTRICTS],
     Valencia: ["Ciutat Vella", "Russafa", "El Pla del Remei", "La Gran Via", "Campanar", "Marxalenes", "Morvedre", "Trinitat", "Benimaclet", "Algirós", "El Cabanyal - El Canyamelar", "La Malva-rosa", "Aiora", "Amistat", "Mestalla", "Patraix", "Safranar", "Favara", "Arrancapins", "Botànic", "La Roqueta", "La Petxina", "Benicalap", "Torrefiel", "Orriols", "Sant Antoni", "Jesús", "Sant Marcel·lí", "Camí Real", "Malilla", "Monteolivete", "En Corts", "Natzaret", "Quatre Carreres", "Beniferri", "Benimàmet"],
-    Torrent: ["Centre", "El Vedat", "Parc Central"],
-    Paterna: ["Centro", "La Canyada", "Valterna", "Terramelar", "Campamento"],
-    Burjassot: ["Centro", "Empalme", "Cantereria"],
-    Alboraia: ["Alboraia Centre", "Port Saplaya", "La Patacona"],
-    Mislata: ["Centro", "La Constitución", "El Quint"],
   };
 
-  const CITY_OPTIONS: SelectOption[] = [
-    ...(cityMarket ? [defaultCity] : ["Valencia", "Mislata", "Xirivella", "Aldaia", "Alaquàs", "Quart de Poblet", "Manises", "Paterna", "Burjassot", "Godella", "Rocafort", "Moncada", "Tavernes Blanques", "Alboraia", "Sedaví", "Benetússer", "Alfafar", "Paiporta", "Picanya", "Torrent", "Catarroja", "Massanassa", "Silla"]),
-    { value: "My city is not listed", label: isEs ? "Mi ciudad no está en la lista" : "My city is not listed" },
-  ];
+  const CITY_OPTIONS: SelectOption[] = [...AVAILABLE_CITIES];
 
   const TIME_OPTIONS = ["07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
 
@@ -394,8 +384,7 @@ function EstimatePageContent() {
 
   const selectedCityAreas = CITY_AREA_OPTIONS[client.city] || [];
   const hasAreaOptions = selectedCityAreas.length > 0;
-  const isCustomCity = client.city === "My city is not listed";
-  const displayCity = isCustomCity ? client.customCity : client.city;
+  const displayCity = client.city;
   const hasSelectedServices = selectedServices.length > 0;
   const hasContact = client.email.trim() !== "" || client.phone.trim() !== "";
 
@@ -516,9 +505,6 @@ function EstimatePageContent() {
         isValid = Boolean(v) && availableTimeOptions.includes(v);
         break;
       }
-      case "customCity":
-        isValid = Boolean((value ?? client.customCity).trim());
-        break;
       default:
         isValid = false;
     }
@@ -566,10 +552,8 @@ function EstimatePageContent() {
     if (!displayCity?.trim()) {
       errors.city = t("errors.city");
       statuses.city = "error";
-      statuses.customCity = "error";
     } else {
-      if (isCustomCity) statuses.customCity = "success";
-      else statuses.city = "success";
+      statuses.city = "success";
     }
 
     if (!client.area.trim()) {
@@ -663,11 +647,7 @@ function EstimatePageContent() {
         total,
         locale,
         sourceUrl: window.location.href,
-        market: requestedMarket === "madrid" || requestedMarket === "barcelona" || requestedMarket === "alicante" ? requestedMarket : "valencia",
-        scheduledAt:
-          client.preferredDate && client.preferredTime
-            ? new Date(`${client.preferredDate}T${client.preferredTime}:00+02:00`).toISOString()
-            : null,
+        market: marketFromCity(displayCity),
       };
 
       const response = await fetch("/api/send", {
@@ -975,7 +955,6 @@ function EstimatePageContent() {
                         ...prev,
                         city: v,
                         area: "",
-                        customCity: v === "My city is not listed" ? prev.customCity : "",
                       }));
 
                       setFieldErrors((prev) => {
@@ -993,45 +972,11 @@ function EstimatePageContent() {
                     }}
                     options={CITY_OPTIONS}
                     placeholder={t("form.chooseCity")}
-                    error={!isCustomCity ? fieldErrors.city : undefined}
+                    error={fieldErrors.city}
                     status={fieldStatus.city || "default"}
                   />
 
-                  {client.city === "My city is not listed" && (
-                    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-                      <label className="mb-2 flex items-center gap-2 text-sm font-bold text-black">
-                        <MapPin className="h-4 w-4" />
-                        {t("form.customCity")}
-                      </label>
-
-                      <input
-                        type="text"
-                        value={client.customCity}
-                        onChange={(e) => setFieldValue("customCity", e.target.value)}
-                        onBlur={() => setFieldSuccessIfValid("customCity")}
-                        placeholder={t("form.enterCity")}
-                        className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition ${
-                          fieldErrors.city || fieldStatus.customCity === "error"
-                            ? "border-red-400 bg-red-50 focus:border-red-500"
-                            : fieldStatus.customCity === "success"
-                            ? "border-green-500 bg-green-50 focus:border-green-600"
-                            : "border-gray-300 focus:border-yellow-400"
-                        }`}
-                      />
-
-                      {fieldErrors.city ? (
-                        <p className="mt-2 text-xs font-medium text-red-600">{fieldErrors.city}</p>
-                      ) : null}
-
-                      <p className="mt-3 text-xs leading-6 text-gray-500">
-                        {isEs
-                          ? "Te contactaremos para confirmar el desplazamiento, disponibilidad y acceso a tu ubicación."
-                          : "We’ll contact you to confirm travel time, availability and access to your location."}
-                      </p>
-                    </div>
-                  )}
-
-                  {!isCustomCity && hasAreaOptions && (
+                  {hasAreaOptions && (
                     <SelectField
                       label={client.city === "Valencia" ? t("form.area") : t("form.areaNeighborhood")}
                       icon={<MapPin className="h-4 w-4" />}
@@ -1047,7 +992,7 @@ function EstimatePageContent() {
                     />
                   )}
 
-                  {!isCustomCity && !hasAreaOptions && (
+                  {!hasAreaOptions && (
                     <Field
                       label={t("form.areaNeighborhood")}
                       icon={<MapPin className="h-4 w-4" />}
@@ -1058,40 +1003,6 @@ function EstimatePageContent() {
                       error={fieldErrors.area}
                       status={fieldStatus.area || "default"}
                     />
-                  )}
-
-                  {isCustomCity && (
-                    <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-                      <label className="mb-2 flex items-center gap-2 text-sm font-bold text-black">
-                        <MapPin className="h-4 w-4" />
-                        {t("form.areaNeighborhood")}
-                      </label>
-
-                      <input
-                        type="text"
-                        value={client.area}
-                        onChange={(e) => setFieldValue("area", e.target.value)}
-                        onBlur={() => setFieldSuccessIfValid("area")}
-                        placeholder={t("form.writeArea")}
-                        className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition ${
-                          fieldErrors.area
-                            ? "border-red-400 bg-red-50 focus:border-red-500"
-                            : fieldStatus.area === "success"
-                            ? "border-green-500 bg-green-50 focus:border-green-600"
-                            : "border-gray-300 focus:border-yellow-400"
-                        }`}
-                      />
-
-                      {fieldErrors.area ? (
-                        <p className="mt-2 text-xs font-medium text-red-600">{fieldErrors.area}</p>
-                      ) : null}
-
-                      <p className="mt-3 text-xs leading-6 text-gray-500">
-                        {isEs
-                          ? "Te contactaremos para confirmar el desplazamiento, disponibilidad y acceso a tu ubicación."
-                          : "We’ll contact you to confirm travel time, availability and access to your location."}
-                      </p>
-                    </div>
                   )}
 
                   <Field
@@ -1471,7 +1382,6 @@ function EstimatePageContent() {
                           email: "",
                           phone: "",
                           city: defaultCity,
-                          customCity: "",
                           area: "",
                           houseAddress: "",
                           apartmentNumber: "",

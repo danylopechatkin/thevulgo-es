@@ -1,5 +1,7 @@
 import { Resend } from "resend";
 import { createClient } from "@supabase/supabase-js";
+import { isAvailableCity, marketFromCity } from "@/lib/cities";
+import { madridLocalDateTimeToUtc } from "@/lib/time";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const supabaseAdmin = createClient(
@@ -27,6 +29,15 @@ export async function POST(req: Request) {
 
     const locale = data.locale === "es" ? "es" : "en";
     const isEs = locale === "es";
+    const city = String(data.city || "").trim();
+
+    if (!isAvailableCity(city)) {
+      return Response.json(
+        { success: false, error: "Unsupported city" },
+        { status: 400 }
+      );
+    }
+    const market = marketFromCity(city);
 
     console.log("📩 NEW ORDER REQUEST:", {
       name: data.fullName,
@@ -34,7 +45,6 @@ export async function POST(req: Request) {
       phone: data.phone,
       date: data.preferredDate,
       time: data.preferredTime,
-      scheduledUTC: data.scheduledAt,
       locale,
       servicesCount: Array.isArray(data.services) ? data.services.length : 0,
     });
@@ -105,13 +115,15 @@ export async function POST(req: Request) {
       );
     }
 
+    const scheduledAt = madridLocalDateTimeToUtc(preferredDate, preferredTime);
+
     const { data: existingOrder, error: slotCheckError } =
       await supabaseAdmin
         .from("orders")
         .select("id")
         .eq("preferred_date", preferredDate)
         .eq("preferred_time", preferredTime)
-        .eq("city", String(data.city || "Valencia"))
+        .eq("city", city)
         .limit(1)
         .maybeSingle();
 
@@ -139,7 +151,7 @@ export async function POST(req: Request) {
     const total = subtotal;
 
     console.log("💾 SAVING TO DB:", {
-      scheduled_at: data.scheduledAt,
+      scheduled_at: scheduledAt,
       subtotal,
       iva,
       total,
@@ -153,7 +165,7 @@ export async function POST(req: Request) {
           full_name: data.fullName || "",
           email: data.email || "",
           phone: data.phone || "",
-          city: data.city || "",
+          city,
           area: data.area || "",
           address: data.houseAddress || "",
           apartment: data.apartmentNumber || "",
@@ -166,7 +178,7 @@ export async function POST(req: Request) {
           status: "new",
           preferred_date: preferredDate,
           preferred_time: preferredTime,
-          scheduled_at: data.scheduledAt || null,
+          scheduled_at: scheduledAt,
           notes: data.notes || "",
           email_sent: false,
           reminder_sent: false,
@@ -204,14 +216,14 @@ export async function POST(req: Request) {
 
     const labels = {
       clientSubject: isEs
-        ? "Hemos recibido tu solicitud — THEVULGO"
-        : "We received your request — THEVULGO",
+        ? `Hemos recibido tu solicitud en ${city} — THEVULGO`
+        : `We received your ${city} request — THEVULGO`,
 
       requestTitle: isEs ? "Solicitud recibida" : "Request received",
 
       requestText: isEs
-        ? `Hola ${data.fullName}, hemos recibido tu solicitud. Te contactaremos pronto para confirmar los detalles.`
-        : `Hi ${data.fullName}, we received your request. We will contact you shortly to confirm the details.`,
+        ? `Hola ${data.fullName}, hemos recibido tu solicitud para ${city}. Te contactaremos pronto para confirmar los detalles.`
+        : `Hi ${data.fullName}, we received your request for ${city}. We will contact you shortly to confirm the details.`,
 
       category: isEs ? "Categoría" : "Category",
       subtotal: "Subtotal",
@@ -238,8 +250,8 @@ export async function POST(req: Request) {
         : "Once they book, you also get 10% off your next job.",
 
       footer: isEs
-        ? `Precio claro. Sin sorpresas.<br/>${data.city || "Valencia"} · Respuesta rápida`
-        : `Clear pricing. No surprises.<br/>${data.city || "Valencia"} · Fast response`,
+        ? `Precio claro. Sin sorpresas.<br/>${city} · Respuesta rápida`
+        : `Clear pricing. No surprises.<br/>${city} · Fast response`,
     };
 
     const servicesHtml = (Array.isArray(data.services) ? data.services : [])
@@ -261,7 +273,7 @@ export async function POST(req: Request) {
       from: "TheVulgo <info@thevulgo.es>",
       to: ["info@thevulgo.es"],
       replyTo: "info@thevulgo.es",
-      subject: `New estimate request from ${data.fullName}`,
+      subject: `[${city}] New estimate request from ${data.fullName}`,
       html: `
         <h2>New Request</h2>
         <p><b>Name:</b> ${data.fullName}</p>
@@ -269,16 +281,16 @@ export async function POST(req: Request) {
         <p><b>Email:</b> ${data.email || "—"}</p>
         <p><b>Language:</b> ${locale}</p>
         <p><b>Source URL:</b> ${data.sourceUrl || "—"}</p>
-        <p><b>Market:</b> ${data.market || "—"}</p>
+        <p><b>Market:</b> ${market}</p>
         <p><b>Category:</b> ${data.category || "—"}</p>
-        <p><b>City:</b> ${data.city || "—"}</p>
+        <p><b>City:</b> ${city}</p>
         <p><b>Area:</b> ${data.area || "—"}</p>
         <p><b>Address:</b> ${data.houseAddress || "—"}</p>
         <p><b>Apartment:</b> ${data.apartmentNumber || "—"}</p>
         <p><b>Extra details:</b> ${data.addressDetails || "—"}</p>
         <p><b>Preferred date:</b> ${data.preferredDate || "—"}</p>
         <p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>
-        <p><b>Scheduled UTC:</b> ${data.scheduledAt || "—"}</p>
+        <p><b>Scheduled UTC:</b> ${scheduledAt}</p>
         <p><b>Notes:</b> ${data.notes || "—"}</p>
         <p><b>Total:</b> €${total.toFixed(2)}</p>
         <h3>Selected services</h3>
@@ -318,10 +330,10 @@ export async function POST(req: Request) {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;padding:40px 0;font-family:Arial,sans-serif;">
 <tr>
 <td align="center">
-<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+<table width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
 <tr>
 <td style="background:#000;padding:20px 30px;color:#fff;font-weight:800;font-size:20px;">
-THEVULGO · ${data.city || "Valencia"}
+THEVULGO · ${city}
 </td>
 </tr>
 
@@ -365,7 +377,7 @@ ${labels.total}
 <td style="padding:0 30px 20px 30px;">
 <div style="font-size:12px;color:#666;">${labels.address}</div>
 <div style="font-weight:700;">
-${data.city || ""}, ${data.area || ""}
+${city}, ${data.area || ""}
 </div>
 <div style="font-size:13px;color:#555;">
 ${data.houseAddress || ""} ${data.apartmentNumber || ""}
@@ -377,11 +389,7 @@ ${data.houseAddress || ""} ${data.apartmentNumber || ""}
 <td style="padding:0 30px 20px 30px;">
 <div style="font-size:12px;color:#666;">${labels.schedule}</div>
 <div style="font-weight:700;">
-${
-  data.scheduledAt
-    ? formatMadridFromUTC(data.scheduledAt)
-    : `${data.preferredDate || ""} ${data.preferredTime || ""}`.trim() || "—"
-}
+${formatMadridFromUTC(scheduledAt)}
 </div>
 </td>
 </tr>

@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { createClient } from "@supabase/supabase-js";
+import { isAvailableCity } from "@/lib/cities";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +37,7 @@ export async function GET() {
 
       const locale = order.locale === "es" ? "es" : "en";
       const isEs = locale === "es";
+      const city = isAvailableCity(String(order.city || "")) ? String(order.city) : "Valencia";
 
       const scheduledDate = new Date(order.scheduled_at);
       const now = new Date();
@@ -59,8 +61,8 @@ export async function GET() {
 
         const labels = {
           subject: isEs
-            ? "Recordatorio: tu servicio está programado pronto — THEVULGO"
-            : "Reminder: your service is scheduled soon — THEVULGO",
+            ? `Recordatorio: tu servicio en ${city} está programado pronto — THEVULGO`
+            : `Reminder: your ${city} service is scheduled soon — THEVULGO`,
 
           title: isEs
             ? "Recordatorio: tu servicio se acerca"
@@ -79,8 +81,8 @@ export async function GET() {
             : "If anything changed, please reply to this email or contact us as soon as possible.",
 
           footer: isEs
-            ? `Precio claro. Sin sorpresas.<br/>${order.city || "Valencia"} · Respuesta rápida`
-            : `Clear pricing. No surprises.<br/>${order.city || "Valencia"} · Fast response`,
+            ? `Precio claro. Sin sorpresas.<br/>${city} · Respuesta rápida`
+            : `Clear pricing. No surprises.<br/>${city} · Fast response`,
         };
 
         const emailResult = await resend.emails.send({
@@ -92,10 +94,10 @@ export async function GET() {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;padding:40px 0;font-family:Arial,sans-serif;">
   <tr>
     <td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+      <table width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
         <tr>
           <td style="background:#000;padding:20px 30px;color:#fff;font-weight:800;font-size:20px;">
-            THEVULGO · ${order.city || "Valencia"}
+            THEVULGO · ${city}
           </td>
         </tr>
 
@@ -131,7 +133,7 @@ export async function GET() {
               <tr>
                 <td style="padding:15px;font-size:12px;color:#666;">${labels.address}</td>
                 <td style="padding:15px;text-align:right;font-weight:700;color:#000;">
-                  ${order.city || ""}, ${order.area || ""}, ${order.address || ""}
+                  ${city}, ${order.area || ""}, ${order.address || ""}
                 </td>
               </tr>
             </table>

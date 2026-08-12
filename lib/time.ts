@@ -39,3 +39,38 @@ export function madridLocalStringToDate(value: string) {
 
   return new Date(year, month - 1, day, hours, minutes, seconds);
 }
+
+function madridOffsetAt(timestamp: number) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Madrid",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date(timestamp));
+  const values = Object.fromEntries(
+    parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value])
+  );
+
+  return Date.UTC(
+    Number(values.year),
+    Number(values.month) - 1,
+    Number(values.day),
+    Number(values.hour),
+    Number(values.minute),
+    Number(values.second)
+  ) - timestamp;
+}
+
+export function madridLocalDateTimeToUtc(date: string, time: string) {
+  const [year, month, day] = date.split("-").map(Number);
+  const [hour, minute] = time.split(":").map(Number);
+  const localAsUtc = Date.UTC(year, month - 1, day, hour, minute, 0);
+  const firstPass = localAsUtc - madridOffsetAt(localAsUtc);
+  const utcTimestamp = localAsUtc - madridOffsetAt(firstPass);
+
+  return new Date(utcTimestamp).toISOString();
+}

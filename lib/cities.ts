@@ -24,6 +24,18 @@ export const ALICANTE_DISTRICTS = [
 export const MARKETS = ["valencia", "madrid", "barcelona", "alicante"] as const;
 export type Market = (typeof MARKETS)[number];
 
+export const AVAILABLE_CITIES = ["Valencia", "Madrid", "Barcelona", "Alicante"] as const;
+export type AvailableCity = (typeof AVAILABLE_CITIES)[number];
+
+export function marketFromCity(city: string): Market {
+  const normalized = city.trim().toLowerCase();
+  return MARKETS.includes(normalized as Market) ? (normalized as Market) : "valencia";
+}
+
+export function isAvailableCity(city: string): city is AvailableCity {
+  return AVAILABLE_CITIES.includes(city as AvailableCity);
+}
+
 export function marketFromPath(pathname: string, locale: string): Market {
   if (pathname === `/${locale}/madrid` || pathname.startsWith(`/${locale}/madrid/`)) return "madrid";
   if (pathname === `/${locale}/barcelona` || pathname.startsWith(`/${locale}/barcelona/`)) return "barcelona";
