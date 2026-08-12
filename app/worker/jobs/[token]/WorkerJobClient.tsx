@@ -1,6 +1,6 @@
 "use client";
 import { whatsappNumber } from "@/app/site-config";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import WorkerPaymentPanel from "./WorkerPaymentPanel";
 type JobMessage = {
   id: string;
@@ -9,6 +9,13 @@ type JobMessage = {
   email_status: string;
   email_delivered_at: string | null;
   created_at: string;
+};
+type JobPhoto = {
+  id: string;
+  type: "before" | "after" | "issue";
+  fileName: string;
+  uploadedAt: string;
+  url: string | null;
 };
 type Props = {
   assignment: {
@@ -57,11 +64,34 @@ export default function WorkerJobClient({
     [notes, setNotes] = useState(assignment.completionNotes),
     [jobMessage, setJobMessage] = useState(""),
     [jobMessages, setJobMessages] = useState(initialMessages),
+    [photos, setPhotos] = useState<JobPhoto[]>([]),
+    [photosLoading, setPhotosLoading] = useState(true),
+    [deletingPhotoId, setDeletingPhotoId] = useState<string | null>(null),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false);
   const responseHandled = useRef(false);
   const maps = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${order.address}, ${order.area}, ${order.city}, ${order.postalCode}`)}`;
   const whatsapp = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hi THEVULGO, I have a question about assigned job TVG-ES-${String(order.number).padStart(5, "0")}.`)}`;
+  const photoLabel = (type: JobPhoto["type"]) =>
+    type === "before" ? "Before" : type === "after" ? "After" : "Issue";
+
+  const loadPhotos = useCallback(async () => {
+    setPhotosLoading(true);
+    try {
+      const response = await fetch(`/api/worker/photos?assignmentId=${assignment.id}`, { cache: "no-store" });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || "Could not load your work photos.");
+      setPhotos(body.photos || []);
+    } catch (cause) {
+      setMessage(cause instanceof Error ? cause.message : "Could not load your work photos.");
+    } finally {
+      setPhotosLoading(false);
+    }
+  }, [assignment.id]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => void loadPhotos(), 0);
+    return () => window.clearTimeout(timer);
+  }, [loadPhotos]);
   async function update(values: Record<string, unknown>) {
     setBusy(true);
     const response = await fetch(`/api/worker/assignments/${assignment.id}`, {
@@ -171,6 +201,24 @@ export default function WorkerJobClient({
         : "Private job note saved successfully.",
     );
   }
+  async function deletePhoto(photo: JobPhoto) {
+    const confirmed = window.confirm(`Delete this ${photoLabel(photo.type).toLowerCase()} photo?`);
+    if (!confirmed) return;
+    setDeletingPhotoId(photo.id);
+    const response = await fetch("/api/worker/photos", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ assignmentId: assignment.id, photoId: photo.id }),
+    });
+    const body = await response.json();
+    setDeletingPhotoId(null);
+    if (!response.ok) {
+      setMessage(body.error || "Could not delete photo.");
+      return;
+    }
+    setPhotos((current) => current.filter((item) => item.id !== photo.id));
+    setMessage(`${photoLabel(photo.type)} photo deleted.`);
+  }
 
   async function respond(value: "accepted" | "declined") {
     const ok = await update({ responseStatus: value, emailLinkViewed: true });
@@ -207,6 +255,7 @@ export default function WorkerJobClient({
         ? `${type === "after" ? "After" : type === "before" ? "Before" : "Issue"} photo uploaded.`
         : body.error || "Could not upload photo.",
     );
+    if (response.ok) await loadPhotos();
   }
   return (
     <main className="min-h-screen bg-[#f7f7f2] px-3 py-4 pb-16 sm:px-5 sm:py-6">
@@ -490,13 +539,42 @@ export default function WorkerJobClient({
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp"
+                  multiple
                   className="sr-only"
-                  onChange={(event) =>
-                    void upload(type, event.target.files?.[0])
-                  }
+                  onChange={async (event) => {
+                    for (const file of Array.from(event.target.files || [])) await upload(type, file);
+                    event.currentTarget.value = "";
+                  }}
                 />
               </label>
             ))}
+          </div>
+          <div className="mt-5 rounded-2xl border border-gray-200 bg-gray-50 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <h3 className="font-black text-gray-900">Your uploaded photos</h3>
+                <p className="mt-1 text-xs font-medium text-gray-500">Visible to you and the THEVULGO CRM for this job only.</p>
+              </div>
+              <span className="rounded-full bg-black px-3 py-1 text-xs font-black text-white">{photos.length}</span>
+            </div>
+            {photosLoading ? <p className="mt-4 text-sm font-semibold text-gray-500">Loading your photos…</p> : photos.length ? (
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {photos.map((photo) => (
+                  <article key={photo.id} className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+                    {photo.url ? <img src={photo.url} alt={`${photoLabel(photo.type)} work photo`} className="aspect-square w-full object-cover" /> : <div className="flex aspect-square items-center justify-center bg-gray-100 text-xs font-bold text-gray-500">Preview unavailable</div>}
+                    <div className="p-3">
+                      <p className="font-black text-gray-900">{photoLabel(photo.type)} photo</p>
+                      <p className="mt-1 truncate text-[11px] text-gray-500" title={photo.fileName}>{photo.fileName}</p>
+                      <p className="mt-1 text-[11px] text-gray-500">{new Date(photo.uploadedAt).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}</p>
+                      <div className="mt-3 flex gap-2">
+                        {photo.url ? <a href={photo.url} target="_blank" rel="noreferrer" className="flex-1 rounded-xl border border-gray-300 px-2 py-2 text-center text-xs font-black text-gray-800">View</a> : null}
+                        <button type="button" disabled={busy || deletingPhotoId === photo.id} onClick={() => void deletePhoto(photo)} className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-black text-red-700 disabled:opacity-50">{deletingPhotoId === photo.id ? "Deleting…" : "Delete"}</button>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : <p className="mt-4 rounded-xl border border-dashed border-gray-300 bg-white p-4 text-sm font-semibold text-gray-500">No work photos uploaded yet. They will appear here immediately after upload.</p>}
           </div>
         </section>
         <WorkerPaymentPanel
