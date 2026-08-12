@@ -56,6 +56,9 @@ type Order = {
   address: string;
 };
 
+const isCompletedOrder = (order: Order) =>
+  Boolean(order.payment_received_at) || ["completed", "done"].includes(order.status);
+
 export default function ClientsDatabaseClient() {
   const [clients, setClients] = useState<Client[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -113,9 +116,7 @@ export default function ClientsDatabaseClient() {
   }, [clients, query, type]);
 
   const totalRevenue = orders
-    .filter(
-      (order) => order.payment_received_at || order.status === "completed",
-    )
+    .filter(isCompletedOrder)
     .reduce((sum, order) => sum + Number(order.total || 0), 0);
   const repeatClients = clients.filter(
     (client) => (ordersByClient.get(client.id)?.length || 0) > 1,
@@ -190,7 +191,7 @@ export default function ClientsDatabaseClient() {
             <div className="grid grid-cols-3 gap-2">
               <Metric label="Clients" value={String(clients.length)} />
               <Metric label="Repeat" value={String(repeatClients)} accent />
-              <Metric label="Revenue" value={`$${Math.round(totalRevenue)}`} />
+              <Metric label="Revenue" value={`€${Math.round(totalRevenue)}`} />
             </div>
           </div>
         </header>
@@ -236,7 +237,7 @@ export default function ClientsDatabaseClient() {
                 const spent = clientOrders.reduce(
                   (sum, order) =>
                     sum +
-                    (order.payment_received_at || order.status === "completed"
+                    (isCompletedOrder(order)
                       ? Number(order.total || 0)
                       : 0),
                   0,
@@ -273,7 +274,7 @@ export default function ClientsDatabaseClient() {
                       />
                       <SmallStat
                         label="Spent EUR"
-                        value={`$${spent.toFixed(0)}`}
+                        value={`€${spent.toFixed(0)}`}
                       />
                       <SmallStat
                         label="Type"
@@ -333,15 +334,15 @@ export default function ClientsDatabaseClient() {
               <SmallStat label="Orders" value={String(selectedOrders.length)} />
               <SmallStat
                 label="Spent EUR"
-                value={`$${selectedStats.spent.toFixed(2)}`}
+                value={`€${selectedStats.spent.toFixed(2)}`}
               />
               <SmallStat
                 label="Booked value"
-                value={`$${selectedStats.booked.toFixed(2)}`}
+                value={`€${selectedStats.booked.toFixed(2)}`}
               />
               <SmallStat
                 label="Average job"
-                value={`$${selectedStats.average.toFixed(2)}`}
+                value={`€${selectedStats.average.toFixed(2)}`}
               />
             </div>
 
@@ -632,7 +633,7 @@ export default function ClientsDatabaseClient() {
                       >
                         {order.payment_received_at
                           ? `Paid · ${friendlyPayment(order.payment_method)}`
-                          : order.status === "completed"
+                          : isCompletedOrder(order)
                             ? "Completed · payment not recorded"
                             : "Not paid"}
                       </p>
@@ -704,9 +705,7 @@ function Field({
 
 function clientStats(orders: Order[]) {
   const now = Date.now();
-  const completedOrders = orders.filter(
-    (order) => order.payment_received_at || order.status === "completed",
-  );
+  const completedOrders = orders.filter(isCompletedOrder);
   const bookedOrders = orders.filter((order) => order.status !== "cancelled");
   const serviceCounts = new Map<string, number>();
   orders.forEach((order) => {
@@ -740,11 +739,11 @@ function clientStats(orders: Order[]) {
       0,
     ),
     average: completedOrders.length ? spent / completedOrders.length : 0,
-    completed: orders.filter((order) => order.status === "completed").length,
+    completed: orders.filter(isCompletedOrder).length,
     cancelled: orders.filter((order) => order.status === "cancelled").length,
     upcoming: orders.filter(
       (order) =>
-        order.status !== "completed" &&
+        !isCompletedOrder(order) &&
         order.status !== "cancelled" &&
         new Date(order.scheduled_at).getTime() >= now,
     ).length,

@@ -316,9 +316,11 @@ function buildReport(data: AnalyticsData | null, days: number) {
     orders = data?.orders || [],
     leads = data?.leads || [],
     leadStages = data?.leadStages || [];
-  const completed = orders.filter((order) => order.status === "completed");
+  const completed = orders.filter((order) =>
+    ["completed", "done"].includes(order.status),
+  );
   const confirmed = orders.filter((order) =>
-    ["confirmed", "in_progress", "completed"].includes(order.status),
+    ["confirmed", "in_progress", "completed", "done"].includes(order.status),
   ).length;
   const paid = orders.filter((order) => order.payment_received_at).length;
   const visitors = new Set(sessions.map((session) => session.visitor_id)).size;
@@ -483,12 +485,12 @@ function buildReport(data: AnalyticsData | null, days: number) {
     services: rank(
       orders,
       (o) => o.category || o.attribution_service || "Uncategorised",
-      (o) => (o.status === "completed" ? Number(o.total) : 0),
+      (o) => (["completed", "done"].includes(o.status) ? Number(o.total) : 0),
     ),
     areas: rank(
       orders,
       (o) => `${o.city} · ${o.area}`,
-      (o) => (o.status === "completed" ? Number(o.total) : 0),
+      (o) => (["completed", "done"].includes(o.status) ? Number(o.total) : 0),
     ),
     lost: rank(
       leads.filter((lead) => lead.status === "lost"),
