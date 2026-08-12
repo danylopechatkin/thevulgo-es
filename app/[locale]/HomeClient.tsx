@@ -17,19 +17,30 @@ import {
   MessageSquare,
   Camera,
 } from "lucide-react";
+import { marketBasePath, type AvailableCity, type Market } from "@/lib/cities";
 
-export default function HomePage() {
+export default function HomePage({
+  city = "Valencia",
+  market = "valencia",
+}: {
+  city?: AvailableCity;
+  market?: Market;
+}) {
   const router = useRouter();
   const locale = useLocale();
-  const t = useTranslations("home");
+  const translate = useTranslations("home");
+  const cityText = (text: string) => text.replaceAll("Valencia", city);
+  const t = (key: Parameters<typeof translate>[0]) => cityText(translate(key));
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const cityBasePath = marketBasePath(locale, market);
+  const marketQuery = market === "valencia" ? "" : `?market=${market}`;
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const goEstimate = () => router.push(`/${locale}/estimate`);
+  const goEstimate = () => router.push(`/${locale}/estimate${marketQuery}`);
 
   const whatsappEnabled = true;
 
@@ -115,7 +126,7 @@ export default function HomePage() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <button
-              onClick={() => router.push(`/${locale}/services`)}
+              onClick={() => router.push(`${cityBasePath}/services`)}
               className="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold shadow-md md:hover:scale-105 transition"
             >
               {t("hero.exploreServices")}
@@ -210,7 +221,7 @@ export default function HomePage() {
 
           <div className="mt-10 text-center">
             <button
-              onClick={() => router.push(`/${locale}/services`)}
+              onClick={() => router.push(`${cityBasePath}/services`)}
               className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
             >
               {t("featured.viewAll")} <ArrowRight className="h-4 w-4" />
@@ -432,8 +443,8 @@ export default function HomePage() {
       {/* CONTACT / PICKER */}
       <section id="contact" className="relative overflow-hidden py-16 sm:py-20">
         <ServicePickerSection
-          onPick={(slug) => router.push(`/${locale}/services/${slug}`)}
-          onOpenEstimate={() => router.push(`/${locale}/services`)}
+          onPick={(slug) => router.push(`${cityBasePath}/services/${slug}`)}
+          onOpenEstimate={() => router.push(`${cityBasePath}/services`)}
           whatsappEnabled={whatsappEnabled}
           whatsappHref={whatsappHref}
         />

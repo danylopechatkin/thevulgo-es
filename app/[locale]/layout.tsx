@@ -1,7 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import Script from "next/script";
 import LanguageSwitcher from "@/app/components/LanguageSwitcher";
 import WhatsAppConversionTracker from "@/app/components/WhatsAppConversionTracker";
@@ -10,6 +9,7 @@ import MobileHeaderMenu from "@/app/components/MobileHeaderMenu";
 import CitySwitcher from "@/app/components/CitySwitcher";
 import { MarketLabel, MarketWhatsApp } from "@/app/components/MarketHeaderDetails";
 import MarketDesktopNav from "@/app/components/MarketDesktopNav";
+import MarketHomeLink from "@/app/components/MarketHomeLink";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -97,8 +97,8 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-md">
             <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-1.5 px-3 py-3 sm:gap-3 sm:px-4">
-              <Link
-                href={`/${locale}`}
+              <MarketHomeLink
+                locale={locale}
                 className="flex shrink-0 items-center gap-2 sm:gap-3"
               >
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-yellow-400 font-extrabold text-black shadow-sm">
@@ -109,7 +109,7 @@ export default async function LocaleLayout({
                   <span className="block truncate">THEVULGO</span>
                   <MarketLabel locale={locale} />
                 </div>
-              </Link>
+              </MarketHomeLink>
 
               <MarketDesktopNav locale={locale} labels={{ services: t("services"), tips: t("tips"), faq: t("faq"), estimate: t("estimate") }} />
 
