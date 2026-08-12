@@ -8,6 +8,28 @@ export const MADRID_DISTRICTS = [
   "Barajas",
 ] as const;
 
+export const BARCELONA_DISTRICTS = [
+  "Ciutat Vella", "Eixample", "Sants-Montjuïc", "Les Corts", "Sarrià-Sant Gervasi",
+  "Gràcia", "Horta-Guinardó", "Nou Barris", "Sant Andreu", "Sant Martí",
+] as const;
+
+export const MARKETS = ["valencia", "madrid", "barcelona"] as const;
+export type Market = (typeof MARKETS)[number];
+
+export function marketFromPath(pathname: string, locale: string): Market {
+  if (pathname === `/${locale}/madrid` || pathname.startsWith(`/${locale}/madrid/`)) return "madrid";
+  if (pathname === `/${locale}/barcelona` || pathname.startsWith(`/${locale}/barcelona/`)) return "barcelona";
+  return "valencia";
+}
+
+export function marketName(market: Market) {
+  return market.charAt(0).toUpperCase() + market.slice(1);
+}
+
+export function marketBasePath(locale: string, market: Market) {
+  return market === "valencia" ? `/${locale}` : `/${locale}/${market}`;
+}
+
 export function humanizeServicePath(path: string, locale: string) {
   const slug = path.split("/").filter(Boolean).at(-1) || "handyman";
   const overrides: Record<string, [string, string]> = {
@@ -36,15 +58,30 @@ export function toMadridPath(pathname: string, locale: string) {
   const source = pathname.startsWith(prefix) ? pathname.slice(prefix.length).replace(/\/$/, "") : "";
   if (!source) return `/${locale}/madrid`;
   if (source === "madrid" || source.startsWith("madrid/")) return `/${locale}/${source}`;
+  if (source === "barcelona") return `/${locale}/madrid`;
+  if (source.startsWith("barcelona/")) return `/${locale}/madrid/${source.slice("barcelona/".length)}`;
   const route = MADRID_ROUTE_BY_SOURCE.get(source);
   return route ? `/${locale}/madrid/${route.path}` : `/${locale}/madrid`;
 }
 
 export function toValenciaPath(pathname: string, locale: string) {
-  const prefix = `/${locale}/madrid`;
-  if (!pathname.startsWith(prefix)) return `/${locale}`;
-  const madridPath = pathname.slice(prefix.length).replace(/^\//, "").replace(/\/$/, "");
-  if (!madridPath) return `/${locale}`;
-  const route = MADRID_ROUTE_BY_PATH.get(madridPath);
+  const market = marketFromPath(pathname, locale);
+  if (market === "valencia") return `/${locale}`;
+  const prefix = `/${locale}/${market}`;
+  const servicePath = pathname.slice(prefix.length).replace(/^\//, "").replace(/\/$/, "");
+  if (!servicePath) return `/${locale}`;
+  const route = MADRID_ROUTE_BY_PATH.get(servicePath);
   return route ? `/${locale}/${route.source}` : `/${locale}`;
+}
+
+export function toBarcelonaPath(pathname: string, locale: string) {
+  const market = marketFromPath(pathname, locale);
+  if (market === "barcelona") return pathname;
+  if (market === "madrid") {
+    const servicePath = pathname.slice(`/${locale}/madrid`.length).replace(/^\//, "");
+    return servicePath ? `/${locale}/barcelona/${servicePath}` : `/${locale}/barcelona`;
+  }
+  const source = pathname.slice(`/${locale}/`.length).replace(/\/$/, "");
+  const route = MADRID_ROUTE_BY_SOURCE.get(source);
+  return route ? `/${locale}/barcelona/${route.path}` : `/${locale}/barcelona`;
 }

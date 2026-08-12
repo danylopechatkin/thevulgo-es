@@ -111,7 +111,7 @@ export async function POST(req: Request) {
 
     const referralCode = makeReferralCode(order.full_name || "CLIENT");
 
-    const marketQuery = order.city === "Madrid" ? "&market=madrid" : "";
+    const marketQuery = order.city === "Madrid" ? "&market=madrid" : order.city === "Barcelona" ? "&market=barcelona" : "";
     const referralLink =
       locale === "es"
         ? `https://www.thevulgo.es/es/estimate?ref=${encodeURIComponent(referralCode)}${marketQuery}`

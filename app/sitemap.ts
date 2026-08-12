@@ -328,6 +328,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { changeFrequency: "monthly", priority: locale === "es" ? 0.8 : 0.7 },
     );
 
+    pages.push({
+      url: `${baseUrl}/${locale}/barcelona`,
+      changeFrequency: "weekly",
+      priority: locale === "es" ? 0.95 : 0.85,
+    });
+
+    addRoutes(
+      pages,
+      locale,
+      MADRID_ROUTES.map((route) => `barcelona/${route.path}`),
+      { changeFrequency: "monthly", priority: locale === "es" ? 0.8 : 0.7 },
+    );
+
     /**
      * Category pages
      */

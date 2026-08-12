@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { BookOpen, Fan, Menu, MessageCircle, Wrench, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { marketBasePath, marketFromPath, marketName } from "@/lib/cities";
 
 type Props = {
   locale: "es" | "en";
@@ -13,14 +14,16 @@ export default function MobileHeaderMenu({ locale }: Props) {
   const [open, setOpen] = useState(false);
   const isEs = locale === "es";
   const pathname = usePathname();
-  const madrid = pathname === `/${locale}/madrid` || pathname.startsWith(`/${locale}/madrid/`);
-  const base = madrid ? `/${locale}/madrid` : `/${locale}`;
+  const market = marketFromPath(pathname, locale);
+  const cityMarket = market !== "valencia";
+  const city = marketName(market);
+  const base = marketBasePath(locale, market);
   const close = () => setOpen(false);
 
   const links = [
     { href: `${base}/services`, label: isEs ? "Servicios" : "Services", icon: Wrench },
-    { href: madrid ? `${base}/handyman` : `${base}/handyman-valencia`, label: isEs ? "Manitas" : "Handyman", icon: Wrench },
-    { href: madrid ? `${base}/services/instalacion-ventilador-techo` : `${base}/services/instalacion-ventilador-techo-valencia`, label: isEs ? "Ventiladores" : "Ceiling fans", icon: Fan },
+    { href: cityMarket ? `${base}/handyman` : `${base}/handyman-valencia`, label: isEs ? "Manitas" : "Handyman", icon: Wrench },
+    { href: cityMarket ? `${base}/services/instalacion-ventilador-techo` : `${base}/services/instalacion-ventilador-techo-valencia`, label: isEs ? "Ventiladores" : "Ceiling fans", icon: Fan },
     { href: `/${locale}/guias`, label: isEs ? "Guías" : "Guides", icon: BookOpen },
     { href: `/${locale}/#faq`, label: "FAQ", icon: MessageCircle },
   ];
@@ -60,7 +63,7 @@ export default function MobileHeaderMenu({ locale }: Props) {
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-yellow-600">THEVULGO</p>
                 <p className="mt-1 text-xl font-black">{isEs ? "¿Qué necesitas?" : "What do you need?"}</p>
               </div>
-              <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold">{madrid ? "Madrid" : "Valencia"}</span>
+              <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold">{city}</span>
             </div>
 
             <nav className="grid grid-cols-2 gap-2">
@@ -84,8 +87,8 @@ export default function MobileHeaderMenu({ locale }: Props) {
             <a
               href={`https://wa.me/34610076942?text=${encodeURIComponent(
                 isEs
-                  ? `Hola, me gustaría pedir presupuesto para un servicio en ${madrid ? "Madrid" : "Valencia"}.`
-                  : `Hi! I’d like an estimate for a service in ${madrid ? "Madrid" : "Valencia"}.`
+                  ? `Hola, me gustaría pedir presupuesto para un servicio en ${city}.`
+                  : `Hi! I’d like an estimate for a service in ${city}.`
               )}`}
               target="_blank"
               rel="noopener noreferrer"
