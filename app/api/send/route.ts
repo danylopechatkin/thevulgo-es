@@ -111,6 +111,7 @@ export async function POST(req: Request) {
         .select("id")
         .eq("preferred_date", preferredDate)
         .eq("preferred_time", preferredTime)
+        .eq("city", String(data.city || "Valencia"))
         .limit(1)
         .maybeSingle();
 
@@ -237,8 +238,8 @@ export async function POST(req: Request) {
         : "Once they book, you also get 10% off your next job.",
 
       footer: isEs
-        ? "Precio claro. Sin sorpresas.<br/>Valencia y alrededores · Respuesta rápida"
-        : "Clear pricing. No surprises.<br/>Valencia & nearby · Fast response",
+        ? `Precio claro. Sin sorpresas.<br/>${data.city || "Valencia"} · Respuesta rápida`
+        : `Clear pricing. No surprises.<br/>${data.city || "Valencia"} · Fast response`,
     };
 
     const servicesHtml = (Array.isArray(data.services) ? data.services : [])
@@ -267,6 +268,8 @@ export async function POST(req: Request) {
         <p><b>Phone:</b> ${data.phone || "—"}</p>
         <p><b>Email:</b> ${data.email || "—"}</p>
         <p><b>Language:</b> ${locale}</p>
+        <p><b>Source URL:</b> ${data.sourceUrl || "—"}</p>
+        <p><b>Market:</b> ${data.market || "—"}</p>
         <p><b>Category:</b> ${data.category || "—"}</p>
         <p><b>City:</b> ${data.city || "—"}</p>
         <p><b>Area:</b> ${data.area || "—"}</p>
@@ -318,7 +321,7 @@ export async function POST(req: Request) {
 <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
 <tr>
 <td style="background:#000;padding:20px 30px;color:#fff;font-weight:800;font-size:20px;">
-THEVULGO · Valencia
+THEVULGO · ${data.city || "Valencia"}
 </td>
 </tr>
 

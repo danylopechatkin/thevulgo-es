@@ -105,16 +105,17 @@ export async function POST(req: Request) {
         : "Send this code to a friend. They get 10% off their first order. You also get 10% off your next service.",
 
       footer: isEs
-        ? "Gracias por elegir THEVULGO.<br/>Precio claro. Sin sorpresas.<br/>Valencia y alrededores · Respuesta rápida"
-        : "Thank you for choosing THEVULGO.<br/>Clear pricing. No surprises.<br/>Valencia & nearby · Fast response",
+        ? `Gracias por elegir THEVULGO.<br/>Precio claro. Sin sorpresas.<br/>${order.city || "Valencia"} · Respuesta rápida`
+        : `Thank you for choosing THEVULGO.<br/>Clear pricing. No surprises.<br/>${order.city || "Valencia"} · Fast response`,
     };
 
     const referralCode = makeReferralCode(order.full_name || "CLIENT");
 
+    const marketQuery = order.city === "Madrid" ? "&market=madrid" : "";
     const referralLink =
       locale === "es"
-        ? `https://www.thevulgo.es/es/estimate?ref=${encodeURIComponent(referralCode)}`
-        : `https://www.thevulgo.es/en/estimate?ref=${encodeURIComponent(referralCode)}`;
+        ? `https://www.thevulgo.es/es/estimate?ref=${encodeURIComponent(referralCode)}${marketQuery}`
+        : `https://www.thevulgo.es/en/estimate?ref=${encodeURIComponent(referralCode)}${marketQuery}`;
 
     const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(referralLink)}`;
 
@@ -148,7 +149,7 @@ export async function POST(req: Request) {
       <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
         <tr>
           <td style="background:#000;padding:20px 30px;color:#fff;font-weight:800;font-size:20px;">
-            THEVULGO · Valencia
+            THEVULGO · ${order.city || "Valencia"}
           </td>
         </tr>
 

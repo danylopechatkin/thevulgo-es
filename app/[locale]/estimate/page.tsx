@@ -23,6 +23,7 @@ import {
   Package,
   Home,
 } from "lucide-react";
+import { MADRID_DISTRICTS } from "@/lib/cities";
 
 type CategoryKey =
   | "handyman"
@@ -232,6 +233,8 @@ function EstimatePageContent() {
   const t = useTranslations("estimatePage");
   const locale = useLocale();
   const isEs = locale === "es";
+  const isMadridMarket = searchParams.get("market") === "madrid";
+  const defaultCity = isMadridMarket ? "Madrid" : "Valencia";
 
   const initialCategory = (() => {
     const raw = searchParams.get("category");
@@ -259,7 +262,7 @@ function EstimatePageContent() {
     fullName: "",
     email: "",
     phone: "",
-    city: "Valencia",
+    city: defaultCity,
     customCity: "",
     area: "",
     houseAddress: "",
@@ -269,8 +272,10 @@ function EstimatePageContent() {
     preferredTime: "",
     notes: "",
   });
+  const availabilityCity = client.city === "My city is not listed" ? client.customCity : client.city;
 
   const CITY_AREA_OPTIONS: Record<string, string[]> = {
+    Madrid: [...MADRID_DISTRICTS],
     Valencia: ["Ciutat Vella", "Russafa", "El Pla del Remei", "La Gran Via", "Campanar", "Marxalenes", "Morvedre", "Trinitat", "Benimaclet", "Algirós", "El Cabanyal - El Canyamelar", "La Malva-rosa", "Aiora", "Amistat", "Mestalla", "Patraix", "Safranar", "Favara", "Arrancapins", "Botànic", "La Roqueta", "La Petxina", "Benicalap", "Torrefiel", "Orriols", "Sant Antoni", "Jesús", "Sant Marcel·lí", "Camí Real", "Malilla", "Monteolivete", "En Corts", "Natzaret", "Quatre Carreres", "Beniferri", "Benimàmet"],
     Torrent: ["Centre", "El Vedat", "Parc Central"],
     Paterna: ["Centro", "La Canyada", "Valterna", "Terramelar", "Campamento"],
@@ -280,7 +285,7 @@ function EstimatePageContent() {
   };
 
   const CITY_OPTIONS: SelectOption[] = [
-    "Valencia", "Mislata", "Xirivella", "Aldaia", "Alaquàs", "Quart de Poblet", "Manises", "Paterna", "Burjassot", "Godella", "Rocafort", "Moncada", "Tavernes Blanques", "Alboraia", "Sedaví", "Benetússer", "Alfafar", "Paiporta", "Picanya", "Torrent", "Catarroja", "Massanassa", "Silla",
+    ...(isMadridMarket ? ["Madrid"] : ["Valencia", "Mislata", "Xirivella", "Aldaia", "Alaquàs", "Quart de Poblet", "Manises", "Paterna", "Burjassot", "Godella", "Rocafort", "Moncada", "Tavernes Blanques", "Alboraia", "Sedaví", "Benetússer", "Alfafar", "Paiporta", "Picanya", "Torrent", "Catarroja", "Massanassa", "Silla"]),
     { value: "My city is not listed", label: isEs ? "Mi ciudad no está en la lista" : "My city is not listed" },
   ];
 
@@ -301,7 +306,7 @@ function EstimatePageContent() {
         setAvailabilityError("");
 
         const response = await fetch(
-          `/api/availability?date=${encodeURIComponent(client.preferredDate)}`,
+          `/api/availability?date=${encodeURIComponent(client.preferredDate)}&city=${encodeURIComponent(availabilityCity || defaultCity)}`,
           {
             cache: "no-store",
             signal: controller.signal,
@@ -338,7 +343,7 @@ function EstimatePageContent() {
     loadAvailability();
 
     return () => controller.abort();
-  }, [client.preferredDate, isEs]);
+  }, [client.preferredDate, availabilityCity, defaultCity, isEs]);
 
   useEffect(() => {
     const raw = searchParams.get("category");
@@ -654,6 +659,8 @@ function EstimatePageContent() {
         iva: 0,
         total,
         locale,
+        sourceUrl: window.location.href,
+        market: isMadridMarket ? "madrid" : "valencia",
         scheduledAt:
           client.preferredDate && client.preferredTime
             ? new Date(`${client.preferredDate}T${client.preferredTime}:00+02:00`).toISOString()
@@ -1460,7 +1467,7 @@ function EstimatePageContent() {
                           fullName: "",
                           email: "",
                           phone: "",
-                          city: "Valencia",
+                          city: defaultCity,
                           customCity: "",
                           area: "",
                           houseAddress: "",

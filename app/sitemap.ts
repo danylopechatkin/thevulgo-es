@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { guides } from "./[locale]/guias/guides-data";
+import { MADRID_ROUTES } from "@/lib/madridRoutes";
 
 const baseUrl = "https://www.thevulgo.es";
 
@@ -313,6 +314,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: locale === "es" ? 1 : 0.9,
     });
+
+    pages.push({
+      url: `${baseUrl}/${locale}/madrid`,
+      changeFrequency: "weekly",
+      priority: locale === "es" ? 0.95 : 0.85,
+    });
+
+    addRoutes(
+      pages,
+      locale,
+      MADRID_ROUTES.map((route) => `madrid/${route.path}`),
+      { changeFrequency: "monthly", priority: locale === "es" ? 0.8 : 0.7 },
+    );
 
     /**
      * Category pages

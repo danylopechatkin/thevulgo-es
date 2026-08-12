@@ -16,6 +16,7 @@ const supabaseAdmin = createClient(
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const date = searchParams.get("date")?.trim() || "";
+  const city = searchParams.get("city")?.trim().slice(0, 120) || "Valencia";
 
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return Response.json(
@@ -28,6 +29,7 @@ export async function GET(request: Request) {
     .from("orders")
     .select("preferred_time")
     .eq("preferred_date", date)
+    .eq("city", city)
     .not("preferred_time", "is", null);
 
   if (error) {
@@ -47,7 +49,7 @@ export async function GET(request: Request) {
   ).sort();
 
   return Response.json(
-    { success: true, date, bookedTimes },
+    { success: true, date, city, bookedTimes },
     {
       headers: {
         "Cache-Control": "no-store",

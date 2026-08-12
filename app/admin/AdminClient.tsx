@@ -254,6 +254,7 @@ export default function AdminClient() {
   const [selectedCalendarDate, setSelectedCalendarDate] = useState(() =>
     getMadridDateKey(new Date())
   );
+  const [cityFilter, setCityFilter] = useState<"all" | "Valencia" | "Madrid">("all");
 
   const [aiOrderText, setAiOrderText] = useState("");
   const [aiOrderImages, setAiOrderImages] = useState<AiOrderImage[]>([]);
@@ -507,12 +508,17 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
     void loadLeadForBooking();
   }, [searchParams]);
 
+  const visibleOrders = useMemo(
+    () => cityFilter === "all" ? orders : orders.filter((order) => (order.city || "Valencia") === cityFilter),
+    [orders, cityFilter]
+  );
+
   const metricOrders = useMemo(
     () =>
-      orders.filter((order) =>
+      visibleOrders.filter((order) =>
         order.preferred_date?.startsWith(calendarMonth)
       ),
-    [orders, calendarMonth]
+    [visibleOrders, calendarMonth]
   );
 
   const metrics = useMemo(() => {
@@ -541,7 +547,7 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
   const ordersByDate = useMemo(() => {
   const grouped = new Map<string, Order[]>();
 
-  orders.forEach((order) => {
+  visibleOrders.forEach((order) => {
     if (!order.preferred_date) return;
 
     const existingOrders = grouped.get(order.preferred_date) || [];
@@ -558,7 +564,7 @@ const [aiWarnings, setAiWarnings] = useState<string[]>([]);
   });
 
   return grouped;
-}, [orders]);
+}, [visibleOrders]);
 
 const calendarDays = useMemo(() => {
   const [year, month] = calendarMonth.split("-").map(Number);
@@ -1274,6 +1280,14 @@ const parseOrderWithAi = async () => {
     <div className="min-h-screen bg-white px-3 py-4 text-black sm:p-6">
       <div className="mx-auto max-w-7xl space-y-5 sm:space-y-8">
         <div className="grid grid-cols-3 items-stretch gap-2 rounded-3xl border border-yellow-200 bg-[#fffdf7] p-3 shadow-sm sm:flex sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none">
+          <label className="col-span-3 flex items-center gap-2 rounded-2xl border border-yellow-400 bg-white px-3 py-2 text-sm font-extrabold shadow-sm sm:col-auto">
+            City
+            <select value={cityFilter} onChange={(event) => setCityFilter(event.target.value as "all" | "Valencia" | "Madrid")} className="min-w-28 bg-transparent py-1 font-bold outline-none">
+              <option value="all">All cities</option>
+              <option value="Valencia">Valencia</option>
+              <option value="Madrid">Madrid</option>
+            </select>
+          </label>
           <Link
             href="/admin/today"
             className="flex min-w-0 items-center justify-center rounded-2xl border border-yellow-400 bg-white px-2 py-3 text-center text-sm font-extrabold text-black shadow-sm transition hover:bg-yellow-50 hover:shadow-md sm:px-5"

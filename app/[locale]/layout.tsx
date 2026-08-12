@@ -7,6 +7,9 @@ import LanguageSwitcher from "@/app/components/LanguageSwitcher";
 import WhatsAppConversionTracker from "@/app/components/WhatsAppConversionTracker";
 import HeaderEstimateLink from "@/app/components/HeaderEstimateLink";
 import MobileHeaderMenu from "@/app/components/MobileHeaderMenu";
+import CitySwitcher from "@/app/components/CitySwitcher";
+import { MarketLabel, MarketWhatsApp } from "@/app/components/MarketHeaderDetails";
+import MarketDesktopNav from "@/app/components/MarketDesktopNav";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -104,45 +107,14 @@ export default async function LocaleLayout({
 
                 <div className="hidden min-w-0 font-extrabold leading-none text-yellow-400 sm:block">
                   <span className="block truncate">THEVULGO</span>
-                  <span className="ml-0 mt-0.5 hidden text-sm font-semibold text-gray-500 sm:block">
-                    Valencia
-                  </span>
+                  <MarketLabel locale={locale} />
                 </div>
               </Link>
 
-              <nav className="hidden items-center gap-6 text-[15px] font-semibold text-gray-800 md:flex">
-                <Link href={`/${locale}/services`} className="hover:text-black">
-                  {t("services")}
-                </Link>
-
-                <Link
-                  href={`/${locale}/handyman-valencia`}
-                  className="font-extrabold text-yellow-500 hover:text-black"
-                >
-                  {locale === "es" ? "Manitas" : "Handyman"}
-                </Link>
-
-                <Link
-                  href={`/${locale}/services/instalacion-ventilador-techo-valencia`}
-                  className="hover:text-black"
-                >
-                  {locale === "es" ? "Ventiladores" : "Ceiling fans"}
-                </Link>
-
-                <Link href={`/${locale}/guias`} className="hover:text-black">
-                  {t("tips")}
-                </Link>
-
-                <Link href={`/${locale}/#faq`} className="hover:text-black">
-                  {t("faq")}
-                </Link>
-
-                <Link href={`/${locale}/estimate`} className="hover:text-black">
-                  {t("estimate")}
-                </Link>
-              </nav>
+              <MarketDesktopNav locale={locale} labels={{ services: t("services"), tips: t("tips"), faq: t("faq"), estimate: t("estimate") }} />
 
               <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+                <CitySwitcher locale={locale} />
                 <div>
                   <LanguageSwitcher locale={locale} />
                 </div>
@@ -156,18 +128,7 @@ export default async function LocaleLayout({
                   {t("getEstimate")}
                 </HeaderEstimateLink>
 
-                <a
-                  href={`https://wa.me/34610076942?text=${encodeURIComponent(
-                    locale === "es"
-                      ? "Hola, me gustaría pedir presupuesto para un servicio en Valencia."
-                      : "Hi! I’d like an estimate for a service in Valencia."
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hidden items-center gap-2 whitespace-nowrap rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-black shadow-sm transition hover:scale-[1.02] hover:border-[#25D366]/60 hover:shadow-md sm:inline-flex sm:rounded-2xl sm:px-4 sm:py-2.5 sm:text-base"
-                >
-                  {t("whatsapp")}
-                </a>
+                <MarketWhatsApp locale={locale} label={t("whatsapp")} className="hidden items-center gap-2 whitespace-nowrap rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-black shadow-sm transition hover:scale-[1.02] hover:border-[#25D366]/60 hover:shadow-md sm:inline-flex sm:rounded-2xl sm:px-4 sm:py-2.5 sm:text-base" />
               </div>
             </div>
           </header>

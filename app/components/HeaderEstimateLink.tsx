@@ -15,6 +15,7 @@ export default function HeaderEstimateLink({
   className: string;
 }) {
   const pathname = usePathname();
-  const href = pathname.endsWith(FAN_PAGE) ? "#fan-quote" : `/${locale}/estimate`;
+  const madrid = pathname === `/${locale}/madrid` || pathname.startsWith(`/${locale}/madrid/`);
+  const href = pathname.endsWith(FAN_PAGE) ? "#fan-quote" : `/${locale}/estimate${madrid ? "?market=madrid" : ""}`;
   return <Link href={href} className={className}>{children}</Link>;
 }

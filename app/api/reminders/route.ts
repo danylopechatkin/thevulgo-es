@@ -79,8 +79,8 @@ export async function GET() {
             : "If anything changed, please reply to this email or contact us as soon as possible.",
 
           footer: isEs
-            ? "Precio claro. Sin sorpresas.<br/>Valencia y alrededores · Respuesta rápida"
-            : "Clear pricing. No surprises.<br/>Valencia & nearby · Fast response",
+            ? `Precio claro. Sin sorpresas.<br/>${order.city || "Valencia"} · Respuesta rápida`
+            : `Clear pricing. No surprises.<br/>${order.city || "Valencia"} · Fast response`,
         };
 
         const emailResult = await resend.emails.send({
@@ -95,7 +95,7 @@ export async function GET() {
       <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
         <tr>
           <td style="background:#000;padding:20px 30px;color:#fff;font-weight:800;font-size:20px;">
-            THEVULGO · Valencia
+            THEVULGO · ${order.city || "Valencia"}
           </td>
         </tr>
 
