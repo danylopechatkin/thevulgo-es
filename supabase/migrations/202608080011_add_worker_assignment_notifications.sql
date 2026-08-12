@@ -1,7 +1,8 @@
 begin;
 
 alter table public.worker_assignments
-  add column if not exists worker_email_status public.email_delivery_status not null default 'pending',
+  add column if not exists worker_email_status text not null default 'pending'
+    check (worker_email_status in ('pending', 'sent', 'failed')),
   add column if not exists worker_email_id text,
   add column if not exists worker_email_error text,
   add column if not exists worker_notified_at timestamptz,

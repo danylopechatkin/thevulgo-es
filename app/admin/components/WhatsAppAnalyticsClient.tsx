@@ -210,7 +210,7 @@ export default function WhatsAppAnalyticsClient() {
         <section className="rounded-[2rem] border border-black/5 bg-white p-5 shadow-sm">
           <h2 className="text-xl font-black">Demand by service area</h2>
           <p className="mt-1 text-sm text-gray-600">
-            Use completed submissions to decide which GTA areas deserve
+            Use completed submissions to decide which Spanish areas deserve
             advertising.
           </p>
           <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -222,7 +222,7 @@ export default function WhatsAppAnalyticsClient() {
                 >
                   <p className="font-black">{item.label}</p>
                   <p className="mt-1 text-sm text-gray-600">
-                    {item.orders} order{item.orders === 1 ? "" : "s"} · C$
+                    {item.orders} order{item.orders === 1 ? "" : "s"} · €
                     {item.revenue.toFixed(2)}
                   </p>
                 </div>
@@ -260,9 +260,9 @@ export default function WhatsAppAnalyticsClient() {
                     {order.attribution_page_path || "—"}
                   </span>
                   <span className="font-black">
-                    C${Number(order.total).toFixed(2)}
+                    €{Number(order.total).toFixed(2)}
                     {order.deposit_required
-                      ? ` · deposit C$${Number(order.deposit_amount).toFixed(2)}`
+                      ? ` · deposit €${Number(order.deposit_amount).toFixed(2)}`
                       : ""}
                   </span>
                 </article>

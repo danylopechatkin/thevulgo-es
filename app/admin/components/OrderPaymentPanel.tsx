@@ -43,7 +43,7 @@ type PaymentEventSummary = {
   created_at: string;
 };
 
-function torontoTime(value?: string | null) {
+function madridTime(value?: string | null) {
   if (!value) return "—";
   return new Intl.DateTimeFormat("en-IE", {
     dateStyle: "medium",
@@ -137,7 +137,7 @@ export default function OrderPaymentPanel({
         </div>
         <span className={`rounded-full px-3 py-1 text-xs font-black uppercase ${currentPaymentStatus === "paid" ? "bg-emerald-100 text-emerald-800" : "bg-yellow-100 text-yellow-800"}`}>{currentPaymentStatus || "unpaid"}</span>
       </div>
-      {currentPaymentStatus === "paid" ? <div className="mt-4 flex items-center gap-2 rounded-2xl bg-emerald-100 p-4 font-black text-emerald-800"><CheckCircle2 className="h-5 w-5" /> Paid and verified · C${Number(currentPaidAmount || 0).toFixed(2)}</div> : <div className="mt-4 grid gap-2 sm:grid-cols-2"><button type="button" disabled={busy} onClick={() => void create(true)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-yellow-400 px-4 font-black disabled:opacity-50">{busy ? <LoaderCircle className="h-4 w-4 animate-spin" /> : hasEmailedLink ? <RefreshCw className="h-4 w-4" /> : <Mail className="h-4 w-4" />} {emailLabel}</button><button type="button" disabled={busy} onClick={() => void create(false)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl border bg-white px-4 font-black disabled:opacity-50"><Copy className="h-4 w-4" /> Copy payment link</button></div>}
+      {currentPaymentStatus === "paid" ? <div className="mt-4 flex items-center gap-2 rounded-2xl bg-emerald-100 p-4 font-black text-emerald-800"><CheckCircle2 className="h-5 w-5" /> Paid and verified · €{Number(currentPaidAmount || 0).toFixed(2)}</div> : <div className="mt-4 grid gap-2 sm:grid-cols-2"><button type="button" disabled={busy} onClick={() => void create(true)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-yellow-400 px-4 font-black disabled:opacity-50">{busy ? <LoaderCircle className="h-4 w-4 animate-spin" /> : hasEmailedLink ? <RefreshCw className="h-4 w-4" /> : <Mail className="h-4 w-4" />} {emailLabel}</button><button type="button" disabled={busy} onClick={() => void create(false)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl border bg-white px-4 font-black disabled:opacity-50"><Copy className="h-4 w-4" /> Copy payment link</button></div>}
       {message && <p className="mt-3 text-sm font-bold">{message}</p>}
       {requests.length > 0 && <div className="mt-5 space-y-3">
         <div className="flex items-center justify-between gap-3">
@@ -148,7 +148,7 @@ export default function OrderPaymentPanel({
           const failed = item.email_delivery_status === "failed" || Boolean(item.email_error);
           const requestEvents = events.filter((event) => event.payment_request_id === item.id);
           return <div key={item.id} className="rounded-2xl border border-gray-100 bg-white px-4 py-4 text-xs shadow-sm">
-            <div className="flex flex-wrap items-center justify-between gap-2"><span className="font-bold text-gray-500">Link #{requests.length - index} · {torontoTime(item.created_at)}</span><b className={item.status === "completed" ? "text-emerald-700" : item.status === "failed" ? "text-red-700" : "text-yellow-700"}>{item.status} · C${Number(item.amount).toFixed(2)}</b></div>
+            <div className="flex flex-wrap items-center justify-between gap-2"><span className="font-bold text-gray-500">Link #{requests.length - index} · {madridTime(item.created_at)}</span><b className={item.status === "completed" ? "text-emerald-700" : item.status === "failed" ? "text-red-700" : "text-yellow-700"}>{item.status} · €{Number(item.amount).toFixed(2)}</b></div>
             {item.email_recipient && <p className="mt-2 break-all text-gray-600">Customer: {item.email_recipient}</p>}
             <div className="mt-2 flex flex-wrap gap-1.5">
               {item.email_sent_at && <span className="rounded-full bg-blue-50 px-2 py-1 font-bold text-blue-700">Sent</span>}
@@ -159,12 +159,12 @@ export default function OrderPaymentPanel({
               {failed && <span className="rounded-full bg-red-50 px-2 py-1 font-bold text-red-700">Email failed</span>}
             </div>
             <div className="mt-3 grid gap-2 text-gray-600 sm:grid-cols-2">
-              {item.email_sent_at && <p><b className="text-gray-900">Email sent:</b> {torontoTime(item.email_sent_at)}</p>}
-              {item.email_delivered_at && <p><b className="text-gray-900">Delivered:</b> {torontoTime(item.email_delivered_at)}</p>}
-              {item.email_opened_at && <p><b className="text-gray-900">Opened:</b> {torontoTime(item.email_opened_at)}</p>}
-              {item.email_clicked_at && <p><b className="text-gray-900">Email clicked:</b> {torontoTime(item.email_clicked_at)}</p>}
-              {item.payment_link_clicked_at && <p><b className="text-gray-900">Checkout opened:</b> {torontoTime(item.payment_link_clicked_at)}</p>}
-              {item.completed_at && <p><b className="text-gray-900">Payment completed:</b> {torontoTime(item.completed_at)}</p>}
+              {item.email_sent_at && <p><b className="text-gray-900">Email sent:</b> {madridTime(item.email_sent_at)}</p>}
+              {item.email_delivered_at && <p><b className="text-gray-900">Delivered:</b> {madridTime(item.email_delivered_at)}</p>}
+              {item.email_opened_at && <p><b className="text-gray-900">Opened:</b> {madridTime(item.email_opened_at)}</p>}
+              {item.email_clicked_at && <p><b className="text-gray-900">Email clicked:</b> {madridTime(item.email_clicked_at)}</p>}
+              {item.payment_link_clicked_at && <p><b className="text-gray-900">Checkout opened:</b> {madridTime(item.payment_link_clicked_at)}</p>}
+              {item.completed_at && <p><b className="text-gray-900">Payment completed:</b> {madridTime(item.completed_at)}</p>}
             </div>
             {(item.paypal_order_id || item.paypal_capture_id) && <div className="mt-3 rounded-xl bg-gray-50 p-3 font-mono text-[11px] text-gray-600">
               {item.paypal_order_id && <p className="break-all">PayPal order: {item.paypal_order_id}</p>}
@@ -172,7 +172,7 @@ export default function OrderPaymentPanel({
             </div>}
             {requestEvents.length > 0 && <div className="mt-3 border-t pt-3">
               <b className="text-gray-900">Verified PayPal history</b>
-              <div className="mt-2 space-y-1.5">{requestEvents.map((event) => <div key={event.id} className="flex flex-wrap justify-between gap-2 rounded-lg bg-gray-50 px-2.5 py-2"><span>{event.event_type.replaceAll("_", " ")}</span><span className="font-bold">{event.status || "recorded"} · {torontoTime(event.created_at)}</span></div>)}</div>
+              <div className="mt-2 space-y-1.5">{requestEvents.map((event) => <div key={event.id} className="flex flex-wrap justify-between gap-2 rounded-lg bg-gray-50 px-2.5 py-2"><span>{event.event_type.replaceAll("_", " ")}</span><span className="font-bold">{event.status || "recorded"} · {madridTime(event.created_at)}</span></div>)}</div>
             </div>}
             {item.email_error && <p className="mt-2 text-red-700">{item.email_error}</p>}
             {item.error_message && <p className="mt-2 text-red-700">PayPal: {item.error_message}</p>}

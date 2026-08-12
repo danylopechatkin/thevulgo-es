@@ -31,6 +31,40 @@ alter table public.marketing_events
 alter table public.analytics_sessions
   add column if not exists city text not null default 'Valencia';
 
+-- Preserve Valencia while recovering the correct market for events collected
+-- after city landing pages launched but before the city column existed.
+update public.whatsapp_clicks
+set city = case
+  when page_path ~ '^/(es|en)/madrid(/|$)' then 'Madrid'
+  when page_path ~ '^/(es|en)/barcelona(/|$)' then 'Barcelona'
+  when page_path ~ '^/(es|en)/alicante(/|$)' then 'Alicante'
+  else 'Valencia'
+end;
+
+update public.estimate_clicks
+set city = case
+  when page_path ~ '^/(es|en)/madrid(/|$)' then 'Madrid'
+  when page_path ~ '^/(es|en)/barcelona(/|$)' then 'Barcelona'
+  when page_path ~ '^/(es|en)/alicante(/|$)' then 'Alicante'
+  else 'Valencia'
+end;
+
+update public.marketing_events
+set city = case
+  when page_path ~ '^/(es|en)/madrid(/|$)' then 'Madrid'
+  when page_path ~ '^/(es|en)/barcelona(/|$)' then 'Barcelona'
+  when page_path ~ '^/(es|en)/alicante(/|$)' then 'Alicante'
+  else 'Valencia'
+end;
+
+update public.analytics_sessions
+set city = case
+  when landing_page ~ '^/(es|en)/madrid(/|$)' then 'Madrid'
+  when landing_page ~ '^/(es|en)/barcelona(/|$)' then 'Barcelona'
+  when landing_page ~ '^/(es|en)/alicante(/|$)' then 'Alicante'
+  else 'Valencia'
+end;
+
 create index if not exists worker_profiles_primary_city_idx
   on public.worker_profiles(primary_city, contractor_status);
 create index if not exists orders_city_created_at_idx

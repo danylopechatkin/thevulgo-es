@@ -140,14 +140,14 @@ export default async function WorkerPage() {
               <p className="mt-4 text-[10px] font-black uppercase tracking-[.12em] text-black/60">
                 Next Monday payout
               </p>
-              <b className="mt-1 block text-2xl">C${pendingPayout.toFixed(2)}</b>
+              <b className="mt-1 block text-2xl">€{pendingPayout.toFixed(2)}</b>
             </div>
             <div className="rounded-2xl bg-white/10 p-4">
               <WalletCards className="h-5 w-5 text-yellow-400" />
               <p className="mt-4 text-[10px] font-black uppercase tracking-[.12em] text-gray-400">
                 Online earnings paid
               </p>
-              <b className="mt-1 block text-2xl">C${paidEarnings.toFixed(2)}</b>
+              <b className="mt-1 block text-2xl">€{paidEarnings.toFixed(2)}</b>
             </div>
             <div className="rounded-2xl bg-white/10 p-4">
               <Banknote className="h-5 w-5 text-yellow-400" />
@@ -155,7 +155,7 @@ export default async function WorkerPage() {
                 Cash due to company
               </p>
               <b className={`mt-1 block text-2xl ${cashDue > 0 ? "text-red-300" : ""}`}>
-                C${cashDue.toFixed(2)}
+                €{cashDue.toFixed(2)}
               </b>
             </div>
             <div className="rounded-2xl bg-white/10 p-4">
@@ -213,7 +213,7 @@ export default async function WorkerPage() {
                         {order?.area}, {order?.city}
                       </p>
                       <p className="mt-3 font-black">
-                        Your expected share: C$
+                        Your expected share: €
                         {Number(assignment.worker_share).toFixed(2)}
                       </p>
                     </Link>

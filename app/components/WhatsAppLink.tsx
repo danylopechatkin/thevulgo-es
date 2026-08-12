@@ -21,7 +21,7 @@ function buildMessage(service?: string, customMessage?: string) {
   const request = service
     ? `I need help with ${service}`
     : "I need handyman service";
-  return `Hi THEVULGO, ${request} in Toronto or the GTA. I would like a quote. I can send photos, measurements and my postal code.`;
+  return `Hi THEVULGO, ${request} in Spain. I would like a quote. I can send photos, measurements and my postal code.`;
 }
 
 export default function WhatsAppLink({

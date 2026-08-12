@@ -203,7 +203,7 @@ export async function POST(
       company_amount_due: companyDue,
       remittance_payment_request_id: link.request.id,
       admin_note: reviewRequired
-        ? `Cash amount differs from order total C$${Number(order.total).toFixed(2)}.`
+        ? `Cash amount differs from order total €${Number(order.total).toFixed(2)}.`
         : "",
     },
     { onConflict: "assignment_id" },
@@ -230,7 +230,7 @@ export async function POST(
     admin.from("worker_activity_events").insert({
       worker_id: assignment.worker_id,
       event_type: "cash_collected",
-      detail: `C$${cashAmount.toFixed(2)} cash recorded; C$${companyDue.toFixed(2)} due within 24 hours.`,
+      detail: `€${cashAmount.toFixed(2)} cash recorded; €${companyDue.toFixed(2)} due within 24 hours.`,
       metadata: { order_id: order.id, assignment_id: assignment.id, payment_request_id: link.request.id },
     }),
     admin.from("order_change_history").insert({

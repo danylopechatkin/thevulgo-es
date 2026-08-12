@@ -594,12 +594,12 @@ function AssignmentRow({
       </div>
       <div className="sm:text-right">
         <p className="text-lg font-black">
-          C${Number(order?.total || 0).toFixed(2)}
+          €{Number(order?.total || 0).toFixed(2)}
         </p>
         <p
           className={`text-xs font-bold ${dark ? "text-yellow-400" : "text-yellow-700"}`}
         >
-          Worker: C${Number(assignment.worker_share || 0).toFixed(2)}
+          Worker: €{Number(assignment.worker_share || 0).toFixed(2)}
         </p>
       </div>
     </div>

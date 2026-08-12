@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
   getCatalogServices,
-  MINIMUM_SERVICE_VISIT_CAD,
+  MINIMUM_SERVICE_VISIT_EUR,
 } from "./serviceCatalog";
 import { requiresTravelDeposit, travelDepositAmount } from "./coverage";
 
@@ -139,8 +139,8 @@ export function calculateQuote(
     (sum, service) => sum + service.subtotal,
     0,
   );
-  const minimumVisitApplied = servicesSubtotal < MINIMUM_SERVICE_VISIT_CAD;
-  const subtotal = Math.max(servicesSubtotal, MINIMUM_SERVICE_VISIT_CAD);
+  const minimumVisitApplied = servicesSubtotal < MINIMUM_SERVICE_VISIT_EUR;
+  const subtotal = Math.max(servicesSubtotal, MINIMUM_SERVICE_VISIT_EUR);
   const tax = Math.round(subtotal * taxRate * 100) / 100;
   return {
     category,

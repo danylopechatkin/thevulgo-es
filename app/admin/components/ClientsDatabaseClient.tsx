@@ -625,7 +625,7 @@ export default function ClientsDatabaseClient() {
                     </div>
                     <div className="text-left sm:text-right">
                       <p className="text-lg font-black">
-                        C${Number(order.total).toFixed(2)}
+                        €{Number(order.total).toFixed(2)}
                       </p>
                       <p
                         className={`mt-1 text-xs font-black uppercase ${order.payment_received_at ? "text-emerald-700" : "text-gray-400"}`}

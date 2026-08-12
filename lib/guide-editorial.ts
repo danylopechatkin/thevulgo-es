@@ -40,7 +40,7 @@ const categoryDetails: Record<
   Planning: {
     readTime: "4 min read",
     localNote:
-      "Valencia and GTA access varies by building, so include your area, parking or loading notes and preferred appointment window.",
+      "Access varies by building across Valencia and nearby areas, so include your area, parking or loading notes and preferred appointment window.",
     quoteFactors: [
       "Wide and close photos with measurements",
       "A numbered task list and product links",

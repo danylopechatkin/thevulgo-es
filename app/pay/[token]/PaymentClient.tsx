@@ -57,7 +57,7 @@ export default function PaymentClient({
           THEVULGO was notified.
         </p>
         <div className="mt-6 rounded-3xl bg-emerald-50 p-5 text-2xl font-black text-emerald-800">
-          C${amount.toFixed(2)} paid
+          €{amount.toFixed(2)} paid
         </div>
       </div>
     );
@@ -77,7 +77,7 @@ export default function PaymentClient({
           <span>Order</span><b className="text-black">{orderLabel}</b>
         </div>
         <div className="mt-4 flex items-end justify-between gap-4 border-t border-black/10 pt-4">
-          <b>Amount due</b><strong className="text-3xl">C${amount.toFixed(2)}</strong>
+          <b>Amount due</b><strong className="text-3xl">€{amount.toFixed(2)}</strong>
         </div>
       </div>
       {status === "cancelled" && (
@@ -93,7 +93,7 @@ export default function PaymentClient({
         className="mt-6 flex min-h-16 w-full items-center justify-center gap-3 rounded-2xl bg-yellow-400 px-6 text-lg font-black shadow-lg transition hover:bg-yellow-300 disabled:opacity-60"
       >
         {busy ? <LoaderCircle className="h-6 w-6 animate-spin" /> : <CreditCard className="h-6 w-6" />}
-        {busy ? "Opening secure checkout…" : `Pay C$${amount.toFixed(2)}`}
+        {busy ? "Opening secure checkout…" : `Pay €${amount.toFixed(2)}`}
       </button>
       <p className="mt-5 text-center text-xs leading-5 text-gray-500">
         THEVULGO never receives or stores your card details. The amount is

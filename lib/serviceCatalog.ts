@@ -7,7 +7,7 @@ export type CatalogService = {
   badgeEs?: string;
 };
 
-export const MINIMUM_SERVICE_VISIT_CAD = 49;
+export const MINIMUM_SERVICE_VISIT_EUR = 49;
 
 export const SERVICE_CATALOG: Record<string, CatalogService[]> = {
   Handyman: [

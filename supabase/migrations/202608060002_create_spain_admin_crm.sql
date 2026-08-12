@@ -39,7 +39,9 @@ alter table public.orders
   add column if not exists cancelled_at timestamptz,
   add column if not exists cancellation_reason text not null default '';
 
-create unique index if not exists orders_referral_code_unique
+-- Legacy Spain orders can legitimately share a surname-based referral code.
+-- Keep lookup fast without enforcing uniqueness or rewriting customer data.
+create index if not exists orders_referral_code_idx
   on public.orders (referral_code) where referral_code is not null;
 create index if not exists leads_follow_up_idx
   on public.leads (follow_up_at) where status not in ('converted', 'lost');

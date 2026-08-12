@@ -2354,7 +2354,7 @@ function historyPresentation(entry: OrderHistory): {
   if (crmEvent === "payment_link_created")
     return {
       title: "Secure payment link created",
-      detail: `Payment request for C$${Number(after.amount || 0).toFixed(2)} was created.`,
+      detail: `Payment request for €${Number(after.amount || 0).toFixed(2)} was created.`,
       tone: "default",
     };
   if (crmEvent === "payment_link_emailed")
@@ -2408,13 +2408,13 @@ function historyPresentation(entry: OrderHistory): {
   if (crmEvent === "paypal_payment_completed")
     return {
       title: "PayPal payment verified",
-      detail: `C$${Number(after.amount || 0).toFixed(2)} received and verified by the server.`,
+      detail: `€${Number(after.amount || 0).toFixed(2)} received and verified by the server.`,
       tone: "success",
     };
   if (crmEvent === "worker_cash_remittance_paid")
     return {
       title: "Cash remittance received",
-      detail: `The company share of C$${Number(after.amount || 0).toFixed(2)} was paid through PayPal.`,
+      detail: `The company share of €${Number(after.amount || 0).toFixed(2)} was paid through PayPal.`,
       tone: "success",
     };
   if (crmEvent === "payment_notifications_sent")

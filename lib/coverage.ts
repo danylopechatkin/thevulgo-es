@@ -5,7 +5,7 @@ export const cityAreas: Record<string, string[]> = {
   Alicante: ["Centro", "Ensanche Diputación", "Benalúa", "San Blas", "Playa de San Juan", "Albufereta"],
 };
 
-// Outer-GTA appointments require a 50% travel deposit before confirmation.
+// No Spanish market currently requires an automatic travel deposit.
 export const depositRequiredCities = new Set<string>();
 
 export function requiresTravelDeposit(city: string) { return depositRequiredCities.has(city.trim()); }
