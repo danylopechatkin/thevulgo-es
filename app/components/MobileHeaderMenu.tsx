@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { BookOpen, Fan, Menu, MessageCircle, Wrench, X } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { marketBasePath, marketFromPath, marketName } from "@/lib/cities";
+import { marketBasePath, marketName } from "@/lib/cities";
 import { marketWhatsAppHref } from "@/lib/marketLinks";
+import { useCurrentMarket } from "@/lib/useCurrentMarket";
 
 type Props = {
   locale: "es" | "en";
@@ -14,8 +14,7 @@ type Props = {
 export default function MobileHeaderMenu({ locale }: Props) {
   const [open, setOpen] = useState(false);
   const isEs = locale === "es";
-  const pathname = usePathname();
-  const market = marketFromPath(pathname, locale);
+  const { market } = useCurrentMarket(locale);
   const cityMarket = market !== "valencia";
   const city = marketName(market);
   const base = marketBasePath(locale, market);

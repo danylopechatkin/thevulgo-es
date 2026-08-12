@@ -1,22 +1,17 @@
 "use client";
 
 import {
-  marketFromPath,
+  marketPathForLocation,
   marketName,
-  toAlicantePath,
-  toBarcelonaPath,
-  toMadridPath,
-  toValenciaPath,
   type Market,
 } from "@/lib/cities";
 import { Check, ChevronDown, MapPin } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useCurrentMarket } from "@/lib/useCurrentMarket";
 
 export default function CitySwitcher({ locale }: { locale: string }) {
-  const pathname = usePathname();
-  const market = marketFromPath(pathname, locale);
+  const { pathname, market } = useCurrentMarket(locale);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -39,10 +34,10 @@ export default function CitySwitcher({ locale }: { locale: string }) {
   }, [open]);
 
   const cities: Array<{ market: Market; href: string; label: string }> = [
-    { market: "valencia", href: toValenciaPath(pathname, locale), label: "Valencia" },
-    { market: "madrid", href: toMadridPath(pathname, locale), label: "Madrid" },
-    { market: "barcelona", href: toBarcelonaPath(pathname, locale), label: "Barcelona" },
-    { market: "alicante", href: toAlicantePath(pathname, locale), label: "Alicante" },
+    { market: "valencia", href: marketPathForLocation(pathname, locale, "valencia"), label: "Valencia" },
+    { market: "madrid", href: marketPathForLocation(pathname, locale, "madrid"), label: "Madrid" },
+    { market: "barcelona", href: marketPathForLocation(pathname, locale, "barcelona"), label: "Barcelona" },
+    { market: "alicante", href: marketPathForLocation(pathname, locale, "alicante"), label: "Alicante" },
   ];
 
   return (

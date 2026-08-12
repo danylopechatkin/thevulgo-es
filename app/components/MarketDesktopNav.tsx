@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { marketBasePath, marketFromPath } from "@/lib/cities";
+import { marketBasePath } from "@/lib/cities";
+import { useCurrentMarket } from "@/lib/useCurrentMarket";
 
 export default function MarketDesktopNav({ locale, labels }: { locale: string; labels: { services: string; tips: string; faq: string; estimate: string } }) {
-  const pathname = usePathname();
-  const market = marketFromPath(pathname, locale);
+  const { market } = useCurrentMarket(locale);
   const cityMarket = market !== "valencia";
   const base = marketBasePath(locale, market);
   return <nav className="hidden items-center gap-6 text-[15px] font-semibold text-gray-800 md:flex">

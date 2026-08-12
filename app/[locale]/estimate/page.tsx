@@ -1119,7 +1119,11 @@ function EstimatePageContent() {
                         <p className="mt-3 text-xs leading-6 text-gray-500">
                           {client.preferredDate === todayDateString ? t("form.todayTimeNote") : t("form.normalTimeNote")}
                           <br />
-                          <span className="text-gray-400">{t("form.localTimeNote")}</span>
+                          <span className="text-gray-400">
+                            {isEs
+                              ? `Todas las horas son hora local de ${displayCity} (España).`
+                              : `All times are ${displayCity} (Spain) local time.`}
+                          </span>
                         </p>
                       )}
                     </div>

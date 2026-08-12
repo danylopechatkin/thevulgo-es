@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { marketBasePath, marketFromPath } from "@/lib/cities";
+import { marketBasePath } from "@/lib/cities";
+import { useCurrentMarket } from "@/lib/useCurrentMarket";
 
 export default function MarketHomeLink({
   locale,
@@ -13,8 +13,7 @@ export default function MarketHomeLink({
   children: React.ReactNode;
   className?: string;
 }) {
-  const pathname = usePathname();
-  const market = marketFromPath(pathname, locale);
+  const { market } = useCurrentMarket(locale);
 
   return <Link href={marketBasePath(locale, market)} className={className}>{children}</Link>;
 }

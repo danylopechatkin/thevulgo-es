@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { AVAILABLE_CITIES, MARKETS, marketBasePath, marketName } from "../lib/cities";
+import {
+  AVAILABLE_CITIES,
+  MARKETS,
+  marketBasePath,
+  marketFromLocation,
+  marketName,
+  marketPathForLocation,
+} from "../lib/cities";
 import { MADRID_ROUTE_BY_PATH } from "../lib/madridRoutes";
 import {
   WHATSAPP_NUMBER,
@@ -80,4 +87,12 @@ test("estimate keeps market while adding service context", () => {
     marketEstimateHref("en", "barcelona", "service=services%2Ftv-mounting"),
     "/en/estimate?market=barcelona&service=services%2Ftv-mounting"
   );
+});
+
+test("estimate query remains the single market source for shared header navigation", () => {
+  assert.equal(marketFromLocation("/es/estimate", "es", "madrid"), "madrid");
+  assert.equal(marketFromLocation("/en/estimate", "en", "barcelona"), "barcelona");
+  assert.equal(marketFromLocation("/es/estimate", "es", "unsupported"), "valencia");
+  assert.equal(marketPathForLocation("/es/estimate", "es", "alicante"), "/es/estimate?market=alicante");
+  assert.equal(marketPathForLocation("/es/estimate", "es", "valencia"), "/es/estimate");
 });

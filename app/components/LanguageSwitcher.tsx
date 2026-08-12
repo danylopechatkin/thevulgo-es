@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import {usePathname} from "next/navigation";
+import {usePathname, useSearchParams} from "next/navigation";
 
 export default function LanguageSwitcher({locale}: {locale: string}) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const switchLocale = (newLocale: string) => {
     const segments = pathname.split("/");
@@ -12,7 +13,9 @@ export default function LanguageSwitcher({locale}: {locale: string}) {
     if (!segments[1]) return `/${newLocale}`;
 
     segments[1] = newLocale;
-    return segments.join("/") || "/";
+    const switchedPath = segments.join("/") || "/";
+    const query = searchParams.toString();
+    return `${switchedPath}${query ? `?${query}` : ""}`;
   };
 
   const baseBtn =

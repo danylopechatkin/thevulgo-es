@@ -43,6 +43,23 @@ export function marketFromPath(pathname: string, locale: string): Market {
   return "valencia";
 }
 
+export function marketFromLocation(pathname: string, locale: string, requestedMarket?: string | null): Market {
+  if (pathname === `/${locale}/estimate` && MARKETS.includes(requestedMarket as Market)) {
+    return requestedMarket as Market;
+  }
+  return marketFromPath(pathname, locale);
+}
+
+export function marketPathForLocation(pathname: string, locale: string, market: Market) {
+  if (pathname === `/${locale}/estimate`) {
+    return `/${locale}/estimate${market === "valencia" ? "" : `?market=${market}`}`;
+  }
+  if (market === "valencia") return toValenciaPath(pathname, locale);
+  if (market === "madrid") return toMadridPath(pathname, locale);
+  if (market === "barcelona") return toBarcelonaPath(pathname, locale);
+  return toAlicantePath(pathname, locale);
+}
+
 export function marketName(market: Market) {
   return market.charAt(0).toUpperCase() + market.slice(1);
 }
