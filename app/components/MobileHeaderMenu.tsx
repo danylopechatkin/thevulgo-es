@@ -25,7 +25,7 @@ export default function MobileHeaderMenu({ locale }: Props) {
     { href: cityMarket ? `${base}/handyman` : `${base}/handyman-valencia`, label: isEs ? "Manitas" : "Handyman", icon: Wrench },
     { href: cityMarket ? `${base}/services/instalacion-ventilador-techo` : `${base}/services/instalacion-ventilador-techo-valencia`, label: isEs ? "Ventiladores" : "Ceiling fans", icon: Fan },
     { href: `/${locale}/guias`, label: isEs ? "Guías" : "Guides", icon: BookOpen },
-    { href: `/${locale}/#faq`, label: "FAQ", icon: MessageCircle },
+    { href: `${base}#faq`, label: "FAQ", icon: MessageCircle },
   ];
 
   return (

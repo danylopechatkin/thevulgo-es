@@ -1323,7 +1323,7 @@ export default async function CommercialSecurityPage({ params }: Props) {
                     </Link>
 
                     <Link
-                      href="/en/services"
+                      href={`/${locale}/services`}
                       className="inline-flex items-center justify-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-7 py-4 text-base font-black text-white transition hover:bg-white/15"
                     >
                       View all services
