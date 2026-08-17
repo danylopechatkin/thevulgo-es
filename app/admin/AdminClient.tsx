@@ -3020,29 +3020,62 @@ function AiOrderImport({
     [images, setImages] = useState<string[]>([]),
     [loading, setLoading] = useState(false),
     [error, setError] = useState("");
-  async function readFile(file?: File) {
-    if (!file) return;
-    setError("");
-    if (file.type.startsWith("image/")) {
-      const url = await new Promise<string>((resolve, reject) => {
+  async function compressImage(file: File) {
+    const source = URL.createObjectURL(file);
+    try {
+      const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const element = new Image();
+        element.onload = () => resolve(element);
+        element.onerror = () => reject(new Error("Could not read image"));
+        element.src = source;
+      });
+      const maxEdge = 1600;
+      const scale = Math.min(1, maxEdge / Math.max(image.naturalWidth, image.naturalHeight));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+      canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("Could not prepare image");
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      const blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, "image/jpeg", 0.76),
+      );
+      if (!blob) throw new Error("Could not compress image");
+      return await new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(String(reader.result));
         reader.onerror = () => reject(new Error("Could not read image"));
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(blob);
       });
-      setImages((current) => [...current, url].slice(0, 10));
-      return;
+    } finally {
+      URL.revokeObjectURL(source);
     }
-    if (file.name.toLowerCase().endsWith(".zip")) {
-      const archive = unzipSync(new Uint8Array(await file.arrayBuffer()), {
-        filter: (entry) => entry.name.toLowerCase().endsWith(".txt"),
-      });
-      const chat = Object.values(archive)[0];
-      if (!chat) throw new Error("ZIP does not contain a WhatsApp TXT export");
-      setText(strFromU8(chat).slice(-100000));
-      return;
+  }
+  async function readFiles(files?: FileList | null) {
+    if (!files?.length) return;
+    setError("");
+    try {
+      const selected = Array.from(files);
+      const imageFiles = selected.filter((file) => file.type.startsWith("image/"));
+      const nonImage = selected.find((file) => !file.type.startsWith("image/"));
+      if (imageFiles.length) {
+        const urls = await Promise.all(imageFiles.slice(0, 6).map(compressImage));
+        setImages((current) => [...current, ...urls].slice(0, 6));
+      }
+      if (!nonImage) return;
+      if (nonImage.name.toLowerCase().endsWith(".zip")) {
+        const archive = unzipSync(new Uint8Array(await nonImage.arrayBuffer()), {
+          filter: (entry) => entry.name.toLowerCase().endsWith(".txt"),
+        });
+        const chat = Object.values(archive)[0];
+        if (!chat) throw new Error("ZIP does not contain a WhatsApp TXT export");
+        setText(strFromU8(chat).slice(-100000));
+        return;
+      }
+      setText((await nonImage.text()).slice(-100000));
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "Could not read files");
     }
-    setText((await file.text()).slice(-100000));
   }
   async function parse() {
     if (!text.trim() && !images.length) return;
@@ -3093,13 +3126,17 @@ function AiOrderImport({
           <input
             type="file"
             accept=".txt,.zip,image/png,image/jpeg,image/webp"
-            onChange={(event) => void readFile(event.target.files?.[0])}
+            multiple
+            onChange={(event) => {
+              void readFiles(event.target.files);
+              event.currentTarget.value = "";
+            }}
             className="hidden"
           />
         </label>
         {images.length ? (
           <span className="px-2 py-2 text-xs text-gray-600">
-            {images.length} screenshot(s)
+            {images.length} screenshot(s) · select up to 6 at once
           </span>
         ) : null}
         <button

@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     );
   if (
     text.length > 100000 ||
-    imageDataUrls.length > 10 ||
+    imageDataUrls.length > 6 ||
     imageDataUrls.reduce((sum: number, item: string) => sum + item.length, 0) >
       4000000
   )
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
               },
               ...imageDataUrls.map((url: string) => ({
                 type: "image_url" as const,
-                image_url: { url, detail: "high" as const },
+                image_url: { url, detail: "low" as const },
               })),
             ]
           : text,
