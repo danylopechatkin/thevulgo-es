@@ -147,6 +147,17 @@ type WorkerAssignment = {
     | null;
 };
 type ManualService = { id: string; label: string; price: number; qty: number };
+type ManualClient = {
+  id: string;
+  full_name: string | null;
+  email: string | null;
+  phone: string | null;
+  alternate_phone?: string | null;
+  address: string | null;
+  apartment: string | null;
+  city: string | null;
+  area: string | null;
+};
 
 const money = (value: number) =>
   new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" }).format(
@@ -2701,6 +2712,51 @@ function ManualOrderForm({
   onClose: () => void;
   onSubmit: (event: React.FormEvent) => Promise<void>;
 }) {
+  const [clients, setClients] = useState<ManualClient[]>([]);
+  const [clientsLoaded, setClientsLoaded] = useState(false);
+  const [clientsLoading, setClientsLoading] = useState(false);
+  const [clientField, setClientField] = useState<"full_name" | "phone" | null>(null);
+  const loadClients = useCallback(async () => {
+    if (clientsLoaded || clientsLoading) return;
+    setClientsLoading(true);
+    try {
+      const response = await fetch("/api/admin/clients", { cache: "no-store" });
+      if (!response.ok) throw new Error("Unable to load clients");
+      const payload = (await response.json()) as { clients?: ManualClient[] };
+      setClients(Array.isArray(payload.clients) ? payload.clients : []);
+    } catch {
+      setClients([]);
+    } finally {
+      setClientsLoaded(true);
+      setClientsLoading(false);
+    }
+  }, [clientsLoaded, clientsLoading]);
+  const query = clientField === "full_name" ? manual.full_name : manual.phone;
+  const matches = useMemo(() => {
+    const text = String(query || "").trim().toLocaleLowerCase();
+    const digits = String(query || "").replace(/\D/g, "");
+    if (text.length < 2 && digits.length < 2) return [];
+    return clients.filter((client) => {
+      const haystack = [client.full_name, client.email, client.phone, client.alternate_phone]
+        .filter(Boolean).join(" ").toLocaleLowerCase();
+      const phoneHaystack = [client.phone, client.alternate_phone]
+        .filter(Boolean).join("").replace(/\D/g, "");
+      return (text.length >= 2 && haystack.includes(text)) ||
+        (digits.length >= 2 && phoneHaystack.includes(digits));
+    }).slice(0, 6);
+  }, [clients, clientField, query]);
+  const selectClient = (client: ManualClient) => {
+    onChange({
+      full_name: client.full_name || "",
+      phone: client.phone || client.alternate_phone || "",
+      email: client.email || "",
+      city: client.city || manual.city,
+      area: client.area || manual.area,
+      address: client.address || manual.address,
+      apartment: client.apartment || manual.apartment,
+    });
+    setClientField(null);
+  };
   const catalog = getCatalogServices(manual.category);
   const manualTotal = services.reduce(
     (sum, service) =>
@@ -2708,10 +2764,10 @@ function ManualOrderForm({
     0,
   );
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 p-2 backdrop-blur-sm sm:p-6">
+    <div className="fixed inset-0 z-50 overflow-x-hidden overflow-y-auto bg-black/60 p-2 backdrop-blur-sm sm:p-6">
       <form
         onSubmit={onSubmit}
-        className="mx-auto max-w-4xl overflow-hidden rounded-[2rem] bg-[#f5f5f2] shadow-2xl"
+        className="mx-auto max-w-4xl overflow-visible rounded-[2rem] bg-[#f5f5f2] shadow-2xl"
       >
         <div className="relative flex items-center justify-between overflow-hidden bg-[#111] p-6 text-white sm:p-7">
           <div className="absolute -right-12 -top-16 h-48 w-48 rounded-full bg-yellow-400/20 blur-3xl" />
@@ -2736,7 +2792,7 @@ function ManualOrderForm({
             <X className="h-5 w-5" />
           </button>
         </div>
-        <div className="space-y-5 p-4 sm:p-7">
+        <div className="min-w-0 space-y-5 p-4 sm:p-7">
           <AiOrderImport
             onApply={(order, parsedServices) => {
               onChange({
@@ -2782,21 +2838,35 @@ function ManualOrderForm({
                 </p>
               </div>
             </div>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            <div className="mt-5 grid min-w-0 gap-4 sm:grid-cols-2">
+              <div className="relative z-30 min-w-0">
               <Field label="Full name">
                 <input
                   required
                   value={manual.full_name}
-                  onChange={(e) => onChange({ full_name: e.target.value })}
+                  onFocus={() => { setClientField("full_name"); void loadClients(); }}
+                  onChange={(e) => { setClientField("full_name"); onChange({ full_name: e.target.value }); }}
+                  onBlur={() => window.setTimeout(() => setClientField(null), 150)}
                 />
               </Field>
+              {clientField === "full_name" && (clientsLoading || matches.length > 0) ? (
+                <ClientMatches loading={clientsLoading} matches={matches} onSelect={selectClient} />
+              ) : null}
+              </div>
+              <div className="relative z-30 min-w-0">
               <Field label="Phone">
                 <input
                   required
                   value={manual.phone}
-                  onChange={(e) => onChange({ phone: e.target.value })}
+                  onFocus={() => { setClientField("phone"); void loadClients(); }}
+                  onChange={(e) => { setClientField("phone"); onChange({ phone: e.target.value }); }}
+                  onBlur={() => window.setTimeout(() => setClientField(null), 150)}
                 />
               </Field>
+              {clientField === "phone" && (clientsLoading || matches.length > 0) ? (
+                <ClientMatches loading={clientsLoading} matches={matches} onSelect={selectClient} />
+              ) : null}
+              </div>
               <Field label="Email">
                 <input
                   type="email"
@@ -2886,7 +2956,7 @@ function ManualOrderForm({
             </label>
           </section>
           <section className="rounded-[1.75rem] border border-black/5 bg-white p-5 shadow-sm sm:p-6">
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-center gap-3">
                 <span className="rounded-xl bg-yellow-100 p-2">
                   <Wrench className="h-5 w-5" />
@@ -2900,7 +2970,7 @@ function ManualOrderForm({
                   </p>
                 </div>
               </div>
-              <div className="rounded-2xl bg-black px-4 py-2 text-right text-white">
+              <div className="shrink-0 self-start rounded-2xl bg-black px-4 py-2 text-right text-white">
                 <p className="text-[10px] font-black uppercase text-white/50">
                   Total
                 </p>
@@ -2912,7 +2982,7 @@ function ManualOrderForm({
             {services.map((service, index) => (
               <div
                 key={`${service.id}-${index}`}
-                className="mt-4 grid gap-2 rounded-2xl bg-[#f7f7f4] p-3 sm:grid-cols-[1fr_110px_90px] [&_input]:rounded-xl [&_input]:border-0 [&_input]:bg-white [&_input]:p-3 [&_select]:rounded-xl [&_select]:border-0 [&_select]:bg-white [&_select]:p-3"
+                className="mt-4 grid min-w-0 gap-2 rounded-2xl bg-[#f7f7f4] p-3 sm:grid-cols-[minmax(0,1fr)_110px_90px] [&_input]:min-w-0 [&_input]:rounded-xl [&_input]:border-0 [&_input]:bg-white [&_input]:p-3 [&_select]:min-w-0 [&_select]:rounded-xl [&_select]:border-0 [&_select]:bg-white [&_select]:p-3"
               >
                 <select
                   value={service.id}
@@ -3154,6 +3224,49 @@ function AiOrderImport({
     </section>
   );
 }
+function ClientMatches({
+  loading,
+  matches,
+  onSelect,
+}: {
+  loading: boolean;
+  matches: ManualClient[];
+  onSelect: (client: ManualClient) => void;
+}) {
+  return (
+    <div className="absolute left-0 right-0 top-full z-[60] mt-2 max-h-64 overflow-y-auto rounded-2xl border border-black/10 bg-white p-2 shadow-2xl">
+      {loading ? (
+        <p className="px-3 py-3 text-sm font-semibold text-gray-500">
+          Searching clients…
+        </p>
+      ) : (
+        matches.map((client) => (
+          <button
+            key={client.id}
+            type="button"
+            onPointerDown={(event) => event.preventDefault()}
+            onClick={() => onSelect(client)}
+            className="block w-full rounded-xl px-3 py-3 text-left transition hover:bg-yellow-50"
+          >
+            <span className="block font-bold text-gray-900">
+              {client.full_name || "Unnamed client"}
+            </span>
+            <span className="mt-1 block text-xs text-gray-500">
+              {[
+                client.phone,
+                client.email,
+                [client.city, client.area].filter(Boolean).join(" · "),
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            </span>
+          </button>
+        ))
+      )}
+    </div>
+  );
+}
+
 function Field({
   label,
   children,
@@ -3162,9 +3275,9 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="text-sm font-bold">
+    <label className="min-w-0 text-sm font-bold">
       {label}
-      <span className="mt-2 block [&_input]:w-full [&_input]:rounded-2xl [&_input]:border [&_input]:border-black/10 [&_input]:bg-[#f7f7f4] [&_input]:p-3.5 [&_input]:outline-none [&_input]:focus:border-yellow-500 [&_input]:focus:bg-white [&_input]:focus:ring-4 [&_input]:focus:ring-yellow-100 [&_select]:w-full [&_select]:rounded-2xl [&_select]:border [&_select]:border-black/10 [&_select]:bg-[#f7f7f4] [&_select]:p-3.5 [&_select]:outline-none [&_select]:focus:border-yellow-500 [&_select]:focus:ring-4 [&_select]:focus:ring-yellow-100">
+      <span className="mt-2 block min-w-0 [&_input]:w-full [&_input]:min-w-0 [&_input]:rounded-2xl [&_input]:border [&_input]:border-black/10 [&_input]:bg-[#f7f7f4] [&_input]:p-3.5 [&_input]:outline-none [&_input]:focus:border-yellow-500 [&_input]:focus:bg-white [&_input]:focus:ring-4 [&_input]:focus:ring-yellow-100 [&_select]:w-full [&_select]:min-w-0 [&_select]:rounded-2xl [&_select]:border [&_select]:border-black/10 [&_select]:bg-[#f7f7f4] [&_select]:p-3.5 [&_select]:outline-none [&_select]:focus:border-yellow-500 [&_select]:focus:ring-4 [&_select]:focus:ring-yellow-100">
         {children}
       </span>
     </label>
