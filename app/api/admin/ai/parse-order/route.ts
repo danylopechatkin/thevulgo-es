@@ -57,7 +57,7 @@ export async function POST(request: Request) {
     text.length > 100000 ||
     imageDataUrls.length > 6 ||
     imageDataUrls.reduce((sum: number, item: string) => sum + item.length, 0) >
-      4000000
+      2500000
   )
     return Response.json({ error: "The import is too large" }, { status: 400 });
   const now = new Date();
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
               },
               ...imageDataUrls.map((url: string) => ({
                 type: "image_url" as const,
-                image_url: { url, detail: "low" as const },
+                image_url: { url, detail: "high" as const },
               })),
             ]
           : text,

@@ -3029,7 +3029,9 @@ function AiOrderImport({
         element.onerror = () => reject(new Error("Could not read image"));
         element.src = source;
       });
-      const maxEdge = 1600;
+      // Phone screenshots contain a lot of pixels but little extra information.
+      // Keeping the long edge at 1200px makes the request reliable and cheaper.
+      const maxEdge = 1200;
       const scale = Math.min(1, maxEdge / Math.max(image.naturalWidth, image.naturalHeight));
       const canvas = document.createElement("canvas");
       canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
@@ -3038,7 +3040,7 @@ function AiOrderImport({
       if (!context) throw new Error("Could not prepare image");
       context.drawImage(image, 0, 0, canvas.width, canvas.height);
       const blob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, "image/jpeg", 0.76),
+        canvas.toBlob(resolve, "image/jpeg", 0.62),
       );
       if (!blob) throw new Error("Could not compress image");
       return await new Promise<string>((resolve, reject) => {
