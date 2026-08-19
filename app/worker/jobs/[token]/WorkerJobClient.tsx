@@ -1,5 +1,6 @@
 "use client";
 import { whatsappNumber } from "@/app/site-config";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import WorkerPaymentPanel from "./WorkerPaymentPanel";
 type JobMessage = {
@@ -59,6 +60,21 @@ export default function WorkerJobClient({
   decision,
   initialMessages,
 }: Props) {
+  const router = useRouter();
+  useEffect(() => {
+    const refresh = () => {
+      if (document.visibilityState === "visible") router.refresh();
+    };
+    window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", refresh);
+    const interval = window.setInterval(refresh, 30_000);
+    return () => {
+      window.removeEventListener("focus", refresh);
+      document.removeEventListener("visibilitychange", refresh);
+      window.clearInterval(interval);
+    };
+  }, [router]);
+
   const [status, setStatus] = useState(assignment.status),
     [responseStatus, setResponseStatus] = useState(assignment.responseStatus),
     [notes, setNotes] = useState(assignment.completionNotes),

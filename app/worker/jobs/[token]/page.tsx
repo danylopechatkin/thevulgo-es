@@ -25,7 +25,7 @@ export default async function WorkerJobPage({
   const { data } = await admin
     .from("worker_assignments")
     .select(
-      "id, access_token, status, response_status, worker_share, completion_notes, email_link_viewed_at, accepted_at, declined_at, access_revoked_at, orders(id, order_number, full_name, city, area, postal_code, address, apartment, address_details, preferred_date, preferred_time, category, services, notes, total, payment_method)",
+      "id, access_token, status, response_status, worker_share, completion_notes, email_link_viewed_at, accepted_at, declined_at, access_revoked_at, orders(id, client_profile_id, order_number, full_name, city, area, postal_code, address, apartment, address_details, preferred_date, preferred_time, category, services, notes, total, payment_method, client_profiles(id, full_name, email, phone, alternate_phone, address, apartment, city, area, postal_code))",
     )
     .eq("access_token", token)
     .eq("worker_id", worker.user_id)
@@ -54,6 +54,18 @@ export default async function WorkerJobPage({
     redirect("/worker");
   const order = Array.isArray(data.orders) ? data.orders[0] : data.orders;
   if (!order) notFound();
+
+  const clientProfile = Array.isArray(order.client_profiles)
+    ? order.client_profiles[0]
+    : order.client_profiles;
+  const client = {
+    name: clientProfile?.full_name || order.full_name,
+    city: clientProfile?.city || order.city,
+    area: clientProfile?.area || order.area,
+    postalCode: clientProfile?.postal_code || order.postal_code,
+    address: clientProfile?.address || order.address,
+    apartment: clientProfile?.apartment || order.apartment,
+  };
   const { data: messages } = await admin
     .from("worker_job_messages")
     .select(
@@ -80,12 +92,12 @@ export default async function WorkerJobPage({
       order={{
         id: order.id,
         number: order.order_number,
-        name: order.full_name,
-        city: order.city,
-        area: order.area,
-        postalCode: order.postal_code,
-        address: order.address,
-        apartment: order.apartment,
+        name: client.name,
+        city: client.city,
+        area: client.area,
+        postalCode: client.postalCode,
+        address: client.address,
+        apartment: client.apartment,
         addressDetails: order.address_details,
         date: order.preferred_date,
         time: order.preferred_time,
