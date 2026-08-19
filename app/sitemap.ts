@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { guides } from "./[locale]/guias/guides-data";
 import { MADRID_ROUTES } from "@/lib/madridRoutes";
+import { AC_SEO_PAGES } from "@/lib/acSeoPages";
 
 const baseUrl = "https://www.thevulgo.es";
 
@@ -404,6 +405,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       {
         changeFrequency: "monthly",
         priority: locale === "es" ? 0.8 : 0.7,
+      },
+    );
+
+    addRoutes(
+      pages,
+      locale,
+      AC_SEO_PAGES.map((page) => page.path),
+      {
+        changeFrequency: "monthly",
+        priority: locale === "es" ? 0.85 : 0.75,
       },
     );
 
