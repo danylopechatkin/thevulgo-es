@@ -327,7 +327,7 @@
   "items": {
     "airConditioning": {
       "title": "Air conditioning",
-      "desc": "AC diagnostics, repair, cleaning, refrigerant recharge and installation.",
+      "desc": "Repair, cleaning, refrigerant and installation.",
       "price": "from €49",
       "badge": "AC service"
     },

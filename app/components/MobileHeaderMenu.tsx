@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { BookOpen, Fan, Menu, MessageCircle, Wrench, X } from "lucide-react";
+import { BookOpen, Fan, Menu, MessageCircle, Wind, Wrench, X } from "lucide-react";
 import { marketBasePath, marketName } from "@/lib/cities";
 import { marketWhatsAppHref } from "@/lib/marketLinks";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
@@ -22,6 +22,7 @@ export default function MobileHeaderMenu({ locale }: Props) {
 
   const links = [
     { href: `${base}/services`, label: isEs ? "Servicios" : "Services", icon: Wrench },
+    ...(cityMarket ? [] : [{ href: `/${locale}/services/aire-acondicionado`, label: isEs ? "Aire acondicionado" : "Air conditioning", icon: Wind }]),
     { href: cityMarket ? `${base}/handyman` : `${base}/handyman-valencia`, label: isEs ? "Manitas" : "Handyman", icon: Wrench },
     { href: cityMarket ? `${base}/services/instalacion-ventilador-techo` : `${base}/services/instalacion-ventilador-techo-valencia`, label: isEs ? "Ventiladores" : "Ceiling fans", icon: Fan },
     { href: `/${locale}/guias`, label: isEs ? "Guías" : "Guides", icon: BookOpen },
@@ -73,7 +74,7 @@ export default function MobileHeaderMenu({ locale }: Props) {
                   href={href}
                   onClick={close}
                   className={`flex min-h-14 items-center gap-2 rounded-2xl border px-3 py-3 text-sm font-extrabold ${
-                    index === 2
+                    index === (cityMarket ? 2 : 1)
                       ? "border-yellow-400 bg-yellow-400 text-black"
                       : "border-yellow-200 bg-[#fffdf2] text-black"
                   }`}

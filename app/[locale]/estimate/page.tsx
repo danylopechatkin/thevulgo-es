@@ -882,12 +882,12 @@ function EstimatePageContent() {
                           </div>
 
                           <div className="rounded-full bg-yellow-50 px-3 py-1 text-sm font-extrabold text-yellow-600">
-                            {isEs ? service.priceLabelEs || `desde ${service.price} €` : service.priceLabel || `from €${service.price}`}
+                            {isEs ? service.priceLabelEs?.replace(/^desde\s+/i, "") || `${service.price} €` : service.priceLabel?.replace(/^from\s+/i, "") || `€${service.price}`}
                           </div>
                         </div>
 
                         <div className="mt-5 flex items-center justify-between gap-4">
-                          <div className="text-sm text-gray-600">{t("step2.startingPrice")}</div>
+                          <div className="text-sm text-gray-600">{isEs ? "Precio" : "Price"}</div>
 
                           <div className="flex items-center gap-2">
                             <button

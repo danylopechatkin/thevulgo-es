@@ -1,58 +1,39 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Wind } from "lucide-react";
+import { ArrowRight, BadgeCheck, CheckCircle2, Clock3, MapPin, MessageCircle, ShieldCheck, Sparkles, Wind, Wrench } from "lucide-react";
 import { getCatalogServices } from "@/lib/serviceCatalog";
 
 type Props = { params: Promise<{ locale: string }> };
 const baseUrl = "https://www.thevulgo.es";
+const phone = "34610076942";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
-  const title = isEs
-    ? "Aire acondicionado en Valencia | Reparación, limpieza e instalación | THEVULGO"
-    : "Air Conditioning in Valencia | Repair, Cleaning & Installation | THEVULGO";
-  const description = isEs
-    ? "Diagnóstico, reparación, limpieza, mantenimiento, recarga de gas e instalación de aire acondicionado en Valencia. Precios claros desde 49 €."
-    : "Air conditioning diagnostics, repair, cleaning, maintenance, refrigerant recharge and installation in Valencia. Clear prices from €49.";
-
-  return {
-    title,
-    description,
-    keywords: isEs
-      ? ["reparación aire acondicionado Valencia", "limpieza aire acondicionado Valencia", "instalación aire acondicionado Valencia", "recarga gas aire acondicionado Valencia"]
-      : ["air conditioning repair Valencia", "AC cleaning Valencia", "AC installation Valencia", "refrigerant recharge Valencia"],
-    alternates: { canonical: `${baseUrl}/${locale}/services/aire-acondicionado`, languages: { es: `${baseUrl}/es/services/aire-acondicionado`, en: `${baseUrl}/en/services/aire-acondicionado` } },
-  };
+  const title = isEs ? "Aire acondicionado en Valencia | Reparación, limpieza e instalación | THEVULGO" : "Air Conditioning in Valencia | Repair, Cleaning & Installation | THEVULGO";
+  const description = isEs ? "Diagnóstico, reparación, limpieza, mantenimiento, recarga de gas e instalación de aire acondicionado en Valencia." : "Air conditioning diagnostics, repair, cleaning, maintenance, refrigerant recharge and installation in Valencia.";
+  return { title, description, alternates: { canonical: `${baseUrl}/${locale}/services/aire-acondicionado`, languages: { es: `${baseUrl}/es/services/aire-acondicionado`, en: `${baseUrl}/en/services/aire-acondicionado` } }, openGraph: { title, description, url: `${baseUrl}/${locale}/services/aire-acondicionado`, siteName: "THEVULGO", type: "website" } };
 }
 
 export default async function AirConditioningPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const estimateHref = `/${locale}/estimate?category=air-conditioning`;
+  const whatsapp = `https://wa.me/${phone}?text=${encodeURIComponent(isEs ? "Hola, necesito ayuda con el aire acondicionado en Valencia. Quiero pedir presupuesto." : "Hi, I need help with air conditioning in Valencia. I'd like an estimate.")}`;
   const services = getCatalogServices("Air Conditioning");
-  const pageUrl = `${baseUrl}/${locale}/services/aire-acondicionado`;
-  const groups = [
-    { title: isEs ? "Diagnóstico y reparación" : "Diagnostics & repair", ids: ["ac-diagnostic", "ac-not-cooling", "ac-not-heating", "ac-not-starting", "ac-water-leak", "ac-drain-unclogging", "ac-electrical-fault", "ac-capacitor", "ac-fan-motor", "ac-control-board", "ac-emergency"] },
-    { title: isEs ? "Limpieza y mantenimiento" : "Cleaning & maintenance", ids: ["ac-basic-cleaning", "ac-deep-indoor-cleaning", "ac-disinfection", "ac-indoor-outdoor-cleaning", "ac-two-splits-cleaning", "ac-three-splits-cleaning", "ac-annual-service", "ac-ducted-maintenance", "ac-duct-cleaning"] },
-    { title: isEs ? "Gas y fugas" : "Refrigerant & leaks", ids: ["ac-pressure-check", "ac-leak-detection", "ac-r32-recharge", "ac-r410a-recharge", "ac-leak-repair-recharge"] },
-    { title: isEs ? "Instalación y sustitución" : "Installation & replacement", ids: ["ac-split-install", "ac-multisplit-2", "ac-multisplit-3", "ac-ducted-install", "ac-preinstall", "ac-commissioning", "ac-removal", "ac-replace-split", "ac-relocate", "ac-extra-line", "ac-extra-trunking", "ac-wall-bracket", "ac-condensate-pump", "ac-wifi-module"] },
-    { title: isEs ? "Negocios" : "Commercial", ids: ["ac-commercial-diagnostic", "ac-business-maintenance"] },
-  ];
-  const serviceJsonLd = { "@context": "https://schema.org", "@type": "Service", name: isEs ? "Aire acondicionado en Valencia" : "Air conditioning in Valencia", url: pageUrl, areaServed: "Valencia", provider: { "@type": "HomeAndConstructionBusiness", name: "THEVULGO", telephone: "+34610076942", url: baseUrl }, hasOfferCatalog: { "@type": "OfferCatalog", itemListElement: services.map((service) => ({ "@type": "Offer", price: service.price, priceCurrency: "EUR", itemOffered: { "@type": "Service", name: isEs ? service.labelEs : service.label } })) } };
+  const popular = ["ac-diagnostic", "ac-not-cooling", "ac-basic-cleaning", "ac-r32-recharge", "ac-split-install", "ac-emergency"].map((id) => services.find((service) => service.id === id)).filter((service): service is NonNullable<typeof service> => Boolean(service));
+  const highlights = isEs ? ["Diagnóstico y reparación", "Limpieza y desinfección", "Gas refrigerante y fugas", "Instalación de split y multisplit"] : ["Diagnostics and repair", "Cleaning and disinfection", "Refrigerant and leaks", "Split and multi-split installation"];
+  const steps = isEs ? [["Cuéntanos qué pasa", "Envía una breve descripción, fotos o el código de error."], ["Confirmamos la visita", "Revisamos tu zona y la disponibilidad."], ["Revisamos el equipo", "Diagnosticamos el problema y confirmamos el trabajo."], ["Trabajo y prueba final", "Dejamos el equipo funcionando y el espacio limpio."]] : [["Tell us what is happening", "Send a short description, photos or the error code."], ["We confirm the visit", "We review your area and availability."], ["We inspect the unit", "We diagnose the issue and confirm the work."], ["Work and final test", "We leave the unit working and the space clean."]];
+  const price = (service: (typeof services)[number]) => isEs ? service.priceLabelEs?.replace(/^desde\s+/i, "") || `${service.price} €` : service.priceLabel?.replace(/^from\s+/i, "") || `€${service.price}`;
+  const serviceJsonLd = { "@context": "https://schema.org", "@type": "Service", name: isEs ? "Aire acondicionado en Valencia" : "Air conditioning in Valencia", areaServed: "Valencia", provider: { "@type": "HomeAndConstructionBusiness", name: "THEVULGO", telephone: `+${phone}` } };
 
-  return <main className="min-h-screen bg-white px-4 py-16 text-black sm:py-24">
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
-    <section className="mx-auto max-w-6xl">
-      <div className="rounded-3xl border border-yellow-400 bg-yellow-50/50 p-8 text-center shadow-xl sm:p-12">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-400"><Wind /></div>
-        <p className="mt-5 text-sm font-bold uppercase tracking-wider text-yellow-700">THEVULGO · Valencia</p>
-        <h1 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">{isEs ? "Aire acondicionado sin sorpresas" : "Air conditioning, no surprises"}</h1>
-        <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-neutral-700">{isEs ? "Diagnóstico, reparación, limpieza, recarga de gas e instalación. Selecciona el servicio y recibe una confirmación antes de la visita." : "Diagnostics, repair, cleaning, refrigerant recharge and installation. Choose a service and receive confirmation before the visit."}</p>
-        <Link href={`/${locale}/estimate?category=air-conditioning`} className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 font-black shadow-lg transition hover:scale-[1.02]">{isEs ? "Pedir presupuesto" : "Get an estimate"}<ArrowRight className="h-5 w-5" /></Link>
-      </div>
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
-        {groups.map((group) => <section key={group.title} className="rounded-3xl border border-neutral-200 p-6 shadow-sm"><h2 className="text-2xl font-black">{group.title}</h2><ul className="mt-5 space-y-3">{group.ids.map((id) => { const service = services.find((item) => item.id === id); if (!service) return null; const price = isEs ? service.priceLabelEs || `desde ${service.price} €` : service.priceLabel || `from €${service.price}`; return <li key={id} className="flex items-start justify-between gap-4 border-b border-neutral-100 pb-3"><span className="flex gap-2 font-medium"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-yellow-500" />{isEs ? service.labelEs : service.label}</span><strong className="shrink-0 text-sm">{price}</strong></li>; })}</ul></section>)}
-      </div>
+  return <main className="overflow-hidden bg-white text-black"><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
+    <section className="relative px-4 pb-16 pt-16 sm:pb-24 sm:pt-24"><div className="absolute inset-0 -z-10 bg-gradient-to-b from-yellow-50 via-white to-white" /><div className="absolute -right-24 top-12 -z-10 h-80 w-80 rounded-full bg-yellow-200/50 blur-3xl" />
+      <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.1fr_.9fr]"><div><div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-2 text-sm font-bold shadow-sm"><Wind className="h-4 w-4" />{isEs ? "Climatización · Valencia" : "Air conditioning · Valencia"}</div><h1 className="mt-6 text-5xl font-black leading-[.96] tracking-tight sm:text-6xl">{isEs ? <>Aire acondicionado<br /><span className="text-yellow-500">sin sorpresas.</span></> : <>Air conditioning<br /><span className="text-yellow-500">with no surprises.</span></>}</h1><p className="mt-6 max-w-xl text-lg leading-8 text-neutral-600">{isEs ? "Reparación, limpieza, recarga de gas e instalación. Confirmamos el alcance antes de empezar." : "Repair, cleaning, refrigerant recharge and installation. We confirm the scope before getting started."}</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><Link href={estimateHref} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 font-black shadow-lg transition hover:scale-[1.02]">{isEs ? "Pedir presupuesto" : "Get an estimate"}<ArrowRight className="h-5 w-5" /></Link><a href={whatsapp} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-2xl border border-neutral-300 bg-white px-7 py-4 font-black"><MessageCircle className="h-5 w-5" />WhatsApp</a></div><div className="mt-8 flex flex-wrap gap-3 text-sm font-semibold text-neutral-700"><span className="inline-flex items-center gap-1.5"><Clock3 className="h-4 w-4 text-yellow-500" />{isEs ? "Respuesta rápida" : "Fast reply"}</span><span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4 text-yellow-500" />Valencia</span><span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-yellow-500" />{isEs ? "Precio confirmado" : "Price confirmed"}</span></div></div>
+      <div className="rounded-[2rem] border-2 border-yellow-400 bg-neutral-950 p-7 text-white shadow-2xl"><p className="text-xs font-black uppercase tracking-[.2em] text-yellow-400">THEVULGO</p><h2 className="mt-3 text-3xl font-black">{isEs ? "¿Qué necesitas?" : "What do you need?"}</h2><div className="mt-6 space-y-4">{highlights.map((item) => <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/10 p-4"><CheckCircle2 className="h-5 w-5 shrink-0 text-yellow-400" /><span className="font-bold">{item}</span></div>)}</div><Link href={estimateHref} className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 font-black text-black">{isEs ? "Ver precios y servicios" : "View services and prices"}<ArrowRight className="h-5 w-5" /></Link></div></div>
     </section>
+    <section className="bg-neutral-950 px-4 py-16 text-white"><div className="mx-auto max-w-7xl"><p className="text-sm font-black uppercase tracking-[.18em] text-yellow-400">{isEs ? "Servicios principales" : "Popular services"}</p><h2 className="mt-3 text-3xl font-black sm:text-4xl">{isEs ? "Elige el servicio que mejor describe tu caso" : "Choose the service that best describes your need"}</h2><div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{popular.map((service) => <Link key={service.id} href={estimateHref} className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:border-yellow-400 hover:bg-white/10"><p className="font-extrabold">{isEs ? service.labelEs : service.label}</p><p className="mt-3 text-lg font-black text-yellow-400">{price(service)}</p></Link>)}</div></div></section>
+    <section className="px-4 py-16 sm:py-24"><div className="mx-auto max-w-7xl"><p className="text-sm font-black uppercase tracking-[.18em] text-yellow-600">{isEs ? "Proceso claro" : "Clear process"}</p><h2 className="mt-3 text-3xl font-black sm:text-4xl">{isEs ? "Así organizamos tu visita" : "How we arrange your visit"}</h2><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">{steps.map(([title, text], index) => <article key={title} className="rounded-3xl border border-neutral-200 p-6 shadow-sm"><BadgeCheck className="h-7 w-7 text-yellow-500" /><p className="mt-5 text-xs font-black text-yellow-600">0{index + 1}</p><h3 className="mt-2 text-xl font-black">{title}</h3><p className="mt-3 leading-7 text-neutral-600">{text}</p></article>)}</div></div></section>
+    <section className="bg-yellow-50 px-4 py-16"><div className="mx-auto max-w-5xl rounded-[2rem] border border-yellow-400 bg-white p-8 text-center shadow-xl sm:p-12"><Sparkles className="mx-auto h-8 w-8 text-yellow-500" /><h2 className="mt-4 text-3xl font-black">{isEs ? "¿No encuentras tu caso?" : "Can't find your case?"}</h2><p className="mx-auto mt-4 max-w-2xl text-neutral-600">{isEs ? "Envíanos fotos, marca y modelo del equipo. Te orientamos antes de reservar." : "Send us photos, the make and model of your unit. We will guide you before you book."}</p><Link href={estimateHref} className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 font-black"><Wrench className="h-5 w-5" />{isEs ? "Solicitar presupuesto" : "Request an estimate"}</Link></div></section>
   </main>;
 }

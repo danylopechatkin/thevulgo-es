@@ -325,7 +325,7 @@
   "items": {
     "airConditioning": {
       "title": "Aire acondicionado",
-      "desc": "Diagnóstico, reparación, limpieza, recarga de gas e instalación de aire acondicionado.",
+      "desc": "Reparación, limpieza, gas e instalación.",
       "price": "desde 49€",
       "badge": "Climatización"
     },

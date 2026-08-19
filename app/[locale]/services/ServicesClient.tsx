@@ -187,7 +187,7 @@ export default function ServicesClient() {
               <button
                 key={service.slug}
                 onClick={() => router.push(`/${locale}/services/${service.slug}`)}
-                className="group rounded-2xl border border-yellow-400 bg-white p-6 text-left shadow-lg transition-all duration-200 hover:-translate-y-[2px] hover:scale-[1.02] hover:shadow-2xl"
+                className="group flex h-full min-h-[260px] flex-col rounded-2xl border border-yellow-400 bg-white p-6 text-left shadow-lg transition-all duration-200 hover:-translate-y-[2px] hover:scale-[1.02] hover:shadow-2xl"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
@@ -204,7 +204,7 @@ export default function ServicesClient() {
                 </h2>
 
                 <p
-                  className="mt-2 text-sm leading-relaxed text-gray-700"
+                  className="mt-2 line-clamp-3 text-sm leading-relaxed text-gray-700"
                   dangerouslySetInnerHTML={{
                     __html: t.raw(`items.${service.key}.desc`) as string,
                   }}
@@ -214,7 +214,7 @@ export default function ServicesClient() {
                   {t(`items.${service.key}.price`)}
                 </div>
 
-                <div className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-black">
+                <div className="mt-auto pt-5 inline-flex items-center gap-2 text-sm font-extrabold text-black">
                   {t("viewService")}
                   <span className="text-yellow-400 transition-transform duration-200 group-hover:translate-x-1">
                     <ArrowRight className="h-4 w-4" />
