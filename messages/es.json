@@ -323,6 +323,12 @@
     "button": "Pedir presupuesto"
   },
   "items": {
+    "airConditioning": {
+      "title": "Aire acondicionado",
+      "desc": "Diagnóstico, reparación, limpieza, recarga de gas e instalación de aire acondicionado.",
+      "price": "desde 49€",
+      "badge": "Climatización"
+    },
     "ceilingFans": {
       "title": "Ventiladores de techo",
       "desc": "Instalación, sustitución de lámpara, ventiladores con luz, mando o WiFi.",

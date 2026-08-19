@@ -12,6 +12,7 @@ const locales = ["es", "en"] as const;
  */
 const categoryPages = [
   "services",
+  "services/aire-acondicionado",
 
   // Main service categories
   "services/tv-mounting",

@@ -10,6 +10,7 @@ import {
   Hammer,
   Tv,
   Fan,
+  Wind,
   Zap,
   Droplets,
   Trash2,
@@ -30,6 +31,7 @@ type CategoryKey =
   | "handyman"
   | "tv-mounting"
   | "ceiling-fans"
+  | "air-conditioning"
   | "electrical"
   | "plumbing"
   | "furniture"
@@ -61,6 +63,7 @@ const CATEGORY_KEYS: CategoryKey[] = [
   "tv-mounting",
   "handyman",
   "ceiling-fans",
+  "air-conditioning",
   "electrical",
   "plumbing",
   "furniture",
@@ -104,6 +107,16 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
     badge: "Popular",
     badgeEs: "Popular",
     services: getCatalogServices("Ceiling Fans"),
+  },
+  "air-conditioning": {
+    title: "Air Conditioning",
+    titleEs: "Aire acondicionado",
+    icon: <Wind className="h-5 w-5" />,
+    subtitle: "Diagnostics, repair, cleaning, refrigerant and installation.",
+    subtitleEs: "Diagnóstico, reparación, limpieza, gas e instalación.",
+    badge: "AC service",
+    badgeEs: "Climatización",
+    services: getCatalogServices("Air Conditioning"),
   },
   electrical: {
     title: "Electrical",
@@ -869,7 +882,7 @@ function EstimatePageContent() {
                           </div>
 
                           <div className="rounded-full bg-yellow-50 px-3 py-1 text-sm font-extrabold text-yellow-600">
-                            €{service.price}
+                            {isEs ? service.priceLabelEs || `desde ${service.price} €` : service.priceLabel || `from €${service.price}`}
                           </div>
                         </div>
 

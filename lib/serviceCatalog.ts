@@ -3,6 +3,9 @@ export type CatalogService = {
   label: string;
   labelEs: string;
   price: number;
+  /** Use when the starting price needs an explanatory suffix (parts, metres or quote). */
+  priceLabel?: string;
+  priceLabelEs?: string;
   badge?: string;
   badgeEs?: string;
 };
@@ -10,6 +13,49 @@ export type CatalogService = {
 export const MINIMUM_SERVICE_VISIT_EUR = 49;
 
 export const SERVICE_CATALOG: Record<string, CatalogService[]> = {
+  "Air Conditioning": [
+    { id: "ac-diagnostic", label: "Air conditioning diagnostic", labelEs: "Diagnóstico de aire acondicionado", price: 49 },
+    { id: "ac-not-cooling", label: "Air conditioner not cooling", labelEs: "Aire acondicionado no enfría", price: 79 },
+    { id: "ac-not-heating", label: "Air conditioner not heating", labelEs: "Aire acondicionado no calienta", price: 79 },
+    { id: "ac-not-starting", label: "Air conditioner not turning on", labelEs: "Aire acondicionado no enciende", price: 79 },
+    { id: "ac-water-leak", label: "Air conditioner leaking water", labelEs: "Aire acondicionado pierde agua", price: 79 },
+    { id: "ac-drain-unclogging", label: "Condensate drain unclogging", labelEs: "Desatasco del desagüe de condensados", price: 79 },
+    { id: "ac-electrical-fault", label: "Electrical fault repair", labelEs: "Reparación de avería eléctrica", price: 89 },
+    { id: "ac-capacitor", label: "Capacitor replacement", labelEs: "Sustitución de condensador", price: 89, priceLabel: "from €89 + part", priceLabelEs: "desde 89 € + pieza" },
+    { id: "ac-fan-motor", label: "Fan motor replacement", labelEs: "Sustitución del motor del ventilador", price: 129, priceLabel: "from €129 + part", priceLabelEs: "desde 129 € + pieza" },
+    { id: "ac-control-board", label: "Control board replacement", labelEs: "Sustitución de placa electrónica", price: 149, priceLabel: "from €149 + part", priceLabelEs: "desde 149 € + pieza" },
+    { id: "ac-emergency", label: "Same-day emergency AC repair", labelEs: "Reparación urgente el mismo día", price: 99, badge: "Urgent", badgeEs: "Urgente" },
+    { id: "ac-basic-cleaning", label: "Basic split AC cleaning", labelEs: "Limpieza básica de aire acondicionado split", price: 79, badge: "Popular", badgeEs: "Popular" },
+    { id: "ac-deep-indoor-cleaning", label: "Deep indoor unit cleaning", labelEs: "Limpieza profunda de unidad interior", price: 99 },
+    { id: "ac-disinfection", label: "Deep cleaning and disinfection", labelEs: "Limpieza y desinfección completa", price: 109 },
+    { id: "ac-indoor-outdoor-cleaning", label: "Indoor + outdoor unit cleaning", labelEs: "Limpieza de unidad interior + exterior", price: 119 },
+    { id: "ac-two-splits-cleaning", label: "2 split AC units cleaning", labelEs: "Limpieza de 2 unidades split", price: 149 },
+    { id: "ac-three-splits-cleaning", label: "3 split AC units cleaning", labelEs: "Limpieza de 3 unidades split", price: 199 },
+    { id: "ac-annual-service", label: "Full annual split AC service", labelEs: "Mantenimiento completo anual de split", price: 119 },
+    { id: "ac-ducted-maintenance", label: "Ducted AC maintenance", labelEs: "Mantenimiento de aire acondicionado por conductos", price: 149 },
+    { id: "ac-pressure-check", label: "Refrigerant pressure check", labelEs: "Comprobación de presión y refrigerante", price: 59 },
+    { id: "ac-leak-detection", label: "Refrigerant leak detection", labelEs: "Detección de fuga de refrigerante", price: 89 },
+    { id: "ac-r32-recharge", label: "R32 refrigerant recharge", labelEs: "Recarga de refrigerante R32", price: 129 },
+    { id: "ac-r410a-recharge", label: "R410A refrigerant recharge", labelEs: "Recarga de refrigerante R410A", price: 139 },
+    { id: "ac-leak-repair-recharge", label: "Leak detection, repair + recharge", labelEs: "Detección de fuga + reparación + recarga", price: 179 },
+    { id: "ac-split-install", label: "Basic Split 1x1 AC installation", labelEs: "Instalación básica aire acondicionado Split 1x1", price: 279, badge: "Popular", badgeEs: "Popular" },
+    { id: "ac-multisplit-2", label: "Multi-Split 2x1 installation", labelEs: "Instalación Multi-Split 2x1", price: 449 },
+    { id: "ac-multisplit-3", label: "Multi-Split 3x1 installation", labelEs: "Instalación Multi-Split 3x1", price: 599 },
+    { id: "ac-ducted-install", label: "Ducted AC installation with existing pre-installation", labelEs: "Instalación aire acondicionado por conductos con preinstalación existente", price: 499 },
+    { id: "ac-preinstall", label: "Split AC pre-installation", labelEs: "Preinstalación de aire acondicionado Split", price: 299 },
+    { id: "ac-commissioning", label: "AC commissioning", labelEs: "Puesta en marcha de aire acondicionado", price: 99 },
+    { id: "ac-removal", label: "Split AC removal", labelEs: "Desmontaje de aire acondicionado Split", price: 99 },
+    { id: "ac-replace-split", label: "Replace existing split AC", labelEs: "Sustitución de Split existente por uno nuevo", price: 299 },
+    { id: "ac-relocate", label: "Relocate air conditioner", labelEs: "Traslado de aire acondicionado a otra ubicación", price: 349 },
+    { id: "ac-extra-line", label: "Additional refrigerant line", labelEs: "Metro adicional de línea frigorífica", price: 35, priceLabel: "from €35/m", priceLabelEs: "desde 35 €/m" },
+    { id: "ac-extra-trunking", label: "Additional trunking", labelEs: "Canaleta adicional", price: 20, priceLabel: "from €20/m", priceLabelEs: "desde 20 €/m" },
+    { id: "ac-wall-bracket", label: "Outdoor unit wall bracket", labelEs: "Soporte para unidad exterior", price: 49 },
+    { id: "ac-condensate-pump", label: "Condensate pump installed", labelEs: "Bomba de condensados instalada", price: 149 },
+    { id: "ac-wifi-module", label: "Wi-Fi / smart module installation", labelEs: "Instalación de Wi-Fi / módulo inteligente", price: 59, priceLabel: "from €59 + equipment", priceLabelEs: "desde 59 € + equipo" },
+    { id: "ac-duct-cleaning", label: "Air duct cleaning", labelEs: "Limpieza de conductos", price: 199 },
+    { id: "ac-commercial-diagnostic", label: "Commercial air conditioning diagnostic", labelEs: "Diagnóstico de aire acondicionado comercial", price: 69 },
+    { id: "ac-business-maintenance", label: "Commercial premises maintenance", labelEs: "Mantenimiento de local comercial", price: 149 },
+  ],
   Handyman: [
     {
       id: "handyman-small-repair",

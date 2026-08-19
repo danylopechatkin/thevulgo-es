@@ -325,6 +325,12 @@
     "button": "Get estimate"
   },
   "items": {
+    "airConditioning": {
+      "title": "Air conditioning",
+      "desc": "AC diagnostics, repair, cleaning, refrigerant recharge and installation.",
+      "price": "from €49",
+      "badge": "AC service"
+    },
     "ceilingFans": {
       "title": "Ceiling fans",
       "desc": "Installation, light replacement, fans with lighting, remote control or WiFi.",

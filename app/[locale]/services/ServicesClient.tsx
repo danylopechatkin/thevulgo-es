@@ -23,6 +23,7 @@ import {
   Satellite,
   Building2,
   Fan,
+  Wind,
 } from "lucide-react";
 
 export default function ServicesClient() {
@@ -32,6 +33,11 @@ export default function ServicesClient() {
   const t = useTranslations("services");
 
   const services = [
+    {
+      key: "airConditioning",
+      slug: "aire-acondicionado",
+      icon: <Wind className="h-5 w-5" />,
+    },
     {
       key: "ceilingFans",
       slug: "instalacion-ventilador-techo-valencia",
