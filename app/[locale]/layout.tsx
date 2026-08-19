@@ -98,7 +98,7 @@ export default async function LocaleLayout({
 
         <NextIntlClientProvider messages={messages}>
           <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-md">
-            <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-1.5 px-3 py-3 sm:gap-3 sm:px-4">
+            <div className="mx-auto flex w-full max-w-[1600px] items-center gap-3 px-3 py-3 sm:px-5">
               <MarketHomeLink
                 locale={locale}
                 className="flex shrink-0 items-center gap-2 sm:gap-3"
@@ -115,7 +115,7 @@ export default async function LocaleLayout({
 
               <MarketDesktopNav locale={locale} labels={{ services: t("services"), tips: t("tips"), faq: t("faq"), estimate: t("estimate") }} />
 
-              <div className="flex min-w-0 flex-1 items-center justify-end gap-1 sm:flex-initial sm:gap-2">
+              <div className="ml-auto flex shrink-0 items-center justify-end gap-2">
                 <CitySwitcher locale={locale} />
                 <div>
                   <LanguageSwitcher locale={locale} />

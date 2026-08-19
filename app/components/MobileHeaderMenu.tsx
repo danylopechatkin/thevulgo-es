@@ -44,13 +44,13 @@ export default function MobileHeaderMenu({ locale }: Props) {
               : "Open menu"
         }
         aria-expanded={open}
-        className="relative z-[60] grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-yellow-400 bg-white text-black shadow-sm transition active:scale-95 md:hidden"
+        className="relative z-[60] grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-yellow-400 bg-white text-black shadow-sm transition active:scale-95 xl:hidden"
       >
         {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
 
       {open && (
-        <div className="fixed inset-x-0 bottom-0 top-[65px] z-50 md:hidden">
+        <div className="fixed inset-x-0 bottom-0 top-[65px] z-50 xl:hidden">
           <button
             type="button"
             aria-label={isEs ? "Cerrar menú" : "Close menu"}
