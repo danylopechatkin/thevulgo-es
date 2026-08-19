@@ -725,7 +725,7 @@ function EstimatePageContent() {
         </div>
 
         <div className="mx-auto w-full max-w-7xl">
-          <div className="mt-4 grid grid-cols-1 gap-8 sm:mt-6 lg:grid-cols-[1.45fr_0.65fr] lg:items-start">
+          <div className="mt-4 grid grid-cols-1 gap-8 sm:mt-6 lg:grid-cols-[1.45fr_0.65fr] lg:items-stretch">
             <div className="space-y-8 lg:h-fit">
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
                 <div className="flex items-start justify-between gap-4">
@@ -1159,7 +1159,8 @@ function EstimatePageContent() {
               </section>
             </div>
 
-            <div className="lg:sticky lg:top-24 lg:self-start">
+            <div className="lg:self-stretch">
+              <div className="lg:sticky lg:top-24">
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-8 lg:h-[calc(100vh-7rem)] lg:flex lg:flex-col">
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -1429,6 +1430,7 @@ function EstimatePageContent() {
                   </div>
                 )}
               </section>
+              </div>
             </div>
           </div>
         </div>
