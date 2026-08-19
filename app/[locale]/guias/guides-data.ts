@@ -370,11 +370,75 @@ const guideLibrary: Guide[] = [
     serviceHref: "handyman-valencia",
     serviceLabel: t("Consultar un trabajo", "Ask about a job"),
   },
+  {
+    slug: "cada-cuanto-limpiar-aire-acondicionado",
+    category: t("Aire acondicionado", "Air conditioning"),
+    title: t("¿Cada cuánto hay que limpiar el aire acondicionado?", "How often should air conditioning be cleaned?"),
+    description: t("Filtros, unidad interior, desagüe y unidad exterior: qué limpiar y cuándo para mantener un aire acondicionado eficiente.", "Filters, indoor unit, drainage and outdoor unit: what to clean and when to keep air conditioning efficient."),
+    intro: t("La frecuencia depende del uso, del polvo, de mascotas y de si el equipo se usa también para calefacción. Limpiar los filtros de forma regular mejora el caudal de aire, pero una limpieza profunda requiere revisar partes que no conviene desmontar sin experiencia.", "Frequency depends on use, dust, pets and whether the unit is also used for heating. Cleaning filters regularly improves airflow, but deep cleaning involves parts that should not be dismantled without experience."),
+    points: [
+      { title: t("Filtros", "Filters"), text: t("Revísalos durante la temporada de uso. Si acumulan polvo, el equipo necesita más esfuerzo para mover el aire.", "Check them during the season of use. If they collect dust, the unit has to work harder to move air.") },
+      { title: t("Olores y desagüe", "Odours and drainage"), text: t("Un mal olor, goteo o manchas pueden indicar humedad acumulada, bandeja sucia o problemas en el desagüe.", "Bad smells, dripping or marks can indicate accumulated moisture, a dirty tray or drainage issues.") },
+      { title: t("Mantenimiento completo", "Full maintenance"), text: t("La unidad interior y exterior se revisan según el acceso, el estado del equipo y las condiciones de instalación.", "Indoor and outdoor units are reviewed according to access, the unit condition and installation conditions.") },
+    ],
+    mistakes: [t("Usar productos agresivos", "Using harsh products"), t("Doblar las aletas del intercambiador", "Bending coil fins"), t("Ignorar un goteo persistente", "Ignoring persistent dripping")],
+    advice: t("Si notas menos caudal, olor o agua, envía fotos y explica cuándo aparece el problema. Ayuda a elegir entre limpieza, desatasco o diagnóstico.", "If you notice lower airflow, odour or water, send photos and explain when it happens. It helps choose between cleaning, drain unclogging or diagnosis."),
+    serviceHref: "services/aire-acondicionado",
+    serviceLabel: t("Ver limpieza de aire acondicionado", "View air conditioning cleaning"),
+  },
+  {
+    slug: "aire-acondicionado-no-enfria-que-revisar",
+    category: t("Aire acondicionado", "Air conditioning"),
+    title: t("Aire acondicionado no enfría: qué revisar antes de pedir reparación", "Air conditioner not cooling: what to check before requesting repair"),
+    description: t("Guía para distinguir ajustes sencillos de problemas de filtros, caudal, desagüe, refrigerante o componentes del aire acondicionado.", "A guide to distinguish simple settings from filter, airflow, drainage, refrigerant or component issues in an air conditioner."),
+    intro: t("Que el aire salga pero no enfríe no significa siempre que falte gas. El modo seleccionado, la temperatura, los filtros y la ventilación pueden afectar al resultado. Una comprobación ordenada evita diagnósticos apresurados.", "Air coming out without cooling does not always mean low refrigerant. The selected mode, temperature, filters and airflow can all affect the result. An organised check avoids rushed diagnosis."),
+    points: [
+      { title: t("Modo y temperatura", "Mode and temperature"), text: t("Comprueba que está en modo frío y que la temperatura elegida está por debajo de la temperatura de la habitación.", "Check that it is in cooling mode and the chosen temperature is below the room temperature.") },
+      { title: t("Caudal de aire", "Airflow"), text: t("Filtros sucios, rejillas bloqueadas o una ventilación deficiente pueden hacer que parezca que enfría menos.", "Dirty filters, blocked grilles or poor airflow can make the unit appear to cool less.") },
+      { title: t("Información útil", "Useful information"), text: t("Anota si el problema es constante, si aparece un código de error y si la unidad exterior funciona.", "Note whether the problem is constant, whether an error code appears and whether the outdoor unit is running.") },
+    ],
+    mistakes: [t("Recargar gas sin localizar una posible fuga", "Recharging refrigerant without locating a possible leak"), t("Forzar el equipo durante horas", "Running the unit hard for hours"), t("Quitar tapas eléctricas", "Removing electrical covers")],
+    advice: t("Envía una foto del mando, de la etiqueta del equipo y un vídeo corto si hay ruidos o códigos. Con esa información se prepara mejor la visita.", "Send a photo of the remote, unit label and a short video if there are noises or error codes. That information helps prepare the visit."),
+    serviceHref: "services/aire-acondicionado",
+    serviceLabel: t("Solicitar diagnóstico de aire acondicionado", "Request an air conditioning diagnostic"),
+  },
+  {
+    slug: "split-vs-multisplit-aire-acondicionado",
+    category: t("Aire acondicionado", "Air conditioning"),
+    title: t("Split vs multisplit: qué aire acondicionado elegir para tu vivienda", "Split vs multi-split: which air conditioning system suits your home?"),
+    description: t("Compara un split independiente y un sistema multisplit según habitaciones, uso, instalación y mantenimiento.", "Compare an independent split and a multi-split system by rooms, usage, installation and maintenance."),
+    intro: t("La elección no depende solo de cuántas habitaciones quieres climatizar. También importan el uso simultáneo, el espacio disponible para unidades exteriores, los recorridos de tubería y cómo quieres mantener el sistema a largo plazo.", "The choice is not only about how many rooms you want to cool. Simultaneous use, space for outdoor units, pipe routes and long-term maintenance also matter."),
+    points: [
+      { title: t("Split 1x1", "Split 1x1"), text: t("Suele ser una solución directa para una estancia y permite valorar cada habitación por separado.", "It is often a direct solution for one room and lets each room be considered separately.") },
+      { title: t("Multisplit", "Multi-split"), text: t("Agrupa varias unidades interiores con una exterior, por lo que conviene planificar capacidad y recorridos desde el inicio.", "It groups several indoor units with one outdoor unit, so capacity and routes should be planned from the start.") },
+      { title: t("Antes de decidir", "Before deciding"), text: t("Mide las habitaciones, indica orientación, altura, uso habitual y dónde podría ir la unidad exterior.", "Measure rooms and note orientation, ceiling height, typical use and possible outdoor-unit locations.") },
+    ],
+    mistakes: [t("Elegir solo por el precio del equipo", "Choosing only by unit price"), t("No considerar el uso simultáneo", "Not considering simultaneous use"), t("Olvidar el mantenimiento futuro", "Forgetting future maintenance")],
+    advice: t("Una foto de cada habitación y de la fachada o terraza permite orientar mejor la propuesta de instalación.", "A photo of each room and the facade or terrace helps guide an installation proposal."),
+    serviceHref: "services/aire-acondicionado",
+    serviceLabel: t("Ver instalación de aire acondicionado", "View air conditioning installation"),
+  },
+  {
+    slug: "preparar-instalacion-aire-acondicionado-split",
+    category: t("Aire acondicionado", "Air conditioning"),
+    title: t("Cómo preparar una instalación de aire acondicionado Split", "How to prepare for a split air conditioning installation"),
+    description: t("Fotos, ubicación, acceso, electricidad y desagüe: prepara una instalación Split para recibir un presupuesto claro.", "Photos, location, access, electricity and drainage: prepare a split installation for a clear estimate."),
+    intro: t("Preparar algunos datos antes de reservar hace que la valoración sea más clara. No necesitas conocer todos los detalles técnicos: fotos amplias, medidas aproximadas y el modelo del equipo suelen ser un buen punto de partida.", "Preparing some details before booking makes the assessment clearer. You do not need every technical detail: wide photos, approximate measurements and the unit model are usually a good start."),
+    points: [
+      { title: t("Unidad interior", "Indoor unit"), text: t("Muestra la pared, altura disponible, muebles cercanos y el lugar desde el que saldría la línea hacia el exterior.", "Show the wall, available height, nearby furniture and where the line would exit to the outside.") },
+      { title: t("Unidad exterior", "Outdoor unit"), text: t("Fotografía balcón, terraza, fachada o patio e indica si hay normas de comunidad, altura o acceso especial.", "Photograph the balcony, terrace, facade or patio and mention community rules, height or special access.") },
+      { title: t("Recorrido y alimentación", "Route and power"), text: t("Comparte la distancia aproximada y cualquier preinstalación, canaleta o punto eléctrico existente.", "Share the approximate distance and any existing pre-installation, trunking or electrical point.") },
+    ],
+    mistakes: [t("Comprar el equipo sin medir el espacio", "Buying the unit without measuring space"), t("No avisar de una fachada o planta alta", "Not mentioning a facade or high floor"), t("Asumir que todos los extras están incluidos", "Assuming all extras are included")],
+    advice: t("Envía las fotos en un solo mensaje con ciudad y código postal. Así se puede confirmar disponibilidad y preparar una propuesta más precisa.", "Send the photos in one message with city and postal code. This helps confirm availability and prepare a more accurate proposal."),
+    serviceHref: "services/aire-acondicionado",
+    serviceLabel: t("Pedir presupuesto de instalación", "Request an installation estimate"),
+  },
 ];
 
 // Keep the public guide centre focused: twenty strong articles are easier to
 // maintain and interlink than a long list of thin pages.
-export const guides = guideLibrary.slice(0, 20);
+export const guides = [...guideLibrary.slice(0, 20), ...guideLibrary.slice(-4)];
 
 export const getGuide = (slug: string) => guides.find((guide) => guide.slug === slug);
 

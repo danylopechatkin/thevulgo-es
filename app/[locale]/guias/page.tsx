@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? "Guías de Manitas e Instalaciones en Valencia | THEVULGO"
     : "Handyman and Installation Guides in Valencia | THEVULGO";
   const description = isEs
-    ? "20 guías prácticas sobre ventiladores de techo, montaje de TV y muebles, lámparas, estanterías, espejos y pequeños trabajos en Valencia."
-    : "20 practical guides about ceiling fans, TV and furniture assembly, lights, shelves, mirrors and small jobs in Valencia.";
+    ? "24 guías prácticas sobre aire acondicionado, ventiladores de techo, montaje de TV y muebles, lámparas, estanterías, espejos y pequeños trabajos en Valencia."
+    : "24 practical guides about air conditioning, ceiling fans, TV and furniture assembly, lights, shelves, mirrors and small jobs in Valencia.";
 
   return {
     title,
@@ -98,7 +98,7 @@ export default async function GuidesPage({ params }: Props) {
               </div>
               <div className="rounded-3xl bg-black p-6 text-white shadow-xl">
                 <Sparkles className="h-7 w-7 text-yellow-400" />
-                <p className="mt-4 text-3xl font-black">20</p>
+                <p className="mt-4 text-3xl font-black">24</p>
                 <p className="mt-1 font-bold text-gray-300">{isEs ? "guías reales para decidir mejor" : "real guides to help you decide"}</p>
                 <a href={whatsapp} className="mt-5 flex items-center justify-between rounded-2xl bg-yellow-400 px-5 py-4 font-black text-black hover:bg-yellow-300">
                   {isEs ? "Preguntar por WhatsApp" : "Ask on WhatsApp"} <MessageCircle className="h-5 w-5" />
