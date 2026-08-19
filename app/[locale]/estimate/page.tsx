@@ -725,7 +725,7 @@ function EstimatePageContent() {
         </div>
 
         <div className="mx-auto w-full max-w-7xl">
-          <div className="mt-4 grid grid-cols-1 gap-8 sm:mt-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+          <div className="mt-4 grid grid-cols-1 gap-8 sm:mt-6 lg:grid-cols-[1.45fr_0.65fr] lg:items-start">
             <div className="space-y-8 lg:h-fit">
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
                 <div className="flex items-start justify-between gap-4">
@@ -1168,7 +1168,7 @@ function EstimatePageContent() {
                       {t("summary.badge")}
                     </div>
                     <h2 className="mt-4 text-2xl font-extrabold text-black">{t("summary.title")}</h2>
-                    <p className="mt-2 text-sm text-gray-600 lg:whitespace-nowrap">{t("summary.description")}</p>
+                    <p className="mt-2 text-sm leading-6 text-gray-600">{t("summary.description")}</p>
                   </div>
 
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md">
