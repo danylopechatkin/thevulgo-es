@@ -3,9 +3,10 @@ import { MADRID_ROUTE_BY_PATH, MADRID_ROUTES } from "@/lib/madridRoutes";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AlicanteLanding from "../AlicanteLanding";
+import { SITE_ORIGIN } from "@/lib/seo";
 
 type Props = { params: Promise<{ locale: string; slug: string[] }> };
-const baseUrl = "https://www.thevulgo.es";
+const baseUrl = SITE_ORIGIN;
 
 export function generateStaticParams() { return MADRID_ROUTES.map((route) => ({ slug: route.path.split("/") })); }
 

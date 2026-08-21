@@ -17,6 +17,7 @@ import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
+import { SITE_ORIGIN } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,7 @@ export async function generateMetadata({
   const { locale } = await params;
 
   return {
-    metadataBase: new URL("https://www.thevulgo.es"),
+    metadataBase: new URL(SITE_ORIGIN),
     title:
       locale === "es"
         ? "THEVULGO | Servicios de manitas en Valencia"
@@ -46,12 +47,14 @@ export async function generateMetadata({
         ? "Servicios profesionales de manitas en Valencia: montaje de TV, muebles, electricidad básica, fontanería y reparaciones del hogar."
         : "Professional handyman services in Valencia: TV mounting, furniture assembly, basic electrical, plumbing and home repairs.",
     alternates: {
-      canonical: `/${locale}`,
+      canonical: `${SITE_ORIGIN}/${locale}`,
       languages: {
-        es: "/es",
-        en: "/en",
+        es: `${SITE_ORIGIN}/es`,
+        en: `${SITE_ORIGIN}/en`,
+        "x-default": `${SITE_ORIGIN}/es`,
       },
     },
+    robots: { index: true, follow: true },
   };
 }
 

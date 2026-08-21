@@ -2,8 +2,7 @@ import type { MetadataRoute } from "next";
 import { guides } from "./[locale]/guias/guides-data";
 import { MADRID_ROUTES } from "@/lib/madridRoutes";
 import { AC_SEO_PAGES } from "@/lib/acSeoPages";
-
-const baseUrl = "https://www.thevulgo.es";
+import { absoluteUrl } from "@/lib/seo";
 
 const locales = ["es", "en"] as const;
 
@@ -297,7 +296,7 @@ function addRoutes(
 ) {
   for (const route of routes) {
     sitemap.push({
-      url: `${baseUrl}/${locale}/${route}`,
+      url: absoluteUrl(`/${locale}/${route}`),
       changeFrequency: options.changeFrequency,
       priority: options.priority,
     });
@@ -312,13 +311,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
      * Homepage
      */
     pages.push({
-      url: `${baseUrl}/${locale}`,
+      url: absoluteUrl(`/${locale}`),
       changeFrequency: "weekly",
       priority: locale === "es" ? 1 : 0.9,
     });
 
     pages.push({
-      url: `${baseUrl}/${locale}/madrid`,
+      url: absoluteUrl(`/${locale}/madrid`),
       changeFrequency: "weekly",
       priority: locale === "es" ? 0.95 : 0.85,
     });
@@ -331,7 +330,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     );
 
     pages.push({
-      url: `${baseUrl}/${locale}/barcelona`,
+      url: absoluteUrl(`/${locale}/barcelona`),
       changeFrequency: "weekly",
       priority: locale === "es" ? 0.95 : 0.85,
     });
@@ -344,7 +343,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     );
 
     pages.push({
-      url: `${baseUrl}/${locale}/alicante`,
+      url: absoluteUrl(`/${locale}/alicante`),
       changeFrequency: "weekly",
       priority: locale === "es" ? 0.95 : 0.85,
     });
@@ -429,5 +428,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     );
   }
 
-  return pages;
+  const seen = new Set<string>();
+  return pages.filter((entry) => {
+    const url = new URL(entry.url);
+    if (/^\/..\/privacy\/?$/.test(url.pathname)) return false;
+    if (url.search || url.pathname.endsWith("/")) return false;
+    if (seen.has(url.href)) return false;
+    seen.add(url.href);
+    return true;
+  });
 }

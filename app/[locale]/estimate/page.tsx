@@ -26,7 +26,6 @@ import {
 } from "lucide-react";
 import { ALICANTE_DISTRICTS, AVAILABLE_CITIES, BARCELONA_DISTRICTS, MADRID_DISTRICTS, marketFromCity } from "@/lib/cities";
 import { getClientAttribution, trackMarketingEvent } from "@/lib/client-attribution";
-
 type CategoryKey =
   | "handyman"
   | "tv-mounting"

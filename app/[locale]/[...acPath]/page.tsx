@@ -5,9 +5,10 @@ import { ArrowRight, CheckCircle2, Clock3, ShieldCheck, Wind } from "lucide-reac
 import WhatsAppLink from "@/app/components/WhatsAppLink";
 import { AC_SEO_PAGES, getAcSeoPage } from "@/lib/acSeoPages";
 import { getAcSeoContent } from "@/lib/acSeoContent";
+import { SITE_ORIGIN } from "@/lib/seo";
 
 type Props = { params: Promise<{ locale: string; acPath: string[] }> };
-const baseUrl = "https://www.thevulgo.es";
+const baseUrl = SITE_ORIGIN;
 
 export function generateStaticParams() {
   return ["es", "en"].flatMap((locale) => AC_SEO_PAGES.map((page) => ({ locale, acPath: page.path.split("/") })));
