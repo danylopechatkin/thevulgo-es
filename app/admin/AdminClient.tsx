@@ -22,7 +22,7 @@ import {
 import { SERVICE_CATALOG, getCatalogServices } from "@/lib/serviceCatalog";
 import { findCatalogService } from "@/lib/serviceCatalog";
 import { strFromU8, unzipSync } from "fflate";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   CalendarClock,
   Plus,
@@ -2680,7 +2680,7 @@ function AssignmentCard({
   );
 }
 
-function ManualOrderForm({
+export function ManualOrderForm({
   manual,
   services,
   saving,
@@ -2697,6 +2697,25 @@ function ManualOrderForm({
   onClose: () => void;
   onSubmit: (event: React.FormEvent) => Promise<void>;
 }) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const viewport = window.visualViewport;
+    const updateViewport = () => {
+      if (!viewport || !dialogRef.current) return;
+      dialogRef.current.style.height = `${viewport.height}px`;
+      dialogRef.current.style.top = `${viewport.offsetTop}px`;
+    };
+    updateViewport();
+    viewport?.addEventListener("resize", updateViewport);
+    viewport?.addEventListener("scroll", updateViewport);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      viewport?.removeEventListener("resize", updateViewport);
+      viewport?.removeEventListener("scroll", updateViewport);
+    };
+  }, []);
   const [clients, setClients] = useState<ManualClient[]>([]);
   const [clientsError, setClientsError] = useState(false);
   const [clientsLoaded, setClientsLoaded] = useState(false);
@@ -2748,22 +2767,25 @@ function ManualOrderForm({
     0,
   );
   return (
-    <div className="fixed inset-0 z-50 overflow-x-hidden overflow-y-auto bg-black/60 p-2 backdrop-blur-sm sm:p-6">
+    <div ref={dialogRef} className="fixed inset-x-0 top-0 z-50 flex h-[100dvh] items-center justify-center bg-black/60 sm:p-6">
       <form
         onSubmit={onSubmit}
-        className="mx-auto max-w-4xl overflow-visible rounded-[2rem] bg-[#f5f5f2] shadow-2xl"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="manual-order-title"
+        className="flex h-full w-full max-w-4xl flex-col overflow-hidden bg-[#f5f5f2] shadow-2xl sm:rounded-3xl [&_input]:text-base [&_select]:text-base [&_textarea]:text-base"
       >
-        <div className="relative flex items-center justify-between overflow-hidden bg-[#111] p-6 text-white sm:p-7">
+        <div className="relative flex shrink-0 items-center justify-between gap-4 overflow-hidden bg-[#111] px-5 py-4 text-white sm:px-7">
           <div className="absolute -right-12 -top-16 h-48 w-48 rounded-full bg-yellow-400/20 blur-3xl" />
           <div>
             <p className="flex items-center gap-2 text-xs font-black uppercase tracking-[.14em] text-yellow-400">
               <Sparkles className="h-4 w-4" />
-              Spain operations operations
+              Spain operations
             </p>
-            <h2 className="mt-2 text-3xl font-black tracking-tight sm:text-4xl">
+            <h2 id="manual-order-title" className="mt-1 text-2xl font-black tracking-tight sm:text-3xl">
               New manual order
             </h2>
-            <p className="mt-2 text-sm text-white/55">
+            <p className="mt-1 hidden text-sm text-white/55 sm:block">
               Create a complete customer job or extract it from WhatsApp.
             </p>
           </div>
@@ -2776,7 +2798,9 @@ function ManualOrderForm({
             <X className="h-5 w-5" />
           </button>
         </div>
-        <div className="min-w-0 space-y-5 p-4 sm:p-7">
+        <div className="min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 sm:p-6" data-manual-order-scroll>
+          <details className="rounded-2xl border border-black/10 bg-white">
+            <summary className="cursor-pointer px-4 py-3 text-sm font-bold">Import from WhatsApp <span className="font-normal text-gray-500">· optional</span></summary>
           <AiOrderImport
             onApply={(order, parsedServices) => {
               onChange({
@@ -2811,7 +2835,8 @@ function ManualOrderForm({
               if (mapped.length) onServices(mapped);
             }}
           />
-          <section className="rounded-[1.75rem] border border-black/5 bg-white p-5 shadow-sm sm:p-6">
+          </details>
+          <section className="rounded-2xl border border-black/5 bg-white p-4 sm:p-5">
             <div className="flex items-center gap-3">
               <span className="rounded-xl bg-yellow-100 p-2">
                 <UserRound className="h-5 w-5" />
@@ -2824,7 +2849,7 @@ function ManualOrderForm({
               </div>
             </div>
             <div className="mt-5 grid min-w-0 gap-4 sm:grid-cols-2">
-              <div className={`relative min-w-0 ${clientField === "full_name" ? "z-40" : "z-0"}`}
+              <div className="min-w-0"
                 onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setClientField(null); }}>
               <Field label="Full name">
                 <input
@@ -2839,12 +2864,13 @@ function ManualOrderForm({
                 <ClientMatches error={clientsError} onRetry={() => void loadClients()} loading={clientsLoading} matches={matches} onSelect={selectClient} />
               ) : null}
               </div>
-              <div className={`relative min-w-0 ${clientField === "phone" ? "z-40" : "z-0"}`}
+              <div className="min-w-0"
                 onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setClientField(null); }}>
               <Field label="Phone">
                 <input
                   required
                   autoComplete="off"
+                  type="tel"
                   value={manual.phone}
                   onFocus={() => { setClientField("phone"); void loadClients(); }}
                   onChange={(e) => { setClientField("phone"); onChange({ phone: e.target.value }); }}
@@ -2891,7 +2917,7 @@ function ManualOrderForm({
               </Field>
             </div>
           </section>
-          <section className="rounded-[1.75rem] border border-black/5 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-2xl border border-black/5 bg-white p-4 sm:p-5">
             <div className="flex items-center gap-3">
               <span className="rounded-xl bg-yellow-100 p-2">
                 <CalendarClock className="h-5 w-5" />
@@ -2930,7 +2956,7 @@ function ManualOrderForm({
               />
             </label>
           </section>
-          <section className="rounded-[1.75rem] border border-black/5 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-2xl border border-black/5 bg-white p-4 sm:p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-center gap-3">
                 <span className="rounded-xl bg-yellow-100 p-2">
@@ -3014,21 +3040,20 @@ function ManualOrderForm({
               <Plus className="h-4 w-4" /> Add service line
             </button>
           </section>
-          <div className="sticky bottom-0 -mx-4 -mb-4 flex flex-col-reverse items-center justify-between gap-3 border-t border-black/5 bg-white/95 p-4 backdrop-blur sm:-mx-7 sm:-mb-7 sm:flex-row sm:px-7">
-            <button
-              type="button"
-              onClick={onClose}
-              className="w-full rounded-2xl border border-black/10 px-5 py-3.5 font-black sm:w-auto"
-            >
-              Cancel
-            </button>
-            <button
-              disabled={saving || services.length === 0}
-              className="w-full rounded-2xl bg-yellow-400 px-6 py-4 font-black shadow-[0_8px_25px_rgba(250,204,21,.3)] transition hover:bg-yellow-300 disabled:opacity-50 sm:w-auto"
-            >
-              {saving ? "Saving…" : "Create Spanish order"}
-            </button>
+        </div>
+        <div className="relative z-10 flex shrink-0 items-center gap-3 border-t border-black/10 bg-white px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:px-6" data-manual-order-actions>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs text-gray-500">Total</p>
+            <p className="text-xl font-black">{money(manualTotal)}</p>
           </div>
+          <button type="button" onClick={onClose}
+            className="min-h-11 rounded-xl px-3 text-sm font-bold text-gray-600 hover:bg-gray-100">
+            Cancel
+          </button>
+          <button disabled={saving || services.length === 0}
+            className="min-h-12 rounded-xl bg-yellow-400 px-5 py-3 text-sm font-black transition hover:bg-yellow-300 disabled:opacity-50">
+            {saving ? "Saving…" : "Create order"}
+          </button>
         </div>
       </form>
     </div>
@@ -3194,7 +3219,7 @@ function ClientMatches({
   onSelect: (client: ManualClient) => void;
 }) {
   return (
-    <div className="absolute left-0 right-0 top-full z-[60] mt-2 max-h-64 overflow-y-auto rounded-2xl border border-black/10 bg-white p-2 shadow-2xl">
+    <div className="mt-2 max-h-56 overflow-y-auto overscroll-contain rounded-xl border border-yellow-300 bg-yellow-50 p-1">
       {loading ? (
         <p className="px-3 py-3 text-sm font-semibold text-gray-500">
           Searching clients…
