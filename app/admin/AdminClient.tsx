@@ -19,7 +19,7 @@ import {
   categoryKeys,
   CATEGORY_MAP,
 } from "@/lib/estimate";
-import { getCatalogServices } from "@/lib/serviceCatalog";
+import { SERVICE_CATALOG, getCatalogServices } from "@/lib/serviceCatalog";
 import { findCatalogService } from "@/lib/serviceCatalog";
 import { strFromU8, unzipSync } from "fflate";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -146,7 +146,7 @@ type WorkerAssignment = {
     | Array<{ full_name: string; email: string }>
     | null;
 };
-type ManualService = { id: string; label: string; price: number; qty: number };
+type ManualService = { category?: string; id: string; label: string; price: number; qty: number };
 type ManualClient = {
   id: string;
   full_name: string | null;
@@ -223,7 +223,7 @@ export default function AdminClient() {
   const [manualServices, setManualServices] = useState<ManualService[]>(() => {
     const first = getCatalogServices("Repairs")[0];
     return first
-      ? [{ id: first.id, label: first.label, price: first.price, qty: 1 }]
+      ? [{ category: "Repairs", id: first.id, label: first.label, price: first.price, qty: 1 }]
       : [];
   });
   const [referenceNow] = useState(() => Date.now());
@@ -515,7 +515,7 @@ export default function AdminClient() {
     const response = await fetch("/api/admin/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...manual, services }),
+      body: JSON.stringify({ ...manual, category: manualServices[0]?.category || manual.category, services }),
     });
     const result = await response.json();
     setSaving(false);
@@ -701,21 +701,6 @@ export default function AdminClient() {
             saving={saving}
             onChange={(updates) => {
               setManual((current) => ({ ...current, ...updates }));
-              if (updates.category) {
-                const first = getCatalogServices(updates.category)[0];
-                setManualServices(
-                  first
-                    ? [
-                        {
-                          id: first.id,
-                          label: first.label,
-                          price: first.price,
-                          qty: 1,
-                        },
-                      ]
-                    : [],
-                );
-              }
             }}
             onServices={setManualServices}
             onClose={() => setShowManual(false)}
@@ -2713,37 +2698,36 @@ function ManualOrderForm({
   onSubmit: (event: React.FormEvent) => Promise<void>;
 }) {
   const [clients, setClients] = useState<ManualClient[]>([]);
+  const [clientsError, setClientsError] = useState(false);
   const [clientsLoaded, setClientsLoaded] = useState(false);
   const [clientsLoading, setClientsLoading] = useState(false);
   const [clientField, setClientField] = useState<"full_name" | "phone" | null>(null);
   const loadClients = useCallback(async () => {
     if (clientsLoaded || clientsLoading) return;
     setClientsLoading(true);
+    setClientsError(false);
     try {
       const response = await fetch("/api/admin/clients", { cache: "no-store" });
       if (!response.ok) throw new Error("Unable to load clients");
       const payload = (await response.json()) as { clients?: ManualClient[] };
       setClients(Array.isArray(payload.clients) ? payload.clients : []);
-    } catch {
-      setClients([]);
-    } finally {
       setClientsLoaded(true);
+    } catch {
+      setClientsError(true);
+    } finally {
       setClientsLoading(false);
     }
   }, [clientsLoaded, clientsLoading]);
   const query = clientField === "full_name" ? manual.full_name : manual.phone;
   const matches = useMemo(() => {
     const text = String(query || "").trim().toLocaleLowerCase();
-    const digits = String(query || "").replace(/\D/g, "");
-    if (text.length < 2 && digits.length < 2) return [];
-    return clients.filter((client) => {
-      const haystack = [client.full_name, client.email, client.phone, client.alternate_phone]
-        .filter(Boolean).join(" ").toLocaleLowerCase();
-      const phoneHaystack = [client.phone, client.alternate_phone]
-        .filter(Boolean).join("").replace(/\D/g, "");
-      return (text.length >= 2 && haystack.includes(text)) ||
-        (digits.length >= 2 && phoneHaystack.includes(digits));
-    }).slice(0, 6);
+    const digits = text.replace(/\D/g, "");
+    if (!text) return [];
+    return clients.filter((client) => clientField === "full_name"
+      ? (client.full_name || "").toLocaleLowerCase().includes(text)
+      : Boolean(digits) && [client.phone, client.alternate_phone].some(
+          (phone) => (phone || "").replace(/\D/g, "").includes(digits),
+        )).slice(0, 6);
   }, [clients, clientField, query]);
   const selectClient = (client: ManualClient) => {
     onChange({
@@ -2751,13 +2735,13 @@ function ManualOrderForm({
       phone: client.phone || client.alternate_phone || "",
       email: client.email || "",
       city: client.city || manual.city,
-      area: client.area || manual.area,
-      address: client.address || manual.address,
-      apartment: client.apartment || manual.apartment,
+      area: client.area || "",
+      address: client.address || "",
+      apartment: client.apartment || "",
     });
     setClientField(null);
   };
-  const catalog = getCatalogServices(manual.category);
+
   const manualTotal = services.reduce(
     (sum, service) =>
       sum + Number(service.price || 0) * Number(service.qty || 0),
@@ -2817,6 +2801,7 @@ function ManualOrderForm({
                   service.label,
                 );
                 return {
+                  category: order.category || manual.category,
                   id: matched?.id || "manual",
                   label: matched?.label || service.label || "Custom job",
                   price: service.price ?? matched?.price ?? 0,
@@ -2839,32 +2824,34 @@ function ManualOrderForm({
               </div>
             </div>
             <div className="mt-5 grid min-w-0 gap-4 sm:grid-cols-2">
-              <div className="relative z-30 min-w-0">
+              <div className={`relative min-w-0 ${clientField === "full_name" ? "z-40" : "z-0"}`}
+                onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setClientField(null); }}>
               <Field label="Full name">
                 <input
                   required
+                  autoComplete="off"
                   value={manual.full_name}
                   onFocus={() => { setClientField("full_name"); void loadClients(); }}
                   onChange={(e) => { setClientField("full_name"); onChange({ full_name: e.target.value }); }}
-                  onBlur={() => window.setTimeout(() => setClientField(null), 150)}
                 />
               </Field>
-              {clientField === "full_name" && (clientsLoading || matches.length > 0) ? (
-                <ClientMatches loading={clientsLoading} matches={matches} onSelect={selectClient} />
+              {clientField === "full_name" && (clientsLoading || Boolean(query?.trim())) ? (
+                <ClientMatches error={clientsError} onRetry={() => void loadClients()} loading={clientsLoading} matches={matches} onSelect={selectClient} />
               ) : null}
               </div>
-              <div className="relative z-30 min-w-0">
+              <div className={`relative min-w-0 ${clientField === "phone" ? "z-40" : "z-0"}`}
+                onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setClientField(null); }}>
               <Field label="Phone">
                 <input
                   required
+                  autoComplete="off"
                   value={manual.phone}
                   onFocus={() => { setClientField("phone"); void loadClients(); }}
                   onChange={(e) => { setClientField("phone"); onChange({ phone: e.target.value }); }}
-                  onBlur={() => window.setTimeout(() => setClientField(null), 150)}
                 />
               </Field>
-              {clientField === "phone" && (clientsLoading || matches.length > 0) ? (
-                <ClientMatches loading={clientsLoading} matches={matches} onSelect={selectClient} />
+              {clientField === "phone" && (clientsLoading || Boolean(query?.trim())) ? (
+                <ClientMatches error={clientsError} onRetry={() => void loadClients()} loading={clientsLoading} matches={matches} onSelect={selectClient} />
               ) : null}
               </div>
               <Field label="Email">
@@ -2901,18 +2888,6 @@ function ManualOrderForm({
                   value={manual.apartment}
                   onChange={(e) => onChange({ apartment: e.target.value })}
                 />
-              </Field>
-              <Field label="Category">
-                <select
-                  value={manual.category}
-                  onChange={(e) => onChange({ category: e.target.value })}
-                >
-                  {categoryKeys.map((key) => (
-                    <option key={key} value={CATEGORY_MAP[key]}>
-                      {CATEGORY_MAP[key]}
-                    </option>
-                  ))}
-                </select>
               </Field>
             </div>
           </section>
@@ -2979,78 +2954,59 @@ function ManualOrderForm({
                 </p>
               </div>
             </div>
-            {services.map((service, index) => (
-              <div
-                key={`${service.id}-${index}`}
-                className="mt-4 grid min-w-0 gap-2 rounded-2xl bg-[#f7f7f4] p-3 sm:grid-cols-[minmax(0,1fr)_110px_90px] [&_input]:min-w-0 [&_input]:rounded-xl [&_input]:border-0 [&_input]:bg-white [&_input]:p-3 [&_select]:min-w-0 [&_select]:rounded-xl [&_select]:border-0 [&_select]:bg-white [&_select]:p-3"
-              >
-                <select
-                  value={service.id}
-                  onChange={(e) => {
-                    const found = catalog.find(
-                      (item) => item.id === e.target.value,
-                    );
-                    if (found)
-                      onServices(
-                        services.map((item, i) =>
-                          i === index
-                            ? {
-                                id: found.id,
-                                label: found.label,
-                                price: found.price,
-                                qty: item.qty,
-                              }
-                            : item,
-                        ),
-                      );
-                  }}
-                >
-                  <option value={service.id}>{service.label}</option>
-                  {catalog
-                    .filter((item) => item.id !== service.id)
-                    .map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.label}
-                      </option>
-                    ))}
-                </select>
-                <input
-                  type="number"
-                  min="1"
-                  step="0.01"
-                  value={service.price}
-                  onChange={(e) =>
-                    onServices(
-                      services.map((item, i) =>
-                        i === index
-                          ? { ...item, price: Number(e.target.value) }
-                          : item,
-                      ),
-                    )
-                  }
-                />
-                <input
-                  type="number"
-                  min="1"
-                  value={service.qty}
-                  onChange={(e) =>
-                    onServices(
-                      services.map((item, i) =>
-                        i === index
-                          ? { ...item, qty: Number(e.target.value) }
-                          : item,
-                      ),
-                    )
-                  }
-                />
-              </div>
-            ))}
+            {services.map((service, index) => {
+              const category = service.category || manual.category;
+              const catalog = getCatalogServices(category);
+              const update = (updates: Partial<ManualService>) => onServices(
+                services.map((item, i) => i === index ? { ...item, ...updates } : item),
+              );
+              return (
+                <div key={index} className="mt-4 min-w-0 rounded-2xl bg-[#f7f7f4] p-3">
+                  <div className="mb-3 flex items-center justify-between gap-2">
+                    <span className="text-sm font-bold">Service {index + 1}</span>
+                    <button type="button" onClick={() => onServices(services.filter((_, i) => i !== index))}
+                      aria-label={`Remove service line ${index + 1}`}
+                      className="flex min-h-11 items-center gap-1 rounded-xl px-3 text-sm font-bold text-red-700 hover:bg-red-50">
+                      <X className="h-4 w-4" /> Remove
+                    </button>
+                  </div>
+                  <div className="grid min-w-0 gap-3 sm:grid-cols-2">
+                    <Field label="Service category">
+                      <select value={category} onChange={(event) => {
+                        update({ category: event.target.value, id: "", label: "", price: 0 });
+                      }}>
+                        {Object.keys(SERVICE_CATALOG).map((name) => <option key={name}>{name}</option>)}
+                      </select>
+                    </Field>
+                    <Field label="Service">
+                      <select required value={service.id} onChange={(event) => {
+                        const found = catalog.find((item) => item.id === event.target.value);
+                        if (found) update({ category, id: found.id, label: found.label, price: found.price });
+                      }}>
+                        <option value="" disabled>Select service</option>
+                        {service.id && !catalog.some((item) => item.id === service.id) ?
+                          <option value={service.id}>{service.label}</option> : null}
+                        {catalog.map((item) => <option key={item.id} value={item.id}>{item.label} — {item.priceLabel || money(item.price)}</option>)}
+                      </select>
+                    </Field>
+                    <Field label="Unit price (EUR)">
+                      <input required type="number" min="0.01" step="0.01" value={service.price}
+                        onChange={(event) => update({ price: Number(event.target.value) })} />
+                    </Field>
+                    <Field label="Quantity">
+                      <input required type="number" min="1" step="1" value={service.qty}
+                        onChange={(event) => update({ qty: Number(event.target.value) })} />
+                    </Field>
+                  </div>
+                </div>
+              );
+            })}
             <button
               type="button"
               onClick={() =>
                 onServices([
                   ...services,
-                  { id: "manual", label: "Custom job", price: 0, qty: 1 },
+                  { category: manual.category, id: "", label: "", price: 0, qty: 1 },
                 ])
               }
               className="mt-4 flex items-center gap-2 rounded-xl border border-dashed border-yellow-500 px-4 py-2.5 text-sm font-black text-yellow-800 transition hover:bg-yellow-50"
@@ -3067,7 +3023,7 @@ function ManualOrderForm({
               Cancel
             </button>
             <button
-              disabled={saving}
+              disabled={saving || services.length === 0}
               className="w-full rounded-2xl bg-yellow-400 px-6 py-4 font-black shadow-[0_8px_25px_rgba(250,204,21,.3)] transition hover:bg-yellow-300 disabled:opacity-50 sm:w-auto"
             >
               {saving ? "Saving…" : "Create Spanish order"}
@@ -3225,10 +3181,14 @@ function AiOrderImport({
   );
 }
 function ClientMatches({
+  error,
+  onRetry,
   loading,
   matches,
   onSelect,
 }: {
+  error: boolean;
+  onRetry: () => void;
   loading: boolean;
   matches: ManualClient[];
   onSelect: (client: ManualClient) => void;
@@ -3239,6 +3199,10 @@ function ClientMatches({
         <p className="px-3 py-3 text-sm font-semibold text-gray-500">
           Searching clients…
         </p>
+      ) : error ? (
+        <button type="button" onPointerDown={(event) => event.preventDefault()} onClick={onRetry} className="p-3 text-sm text-red-700">Could not load clients. Retry</button>
+      ) : matches.length === 0 ? (
+        <p className="p-3 text-sm text-gray-500">No matching clients</p>
       ) : (
         matches.map((client) => (
           <button
@@ -3246,7 +3210,7 @@ function ClientMatches({
             type="button"
             onPointerDown={(event) => event.preventDefault()}
             onClick={() => onSelect(client)}
-            className="block w-full rounded-xl px-3 py-3 text-left transition hover:bg-yellow-50"
+            className="block w-full break-words rounded-xl px-3 py-3 text-left transition hover:bg-yellow-50 focus:bg-yellow-50"
           >
             <span className="block font-bold text-gray-900">
               {client.full_name || "Unnamed client"}
