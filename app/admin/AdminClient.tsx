@@ -1,6 +1,7 @@
 
 "use client";
 
+import { findManualCustomers, type ManualCustomer } from "@/lib/manual-customers";
 import AdminNav from "./components/AdminNav";
 import OrdersCalendar from "./components/OrdersCalendar";
 import OrderPaymentPanel from "./components/OrderPaymentPanel";
@@ -147,17 +148,7 @@ type WorkerAssignment = {
     | null;
 };
 type ManualService = { category?: string; id: string; label: string; price: number; qty: number };
-type ManualClient = {
-  id: string;
-  full_name: string | null;
-  email: string | null;
-  phone: string | null;
-  alternate_phone?: string | null;
-  address: string | null;
-  apartment: string | null;
-  city: string | null;
-  area: string | null;
-};
+type ManualClient = ManualCustomer;
 
 const money = (value: number) =>
   new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" }).format(
@@ -208,6 +199,7 @@ export default function AdminClient() {
   const [showManual, setShowManual] = useState(false);
   const [saving, setSaving] = useState(false);
   const [manual, setManual] = useState({
+    client_profile_id: "",
     full_name: "",
     phone: "",
     email: "",
@@ -512,13 +504,21 @@ export default function AdminClient() {
     setError("");
     setNotice("");
     const hasCustomerEmail = Boolean(manual.email.trim());
-    const response = await fetch("/api/admin/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...manual, category: manualServices[0]?.category || manual.category, services }),
-    });
-    const result = await response.json();
-    setSaving(false);
+    let response: Response;
+    let result;
+    try {
+      response = await fetch("/api/admin/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...manual, client_profile_id: manual.client_profile_id || undefined, category: manualServices[0]?.category || manual.category, services }),
+      });
+      result = await response.json();
+    } catch {
+      setError("Could not reach the server. Your order details are still here; please try again.");
+      return;
+    } finally {
+      setSaving(false);
+    }
     if (!response.ok) {
       setError(result.error || "Could not create manual order");
       return;
@@ -532,6 +532,7 @@ export default function AdminClient() {
     );
     setShowManual(false);
     setManual({
+      client_profile_id: "",
       full_name: "",
       phone: "",
       email: "",
@@ -699,6 +700,7 @@ export default function AdminClient() {
             manual={manual}
             services={manualServices}
             saving={saving}
+            submitError={error}
             onChange={(updates) => {
               setManual((current) => ({ ...current, ...updates }));
             }}
@@ -2681,6 +2683,7 @@ function AssignmentCard({
 }
 
 export function ManualOrderForm({
+  submitError,
   manual,
   services,
   saving,
@@ -2689,6 +2692,7 @@ export function ManualOrderForm({
   onClose,
   onSubmit,
 }: {
+  submitError?: string;
   manual: Record<string, string>;
   services: ManualService[];
   saving: boolean;
@@ -2698,67 +2702,134 @@ export function ManualOrderForm({
   onSubmit: (event: React.FormEvent) => Promise<void>;
 }) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const closeRef = useRef(onClose);
+  useEffect(() => { closeRef.current = onClose; }, [onClose]);
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
+  const [customerMode, setCustomerMode] = useState<"select" | "selected" | "new">(
+    manual.full_name ? "selected" : "select",
+  );
+  const [needsName, setNeedsName] = useState(!manual.full_name);
+  const [needsPhone, setNeedsPhone] = useState(!manual.phone);
+  const [selectedClient, setSelectedClient] = useState<ManualClient | null>(null);
+  const [differentAddress, setDifferentAddress] = useState(false);
+  const [customerQuery, setCustomerQuery] = useState("");
+  const [clients, setClients] = useState<ManualClient[]>([]);
+  const [clientsError, setClientsError] = useState(false);
+  const [clientsLoading, setClientsLoading] = useState(true);
+  const [clientRetry, setClientRetry] = useState(0);
+  const summaryRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement;
     document.body.style.overflow = "hidden";
     const viewport = window.visualViewport;
+    let fullHeight = window.innerHeight;
+    let frame = 0;
     const updateViewport = () => {
-      if (!viewport || !dialogRef.current) return;
-      dialogRef.current.style.height = `${viewport.height}px`;
-      dialogRef.current.style.top = `${viewport.offsetTop}px`;
+      const focused = document.activeElement;
+      const editing = focused instanceof HTMLElement && focused.matches("input, textarea, [contenteditable=true]");
+      const height = viewport?.height ?? window.innerHeight;
+      if (!editing) fullHeight = Math.max(fullHeight, window.innerHeight);
+      const keyboard = editing && Math.max(fullHeight, window.innerHeight) - height > 120;
+      setKeyboardOpen(keyboard);
+      if (dialogRef.current) {
+        dialogRef.current.style.height = `${height}px`;
+        dialogRef.current.style.top = `${viewport?.offsetTop ?? 0}px`;
+      }
+      if (keyboard && focused instanceof HTMLElement) {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => focused.scrollIntoView({ block: "nearest" }));
+      }
     };
+    const onOrientation = () => { fullHeight = window.innerHeight; updateViewport(); };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { event.preventDefault(); closeRef.current(); }
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(dialogRef.current?.querySelectorAll<HTMLElement>(
+        'button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), summary, [tabindex="0"]',
+      ) ?? []).filter((element) => element.getClientRects().length > 0);
+      const first = focusable[0], last = focusable.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    // Focus the dialog, not a text input: opening it must not summon the phone keyboard.
+    dialogRef.current?.querySelector<HTMLFormElement>("form")?.focus();
     updateViewport();
     viewport?.addEventListener("resize", updateViewport);
     viewport?.addEventListener("scroll", updateViewport);
+    window.addEventListener("resize", updateViewport);
+    window.addEventListener("orientationchange", onOrientation);
+    document.addEventListener("focusin", updateViewport);
+    document.addEventListener("focusout", updateViewport);
+    document.addEventListener("keydown", onKeyDown);
     return () => {
+      cancelAnimationFrame(frame);
       document.body.style.overflow = previousOverflow;
       viewport?.removeEventListener("resize", updateViewport);
       viewport?.removeEventListener("scroll", updateViewport);
+      window.removeEventListener("resize", updateViewport);
+      window.removeEventListener("orientationchange", onOrientation);
+      document.removeEventListener("focusin", updateViewport);
+      document.removeEventListener("focusout", updateViewport);
+      document.removeEventListener("keydown", onKeyDown);
+      if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus();
     };
   }, []);
-  const [clients, setClients] = useState<ManualClient[]>([]);
-  const [clientsError, setClientsError] = useState(false);
-  const [clientsLoaded, setClientsLoaded] = useState(false);
-  const [clientsLoading, setClientsLoading] = useState(false);
-  const [clientField, setClientField] = useState<"full_name" | "phone" | null>(null);
-  const loadClients = useCallback(async () => {
-    if (clientsLoaded || clientsLoading) return;
-    setClientsLoading(true);
-    setClientsError(false);
-    try {
-      const response = await fetch("/api/admin/clients", { cache: "no-store" });
-      if (!response.ok) throw new Error("Unable to load clients");
-      const payload = (await response.json()) as { clients?: ManualClient[] };
-      setClients(Array.isArray(payload.clients) ? payload.clients : []);
-      setClientsLoaded(true);
-    } catch {
-      setClientsError(true);
-    } finally {
-      setClientsLoading(false);
-    }
-  }, [clientsLoaded, clientsLoading]);
-  const query = clientField === "full_name" ? manual.full_name : manual.phone;
-  const matches = useMemo(() => {
-    const text = String(query || "").trim().toLocaleLowerCase();
-    const digits = text.replace(/\D/g, "");
-    if (!text) return [];
-    return clients.filter((client) => clientField === "full_name"
-      ? (client.full_name || "").toLocaleLowerCase().includes(text)
-      : Boolean(digits) && [client.phone, client.alternate_phone].some(
-          (phone) => (phone || "").replace(/\D/g, "").includes(digits),
-        )).slice(0, 6);
-  }, [clients, clientField, query]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/admin/clients", { cache: "no-store", signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Unable to load customers");
+        const payload = (await response.json()) as { clients?: ManualClient[] };
+        setClients(Array.isArray(payload.clients) ? payload.clients : []);
+      })
+      .catch(() => { if (!controller.signal.aborted) setClientsError(true); })
+      .finally(() => { if (!controller.signal.aborted) setClientsLoading(false); });
+    return () => controller.abort();
+  }, [clientRetry]);
+
+  const storedClient = clients.find((client) => client.id === manual.client_profile_id);
+  const activeClient = selectedClient || storedClient;
+  const showDifferentAddress = differentAddress || Boolean(!selectedClient && storedClient &&
+    ["city", "area", "address", "apartment"].some((key) => manual[key] !== (storedClient[key as keyof ManualClient] || "")));
+
+  const matches = useMemo(() => findManualCustomers(clients, customerQuery), [clients, customerQuery]);
+  const savedAddress = (client: ManualClient) => ({
+    city: client.city || "Valencia", area: client.area || "",
+    address: client.address || "", apartment: client.apartment || "",
+  });
   const selectClient = (client: ManualClient) => {
     onChange({
-      full_name: client.full_name || "",
-      phone: client.phone || client.alternate_phone || "",
-      email: client.email || "",
-      city: client.city || manual.city,
-      area: client.area || "",
-      address: client.address || "",
-      apartment: client.apartment || "",
+      client_profile_id: client.id,
+      full_name: client.full_name || "", phone: client.phone || client.alternate_phone || "",
+      email: client.email || "", ...savedAddress(client),
     });
-    setClientField(null);
+    setNeedsName(!client.full_name);
+    setNeedsPhone(!client.phone && !client.alternate_phone);
+    setSelectedClient(client);
+    setDifferentAddress(!client.address || !client.area || !client.city);
+    setCustomerMode("selected");
+    setCustomerQuery("");
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+    requestAnimationFrame(() => {
+      summaryRef.current?.focus({ preventScroll: true });
+      summaryRef.current?.closest("section")?.scrollIntoView({ block: "start" });
+    });
+  };
+  const changeCustomer = () => {
+    setCustomerMode("select");
+    setCustomerQuery("");
+    requestAnimationFrame(() => searchRef.current?.focus());
+  };
+  const createCustomer = () => {
+    setSelectedClient(null);
+    setCustomerMode("new");
+    setDifferentAddress(false);
+    onChange({ client_profile_id: "", full_name: "", phone: "", email: "", city: "Valencia", area: "", address: "", apartment: "" });
+    requestAnimationFrame(() => dialogRef.current?.querySelector<HTMLInputElement>('[name="customer-name"]')?.focus());
   };
 
   const manualTotal = services.reduce(
@@ -2769,7 +2840,11 @@ export function ManualOrderForm({
   return (
     <div ref={dialogRef} className="fixed inset-x-0 top-0 z-50 flex h-[100dvh] items-center justify-center bg-black/60 sm:p-6">
       <form
-        onSubmit={onSubmit}
+        onSubmit={(event) => {
+          if (customerMode === "select") { event.preventDefault(); searchRef.current?.focus(); return; }
+          void onSubmit(event);
+        }}
+        tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby="manual-order-title"
@@ -2798,12 +2873,18 @@ export function ManualOrderForm({
             <X className="h-5 w-5" />
           </button>
         </div>
-        <div className="min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 sm:p-6" data-manual-order-scroll>
+        <div className="min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pb-6 scroll-pb-6 sm:p-6" data-manual-order-scroll>
           <details className="rounded-2xl border border-black/10 bg-white">
             <summary className="cursor-pointer px-4 py-3 text-sm font-bold">Import from WhatsApp <span className="font-normal text-gray-500">· optional</span></summary>
           <AiOrderImport
             onApply={(order, parsedServices) => {
+              setSelectedClient(null);
+              setNeedsName(!order.fullName && !manual.full_name);
+              setNeedsPhone(!order.phone && !manual.phone);
+              setCustomerMode("selected");
+              setDifferentAddress(true);
               onChange({
+                client_profile_id: "",
                 full_name: order.fullName || manual.full_name,
                 phone: order.phone || manual.phone,
                 email: order.email || manual.email,
@@ -2848,45 +2929,71 @@ export function ManualOrderForm({
                 </p>
               </div>
             </div>
-            <div className="mt-5 grid min-w-0 gap-4 sm:grid-cols-2">
-              <div className="min-w-0"
-                onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setClientField(null); }}>
-              <Field label="Full name">
-                <input
-                  required
-                  autoComplete="off"
-                  value={manual.full_name}
-                  onFocus={() => { setClientField("full_name"); void loadClients(); }}
-                  onChange={(e) => { setClientField("full_name"); onChange({ full_name: e.target.value }); }}
-                />
-              </Field>
-              {clientField === "full_name" && (clientsLoading || Boolean(query?.trim())) ? (
-                <ClientMatches error={clientsError} onRetry={() => void loadClients()} loading={clientsLoading} matches={matches} onSelect={selectClient} />
-              ) : null}
+            {customerMode === "select" ? (
+              <div className="mt-5">
+                <Field label="Select existing customer">
+                  <input ref={searchRef} type="search" autoComplete="off" autoCorrect="off" spellCheck={false}
+                    placeholder="Name, phone or email" value={customerQuery}
+                    aria-controls="manual-customer-results" aria-describedby="manual-customer-status"
+                    onChange={(event) => setCustomerQuery(event.target.value)}
+                    onKeyDown={(event) => { if (event.key === "Enter") event.preventDefault(); }} />
+                </Field>
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <p id="manual-customer-status" role="status" className="text-xs font-bold text-gray-500">
+                    {customerQuery.trim() ? `${matches.length} matching customers` : "Recent customers"}
+                  </p>
+                  <button type="button" onClick={createCustomer} className="min-h-11 rounded-xl px-2 text-sm font-bold text-black underline decoration-yellow-400 decoration-2 underline-offset-4">
+                    + Create new customer
+                  </button>
+                </div>
+                <ClientMatches error={clientsError} onRetry={() => { setClientsError(false); setClientsLoading(true); setClientRetry((value) => value + 1); }}
+                  loading={clientsLoading} matches={matches} onSelect={selectClient} />
               </div>
-              <div className="min-w-0"
-                onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setClientField(null); }}>
-              <Field label="Phone">
-                <input
-                  required
-                  autoComplete="off"
-                  type="tel"
-                  value={manual.phone}
-                  onFocus={() => { setClientField("phone"); void loadClients(); }}
-                  onChange={(e) => { setClientField("phone"); onChange({ phone: e.target.value }); }}
-                />
-              </Field>
-              {clientField === "phone" && (clientsLoading || Boolean(query?.trim())) ? (
-                <ClientMatches error={clientsError} onRetry={() => void loadClients()} loading={clientsLoading} matches={matches} onSelect={selectClient} />
-              ) : null}
-              </div>
-              <Field label="Email">
-                <input
-                  type="email"
-                  value={manual.email}
-                  onChange={(e) => onChange({ email: e.target.value })}
-                />
-              </Field>
+            ) : (
+              <div className="mt-5">
+                {customerMode === "selected" ? (
+                  <div ref={summaryRef} tabIndex={-1} className="rounded-2xl border border-yellow-200 bg-yellow-50/60 p-4 outline-none focus-visible:ring-2 focus-visible:ring-yellow-500">
+                    <p className="text-xs font-bold uppercase tracking-wide text-gray-500">{activeClient ? "Selected customer" : "Customer details"}</p>
+                    <p className="mt-1 break-words text-lg font-black">{manual.full_name || "Add customer name"}</p>
+                    <p className="mt-1 break-words text-sm text-gray-700">{manual.phone || "Phone needed"}</p>
+                    {manual.email ? <p className="mt-1 break-all text-sm text-gray-600">{manual.email}</p> : null}
+                    <button type="button" onClick={changeCustomer} className="mt-2 min-h-11 rounded-xl text-sm font-bold underline underline-offset-4">Change customer</button>
+                    {needsName ? <Field label="Full name"><input required minLength={2} value={manual.full_name} onChange={(event) => onChange({ full_name: event.target.value })} /></Field> : null}
+                    {needsPhone ? <Field label="Phone"><input required type="tel" minLength={7} value={manual.phone} onChange={(event) => onChange({ phone: event.target.value })} /></Field> : null}
+                  </div>
+                ) : (
+                  <>
+                    <div className="mb-3 flex items-center justify-between gap-2">
+                      <h4 className="font-black">New customer</h4>
+                      <button type="button" onClick={changeCustomer} className="min-h-11 text-sm font-bold underline underline-offset-4">Select existing instead</button>
+                    </div>
+                    <div className="grid min-w-0 gap-4 sm:grid-cols-2">
+                      <Field label="Full name"><input name="customer-name" autoComplete="name" required minLength={2} maxLength={160} value={manual.full_name} onChange={(event) => onChange({ full_name: event.target.value })} /></Field>
+                      <Field label="Phone"><input autoComplete="tel" required type="tel" minLength={7} maxLength={80} value={manual.phone} onChange={(event) => onChange({ phone: event.target.value })} /></Field>
+                      <Field label="Email"><input autoComplete="email" type="email" maxLength={240} value={manual.email} onChange={(event) => onChange({ email: event.target.value })} /></Field>
+                    </div>
+                  </>
+                )}
+                <h4 className="mt-5 font-black">Service address</h4>
+                {customerMode === "selected" && activeClient ? (
+                  <fieldset className="mt-3 space-y-2">
+                    <legend className="sr-only">Address for this order</legend>
+                    <label className="flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border border-black/10 p-3 text-sm">
+                      <input type="radio" name="order-address" checked={!showDifferentAddress} disabled={!activeClient.address || !activeClient.area || !activeClient.city}
+                        onChange={() => { onChange(savedAddress(activeClient)); setSelectedClient(activeClient); setDifferentAddress(false); }} className="mt-1 h-4 w-4 accent-yellow-500" />
+                      <span><b>Use saved address</b><span className="mt-1 block text-gray-600">{[activeClient.address, activeClient.apartment, activeClient.area, activeClient.city].filter(Boolean).join(", ") || "No saved address"}</span>
+                      {!activeClient.address || !activeClient.area || !activeClient.city ? <span className="block text-amber-800">Complete the address below for this order.</span> : null}</span>
+                    </label>
+                    <label className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-black/10 p-3 text-sm font-bold">
+                      <input type="radio" name="order-address" checked={showDifferentAddress} onChange={() => {
+                        setDifferentAddress(true);
+                        onChange({ city: activeClient.city || "Valencia", area: "", address: "", apartment: "" });
+                      }} className="h-4 w-4 accent-yellow-500" />Different address for this order
+                    </label>
+                  </fieldset>
+                ) : null}
+                {customerMode === "new" || showDifferentAddress || !activeClient ? (
+                  <div className="mt-3 grid min-w-0 gap-4 sm:grid-cols-2">
               <Field label="City">
                 <select
                   value={manual.city}
@@ -2915,7 +3022,11 @@ export function ManualOrderForm({
                   onChange={(e) => onChange({ apartment: e.target.value })}
                 />
               </Field>
-            </div>
+                  </div>
+                ) : null}
+                {showDifferentAddress && activeClient ? <p className="mt-3 text-xs text-gray-500">Used for this order. The customer’s saved address is unchanged.</p> : null}
+              </div>
+            )}
           </section>
           <section className="rounded-2xl border border-black/5 bg-white p-4 sm:p-5">
             <div className="flex items-center gap-3">
@@ -3041,17 +3152,14 @@ export function ManualOrderForm({
             </button>
           </section>
         </div>
-        <div className="relative z-10 flex shrink-0 items-center gap-3 border-t border-black/10 bg-white px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:px-6" data-manual-order-actions>
-          <div className="min-w-0 flex-1">
+        {submitError ? <p role="alert" className="shrink-0 border-t border-red-200 bg-red-50 px-4 py-2 text-sm text-red-800">{submitError}</p> : null}
+        <div hidden={keyboardOpen} className={`${keyboardOpen ? "hidden" : "flex"} relative z-10 shrink-0 items-center justify-between gap-4 border-t border-black/10 bg-white/90 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_16px_rgba(0,0,0,0.04)] backdrop-blur-xl sm:px-6`} data-manual-order-actions>
+          <div className="min-w-0">
             <p className="text-xs text-gray-500">Total</p>
-            <p className="text-xl font-black">{money(manualTotal)}</p>
+            <p className="whitespace-nowrap text-xl font-black">{money(manualTotal)}</p>
           </div>
-          <button type="button" onClick={onClose}
-            className="min-h-11 rounded-xl px-3 text-sm font-bold text-gray-600 hover:bg-gray-100">
-            Cancel
-          </button>
-          <button disabled={saving || services.length === 0}
-            className="min-h-12 rounded-xl bg-yellow-400 px-5 py-3 text-sm font-black transition hover:bg-yellow-300 disabled:opacity-50">
+          <button disabled={saving || services.length === 0 || customerMode === "select"}
+            className="min-h-12 rounded-xl bg-yellow-400 px-6 py-3 text-sm font-black transition hover:bg-yellow-300 disabled:opacity-50">
             {saving ? "Saving…" : "Create order"}
           </button>
         </div>
@@ -3219,36 +3327,32 @@ function ClientMatches({
   onSelect: (client: ManualClient) => void;
 }) {
   return (
-    <div className="mt-2 max-h-56 overflow-y-auto overscroll-contain rounded-xl border border-yellow-300 bg-yellow-50 p-1">
+    <div id="manual-customer-results" className="mt-2 divide-y divide-black/5 rounded-xl border border-black/10 bg-white p-1">
       {loading ? (
         <p className="px-3 py-3 text-sm font-semibold text-gray-500">
-          Searching clients…
+          Loading customers…
         </p>
       ) : error ? (
-        <button type="button" onPointerDown={(event) => event.preventDefault()} onClick={onRetry} className="p-3 text-sm text-red-700">Could not load clients. Retry</button>
+        <button type="button" onClick={onRetry} className="p-3 text-sm text-red-700">Could not load customers. Retry</button>
       ) : matches.length === 0 ? (
-        <p className="p-3 text-sm text-gray-500">No matching clients</p>
+        <p className="p-3 text-sm text-gray-500">No customers found. Search again or create a new customer.</p>
       ) : (
         matches.map((client) => (
           <button
             key={client.id}
             type="button"
-            onPointerDown={(event) => event.preventDefault()}
+
             onClick={() => onSelect(client)}
             className="block w-full break-words rounded-xl px-3 py-3 text-left transition hover:bg-yellow-50 focus:bg-yellow-50"
           >
             <span className="block font-bold text-gray-900">
-              {client.full_name || "Unnamed client"}
+              {client.full_name || "Unnamed customer"}
             </span>
-            <span className="mt-1 block text-xs text-gray-500">
-              {[
-                client.phone,
-                client.email,
-                [client.city, client.area].filter(Boolean).join(" · "),
-              ]
-                .filter(Boolean)
-                .join(" · ")}
+            <span className="mt-1 block text-sm text-gray-700">{client.phone || client.alternate_phone || "No phone saved"}</span>
+            <span className="mt-1 block text-xs leading-5 text-gray-500">
+              {[client.address, client.area, client.city].filter(Boolean).join(" · ") || "No address saved"}
             </span>
+            {client.email ? <span className="block break-all text-xs leading-5 text-gray-500">{client.email}</span> : null}
           </button>
         ))
       )}
@@ -3273,4 +3377,4 @@ function Field({
   );
 }
 
-  
+
