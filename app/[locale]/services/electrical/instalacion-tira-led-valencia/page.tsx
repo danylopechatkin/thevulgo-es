@@ -41,12 +41,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de Tira LED en Valencia | Desde 29€ | THEVULGO"
-    : "LED Strip Installation in Valencia | From €29 | THEVULGO";
+    ? "Instalación de Tira LED en Valencia | 29 € | THEVULGO"
+    : "LED Strip Installation in Valencia | €29 | THEVULGO";
 
   const description = isEs
-    ? "Instalación simple de tiras LED en Valencia desde 29€. Iluminación decorativa para estantes, escritorios, muebles TV, cocinas y habitaciones."
-    : "Simple LED strip installation in Valencia from €29. Decorative lighting for shelves, desks, TV units, kitchens and rooms.";
+    ? "Instalación simple de tiras LED en Valencia por 29 €. Iluminación decorativa para estantes, escritorios, muebles TV, cocinas y habitaciones."
+    : "Simple LED strip installation in Valencia for €29. Decorative lighting for shelves, desks, TV units, kitchens and rooms.";
 
   return {
     title,
@@ -85,8 +85,8 @@ export default async function LedStripInstallationValenciaPage({
       : "LED strip installation in Valencia",
 
     hero: isEs
-      ? "Instalación simple de tiras LED desde 29€ para estantes, escritorios, muebles TV, cocinas, habitaciones e iluminación decorativa con acabado limpio y ordenado."
-      : "Simple LED strip installation from €29 for shelves, desks, TV furniture, kitchens, rooms and decorative lighting with a clean, organized finish.",
+      ? "Instalación simple de tiras LED por 29 € para estantes, escritorios, muebles TV, cocinas, habitaciones e iluminación decorativa con acabado limpio y ordenado."
+      : "Simple LED strip installation for €29 for shelves, desks, TV furniture, kitchens, rooms and decorative lighting with a clean, organized finish.",
 
     whatsapp: isEs
       ? "Hola, quiero un presupuesto para instalación de tira LED en Valencia."
@@ -105,7 +105,7 @@ export default async function LedStripInstallationValenciaPage({
 
     bullets: isEs
       ? [
-          "Desde 29€",
+          "29 €",
           "Estantes y escritorios",
           "Muebles TV y decoración",
           "Cableado ordenado",
@@ -113,7 +113,7 @@ export default async function LedStripInstallationValenciaPage({
           "Valencia y alrededores",
         ]
       : [
-          "From €29",
+          "€29",
           "Shelves and desks",
           "TV furniture and decor",
           "Clean cable routing",
@@ -310,7 +310,7 @@ export default async function LedStripInstallationValenciaPage({
     ? [
         {
           q: "¿Cuánto cuesta instalar una tira LED en Valencia?",
-          a: "La instalación simple de tira LED empieza desde 29€. El precio final depende de la longitud, ubicación, tipo de superficie, fuente de alimentación, cableado y dificultad.",
+          a: "La instalación simple de tira LED cuesta 29 €. El precio final depende de la longitud, ubicación, tipo de superficie, fuente de alimentación, cableado y dificultad.",
         },
         {
           q: "¿Dónde se pueden instalar tiras LED?",
@@ -344,7 +344,7 @@ export default async function LedStripInstallationValenciaPage({
     : [
         {
           q: "How much does LED strip installation cost in Valencia?",
-          a: "Simple LED strip installation starts from €29. The final price depends on length, location, surface type, power supply, cable routing and difficulty.",
+          a: "Simple LED strip installation costs €29. The final price depends on length, location, surface type, power supply, cable routing and difficulty.",
         },
         {
           q: "Where can LED strips be installed?",
@@ -683,7 +683,7 @@ export default async function LedStripInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 29€" : "From €29"}
+            {isEs ? "29 €" : "€29"}
           </p>
           <h2 className="mt-3 text-4xl font-black">{t.priceTitle}</h2>
           <p className="mt-6 text-lg font-medium leading-8 text-neutral-900">

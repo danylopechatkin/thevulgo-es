@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Estante de Cristal para Baño | Desde 35€ | THEVULGO"
-      : "Glass Bathroom Shelf Installation | From €35 | THEVULGO",
+      ? "Instalación de Estante de Cristal para Baño | 35 € | THEVULGO"
+      : "Glass Bathroom Shelf Installation | €35 | THEVULGO",
     description: isEs
-      ? "Instalación de estantes de cristal para baño desde 35€. Montaje seguro de baldas de vidrio para cosméticos, almacenaje y decoración."
-      : "Glass bathroom shelf installation from €35. Secure mounting for cosmetics, storage or decorative use with clean spacing and alignment.",
+      ? "Instalación de estantes de cristal para baño por 35 €. Montaje seguro de baldas de vidrio para cosméticos, almacenaje y decoración."
+      : "Glass bathroom shelf installation for €35. Secure mounting for cosmetics, storage or decorative use with clean spacing and alignment.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar un estante de cristal para baño?",
-    a: "La instalación de estante de cristal para baño empieza desde 35€. El precio depende del tamaño, peso, tipo de pared, soportes, número de fijaciones y dificultad del montaje.",
+    a: "La instalación de estante de cristal para baño cuesta 35 €. El precio depende del tamaño, peso, tipo de pared, soportes, número de fijaciones y dificultad del montaje.",
   },
   {
     q: "¿Instalan estantes de cristal sobre azulejo?",
@@ -247,7 +247,7 @@ export default async function GlassShelfInstallationPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 35€",
+                "35 €",
                 "Estantes de cristal",
                 "Para cosméticos",
                 "Montaje seguro",
@@ -318,7 +318,7 @@ export default async function GlassShelfInstallationPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 35€. Presupuesto según fotos, piezas y dificultad.",
+              text: "35 €. Presupuesto según fotos, piezas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -463,7 +463,7 @@ export default async function GlassShelfInstallationPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 35€
+            35 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar estante de cristal de baño

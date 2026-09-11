@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de Tacos y Anclajes en Valencia | Desde 25€ | THEVULGO"
-    : "Wall Anchor Installation in Valencia | From €25 | THEVULGO";
+    ? "Instalación de Tacos y Anclajes en Valencia | 25 € | THEVULGO"
+    : "Wall Anchor Installation in Valencia | €25 | THEVULGO";
 
   const description = isEs
-    ? "Instalación de tacos y anclajes de pared en Valencia desde 25€ para montar estantes, espejos, accesorios y fijaciones de forma segura."
-    : "Wall anchor and plug installation in Valencia from €25 for safe mounting of shelves, mirrors, fixtures and small wall fittings.";
+    ? "Instalación de tacos y anclajes de pared en Valencia por 25 € para montar estantes, espejos, accesorios y fijaciones de forma segura."
+    : "Wall anchor and plug installation in Valencia for €25 for safe mounting of shelves, mirrors, fixtures and small wall fittings.";
 
   return {
     title,
@@ -114,7 +114,7 @@ export default async function WallAnchorInstallationPage({ params }: PageProps) 
         },
         {
           q: "¿Cuánto cuesta instalar anclajes de pared en Valencia?",
-          a: "El servicio empieza desde 25€. El precio final depende del número de puntos, tipo de pared, peso del objeto, acceso y material necesario.",
+          a: "El servicio cuesta 25 €. El precio final depende del número de puntos, tipo de pared, peso del objeto, acceso y material necesario.",
         },
         {
           q: "¿Sirve para montar estantes y espejos?",
@@ -136,7 +136,7 @@ export default async function WallAnchorInstallationPage({ params }: PageProps) 
         },
         {
           q: "How much does wall anchor installation cost in Valencia?",
-          a: "The service starts from €25. Final price depends on the number of fixing points, wall type, item weight, access and required material.",
+          a: "The service costs €25. Final price depends on the number of fixing points, wall type, item weight, access and required material.",
         },
         {
           q: "Is this suitable for shelves and mirrors?",
@@ -232,13 +232,13 @@ export default async function WallAnchorInstallationPage({ params }: PageProps) 
 
   const heroPoints = isEs
     ? [
-        "Desde 25€",
+        "25 €",
         "Tacos y anclajes",
         "Estantes, espejos y accesorios",
         "Fijación más segura",
       ]
     : [
-        "From €25",
+        "€25",
         "Wall plugs and anchors",
         "Shelves, mirrors and fixtures",
         "Safer mounting",
@@ -338,7 +338,7 @@ export default async function WallAnchorInstallationPage({ params }: PageProps) 
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Drill className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 25€" : "From €25"}
+                {isEs ? "25 €" : "€25"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -474,7 +474,7 @@ export default async function WallAnchorInstallationPage({ params }: PageProps) 
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 25€" : "From €25"}
+            {isEs ? "25 €" : "€25"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

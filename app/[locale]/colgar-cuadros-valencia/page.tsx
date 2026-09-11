@@ -166,27 +166,27 @@ export default async function ColgarCuadrosValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Colgar 1 cuadro pequeño", "desde 29 €"],
-        ["Colgar varios cuadros", "desde 39 €"],
-        ["Composición de cuadros", "desde 49 €"],
-        ["Cuadro grande o pesado", "desde 49 €"],
+        ["Colgar 1 cuadro pequeño", "29 €"],
+        ["Colgar varios cuadros", "39 €"],
+        ["Composición de cuadros", "49 €"],
+        ["Cuadro grande o pesado", "49 €"],
         ["Espejo ligero / decoración", "según trabajo"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Hang 1 small picture", "from €29"],
-        ["Hang several pictures", "from €39"],
-        ["Picture wall composition", "from €49"],
-        ["Large or heavy picture", "from €49"],
+        ["Hang 1 small picture", "€29"],
+        ["Hang several pictures", "€39"],
+        ["Picture wall composition", "€49"],
+        ["Large or heavy picture", "€49"],
         ["Light mirror / decor", "by job"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta colgar cuadros en Valencia?",
-          a: "Depende del número de cuadros, tamaño, peso, tipo de pared, altura, composición y fijaciones necesarias. Un trabajo pequeño suele empezar desde 29–39 €.",
+          a: "Depende del número de cuadros, tamaño, peso, tipo de pared, altura, composición y fijaciones necesarias. Un trabajo pequeño cuesta 29–39 €.",
         },
         {
           q: "¿Podéis colgar varios cuadros alineados?",
@@ -212,7 +212,7 @@ export default async function ColgarCuadrosValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does picture hanging in Valencia cost?",
-          a: "It depends on number of pictures, size, weight, wall type, height, layout and required fixings. A small job usually starts from €29–39.",
+          a: "It depends on number of pictures, size, weight, wall type, height, layout and required fixings. A small job costs €29–39.",
         },
         {
           q: "Can you hang several pictures aligned?",
@@ -475,7 +475,7 @@ export default async function ColgarCuadrosValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

@@ -28,11 +28,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Instalación de Lámparas Colgantes en Valencia | Desde 39€ | THEVULGO"
-      : "Pendant Lamp Installation in Valencia | From €39 | THEVULGO",
+      ? "Instalación de Lámparas Colgantes en Valencia | 39 € | THEVULGO"
+      : "Pendant Lamp Installation in Valencia | €39 | THEVULGO",
     description: isEs
-      ? "Instalación de lámparas colgantes en Valencia desde 39€. Posición cuidada, altura correcta, fijación segura y acabado limpio para casas y apartamentos."
-      : "Pendant lamp installation in Valencia from €39. Careful positioning, correct height, secure fixing and clean finish for homes and apartments.",
+      ? "Instalación de lámparas colgantes en Valencia por 39 €. Posición cuidada, altura correcta, fijación segura y acabado limpio para casas y apartamentos."
+      : "Pendant lamp installation in Valencia for €39. Careful positioning, correct height, secure fixing and clean finish for homes and apartments.",
     alternates: {
       canonical: `${siteUrl}/${locale}/instalacion-lamparas-colgantes-valencia`,
       languages: {
@@ -74,7 +74,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar una lámpara colgante en Valencia?",
-    a: "La instalación de lámpara colgante empieza desde 39€. El precio final depende del tipo de lámpara, peso, altura, techo, punto de luz y dificultad de instalación.",
+    a: "La instalación de lámpara colgante cuesta 39 €. El precio final depende del tipo de lámpara, peso, altura, techo, punto de luz y dificultad de instalación.",
   },
   {
     q: "¿Pueden ajustar la altura de la lámpara colgante?",
@@ -212,8 +212,8 @@ export default async function PendantLampInstallationValenciaPage({
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Instalación de lámparas colgantes desde{" "}
-              <strong className="text-neutral-950">39€</strong>, con posición
+              Instalación de lámparas colgantes de{" "}
+              <strong className="text-neutral-950">39 €</strong>, con posición
               cuidada, altura correcta, fijación segura y acabado limpio para
               casas, apartamentos, cocinas y salones.
             </p>
@@ -237,7 +237,7 @@ export default async function PendantLampInstallationValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Instalación desde 39€",
+                "Instalación por 39 €",
                 "Lámparas colgantes",
                 "Altura y posición cuidada",
                 "Comedor, cocina y salón",
@@ -423,7 +423,7 @@ export default async function PendantLampInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para instalar lámpara colgante en Valencia

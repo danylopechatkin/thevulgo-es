@@ -101,8 +101,8 @@ export default function DoorsClient() {
     {
       title: isEs ? "Precio transparente" : "Transparent pricing",
       text: isEs
-        ? "Precios iniciales claros y estimación práctica antes de empezar."
-        : "Clear starting prices and practical estimate logic before work begins.",
+        ? "Precios claros y estimación práctica antes de empezar."
+        : "Clear prices and practical estimate logic before work begins.",
       icon: <ShieldCheck className="h-5 w-5" />,
     },
   ];
@@ -113,7 +113,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Corrección básica de alineación para puertas que rozan, quedan desiguales o no cierran con suavidad. Una opción práctica para pequeños problemas de uso en pisos y casas."
       : "Basic door alignment correction for doors that rub, sit unevenly or do not close as smoothly as they should. A practical option for small usability issues in apartments and homes.",
-    price: isEs ? "desde €39" : "from €39",
+    price: isEs ? "39 €" : "€39",
     icon: <DoorOpen className="h-5 w-5" />,
     href: `/${locale}/services/doors/door-alignment-adjustment`,
     className: "lg:col-span-2",
@@ -123,7 +123,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Cambio de manillas desgastadas, dañadas o antiguas por herrajes más limpios y de mejor aspecto."
       : "Replacement of worn, damaged or outdated door handles with cleaner, better-looking hardware.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <Hammer className="h-5 w-5" />,
     href: `/${locale}/services/doors/handle-replacement`,
     className: "",
@@ -133,7 +133,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Apretado y estabilización de manillas, pomos y piezas visibles que se han aflojado."
       : "Tightening and stabilizing loose handles, knobs and visible fittings.",
-    price: isEs ? "desde €25" : "from €25",
+    price: isEs ? "25 €" : "€25",
     icon: <Wrench className="h-5 w-5" />,
     href: `/${locale}/services/doors/loose-handle-fixing`,
     className: "",
@@ -143,7 +143,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Pequeñas correcciones del pestillo cuando la puerta no engancha correctamente."
       : "Small latch corrections when the door does not catch properly.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <ShieldCheck className="h-5 w-5" />,
     href: `/${locale}/services/doors/latch-adjustment`,
     className: "",
@@ -153,7 +153,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Ajuste del cerradero y herrajes visibles para mejorar cómo cierra la puerta."
       : "Adjustment of strike plates and related visible hardware.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <SquareDashedMousePointer className="h-5 w-5" />,
     href: `/${locale}/services/doors/latch-adjustment`,
     className: "",
@@ -163,7 +163,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Apretado y pequeñas correcciones de bisagras sueltas."
       : "Tightening and small corrections of loose hinges.",
-    price: isEs ? "desde €25" : "from €25",
+    price: isEs ? "25 €" : "€25",
     icon: <Wrench className="h-5 w-5" />,
     href: `/${locale}/services/doors/hinge-tightening`,
     className: "",
@@ -173,7 +173,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Cambio o ajuste de burletes desgastados para reducir corrientes de aire y ruido."
       : "Replacement or adjustment of worn door seals.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <ShieldCheck className="h-5 w-5" />,
     href: `/${locale}/services/doors/door-seal-replacement`,
     className: "",
@@ -183,7 +183,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Cambio de bisagras visibles cuando el herraje compatible ya está disponible."
       : "Replacement of visible door hinges where compatible hardware is available.",
-    price: isEs ? "desde €35" : "from €35",
+    price: isEs ? "35 €" : "€35",
     icon: <Hammer className="h-5 w-5" />,
     href: `/${locale}/services/doors/cambio-bisagras-puerta`,
     className: "lg:col-span-2",
@@ -193,7 +193,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Ajuste básico de cierrapuertas compatibles para reducir golpes."
       : "Basic adjustment of compatible closers to reduce slamming.",
-    price: isEs ? "desde €39" : "from €39",
+    price: isEs ? "39 €" : "€39",
     icon: <DoorOpen className="h-5 w-5" />,
     href: `/${locale}/services/doors/ajuste-cierrapuertas`,
     className: "",
@@ -203,7 +203,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Instalación de topes para proteger paredes, muebles y manillas."
       : "Installation of simple door stoppers to protect walls and handles.",
-    price: isEs ? "desde €25" : "from €25",
+    price: isEs ? "25 €" : "€25",
     icon: <House className="h-5 w-5" />,
     href: `/${locale}/services/doors/instalacion-tope-puerta`,
     className: "",
@@ -213,7 +213,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Cambio de bombines compatibles cuando la pieza nueva ya está disponible."
       : "Replacement of compatible visible lock cylinders.",
-    price: isEs ? "desde €39" : "from €39",
+    price: isEs ? "39 €" : "€39",
     icon: <KeyRound className="h-5 w-5" />,
     href: `/${locale}/services/doors/cambio-bombin-cerradura`,
     className: "",
@@ -223,7 +223,7 @@ export default function DoorsClient() {
     desc: isEs
       ? "Pequeñas correcciones en puertas de muebles, puertas interiores y mecanismos visibles."
       : "Small hardware corrections for cabinet doors, utility doors and interior fittings.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <Wrench className="h-5 w-5" />,
     href: `/${locale}/services/doors/herrajes-puertas-interiores`,
     className: "",

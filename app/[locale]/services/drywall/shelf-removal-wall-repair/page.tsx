@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reparación de Pared Tras Quitar Estantes en Valencia | Desde 35€ | THEVULGO"
-    : "Shelf Removal Wall Repair in Valencia | From €35 | THEVULGO";
+    ? "Reparación de Pared Tras Quitar Estantes en Valencia | 35 € | THEVULGO"
+    : "Shelf Removal Wall Repair in Valencia | €35 | THEVULGO";
 
   const description = isEs
-    ? "Reparación de pared tras quitar estantes en Valencia desde 35€. Relleno de agujeros de tacos, tornillos, anclajes y daños de montaje."
-    : "Shelf removal wall repair in Valencia from €35. Repair of shelf anchor points, screws and mounting damage with filling and smoothing.";
+    ? "Reparación de pared tras quitar estantes en Valencia por 35 €. Relleno de agujeros de tacos, tornillos, anclajes y daños de montaje."
+    : "Shelf removal wall repair in Valencia for €35. Repair of shelf anchor points, screws and mounting damage with filling and smoothing.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function ShelfRemovalWallRepairPage({ params }: PageProps) 
         },
         {
           q: "¿Cuánto cuesta reparar la pared después de quitar un estante?",
-          a: "El servicio empieza desde 35€. El precio final depende del número de agujeros, tamaño del daño, tipo de pared, acabado esperado y si hace falta pintura.",
+          a: "El servicio cuesta 35 €. El precio final depende del número de agujeros, tamaño del daño, tipo de pared, acabado esperado y si hace falta pintura.",
         },
         {
           q: "¿Podéis reparar agujeros de tacos y tornillos?",
@@ -141,7 +141,7 @@ export default async function ShelfRemovalWallRepairPage({ params }: PageProps) 
         },
         {
           q: "How much does wall repair after shelf removal cost?",
-          a: "The service starts from €35. Final price depends on number of holes, damage size, wall type, expected finish and whether painting is needed.",
+          a: "The service costs €35. Final price depends on number of holes, damage size, wall type, expected finish and whether painting is needed.",
         },
         {
           q: "Can you repair wall plug and screw holes?",
@@ -245,13 +245,13 @@ export default async function ShelfRemovalWallRepairPage({ params }: PageProps) 
 
   const heroPoints = isEs
     ? [
-        "Desde 35€",
+        "35 €",
         "Agujeros de estantes y soportes",
         "Tacos, tornillos y anclajes",
         "Relleno y alisado local",
       ]
     : [
-        "From €35",
+        "€35",
         "Shelf and bracket holes",
         "Plugs, screws and anchors",
         "Local filling and smoothing",
@@ -386,7 +386,7 @@ export default async function ShelfRemovalWallRepairPage({ params }: PageProps) 
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Hammer className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 35€" : "From €35"}
+                {isEs ? "35 €" : "€35"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -522,7 +522,7 @@ export default async function ShelfRemovalWallRepairPage({ params }: PageProps) 
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 35€" : "From €35"}
+            {isEs ? "35 €" : "€35"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

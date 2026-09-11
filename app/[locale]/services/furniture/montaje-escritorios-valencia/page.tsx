@@ -28,11 +28,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Montaje de Escritorios en Valencia | Desde 39€ | THEVULGO"
-      : "Desk & Home Office Assembly in Valencia | From €39 | THEVULGO",
+      ? "Montaje de Escritorios en Valencia | 39 € | THEVULGO"
+      : "Desk & Home Office Assembly in Valencia | €39 | THEVULGO",
     description: isEs
-      ? "Montaje de escritorios, mesas de trabajo y zonas compactas de oficina en casa en Valencia desde 39€. Alineación, estabilidad y organización básica de cables."
-      : "Desk, work table and compact home office assembly in Valencia from €39. Careful alignment, stable setup and basic cable organization.",
+      ? "Montaje de escritorios, mesas de trabajo y zonas compactas de oficina en casa en Valencia por 39 €. Alineación, estabilidad y organización básica de cables."
+      : "Desk, work table and compact home office assembly in Valencia for €39. Careful alignment, stable setup and basic cable organization.",
     alternates: {
       canonical: `${siteUrl}/${locale}/services/furniture/montaje-escritorios-valencia`,
       languages: {
@@ -74,7 +74,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta montar un escritorio en Valencia?",
-    a: "El montaje de escritorios empieza desde 39€. El precio final depende del tamaño, número de piezas, cajones, patas, estantes, dificultad y si hay que organizar cables o montar accesorios.",
+    a: "El montaje de escritorios cuesta 39 €. El precio final depende del tamaño, número de piezas, cajones, patas, estantes, dificultad y si hay que organizar cables o montar accesorios.",
   },
   {
     q: "¿Montan escritorios IKEA?",
@@ -211,8 +211,8 @@ export default async function DeskAssemblyValenciaPage({ params }: PageProps) {
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
               Montaje de escritorios, mesas de trabajo y zonas compactas de
-              oficina en casa desde{" "}
-              <strong className="text-neutral-950">39€</strong>. Alineación
+              oficina en casa por{" "}
+              <strong className="text-neutral-950">39 €</strong>. Alineación
               correcta, estructura estable y organización básica de cables para
               trabajar cómodo.
             </p>
@@ -236,7 +236,7 @@ export default async function DeskAssemblyValenciaPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Montaje desde 39€",
+                "Montaje por 39 €",
                 "Escritorios y mesas de trabajo",
                 "Oficina en casa",
                 "Cajoneras y accesorios",
@@ -423,7 +423,7 @@ export default async function DeskAssemblyValenciaPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para montar escritorio en Valencia

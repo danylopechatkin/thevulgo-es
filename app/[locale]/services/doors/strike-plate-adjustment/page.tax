@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Ajuste de Cerradero de Puerta | Desde 29€ | THEVULGO"
-      : "Strike Plate Adjustment | From €29 | THEVULGO",
+      ? "Ajuste de Cerradero de Puerta | 29 € | THEVULGO"
+      : "Strike Plate Adjustment | €29 | THEVULGO",
     description: isEs
-      ? "Ajuste de cerradero de puerta desde 29€. Corrección de placa, pestillo y herrajes visibles para mejorar el cierre y la alineación con el marco."
-      : "Strike plate adjustment from €29. Improve door closing, latch alignment and frame fit with practical strike plate and hardware corrections.",
+      ? "Ajuste de cerradero de puerta por 29 €. Corrección de placa, pestillo y herrajes visibles para mejorar el cierre y la alineación con el marco."
+      : "Strike plate adjustment for €29. Improve door closing, latch alignment and frame fit with practical strike plate and hardware corrections.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta ajustar un cerradero de puerta?",
-    a: "El ajuste de cerradero empieza desde 29€. El precio depende del tipo de puerta, placa, pestillo, marco, tornillos, nivel de desalineación y dificultad del ajuste.",
+    a: "El ajuste de cerradero cuesta 29 €. El precio depende del tipo de puerta, placa, pestillo, marco, tornillos, nivel de desalineación y dificultad del ajuste.",
   },
   {
     q: "¿Pueden ajustar el cerradero sin cambiarlo?",
@@ -242,7 +242,7 @@ export default async function StrikePlateAdjustmentPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 29€",
+                "29 €",
                 "Cerradero desalineado",
                 "Pestillo que no entra",
                 "Mejor cierre",
@@ -313,7 +313,7 @@ export default async function StrikePlateAdjustmentPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 29€. Presupuesto según fotos, vídeo y dificultad.",
+              text: "29 €. Presupuesto según fotos, vídeo y dificultad.",
             },
           ].map((item) => (
             <div
@@ -458,7 +458,7 @@ export default async function StrikePlateAdjustmentPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para ajustar cerradero de puerta

@@ -166,27 +166,27 @@ export default async function ColgarTvValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Colgar TV pequeña", "desde 49 €"],
-        ["Colgar TV mediana", "desde 59 €"],
-        ["Colgar TV grande", "desde 69 €"],
-        ["Soporte articulado / brazo", "desde 79 €"],
+        ["Colgar TV pequeña", "49 €"],
+        ["Colgar TV mediana", "59 €"],
+        ["Colgar TV grande", "69 €"],
+        ["Soporte articulado / brazo", "79 €"],
         ["Soundbar / cableado limpio", "según trabajo"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small TV mounting", "from €49"],
-        ["Medium TV mounting", "from €59"],
-        ["Large TV mounting", "from €69"],
-        ["Full motion / arm bracket", "from €79"],
+        ["Small TV mounting", "€49"],
+        ["Medium TV mounting", "€59"],
+        ["Large TV mounting", "€69"],
+        ["Full motion / arm bracket", "€79"],
         ["Soundbar / clean cabling", "by job"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta colgar una TV en Valencia?",
-          a: "Depende del tamaño de la TV, tipo de pared, soporte, altura, cableado y dificultad. Una instalación básica suele empezar desde 49–69 €.",
+          a: "Depende del tamaño de la TV, tipo de pared, soporte, altura, cableado y dificultad. Una instalación básica cuesta 49–69 €.",
         },
         {
           q: "¿Se puede colgar una TV en pared de pladur?",
@@ -212,7 +212,7 @@ export default async function ColgarTvValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does TV wall mounting in Valencia cost?",
-          a: "It depends on TV size, wall type, bracket, height, cabling and difficulty. A basic installation usually starts from €49–69.",
+          a: "It depends on TV size, wall type, bracket, height, cabling and difficulty. A basic installation costs €49–69.",
         },
         {
           q: "Can a TV be mounted on drywall?",
@@ -436,7 +436,7 @@ export default async function ColgarTvValenciaPage({ params }: Props) {
 
               <p className="mt-5 text-lg leading-8 text-neutral-700">
                 {isEs
-                  ? "Antes de colgar una TV revisamos el tipo de pared, peso del televisor, tamaño, soporte, altura ideal, puntos de fijación, distancia a enchufes y cableado. El objetivo es dejar la televisión nivelada, estable y cómoda para ver desde el sofá, cama u oficina."
+                  ? "Antes de colgar una TV revisamos el tipo de pared, peso del televisor, tamaño, soporte, altura ideal, puntos de fijación, distancia a enchufes y cableado. El objetivo es dejar la televisión nivelada, estable y cómoda para ver en el sofá, cama u oficina."
                   : "Before mounting a TV, we check wall type, TV weight, size, bracket, ideal height, fixing points, socket distance and cabling. The goal is to leave the TV level, stable and comfortable to watch from the sofa, bed or office."}
               </p>
 
@@ -469,7 +469,7 @@ export default async function ColgarTvValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

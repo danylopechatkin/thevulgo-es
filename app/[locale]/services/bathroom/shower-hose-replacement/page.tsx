@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Cambio de Manguera de Ducha | Desde 29€ | THEVULGO"
-      : "Shower Hose Replacement | From €29 | THEVULGO",
+      ? "Cambio de Manguera de Ducha | 29 € | THEVULGO"
+      : "Shower Hose Replacement | €29 | THEVULGO",
     description: isEs
-      ? "Sustitución de mangueras de ducha y conectores visibles compatibles desde 29€. Mejora el aspecto, la comodidad y el uso diario de la ducha."
-      : "Shower hose replacement from €29. Replacement of shower hoses and visible connectors where the setup is straightforward and compatible.",
+      ? "Sustitución de mangueras de ducha y conectores visibles compatibles de 29 €. Mejora el aspecto, la comodidad y el uso diario de la ducha."
+      : "Shower hose replacement for €29. Replacement of shower hoses and visible connectors where the setup is straightforward and compatible.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta cambiar una manguera de ducha?",
-    a: "El cambio de manguera de ducha empieza desde 29€. El precio depende del tipo de manguera, conectores visibles, compatibilidad, estado de las piezas y si hay que cambiar algún accesorio adicional.",
+    a: "El cambio de manguera de ducha cuesta 29 €. El precio depende del tipo de manguera, conectores visibles, compatibilidad, estado de las piezas y si hay que cambiar algún accesorio adicional.",
   },
   {
     q: "¿Pueden sustituir una manguera antigua?",
@@ -243,7 +243,7 @@ export default async function ShowerHoseReplacementPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 29€",
+                "29 €",
                 "Mangueras de ducha",
                 "Conectores visibles",
                 "Instalación rápida",
@@ -314,7 +314,7 @@ export default async function ShowerHoseReplacementPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 29€. Presupuesto según fotos, modelo y dificultad.",
+              text: "29 €. Presupuesto según fotos, modelo y dificultad.",
             },
           ].map((item) => (
             <div
@@ -459,7 +459,7 @@ export default async function ShowerHoseReplacementPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para cambiar manguera de ducha

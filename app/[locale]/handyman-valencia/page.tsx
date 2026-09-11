@@ -121,13 +121,13 @@ export default async function HandymanValenciaPage({ params }: Props) {
 
   const faqs = isEs
     ? [
-        ["¿Cuánto cuesta un manitas en Valencia?", "Los trabajos pequeños suelen empezar desde 35–49 €. Confirmamos el precio antes de la visita según fotos, materiales y dificultad."],
+        ["¿Cuánto cuesta un manitas en Valencia?", "Los trabajos pequeños cuestan 35–49 €. Confirmamos el precio antes de la visita según fotos, materiales y dificultad."],
         ["¿Puedo enviar fotos por WhatsApp?", "Sí. Envía fotos, una descripción, medidas aproximadas y tu zona para recibir una estimación más clara."],
         ["¿Podéis hacer varios trabajos en una visita?", "Sí. Envía la lista completa para preparar herramientas, materiales y organizar mejor el tiempo."],
         ["¿En qué zonas trabajáis?", "Valencia ciudad y zonas cercanas. Consulta tu ubicación por WhatsApp antes de confirmar."],
       ]
     : [
-        ["How much does a handyman in Valencia cost?", "Small jobs usually start from €35–49. We confirm the price before the visit based on photos, materials and difficulty."],
+        ["How much does a handyman in Valencia cost?", "Small jobs cost €35–49. We confirm the price before the visit based on photos, materials and difficulty."],
         ["Can I send photos by WhatsApp?", "Yes. Send photos, a description, approximate measurements and your area for a clearer estimate."],
         ["Can you do several jobs in one visit?", "Yes. Send the full list so we can prepare tools, materials and organise the time better."],
         ["Which areas do you cover?", "Valencia city and nearby areas. Check your location by WhatsApp before confirming."],
@@ -174,7 +174,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
                 : "We mount TVs and furniture, adjust doors, hang mirrors and handle small repairs. Send photos and get a clear quote by WhatsApp."}
             </p>
             <div className="mt-6 flex flex-wrap gap-2 text-sm font-bold">
-              {[isEs ? "Desde 35 €" : "From €35", isEs ? "Respuesta rápida" : "Fast response", isEs ? "Presupuesto antes de empezar" : "Quote before starting", "ES / EN"].map((item) => (
+              {[isEs ? "35 €" : "€35", isEs ? "Respuesta rápida" : "Fast response", isEs ? "Presupuesto antes de empezar" : "Quote before starting", "ES / EN"].map((item) => (
                 <span key={item} className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-4 py-2 text-white">
                   <Check className="h-4 w-4 text-yellow-400" /> {item}
                 </span>
@@ -212,7 +212,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
           <div>
             <p className="text-sm font-black uppercase tracking-[.2em] text-yellow-600">{isEs ? "Servicios populares" : "Popular services"}</p>
             <h2 className="mt-3 text-3xl font-black sm:text-4xl">{isEs ? "Lo que más nos piden" : "What clients ask for most"}</h2>
-            <p className="mt-3 max-w-2xl text-neutral-600">{isEs ? "Elige el servicio que necesitas y consulta ejemplos, precios orientativos y disponibilidad." : "Choose the service you need and check examples, guide prices and availability."}</p>
+            <p className="mt-3 max-w-2xl text-neutral-600">{isEs ? "Elige el servicio que necesitas y consulta ejemplos, precios de servicios y disponibilidad." : "Choose the service you need and check examples, service prices and availability."}</p>
           </div>
           <Link href={`/${locale}/services`} className="inline-flex items-center gap-2 font-bold underline decoration-yellow-400 decoration-4 underline-offset-4">{isEs ? "Ver todos los servicios" : "See all services"} <ArrowRight className="h-4 w-4" /></Link>
         </div>
@@ -221,7 +221,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
             <Link key={service.href} href={service.href} className="group rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-yellow-400 hover:shadow-xl">
               <div className="flex items-start justify-between gap-4">
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400"><service.icon className="h-6 w-6" /></span>
-                <span className="rounded-full bg-neutral-100 px-3 py-1 text-sm font-black">{isEs ? "desde" : "from"} {service.price}</span>
+                <span className="rounded-full bg-neutral-100 px-3 py-1 text-sm font-black">{isEs ? "precio" : "price"} {service.price}</span>
               </div>
               <h3 className="mt-5 text-xl font-black">{service.title}</h3>
               <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold">{isEs ? "Ver detalles" : "View details"} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
@@ -242,7 +242,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
             <div className="grid gap-3 sm:grid-cols-2">
               {services.map((service) => (
                 <div key={service.title} className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
-                  <span className="font-semibold">{service.title}</span><span className="ml-3 shrink-0 font-black">{isEs ? "desde" : "from"} {service.price}</span>
+                  <span className="font-semibold">{service.title}</span><span className="ml-3 shrink-0 font-black">{isEs ? "precio" : "price"} {service.price}</span>
                 </div>
               ))}
             </div>

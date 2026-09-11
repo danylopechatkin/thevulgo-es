@@ -103,12 +103,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalar ventilador de techo en Valencia desde 45 € | THEVULGO"
-    : "Install Ceiling Fan in Valencia From €45 | THEVULGO";
+    ? "Instalar ventilador de techo en Valencia por 45 € | THEVULGO"
+    : "Install Ceiling Fan in Valencia | €45 | THEVULGO";
 
   const description = isEs
-    ? "Instalar ventilador de techo en Valencia desde 45 €. 2 ventiladores 85 €, 3 ventiladores 125 €. Incluye desmontaje de lámpara antigua, conexión al punto eléctrico existente y prueba final."
-    : "Install a ceiling fan in Valencia from €45. 2 fans €85, 3 fans €125. Includes old lamp removal, connection to the existing electrical point and final test.";
+    ? "Instalar ventilador de techo en Valencia por 45 €. 2 ventiladores 85 €, 3 ventiladores 125 €. Incluye desmontaje de lámpara antigua, conexión al punto eléctrico existente y prueba final."
+    : "Install a ceiling fan in Valencia for €45. 2 fans €85, 3 fans €125. Includes old lamp removal, connection to the existing electrical point and final test.";
 
   return {
     title,
@@ -348,8 +348,8 @@ export default async function InstallCeilingFanPage({ params }: Props) {
 
             <h1 className="max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">
               {isEs
-                ? "Instalar ventilador de techo desde 45 €"
-                : "Install a ceiling fan from €45"}
+                ? "Instalar ventilador de techo por 45 €"
+                : "Install a ceiling fan for €45"}
             </h1>
 
             <p className="mt-6 max-w-4xl text-lg leading-8 text-neutral-700">
@@ -378,7 +378,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
-                isEs ? "Desde 45 €" : "From €45",
+                isEs ? "45 €" : "€45",
                 isEs ? "2 ventiladores 85 €" : "2 fans €85",
                 isEs ? "3 ventiladores 125 €" : "3 fans €125",
               ].map((item) => (

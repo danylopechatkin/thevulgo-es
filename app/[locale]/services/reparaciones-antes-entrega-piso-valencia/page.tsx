@@ -272,22 +272,22 @@ export default async function RepairsBeforeHandoverPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Tapar agujeros pequeños", "desde 35 €"],
-        ["Reparación de pared", "desde 35 €"],
-        ["Retoques de pintura", "desde 49 €"],
-        ["Ajuste de puerta / manilla", "desde 35 €"],
-        ["Cambio de enchufe / interruptor", "desde 35 €"],
-        ["Puesta a punto del piso", "desde 79 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Tapar agujeros pequeños", "35 €"],
+        ["Reparación de pared", "35 €"],
+        ["Retoques de pintura", "49 €"],
+        ["Ajuste de puerta / manilla", "35 €"],
+        ["Cambio de enchufe / interruptor", "35 €"],
+        ["Puesta a punto del piso", "79 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Fill small holes", "from €35"],
-        ["Wall repair", "from €35"],
-        ["Paint touch-ups", "from €49"],
-        ["Door / handle adjustment", "from €35"],
-        ["Outlet / switch replacement", "from €35"],
-        ["Apartment preparation", "from €79"],
-        ["Visit / inspection", "from €49"],
+        ["Fill small holes", "€35"],
+        ["Wall repair", "€35"],
+        ["Paint touch-ups", "€49"],
+        ["Door / handle adjustment", "€35"],
+        ["Outlet / switch replacement", "€35"],
+        ["Apartment preparation", "€79"],
+        ["Visit / inspection", "€49"],
       ];
 
   const process = isEs
@@ -356,7 +356,7 @@ export default async function RepairsBeforeHandoverPage({ params }: Props) {
         },
         {
           q: "¿Cuánto cuesta preparar un piso para entregar?",
-          a: "Depende del número de desperfectos, materiales, tiempo y urgencia. Los trabajos pequeños suelen empezar desde 35–49 €.",
+          a: "Depende del número de desperfectos, materiales, tiempo y urgencia. Los trabajos pequeños cuestan 35–49 €.",
         },
         {
           q: "¿Trabajáis con propietarios, inquilinos y agencias?",
@@ -390,7 +390,7 @@ export default async function RepairsBeforeHandoverPage({ params }: Props) {
         },
         {
           q: "How much does it cost to prepare an apartment for handover?",
-          a: "It depends on the number of issues, materials, time and urgency. Small jobs usually start from €35–49.",
+          a: "It depends on the number of issues, materials, time and urgency. Small jobs cost €35–49.",
         },
         {
           q: "Do you work with owners, tenants and agencies?",
@@ -616,7 +616,7 @@ export default async function RepairsBeforeHandoverPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -635,7 +635,7 @@ export default async function RepairsBeforeHandoverPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

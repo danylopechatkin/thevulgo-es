@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Retoques Antes de Entregar Piso en Valencia | Desde 39€ | THEVULGO"
-    : "Move-Out Touch-Ups in Valencia | From €39 | THEVULGO";
+    ? "Retoques Antes de Entregar Piso en Valencia | 39 € | THEVULGO"
+    : "Move-Out Touch-Ups in Valencia | €39 | THEVULGO";
 
   const description = isEs
-    ? "Retoques antes de entregar un piso en Valencia desde 39€. Marcas de pared, pequeños agujeros, detalles visibles, accesorios sueltos y preparación para entrega."
-    : "Move-out touch-ups in Valencia from €39. Wall marks, small holes, visible details, loose fittings and room preparation before rental handover.";
+    ? "Retoques antes de entregar un piso en Valencia por 39 €. Marcas de pared, pequeños agujeros, detalles visibles, accesorios sueltos y preparación para entrega."
+    : "Move-out touch-ups in Valencia for €39. Wall marks, small holes, visible details, loose fittings and room preparation before rental handover.";
 
   return {
     title,
@@ -118,7 +118,7 @@ export default async function MoveOutTouchUpsPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuestan los retoques de move-out en Valencia?",
-          a: "El servicio empieza desde 39€. El precio final depende del número de zonas, tipo de correcciones, estado de la habitación, material necesario y tiempo estimado.",
+          a: "El servicio cuesta 39 €. El precio final depende del número de zonas, tipo de correcciones, estado de la habitación, material necesario y tiempo estimado.",
         },
         {
           q: "¿Sirve para entregar un piso de alquiler?",
@@ -144,7 +144,7 @@ export default async function MoveOutTouchUpsPage({ params }: PageProps) {
         },
         {
           q: "How much do move-out touch-ups cost in Valencia?",
-          a: "The service starts from €39. Final price depends on the number of areas, correction type, room condition, required material and estimated time.",
+          a: "The service costs €39. Final price depends on the number of areas, correction type, room condition, required material and estimated time.",
         },
         {
           q: "Is this useful before handing over a rental apartment?",
@@ -247,13 +247,13 @@ export default async function MoveOutTouchUpsPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 39€",
+        "39 €",
         "Antes de entregar llaves",
         "Marcas, agujeros y detalles visibles",
         "Mejor aspecto para inspección",
       ]
     : [
-        "From €39",
+        "€39",
         "Before key handover",
         "Marks, holes and visible details",
         "Cleaner look for inspection",
@@ -502,7 +502,7 @@ export default async function MoveOutTouchUpsPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <KeyRound className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 39€" : "From €39"}
+                {isEs ? "39 €" : "€39"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -768,7 +768,7 @@ export default async function MoveOutTouchUpsPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 39€" : "From €39"}
+            {isEs ? "39 €" : "€39"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

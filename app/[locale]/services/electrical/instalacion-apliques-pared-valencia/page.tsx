@@ -28,11 +28,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Instalación de Apliques de Pared en Valencia | Desde 35€ | THEVULGO"
-      : "Wall Light Installation in Valencia | From €35 | THEVULGO",
+      ? "Instalación de Apliques de Pared en Valencia | 35 € | THEVULGO"
+      : "Wall Light Installation in Valencia | €35 | THEVULGO",
     description: isEs
-      ? "Instalación limpia y segura de apliques de pared en Valencia desde 35€. Iluminación montada en pared para casas, apartamentos, dormitorios, pasillos y salones."
-      : "Clean and safe wall light installation in Valencia from €35. Wall-mounted lighting for homes, apartments, bedrooms, hallways and living rooms.",
+      ? "Instalación limpia y segura de apliques de pared en Valencia por 35 €. Iluminación montada en pared para casas, apartamentos, dormitorios, pasillos y salones."
+      : "Clean and safe wall light installation in Valencia for €35. Wall-mounted lighting for homes, apartments, bedrooms, hallways and living rooms.",
     alternates: {
       canonical: `${siteUrl}/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
       languages: {
@@ -74,7 +74,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar un aplique de pared en Valencia?",
-    a: "La instalación de apliques de pared empieza desde 35€. El precio final depende del tipo de aplique, pared, punto eléctrico, altura, peso y dificultad.",
+    a: "La instalación de apliques de pared cuesta 35 €. El precio final depende del tipo de aplique, pared, punto eléctrico, altura, peso y dificultad.",
   },
   {
     q: "¿Instalan apliques en dormitorio o pasillo?",
@@ -86,7 +86,7 @@ const faqs = [
   },
   {
     q: "¿Se puede instalar un aplique si no hay punto de luz?",
-    a: "Depende del caso. Si no hay punto eléctrico, habría que revisar si se puede llevar cableado desde un punto cercano o preparar una solución con canaleta.",
+    a: "Depende del caso. Si no hay punto eléctrico, habría que revisar si se puede llevar cableado de un punto cercano o preparar una solución con canaleta.",
   },
   {
     q: "¿Instalan apliques en pladur?",
@@ -212,8 +212,8 @@ export default async function WallLightInstallationValenciaPage({
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Instalación limpia y segura de iluminación montada en pared desde{" "}
-              <strong className="text-neutral-950">35€</strong>. Apliques para
+              Instalación limpia y segura de iluminación montada en pared por{" "}
+              <strong className="text-neutral-950">35 €</strong>. Apliques para
               dormitorios, pasillos, salones, entradas, oficinas y apartamentos.
             </p>
 
@@ -236,7 +236,7 @@ export default async function WallLightInstallationValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Instalación desde 35€",
+                "Instalación por 35 €",
                 "Apliques de pared",
                 "Sustitución simple",
                 "Fijación limpia",
@@ -420,7 +420,7 @@ export default async function WallLightInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 35€
+            35 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para instalar apliques en Valencia

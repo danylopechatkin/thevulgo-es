@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Parche Localizado de Techo en Valencia | Desde 39€ | THEVULGO"
-    : "Ceiling Spot Patching in Valencia | From €39 | THEVULGO";
+    ? "Parche Localizado de Techo en Valencia | 39 € | THEVULGO"
+    : "Ceiling Spot Patching in Valencia | €39 | THEVULGO";
 
   const description = isEs
-    ? "Parcheado localizado de techo en Valencia desde 39€. Reparación pequeña, relleno y alisado de zonas visibles en techos interiores."
-    : "Ceiling spot patching in Valencia from €39. Small localized ceiling patching, filling and smoothing for visible interior ceiling areas.";
+    ? "Parcheado localizado de techo en Valencia por 39 €. Reparación pequeña, relleno y alisado de zonas visibles en techos interiores."
+    : "Ceiling spot patching in Valencia for €39. Small localized ceiling patching, filling and smoothing for visible interior ceiling areas.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function CeilingSpotPatchingPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta reparar una zona pequeña del techo en Valencia?",
-          a: "El servicio empieza desde 39€. El precio final depende del tamaño, altura, estado del techo, material necesario y acabado esperado.",
+          a: "El servicio cuesta 39 €. El precio final depende del tamaño, altura, estado del techo, material necesario y acabado esperado.",
         },
         {
           q: "¿Sirve para techos de pladur o yeso?",
@@ -137,7 +137,7 @@ export default async function CeilingSpotPatchingPage({ params }: PageProps) {
         },
         {
           q: "How much does small ceiling repair cost in Valencia?",
-          a: "The service starts from €39. Final price depends on size, height, ceiling condition, required material and expected finish.",
+          a: "The service costs €39. Final price depends on size, height, ceiling condition, required material and expected finish.",
         },
         {
           q: "Is this suitable for drywall or plaster ceilings?",
@@ -209,8 +209,8 @@ export default async function CeilingSpotPatchingPage({ params }: PageProps) {
   };
 
   const heroPoints = isEs
-    ? ["Desde 39€", "Parche localizado", "Techos interiores", "Relleno y alisado"]
-    : ["From €39", "Localized patching", "Interior ceilings", "Filling and smoothing"];
+    ? ["39 €", "Parche localizado", "Techos interiores", "Relleno y alisado"]
+    : ["€39", "Localized patching", "Interior ceilings", "Filling and smoothing"];
 
   const included = isEs
     ? [
@@ -296,7 +296,7 @@ export default async function CeilingSpotPatchingPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <CircleDot className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 39€" : "From €39"}
+                {isEs ? "39 €" : "€39"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs ? "Zona reparada. Techo más limpio. Mejor acabado." : "Area repaired. Cleaner ceiling. Better finish."}
@@ -405,7 +405,7 @@ export default async function CeilingSpotPatchingPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 39€" : "From €39"}
+            {isEs ? "39 €" : "€39"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs ? "Envía fotos de la zona del techo" : "Send photos of the ceiling area"}

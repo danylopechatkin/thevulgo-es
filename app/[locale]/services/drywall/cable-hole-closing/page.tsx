@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Cerrar Agujeros de Cables en Valencia | Desde 29€ | THEVULGO"
-    : "Cable Hole Closing in Valencia | From €29 | THEVULGO";
+    ? "Cerrar Agujeros de Cables en Valencia | 29 € | THEVULGO"
+    : "Cable Hole Closing in Valencia | €29 | THEVULGO";
 
   const description = isEs
-    ? "Cierre y alisado de pequeños agujeros de cables o cableado en paredes en Valencia desde 29€. Reparación limpia tras instalaciones o cambios de cableado."
-    : "Cable hole closing in Valencia from €29. Closing and smoothing small cable or wiring openings in walls after installations or wiring changes.";
+    ? "Cierre y alisado de pequeños agujeros de cables o cableado en paredes en Valencia por 29 €. Reparación limpia tras instalaciones o cambios de cableado."
+    : "Cable hole closing in Valencia for €29. Closing and smoothing small cable or wiring openings in walls after installations or wiring changes.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function CableHoleClosingPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta cerrar un agujero de cable en Valencia?",
-          a: "El servicio empieza desde 29€. El precio final depende del tamaño del hueco, tipo de pared, número de agujeros, acabado esperado y si hace falta pintura.",
+          a: "El servicio cuesta 29 €. El precio final depende del tamaño del hueco, tipo de pared, número de agujeros, acabado esperado y si hace falta pintura.",
         },
         {
           q: "¿Sirve para agujeros de TV, internet o cableado antiguo?",
@@ -137,7 +137,7 @@ export default async function CableHoleClosingPage({ params }: PageProps) {
         },
         {
           q: "How much does cable hole closing cost in Valencia?",
-          a: "The service starts from €29. Final price depends on opening size, wall type, number of holes, expected finish and whether painting is needed.",
+          a: "The service costs €29. Final price depends on opening size, wall type, number of holes, expected finish and whether painting is needed.",
         },
         {
           q: "Is this suitable for TV, internet or old wiring holes?",
@@ -207,8 +207,8 @@ export default async function CableHoleClosingPage({ params }: PageProps) {
   };
 
   const heroPoints = isEs
-    ? ["Desde 29€", "Agujeros de cables", "Cierre y alisado", "Mejor acabado visible"]
-    : ["From €29", "Cable holes", "Closing and smoothing", "Cleaner visible finish"];
+    ? ["29 €", "Agujeros de cables", "Cierre y alisado", "Mejor acabado visible"]
+    : ["€29", "Cable holes", "Closing and smoothing", "Cleaner visible finish"];
 
   const included = isEs
     ? [
@@ -294,7 +294,7 @@ export default async function CableHoleClosingPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Cable className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 29€" : "From €29"}
+                {isEs ? "29 €" : "€29"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs ? "Hueco cerrado. Pared más limpia. Mejor acabado." : "Opening closed. Cleaner wall. Better finish."}
@@ -403,7 +403,7 @@ export default async function CableHoleClosingPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 29€" : "From €29"}
+            {isEs ? "29 €" : "€29"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs ? "Envía fotos del hueco de cable" : "Send photos of the cable hole"}

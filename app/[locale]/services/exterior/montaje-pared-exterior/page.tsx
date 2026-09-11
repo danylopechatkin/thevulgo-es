@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Montaje en Pared Exterior | Desde 39€ | THEVULGO"
-      : "Outdoor Wall Mounting | From €39 | THEVULGO",
+      ? "Montaje en Pared Exterior | 39 € | THEVULGO"
+      : "Outdoor Wall Mounting | €39 | THEVULGO",
     description: isEs
-      ? "Montaje en pared exterior desde 39€. Instalación de accesorios exteriores, carteles, soportes, pequeños dispositivos y elementos prácticos en superficies adecuadas."
-      : "Outdoor wall mounting from €39. Mounting of exterior accessories, signs, holders, small fixtures and practical outdoor items on suitable surfaces.",
+      ? "Montaje en pared exterior por 39 €. Instalación de accesorios exteriores, carteles, soportes, pequeños dispositivos y elementos prácticos en superficies adecuadas."
+      : "Outdoor wall mounting for €39. Mounting of exterior accessories, signs, holders, small fixtures and practical outdoor items on suitable surfaces.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta el montaje en pared exterior?",
-    a: "El montaje en pared exterior empieza desde 39€. El precio depende del tipo de accesorio, superficie, altura, fijaciones, acceso, peso del elemento y dificultad del montaje.",
+    a: "El montaje en pared exterior cuesta 39 €. El precio depende del tipo de accesorio, superficie, altura, fijaciones, acceso, peso del elemento y dificultad del montaje.",
   },
   {
     q: "¿Qué elementos exteriores pueden instalarse?",
@@ -243,7 +243,7 @@ export default async function MontajeParedExteriorPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 39€",
+                "39 €",
                 "Carteles y señales",
                 "Soportes exteriores",
                 "Números de casa",
@@ -314,7 +314,7 @@ export default async function MontajeParedExteriorPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 39€. Presupuesto según fotos, accesorio y dificultad.",
+              text: "39 €. Presupuesto según fotos, accesorio y dificultad.",
             },
           ].map((item) => (
             <div
@@ -461,7 +461,7 @@ export default async function MontajeParedExteriorPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para montaje en pared exterior

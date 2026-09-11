@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Montaje de Cómodas y Cajoneras en Valencia | Desde 45€ | THEVULGO"
-      : "Dresser & Drawer Assembly in Valencia | From €45 | THEVULGO",
+      ? "Montaje de Cómodas y Cajoneras en Valencia | 45 € | THEVULGO"
+      : "Dresser & Drawer Assembly in Valencia | €45 | THEVULGO",
     description: isEs
-      ? "Montaje profesional de cómodas y cajoneras en Valencia desde 45€. Cajones, guías, alineación, ajuste correcto y estructura estable para uso diario."
-      : "Professional dresser and drawer assembly in Valencia from €45. Drawers, runners, alignment, correct adjustment and stable structure for daily use.",
+      ? "Montaje profesional de cómodas y cajoneras en Valencia por 45 €. Cajones, guías, alineación, ajuste correcto y estructura estable para uso diario."
+      : "Professional dresser and drawer assembly in Valencia for €45. Drawers, runners, alignment, correct adjustment and stable structure for daily use.",
     alternates: {
       canonical: `${siteUrl}/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
       languages: {
@@ -73,7 +73,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta montar una cómoda o cajonera en Valencia?",
-    a: "El montaje de cómodas y cajoneras empieza desde 45€. El precio final depende del tamaño, número de cajones, tipo de guías, dificultad y si hay que fijar el mueble a la pared.",
+    a: "El montaje de cómodas y cajoneras cuesta 45 €. El precio final depende del tamaño, número de cajones, tipo de guías, dificultad y si hay que fijar el mueble a la pared.",
   },
   {
     q: "¿Montan cajoneras IKEA?",
@@ -209,8 +209,8 @@ export default async function DrawerAssemblyValenciaPage({ params }: PageProps) 
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Montaje limpio de cajoneras desde{" "}
-              <strong className="text-neutral-950">45€</strong>, con guías y
+              Montaje limpio de cajoneras por{" "}
+              <strong className="text-neutral-950">45 €</strong>, con guías y
               ajuste correcto de cajones. Montamos cómodas, cajoneras IKEA,
               muebles flat-pack y revisamos alineación, estabilidad y seguridad.
             </p>
@@ -234,7 +234,7 @@ export default async function DrawerAssemblyValenciaPage({ params }: PageProps) 
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Montaje desde 45€",
+                "Montaje por 45 €",
                 "Cómodas y cajoneras",
                 "Guías y cajones",
                 "Ajuste de frentes",
@@ -420,7 +420,7 @@ export default async function DrawerAssemblyValenciaPage({ params }: PageProps) 
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 45€
+            45 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para montar cómoda o cajonera en Valencia

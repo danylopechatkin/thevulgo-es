@@ -101,12 +101,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de ventilador con control remoto en Valencia desde 45 € | THEVULGO"
-    : "Ceiling Fan With Remote Control Installation in Valencia From €45 | THEVULGO";
+    ? "Instalación de ventilador con control remoto en Valencia por 45 € | THEVULGO"
+    : "Ceiling Fan With Remote Control Installation in Valencia | €45 | THEVULGO";
 
   const description = isEs
-    ? "Instalación de ventilador de techo con control remoto en Valencia desde 45 €. Montaje, receptor, mando, luz, velocidades y prueba final."
-    : "Ceiling fan with remote control installation in Valencia from €45. Mounting, receiver setup, remote control, light, speeds and final test.";
+    ? "Instalación de ventilador de techo con control remoto en Valencia por 45 €. Montaje, receptor, mando, luz, velocidades y prueba final."
+    : "Ceiling fan with remote control installation in Valencia for €45. Mounting, receiver setup, remote control, light, speeds and final test.";
 
   return {
     title,
@@ -257,8 +257,8 @@ export default async function RemoteControlFanPage({ params }: Props) {
           acceptedAnswer: {
             "@type": "Answer",
             text: isEs
-              ? "El precio es desde 45 € para un ventilador, 85 € para dos y 125 € para tres, usando el punto eléctrico existente."
-              : "The price is from €45 for one fan, €85 for two and €125 for three, using the existing electrical point.",
+              ? "El precio es de 45 € para un ventilador, 85 € para dos y 125 € para tres, usando el punto eléctrico existente."
+              : "The price is €45 for one fan, €85 for two and €125 for three, using the existing electrical point.",
           },
         },
       ],
@@ -359,8 +359,8 @@ export default async function RemoteControlFanPage({ params }: Props) {
         ? "¿Cuánto cuesta instalar un ventilador con control remoto?"
         : "How much does it cost to install a fan with remote control?",
       a: isEs
-        ? "El precio es desde 45 € para un ventilador, 85 € para dos y 125 € para tres, si se usa el punto eléctrico existente."
-        : "The price is from €45 for one fan, €85 for two and €125 for three, when using the existing electrical point.",
+        ? "El precio es de 45 € para un ventilador, 85 € para dos y 125 € para tres, si se usa el punto eléctrico existente."
+        : "The price is €45 for one fan, €85 for two and €125 for three, when using the existing electrical point.",
     },
     {
       q: isEs
@@ -427,8 +427,8 @@ export default async function RemoteControlFanPage({ params }: Props) {
 
             <h1 className="max-w-4xl text-4xl font-black tracking-tight text-neutral-950 sm:text-5xl lg:text-6xl">
               {isEs
-                ? "Instalación de ventilador con control remoto desde 45 €"
-                : "Ceiling fan with remote control from €45"}
+                ? "Instalación de ventilador con control remoto por 45 €"
+                : "Ceiling fan with remote control for €45"}
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600 sm:text-xl">
@@ -457,7 +457,7 @@ export default async function RemoteControlFanPage({ params }: Props) {
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {[
-                isEs ? "Desde 45 €" : "From €45",
+                isEs ? "45 €" : "€45",
                 isEs ? "Mando y receptor" : "Remote and receiver",
                 isEs ? "Prueba completa" : "Full test",
               ].map((item) => (

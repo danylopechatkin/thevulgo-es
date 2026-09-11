@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reparación de Esquinas de Pared en Valencia | Desde 39€ | THEVULGO"
-    : "Corner Repair in Valencia | From €39 | THEVULGO";
+    ? "Reparación de Esquinas de Pared en Valencia | 39 € | THEVULGO"
+    : "Corner Repair in Valencia | €39 | THEVULGO";
 
   const description = isEs
-    ? "Reparación de esquinas de pared dañadas en Valencia desde 39€. Corrección de bordes, golpes, desconchones y zonas visibles con relleno y alisado."
-    : "Corner repair in Valencia from €39. Repair of damaged wall corners, edge areas, chips and visible impact marks with filling and smoothing.";
+    ? "Reparación de esquinas de pared dañadas en Valencia por 39 €. Corrección de bordes, golpes, desconchones y zonas visibles con relleno y alisado."
+    : "Corner repair in Valencia for €39. Repair of damaged wall corners, edge areas, chips and visible impact marks with filling and smoothing.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function CornerRepairPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta reparar una esquina de pared en Valencia?",
-          a: "El servicio empieza desde 39€. El precio final depende del tamaño del golpe, tipo de pared, profundidad del daño, acabado esperado y si hace falta pintura.",
+          a: "El servicio cuesta 39 €. El precio final depende del tamaño del golpe, tipo de pared, profundidad del daño, acabado esperado y si hace falta pintura.",
         },
         {
           q: "¿Se pueden reparar golpes o desconchones en esquinas?",
@@ -141,7 +141,7 @@ export default async function CornerRepairPage({ params }: PageProps) {
         },
         {
           q: "How much does wall corner repair cost in Valencia?",
-          a: "The service starts from €39. Final price depends on impact size, wall type, damage depth, expected finish and whether painting is needed.",
+          a: "The service costs €39. Final price depends on impact size, wall type, damage depth, expected finish and whether painting is needed.",
         },
         {
           q: "Can chips or impact marks on corners be repaired?",
@@ -239,13 +239,13 @@ export default async function CornerRepairPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 39€",
+        "39 €",
         "Esquinas y bordes dañados",
         "Relleno y alisado",
         "Mejor acabado visible",
       ]
     : [
-        "From €39",
+        "€39",
         "Damaged corners and edges",
         "Filling and smoothing",
         "Cleaner visible finish",
@@ -378,7 +378,7 @@ export default async function CornerRepairPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <CornerDownRight className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 39€" : "From €39"}
+                {isEs ? "39 €" : "€39"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -514,7 +514,7 @@ export default async function CornerRepairPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 39€" : "From €39"}
+            {isEs ? "39 €" : "€39"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

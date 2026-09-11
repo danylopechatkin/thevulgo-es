@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Retoques de Fachada | Desde 59€ | THEVULGO"
-      : "Facade Touch-Up Work | From €59 | THEVULGO",
+      ? "Retoques de Fachada | 59 € | THEVULGO"
+      : "Facade Touch-Up Work | €59 | THEVULGO",
     description: isEs
-      ? "Retoques de fachada desde 59€. Trabajos básicos de mejora visible en superficies exteriores accesibles para mejorar apariencia sin reforma completa."
-      : "Facade touch-up work from €59. Basic visible touch-up work on accessible exterior surfaces for practical improvement rather than full renovation.",
+      ? "Retoques de fachada por 59 €. Trabajos básicos de mejora visible en superficies exteriores accesibles para mejorar apariencia sin reforma completa."
+      : "Facade touch-up work for €59. Basic visible touch-up work on accessible exterior surfaces for practical improvement rather than full renovation.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuestan los retoques de fachada?",
-    a: "Los retoques de fachada empiezan desde 59€. El precio depende del estado de la superficie, acceso, tamaño de la zona, material, preparación necesaria y dificultad del trabajo.",
+    a: "Los retoques de fachada cuestan 59 €. El precio depende del estado de la superficie, acceso, tamaño de la zona, material, preparación necesaria y dificultad del trabajo.",
   },
   {
     q: "¿Qué tipo de retoques exteriores pueden hacer?",
@@ -241,7 +241,7 @@ export default async function RetoquesFachadaPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 59€",
+                "59 €",
                 "Superficies exteriores",
                 "Mejora visual",
                 "Zonas accesibles",
@@ -312,7 +312,7 @@ export default async function RetoquesFachadaPage({ params }: PageProps) {
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 59€. Presupuesto según fotos, acceso y superficie.",
+              text: "59 €. Presupuesto según fotos, acceso y superficie.",
             },
           ].map((item) => (
             <div
@@ -458,7 +458,7 @@ export default async function RetoquesFachadaPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 59€
+            59 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para retoques de fachada

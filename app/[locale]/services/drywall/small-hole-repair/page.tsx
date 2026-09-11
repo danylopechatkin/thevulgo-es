@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reparación de Agujeros Pequeños en Pared en Valencia | Desde 29€ | THEVULGO"
-    : "Small Hole Repair in Valencia | From €29 | THEVULGO";
+    ? "Reparación de Agujeros Pequeños en Pared en Valencia | 29 € | THEVULGO"
+    : "Small Hole Repair in Valencia | €29 | THEVULGO";
 
   const description = isEs
-    ? "Reparación de agujeros pequeños en pladur o paredes de yeso en Valencia desde 29€. Relleno limpio, alisado y corrección visible de pequeños daños."
-    : "Small hole repair in drywall or plaster walls in Valencia from €29. Clean filling, smoothing and visible correction of small wall damage.";
+    ? "Reparación de agujeros pequeños en pladur o paredes de yeso en Valencia por 29 €. Relleno limpio, alisado y corrección visible de pequeños daños."
+    : "Small hole repair in drywall or plaster walls in Valencia for €29. Clean filling, smoothing and visible correction of small wall damage.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function SmallHoleRepairPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta reparar un agujero pequeño en pared en Valencia?",
-          a: "El servicio empieza desde 29€. El precio final depende del tamaño del agujero, tipo de pared, número de zonas, acabado esperado y si hace falta pintura o material adicional.",
+          a: "El servicio cuesta 29 €. El precio final depende del tamaño del agujero, tipo de pared, número de zonas, acabado esperado y si hace falta pintura o material adicional.",
         },
         {
           q: "¿Trabajáis con pladur y paredes de yeso?",
@@ -141,7 +141,7 @@ export default async function SmallHoleRepairPage({ params }: PageProps) {
         },
         {
           q: "How much does small wall hole repair cost in Valencia?",
-          a: "The service starts from €29. Final price depends on hole size, wall type, number of areas, expected finish and whether paint or extra material is needed.",
+          a: "The service costs €29. Final price depends on hole size, wall type, number of areas, expected finish and whether paint or extra material is needed.",
         },
         {
           q: "Do you work with drywall and plaster walls?",
@@ -241,13 +241,13 @@ export default async function SmallHoleRepairPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 29€",
+        "29 €",
         "Pladur o paredes de yeso",
         "Relleno limpio y alisado",
         "Ideal para agujeros pequeños",
       ]
     : [
-        "From €29",
+        "€29",
         "Drywall or plaster walls",
         "Clean filling and smoothing",
         "Ideal for small holes",
@@ -380,7 +380,7 @@ export default async function SmallHoleRepairPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <CircleDot className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 29€" : "From €29"}
+                {isEs ? "29 €" : "€29"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -516,7 +516,7 @@ export default async function SmallHoleRepairPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 29€" : "From €29"}
+            {isEs ? "29 €" : "€29"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

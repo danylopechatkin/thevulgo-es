@@ -269,20 +269,20 @@ export default async function PaintTouchUpsValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Retoque pequeño", "desde 49 €"],
-        ["Preparación de pared", "desde 35 €"],
-        ["Pintar una zona", "desde 49 €"],
-        ["Pintar una pared", "desde 69 €"],
-        ["Después de reparar agujeros", "desde 49 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Retoque pequeño", "49 €"],
+        ["Preparación de pared", "35 €"],
+        ["Pintar una zona", "49 €"],
+        ["Pintar una pared", "69 €"],
+        ["Después de reparar agujeros", "49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small touch-up", "from €49"],
-        ["Wall preparation", "from €35"],
-        ["Paint one area", "from €49"],
-        ["Paint one wall", "from €69"],
-        ["After filling holes", "from €49"],
-        ["Visit / inspection", "from €49"],
+        ["Small touch-up", "€49"],
+        ["Wall preparation", "€35"],
+        ["Paint one area", "€49"],
+        ["Paint one wall", "€69"],
+        ["After filling holes", "€49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const process = isEs
@@ -409,7 +409,7 @@ export default async function PaintTouchUpsValenciaPage({ params }: Props) {
         },
         {
           q: "¿Cuánto cuesta un retoque de pintura?",
-          a: "Depende del tamaño, pintura, preparación y dificultad. Los retoques pequeños suelen empezar desde 49 €.",
+          a: "Depende del tamaño, pintura, preparación y dificultad. Los retoques pequeños cuestan 49 €.",
         },
       ]
     : [
@@ -451,7 +451,7 @@ export default async function PaintTouchUpsValenciaPage({ params }: Props) {
         },
         {
           q: "How much does a paint touch-up cost?",
-          a: "It depends on size, paint, preparation and difficulty. Small touch-ups usually start from €49.",
+          a: "It depends on size, paint, preparation and difficulty. Small touch-ups cost €49.",
         },
       ];
 
@@ -664,7 +664,7 @@ export default async function PaintTouchUpsValenciaPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -683,7 +683,7 @@ export default async function PaintTouchUpsValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

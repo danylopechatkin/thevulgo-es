@@ -136,7 +136,7 @@ const repairLinks = [
       desc: isEs
         ? "Cambio de silicona antigua en cocinas, baños y alrededor de piezas visibles."
         : "Replacement of old silicone in kitchens, bathrooms and around fixtures.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Droplets className="h-5 w-5" />,
       className: "",
     },
@@ -145,7 +145,7 @@ const repairLinks = [
       desc: isEs
         ? "Sellado de pequeños huecos alrededor de superficies, piezas y detalles visibles del hogar."
         : "Small gap sealing around surfaces, fittings and visible home details.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <ShieldCheck className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -154,7 +154,7 @@ const repairLinks = [
       desc: isEs
         ? "Retoques locales de pared, marcas de tornillos y pequeñas correcciones visibles."
         : "Simple local wall touch-ups, screw marks and small visible corrections.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Paintbrush className="h-5 w-5" />,
       className: "",
     },
@@ -163,7 +163,7 @@ const repairLinks = [
       desc: isEs
         ? "Pequeños ajustes de alineación de puertas y mejoras básicas de uso diario."
         : "Small door alignment fixes and basic usability improvements.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <DoorOpen className="h-5 w-5" />,
       className: "",
     },
@@ -172,7 +172,7 @@ const repairLinks = [
       desc: isEs
         ? "Ajuste y reparación de manillas, pomos y piezas pequeñas sueltas."
         : "Tightening and fixing of loose handles, knobs and small fittings.",
-      price: isEs ? "desde €25" : "from €25",
+      price: isEs ? "25 €" : "€25",
       icon: <Hammer className="h-5 w-5" />,
       className: "",
     },
@@ -181,7 +181,7 @@ const repairLinks = [
       desc: isEs
         ? "Pequeñas correcciones y arreglos de barras de cortina y fijaciones simples."
         : "Minor fixes and corrections for curtain rails and simple fittings.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Ruler className="h-5 w-5" />,
       className: "",
     },
@@ -190,7 +190,7 @@ const repairLinks = [
       desc: isEs
         ? "Instalación de tacos y anclajes de pared para montar estantes, espejos y accesorios de forma segura."
         : "Installation of wall anchors and plugs for safe mounting of shelves, mirrors and fixtures.",
-      price: isEs ? "desde €25" : "from €25",
+      price: isEs ? "25 €" : "€25",
       icon: <Drill className="h-5 w-5" />,
       className: "",
     },
@@ -199,7 +199,7 @@ const repairLinks = [
       desc: isEs
         ? "Reapriete o recolocación de estantes pequeños sueltos o inestables."
         : "Re-tightening or repositioning loose or unstable small shelves.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Drill className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -208,7 +208,7 @@ const repairLinks = [
       desc: isEs
         ? "Ajuste o nueva fijación de espejos y pequeños accesorios de pared."
         : "Adjustment or re-fixing of mirrors and small wall accessories.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Package className="h-5 w-5" />,
       className: "",
     },
@@ -217,7 +217,7 @@ const repairLinks = [
       desc: isEs
         ? "Correcciones simples de muebles pequeños y problemas de fijación."
         : "Simple corrections for small furniture issues and fitting problems.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -226,7 +226,7 @@ const repairLinks = [
       desc: isEs
         ? "Pequeña reparación o recolocación de soportes, ganchos y accesorios de baño."
         : "Minor repair or re-fixing of holders, hooks and bathroom accessories.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Droplets className="h-5 w-5" />,
       className: "",
     },
@@ -235,7 +235,7 @@ const repairLinks = [
       desc: isEs
         ? "Corrección básica de tapas, placas y accesorios visibles sueltos o torcidos."
         : "Basic correction of loose covers, plates and visible accessory alignment.",
-      price: isEs ? "desde €25" : "from €25",
+      price: isEs ? "25 €" : "€25",
       icon: <Plug className="h-5 w-5" />,
       className: "",
     },
@@ -244,7 +244,7 @@ const repairLinks = [
       desc: isEs
         ? "Ajustes sencillos de bisagras para puertas de muebles y elementos interiores."
         : "Simple hinge adjustments for cabinet doors and interior fittings.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <DoorOpen className="h-5 w-5" />,
       className: "",
     },
@@ -253,7 +253,7 @@ const repairLinks = [
       desc: isEs
         ? "Perforación limpia para arreglos simples, accesorios y pequeñas instalaciones."
         : "Clean drilling for simple home fixes, accessories and minor installs.",
-      price: isEs ? "desde €25" : "from €25",
+      price: isEs ? "25 €" : "€25",
       icon: <Drill className="h-5 w-5" />,
       className: "",
     },
@@ -262,7 +262,7 @@ const repairLinks = [
       desc: isEs
         ? "Pequeñas correcciones visibles para mejorar una habitación antes de entregar o dejar una vivienda."
         : "Small visible corrections to improve a room before move-out or handover.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <House className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -271,7 +271,7 @@ const repairLinks = [
       desc: isEs
         ? "Pequeños ajustes de cocina y reparaciones visibles para mejorar el uso diario."
         : "Small kitchen adjustments and visible repair work for daily usability.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },

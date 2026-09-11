@@ -161,9 +161,9 @@ export default async function FalsoTechoPladurValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Revisión / visita", "desde 49 €"],
-        ["Reparación pequeña de techo", "desde 49 €"],
-        ["Parche + lijado básico", "desde 45 €"],
+        ["Revisión / visita", "49 €"],
+        ["Reparación pequeña de techo", "49 €"],
+        ["Parche + lijado básico", "45 €"],
         ["Preparación para focos", "presupuesto"],
         ["Falso techo pequeño", "presupuesto"],
         ["Falso techo completo", "presupuesto"],
@@ -171,9 +171,9 @@ export default async function FalsoTechoPladurValenciaPage({ params }: Props) {
         ["Preparación para pintura", "presupuesto"],
       ]
     : [
-        ["Visit / inspection", "from €49"],
-        ["Small ceiling repair", "from €49"],
-        ["Patch + basic sanding", "from €45"],
+        ["Visit / inspection", "€49"],
+        ["Small ceiling repair", "€49"],
+        ["Patch + basic sanding", "€45"],
         ["Spotlight preparation", "quote"],
         ["Small false ceiling", "quote"],
         ["Complete false ceiling", "quote"],
@@ -573,7 +573,7 @@ export default async function FalsoTechoPladurValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

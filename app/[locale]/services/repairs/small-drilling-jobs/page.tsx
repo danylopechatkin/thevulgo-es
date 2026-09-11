@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Pequeños Trabajos de Taladro en Valencia | Desde 25€ | THEVULGO"
-    : "Small Drilling Jobs in Valencia | From €25 | THEVULGO";
+    ? "Pequeños Trabajos de Taladro en Valencia | 25 € | THEVULGO"
+    : "Small Drilling Jobs in Valencia | €25 | THEVULGO";
 
   const description = isEs
-    ? "Pequeños trabajos de taladro en Valencia desde 25€. Perforación limpia para accesorios, soportes, estantes ligeros, tacos y pequeñas fijaciones."
-    : "Small drilling jobs in Valencia from €25. Clean drilling for accessories, brackets, light shelves, wall plugs and small fixings.";
+    ? "Pequeños trabajos de taladro en Valencia por 25 €. Perforación limpia para accesorios, soportes, estantes ligeros, tacos y pequeñas fijaciones."
+    : "Small drilling jobs in Valencia for €25. Clean drilling for accessories, brackets, light shelves, wall plugs and small fixings.";
 
   return {
     title,
@@ -117,7 +117,7 @@ export default async function SmallDrillingJobsPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta un pequeño trabajo de taladro en Valencia?",
-          a: "El servicio empieza desde 25€. El precio final depende del número de agujeros, tipo de pared, acceso, material necesario y objeto a fijar.",
+          a: "El servicio cuesta 25 €. El precio final depende del número de agujeros, tipo de pared, acceso, material necesario y objeto a fijar.",
         },
         {
           q: "¿Podéis taladrar para accesorios de baño, cocina o pared?",
@@ -147,7 +147,7 @@ export default async function SmallDrillingJobsPage({ params }: PageProps) {
         },
         {
           q: "How much does a small drilling job cost in Valencia?",
-          a: "The service starts from €25. Final price depends on the number of holes, wall type, access, required material and the item being fixed.",
+          a: "The service costs €25. Final price depends on the number of holes, wall type, access, required material and the item being fixed.",
         },
         {
           q: "Can you drill for bathroom, kitchen or wall accessories?",
@@ -254,13 +254,13 @@ export default async function SmallDrillingJobsPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 25€",
+        "25 €",
         "Perforación limpia",
         "Accesorios y pequeñas fijaciones",
         "Baño, cocina y detalles de pared",
       ]
     : [
-        "From €25",
+        "€25",
         "Clean drilling",
         "Accessories and small fixings",
         "Bathroom, kitchen and wall details",
@@ -479,7 +479,7 @@ export default async function SmallDrillingJobsPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Drill className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 25€" : "From €25"}
+                {isEs ? "25 €" : "€25"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -718,7 +718,7 @@ export default async function SmallDrillingJobsPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 25€" : "From €25"}
+            {isEs ? "25 €" : "€25"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reajuste de Estantes en Valencia | Desde 35€ | THEVULGO"
-    : "Shelf Re-fixing in Valencia | From €35 | THEVULGO";
+    ? "Reajuste de Estantes en Valencia | 35 € | THEVULGO"
+    : "Shelf Re-fixing in Valencia | €35 | THEVULGO";
 
   const description = isEs
-    ? "Reajuste de estantes flojos o inestables en Valencia desde 35€. Reapriete, reposicionamiento y pequeñas correcciones para estantes pequeños."
-    : "Shelf re-fixing in Valencia from €35. Re-tightening, repositioning and small corrections for loose or unstable small shelves.";
+    ? "Reajuste de estantes flojos o inestables en Valencia por 35 €. Reapriete, reposicionamiento y pequeñas correcciones para estantes pequeños."
+    : "Shelf re-fixing in Valencia for €35. Re-tightening, repositioning and small corrections for loose or unstable small shelves.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function ShelfRefixingPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta arreglar un estante flojo en Valencia?",
-          a: "El servicio empieza desde 35€. El precio final depende del tipo de estante, pared, peso, número de soportes, estado de los anclajes y si hace falta material adicional.",
+          a: "El servicio cuesta 35 €. El precio final depende del tipo de estante, pared, peso, número de soportes, estado de los anclajes y si hace falta material adicional.",
         },
         {
           q: "¿Podéis arreglar un estante que se mueve?",
@@ -141,7 +141,7 @@ export default async function ShelfRefixingPage({ params }: PageProps) {
         },
         {
           q: "How much does fixing a loose shelf cost in Valencia?",
-          a: "The service starts from €35. Final price depends on shelf type, wall type, weight, number of brackets, anchor condition and whether extra material is needed.",
+          a: "The service costs €35. Final price depends on shelf type, wall type, weight, number of brackets, anchor condition and whether extra material is needed.",
         },
         {
           q: "Can you fix a shelf that moves?",
@@ -239,13 +239,13 @@ export default async function ShelfRefixingPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 35€",
+        "35 €",
         "Estantes flojos o inestables",
         "Reapriete y reposicionamiento",
         "Mejor estabilidad y uso diario",
       ]
     : [
-        "From €35",
+        "€35",
         "Loose or unstable shelves",
         "Re-tightening and repositioning",
         "Better stability and everyday use",
@@ -345,7 +345,7 @@ export default async function ShelfRefixingPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Package className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 35€" : "From €35"}
+                {isEs ? "35 €" : "€35"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -481,7 +481,7 @@ export default async function ShelfRefixingPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 35€" : "From €35"}
+            {isEs ? "35 €" : "€35"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

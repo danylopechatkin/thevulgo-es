@@ -102,7 +102,6 @@ export function getTaxRate() {
 export function calculateQuote(
   categoryKey: CategoryKey,
   selections: Array<{ id: string; qty: number }>,
-  taxRate = getTaxRate(),
 ): CalculatedQuote {
   const category = CATEGORY_MAP[categoryKey];
   if (!category) throw new EstimateValidationError("Invalid service category");
@@ -141,15 +140,16 @@ export function calculateQuote(
   );
   const minimumVisitApplied = servicesSubtotal < MINIMUM_SERVICE_VISIT_EUR;
   const subtotal = Math.max(servicesSubtotal, MINIMUM_SERVICE_VISIT_EUR);
-  const tax = Math.round(subtotal * taxRate * 100) / 100;
+  // Public quotes never apply the CRM accounting rate.
+  const tax = 0;
   return {
     category,
     services,
     subtotal,
     tax,
-    total: subtotal + tax,
+    total: subtotal,
     currency: "EUR",
-    taxRate,
+    taxRate: 0,
     minimumVisitApplied,
   };
 }

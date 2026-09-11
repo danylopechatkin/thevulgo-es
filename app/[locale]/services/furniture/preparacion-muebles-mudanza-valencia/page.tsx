@@ -268,7 +268,7 @@ export default async function MoveInFurnitureSetupValenciaPage({
 
   const notIncluded = isEs
     ? [
-        "Transporte de muebles desde tienda",
+        "Transporte de muebles de tienda",
         "Mudanza completa de cajas y objetos personales",
         "Subida de muebles sin ascensor si no se avisa antes",
         "Reparación de piezas rotas de fábrica",

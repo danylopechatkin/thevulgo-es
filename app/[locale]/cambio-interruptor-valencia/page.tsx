@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Cambio de Interruptor en Valencia | Desde 29€ | THEVULGO"
-      : "Light Switch Replacement in Valencia | From €29 | THEVULGO",
+      ? "Cambio de Interruptor en Valencia | 29 € | THEVULGO"
+      : "Light Switch Replacement in Valencia | €29 | THEVULGO",
     description: isEs
-      ? "Cambio de interruptor en Valencia desde 29€. Sustitución de interruptores dañados, antiguos o desgastados para casas, pisos y apartamentos."
-      : "Light switch replacement in Valencia from €29. Replacement of damaged, old or worn switches for homes and apartments.",
+      ? "Cambio de interruptor en Valencia por 29 €. Sustitución de interruptores dañados, antiguos o desgastados para casas, pisos y apartamentos."
+      : "Light switch replacement in Valencia for €29. Replacement of damaged, old or worn switches for homes and apartments.",
     alternates: {
       canonical: `${siteUrl}/${locale}/cambio-interruptor-valencia`,
       languages: {
@@ -73,7 +73,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta cambiar un interruptor en Valencia?",
-    a: "El cambio de interruptor empieza desde 29€. El precio final depende del tipo de interruptor, estado del mecanismo, cableado existente, marco, número de unidades y dificultad.",
+    a: "El cambio de interruptor cuesta 29 €. El precio final depende del tipo de interruptor, estado del mecanismo, cableado existente, marco, número de unidades y dificultad.",
   },
   {
     q: "¿Pueden cambiar un interruptor antiguo por uno nuevo?",
@@ -211,8 +211,8 @@ export default async function SwitchReplacementValenciaPage({
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Sustitución de interruptores dañados, antiguos o desgastados desde{" "}
-              <strong className="text-neutral-950">29€</strong>. Cambio limpio
+              Sustitución de interruptores dañados, antiguos o desgastados por{" "}
+              <strong className="text-neutral-950">29 €</strong>. Cambio limpio
               de mecanismos para casas, pisos, apartamentos y oficinas pequeñas.
             </p>
 
@@ -235,7 +235,7 @@ export default async function SwitchReplacementValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Cambio desde 29€",
+                "Cambio por 29 €",
                 "Interruptores antiguos",
                 "Interruptores dañados",
                 "Mecanismos simples o dobles",
@@ -396,7 +396,7 @@ export default async function SwitchReplacementValenciaPage({
             },
             {
               title: "Interruptor conmutado",
-              text: "Cambio de interruptores usados desde dos puntos de control.",
+              text: "Cambio de interruptores usados con dos puntos de control.",
             },
             {
               title: "Mecanismo antiguo",
@@ -420,7 +420,7 @@ export default async function SwitchReplacementValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para cambiar interruptor en Valencia

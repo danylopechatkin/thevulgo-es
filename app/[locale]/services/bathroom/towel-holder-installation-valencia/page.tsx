@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Toallero en Valencia | Desde 29€ | THEVULGO"
-      : "Towel Holder Installation in Valencia | From €29 | THEVULGO",
+      ? "Instalación de Toallero en Valencia | 29 € | THEVULGO"
+      : "Towel Holder Installation in Valencia | €29 | THEVULGO",
     description: isEs
-      ? "Instalación de toalleros en Valencia desde 29€. Montaje de barras, ganchos y soportes de baño con separación limpia y posición práctica."
-      : "Towel holder installation in Valencia from €29. Mounting towel bars, hooks and holder systems with clean spacing and practical positioning.",
+      ? "Instalación de toalleros en Valencia por 29 €. Montaje de barras, ganchos y soportes de baño con separación limpia y posición práctica."
+      : "Towel holder installation in Valencia for €29. Mounting towel bars, hooks and holder systems with clean spacing and practical positioning.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar un toallero en Valencia?",
-    a: "La instalación de toallero empieza desde 29€. El precio depende del tipo de toallero, pared, fijaciones, número de piezas y dificultad del montaje.",
+    a: "La instalación de toallero cuesta 29 €. El precio depende del tipo de toallero, pared, fijaciones, número de piezas y dificultad del montaje.",
   },
   {
     q: "¿Instalan barras de toalla y ganchos?",
@@ -260,7 +260,7 @@ export default async function TowelHolderInstallationValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 29€",
+                "29 €",
                 "Barras y ganchos",
                 "Separación limpia",
                 "Posición práctica",
@@ -331,7 +331,7 @@ export default async function TowelHolderInstallationValenciaPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 29€. Presupuesto según fotos, piezas y dificultad.",
+              text: "29 €. Presupuesto según fotos, piezas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -445,7 +445,7 @@ export default async function TowelHolderInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar toallero en Valencia

@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Ajuste de Rieles de Cortina en Valencia | Desde 29€ | THEVULGO"
-    : "Curtain Rail Adjustments in Valencia | From €29 | THEVULGO";
+    ? "Ajuste de Rieles de Cortina en Valencia | 29 € | THEVULGO"
+    : "Curtain Rail Adjustments in Valencia | €29 | THEVULGO";
 
   const description = isEs
-    ? "Ajuste de rieles de cortina en Valencia desde 29€: soportes flojos, rieles desalineados, fijaciones simples y mejoras de uso diario."
-    : "Curtain rail adjustments in Valencia from €29: loose supports, misaligned rails, simple fittings and everyday usability improvements.";
+    ? "Ajuste de rieles de cortina en Valencia por 29 €: soportes flojos, rieles desalineados, fijaciones simples y mejoras de uso diario."
+    : "Curtain rail adjustments in Valencia for €29: loose supports, misaligned rails, simple fittings and everyday usability improvements.";
 
   return {
     title,
@@ -117,7 +117,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
         },
         {
           q: "¿Cuánto cuesta ajustar un riel de cortina en Valencia?",
-          a: "El servicio empieza desde 29€. El precio final depende del tipo de riel, estado de la pared o techo, número de soportes, acceso y material necesario.",
+          a: "El servicio cuesta 29 €. El precio final depende del tipo de riel, estado de la pared o techo, número de soportes, acceso y material necesario.",
         },
         {
           q: "¿Podéis arreglar un riel de cortina suelto?",
@@ -147,7 +147,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
         },
         {
           q: "How much does curtain rail adjustment cost in Valencia?",
-          a: "The service starts from €29. Final price depends on rail type, wall or ceiling condition, number of supports, access and required material.",
+          a: "The service costs €29. Final price depends on rail type, wall or ceiling condition, number of supports, access and required material.",
         },
         {
           q: "Can you fix a loose curtain rail?",
@@ -254,13 +254,13 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
 
   const heroPoints = isEs
     ? [
-        "Desde 29€",
+        "29 €",
         "Rieles y soportes sueltos",
         "Fijaciones simples",
         "Mejor uso diario",
       ]
     : [
-        "From €29",
+        "€29",
         "Loose rails and supports",
         "Simple fittings",
         "Better everyday use",
@@ -472,7 +472,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Ruler className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 29€" : "From €29"}
+                {isEs ? "29 €" : "€29"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -701,7 +701,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 29€" : "From €29"}
+            {isEs ? "29 €" : "€29"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs ? "Envía fotos y vídeo para valorar el riel" : "Send photos and video to check the rail"}

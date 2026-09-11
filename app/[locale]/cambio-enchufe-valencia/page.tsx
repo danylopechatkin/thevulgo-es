@@ -28,11 +28,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Cambio de Enchufe en Valencia | Desde 29€ | THEVULGO"
-      : "Socket Replacement in Valencia | From €29 | THEVULGO",
+      ? "Cambio de Enchufe en Valencia | 29 € | THEVULGO"
+      : "Socket Replacement in Valencia | €29 | THEVULGO",
     description: isEs
-      ? "Cambio de enchufe en Valencia desde 29€. Sustitución de enchufes dañados, antiguos o tapas para una instalación más limpia en casas y apartamentos."
-      : "Socket replacement in Valencia from €29. Replacement of damaged, old sockets and covers for cleaner installations.",
+      ? "Cambio de enchufe en Valencia por 29 €. Sustitución de enchufes dañados, antiguos o tapas para una instalación más limpia en casas y apartamentos."
+      : "Socket replacement in Valencia for €29. Replacement of damaged, old sockets and covers for cleaner installations.",
     alternates: {
   canonical: `${siteUrl}/${locale}/cambio-enchufe-valencia`,
   languages: {
@@ -47,8 +47,8 @@ robots: {
 },
     openGraph: {
       title: isEs
-        ? "Cambio de Enchufe en Valencia | Desde 29€"
-        : "Socket Replacement in Valencia | From €29",
+        ? "Cambio de Enchufe en Valencia | 29 €"
+        : "Socket Replacement in Valencia | €29",
       description: isEs
         ? "Cambio limpio y profesional de enchufes en Valencia."
         : "Clean and professional socket replacement in Valencia.",
@@ -80,7 +80,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta cambiar un enchufe en Valencia?",
-    a: "El cambio de enchufe empieza desde 29€. El precio depende del tipo de enchufe, número de unidades, estado del mecanismo y complejidad.",
+    a: "El cambio de enchufe cuesta 29 €. El precio depende del tipo de enchufe, número de unidades, estado del mecanismo y complejidad.",
   },
   {
     q: "¿Pueden cambiar enchufes antiguos o dañados?",
@@ -226,7 +226,7 @@ export default async function SocketReplacementPage({
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
               Sustitución de enchufes y tapas para una instalación más limpia
-              desde <strong className="text-black">29€</strong>. Cambio rápido,
+              por <strong className="text-black">29 €</strong>. Cambio rápido,
               limpio y profesional para casas, apartamentos y oficinas.
             </p>
 
@@ -249,7 +249,7 @@ export default async function SocketReplacementPage({
 
             <div className="mt-8 grid gap-3 text-sm font-medium text-neutral-700 sm:grid-cols-2">
               {[
-                "Cambio desde 29€",
+                "Cambio por 29 €",
                 "Enchufes simples y dobles",
                 "Tapas y mecanismos",
                 "Acabado limpio",
@@ -434,7 +434,7 @@ export default async function SocketReplacementPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
 
           <h2 className="mt-3 text-4xl font-black">

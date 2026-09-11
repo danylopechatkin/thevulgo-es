@@ -241,24 +241,24 @@ export default async function StarlinkInternetPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Diagnóstico de internet", "desde 49 €"],
-        ["Instalación de router 4G/5G", "desde 79 €"],
-        ["Montaje de Starlink", "desde 79 €"],
-        ["Starlink en tejado", "desde 99 €"],
-        ["Antena exterior", "desde 89 €"],
-        ["WiFi bridge", "desde 99 €"],
-        ["Enlace punto a punto", "desde 129 €"],
-        ["Internet para negocio", "desde 129 €"],
+        ["Diagnóstico de internet", "49 €"],
+        ["Instalación de router 4G/5G", "79 €"],
+        ["Montaje de Starlink", "79 €"],
+        ["Starlink en tejado", "99 €"],
+        ["Antena exterior", "89 €"],
+        ["WiFi bridge", "99 €"],
+        ["Enlace punto a punto", "129 €"],
+        ["Internet para negocio", "129 €"],
       ]
     : [
-        ["Internet diagnostics", "from €49"],
-        ["4G/5G router installation", "from €79"],
-        ["Starlink mounting", "from €79"],
-        ["Starlink roof installation", "from €99"],
-        ["Outdoor antenna", "from €89"],
-        ["WiFi bridge", "from €99"],
-        ["Point-to-point wireless", "from €129"],
-        ["Business internet setup", "from €129"],
+        ["Internet diagnostics", "€49"],
+        ["4G/5G router installation", "€79"],
+        ["Starlink mounting", "€79"],
+        ["Starlink roof installation", "€99"],
+        ["Outdoor antenna", "€89"],
+        ["WiFi bridge", "€99"],
+        ["Point-to-point wireless", "€129"],
+        ["Business internet setup", "€129"],
       ];
 
   const clientTypes = [
@@ -334,7 +334,7 @@ export default async function StarlinkInternetPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta instalar Starlink en Valencia?",
-          a: "Depende de la ubicación, altura, tipo de montaje, cableado, acceso al tejado o fachada y configuración. Un montaje básico puede empezar desde 79–99 €.",
+          a: "Depende de la ubicación, altura, tipo de montaje, cableado, acceso al tejado o fachada y configuración. Un montaje básico puede costar 79–99 €.",
         },
         {
           q: "¿Instaláis Starlink en tejado?",
@@ -368,7 +368,7 @@ export default async function StarlinkInternetPage({ params }: Props) {
     : [
         {
           q: "How much does Starlink installation in Valencia cost?",
-          a: "It depends on location, height, mounting type, cabling, roof or façade access and configuration. A basic mounting job can start from €79–99.",
+          a: "It depends on location, height, mounting type, cabling, roof or façade access and configuration. A basic mounting job can cost €79–99.",
         },
         {
           q: "Do you install Starlink on roofs?",
@@ -640,7 +640,7 @@ export default async function StarlinkInternetPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -665,7 +665,7 @@ export default async function StarlinkInternetPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

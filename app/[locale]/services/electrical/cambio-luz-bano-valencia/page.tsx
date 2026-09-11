@@ -43,12 +43,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Cambio de Luz de Baño en Valencia | Desde 35€ | THEVULGO"
-    : "Bathroom Light Replacement in Valencia | From €35 | THEVULGO";
+    ? "Cambio de Luz de Baño en Valencia | 35 € | THEVULGO"
+    : "Bathroom Light Replacement in Valencia | €35 | THEVULGO";
 
   const description = isEs
-    ? "Cambio de luz de baño en Valencia desde 35€. Sustitución simple de luces de espejo, apliques y accesorios de baño compatibles."
-    : "Bathroom light replacement in Valencia from €35. Simple replacement of mirror lights, wall lights and compatible bathroom lighting accessories.";
+    ? "Cambio de luz de baño en Valencia por 35 €. Sustitución simple de luces de espejo, apliques y accesorios de baño compatibles."
+    : "Bathroom light replacement in Valencia for €35. Simple replacement of mirror lights, wall lights and compatible bathroom lighting accessories.";
 
   return {
     title,
@@ -87,8 +87,8 @@ export default async function BathroomLightReplacementValenciaPage({
       : "Bathroom light replacement in Valencia",
 
     hero: isEs
-      ? "Sustitución simple de luces de espejo y accesorios de baño desde 35€. Cambio limpio, revisión básica del punto existente y acabado ordenado para casas, apartamentos y pisos de alquiler."
-      : "Simple replacement of mirror lights and bathroom lighting accessories from €35. Clean swap, basic existing-point check and tidy finish for homes, apartments and rental properties.",
+      ? "Sustitución simple de luces de espejo y accesorios de baño por 35 €. Cambio limpio, revisión básica del punto existente y acabado ordenado para casas, apartamentos y pisos de alquiler."
+      : "Simple replacement of mirror lights and bathroom lighting accessories for €35. Clean swap, basic existing-point check and tidy finish for homes, apartments and rental properties.",
 
     whatsapp: isEs
       ? "Hola, quiero un presupuesto para cambio de luz de baño en Valencia."
@@ -107,7 +107,7 @@ export default async function BathroomLightReplacementValenciaPage({
 
     bullets: isEs
       ? [
-          "Desde 35€",
+          "35 €",
           "Luces de espejo",
           "Apliques de baño",
           "Sustitución compatible",
@@ -115,7 +115,7 @@ export default async function BathroomLightReplacementValenciaPage({
           "Valencia y alrededores",
         ]
       : [
-          "From €35",
+          "€35",
           "Mirror lights",
           "Bathroom wall lights",
           "Compatible replacement",
@@ -314,7 +314,7 @@ export default async function BathroomLightReplacementValenciaPage({
     ? [
         {
           q: "¿Cuánto cuesta cambiar una luz de baño en Valencia?",
-          a: "El cambio de luz de baño empieza desde 35€. El precio final depende del tipo de luz, tamaño, acceso, compatibilidad, fijación y dificultad.",
+          a: "El cambio de luz de baño cuesta 35 €. El precio final depende del tipo de luz, tamaño, acceso, compatibilidad, fijación y dificultad.",
         },
         {
           q: "¿Cambian luces de espejo de baño?",
@@ -348,7 +348,7 @@ export default async function BathroomLightReplacementValenciaPage({
     : [
         {
           q: "How much does bathroom light replacement cost in Valencia?",
-          a: "Bathroom light replacement starts from €35. The final price depends on light type, size, access, compatibility, fixing and difficulty.",
+          a: "Bathroom light replacement costs €35. The final price depends on light type, size, access, compatibility, fixing and difficulty.",
         },
         {
           q: "Do you replace bathroom mirror lights?",
@@ -697,7 +697,7 @@ export default async function BathroomLightReplacementValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 35€" : "From €35"}
+            {isEs ? "35 €" : "€35"}
           </p>
           <h2 className="mt-3 text-4xl font-black">{t.priceTitle}</h2>
           <p className="mt-6 text-lg font-medium leading-8 text-neutral-900">

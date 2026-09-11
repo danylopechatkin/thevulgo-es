@@ -46,11 +46,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Montaje de Armario en Valencia | Desde 69€ | THEVULGO"
-      : "Wardrobe Assembly in Valencia | From €69 | THEVULGO",
+      ? "Montaje de Armario en Valencia | 69 € | THEVULGO"
+      : "Wardrobe Assembly in Valencia | €69 | THEVULGO",
     description: isEs
-      ? "Montaje de armarios en Valencia desde 69€. Armarios correderos, armarios IKEA, puertas, cajones, baldas, alineación y fijación a pared."
-      : "Wardrobe assembly in Valencia from €69. Sliding wardrobes, IKEA wardrobes, doors, drawers, shelves, alignment and wall fixing.",
+      ? "Montaje de armarios en Valencia por 69 €. Armarios correderos, armarios IKEA, puertas, cajones, baldas, alineación y fijación a pared."
+      : "Wardrobe assembly in Valencia for €69. Sliding wardrobes, IKEA wardrobes, doors, drawers, shelves, alignment and wall fixing.",
     robots: {
       index: true,
       follow: true,
@@ -96,7 +96,7 @@ export default async function WardrobeAssemblyValenciaPage({
     ? [
         {
           q: "¿Cuánto cuesta montar un armario en Valencia?",
-          a: "El montaje de armario empieza desde 69€. El precio final depende del tamaño, número de puertas, cajones, tipo de armario, si es corredero o estándar y si hace falta fijarlo a la pared.",
+          a: "El montaje de armario cuesta 69 €. El precio final depende del tamaño, número de puertas, cajones, tipo de armario, si es corredero o estándar y si hace falta fijarlo a la pared.",
         },
         {
           q: "¿Montan armarios correderos?",
@@ -122,7 +122,7 @@ export default async function WardrobeAssemblyValenciaPage({
     : [
         {
           q: "How much does wardrobe assembly in Valencia cost?",
-          a: "Wardrobe assembly starts from €69. The final price depends on size, number of doors, drawers, wardrobe type, whether it is sliding or standard, and whether wall fixing is needed.",
+          a: "Wardrobe assembly costs €69. The final price depends on size, number of doors, drawers, wardrobe type, whether it is sliding or standard, and whether wall fixing is needed.",
         },
         {
           q: "Do you assemble sliding wardrobes?",
@@ -239,8 +239,8 @@ export default async function WardrobeAssemblyValenciaPage({
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
               {isEs
-                ? "Montaje y alineación de armarios correderos, estándar e IKEA desde 69€. Instalamos estructura, puertas, cajones, baldas y revisamos la estabilidad para uso diario."
-                : "Assembly and alignment of sliding, standard and IKEA wardrobes from €69. We install the structure, doors, drawers, shelves and check stability for everyday use."}
+                ? "Montaje y alineación de armarios correderos, estándar e IKEA por 69 €. Instalamos estructura, puertas, cajones, baldas y revisamos la estabilidad para uso diario."
+                : "Assembly and alignment of sliding, standard and IKEA wardrobes for €69. We install the structure, doors, drawers, shelves and check stability for everyday use."}
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -263,7 +263,7 @@ export default async function WardrobeAssemblyValenciaPage({
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {(isEs
                 ? [
-                    "Montaje desde 69€",
+                    "Montaje por 69 €",
                     "Armarios correderos",
                     "Armarios estándar",
                     "Ajuste de puertas y cajones",
@@ -271,7 +271,7 @@ export default async function WardrobeAssemblyValenciaPage({
                     "Valencia y alrededores",
                   ]
                 : [
-                    "Assembly from €69",
+                    "Assembly for €69",
                     "Sliding wardrobes",
                     "Standard wardrobes",
                     "Door and drawer adjustment",
@@ -542,7 +542,7 @@ export default async function WardrobeAssemblyValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 69€" : "From €69"}
+            {isEs ? "69 €" : "€69"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

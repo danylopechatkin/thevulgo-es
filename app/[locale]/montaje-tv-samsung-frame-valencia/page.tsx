@@ -42,8 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "Samsung Frame TV Mounting in Valencia | Professional Installation | THEVULGO";
 
   const description = isEs
-    ? "Montaje profesional de Samsung Frame en Valencia. Instalación limpia, alineación precisa, One Connect Box, ocultación de cable invisible y montaje seguro en pared. Desde 69€."
-    : "Professional Samsung Frame TV mounting in Valencia. Clean installation, precise alignment, One Connect Box planning, cable concealment and secure wall mounting. From €69.";
+    ? "Montaje profesional de Samsung Frame en Valencia. Instalación limpia, alineación precisa, One Connect Box, ocultación de cable invisible y montaje seguro en pared. 69 €."
+    : "Professional Samsung Frame TV mounting in Valencia. Clean installation, precise alignment, One Connect Box planning, cable concealment and secure wall mounting. €69.";
 
   const url = `${baseUrl}/${locale}/montaje-tv-samsung-frame-valencia`;
 
@@ -191,8 +191,8 @@ export default async function Page({ params }: Props) {
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "El montaje de Samsung Frame en Valencia empieza desde 69 €. El precio final depende del tamaño de la TV, tipo de pared, soporte, altura, ubicación del One Connect Box y ocultación de cables."
-            : "Samsung Frame mounting in Valencia starts from €69. The final price depends on TV size, wall type, bracket, height, One Connect Box position and cable concealment.",
+            ? "El montaje de Samsung Frame en Valencia cuesta 69 €. El precio final depende del tamaño de la TV, tipo de pared, soporte, altura, ubicación del One Connect Box y ocultación de cables."
+            : "Samsung Frame mounting in Valencia costs €69. The final price depends on TV size, wall type, bracket, height, One Connect Box position and cable concealment.",
         },
       },
       {
@@ -267,8 +267,8 @@ export default async function Page({ params }: Props) {
     secondaryCta: isEs ? "WhatsApp rápido" : "Quick WhatsApp",
 
     heroNote: isEs
-      ? "Desde 69 €. Precio final según tamaño, pared, soporte, cableado y dificultad."
-      : "From €69. Final price depends on size, wall, bracket, cabling and complexity.",
+      ? "69 €. Precio final según tamaño, pared, soporte, cableado y dificultad."
+      : "€69. Final price depends on size, wall, bracket, cabling and complexity.",
 
     servicesTitle: isEs
       ? "Servicio especializado para Samsung Frame"
@@ -455,28 +455,28 @@ export default async function Page({ params }: Props) {
       text: isEs
         ? "Ideal para dormitorios, despachos y espacios pequeños."
         : "Ideal for bedrooms, offices and smaller rooms.",
-      price: isEs ? "desde €69" : "from €69",
+      price: isEs ? "69 €" : "€69",
     },
     {
       title: "Samsung Frame 55”",
       text: isEs
         ? "Una de las medidas más habituales para salones modernos."
         : "One of the most common sizes for modern living rooms.",
-      price: isEs ? "desde €69" : "from €69",
+      price: isEs ? "69 €" : "€69",
     },
     {
       title: "Samsung Frame 65”",
       text: isEs
         ? "Requiere buena medición para quedar centrada y cómoda."
         : "Requires good measuring to stay centered and comfortable.",
-      price: isEs ? "desde €79" : "from €79",
+      price: isEs ? "79 €" : "€79",
     },
     {
       title: "Samsung Frame 75”",
       text: isEs
         ? "Pantalla grande con más peso y necesidad de fijación muy estable."
         : "Large screen with more weight and need for very stable fixing.",
-      price: isEs ? "desde €99" : "from €99",
+      price: isEs ? "99 €" : "€99",
     },
   ];
 
@@ -530,7 +530,7 @@ export default async function Page({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta montar una Samsung Frame en Valencia?",
-          a: "El montaje empieza desde 69 €. El precio final depende del tamaño, tipo de pared, soporte, ubicación del One Connect Box y ocultación de cables.",
+          a: "El montaje cuesta 69 €. El precio final depende del tamaño, tipo de pared, soporte, ubicación del One Connect Box y ocultación de cables.",
         },
         {
           q: "¿Samsung Frame necesita instalación especial?",
@@ -564,7 +564,7 @@ export default async function Page({ params }: Props) {
     : [
         {
           q: "How much does Samsung Frame mounting cost in Valencia?",
-          a: "Mounting starts from €69. Final price depends on size, wall type, bracket, One Connect Box location and cable concealment.",
+          a: "Mounting costs €69. Final price depends on size, wall type, bracket, One Connect Box location and cable concealment.",
         },
         {
           q: "Does Samsung Frame need special installation?",

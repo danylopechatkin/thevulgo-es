@@ -135,26 +135,26 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
 
   const priceItems = isEs
     ? [
-        ["Reparación pequeña de pladur", "desde 35 €"],
-        ["Parche y lijado básico", "desde 45 €"],
-        ["Reparación de techo de pladur", "desde 49 €"],
-        ["Instalación básica de pladur", "desde 79 €"],
+        ["Reparación pequeña de pladur", "35 €"],
+        ["Parche y lijado básico", "45 €"],
+        ["Reparación de techo de pladur", "49 €"],
+        ["Instalación básica de pladur", "79 €"],
         ["Tabique de pladur", "presupuesto"],
         ["Falso techo de pladur", "presupuesto"],
         ["Techo registrable", "presupuesto"],
         ["Trabajo para oficina o local", "presupuesto"],
-        ["Visita técnica / revisión", "desde 49 €"],
+        ["Visita técnica / revisión", "49 €"],
       ]
     : [
-        ["Small drywall repair", "from €35"],
-        ["Patch and basic sanding", "from €45"],
-        ["Drywall ceiling repair", "from €49"],
-        ["Basic drywall installation", "from €79"],
+        ["Small drywall repair", "€35"],
+        ["Patch and basic sanding", "€45"],
+        ["Drywall ceiling repair", "€49"],
+        ["Basic drywall installation", "€79"],
         ["Drywall partition", "quote"],
         ["Plasterboard false ceiling", "quote"],
         ["Suspended ceiling", "quote"],
         ["Office or shop work", "quote"],
-        ["Technical visit / inspection", "from €49"],
+        ["Technical visit / inspection", "€49"],
       ];
 
   const requiredInfo = isEs
@@ -278,7 +278,7 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta el pladur en Valencia?",
-          a: "Depende del tipo de trabajo, metros, materiales, altura, acceso, acabado y dificultad. Las reparaciones pequeñas pueden empezar desde 35 €, pero tabiques, falsos techos y reformas necesitan presupuesto personalizado.",
+          a: "Depende del tipo de trabajo, metros, materiales, altura, acceso, acabado y dificultad. Las reparaciones pequeñas pueden costar 35 €, pero tabiques, falsos techos y reformas necesitan presupuesto personalizado.",
         },
         {
           q: "¿Cómo pedir presupuesto de pladur?",
@@ -294,7 +294,7 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
         },
         {
           q: "¿Cuánto cuesta reparar un agujero en pladur?",
-          a: "Una reparación pequeña puede empezar desde 35 €, pero el precio cambia según tamaño del agujero, si hay que reforzar, masillar, lijar, preparar para pintura o igualar la superficie.",
+          a: "Una reparación pequeña puede costar 35 €, pero el precio cambia según tamaño del agujero, si hay que reforzar, masillar, lijar, preparar para pintura o igualar la superficie.",
         },
         {
           q: "¿Cuánto cuesta un falso techo de pladur?",
@@ -312,7 +312,7 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does drywall cost in Valencia?",
-          a: "It depends on job type, measurements, materials, height, access, finish and difficulty. Small repairs can start from €35, but partitions, false ceilings and renovations need a custom quote.",
+          a: "It depends on job type, measurements, materials, height, access, finish and difficulty. Small repairs can cost €35, but partitions, false ceilings and renovations need a custom quote.",
         },
         {
           q: "How can I request a drywall quote?",
@@ -328,7 +328,7 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
         },
         {
           q: "How much does it cost to repair a drywall hole?",
-          a: "A small repair can start from €35, but the price changes depending on hole size, reinforcement, filler, sanding, paint preparation and surface matching.",
+          a: "A small repair can cost €35, but the price changes depending on hole size, reinforcement, filler, sanding, paint preparation and surface matching.",
         },
         {
           q: "How much does a plasterboard false ceiling cost?",
@@ -548,7 +548,7 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
           <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
             <h3 className="flex items-center gap-2 text-xl font-black">
               <Euro className="h-6 w-6 text-yellow-500" />
-              {isEs ? "Tabla de precios orientativos" : "Guide price table"}
+              {isEs ? "Tabla de precios de servicios" : "Service price table"}
             </h3>
 
             <div className="mt-5 space-y-3">
@@ -611,7 +611,7 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
               icon: MessageCircle,
               title: isEs ? "Fotos generales" : "General photos",
               text: isEs
-                ? "Haz una foto desde lejos para ver toda la zona, pared, techo, suelo y acceso."
+                ? "Haz una foto a distancia para ver toda la zona, pared, techo, suelo y acceso."
                 : "Take a photo from distance to show the whole area, wall, ceiling, floor and access.",
             },
             {

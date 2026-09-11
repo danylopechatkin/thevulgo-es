@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Reparación y Ajuste de Vallas | Desde 59€ | THEVULGO"
-      : "Fence Repair & Adjustment | From €59 | THEVULGO",
+      ? "Reparación y Ajuste de Vallas | 59 € | THEVULGO"
+      : "Fence Repair & Adjustment | €59 | THEVULGO",
     description: isEs
-      ? "Reparación y ajuste de vallas desde 59€. Corrección de secciones de valla, límites exteriores visibles y elementos exteriores para mejorar estabilidad, función y aspecto."
-      : "Fence repair and adjustment from €59. Repair and adjustment of fences, fence sections and visible outdoor boundaries to improve stability, function and appearance.",
+      ? "Reparación y ajuste de vallas por 59 €. Corrección de secciones de valla, límites exteriores visibles y elementos exteriores para mejorar estabilidad, función y aspecto."
+      : "Fence repair and adjustment for €59. Repair and adjustment of fences, fence sections and visible outdoor boundaries to improve stability, function and appearance.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta reparar o ajustar una valla?",
-    a: "La reparación y ajuste de vallas empieza desde 59€. El precio depende del tipo de valla, estado, acceso, piezas necesarias, estabilidad y alcance del trabajo.",
+    a: "La reparación y ajuste de vallas cuesta 59 €. El precio depende del tipo de valla, estado, acceso, piezas necesarias, estabilidad y alcance del trabajo.",
   },
   {
     q: "¿Qué tipo de vallas pueden revisar?",
@@ -245,7 +245,7 @@ export default async function ReparacionAjusteVallasPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 59€",
+                "59 €",
                 "Vallas y secciones visibles",
                 "Mejor estabilidad",
                 "Ajustes exteriores",
@@ -316,7 +316,7 @@ export default async function ReparacionAjusteVallasPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 59€. Presupuesto según fotos, acceso y dificultad.",
+              text: "59 €. Presupuesto según fotos, acceso y dificultad.",
             },
           ].map((item) => (
             <div
@@ -461,7 +461,7 @@ export default async function ReparacionAjusteVallasPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 59€
+            59 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para reparar o ajustar una valla

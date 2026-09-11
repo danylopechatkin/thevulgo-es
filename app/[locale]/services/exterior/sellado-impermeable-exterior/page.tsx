@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Sellado Impermeable Exterior | Desde 49€ | THEVULGO"
-      : "Outdoor Waterproof Sealing | From €49 | THEVULGO",
+      ? "Sellado Impermeable Exterior | 49 € | THEVULGO"
+      : "Outdoor Waterproof Sealing | €49 | THEVULGO",
     description: isEs
-      ? "Sellado impermeable exterior desde 49€. Sellado de pequeños huecos, juntas y zonas expuestas para ayudar a proteger superficies de humedad."
-      : "Outdoor waterproof sealing from €49. Sealing of small exterior gaps, joints and exposed areas to help protect surfaces from moisture.",
+      ? "Sellado impermeable exterior por 49 €. Sellado de pequeños huecos, juntas y zonas expuestas para ayudar a proteger superficies de humedad."
+      : "Outdoor waterproof sealing for €49. Sealing of small exterior gaps, joints and exposed areas to help protect surfaces from moisture.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta el sellado impermeable exterior?",
-    a: "El sellado impermeable exterior empieza desde 49€. El precio depende del tamaño de la zona, tipo de junta, acceso, estado de la superficie, material necesario y dificultad.",
+    a: "El sellado impermeable exterior cuesta 49 €. El precio depende del tamaño de la zona, tipo de junta, acceso, estado de la superficie, material necesario y dificultad.",
   },
   {
     q: "¿Qué zonas exteriores se pueden sellar?",
@@ -245,7 +245,7 @@ export default async function SelladoImpermeableExteriorPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 49€",
+                "49 €",
                 "Juntas exteriores",
                 "Pequeños huecos",
                 "Zonas expuestas",
@@ -316,7 +316,7 @@ export default async function SelladoImpermeableExteriorPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 49€. Presupuesto según fotos, zona y dificultad.",
+              text: "49 €. Presupuesto según fotos, zona y dificultad.",
             },
           ].map((item) => (
             <div
@@ -461,7 +461,7 @@ export default async function SelladoImpermeableExteriorPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 49€
+            49 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para sellado impermeable exterior

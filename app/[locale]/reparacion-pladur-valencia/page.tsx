@@ -162,24 +162,24 @@ export default async function ReparacionPladurValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Reparación pequeña de pladur", "desde 35 €"],
-        ["Parche + masilla", "desde 45 €"],
-        ["Parche + lijado básico", "desde 45 €"],
-        ["Reparación de techo", "desde 49 €"],
-        ["Reparación de grietas", "desde 39 €"],
+        ["Reparación pequeña de pladur", "35 €"],
+        ["Parche + masilla", "45 €"],
+        ["Parche + lijado básico", "45 €"],
+        ["Reparación de techo", "49 €"],
+        ["Reparación de grietas", "39 €"],
         ["Reparación de esquina dañada", "presupuesto"],
         ["Daño grande o zona abierta", "presupuesto"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small drywall repair", "from €35"],
-        ["Patch + filler", "from €45"],
-        ["Patch + basic sanding", "from €45"],
-        ["Ceiling repair", "from €49"],
-        ["Crack repair", "from €39"],
+        ["Small drywall repair", "€35"],
+        ["Patch + filler", "€45"],
+        ["Patch + basic sanding", "€45"],
+        ["Ceiling repair", "€49"],
+        ["Crack repair", "€39"],
         ["Damaged corner repair", "quote"],
         ["Large damage or open area", "quote"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const damageTypes = isEs
@@ -307,7 +307,7 @@ export default async function ReparacionPladurValenciaPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta reparar pladur en Valencia?",
-          a: "Depende del tamaño del daño, si es pared o techo, altura, acabado y si hay que pintar. Una reparación pequeña puede empezar desde 35 €, pero daños grandes necesitan presupuesto.",
+          a: "Depende del tamaño del daño, si es pared o techo, altura, acabado y si hay que pintar. Una reparación pequeña puede costar 35 €, pero daños grandes necesitan presupuesto.",
         },
         {
           q: "¿Reparáis agujeros en pladur?",
@@ -341,7 +341,7 @@ export default async function ReparacionPladurValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does drywall repair cost in Valencia?",
-          a: "It depends on damage size, whether it is a wall or ceiling, height, finish and whether painting is needed. A small repair can start from €35, but large damage needs a quote.",
+          a: "It depends on damage size, whether it is a wall or ceiling, height, finish and whether painting is needed. A small repair can cost €35, but large damage needs a quote.",
         },
         {
           q: "Do you repair holes in drywall?",
@@ -602,7 +602,7 @@ export default async function ReparacionPladurValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

@@ -160,24 +160,24 @@ export default async function PintarPladurValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Preparación pequeña", "desde 35 €"],
-        ["Parche + masilla + lijado", "desde 45 €"],
-        ["Preparar zona para pintar", "desde 49 €"],
+        ["Preparación pequeña", "35 €"],
+        ["Parche + masilla + lijado", "45 €"],
+        ["Preparar zona para pintar", "49 €"],
         ["Pintar reparación pequeña", "presupuesto"],
         ["Pintar pared de pladur", "presupuesto"],
         ["Pintar techo de pladur", "presupuesto"],
         ["Pintar falso techo", "presupuesto"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small preparation", "from €35"],
-        ["Patch + filler + sanding", "from €45"],
-        ["Prepare area for painting", "from €49"],
+        ["Small preparation", "€35"],
+        ["Patch + filler + sanding", "€45"],
+        ["Prepare area for painting", "€49"],
         ["Paint small repair", "quote"],
         ["Paint drywall wall", "quote"],
         ["Paint plasterboard ceiling", "quote"],
         ["Paint false ceiling", "quote"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const factors = isEs
@@ -572,7 +572,7 @@ export default async function PintarPladurValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

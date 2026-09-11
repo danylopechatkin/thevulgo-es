@@ -43,12 +43,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Cambio de Extractor en Valencia | Desde 45€ | THEVULGO"
-    : "Extractor Fan Replacement in Valencia | From €45 | THEVULGO";
+    ? "Cambio de Extractor en Valencia | 45 € | THEVULGO"
+    : "Extractor Fan Replacement in Valencia | €45 | THEVULGO";
 
   const description = isEs
-    ? "Cambio de extractor en Valencia desde 45€. Sustitución de extractores compatibles de baño o cocina con instalación limpia y revisión básica."
-    : "Extractor fan replacement in Valencia from €45. Replacement of compatible bathroom or kitchen extractor fans with clean installation and basic check.";
+    ? "Cambio de extractor en Valencia por 45 €. Sustitución de extractores compatibles de baño o cocina con instalación limpia y revisión básica."
+    : "Extractor fan replacement in Valencia for €45. Replacement of compatible bathroom or kitchen extractor fans with clean installation and basic check.";
 
   return {
     title,
@@ -87,8 +87,8 @@ export default async function ExtractorReplacementValenciaPage({
       : "Extractor fan replacement in Valencia",
 
     hero: isEs
-      ? "Sustitución de extractores compatibles de baño o cocina desde 45€. Cambio limpio, revisión básica de conexión y acabado ordenado para casas, apartamentos y pisos de alquiler."
-      : "Replacement of compatible bathroom or kitchen extractor fans from €45. Clean swap, basic connection check and tidy finish for homes, apartments and rental properties.",
+      ? "Sustitución de extractores compatibles de baño o cocina por 45 €. Cambio limpio, revisión básica de conexión y acabado ordenado para casas, apartamentos y pisos de alquiler."
+      : "Replacement of compatible bathroom or kitchen extractor fans for €45. Clean swap, basic connection check and tidy finish for homes, apartments and rental properties.",
 
     whatsapp: isEs
       ? "Hola, quiero un presupuesto para cambio de extractor en Valencia."
@@ -107,7 +107,7 @@ export default async function ExtractorReplacementValenciaPage({
 
     bullets: isEs
       ? [
-          "Desde 45€",
+          "45 €",
           "Extractor de baño",
           "Extractor de cocina",
           "Sustitución compatible",
@@ -115,7 +115,7 @@ export default async function ExtractorReplacementValenciaPage({
           "Valencia y alrededores",
         ]
       : [
-          "From €45",
+          "€45",
           "Bathroom extractor fan",
           "Kitchen extractor fan",
           "Compatible replacement",
@@ -314,7 +314,7 @@ export default async function ExtractorReplacementValenciaPage({
     ? [
         {
           q: "¿Cuánto cuesta cambiar un extractor en Valencia?",
-          a: "El cambio de extractor empieza desde 45€. El precio final depende del tipo de extractor, tamaño, acceso, compatibilidad, fijación y dificultad.",
+          a: "El cambio de extractor cuesta 45 €. El precio final depende del tipo de extractor, tamaño, acceso, compatibilidad, fijación y dificultad.",
         },
         {
           q: "¿Cambian extractores de baño?",
@@ -348,7 +348,7 @@ export default async function ExtractorReplacementValenciaPage({
     : [
         {
           q: "How much does extractor fan replacement cost in Valencia?",
-          a: "Extractor fan replacement starts from €45. The final price depends on fan type, size, access, compatibility, fixing and difficulty.",
+          a: "Extractor fan replacement costs €45. The final price depends on fan type, size, access, compatibility, fixing and difficulty.",
         },
         {
           q: "Do you replace bathroom extractor fans?",
@@ -693,7 +693,7 @@ export default async function ExtractorReplacementValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 45€" : "From €45"}
+            {isEs ? "45 €" : "€45"}
           </p>
           <h2 className="mt-3 text-4xl font-black">{t.priceTitle}</h2>
           <p className="mt-6 text-lg font-medium leading-8 text-neutral-900">

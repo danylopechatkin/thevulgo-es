@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Herrajes para Puertas Interiores y Armarios | Desde 29€ | THEVULGO"
-      : "Cabinet and Interior Door Hardware | From €29 | THEVULGO",
+      ? "Herrajes para Puertas Interiores y Armarios | 29 € | THEVULGO"
+      : "Cabinet and Interior Door Hardware | €29 | THEVULGO",
     description: isEs
-      ? "Ajuste y corrección de herrajes desde 29€. Bisagras, manillas y mecanismos visibles en puertas interiores, armarios y puertas auxiliares."
-      : "Cabinet and interior door hardware service from €29. Small corrections for hinges, handles and visible mechanisms on cabinet and interior doors.",
+      ? "Ajuste y corrección de herrajes de 29 €. Bisagras, manillas y mecanismos visibles en puertas interiores, armarios y puertas auxiliares."
+      : "Cabinet and interior door hardware service for €29. Small corrections for hinges, handles and visible mechanisms on cabinet and interior doors.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -80,7 +80,7 @@ const faqs = [
   },
   {
     q: "¿Cuánto cuesta ajustar herrajes de puertas interiores o armarios?",
-    a: "El servicio empieza desde 29€. El precio depende del número de puertas, tipo de herraje, estado de las piezas, dificultad y si hace falta sustituir algún elemento.",
+    a: "El servicio cuesta 29 €. El precio depende del número de puertas, tipo de herraje, estado de las piezas, dificultad y si hace falta sustituir algún elemento.",
   },
   {
     q: "¿Ajustan bisagras de armarios?",
@@ -247,7 +247,7 @@ export default async function HerrajesPuertasInterioresPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 29€",
+                "29 €",
                 "Bisagras de armarios",
                 "Manillas y pomos",
                 "Puertas interiores",
@@ -318,7 +318,7 @@ export default async function HerrajesPuertasInterioresPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 29€. Presupuesto según fotos, vídeo y dificultad.",
+              text: "29 €. Presupuesto según fotos, vídeo y dificultad.",
             },
           ].map((item) => (
             <div
@@ -463,7 +463,7 @@ export default async function HerrajesPuertasInterioresPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para ajustar herrajes de puertas y armarios

@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Relleno de Grietas en Valencia | Desde 29€ | THEVULGO"
-    : "Crack Filling in Valencia | From €29 | THEVULGO";
+    ? "Relleno de Grietas en Valencia | 29 € | THEVULGO"
+    : "Crack Filling in Valencia | €29 | THEVULGO";
 
   const description = isEs
-    ? "Relleno y alisado de pequeñas grietas visibles en paredes y esquinas en Valencia desde 29€. Preparación limpia para mejorar el acabado."
-    : "Crack filling in Valencia from €29. Filling and smoothing of small visible cracks in walls and corners for a cleaner finish.";
+    ? "Relleno y alisado de pequeñas grietas visibles en paredes y esquinas en Valencia por 29 €. Preparación limpia para mejorar el acabado."
+    : "Crack filling in Valencia for €29. Filling and smoothing of small visible cracks in walls and corners for a cleaner finish.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function CrackFillingPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta rellenar una grieta en Valencia?",
-          a: "El servicio empieza desde 29€. El precio final depende del largo de la grieta, profundidad, tipo de pared, número de zonas y acabado esperado.",
+          a: "El servicio cuesta 29 €. El precio final depende del largo de la grieta, profundidad, tipo de pared, número de zonas y acabado esperado.",
         },
         {
           q: "¿Reparáis grietas en esquinas?",
@@ -141,7 +141,7 @@ export default async function CrackFillingPage({ params }: PageProps) {
         },
         {
           q: "How much does crack filling cost in Valencia?",
-          a: "The service starts from €29. Final price depends on crack length, depth, wall type, number of areas and expected finish.",
+          a: "The service costs €29. Final price depends on crack length, depth, wall type, number of areas and expected finish.",
         },
         {
           q: "Do you repair cracks in corners?",
@@ -239,13 +239,13 @@ export default async function CrackFillingPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 29€",
+        "29 €",
         "Grietas pequeñas visibles",
         "Paredes y esquinas",
         "Relleno y alisado limpio",
       ]
     : [
-        "From €29",
+        "€29",
         "Small visible cracks",
         "Walls and corners",
         "Clean filling and smoothing",
@@ -378,7 +378,7 @@ export default async function CrackFillingPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Zap className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 29€" : "From €29"}
+                {isEs ? "29 €" : "€29"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -514,7 +514,7 @@ export default async function CrackFillingPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 29€" : "From €29"}
+            {isEs ? "29 €" : "€29"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

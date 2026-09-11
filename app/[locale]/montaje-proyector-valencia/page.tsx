@@ -84,7 +84,7 @@ const faqs = [
   },
   {
     q: "¿Pueden pasar cable HDMI para el proyector?",
-    a: "Sí. Podemos ayudarte con cable HDMI, canaleta exterior, organización de cables o planificación del recorrido desde el rack, consola, portátil o decodificador.",
+    a: "Sí. Podemos ayudarte con cable HDMI, canaleta exterior, organización de cables o planificación del recorrido del rack, consola, portátil o decodificador.",
   },
   {
     q: "¿Instalan proyectores de corta distancia o ultra short throw?",
@@ -426,7 +426,7 @@ export default async function ProjectorMountingValenciaPage({
           {[
             {
               title: "HDMI y canaletas",
-              text: "Podemos organizar el recorrido del cable desde tus dispositivos hasta el proyector.",
+              text: "Podemos organizar el recorrido del cable de tus dispositivos hasta el proyector.",
             },
             {
               title: "Home cinema",

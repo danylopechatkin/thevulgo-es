@@ -200,22 +200,22 @@ const prices = [
   {
     esName: "Visita / pequeña reparación simple",
     enName: "Visit / simple small repair",
-    price: "desde 35 €",
+    price: "35 €",
   },
   {
     esName: "Retoques de pintura o pared",
     enName: "Paint or wall touch-ups",
-    price: "desde 45 €",
+    price: "45 €",
   },
   {
     esName: "Pack varias reparaciones",
     enName: "Multiple repair package",
-    price: "desde 60 €",
+    price: "60 €",
   },
   {
     esName: "Puesta a punto antes de entregar piso",
     enName: "Flat preparation before handover",
-    price: "desde 80 €",
+    price: "80 €",
   },
 ];
 
@@ -255,9 +255,9 @@ const faqs = [
   },
   {
     esQ: "¿Cuál es el precio mínimo?",
-    esA: "Normalmente las pequeñas reparaciones empiezan desde 35 €, dependiendo del tipo de trabajo, zona, materiales y tiempo necesario.",
+    esA: "Normalmente las pequeñas reparaciones cuestan 35 €, dependiendo del tipo de trabajo, zona, materiales y tiempo necesario.",
     enQ: "What is the minimum price?",
-    enA: "Small repairs usually start from €35, depending on the type of job, area, materials and time required.",
+    enA: "Small repairs cost €35, depending on the type of job, area, materials and time required.",
   },
   {
     esQ: "¿Puedes hacer varias reparaciones en una sola visita?",
@@ -498,7 +498,7 @@ export default async function PequenasReparacionesValenciaPage({
                 {[
                   {
                     icon: Euro,
-                    text: isEs ? "Desde 35 €" : "From €35",
+                    text: isEs ? "35 €" : "€35",
                   },
                   {
                     icon: Clock3,
@@ -630,7 +630,7 @@ export default async function PequenasReparacionesValenciaPage({
         <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
           <div className="mb-10 max-w-3xl">
             <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-amber-300">
-              {isEs ? "Precios orientativos" : "Guide prices"}
+              {isEs ? "Precios de servicios" : "Service prices"}
             </p>
             <h2 className="text-3xl font-bold md:text-4xl">
               {isEs

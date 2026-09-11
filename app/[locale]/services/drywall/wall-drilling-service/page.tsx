@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Servicio de Taladro en Pared en Valencia | Desde 25€ | THEVULGO"
-    : "Wall Drilling Service in Valencia | From €25 | THEVULGO";
+    ? "Servicio de Taladro en Pared en Valencia | 25 € | THEVULGO"
+    : "Wall Drilling Service in Valencia | €25 | THEVULGO";
 
   const description = isEs
-    ? "Servicio de taladro limpio en pared en Valencia desde 25€. Perforación para soportes, brackets, accesorios y pequeñas fijaciones cuando la superficie es adecuada."
-    : "Wall drilling service in Valencia from €25. Clean drilling for mounts, brackets or accessories where the wall surface is suitable.";
+    ? "Servicio de taladro limpio en pared en Valencia por 25 €. Perforación para soportes, brackets, accesorios y pequeñas fijaciones cuando la superficie es adecuada."
+    : "Wall drilling service in Valencia for €25. Clean drilling for mounts, brackets or accessories where the wall surface is suitable.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function WallDrillingServicePage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta taladrar una pared en Valencia?",
-          a: "El servicio empieza desde 25€. El precio final depende del número de puntos, tipo de pared, altura, acceso, objeto a fijar y material necesario.",
+          a: "El servicio cuesta 25 €. El precio final depende del número de puntos, tipo de pared, altura, acceso, objeto a fijar y material necesario.",
         },
         {
           q: "¿Podéis taladrar para soportes, brackets o accesorios?",
@@ -137,7 +137,7 @@ export default async function WallDrillingServicePage({ params }: PageProps) {
         },
         {
           q: "How much does wall drilling cost in Valencia?",
-          a: "The service starts from €25. Final price depends on number of points, wall type, height, access, item being fixed and required material.",
+          a: "The service costs €25. Final price depends on number of points, wall type, height, access, item being fixed and required material.",
         },
         {
           q: "Can you drill for mounts, brackets or accessories?",
@@ -209,8 +209,8 @@ export default async function WallDrillingServicePage({ params }: PageProps) {
   };
 
   const heroPoints = isEs
-    ? ["Desde 25€", "Taladro limpio", "Soportes y accesorios", "Según tipo de pared"]
-    : ["From €25", "Clean drilling", "Mounts and accessories", "Based on wall type"];
+    ? ["25 €", "Taladro limpio", "Soportes y accesorios", "Según tipo de pared"]
+    : ["€25", "Clean drilling", "Mounts and accessories", "Based on wall type"];
 
   const included = isEs
     ? [
@@ -296,7 +296,7 @@ export default async function WallDrillingServicePage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Drill className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 25€" : "From €25"}
+                {isEs ? "25 €" : "€25"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs ? "Puntos limpios. Fijación preparada. Resultado cuidado." : "Clean points. Fixing prepared. Neat result."}
@@ -405,7 +405,7 @@ export default async function WallDrillingServicePage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 25€" : "From €25"}
+            {isEs ? "25 €" : "€25"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs ? "Envía fotos de la pared y del objeto" : "Send photos of the wall and item"}

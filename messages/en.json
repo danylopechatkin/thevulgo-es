@@ -317,7 +317,7 @@
   "services": {
   "badge": "THEVULGO · Valencia",
   "title": "Services in Valencia",
-  "subtitle": "Clear categories, guide prices and clean work from the start. Choose the service that fits your case and review the details.",
+  "subtitle": "Clear categories, service prices and clean work from the start. Choose the service that fits your case and review the details.",
   "viewService": "View service",
   "cta": {
     "title": "Not sure which service you need?",
@@ -328,121 +328,121 @@
     "airConditioning": {
       "title": "Air conditioning",
       "desc": "Repair, cleaning, refrigerant and installation.",
-      "price": "from €49",
+      "price": "€49",
       "badge": "AC service"
     },
     "ceilingFans": {
       "title": "Ceiling fans",
       "desc": "Installation, light replacement, fans with lighting, remote control or WiFi.",
-      "price": "from €45",
+      "price": "€45",
       "badge": "Popular"
     },
     "tvMounting": {
       "title": "TV Mounting",
       "desc": "TVs, brackets, shelves, mirrors and clean cable routing.",
-      "price": "from €49",
+      "price": "€49",
       "badge": "Top"
     },
     "furniture": {
       "title": "Furniture Assembly",
       "desc": "IKEA, wardrobes, beds, furniture and small home installations.",
-      "price": "from €39",
+      "price": "€39",
       "badge": "Popular"
     },
     "electrical": {
       "title": "Basic Electrical",
       "desc": "Lights, switches, sockets and simple upgrades with a clean finish.",
-      "price": "from €35",
+      "price": "€35",
       "badge": "Safe"
     },
     "plumbing": {
       "title": "Plumbing",
       "desc": "Faucets, sinks, toilets, valves and small leaks.",
-      "price": "from €39",
+      "price": "€39",
       "badge": "Fast"
     },
     "repairs": {
       "title": "Home Repairs",
       "desc": "Small repairs, adjustments and general maintenance.",
-      "price": "from €25",
+      "price": "€25",
       "badge": "Practical"
     },
     "drywall": {
       "title": "Walls & Drywall",
       "desc": "Repairs, anchors, drilling, cutouts and finish preparation.",
-      "price": "from €45",
+      "price": "€45",
       "badge": "Pro"
     },
     "doors": {
       "title": "Doors & Hardware",
       "desc": "Handles, hinges, locks, closers and adjustments.",
-      "price": "from €35",
+      "price": "€35",
       "badge": "Fix"
     },
     "smartHome": {
       "title": "Smart Home",
       "desc": "Cameras, smart locks, doorbells and device setup.",
-      "price": "from €49",
+      "price": "€49",
       "badge": "Smart"
     },
     "networking": {
       "title": "WiFi & Networking",
       "desc": "Routers, repeaters, access points, switches, Ethernet, RJ45 and network diagnostics.",
-      "price": "from €49",
+      "price": "€49",
       "badge": "WiFi"
     },
     "cctv": {
       "title": "CCTV & Cameras",
       "desc": "Security camera installation, NVR setup, remote viewing and camera configuration.",
-      "price": "from €59",
+      "price": "€59",
       "badge": "CCTV"
     },
     "alarmSystems": {
       "title": "Alarm Systems",
       "desc": "Wired and wireless alarms, sensors, sirens, keypad setup and security upgrades.",
-      "price": "from €69",
+      "price": "€69",
       "badge": "Alarm"
     },
     "accessControl": {
       "title": "Access Control",
       "desc": "Keypads, RFID readers, electric locks, magnetic locks and door access systems.",
-      "price": "from €79",
+      "price": "€79",
       "badge": "Access"
     },
     "starlinkInternet": {
       "title": "Starlink & Internet",
       "desc": "Starlink installation, outdoor antennas, 4G/5G routers and point-to-point links.",
-      "price": "from €79",
+      "price": "€79",
       "badge": "Internet"
     },
     "commercialSecurity": {
       "title": "Commercial Security",
       "desc": "Network, CCTV, alarm and access control solutions for offices, bars and businesses.",
-      "price": "from €99",
+      "price": "€99",
       "badge": "Business"
     },
     "kitchen": {
       "title": "Kitchen",
       "desc": "Cabinets, shelves, lights, accessories and small installations.",
-      "price": "from €45",
+      "price": "€45",
       "badge": "Kitchen"
     },
     "bathroom": {
       "title": "Bathroom",
       "desc": "Mirrors, cabinets, holders, accessories and clean finishing work.",
-      "price": "from €39",
+      "price": "€39",
       "badge": "Bath"
     },
     "moveIn": {
       "title": "Move-In Setup",
       "desc": "Curtains, furniture and common setup work when moving into a home.",
-      "price": "from €49",
+      "price": "€49",
       "badge": "Setup"
     },
     "exterior": {
       "title": "Exterior Work",
       "desc": "Fences, facades, roofs and selected outdoor repairs.",
-      "price": "from €59",
+      "price": "€59",
       "badge": "House"
     }
   }
@@ -458,8 +458,8 @@
     "titleSuffix": "estimate builder",
     "description": "Choose exactly what you need. Add one or several items to build your estimate.",
     "clearAll": "Clear all",
-    "startingPrice": "Starting price per item",
-    "subtotal": "Subtotal",
+    "unitPrice": "Price per item",
+    "lineTotal": "Service total",
     "customNote": "Can’t find your exact service? Choose \"Custom job / Not listed\" or describe it in notes."
   },
   "step3": {

@@ -275,9 +275,9 @@ const faqs = [
     qEs: "¿Cuánto cuesta una puesta a punto de vivienda?",
     qEn: "How much does home preparation cost?",
     aEs:
-      "Depende de la lista de trabajos, materiales, estado de la vivienda y urgencia. Los trabajos pequeños pueden empezar desde 49 €.",
+      "Depende de la lista de trabajos, materiales, estado de la vivienda y urgencia. Los trabajos pequeños pueden costar 49 €.",
     aEn:
-      "It depends on the task list, materials, property condition and urgency. Small jobs can start from €49.",
+      "It depends on the task list, materials, property condition and urgency. Small jobs can cost €49.",
   },
   {
     qEs: "¿Trabajáis en toda Valencia?",
@@ -456,7 +456,7 @@ export default async function PuestaAPuntoViviendaPage({ params }: Props) {
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {[
-                [isEs ? "Desde 49 €" : "From €49", Euro],
+                [isEs ? "49 €" : "€49", Euro],
                 [
                   isEs ? "Fotos para presupuesto" : "Photos for estimate",
                   FileCheck2,

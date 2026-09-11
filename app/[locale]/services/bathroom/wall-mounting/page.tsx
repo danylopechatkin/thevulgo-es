@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Montaje en Pared para Baño | Desde 35€ | THEVULGO"
-      : "Bathroom Wall Mounting | From €35 | THEVULGO",
+      ? "Montaje en Pared para Baño | 35 € | THEVULGO"
+      : "Bathroom Wall Mounting | €35 | THEVULGO",
     description: isEs
-      ? "Montaje en pared para artículos de baño desde 35€. Taladro e instalación de espejos, muebles, estantes y accesorios en paredes adecuadas."
-      : "Bathroom wall mounting from €35. Drilling and mounting for mirrors, cabinets, shelves and accessories in suitable wall types.",
+      ? "Montaje en pared para artículos de baño por 35 €. Taladro e instalación de espejos, muebles, estantes y accesorios en paredes adecuadas."
+      : "Bathroom wall mounting for €35. Drilling and mounting for mirrors, cabinets, shelves and accessories in suitable wall types.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta montar artículos de baño en pared?",
-    a: "El montaje en pared para artículos de baño empieza desde 35€. El precio depende del tipo de pieza, peso, pared, fijaciones, número de agujeros y dificultad del montaje.",
+    a: "El montaje en pared para artículos de baño cuesta 35 €. El precio depende del tipo de pieza, peso, pared, fijaciones, número de agujeros y dificultad del montaje.",
   },
   {
     q: "¿Qué artículos de baño pueden montar?",
@@ -243,7 +243,7 @@ export default async function BathroomWallMountingPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 35€",
+                "35 €",
                 "Espejos y estantes",
                 "Muebles y armarios",
                 "Accesorios de baño",
@@ -314,7 +314,7 @@ export default async function BathroomWallMountingPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 35€. Presupuesto según fotos, piezas y dificultad.",
+              text: "35 €. Presupuesto según fotos, piezas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -459,7 +459,7 @@ export default async function BathroomWallMountingPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 35€
+            35 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para montaje en pared de baño

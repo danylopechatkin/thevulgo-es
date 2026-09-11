@@ -23,12 +23,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Sellado de Juntas y Huecos en Valencia | Desde 29€ | THEVULGO"
-    : "Sealing & Gap Filling in Valencia | From €29 | THEVULGO";
+    ? "Sellado de Juntas y Huecos en Valencia | 29 € | THEVULGO"
+    : "Sealing & Gap Filling in Valencia | €29 | THEVULGO";
 
   const description = isEs
-    ? "Sellado de pequeños huecos, juntas y separaciones visibles en Valencia desde 29€. Acabado limpio alrededor de superficies, accesorios y detalles del hogar."
-    : "Small gap sealing and filling in Valencia from €29. Clean finish around surfaces, fittings and visible home details.";
+    ? "Sellado de pequeños huecos, juntas y separaciones visibles en Valencia por 29 €. Acabado limpio alrededor de superficies, accesorios y detalles del hogar."
+    : "Small gap sealing and filling in Valencia for €29. Clean finish around surfaces, fittings and visible home details.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function SealingGapFillingPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta el sellado de huecos en Valencia?",
-          a: "El servicio empieza desde 29€. El precio final depende del número de zonas, tamaño de los huecos, material necesario, acceso y acabado esperado.",
+          a: "El servicio cuesta 29 €. El precio final depende del número de zonas, tamaño de los huecos, material necesario, acceso y acabado esperado.",
         },
         {
           q: "¿Este servicio sirve para baños y cocinas?",
@@ -137,7 +137,7 @@ export default async function SealingGapFillingPage({ params }: PageProps) {
         },
         {
           q: "How much does sealing and gap filling cost in Valencia?",
-          a: "The service starts from €29. Final price depends on the number of areas, gap size, required material, access and expected finish.",
+          a: "The service costs €29. Final price depends on the number of areas, gap size, required material, access and expected finish.",
         },
         {
           q: "Is this service suitable for bathrooms and kitchens?",
@@ -233,13 +233,13 @@ export default async function SealingGapFillingPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 29€",
+        "29 €",
         "Huecos pequeños y juntas visibles",
         "Baños, cocinas y detalles del hogar",
         "Acabado más limpio",
       ]
     : [
-        "From €29",
+        "€29",
         "Small gaps and visible joints",
         "Bathrooms, kitchens and home details",
         "Cleaner visible finish",
@@ -339,7 +339,7 @@ export default async function SealingGapFillingPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Sparkles className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 29€" : "From €29"}
+                {isEs ? "29 €" : "€29"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -475,7 +475,7 @@ export default async function SealingGapFillingPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 29€" : "From €29"}
+            {isEs ? "29 €" : "€29"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Preparación de Pared para Retoques en Valencia | Desde 35€ | THEVULGO"
-    : "Wall Touch-Up Prep in Valencia | From €35 | THEVULGO";
+    ? "Preparación de Pared para Retoques en Valencia | 35 € | THEVULGO"
+    : "Wall Touch-Up Prep in Valencia | €35 | THEVULGO";
 
   const description = isEs
-    ? "Preparación básica de pared antes de pintar o retocar en Valencia desde 35€. Alisado, corrección de marcas, preparación de superficie y mejora visible."
-    : "Basic wall touch-up preparation in Valencia from €35. Surface preparation before painting or touch-up work: smoothing, marks correction and visible finish prep.";
+    ? "Preparación básica de pared antes de pintar o retocar en Valencia por 35 €. Alisado, corrección de marcas, preparación de superficie y mejora visible."
+    : "Basic wall touch-up preparation in Valencia for €35. Surface preparation before painting or touch-up work: smoothing, marks correction and visible finish prep.";
 
   return {
     title,
@@ -114,7 +114,7 @@ export default async function WallTouchUpPrepPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta preparar una pared para pintar en Valencia?",
-          a: "El servicio empieza desde 35€. El precio final depende del tamaño de la zona, estado de la pared, número de marcas, material necesario y acabado esperado.",
+          a: "El servicio cuesta 35 €. El precio final depende del tamaño de la zona, estado de la pared, número de marcas, material necesario y acabado esperado.",
         },
         {
           q: "¿Incluye pintura?",
@@ -136,7 +136,7 @@ export default async function WallTouchUpPrepPage({ params }: PageProps) {
         },
         {
           q: "How much does wall prep before painting cost in Valencia?",
-          a: "The service starts from €35. Final price depends on area size, wall condition, number of marks, required material and expected finish.",
+          a: "The service costs €35. Final price depends on area size, wall condition, number of marks, required material and expected finish.",
         },
         {
           q: "Is painting included?",
@@ -232,13 +232,13 @@ export default async function WallTouchUpPrepPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 35€",
+        "35 €",
         "Preparación antes de pintar",
         "Alisado y corrección local",
         "Mejor acabado visible",
       ]
     : [
-        "From €35",
+        "€35",
         "Prep before painting",
         "Local smoothing and correction",
         "Better visible finish",
@@ -371,7 +371,7 @@ export default async function WallTouchUpPrepPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Paintbrush className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 35€" : "From €35"}
+                {isEs ? "35 €" : "€35"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -507,7 +507,7 @@ export default async function WallTouchUpPrepPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 35€" : "From €35"}
+            {isEs ? "35 €" : "€35"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

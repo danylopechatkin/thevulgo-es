@@ -124,7 +124,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Instalación de cámaras inteligentes interiores o exteriores con ubicación práctica, montaje limpio y configuración básica para app cuando sea compatible."
         : "Installation of indoor or outdoor smart cameras with practical placement, clean mounting and basic app-ready setup where supported.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Camera className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -133,7 +133,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Instalación de videoporteros inteligentes compatibles con montaje limpio y configuración básica para conexión con la app."
         : "Installation of compatible smart video doorbells with clean mounting and basic device setup for app connection.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <BellRing className="h-5 w-5" />,
       className: "",
     },
@@ -142,7 +142,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Instalación de cerraduras inteligentes y dispositivos de acceso cuando la puerta y el sistema sean compatibles."
         : "Installation of compatible smart locks and door access devices where the door and fitting are suitable.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
       icon: <Lock className="h-5 w-5" />,
       className: "",
     },
@@ -151,7 +151,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Conexión y colocación básica de cámaras Wi-Fi para pisos, casas y vigilancia interior sencilla."
         : "Basic connection and positioning of Wi-Fi cameras for apartments, homes and small indoor monitoring setups.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Wifi className="h-5 w-5" />,
       className: "",
     },
@@ -160,7 +160,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Montaje de cámaras con batería en ubicaciones interiores o exteriores adecuadas, cuidando el ángulo y la cobertura."
         : "Mounting of battery-powered cameras in suitable indoor or outdoor locations with attention to angle and coverage.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <BatteryCharging className="h-5 w-5" />,
       className: "",
     },
@@ -169,7 +169,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Montaje limpio de cámaras inteligentes cableadas compatibles cuando la alimentación y la ubicación ya son adecuadas."
         : "Clean mounting of compatible wired smart cameras where power and location are already suitable.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Camera className="h-5 w-5" />,
       className: "",
     },
@@ -178,7 +178,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración de motores inteligentes para cortinas o persianas con apertura automática, app o control por voz."
         : "Setup of smart curtain or blind motors for automated opening, closing and app or voice control in modern home environments.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Wifi className="h-5 w-5" />,
       className: "",
     },
@@ -187,7 +187,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Instalación de sensores compatibles de movimiento, puerta, ventana o ambiente para automatización y alertas."
         : "Installation of compatible smart motion, door, window or environmental sensors for home automation and alerts.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <ScanSearch className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -196,7 +196,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración de sensores de contacto para entradas, armarios, ventanas o puertas dentro de sistemas inteligentes."
         : "Setup of contact sensors for entry points, cabinets, windows or doors as part of smart monitoring systems.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <ShieldCheck className="h-5 w-5" />,
       className: "",
     },
@@ -205,7 +205,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Instalación y colocación básica de sensores de movimiento interiores compatibles."
         : "Basic installation and placement of compatible indoor motion sensors for smarter alerts and automation.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Radio className="h-5 w-5" />,
       className: "",
     },
@@ -214,7 +214,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración y colocación de enchufes inteligentes para lámparas, aparatos o control programado."
         : "Configuration and placement of smart plugs for lamps, appliances or timed control in everyday home use.",
-      price: isEs ? "desde €25" : "from €25",
+      price: isEs ? "25 €" : "€25",
       icon: <Plug className="h-5 w-5" />,
       className: "",
     },
@@ -223,7 +223,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Instalación o configuración de interruptores inteligentes compatibles y dispositivos de control conectados."
         : "Installation or setup of compatible smart switches and connected control devices where suitable.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "",
     },
@@ -232,7 +232,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración de bombillas inteligentes, luces conectadas y control por app para habitaciones o escenas."
         : "Setup of smart bulbs, connected lights and app-controlled lighting for rooms, shelves or home scenes.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "",
     },
@@ -241,7 +241,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Instalación y configuración de dispositivos compatibles para controlar consumo eléctrico y mejorar eficiencia."
         : "Installation and setup of compatible smart energy monitoring devices to track power usage and improve efficiency in everyday home use.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <BatteryCharging className="h-5 w-5" />,
       className: "",
     },
@@ -250,7 +250,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Instalación y configuración básica de tiras LED inteligentes para iluminación decorativa, escritorios o zonas multimedia."
         : "Installation and basic configuration of smart LED strips for accent lighting, media units, desks or decorative areas.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -259,7 +259,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración de hubs y bridges compatibles para cámaras, luces, sensores y automatizaciones."
         : "Setup of compatible hubs and bridges used for smart cameras, lights, sensors and automation devices.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Router className="h-5 w-5" />,
       className: "",
     },
@@ -268,7 +268,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Colocación y configuración básica de extensores Wi-Fi compatibles para mejorar señal de dispositivos inteligentes."
         : "Basic placement and setup of compatible Wi-Fi extenders to improve signal for smart devices around the home.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Wifi className="h-5 w-5" />,
       className: "",
     },
@@ -277,7 +277,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Ayuda para conectar dispositivos inteligentes compatibles a Wi-Fi, apps y configuraciones básicas."
         : "Help with connecting compatible smart devices to Wi-Fi networks, apps and basic home setups.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Router className="h-5 w-5" />,
       className: "",
     },
@@ -286,7 +286,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración o montaje básico de intercomunicadores inteligentes y unidades de acceso compatibles."
         : "Basic setup or mounting of compatible smart intercom devices and connected access units where suitable.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <MonitorSmartphone className="h-5 w-5" />,
       className: "",
     },
@@ -295,7 +295,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Instalación y colocación de partes compatibles de alarma inteligente como hubs, sensores y sirenas."
         : "Installation and positioning of compatible smart alarm parts such as hubs, sensors and sirens for home use.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Siren className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -304,7 +304,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración y colocación básica de sirenas interiores o dispositivos de alerta compatibles."
         : "Basic setup and positioning of compatible indoor sirens or alert devices in smart home systems.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Siren className="h-5 w-5" />,
       className: "",
     },
@@ -313,7 +313,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Montaje de sirenas exteriores compatibles cuando el dispositivo y la ubicación sean adecuados."
         : "Mounting of compatible outdoor sirens where the device and location are suitable for installation.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Siren className="h-5 w-5" />,
       className: "",
     },
@@ -322,7 +322,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración básica de termostatos inteligentes y control climático conectado cuando el sistema lo permita."
         : "Basic setup of compatible smart thermostats and connected climate control devices where the system allows it.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Thermometer className="h-5 w-5" />,
       className: "",
     },
@@ -331,7 +331,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración de altavoces inteligentes y asistentes de voz para control básico de luces, enchufes y dispositivos."
         : "Setup of smart speakers and voice assistant devices for basic control of lights, plugs and compatible home devices.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Speaker className="h-5 w-5" />,
       className: "",
     },
@@ -340,7 +340,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración de pantallas inteligentes compatibles para monitoreo, intercomunicador o control del hogar."
         : "Configuration of compatible smart displays for monitoring, intercom use or home control in one place.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <MonitorSmartphone className="h-5 w-5" />,
       className: "",
     },
@@ -349,7 +349,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Ayuda básica para conectar dispositivos inteligentes compatibles a apps, cuentas y configuración de usuario."
         : "Basic assistance with connecting compatible smart devices to their mobile apps, accounts and user setup steps.",
-      price: isEs ? "desde €25" : "from €25",
+      price: isEs ? "25 €" : "€25",
       icon: <Smartphone className="h-5 w-5" />,
       className: "",
     },
@@ -358,7 +358,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Solución práctica de problemas comunes de conexión, ubicación o configuración en entornos inteligentes simples."
         : "Practical troubleshooting for common connection, positioning or device setup issues in simple smart home environments.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Wrench className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -367,7 +367,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Ajuste de cámaras instaladas para mejorar cobertura, vigilancia de entradas o visibilidad en zonas clave."
         : "Adjustment of mounted cameras to improve room coverage, entry monitoring or visibility around key areas.",
-      price: isEs ? "desde €25" : "from €25",
+      price: isEs ? "25 €" : "€25",
       icon: <Camera className="h-5 w-5" />,
       className: "",
     },
@@ -376,7 +376,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración de dispositivos de entrada inteligente como cerraduras, teclados y accesorios compatibles."
         : "Setup of smart entry devices such as connected locks, keypads and access accessories where compatible.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <KeyRound className="h-5 w-5" />,
       className: "",
     },
@@ -385,7 +385,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Instalación combinada de varios dispositivos en una habitación: luces, enchufes, sensores y cámaras."
         : "Combined installation and setup of several smart devices in one room such as lights, plugs, sensors and cameras.",
-      price: isEs ? "desde €69" : "from €69",
+      price: isEs ? "69 €" : "€69",
       icon: <House className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -394,7 +394,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Configuración inteligente para apartamentos con cámaras, enchufes, luces y sensores."
         : "Smart home setup for apartments including practical combinations of cameras, plugs, lights and sensors.",
-      price: isEs ? "desde €79" : "from €79",
+      price: isEs ? "79 €" : "€79",
       icon: <House className="h-5 w-5" />,
       className: "",
     },
@@ -403,7 +403,7 @@ export default function SmartHomeClient() {
       desc: isEs
         ? "Mejora de ubicación de dispositivos existentes para mejor señal, cobertura y uso: cámaras, sensores y equipos Wi-Fi."
         : "Improving placement of existing smart devices for better signal, coverage and usability. Includes camera angles, sensors and Wi-Fi-dependent devices.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <ScanSearch className="h-5 w-5" />,
       className: "",
     },

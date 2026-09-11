@@ -169,7 +169,7 @@ const cctvPages = [
     en: "Remote Viewing Setup",
     es: "Configuración de acceso remoto",
     descEn: "Mobile app setup to view cameras remotely from phone, tablet or computer.",
-    descEs: "Configuración de app móvil para ver cámaras desde teléfono, tablet u ordenador.",
+    descEs: "Configuración de app móvil para ver cámaras con teléfono, tablet u ordenador.",
     icon: MonitorSmartphone,
   },
   {
@@ -321,24 +321,24 @@ export default async function CctvPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Diagnóstico de cámaras", "desde 49 €"],
-        ["Instalación de cámara interior", "desde 59 €"],
-        ["Instalación de cámara exterior", "desde 69 €"],
-        ["Configuración de app / acceso remoto", "desde 49 €"],
-        ["Instalación de NVR / DVR", "desde 79 €"],
-        ["Cámara IP / PoE", "desde 69 €"],
-        ["CCTV para negocio", "desde 99 €"],
-        ["Mantenimiento de cámaras", "desde 49 €"],
+        ["Diagnóstico de cámaras", "49 €"],
+        ["Instalación de cámara interior", "59 €"],
+        ["Instalación de cámara exterior", "69 €"],
+        ["Configuración de app / acceso remoto", "49 €"],
+        ["Instalación de NVR / DVR", "79 €"],
+        ["Cámara IP / PoE", "69 €"],
+        ["CCTV para negocio", "99 €"],
+        ["Mantenimiento de cámaras", "49 €"],
       ]
     : [
-        ["Camera diagnostics", "from €49"],
-        ["Indoor camera installation", "from €59"],
-        ["Outdoor camera installation", "from €69"],
-        ["App / remote viewing setup", "from €49"],
-        ["NVR / DVR installation", "from €79"],
-        ["IP / PoE camera", "from €69"],
-        ["Business CCTV", "from €99"],
-        ["Camera maintenance", "from €49"],
+        ["Camera diagnostics", "€49"],
+        ["Indoor camera installation", "€59"],
+        ["Outdoor camera installation", "€69"],
+        ["App / remote viewing setup", "€49"],
+        ["NVR / DVR installation", "€79"],
+        ["IP / PoE camera", "€69"],
+        ["Business CCTV", "€99"],
+        ["Camera maintenance", "€49"],
       ];
 
   const clientTypes = [
@@ -395,7 +395,7 @@ export default async function CctvPage({ params }: Props) {
         "Configuración de NVR, DVR y app móvil",
         "Ayuda con Hikvision, Dahua, Reolink, VIGI y Ubiquiti",
         "Revisión de cableado, PoE, router y red",
-        "Acceso remoto desde móvil, tablet u ordenador",
+        "Acceso remoto con el móvil, tablet u ordenador",
         "Mantenimiento, ajustes y reparación de cámaras",
         "Comunicación directa por WhatsApp",
       ]
@@ -414,15 +414,15 @@ export default async function CctvPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta instalar cámaras CCTV en Valencia?",
-          a: "Depende del número de cámaras, tipo de cámara, cableado, altura, acceso, grabador y configuración. Una instalación básica puede empezar desde 59–69 € por cámara.",
+          a: "Depende del número de cámaras, tipo de cámara, cableado, altura, acceso, grabador y configuración. Una instalación básica puede costar 59–69 € por cámara.",
         },
         {
           q: "¿Instaláis cámaras IP y cámaras PoE?",
           a: "Sí. Podemos instalar cámaras IP, cámaras PoE, switches PoE, NVR, cableado Ethernet y acceso remoto.",
         },
         {
-          q: "¿Configuráis la app para ver cámaras desde el móvil?",
-          a: "Sí. Podemos configurar acceso remoto para ver cámaras desde móvil, tablet u ordenador, siempre que el sistema y la conexión lo permitan.",
+          q: "¿Configuráis la app para ver cámaras con el móvil?",
+          a: "Sí. Podemos configurar acceso remoto para ver cámaras con el móvil, tablet u ordenador, siempre que el sistema y la conexión lo permitan.",
         },
         {
           q: "¿Trabajáis con Hikvision, Dahua, Reolink, TP-Link VIGI y Ubiquiti?",
@@ -448,7 +448,7 @@ export default async function CctvPage({ params }: Props) {
     : [
         {
           q: "How much does CCTV camera installation in Valencia cost?",
-          a: "It depends on the number of cameras, camera type, cabling, height, access, recorder and configuration. A basic installation can start from €59–69 per camera.",
+          a: "It depends on the number of cameras, camera type, cabling, height, access, recorder and configuration. A basic installation can cost €59–69 per camera.",
         },
         {
           q: "Do you install IP cameras and PoE cameras?",
@@ -638,7 +638,7 @@ export default async function CctvPage({ params }: Props) {
                   icon: BadgeCheck,
                   title: isEs ? "App y acceso remoto" : "App and remote access",
                   text: isEs
-                    ? "Configuración para ver cámaras desde el móvil."
+                    ? "Configuración para ver cámaras con el móvil."
                     : "Setup to view cameras from your phone.",
                 },
               ].map((item) => (
@@ -720,7 +720,7 @@ export default async function CctvPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -745,7 +745,7 @@ export default async function CctvPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">
@@ -884,7 +884,7 @@ export default async function CctvPage({ params }: Props) {
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
                 {isEs
-                  ? "NVR, DVR, app móvil y visualización desde fuera"
+                  ? "NVR, DVR, app móvil y visualización en remoto"
                   : "NVR, DVR, mobile app and remote viewing"}
               </h2>
 
@@ -905,7 +905,7 @@ export default async function CctvPage({ params }: Props) {
               {(isEs
                 ? [
                     "Grabación continua o por movimiento",
-                    "Acceso remoto desde móvil",
+                    "Acceso remoto con el móvil",
                     "Configuración de NVR",
                     "Configuración de DVR",
                     "Revisión de cables",
@@ -953,7 +953,7 @@ export default async function CctvPage({ params }: Props) {
 
             <p className="mt-4 text-lg leading-8 text-neutral-700">
               {isEs
-                ? "Antes de perforar o pasar cable, hay que definir qué se quiere ver, desde qué ángulo, con qué luz, dónde está el router o grabador, y si la cámara será WiFi, PoE, interior o exterior."
+                ? "Antes de perforar o pasar cable, hay que definir qué se quiere ver, con qué ángulo, con qué luz, dónde está el router o grabador, y si la cámara será WiFi, PoE, interior o exterior."
                 : "Before drilling or running cable, it is important to define what needs to be seen, from which angle, with what light, where the router or recorder is located and whether the camera will be WiFi, PoE, indoor or outdoor."}
             </p>
 

@@ -3,6 +3,7 @@
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import { calculatePublicTotal, formatPublicPrice, formatCatalogPrice } from "@/lib/public-pricing";
 import { CatalogService, getCatalogServices } from "@/lib/serviceCatalog";
 import {
   Calculator,
@@ -377,7 +378,7 @@ function EstimatePageContent() {
       });
   }, [currentCategory.services, quantities, isEs]);
 
-  const estimatedTotal = useMemo(() => selectedServices.reduce((sum, item) => sum + item.subtotal, 0), [selectedServices]);
+  const estimatedTotal = useMemo(() => calculatePublicTotal(selectedServices), [selectedServices]);
 
   const subtotal = Number(estimatedTotal.toFixed(2));
   const total = subtotal;
@@ -657,7 +658,6 @@ function EstimatePageContent() {
           badge: service.displayBadge,
         })),
         subtotal,
-        iva: 0,
         total,
         locale,
         sourceUrl: window.location.href,
@@ -881,7 +881,7 @@ function EstimatePageContent() {
                           </div>
 
                           <div className="rounded-full bg-yellow-50 px-3 py-1 text-sm font-extrabold text-yellow-600">
-                            {isEs ? service.priceLabelEs?.replace(/^desde\s+/i, "") || `${service.price} €` : service.priceLabel?.replace(/^from\s+/i, "") || `€${service.price}`}
+                            {formatCatalogPrice(service, locale)}
                           </div>
                         </div>
 
@@ -912,8 +912,8 @@ function EstimatePageContent() {
                         </div>
 
                         <div className="mt-4 flex items-center justify-between">
-                          <span className="text-sm text-gray-500">{t("step2.subtotal")}</span>
-                          <span className="text-base font-extrabold text-black">€{qty * service.price}</span>
+                          <span className="text-sm text-gray-500">{t("step2.lineTotal")}</span>
+                          <span className="text-base font-extrabold text-black">{formatPublicPrice(qty * service.price, locale)}</span>
                         </div>
                       </div>
                     );
@@ -1195,12 +1195,12 @@ function EstimatePageContent() {
                             <div>
                               <p className="font-bold text-black">{item.displayLabel}</p>
                               <p className="mt-1 text-xs text-gray-500">
-                                {item.qty} × €{item.price}
+                                {item.qty} × {formatPublicPrice(item.price, locale)}
                               </p>
                             </div>
 
-                            <div className="flex items-center gap-3">
-                              <div className="text-sm font-extrabold text-black">€{item.subtotal}</div>
+                            <div className="flex shrink-0 items-center gap-3">
+                              <div className="whitespace-nowrap text-sm font-extrabold text-black">{formatPublicPrice(item.subtotal, locale)}</div>
 
                               <button
                                 type="button"
@@ -1218,7 +1218,7 @@ function EstimatePageContent() {
                 )}
 
                 {submitStage === "build" && (
-                  <TotalBox total={total} t={t} />
+                  <TotalBox total={total} t={t} locale={locale} />
                 )}
 
                 {submitStage === "build" && (
@@ -1285,11 +1285,11 @@ function EstimatePageContent() {
                               <div className="flex flex-col">
                                 <span className="font-semibold text-black">{item.displayLabel}</span>
                                 <span className="text-xs text-gray-500">
-                                  {item.qty} × €{item.price}
+                                  {item.qty} × {formatPublicPrice(item.price, locale)}
                                 </span>
                               </div>
 
-                              <span className="font-semibold text-black">€{item.subtotal}</span>
+                              <span className="font-semibold text-black">{formatPublicPrice(item.subtotal, locale)}</span>
                             </div>
                           ))}
                         </div>
@@ -1301,7 +1301,7 @@ function EstimatePageContent() {
                             </span>
 
                             <span className="text-xl font-extrabold text-black">
-                              €{total.toFixed(2)}
+                              {formatPublicPrice(total, locale, true)}
                             </span>
                           </div>
                         </div>
@@ -1445,17 +1445,19 @@ export default function EstimatePage() {
 }
 
 function TotalBox({
+  locale,
   total,
   t,
 }: {
   total: number;
+  locale: string;
   t: (key: string) => string;
 }) {
   return (
     <div className="mt-6 shrink-0 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
       <div className="flex justify-between text-lg font-extrabold text-black">
         <span>{t("summary.total")}</span>
-        <span>€{total.toFixed(2)}</span>
+        <span>{formatPublicPrice(total, locale, true)}</span>
       </div>
     </div>
   );

@@ -28,11 +28,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Instalación de Lámparas en Valencia | Desde 35€ | THEVULGO"
-      : "Lamp Installation in Valencia | From €35 | THEVULGO",
+      ? "Instalación de Lámparas en Valencia | 35 € | THEVULGO"
+      : "Lamp Installation in Valencia | €35 | THEVULGO",
     description: isEs
-      ? "Instalación de lámparas en Valencia desde 35€. Luces de techo, lámparas colgantes y sustitución simple de iluminación para casas y apartamentos."
-      : "Lamp installation in Valencia from €35. Ceiling lights, pendant lamps and simple light replacement for homes and apartments.",
+      ? "Instalación de lámparas en Valencia por 35 €. Luces de techo, lámparas colgantes y sustitución simple de iluminación para casas y apartamentos."
+      : "Lamp installation in Valencia for €35. Ceiling lights, pendant lamps and simple light replacement for homes and apartments.",
     alternates: {
       canonical: `${siteUrl}/${locale}/instalacion-lampara-valencia`,
       languages: {
@@ -74,7 +74,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar una lámpara en Valencia?",
-    a: "La instalación de lámpara empieza desde 35€. El precio final depende del tipo de lámpara, altura, techo, peso, cableado existente y dificultad.",
+    a: "La instalación de lámpara cuesta 35 €. El precio final depende del tipo de lámpara, altura, techo, peso, cableado existente y dificultad.",
   },
   {
     q: "¿Instalan lámparas de techo?",
@@ -213,7 +213,7 @@ export default async function LampInstallationValenciaPage({
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
               Instalación de luces de techo, lámparas y sustitución simple de
-              iluminación desde <strong className="text-neutral-950">35€</strong>{" "}
+              iluminación por <strong className="text-neutral-950">35 €</strong>{" "}
               para casas, apartamentos, oficinas y pisos en Valencia.
             </p>
 
@@ -236,7 +236,7 @@ export default async function LampInstallationValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Instalación desde 35€",
+                "Instalación por 35 €",
                 "Lámparas de techo",
                 "Plafones y luces colgantes",
                 "Sustitución simple",
@@ -420,7 +420,7 @@ export default async function LampInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 35€
+            35 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para instalar lámpara en Valencia

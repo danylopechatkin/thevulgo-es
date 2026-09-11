@@ -99,12 +99,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reemplazo de ventilador de techo en Valencia desde 45 € | THEVULGO"
-    : "Ceiling Fan Replacement in Valencia From €45 | THEVULGO";
+    ? "Reemplazo de ventilador de techo en Valencia por 45 € | THEVULGO"
+    : "Ceiling Fan Replacement in Valencia | €45 | THEVULGO";
 
   const description = isEs
-    ? "Reemplazo de ventilador de techo en Valencia desde 45 €. Desmontaje del ventilador antiguo, montaje del nuevo, conexión al punto eléctrico existente y prueba final."
-    : "Ceiling fan replacement in Valencia from €45. Old fan removal, new fan mounting, connection to the existing electrical point and final testing.";
+    ? "Reemplazo de ventilador de techo en Valencia por 45 €. Desmontaje del ventilador antiguo, montaje del nuevo, conexión al punto eléctrico existente y prueba final."
+    : "Ceiling fan replacement in Valencia for €45. Old fan removal, new fan mounting, connection to the existing electrical point and final testing.";
 
   return {
     title,
@@ -255,8 +255,8 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
           acceptedAnswer: {
             "@type": "Answer",
             text: isEs
-              ? "El precio es desde 45 € para un ventilador, 85 € para dos y 125 € para tres, usando el punto eléctrico existente."
-              : "The price is from €45 for one fan, €85 for two and €125 for three, using the existing electrical point.",
+              ? "El precio es de 45 € para un ventilador, 85 € para dos y 125 € para tres, usando el punto eléctrico existente."
+              : "The price is €45 for one fan, €85 for two and €125 for three, using the existing electrical point.",
           },
         },
       ],
@@ -357,8 +357,8 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
         ? "¿Cuánto cuesta reemplazar un ventilador de techo?"
         : "How much does it cost to replace a ceiling fan?",
       a: isEs
-        ? "El precio es desde 45 € para un ventilador, 85 € para dos y 125 € para tres, si se usa el mismo punto eléctrico existente."
-        : "The price is from €45 for one fan, €85 for two and €125 for three, when using the same existing electrical point.",
+        ? "El precio es de 45 € para un ventilador, 85 € para dos y 125 € para tres, si se usa el mismo punto eléctrico existente."
+        : "The price is €45 for one fan, €85 for two and €125 for three, when using the same existing electrical point.",
     },
     {
       q: isEs
@@ -425,8 +425,8 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
 
             <h1 className="max-w-4xl text-4xl font-black tracking-tight text-neutral-950 sm:text-5xl lg:text-6xl">
               {isEs
-                ? "Reemplazo de ventilador de techo desde 45 €"
-                : "Ceiling fan replacement from €45"}
+                ? "Reemplazo de ventilador de techo por 45 €"
+                : "Ceiling fan replacement for €45"}
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600 sm:text-xl">
@@ -455,7 +455,7 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {[
-                isEs ? "Desde 45 €" : "From €45",
+                isEs ? "45 €" : "€45",
                 isEs ? "Desmontaje incluido" : "Removal included",
                 isEs ? "Prueba final completa" : "Full final test",
               ].map((item) => (
@@ -987,7 +987,7 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
 
             <p className="mt-5 text-lg leading-8 text-neutral-600">
               {isEs
-                ? "También podemos ayudarte con instalación de ventiladores nuevos, ventiladores con luz, mando, aspas retráctiles o cambio desde lámpara."
+                ? "También podemos ayudarte con instalación de ventiladores nuevos, ventiladores con luz, mando, aspas retráctiles o sustitución de lámpara."
                 : "We can also help with new fan installation, fans with light, remote control, retractable blades or lamp-to-fan replacement."}
             </p>
           </div>

@@ -99,12 +99,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalar ventilador de techo en Valencia | Desde 45 €"
-    : "Ceiling Fan Installation Valencia | From €45";
+    ? "Instalar ventilador de techo en Valencia | 45 €"
+    : "Ceiling Fan Installation Valencia | €45";
 
   const description = isEs
-    ? "Instalación de ventiladores de techo en Valencia desde 45 €. Desmontaje del anterior, conexión y prueba incluidos. Precio rápido online."
-    : "Ceiling fan installation in Valencia from €45. Removal of the old fitting, connection and final testing included. Check your price online.";
+    ? "Instalación de ventiladores de techo en Valencia por 45 €. Desmontaje del anterior, conexión y prueba incluidos. Precio rápido online."
+    : "Ceiling fan installation in Valencia for €45. Removal of the old fitting, connection and final testing included. Check your price online.";
 
   return {
     title,
@@ -406,8 +406,8 @@ export default async function CeilingFanInstallationPage({
         areaServed: areas,
         url: pageUrl,
         description: isEs
-          ? "Instalación de ventiladores de techo en Valencia desde 45 €. Desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente incluidos."
-          : "Ceiling fan installation in Valencia from €45. Old lamp or fan removal and connection to the existing electrical point included.",
+          ? "Instalación de ventiladores de techo en Valencia por 45 €. Desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente incluidos."
+          : "Ceiling fan installation in Valencia for €45. Old lamp or fan removal and connection to the existing electrical point included.",
         offers: [
           {
             "@type": "Offer",
@@ -514,8 +514,8 @@ export default async function CeilingFanInstallationPage({
 
             <p className="mt-6 max-w-4xl text-lg leading-8 text-neutral-700">
   {isEs
-    ? "¿Necesitas instalar un ventilador de techo en Valencia? En THEVULGO realizamos la instalación de ventiladores de techo desde 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles, CREATE, Cecotec y otras marcas. El servicio incluye montaje, conexión al punto eléctrico existente y prueba final."
-    : "Need to install a ceiling fan in Valencia? THEVULGO provides professional ceiling fan installation from €45. We install ceiling fans with lights, remote controls, WiFi and retractable blades. Installation includes mounting, connection to the existing electrical point and final testing."}
+    ? "¿Necesitas instalar un ventilador de techo en Valencia? En THEVULGO realizamos la instalación de ventiladores de techo por 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles, CREATE, Cecotec y otras marcas. El servicio incluye montaje, conexión al punto eléctrico existente y prueba final."
+    : "Need to install a ceiling fan in Valencia? THEVULGO provides professional ceiling fan installation for €45. We install ceiling fans with lights, remote controls, WiFi and retractable blades. Installation includes mounting, connection to the existing electrical point and final testing."}
 </p>
 
 <div className="mt-5 flex flex-wrap gap-3 text-sm font-bold">
@@ -534,7 +534,7 @@ export default async function CeilingFanInstallationPage({
 
   <span className="rounded-full bg-yellow-400 px-4 py-2 text-black shadow-sm">
 
-    {isEs ? "Desde 45 €" : "From €45"}
+    {isEs ? "45 €" : "€45"}
 
   </span>
 
@@ -651,8 +651,8 @@ export default async function CeilingFanInstallationPage({
 
     <p className="mt-5 text-lg leading-8 text-neutral-700">
       {isEs
-        ? "Si necesitas instalar un ventilador de techo en Valencia, THEVULGO ofrece un servicio profesional desde 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles y modelos de todas las marcas. El servicio incluye el montaje, la conexión al punto eléctrico existente, el desmontaje de la lámpara o ventilador anterior y la prueba final de funcionamiento."
-        : "If you need to install a ceiling fan in Valencia, THEVULGO provides professional installation from €45. We install fans with lights, remote controls, WiFi, retractable blades and all major brands. The service includes mounting, connection to the existing electrical point, removal of the old light or fan and full testing."}
+        ? "Si necesitas instalar un ventilador de techo en Valencia, THEVULGO ofrece un servicio profesional por 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles y modelos de todas las marcas. El servicio incluye el montaje, la conexión al punto eléctrico existente, el desmontaje de la lámpara o ventilador anterior y la prueba final de funcionamiento."
+        : "If you need to install a ceiling fan in Valencia, THEVULGO provides professional installation for €45. We install fans with lights, remote controls, WiFi, retractable blades and all major brands. The service includes mounting, connection to the existing electrical point, removal of the old light or fan and full testing."}
     </p>
   </div>
 </section>
@@ -1274,9 +1274,9 @@ export default async function CeilingFanInstallationPage({
 
     {isEs
 
-      ? "Si buscas instalar un ventilador de techo en Valencia, THEVULGO ofrece un servicio profesional desde 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles y modelos de todas las marcas. Confirmamos el precio antes de la visita y dejamos el ventilador completamente instalado, conectado y probado."
+      ? "Si buscas instalar un ventilador de techo en Valencia, THEVULGO ofrece un servicio profesional por 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles y modelos de todas las marcas. Confirmamos el precio antes de la visita y dejamos el ventilador completamente instalado, conectado y probado."
 
-      : "If you are looking to install a ceiling fan in Valencia, THEVULGO provides professional installation from €45. We install fans with lights, remote controls, WiFi, retractable blades and all major brands. We confirm the price before the visit and leave the fan fully installed, connected and tested."}
+      : "If you are looking to install a ceiling fan in Valencia, THEVULGO provides professional installation for €45. We install fans with lights, remote controls, WiFi, retractable blades and all major brands. We confirm the price before the visit and leave the fan fully installed, connected and tested."}
 
   </p>
 

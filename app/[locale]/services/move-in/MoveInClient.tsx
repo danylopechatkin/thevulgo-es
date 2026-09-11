@@ -137,7 +137,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Servicio rápido para dejar el piso listo en un día con muebles, luces, cortinas e instalaciones esenciales."
         : "Fast-track setup service focused on getting your apartment ready in one day with furniture, lights, curtains and essential installations completed efficiently.",
-      price: isEs ? "desde €79" : "from €79",
+      price: isEs ? "79 €" : "€79",
       icon: <Clock3 className="h-5 w-5" />,
       className: "",
     },
@@ -146,16 +146,16 @@ export default function MoveInClient() {
       desc: isEs
         ? "Ajustes finales y pequeñas instalaciones para que el piso se vea completo: espejos, decoración, accesorios y detalles visibles."
         : "Final adjustments and small installations that make the apartment feel complete — mirrors, decor, alignment fixes, accessories and visual finishing details.",
-      price: isEs ? "desde €45" : "from €45",
+      price: isEs ? "45 €" : "€45",
       icon: <CheckCircle2 className="h-5 w-5" />,
       className: "",
     },
     {
       title: isEs ? "Montaje de muebles" : "Furniture assembly",
       desc: isEs
-        ? "Montaje de camas, mesas, sillas, estantes, muebles pequeños y otros elementos necesarios para usar el piso desde el primer día."
+        ? "Montaje de camas, mesas, sillas, estantes, muebles pequeños y otros elementos necesarios para usar el piso ya el primer día."
         : "Assembly of beds, tables, chairs, shelves, small cabinets and other furniture needed to make the apartment functional from day one.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Sofa className="h-5 w-5" />,
       className: "",
     },
@@ -164,7 +164,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Montaje de TV y preparación de la zona con mejor alineación y distribución más terminada."
         : "Mounting TVs and setting up the viewing area with cleaner alignment and a more finished room layout.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Tv className="h-5 w-5" />,
       className: "",
     },
@@ -173,7 +173,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Instalación de luces de techo, lámparas y elementos básicos de iluminación para dejar el piso listo."
         : "Installation of ceiling lights, lamps and basic room lighting fixtures for a ready-to-live apartment setup.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "",
     },
@@ -182,7 +182,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Instalación de rieles, barras, estores y sistemas simples para privacidad y comodidad."
         : "Installation of curtain rails, rods, blinds and simple window covering systems for privacy and comfort.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Drill className="h-5 w-5" />,
       className: "",
     },
@@ -191,7 +191,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Montaje de espejos, ganchos, estantes y accesorios prácticos para que el piso se vea más completo y organizado."
         : "Mounting mirrors, hooks, shelves and practical wall accessories to make the apartment feel more complete and organized.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Hammer className="h-5 w-5" />,
       className: "",
     },
@@ -200,7 +200,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Preparación práctica del dormitorio: cama, mesitas, espejos, pequeños accesorios y detalles esenciales."
         : "Practical bedroom setup including bed positioning, bedside items, mirrors, small fittings and essential finishing touches to make the room feel ready from day one.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Home className="h-5 w-5" />,
       className: "",
     },
@@ -209,7 +209,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Ayuda para desempaquetar cajas, colocar muebles y ubicar objetos esenciales para que el piso sea funcional más rápido."
         : "Help with unpacking boxes, arranging furniture and placing essential items so the apartment becomes functional faster.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Boxes className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -218,7 +218,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Organización básica de habitaciones, colocación de muebles y pequeñas mejoras de distribución."
         : "Basic room organization, furniture placement and small layout improvements to make better everyday use of the space.",
-      price: isEs ? "desde €45" : "from €45",
+      price: isEs ? "45 €" : "€45",
       icon: <Package className="h-5 w-5" />,
       className: "",
     },
@@ -227,7 +227,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Pequeñas correcciones, ajuste de piezas y mejora de uso en diferentes zonas del piso."
         : "Small practical corrections, tightening fittings and improving usability across multiple parts of the apartment.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -236,7 +236,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Ajuste básico de puertas, manillas y herrajes visibles para mejorar el uso diario."
         : "Basic adjustment of doors, handles and visible hardware to improve how the apartment feels in daily use.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <DoorOpen className="h-5 w-5" />,
       className: "",
     },
@@ -245,7 +245,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Preparación básica de cocina, pequeñas instalaciones y organización para uso inmediato."
         : "Basic setup of kitchen items, small installations and practical preparation so the kitchen is ready for immediate daily use.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <ChefHat className="h-5 w-5" />,
       className: "",
     },
@@ -254,7 +254,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Instalación de espejos, soportes, estantes y elementos esenciales de baño."
         : "Installation of mirrors, holders, shelves and small bathroom essentials to complete the bathroom quickly and cleanly.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Bath className="h-5 w-5" />,
       className: "",
     },
@@ -263,16 +263,16 @@ export default function MoveInClient() {
       desc: isEs
         ? "Configuración básica de router, dispositivos inteligentes y electrónica del hogar."
         : "Basic setup of routers, smart devices and home electronics to get the apartment connected and ready to use.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Router className="h-5 w-5" />,
       className: "",
     },
     {
       title: isEs ? "Preparación de escritorio / workspace" : "Workspace / desk setup",
       desc: isEs
-        ? "Montaje y preparación de escritorios, zonas de trabajo y elementos esenciales para trabajar desde casa."
+        ? "Montaje y preparación de escritorios, zonas de trabajo y elementos esenciales para trabajar en casa."
         : "Assembly and setup of desks, workstations and home office essentials for practical work-from-home use.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <MonitorSmartphone className="h-5 w-5" />,
       className: "",
     },
@@ -281,7 +281,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Preparación de la zona de entrada: ganchos, pequeño almacenamiento, espejos y accesorios prácticos."
         : "Setup of entry-area essentials such as hooks, small storage, mirrors and practical accessories near the entrance.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <KeyRound className="h-5 w-5" />,
       className: "",
     },
@@ -576,7 +576,7 @@ export default function MoveInClient() {
                       <p>
                         Una buena preparación de mudanza no consiste solo en instalar cosas por separado.
                         Se trata de hacer que todo el piso se sienta listo, organizado y mucho más cómodo
-                        desde el primer día.
+                        ya el primer día.
                       </p>
 
                       <p>

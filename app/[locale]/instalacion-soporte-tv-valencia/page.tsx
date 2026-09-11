@@ -169,27 +169,27 @@ export default async function InstalacionSoporteTvValenciaPage({
 
   const prices = isEs
     ? [
-        ["Instalación de soporte fijo", "desde 49 €"],
-        ["Instalación de soporte inclinable", "desde 59 €"],
-        ["Instalación de soporte articulado", "desde 79 €"],
-        ["Instalación de soporte para TV grande", "desde 69 €"],
+        ["Instalación de soporte fijo", "49 €"],
+        ["Instalación de soporte inclinable", "59 €"],
+        ["Instalación de soporte articulado", "79 €"],
+        ["Instalación de soporte para TV grande", "69 €"],
         ["Soundbar / cableado limpio", "según trabajo"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Fixed bracket installation", "from €49"],
-        ["Tilting bracket installation", "from €59"],
-        ["Full motion bracket installation", "from €79"],
-        ["Large TV bracket installation", "from €69"],
+        ["Fixed bracket installation", "€49"],
+        ["Tilting bracket installation", "€59"],
+        ["Full motion bracket installation", "€79"],
+        ["Large TV bracket installation", "€69"],
         ["Soundbar / clean cabling", "by job"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta instalar un soporte TV en Valencia?",
-          a: "Depende del tipo de soporte, tamaño y peso de la TV, tipo de pared, altura, dificultad y cableado. Un soporte fijo suele empezar desde 49 €, y un soporte articulado desde 79 €.",
+          a: "Depende del tipo de soporte, tamaño y peso de la TV, tipo de pared, altura, dificultad y cableado. Un soporte fijo cuesta 49 €, y un soporte articulado por 79 €.",
         },
         {
           q: "¿Qué tipo de soporte TV podéis instalar?",
@@ -215,7 +215,7 @@ export default async function InstalacionSoporteTvValenciaPage({
     : [
         {
           q: "How much does TV bracket installation in Valencia cost?",
-          a: "It depends on bracket type, TV size and weight, wall type, height, difficulty and cabling. A fixed bracket usually starts from €49, and a full motion bracket from €79.",
+          a: "It depends on bracket type, TV size and weight, wall type, height, difficulty and cabling. A fixed bracket costs €49, and a full motion bracket for €79.",
         },
         {
           q: "What type of TV bracket can you install?",
@@ -478,7 +478,7 @@ export default async function InstalacionSoporteTvValenciaPage({
                         <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

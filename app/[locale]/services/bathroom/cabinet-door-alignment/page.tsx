@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Ajuste de Puertas de Mueble de Baño | Desde 29€ | THEVULGO"
-      : "Bathroom Cabinet Door Alignment | From €29 | THEVULGO",
+      ? "Ajuste de Puertas de Mueble de Baño | 29 € | THEVULGO"
+      : "Bathroom Cabinet Door Alignment | €29 | THEVULGO",
     description: isEs
-      ? "Ajuste de puertas de muebles de baño desde 29€. Mejora de simetría, cierre, bisagras y línea visual del mueble para un acabado más limpio."
-      : "Bathroom cabinet door alignment from €29. Adjustment of cabinet doors to improve symmetry, closing feel and the visual line of bathroom furniture.",
+      ? "Ajuste de puertas de muebles de baño por 29 €. Mejora de simetría, cierre, bisagras y línea visual del mueble para un acabado más limpio."
+      : "Bathroom cabinet door alignment for €29. Adjustment of cabinet doors to improve symmetry, closing feel and the visual line of bathroom furniture.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta ajustar puertas de mueble de baño?",
-    a: "El ajuste de puertas de mueble de baño empieza desde 29€. El precio depende del número de puertas, tipo de bisagra, estado del mueble, acceso y dificultad del ajuste.",
+    a: "El ajuste de puertas de mueble de baño cuesta 29 €. El precio depende del número de puertas, tipo de bisagra, estado del mueble, acceso y dificultad del ajuste.",
   },
   {
     q: "¿Pueden ajustar puertas que no cierran bien?",
@@ -244,7 +244,7 @@ export default async function CabinetDoorAlignmentPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 29€",
+                "29 €",
                 "Puertas desalineadas",
                 "Ajuste de bisagras",
                 "Mejor cierre",
@@ -315,7 +315,7 @@ export default async function CabinetDoorAlignmentPage({ params }: PageProps) {
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 29€. Presupuesto según fotos, puertas y dificultad.",
+              text: "29 €. Presupuesto según fotos, puertas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -459,7 +459,7 @@ export default async function CabinetDoorAlignmentPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para ajustar puertas de mueble de baño

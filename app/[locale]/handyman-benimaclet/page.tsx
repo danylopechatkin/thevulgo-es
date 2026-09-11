@@ -226,24 +226,24 @@ export default async function HandymanBenimacletPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Montaje de TV", "desde 49 €"],
-        ["Montaje de muebles", "desde 45 €"],
-        ["Cambio de enchufe / interruptor", "desde 35 €"],
-        ["Instalación de lámpara", "desde 39 €"],
-        ["Estanterías / accesorios", "desde 35 €"],
-        ["Pequeñas reparaciones", "desde 35 €"],
-        ["Reparación de pladur", "desde 35 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Montaje de TV", "49 €"],
+        ["Montaje de muebles", "45 €"],
+        ["Cambio de enchufe / interruptor", "35 €"],
+        ["Instalación de lámpara", "39 €"],
+        ["Estanterías / accesorios", "35 €"],
+        ["Pequeñas reparaciones", "35 €"],
+        ["Reparación de pladur", "35 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["TV mounting", "from €49"],
-        ["Furniture assembly", "from €45"],
-        ["Outlet / switch replacement", "from €35"],
-        ["Light installation", "from €39"],
-        ["Shelves / accessories", "from €35"],
-        ["Small repairs", "from €35"],
-        ["Drywall repair", "from €35"],
-        ["Visit / inspection", "from €49"],
+        ["TV mounting", "€49"],
+        ["Furniture assembly", "€45"],
+        ["Outlet / switch replacement", "€35"],
+        ["Light installation", "€39"],
+        ["Shelves / accessories", "€35"],
+        ["Small repairs", "€35"],
+        ["Drywall repair", "€35"],
+        ["Visit / inspection", "€49"],
       ];
 
   const detailedServices = isEs
@@ -360,7 +360,7 @@ export default async function HandymanBenimacletPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta un manitas en Benimaclet?",
-          a: "Depende del trabajo, materiales, tiempo y dificultad. Los trabajos pequeños suelen empezar desde 35–49 €. Siempre confirmamos el precio antes de empezar.",
+          a: "Depende del trabajo, materiales, tiempo y dificultad. Los trabajos pequeños cuestan 35–49 €. Siempre confirmamos el precio antes de empezar.",
         },
         {
           q: "¿Puedo enviar fotos por WhatsApp?",
@@ -394,7 +394,7 @@ export default async function HandymanBenimacletPage({ params }: Props) {
     : [
         {
           q: "How much does a handyman in Benimaclet cost?",
-          a: "It depends on the job, materials, time and difficulty. Small jobs usually start from €35–49. We always confirm the price before starting.",
+          a: "It depends on the job, materials, time and difficulty. Small jobs cost €35–49. We always confirm the price before starting.",
         },
         {
           q: "Can I send photos by WhatsApp?",
@@ -557,7 +557,7 @@ export default async function HandymanBenimacletPage({ params }: Props) {
                 {
                   icon: Clock3,
                   title: isEs ? "Respuesta rápida" : "Fast response",
-                  text: isEs ? "Envía fotos desde Benimaclet y recibe estimación." : "Send photos from Benimaclet and get an estimate.",
+                  text: isEs ? "Envía fotos de tu vivienda en Benimaclet y recibe estimación." : "Send photos from Benimaclet and get an estimate.",
                 },
                 {
                   icon: ShieldCheck,
@@ -638,7 +638,7 @@ export default async function HandymanBenimacletPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -657,7 +657,7 @@ export default async function HandymanBenimacletPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

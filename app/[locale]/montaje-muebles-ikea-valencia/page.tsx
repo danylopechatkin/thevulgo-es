@@ -28,12 +28,12 @@ export async function generateMetadata({
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Montaje de Muebles IKEA en Valencia | Desde 39€ | THEVULGO"
-    : "IKEA Furniture Assembly in Valencia | From €39 | THEVULGO";
+    ? "Montaje de Muebles IKEA en Valencia | 39 € | THEVULGO"
+    : "IKEA Furniture Assembly in Valencia | €39 | THEVULGO";
 
   const description = isEs
-    ? "Montaje profesional de muebles IKEA en Valencia desde 39€. Armarios, camas, cómodas, estanterías, muebles flat-pack, ajuste de puertas, cajones y fijación a pared."
-    : "Professional IKEA furniture assembly in Valencia from €39. Wardrobes, beds, dressers, shelves, flat-pack furniture, door and drawer adjustment and wall fixing.";
+    ? "Montaje profesional de muebles IKEA en Valencia por 39 €. Armarios, camas, cómodas, estanterías, muebles flat-pack, ajuste de puertas, cajones y fijación a pared."
+    : "Professional IKEA furniture assembly in Valencia for €39. Wardrobes, beds, dressers, shelves, flat-pack furniture, door and drawer adjustment and wall fixing.";
 
   return {
     title,
@@ -118,7 +118,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
     ? [
         {
           q: "¿Cuánto cuesta el montaje de muebles IKEA en Valencia?",
-          a: "El montaje de muebles IKEA empieza desde 39€. El precio final depende del tipo de mueble, tamaño, número de piezas, dificultad, si hay que fijar a pared y distancia fuera de Valencia.",
+          a: "El montaje de muebles IKEA cuesta 39 €. El precio final depende del tipo de mueble, tamaño, número de piezas, dificultad, si hay que fijar a pared y distancia fuera de Valencia.",
         },
         {
           q: "¿Montan armarios IKEA?",
@@ -156,7 +156,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
     : [
         {
           q: "How much does IKEA furniture assembly cost in Valencia?",
-          a: "IKEA furniture assembly starts from €39. Final price depends on furniture type, size, number of pieces, difficulty, wall fixing and distance outside Valencia.",
+          a: "IKEA furniture assembly costs €39. Final price depends on furniture type, size, number of pieces, difficulty, wall fixing and distance outside Valencia.",
         },
         {
           q: "Do you assemble IKEA wardrobes?",
@@ -272,7 +272,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
 
   const notIncluded = isEs
     ? [
-        "Transporte de muebles desde tienda",
+        "Transporte de muebles de tienda",
         "Subida de muebles sin ascensor si no se avisa antes",
         "Reparación de piezas rotas de fábrica",
         "Modificaciones estructurales no indicadas por el fabricante",
@@ -407,8 +407,8 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
               {isEs
-                ? "Montaje profesional de muebles IKEA tipo flat-pack desde 39€: armarios, camas, cómodas, muebles, estanterías y más. Ajuste cuidadoso, alineación correcta y estructura estable para uso diario."
-                : "Professional IKEA flat-pack furniture assembly from €39: wardrobes, beds, dressers, furniture, shelves and more. Careful adjustment, correct alignment and stable structure for everyday use."}
+                ? "Montaje profesional de muebles IKEA tipo flat-pack por 39 €: armarios, camas, cómodas, muebles, estanterías y más. Ajuste cuidadoso, alineación correcta y estructura estable para uso diario."
+                : "Professional IKEA flat-pack furniture assembly for €39: wardrobes, beds, dressers, furniture, shelves and more. Careful adjustment, correct alignment and stable structure for everyday use."}
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -431,7 +431,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {(isEs
                 ? [
-                    "Montaje desde 39€",
+                    "Montaje por 39 €",
                     "Armarios, camas y cómodas",
                     "Estanterías y muebles de TV",
                     "Ajuste y alineación correcta",
@@ -439,7 +439,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
                     "Valencia y alrededores",
                   ]
                 : [
-                    "Assembly from €39",
+                    "Assembly for €39",
                     "Wardrobes, beds and dressers",
                     "Shelves and TV units",
                     "Correct adjustment and alignment",
@@ -699,7 +699,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 39€" : "From €39"}
+            {isEs ? "39 €" : "€39"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

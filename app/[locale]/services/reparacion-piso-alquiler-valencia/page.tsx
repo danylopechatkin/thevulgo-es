@@ -240,20 +240,20 @@ export default async function RentalApartmentRepairPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Reparación pequeña de pared", "desde 35 €"],
-        ["Tapar agujeros / marcas", "desde 35 €"],
-        ["Retoques de pintura", "desde 49 €"],
-        ["Pequeñas reparaciones", "desde 35 €"],
-        ["Puesta a punto del piso", "desde 79 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Reparación pequeña de pared", "35 €"],
+        ["Tapar agujeros / marcas", "35 €"],
+        ["Retoques de pintura", "49 €"],
+        ["Pequeñas reparaciones", "35 €"],
+        ["Puesta a punto del piso", "79 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small wall repair", "from €35"],
-        ["Fill holes / marks", "from €35"],
-        ["Paint touch-ups", "from €49"],
-        ["Small repairs", "from €35"],
-        ["Apartment preparation", "from €79"],
-        ["Visit / inspection", "from €49"],
+        ["Small wall repair", "€35"],
+        ["Fill holes / marks", "€35"],
+        ["Paint touch-ups", "€49"],
+        ["Small repairs", "€35"],
+        ["Apartment preparation", "€79"],
+        ["Visit / inspection", "€49"],
       ];
 
   const process = isEs
@@ -536,7 +536,7 @@ export default async function RentalApartmentRepairPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -555,7 +555,7 @@ export default async function RentalApartmentRepairPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

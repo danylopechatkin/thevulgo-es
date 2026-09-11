@@ -195,7 +195,7 @@ const serviceCards = [
 const prices = [
   {
     name: "Security inspection",
-    price: "from €49",
+    price: "€49",
     text: "Best for checking an existing system, camera positions, blind spots, network problems or access needs.",
     items: [
       "On-site inspection",
@@ -206,7 +206,7 @@ const prices = [
   },
   {
     name: "Small business setup",
-    price: "from €99",
+    price: "€99",
     text: "For small CCTV, alarm, recorder, network or access control tasks in offices, bars and shops.",
     items: [
       "Small installation work",
@@ -302,7 +302,7 @@ const faqs = [
   {
     question: "How much does commercial security installation cost?",
     answer:
-      "Small commercial security work starts from €99. A security inspection starts from €49. Full systems with multiple cameras, cabling, access control or network work require a custom quote.",
+      "Small commercial security work costs €99. A security inspection costs €49. Full systems with multiple cameras, cabling, access control or network work require a custom quote.",
   },
   {
     question: "Can you connect cameras to my phone?",
@@ -524,7 +524,7 @@ export default async function CommercialSecurityPage({ params }: Props) {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <span className="rounded-full bg-yellow-400 px-5 py-3 text-base font-black text-black">
-                  from €99
+                  for €99
                 </span>
                 <span className="rounded-full border border-neutral-300 bg-white px-5 py-3 text-base font-bold text-neutral-800">
                   CCTV · Alarm · Access

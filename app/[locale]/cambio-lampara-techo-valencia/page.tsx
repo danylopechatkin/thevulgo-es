@@ -42,12 +42,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Cambio de Lámpara de Techo en Valencia | Desde 35€ | THEVULGO"
-    : "Ceiling Lamp Replacement in Valencia | From €35 | THEVULGO";
+    ? "Cambio de Lámpara de Techo en Valencia | 35 € | THEVULGO"
+    : "Ceiling Lamp Replacement in Valencia | €35 | THEVULGO";
 
   const description = isEs
-    ? "Cambio de lámpara de techo en Valencia desde 35€. Retirada de luz antigua e instalación limpia de una nueva lámpara compatible."
-    : "Ceiling lamp replacement in Valencia from €35. Removal of an old light and clean installation of a new compatible ceiling lamp.";
+    ? "Cambio de lámpara de techo en Valencia por 35 €. Retirada de luz antigua e instalación limpia de una nueva lámpara compatible."
+    : "Ceiling lamp replacement in Valencia for €35. Removal of an old light and clean installation of a new compatible ceiling lamp.";
 
   return {
     title,
@@ -86,8 +86,8 @@ export default async function CeilingLampReplacementValenciaPage({
       : "Ceiling lamp replacement in Valencia",
 
     hero: isEs
-      ? "Retirada de luz antigua e instalación limpia de una nueva lámpara compatible desde 35€. Servicio para casas, apartamentos, pisos de alquiler y oficinas pequeñas."
-      : "Removal of an old light and clean installation of a new compatible ceiling lamp from €35. Service for homes, apartments, rental flats and small offices.",
+      ? "Retirada de luz antigua e instalación limpia de una nueva lámpara compatible por 35 €. Servicio para casas, apartamentos, pisos de alquiler y oficinas pequeñas."
+      : "Removal of an old light and clean installation of a new compatible ceiling lamp for €35. Service for homes, apartments, rental flats and small offices.",
 
     whatsapp: isEs
       ? "Hola, quiero un presupuesto para cambio de lámpara de techo en Valencia."
@@ -106,7 +106,7 @@ export default async function CeilingLampReplacementValenciaPage({
 
     bullets: isEs
       ? [
-          "Desde 35€",
+          "35 €",
           "Retirada de luz antigua",
           "Lámpara compatible",
           "Acabado limpio",
@@ -114,7 +114,7 @@ export default async function CeilingLampReplacementValenciaPage({
           "Valencia y alrededores",
         ]
       : [
-          "From €35",
+          "€35",
           "Old light removal",
           "Compatible lamp",
           "Clean finish",
@@ -313,7 +313,7 @@ export default async function CeilingLampReplacementValenciaPage({
     ? [
         {
           q: "¿Cuánto cuesta cambiar una lámpara de techo en Valencia?",
-          a: "El cambio de lámpara de techo empieza desde 35€. El precio final depende del tipo de lámpara, peso, altura, techo, compatibilidad y dificultad.",
+          a: "El cambio de lámpara de techo cuesta 35 €. El precio final depende del tipo de lámpara, peso, altura, techo, compatibilidad y dificultad.",
         },
         {
           q: "¿Pueden retirar la lámpara antigua?",
@@ -347,7 +347,7 @@ export default async function CeilingLampReplacementValenciaPage({
     : [
         {
           q: "How much does ceiling lamp replacement cost in Valencia?",
-          a: "Ceiling lamp replacement starts from €35. The final price depends on lamp type, weight, height, ceiling, compatibility and difficulty.",
+          a: "Ceiling lamp replacement costs €35. The final price depends on lamp type, weight, height, ceiling, compatibility and difficulty.",
         },
         {
           q: "Can you remove the old lamp?",
@@ -649,7 +649,7 @@ export default async function CeilingLampReplacementValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 35€" : "From €35"}
+            {isEs ? "35 €" : "€35"}
           </p>
           <h2 className="mt-3 text-4xl font-black">{t.priceTitle}</h2>
           <p className="mt-6 text-lg font-medium leading-8 text-neutral-900">

@@ -308,9 +308,9 @@ const faqs = [
     qEs: "¿Cuánto cuesta una puesta a punto de piso en Valencia?",
     qEn: "How much does apartment preparation cost in Valencia?",
     aEs:
-      "Depende de la lista de trabajos, materiales, estado del piso y urgencia. Los trabajos pequeños pueden empezar desde 35 €.",
+      "Depende de la lista de trabajos, materiales, estado del piso y urgencia. Los trabajos pequeños pueden costar 35 €.",
     aEn:
-      "It depends on the task list, materials, apartment condition and urgency. Small jobs can start from €35.",
+      "It depends on the task list, materials, apartment condition and urgency. Small jobs can cost €35.",
   },
   {
     qEs: "¿Podéis venir rápido?",
@@ -367,7 +367,7 @@ export default async function PuestaAPuntoPisoValenciaPage({ params }: Props) {
       : "We prepare apartments and homes with small repairs, paint touch-ups, fitting installation, visual checks and quick fixes before renting, selling, receiving guests or handing over keys.",
     whatsapp: isEs ? "Pedir presupuesto por WhatsApp" : "Request estimate by WhatsApp",
     form: isEs ? "Abrir formulario" : "Open form",
-    from: isEs ? "Desde 35 €" : "From €35",
+    from: isEs ? "35 €" : "€35",
     smallJobs: isEs ? "Trabajos pequeños" : "Small jobs",
     cityText: isEs ? "Valencia y alrededores" : "Valencia and nearby areas",
     photosFirst: isEs ? "Fotos primero" : "Photos first",

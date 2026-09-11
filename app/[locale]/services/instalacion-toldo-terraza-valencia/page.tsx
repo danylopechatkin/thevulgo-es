@@ -91,7 +91,7 @@ const faqs = [
   {
     question: "¿Cuánto cuesta instalar un toldo para terraza en Valencia?",
     answer:
-      "La instalación de un toldo para terraza en Valencia suele empezar desde 79 €. El precio final depende del tamaño del toldo, tipo de pared, altura, accesibilidad, tipo de toldo y si hay que desmontar un toldo antiguo.",
+      "La instalación de un toldo para terraza en Valencia cuesta 79 €. El precio final depende del tamaño del toldo, tipo de pared, altura, accesibilidad, tipo de toldo y si hay que desmontar un toldo antiguo.",
   },
   {
     question: "¿Instaláis toldos en áticos?",
@@ -135,8 +135,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de toldo para terraza en Valencia | Desde 79€"
-    : "Terrace awning installation in Valencia | From €79";
+    ? "Instalación de toldo para terraza en Valencia | 79 €"
+    : "Terrace awning installation in Valencia | €79";
 
   const description = isEs
     ? "Instalación de toldos para terrazas en Valencia. Montaje profesional en viviendas, áticos y patios. Presupuesto rápido por WhatsApp."
@@ -300,7 +300,7 @@ export default async function TerraceAwningPage({ params }: Props) {
                         <div className="mt-8 grid gap-3 sm:grid-cols-3">
               <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                 <Euro className="mb-2 h-5 w-5 text-orange-600" />
-                <p className="font-semibold">{isEs ? "Desde 79€" : "From €79"}</p>
+                <p className="font-semibold">{isEs ? "79 €" : "€79"}</p>
                 <p className="text-sm text-slate-600">
                   {isEs ? "Precio claro antes de empezar" : "Clear price before work"}
                 </p>
@@ -487,8 +487,8 @@ export default async function TerraceAwningPage({ params }: Props) {
               </p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
                 {isEs
-                  ? "Precio desde 79€ para instalar un toldo en terraza"
-                  : "From €79 to install an awning on a terrace"}
+                  ? "Precio de 79 € para instalar un toldo en terraza"
+                  : "€79 to install an awning on a terrace"}
               </h2>
               <p className="mt-4 leading-8 text-slate-300">
                 {isEs
@@ -509,14 +509,14 @@ export default async function TerraceAwningPage({ params }: Props) {
               {[
                 {
                   title: isEs ? "Toldo manual terraza" : "Manual terrace awning",
-                  price: isEs ? "desde 79€" : "from €79",
+                  price: isEs ? "79 €" : "€79",
                   text: isEs
                     ? "Para toldos manuales pequeños o medianos con acceso sencillo y pared adecuada."
                     : "For small or medium manual awnings with easy access and suitable wall.",
                 },
                 {
                   title: isEs ? "Toldo eléctrico terraza" : "Electric terrace awning",
-                  price: isEs ? "desde 99€" : "from €99",
+                  price: isEs ? "99 €" : "€99",
                   text: isEs
                     ? "Para toldos motorizados con punto eléctrico preparado o cercano."
                     : "For motorized awnings with a prepared or nearby electrical point.",

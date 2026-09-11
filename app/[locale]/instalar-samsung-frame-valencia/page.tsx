@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "Install Samsung Frame Valencia | Professional Mounting | THEVULGO";
 
   const description = isEs
-    ? "Instalar Samsung Frame en Valencia. Montaje profesional en pared, alineación precisa, One Connect Box, cable invisible, acabado tipo cuadro y ocultación de cables. Desde 69€."
-    : "Install Samsung Frame in Valencia. Professional wall mounting, precise alignment, One Connect Box, invisible cable, picture-frame finish and cable concealment. From €69.";
+    ? "Instalar Samsung Frame en Valencia. Montaje profesional en pared, alineación precisa, One Connect Box, cable invisible, acabado tipo cuadro y ocultación de cables. 69 €."
+    : "Install Samsung Frame in Valencia. Professional wall mounting, precise alignment, One Connect Box, invisible cable, picture-frame finish and cable concealment. €69.";
 
   const url = `${baseUrl}/${locale}/instalar-samsung-frame-valencia`;
 
@@ -193,8 +193,8 @@ export default async function Page({ params }: Props) {
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "Instalar una Samsung Frame en Valencia empieza desde 69 €. El precio final depende del tamaño, tipo de pared, soporte, ubicación del One Connect Box y ocultación de cables."
-            : "Installing a Samsung Frame in Valencia starts from €69. Final price depends on size, wall type, bracket, One Connect Box location and cable concealment.",
+            ? "Instalar una Samsung Frame en Valencia cuesta 69 €. El precio final depende del tamaño, tipo de pared, soporte, ubicación del One Connect Box y ocultación de cables."
+            : "Installing a Samsung Frame in Valencia costs €69. Final price depends on size, wall type, bracket, One Connect Box location and cable concealment.",
         },
       },
       {
@@ -269,8 +269,8 @@ export default async function Page({ params }: Props) {
     secondaryCta: isEs ? "WhatsApp rápido" : "Quick WhatsApp",
 
     heroNote: isEs
-      ? "Desde 69 €. Precio final según tamaño, pared, soporte, cableado y dificultad."
-      : "From €69. Final price depends on size, wall, bracket, cabling and complexity.",
+      ? "69 €. Precio final según tamaño, pared, soporte, cableado y dificultad."
+      : "€69. Final price depends on size, wall, bracket, cabling and complexity.",
 
     servicesTitle: isEs
       ? "Servicio para instalar Samsung Frame"
@@ -515,7 +515,7 @@ export default async function Page({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta instalar una Samsung Frame en Valencia?",
-          a: "Instalar una Samsung Frame empieza desde 69 €. El precio final depende del tamaño, pared, soporte, One Connect Box, cableado y dificultad.",
+          a: "Instalar una Samsung Frame cuesta 69 €. El precio final depende del tamaño, pared, soporte, One Connect Box, cableado y dificultad.",
         },
         {
           q: "¿Samsung Frame necesita instalación especial?",
@@ -549,7 +549,7 @@ export default async function Page({ params }: Props) {
     : [
         {
           q: "How much does it cost to install a Samsung Frame in Valencia?",
-          a: "Installing a Samsung Frame starts from €69. Final price depends on size, wall, bracket, One Connect Box, cabling and complexity.",
+          a: "Installing a Samsung Frame costs €69. Final price depends on size, wall, bracket, One Connect Box, cabling and complexity.",
         },
         {
           q: "Does Samsung Frame need special installation?",

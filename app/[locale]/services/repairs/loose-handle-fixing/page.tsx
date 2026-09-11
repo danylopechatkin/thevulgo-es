@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reparación de Tiradores Sueltos en Valencia | Desde 25€ | THEVULGO"
-    : "Loose Handle Fixing in Valencia | From €25 | THEVULGO";
+    ? "Reparación de Tiradores Sueltos en Valencia | 25 € | THEVULGO"
+    : "Loose Handle Fixing in Valencia | €25 | THEVULGO";
 
   const description = isEs
-    ? "Reparación de tiradores sueltos en Valencia desde 25€. Arreglamos pomos, manillas, cajones, puertas, armarios y pequeños accesorios a domicilio."
-    : "Loose handle fixing in Valencia from €25. We fix knobs, door handles, drawers, wardrobes, cabinet handles and small fittings at home.";
+    ? "Reparación de tiradores sueltos en Valencia por 25 €. Arreglamos pomos, manillas, cajones, puertas, armarios y pequeños accesorios a domicilio."
+    : "Loose handle fixing in Valencia for €25. We fix knobs, door handles, drawers, wardrobes, cabinet handles and small fittings at home.";
 
   return {
     title,
@@ -117,7 +117,7 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta arreglar un tirador suelto en Valencia?",
-          a: "El servicio empieza desde 25€. El precio final depende del tipo de tirador, estado del tornillo, material, acceso, número de piezas y si hace falta reemplazar algún componente.",
+          a: "El servicio cuesta 25 €. El precio final depende del tipo de tirador, estado del tornillo, material, acceso, número de piezas y si hace falta reemplazar algún componente.",
         },
         {
           q: "¿Podéis arreglar una manilla de puerta suelta?",
@@ -143,7 +143,7 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
         },
         {
           q: "How much does loose handle fixing cost in Valencia?",
-          a: "The service starts from €25. Final price depends on handle type, screw condition, material, access, number of pieces and whether any component needs replacement.",
+          a: "The service costs €25. Final price depends on handle type, screw condition, material, access, number of pieces and whether any component needs replacement.",
         },
         {
           q: "Can you fix a loose door handle?",
@@ -246,13 +246,13 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 25€",
+        "25 €",
         "Tiradores y pomos sueltos",
         "Manillas y pequeños accesorios",
         "Uso diario más cómodo",
       ]
     : [
-        "From €25",
+        "€25",
         "Loose handles and knobs",
         "Door handles and small fittings",
         "Better everyday use",
@@ -433,7 +433,7 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Grip className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 25€" : "From €25"}
+                {isEs ? "25 €" : "€25"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -691,7 +691,7 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 25€" : "From €25"}
+            {isEs ? "25 €" : "€25"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Montaje de Cama en Valencia | Desde 49€ | THEVULGO"
-      : "Bed Assembly in Valencia | From €49 | THEVULGO",
+      ? "Montaje de Cama en Valencia | 49 € | THEVULGO"
+      : "Bed Assembly in Valencia | €49 | THEVULGO",
     description: isEs
-      ? "Montaje profesional de camas en Valencia desde 49€. Camas estándar, camas IKEA, estructuras, somier, cabecero, cajones, ajuste y alineación estable."
-      : "Professional bed assembly in Valencia from €49. Standard beds, IKEA beds, frames, slats, headboards, drawers, careful adjustment and stable alignment.",
+      ? "Montaje profesional de camas en Valencia por 49 €. Camas estándar, camas IKEA, estructuras, somier, cabecero, cajones, ajuste y alineación estable."
+      : "Professional bed assembly in Valencia for €49. Standard beds, IKEA beds, frames, slats, headboards, drawers, careful adjustment and stable alignment.",
     alternates: {
       canonical: `${siteUrl}/${locale}/services/furniture/montaje-cama-valencia`,
       languages: {
@@ -73,7 +73,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta montar una cama en Valencia?",
-    a: "El montaje de cama empieza desde 49€. El precio final depende del tipo de cama, tamaño, cajones, cabecero, somier, dificultad y si hay que desmontar una cama anterior.",
+    a: "El montaje de cama cuesta 49 €. El precio final depende del tipo de cama, tamaño, cajones, cabecero, somier, dificultad y si hay que desmontar una cama anterior.",
   },
   {
     q: "¿Montan camas IKEA?",
@@ -209,8 +209,8 @@ export default async function BedAssemblyValenciaPage({ params }: PageProps) {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Montaje de cama estándar desde{" "}
-              <strong className="text-neutral-950">49€</strong>, ajuste de
+              Montaje de cama estándar por{" "}
+              <strong className="text-neutral-950">49 €</strong>, ajuste de
               estructura y alineación estable. Instalamos camas IKEA, estructuras
               flat-pack, somier, cabecero, cajones y camas con almacenamiento.
             </p>
@@ -234,7 +234,7 @@ export default async function BedAssemblyValenciaPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Montaje desde 49€",
+                "Montaje por 49 €",
                 "Camas estándar e IKEA",
                 "Somier, cabecero y estructura",
                 "Camas con cajones",
@@ -421,7 +421,7 @@ export default async function BedAssemblyValenciaPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 49€
+            49 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para montar cama en Valencia

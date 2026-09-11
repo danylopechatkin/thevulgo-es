@@ -390,24 +390,24 @@ export default async function NetworkingPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Diagnóstico WiFi / red", "desde 49 €"],
-        ["Configuración de router", "desde 49 €"],
-        ["Instalación de repetidor", "desde 49 €"],
-        ["Instalación de punto de acceso", "desde 59 €"],
-        ["Instalación de switch", "desde 59 €"],
-        ["RJ45 / punto de red", "desde 45 €"],
-        ["WiFi para negocio", "desde 89 €"],
-        ["Rack / armario de red", "desde 99 €"],
+        ["Diagnóstico WiFi / red", "49 €"],
+        ["Configuración de router", "49 €"],
+        ["Instalación de repetidor", "49 €"],
+        ["Instalación de punto de acceso", "59 €"],
+        ["Instalación de switch", "59 €"],
+        ["RJ45 / punto de red", "45 €"],
+        ["WiFi para negocio", "89 €"],
+        ["Rack / armario de red", "99 €"],
       ]
     : [
-        ["WiFi / network diagnostics", "from €49"],
-        ["Router configuration", "from €49"],
-        ["Repeater installation", "from €49"],
-        ["Access point installation", "from €59"],
-        ["Switch installation", "from €59"],
-        ["RJ45 / network point", "from €45"],
-        ["Business WiFi", "from €89"],
-        ["Network cabinet / rack", "from €99"],
+        ["WiFi / network diagnostics", "€49"],
+        ["Router configuration", "€49"],
+        ["Repeater installation", "€49"],
+        ["Access point installation", "€59"],
+        ["Switch installation", "€59"],
+        ["RJ45 / network point", "€45"],
+        ["Business WiFi", "€89"],
+        ["Network cabinet / rack", "€99"],
       ];
 
   const clientTypes = [
@@ -483,7 +483,7 @@ export default async function NetworkingPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta instalar WiFi o redes en Valencia?",
-          a: "Depende del trabajo. Un diagnóstico o configuración básica puede empezar desde 49 €. Instalaciones con cableado, switches, puntos de acceso o rack se presupuestan según materiales, tiempo y dificultad.",
+          a: "Depende del trabajo. Un diagnóstico o configuración básica puede costar 49 €. Instalaciones con cableado, switches, puntos de acceso o rack se presupuestan según materiales, tiempo y dificultad.",
         },
         {
           q: "¿Podéis mejorar la señal WiFi en toda la casa?",
@@ -517,7 +517,7 @@ export default async function NetworkingPage({ params }: Props) {
     : [
         {
           q: "How much does WiFi or networking installation in Valencia cost?",
-          a: "It depends on the job. Basic diagnostics or configuration can start from €49. Cabling, switches, access points or rack work are quoted based on materials, time and difficulty.",
+          a: "It depends on the job. Basic diagnostics or configuration can cost €49. Cabling, switches, access points or rack work are quoted based on materials, time and difficulty.",
         },
         {
           q: "Can you improve WiFi signal across the whole home?",
@@ -781,7 +781,7 @@ export default async function NetworkingPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -806,7 +806,7 @@ export default async function NetworkingPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

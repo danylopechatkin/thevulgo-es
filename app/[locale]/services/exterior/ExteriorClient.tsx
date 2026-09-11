@@ -119,7 +119,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Reparación y ajuste de vallas, secciones visibles y límites exteriores para mejorar estabilidad, uso y aspecto general."
         : "Repair and adjustment of fences, fence sections and visible outdoor boundaries to improve stability, function and overall exterior appearance.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
       icon: <Fence className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -128,7 +128,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Corrección básica de puertas exteriores y accesos para mejorar apertura, cierre y uso diario."
         : "Basic correction of gates and outdoor access elements to improve opening, closing and practical daily use.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <DoorOpen className="h-5 w-5" />,
       className: "",
     },
@@ -137,7 +137,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Pequeñas reparaciones y ajustes de soportes, manillas, fijaciones y elementos visibles exteriores."
         : "Small repairs and tightening of visible outdoor fittings, brackets, handles and practical hardware elements.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -146,7 +146,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Retoques básicos en superficies exteriores accesibles cuando el trabajo es de mejora práctica y no reforma completa."
         : "Basic visible touch-up work on accessible exterior surfaces where the job is suitable for practical improvement rather than full renovation.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
       icon: <Paintbrush className="h-5 w-5" />,
       className: "",
     },
@@ -155,7 +155,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Montaje de accesorios, carteles, soportes, pequeños elementos y piezas prácticas exteriores en superficies adecuadas."
         : "Mounting of exterior accessories, signs, holders, small fixtures and practical outdoor items on suitable surfaces.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Drill className="h-5 w-5" />,
       className: "",
     },
@@ -164,7 +164,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Instalación de soportes, fijaciones y elementos pequeños de apoyo para un uso exterior más organizado."
         : "Installation of practical brackets, holders and small exterior support elements for organized outdoor use.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Hammer className="h-5 w-5" />,
       className: "",
     },
@@ -173,7 +173,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Sellado de pequeños huecos, juntas y zonas expuestas para ayudar a proteger superficies de humedad y mejorar durabilidad."
         : "Sealing of small exterior gaps, joints and exposed areas to help protect surfaces from moisture and improve durability of outdoor elements.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <ShieldCheck className="h-5 w-5" />,
       className: "",
     },
@@ -184,7 +184,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Montaje y ajuste básico de accesorios compatibles para pérgolas, sombra o soportes exteriores simples."
         : "Basic fitting and adjustment of compatible pergola accessories, shade elements or simple outdoor support items.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <House className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -193,7 +193,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Montaje o preparación de piezas simples de almacenamiento exterior para patios, terrazas o zonas exteriores."
         : "Assembly or setup of simple outdoor storage pieces and utility elements for patios, terraces or house exteriors.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Package className="h-5 w-5" />,
       className: "",
     },
@@ -202,7 +202,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Sustitución de accesorios exteriores desgastados o dañados como soportes, fijaciones y elementos prácticos visibles."
         : "Replacement of worn or damaged outdoor fixtures such as holders, brackets, visible fittings and practical exterior utility elements to improve both function and presentation.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -211,7 +211,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Montaje y preparación de mesas, sillas, bancos y muebles exteriores para espacios más limpios y útiles."
         : "Assembly and setup of outdoor tables, chairs, benches and patio furniture for cleaner, more usable exterior spaces around the home.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Package className="h-5 w-5" />,
       className: "",
     },
@@ -229,7 +229,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Instalación y colocación de buzones o accesorios de entrada con alineación limpia y posición práctica."
         : "Installation and positioning of mailboxes or exterior entry accessories with cleaner alignment and practical placement.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Package className="h-5 w-5" />,
       className: "",
     },
@@ -238,7 +238,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Montaje de números de casa, carteles de nombre y pequeños detalles visibles de entrada."
         : "Mounting of house numbers, name signs and small visible entry details to improve exterior presentation.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Ruler className="h-5 w-5" />,
       className: "",
     },
@@ -247,7 +247,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Instalación de luces exteriores compatibles cuando la instalación es adecuada y el alcance es sencillo."
         : "Installation of compatible exterior light fixtures where the setup is suitable and the scope is straightforward.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Shield className="h-5 w-5" />,
       className: "",
     },
@@ -256,7 +256,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Instalación de pequeños accesorios de jardín o patio como ganchos, soportes y fijaciones simples."
         : "Installation of small garden or patio accessories such as hooks, holders, decorative supports and simple outdoor fittings.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <TreePine className="h-5 w-5" />,
       className: "",
     },
@@ -265,7 +265,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Preparación práctica de elementos de terraza o patio, pequeños montajes, organización y detalles visibles."
         : "Practical setup of outdoor terrace or patio items including small fittings, arrangement help and visible finishing tasks.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <House className="h-5 w-5" />,
       className: "",
     },
@@ -276,7 +276,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Correcciones básicas en bordes exteriores accesibles y detalles de superficie cuando el trabajo es seguro y menor."
         : "Basic visible correction work around accessible exterior edges and surface details where the job is suitable for safe minor improvement.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
       icon: <ShieldCheck className="h-5 w-5" />,
       className: "",
     },
@@ -285,7 +285,7 @@ export default function ExteriorClient() {
       desc: isEs
         ? "Ajuste y apriete de elementos de balcón, barandillas y piezas visibles para mejorar estabilidad y alineación."
         : "Adjustment and tightening of balcony elements, railings and visible safety parts to improve stability, alignment and overall exterior feel.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
       icon: <Ruler className="h-5 w-5" />,
       className: "",
     },

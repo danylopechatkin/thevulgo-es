@@ -89,7 +89,7 @@ const faqsEs = [
   {
     question: "¿Cuánto cuesta un manitas para instalar un toldo?",
     answer:
-      "El servicio de manitas para instalar toldos en Valencia empieza desde 145 €. El precio final depende del tamaño del toldo, tipo de pared, altura, acceso y si hace falta una segunda persona.",
+      "El servicio de manitas para instalar toldos en Valencia cuesta 145 €. El precio final depende del tamaño del toldo, tipo de pared, altura, acceso y si hace falta una segunda persona.",
   },
   {
     question: "¿Puedo contratar un manitas si ya compré el toldo?",
@@ -117,7 +117,7 @@ const faqsEn = [
   {
     question: "How much does a handyman cost to install an awning?",
     answer:
-      "Handyman awning installation in Valencia starts from €145. The final price depends on awning size, wall type, height, access and whether a second person is needed.",
+      "Handyman awning installation in Valencia costs €145. The final price depends on awning size, wall type, height, access and whether a second person is needed.",
   },
   {
     question: "Can I hire a handyman if I already bought the awning?",
@@ -147,11 +147,11 @@ function getContent(locale: string) {
   return {
     isEs,
     title: isEs
-      ? "Manitas para Instalar Toldos en Valencia | Desde 145€ | THEVULGO"
-      : "Handyman for Awning Installation in Valencia | From €145 | THEVULGO",
+      ? "Manitas para Instalar Toldos en Valencia | 145 € | THEVULGO"
+      : "Handyman for Awning Installation in Valencia | €145 | THEVULGO",
     description: isEs
-      ? "Manitas para instalar toldos en Valencia desde 145€. Instalación de toldos manuales, Leroy Merlin, Naterial y Calima. También pequeños trabajos del hogar."
-      : "Handyman for awning installation in Valencia from €145. Manual awnings, Leroy Merlin, Naterial and Calima models. Also small home jobs.",
+      ? "Manitas para instalar toldos en Valencia por 145 €. Instalación de toldos manuales, Leroy Merlin, Naterial y Calima. También pequeños trabajos del hogar."
+      : "Handyman for awning installation in Valencia for €145. Manual awnings, Leroy Merlin, Naterial and Calima models. Also small home jobs.",
     h1: isEs
       ? "Manitas para Instalar Toldos en Valencia"
       : "Handyman for Awning Installation in Valencia",
@@ -344,7 +344,7 @@ export default async function ManitasInstalacionToldosValenciaPage({
               </div>
                             <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 {[
-                  content.isEs ? "Desde 145€" : "From €145",
+                  content.isEs ? "145 €" : "€145",
                   content.isEs
                     ? "Toldos manuales y eléctricos"
                     : "Manual and electric awnings",
@@ -446,8 +446,8 @@ export default async function ManitasInstalacionToldosValenciaPage({
                 </p>
                 <h2 className="mt-5 text-4xl font-black tracking-tight md:text-5xl">
                   {content.isEs
-                    ? "Manitas para toldos desde 145€"
-                    : "Handyman for awnings from €145"}
+                    ? "Manitas para toldos por 145 €"
+                    : "Handyman for awnings for €145"}
                 </h2>
                 <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-300">
                   {content.isEs
@@ -459,11 +459,11 @@ export default async function ManitasInstalacionToldosValenciaPage({
               <div className="rounded-[2rem] border border-yellow-400/40 bg-white/5 p-6">
                 <div className="rounded-3xl bg-yellow-400 p-7 text-neutral-950">
                   <p className="text-sm font-black uppercase tracking-[0.2em]">
-                    {content.isEs ? "Desde" : "From"}
+                    {content.isEs ? "Precio" : "Price"}
                   </p>
                   <div className="mt-3 flex items-end gap-2">
                     <span className="text-7xl font-black leading-none">
-                      145€
+                      145 €
                     </span>
                     <span className="mb-2 text-lg font-bold">
                       {content.isEs ? "instalación" : "installation"}
@@ -484,7 +484,7 @@ export default async function ManitasInstalacionToldosValenciaPage({
                   title: content.isEs
                     ? "Instalar toldo"
                     : "Install awning",
-                  price: content.isEs ? "desde 145€" : "from €145",
+                  price: content.isEs ? "145 €" : "€145",
                   text: content.isEs
                     ? "Para toldos con acceso cómodo, pared adecuada y montaje estándar."
                     : "For awnings with easy access, suitable wall and standard mounting.",
@@ -504,7 +504,7 @@ export default async function ManitasInstalacionToldosValenciaPage({
                   title: content.isEs
                     ? "Toldo grande"
                     : "Large awning",
-                  price: "200€ - 280€",
+                  price: "200 € - 280 €",
                   text: content.isEs
                     ? "Los toldos pesados pueden necesitar una segunda persona para sujetarlos con seguridad."
                     : "Heavy awnings may need a second person to hold them safely.",
@@ -1021,8 +1021,8 @@ export default async function ManitasInstalacionToldosValenciaPage({
 
             <h2 className="mt-8 text-4xl font-black tracking-tight md:text-6xl">
               {content.isEs
-                ? "Manitas para instalar toldos desde 145€"
-                : "Handyman for awning installation from €145"}
+                ? "Manitas para instalar toldos por 145 €"
+                : "Handyman for awning installation for €145"}
             </h2>
 
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-neutral-300">

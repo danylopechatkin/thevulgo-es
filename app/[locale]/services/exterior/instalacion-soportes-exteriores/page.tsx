@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Soportes Exteriores | Desde 39€ | THEVULGO"
-      : "Outdoor Shelf or Bracket Fitting | From €39 | THEVULGO",
+      ? "Instalación de Soportes Exteriores | 39 € | THEVULGO"
+      : "Outdoor Shelf or Bracket Fitting | €39 | THEVULGO",
     description: isEs
-      ? "Instalación de soportes exteriores desde 39€. Montaje de escuadras, holders, soportes y pequeños elementos de apoyo para patios, terrazas y exteriores."
-      : "Outdoor shelf or bracket fitting from €39. Installation of practical brackets, holders and small exterior support elements for organized outdoor use.",
+      ? "Instalación de soportes exteriores de 39 €. Montaje de escuadras, holders, soportes y pequeños elementos de apoyo para patios, terrazas y exteriores."
+      : "Outdoor shelf or bracket fitting for €39. Installation of practical brackets, holders and small exterior support elements for organized outdoor use.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar soportes exteriores?",
-    a: "La instalación de soportes exteriores empieza desde 39€. El precio depende del tipo de soporte, superficie, peso, altura, fijaciones, número de elementos y dificultad.",
+    a: "La instalación de soportes exteriores cuesta 39 €. El precio depende del tipo de soporte, superficie, peso, altura, fijaciones, número de elementos y dificultad.",
   },
   {
     q: "¿Qué tipos de soportes exteriores pueden instalarse?",
@@ -247,7 +247,7 @@ export default async function InstalacionSoportesExterioresPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 39€",
+                "39 €",
                 "Soportes exteriores",
                 "Escuadras y brackets",
                 "Holders prácticos",
@@ -318,7 +318,7 @@ export default async function InstalacionSoportesExterioresPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 39€. Presupuesto según fotos, soporte y dificultad.",
+              text: "39 €. Presupuesto según fotos, soporte y dificultad.",
             },
           ].map((item) => (
             <div
@@ -464,7 +464,7 @@ export default async function InstalacionSoportesExterioresPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar soportes exteriores

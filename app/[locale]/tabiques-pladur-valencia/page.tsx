@@ -158,23 +158,23 @@ export default async function TabiquesPladurValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
         ["Tabique pequeño de pladur", "presupuesto"],
         ["Pared de pladur interior", "presupuesto"],
         ["Separación para oficina", "presupuesto"],
         ["Cierre de hueco con pladur", "presupuesto"],
-        ["Preparación para pintura", "desde 49 €"],
-        ["Reparación de tabique", "desde 45 €"],
+        ["Preparación para pintura", "49 €"],
+        ["Reparación de tabique", "45 €"],
         ["Trabajo para local comercial", "presupuesto"],
       ]
     : [
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
         ["Small drywall partition", "quote"],
         ["Interior drywall wall", "quote"],
         ["Office separation", "quote"],
         ["Closing opening with drywall", "quote"],
-        ["Preparation for painting", "from €49"],
-        ["Partition repair", "from €45"],
+        ["Preparation for painting", "€49"],
+        ["Partition repair", "€45"],
         ["Commercial space work", "quote"],
       ];
 
@@ -584,7 +584,7 @@ export default async function TabiquesPladurValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

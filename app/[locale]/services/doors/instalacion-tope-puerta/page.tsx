@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Tope de Puerta | Desde 25€ | THEVULGO"
-      : "Door Stopper Installation | From €25 | THEVULGO",
+      ? "Instalación de Tope de Puerta | 25 € | THEVULGO"
+      : "Door Stopper Installation | €25 | THEVULGO",
     description: isEs
-      ? "Instalación de topes de puerta desde 25€. Montaje de topes sencillos para proteger paredes, muebles, manillas y evitar golpes repetidos."
-      : "Door stopper installation from €25. Installation of simple door stoppers to protect walls, furniture and handles from repeated impact damage.",
+      ? "Instalación de topes de puerta por 25 €. Montaje de topes sencillos para proteger paredes, muebles, manillas y evitar golpes repetidos."
+      : "Door stopper installation for €25. Installation of simple door stoppers to protect walls, furniture and handles from repeated impact damage.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar un tope de puerta?",
-    a: "La instalación de tope de puerta empieza desde 25€. El precio depende del tipo de tope, superficie, ubicación, fijación, número de topes y dificultad del montaje.",
+    a: "La instalación de tope de puerta cuesta 25 €. El precio depende del tipo de tope, superficie, ubicación, fijación, número de topes y dificultad del montaje.",
   },
   {
     q: "¿Para qué sirve un tope de puerta?",
@@ -245,7 +245,7 @@ export default async function InstalacionTopePuertaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 25€",
+                "25 €",
                 "Topes de puerta",
                 "Protección de paredes",
                 "Protección de manillas",
@@ -316,7 +316,7 @@ export default async function InstalacionTopePuertaPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 25€. Presupuesto según fotos, producto y cantidad.",
+              text: "25 €. Presupuesto según fotos, producto y cantidad.",
             },
           ].map((item) => (
             <div
@@ -460,7 +460,7 @@ export default async function InstalacionTopePuertaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 25€
+            25 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar tope de puerta

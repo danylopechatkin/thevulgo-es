@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Mueble Bajo Lavabo en Valencia | Desde 59€ | THEVULGO"
-      : "Vanity Unit Installation in Valencia | From €59 | THEVULGO",
+      ? "Instalación de Mueble Bajo Lavabo en Valencia | 59 € | THEVULGO"
+      : "Vanity Unit Installation in Valencia | €59 | THEVULGO",
     description: isEs
-      ? "Instalación de muebles bajo lavabo en Valencia desde 59€. Colocación de vanity units con alineación limpia, buena posición y acabado más ordenado alrededor del lavabo."
-      : "Vanity unit installation in Valencia from €59. Bathroom vanity units fitted with clean positioning, alignment and a better final layout around the sink area.",
+      ? "Instalación de muebles bajo lavabo en Valencia por 59 €. Colocación de vanity units con alineación limpia, buena posición y acabado más ordenado alrededor del lavabo."
+      : "Vanity unit installation in Valencia for €59. Bathroom vanity units fitted with clean positioning, alignment and a better final layout around the sink area.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar un mueble bajo lavabo en Valencia?",
-    a: "La instalación de vanity unit o mueble bajo lavabo empieza desde 59€. El precio depende del tamaño, tipo de mueble, pared, lavabo, espacio disponible y dificultad del montaje.",
+    a: "La instalación de vanity unit o mueble bajo lavabo cuesta 59 €. El precio depende del tamaño, tipo de mueble, pared, lavabo, espacio disponible y dificultad del montaje.",
   },
   {
     q: "¿Instalan muebles bajo lavabo suspendidos?",
@@ -242,7 +242,7 @@ export default async function VanityUnitInstallationValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 59€",
+                "59 €",
                 "Mueble bajo lavabo",
                 "Vanity units",
                 "Alineación limpia",
@@ -310,7 +310,7 @@ export default async function VanityUnitInstallationValenciaPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 59€. Presupuesto según fotos, medidas y dificultad.",
+              text: "59 €. Presupuesto según fotos, medidas y dificultad.",
             },
           ].map((item) => (
             <div key={item.title} className="rounded-2xl border border-yellow-200 bg-yellow-50 p-6 shadow-sm">
@@ -415,7 +415,7 @@ export default async function VanityUnitInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 59€
+            59 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar mueble bajo lavabo en Valencia
