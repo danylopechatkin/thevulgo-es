@@ -12,6 +12,7 @@ const serviceSchema = z.object({
   qty: z.number().int().min(1).max(100),
 });
 const schema = z.object({
+  client_profile_id: z.string().uuid().optional(),
   full_name: z.string().trim().min(2).max(160),
   phone: z.string().trim().min(7).max(80),
   email: z.union([z.string().trim().email().max(240), z.literal("")]),
@@ -89,10 +90,17 @@ export async function POST(request: Request) {
     total = subtotal + tax,
     deposit = calculateTravelDeposit(total, input.city);
   const database = getSupabaseAdmin();
+  if (input.client_profile_id) {
+    const { data: client, error: clientError } = await database
+      .from("client_profiles").select("id").eq("id", input.client_profile_id).maybeSingle();
+    if (clientError) return Response.json({ error: "Could not verify customer. Try again." }, { status: 500 });
+    if (!client) return Response.json({ error: "Customer no longer exists. Select another customer." }, { status: 400 });
+  }
   const { data, error } = await database
     .from("orders")
     .insert({
       idempotency_key: crypto.randomUUID(),
+      ...(input.client_profile_id ? { client_profile_id: input.client_profile_id, preserve_client_profile: true } : {}),
       full_name: input.full_name,
       phone: input.phone,
       email: input.email,
