@@ -265,9 +265,9 @@ const faqs = [
     qEs: "¿Cuánto cuesta preparar un piso para devolverlo?",
     qEn: "How much does it cost to prepare an apartment for return?",
     aEs:
-      "Depende de la cantidad de trabajos, materiales, estado del piso y urgencia. Los trabajos pequeños pueden empezar desde 35 €.",
+      "Depende de la cantidad de trabajos, materiales, estado del piso y urgencia. Los trabajos pequeños pueden costar 35 €.",
     aEn:
-      "It depends on the number of tasks, materials, apartment condition and urgency. Small jobs can start from €35.",
+      "It depends on the number of tasks, materials, apartment condition and urgency. Small jobs can cost €35.",
   },
   {
     qEs: "¿Podéis venir rápido si entrego las llaves pronto?",
@@ -329,7 +329,7 @@ export default async function DevolverPisoPropietarioValenciaPage({
     whatsapp: isEs ? "Pedir presupuesto por WhatsApp" : "Request estimate by WhatsApp",
     form: isEs ? "Abrir formulario" : "Open form",
     sendPhotos: isEs ? "Enviar fotos ahora" : "Send photos now",
-    from: isEs ? "Desde 35 €" : "From €35",
+    from: isEs ? "35 €" : "€35",
     smallJobs: isEs ? "Pequeñas reparaciones" : "Small repairs",
     city: "Valencia",
     cityText: isEs ? "Centro y alrededores" : "City and nearby areas",

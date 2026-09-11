@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reparación Media de Pared en Valencia | Desde 45€ | THEVULGO"
-    : "Medium Wall Patching in Valencia | From €45 | THEVULGO";
+    ? "Reparación Media de Pared en Valencia | 45 € | THEVULGO"
+    : "Medium Wall Patching in Valencia | €45 | THEVULGO";
 
   const description = isEs
-    ? "Reparación de daños visibles en pared, golpes, abolladuras y zonas dañadas en pladur o yeso en Valencia desde 45€. Parcheado, relleno y alisado."
-    : "Patch repair for visible wall damage, dents, impact marks and damaged drywall or plaster in Valencia from €45. Patching, filling and smoothing.";
+    ? "Reparación de daños visibles en pared, golpes, abolladuras y zonas dañadas en pladur o yeso en Valencia por 45 €. Parcheado, relleno y alisado."
+    : "Patch repair for visible wall damage, dents, impact marks and damaged drywall or plaster in Valencia for €45. Patching, filling and smoothing.";
 
   return {
     title,
@@ -291,7 +291,7 @@ export default async function MediumWallPatchingPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold sm:grid-cols-2">
               {[
-                isEs ? "Desde 45€" : "From €45",
+                isEs ? "45 €" : "€45",
                 isEs ? "Daños visibles" : "Visible damage",
                 isEs ? "Pladur y yeso" : "Drywall & plaster",
                 isEs ? "Preparación para pintura" : "Prep for repaint",
@@ -308,7 +308,7 @@ export default async function MediumWallPatchingPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 shadow-md">
               <Layers3 className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 45€" : "From €45"}
+                {isEs ? "45 €" : "€45"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs

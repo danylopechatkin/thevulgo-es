@@ -164,27 +164,27 @@ export default async function InstalarLamparaValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Instalar lámpara sencilla", "desde 39 €"],
-        ["Instalar plafón", "desde 39 €"],
-        ["Instalar aplique de pared", "desde 39 €"],
-        ["Cambiar lámpara de techo", "desde 39 €"],
-        ["Instalar lámpara colgante", "desde 49 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Instalar lámpara sencilla", "39 €"],
+        ["Instalar plafón", "39 €"],
+        ["Instalar aplique de pared", "39 €"],
+        ["Cambiar lámpara de techo", "39 €"],
+        ["Instalar lámpara colgante", "49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Simple light installation", "from €39"],
-        ["Ceiling fixture installation", "from €39"],
-        ["Wall light installation", "from €39"],
-        ["Ceiling light replacement", "from €39"],
-        ["Pendant light installation", "from €49"],
-        ["Visit / inspection", "from €49"],
+        ["Simple light installation", "€39"],
+        ["Ceiling fixture installation", "€39"],
+        ["Wall light installation", "€39"],
+        ["Ceiling light replacement", "€39"],
+        ["Pendant light installation", "€49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta instalar una lámpara en Valencia?",
-          a: "Depende del tipo de lámpara, altura, peso, estado del punto de luz, fijación, materiales y dificultad. Una instalación sencilla suele empezar desde 39 €.",
+          a: "Depende del tipo de lámpara, altura, peso, estado del punto de luz, fijación, materiales y dificultad. Una instalación sencilla cuesta 39 €.",
         },
         {
           q: "¿Instaláis lámparas de techo?",
@@ -210,7 +210,7 @@ export default async function InstalarLamparaValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does light installation in Valencia cost?",
-          a: "It depends on light type, height, weight, condition of the light point, fixing, materials and difficulty. A simple installation usually starts from €39.",
+          a: "It depends on light type, height, weight, condition of the light point, fixing, materials and difficulty. A simple installation costs €39.",
         },
         {
           q: "Do you install ceiling lights?",
@@ -475,7 +475,7 @@ export default async function InstalarLamparaValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

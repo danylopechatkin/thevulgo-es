@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Mueble de Baño en Valencia | Desde 59€ | THEVULGO"
-      : "Bathroom Cabinet Installation in Valencia | From €59 | THEVULGO",
+      ? "Instalación de Mueble de Baño en Valencia | 59 € | THEVULGO"
+      : "Bathroom Cabinet Installation in Valencia | €59 | THEVULGO",
     description: isEs
-      ? "Instalación de muebles de baño en Valencia desde 59€. Montaje de armarios, muebles auxiliares y unidades de almacenaje con alineación limpia y fijación segura."
-      : "Bathroom cabinet installation in Valencia from €59. Cabinets, storage units and bathroom furniture fitted with clean alignment and secure positioning.",
+      ? "Instalación de muebles de baño en Valencia por 59 €. Montaje de armarios, muebles auxiliares y unidades de almacenaje con alineación limpia y fijación segura."
+      : "Bathroom cabinet installation in Valencia for €59. Cabinets, storage units and bathroom furniture fitted with clean alignment and secure positioning.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar un mueble de baño en Valencia?",
-    a: "La instalación de mueble de baño empieza desde 59€. El precio final depende del tipo de mueble, tamaño, pared, fijaciones, nivelación y si hay que montar una unidad completa o solo colocarla.",
+    a: "La instalación de mueble de baño cuesta 59 €. El precio final depende del tipo de mueble, tamaño, pared, fijaciones, nivelación y si hay que montar una unidad completa o solo colocarla.",
   },
   {
     q: "¿Instalan armarios de baño suspendidos?",
@@ -260,7 +260,7 @@ export default async function BathroomCabinetInstallationValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 59€",
+                "59 €",
                 "Muebles de baño y armarios",
                 "Alineación limpia",
                 "Fijación segura",
@@ -331,7 +331,7 @@ export default async function BathroomCabinetInstallationValenciaPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 59€. Presupuesto según fotos, medidas y dificultad.",
+              text: "59 €. Presupuesto según fotos, medidas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -510,7 +510,7 @@ export default async function BathroomCabinetInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 59€
+            59 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar mueble de baño en Valencia

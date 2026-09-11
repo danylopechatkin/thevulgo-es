@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Montaje de Estanterías en Valencia | Desde 39€ | THEVULGO"
-      : "Shelf & Bookcase Assembly in Valencia | From €39 | THEVULGO",
+      ? "Montaje de Estanterías en Valencia | 39 € | THEVULGO"
+      : "Shelf & Bookcase Assembly in Valencia | €39 | THEVULGO",
     description: isEs
-      ? "Montaje profesional de estanterías, librerías y unidades independientes en Valencia desde 39€. Alineación correcta, estructura estable y fijación a pared si hace falta."
-      : "Professional shelf, bookcase and freestanding unit assembly in Valencia from €39. Correct alignment, stable structure and wall fixing if needed.",
+      ? "Montaje profesional de estanterías, librerías y unidades independientes en Valencia por 39 €. Alineación correcta, estructura estable y fijación a pared si hace falta."
+      : "Professional shelf, bookcase and freestanding unit assembly in Valencia for €39. Correct alignment, stable structure and wall fixing if needed.",
     alternates: {
       canonical: `${siteUrl}/${locale}/services/furniture/montaje-estanterias-valencia`,
       languages: {
@@ -73,7 +73,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta montar una estantería en Valencia?",
-    a: "El montaje de estanterías empieza desde 39€. El precio final depende del tamaño, número de piezas, tipo de estantería, altura, peso y si hace falta fijarla a la pared.",
+    a: "El montaje de estanterías cuesta 39 €. El precio final depende del tamaño, número de piezas, tipo de estantería, altura, peso y si hace falta fijarla a la pared.",
   },
   {
     q: "¿Montan librerías grandes?",
@@ -211,8 +211,8 @@ export default async function ShelvingAssemblyValenciaPage({
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Montaje de estanterías, librerías y unidades independientes desde{" "}
-              <strong className="text-neutral-950">39€</strong>. Alineación
+              Montaje de estanterías, librerías y unidades independientes de{" "}
+              <strong className="text-neutral-950">39 €</strong>. Alineación
               correcta, estructura estable y fijación a pared si hace falta para
               mayor seguridad.
             </p>
@@ -236,7 +236,7 @@ export default async function ShelvingAssemblyValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Montaje desde 39€",
+                "Montaje por 39 €",
                 "Estanterías y librerías",
                 "Unidades independientes",
                 "Alineación correcta",
@@ -422,7 +422,7 @@ export default async function ShelvingAssemblyValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para montar estanterías en Valencia

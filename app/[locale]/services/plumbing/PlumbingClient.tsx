@@ -96,8 +96,8 @@ export default function PlumbingClient() {
     {
       title: isEs ? "Precio transparente" : "Transparent pricing",
       text: isEs
-        ? "Precios iniciales claros y estimación antes de empezar."
-        : "Clear starting prices and estimate logic before work begins.",
+        ? "Precios claros y estimación antes de empezar."
+        : "Clear prices and estimate logic before work begins.",
       icon: <ShieldCheck className="h-5 w-5" />,
     },
   ];
@@ -108,7 +108,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Cambio e instalación de grifo de cocina o baño con alineación cuidadosa y revisión de fugas."
         : "Kitchen or bathroom faucet replacement and fitting with careful alignment and leak check.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Droplets className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -117,7 +117,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Instalación sencilla de lavabo y conexión para baño o zona de servicio."
         : "Simple sink installation and connection for bathrooms or utility areas.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
       icon: <Bath className="h-5 w-5" />,
       className: "",
     },
@@ -126,7 +126,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Cambio de alcachofas, soportes y piezas compatibles de ducha."
         : "Replacement of shower heads, holders and compatible fittings.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <ShowerHead className="h-5 w-5" />,
       className: "",
     },
@@ -135,7 +135,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Instalación de nueva tapa de inodoro con ajuste correcto."
         : "Installation of new toilet seat fittings with proper adjustment.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Bath className="h-5 w-5" />,
       className: "",
     },
@@ -144,7 +144,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Conexión de lavadora a toma de agua y desagüe existentes."
         : "Connection of washing machines to water supply and drain points.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Droplets className="h-5 w-5" />,
       className: "",
     },
@@ -153,7 +153,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Conexión de lavavajillas y configuración sencilla en espacios compatibles."
         : "Dishwasher water connection and simple setup for compatible spaces.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Droplets className="h-5 w-5" />,
       className: "",
     },
@@ -162,7 +162,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Pequeñas fugas visibles, ajuste de piezas y correcciones simples de conexión."
         : "Minor visible leak fixes, tightening fittings and simple connection corrections.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Waves className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -171,7 +171,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Pequeños ajustes bajo fregadero de cocina o lavabo para mejor encaje y estabilidad."
         : "Small adjustments under kitchen or bathroom sinks for better fit and stability.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -180,7 +180,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Cambio de manguera de ducha y conectores compatibles."
         : "Replacement of shower hose and connector fittings.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <ShowerHead className="h-5 w-5" />,
       className: "",
     },
@@ -189,7 +189,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Instalación de grifos de baño compatibles y piezas básicas."
         : "Installation of compatible bathroom taps and basic fittings.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Droplets className="h-5 w-5" />,
       className: "",
     },
@@ -198,7 +198,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Instalación básica de filtros compatibles bajo fregadero o en grifo."
         : "Basic installation of compatible under-sink or tap filter units.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Droplets className="h-5 w-5" />,
       className: "",
     },
@@ -207,7 +207,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Cambio de conectores y piezas visibles simples de tubería."
         : "Replacement of simple visible pipe connectors and fittings.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -216,7 +216,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Instalación sencilla de manguera bidé y conectores compatibles."
         : "Simple installation of bidet hoses and compatible connectors.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Bath className="h-5 w-5" />,
       className: "",
     },
@@ -225,7 +225,7 @@ export default function PlumbingClient() {
       desc: isEs
         ? "Cambio de pequeñas llaves de paso accesibles cuando las condiciones son adecuadas."
         : "Replacement of accessible small shut-off valves where suitable.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <CircleOff className="h-5 w-5" />,
       className: "",
     },

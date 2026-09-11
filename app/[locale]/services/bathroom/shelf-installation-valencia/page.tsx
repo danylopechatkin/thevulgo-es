@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Estantería de Baño en Valencia | Desde 35€ | THEVULGO"
-      : "Bathroom Shelf Installation in Valencia | From €35 | THEVULGO",
+      ? "Instalación de Estantería de Baño en Valencia | 35 € | THEVULGO"
+      : "Bathroom Shelf Installation in Valencia | €35 | THEVULGO",
     description: isEs
-      ? "Instalación de estanterías de baño en Valencia desde 35€. Montaje de baldas para almacenaje, cosméticos, decoración y objetos de uso diario."
-      : "Bathroom shelf installation in Valencia from €35. Shelves for storage, cosmetics, décor and everyday items with clean wall alignment.",
+      ? "Instalación de estanterías de baño en Valencia por 35 €. Montaje de baldas para almacenaje, cosméticos, decoración y objetos de uso diario."
+      : "Bathroom shelf installation in Valencia for €35. Shelves for storage, cosmetics, décor and everyday items with clean wall alignment.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar una estantería de baño en Valencia?",
-    a: "La instalación de estantería de baño empieza desde 35€. El precio depende del tamaño, número de baldas, tipo de pared, fijaciones, peso previsto y dificultad del montaje.",
+    a: "La instalación de estantería de baño cuesta 35 €. El precio depende del tamaño, número de baldas, tipo de pared, fijaciones, peso previsto y dificultad del montaje.",
   },
   {
     q: "¿Instalan estanterías en azulejo?",
@@ -260,7 +260,7 @@ export default async function BathroomShelfInstallationValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 35€",
+                "35 €",
                 "Estanterías y baldas",
                 "Para cosméticos y almacenaje",
                 "Alineación limpia",
@@ -331,7 +331,7 @@ export default async function BathroomShelfInstallationValenciaPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 35€. Presupuesto según fotos, piezas y dificultad.",
+              text: "35 €. Presupuesto según fotos, piezas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -445,7 +445,7 @@ export default async function BathroomShelfInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 35€
+            35 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar estantería de baño en Valencia

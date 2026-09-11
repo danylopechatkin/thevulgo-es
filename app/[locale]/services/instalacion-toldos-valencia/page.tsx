@@ -59,7 +59,7 @@ const faqs = [
   {
     question: "¿Cuánto cuesta instalar un toldo en Valencia?",
     answer:
-      "La instalación de toldos en Valencia empieza desde 99 €. El precio final depende del tamaño del toldo, tipo de pared, altura de instalación, número de soportes y si es necesario trabajar entre dos personas.",
+      "La instalación de toldos en Valencia cuesta 99 €. El precio final depende del tamaño del toldo, tipo de pared, altura de instalación, número de soportes y si es necesario trabajar entre dos personas.",
   },
   {
     question: "¿Instaláis toldos comprados en Leroy Merlin?",
@@ -90,11 +90,11 @@ export async function generateMetadata({
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de toldos en Valencia desde 99 € | THEVULGO"
-    : "Awning Installation in Valencia From €99 | THEVULGO";
+    ? "Instalación de toldos en Valencia por 99 € | THEVULGO"
+    : "Awning Installation in Valencia | €99 | THEVULGO";
   const description = isEs
-    ? "Instalación de toldos manuales y eléctricos en Valencia desde 99 €. Montaje en balcón, terraza o patio. Presupuesto rápido por WhatsApp."
-    : "Manual and electric awning installation in Valencia from €99. Installation on balconies, terraces and patios. Fast WhatsApp estimate.";
+    ? "Instalación de toldos manuales y eléctricos en Valencia por 99 €. Montaje en balcón, terraza o patio. Presupuesto rápido por WhatsApp."
+    : "Manual and electric awning installation in Valencia for €99. Installation on balconies, terraces and patios. Fast WhatsApp estimate.";
 
   return {
     title,
@@ -229,8 +229,8 @@ export default async function InstalacionToldosValenciaPage({
               </h1>
 
               <p className="mt-8 max-w-2xl text-lg leading-8 text-neutral-700 md:text-xl">
-                Montaje profesional de toldos manuales y eléctricos desde{" "}
-                <strong className="text-neutral-950">99€</strong>. Instalamos
+                Montaje profesional de toldos manuales y eléctricos por{" "}
+                <strong className="text-neutral-950">99 €</strong>. Instalamos
                 toldos para terraza, patio, balcón y fachada, incluyendo modelos
                 de Leroy Merlin, Naterial y Calima.
               </p>
@@ -254,7 +254,7 @@ export default async function InstalacionToldosValenciaPage({
 
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 {[
-                  "Instalación desde 99€",
+                  "Instalación por 99 €",
                   "Toldos manuales y eléctricos",
                   "Leroy Merlin, Naterial, Calima",
                   "Valencia y alrededores",
@@ -329,7 +329,7 @@ export default async function InstalacionToldosValenciaPage({
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
               <div>
                 <p className="text-sm font-black uppercase tracking-[0.25em] text-yellow-400">
-                  Precios orientativos
+                  Precios de servicios
                 </p>
                 <h2 className="mt-5 text-4xl font-black tracking-tight md:text-5xl">
                   Precio claro para instalar un toldo en Valencia
@@ -344,10 +344,10 @@ export default async function InstalacionToldosValenciaPage({
               <div className="rounded-[2rem] border border-yellow-400/40 bg-white/5 p-6">
                 <div className="rounded-3xl bg-yellow-400 p-7 text-neutral-950">
                   <p className="text-sm font-black uppercase tracking-[0.2em]">
-                    Desde
+                    Precio
                   </p>
                   <div className="mt-3 flex items-end gap-2">
-                    <span className="text-7xl font-black leading-none">99€</span>
+                    <span className="text-7xl font-black leading-none">99 €</span>
                     <span className="mb-2 text-lg font-bold">
                       instalación básica
                     </span>
@@ -364,19 +364,19 @@ export default async function InstalacionToldosValenciaPage({
               {[
                 {
                   title: "Toldo pequeño",
-                  price: "desde 99€",
+                  price: "99 €",
                   text: "Instalación sencilla de toldo pequeño en terraza, patio o balcón.",
                   icon: Umbrella,
                 },
                 {
                   title: "Toldo mediano",
-                  price: "120€ - 170€",
+                  price: "120 € - 170 €",
                   text: "Montaje de toldo manual con soportes estándar y acceso cómodo.",
                   icon: Sun,
                 },
                 {
                   title: "Toldo grande",
-                  price: "175€ - 250€",
+                  price: "175 € - 250 €",
                   text: "Toldos de gran tamaño, normalmente con ayuda de segunda persona.",
                   icon: Users,
                 },
@@ -753,7 +753,7 @@ export default async function InstalacionToldosValenciaPage({
                     },
                     {
                       icon: Euro,
-                      title: "Desde 99€",
+                      title: "99 €",
                       text: "Precio adaptado al tamaño y dificultad.",
                     },
                     {
@@ -927,7 +927,7 @@ export default async function InstalacionToldosValenciaPage({
             </div>
 
             <h2 className="mt-8 text-4xl font-black tracking-tight md:text-6xl">
-              Instalación de toldos en Valencia desde 99€
+              Instalación de toldos en Valencia por 99 €
             </h2>
 
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-neutral-300">

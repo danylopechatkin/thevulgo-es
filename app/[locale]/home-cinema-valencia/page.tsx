@@ -168,27 +168,27 @@ export default async function HomeCinemaValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Instalación básica home cinema", "desde 79 €"],
-        ["Instalación de proyector", "desde 59 €"],
-        ["Proyector en techo con soporte", "desde 79 €"],
-        ["Instalación de pantalla", "desde 49 €"],
-        ["Montaje de TV / soundbar", "desde 49 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Instalación básica home cinema", "79 €"],
+        ["Instalación de proyector", "59 €"],
+        ["Proyector en techo con soporte", "79 €"],
+        ["Instalación de pantalla", "49 €"],
+        ["Montaje de TV / soundbar", "49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Basic home cinema installation", "from €79"],
-        ["Projector installation", "from €59"],
-        ["Ceiling projector with bracket", "from €79"],
-        ["Screen installation", "from €49"],
-        ["TV / soundbar mounting", "from €49"],
-        ["Visit / inspection", "from €49"],
+        ["Basic home cinema installation", "€79"],
+        ["Projector installation", "€59"],
+        ["Ceiling projector with bracket", "€79"],
+        ["Screen installation", "€49"],
+        ["TV / soundbar mounting", "€49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta instalar un home cinema en Valencia?",
-          a: "Depende de si incluye proyector, pantalla, TV, soundbar, soportes, cableado, altura, distancia de proyección y ajustes. Una instalación básica suele empezar desde 79 €.",
+          a: "Depende de si incluye proyector, pantalla, TV, soundbar, soportes, cableado, altura, distancia de proyección y ajustes. Una instalación básica cuesta 79 €.",
         },
         {
           q: "¿Instaláis proyectores y pantallas?",
@@ -214,7 +214,7 @@ export default async function HomeCinemaValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does home cinema installation in Valencia cost?",
-          a: "It depends on whether it includes projector, screen, TV, soundbar, brackets, cabling, height, projection distance and setup. A basic installation usually starts from €79.",
+          a: "It depends on whether it includes projector, screen, TV, soundbar, brackets, cabling, height, projection distance and setup. A basic installation costs €79.",
         },
         {
           q: "Do you install projectors and screens?",
@@ -477,7 +477,7 @@ export default async function HomeCinemaValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

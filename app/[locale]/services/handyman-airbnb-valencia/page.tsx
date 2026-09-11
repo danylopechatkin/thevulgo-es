@@ -267,7 +267,7 @@ export default async function HandymanAirbnbValenciaPage({ params }: Props) {
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
-                ["Desde 35 €", "Trabajos pequeños"],
+                ["35 €", "Trabajos pequeños"],
                 ["Valencia", "Zonas céntricas y alrededores"],
                 ["Fotos primero", "Precio claro antes de ir"],
               ].map(([title, text]) => (
@@ -482,7 +482,7 @@ export default async function HandymanAirbnbValenciaPage({ params }: Props) {
             <p className="mt-4 text-amber-100">
               Un apartamento limpio visualmente, sin detalles rotos ni marcas
               evidentes, transmite más confianza y mejora la experiencia del
-              huésped desde el primer minuto.
+              huésped ya en el primer minuto.
             </p>
           </div>
         </div>

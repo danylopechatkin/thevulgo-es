@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Reparar Manilla Suelta | Desde 25€ | THEVULGO"
-      : "Fix Loose Door Handle | From €25 | THEVULGO",
+      ? "Reparar Manilla Suelta | 25 € | THEVULGO"
+      : "Fix Loose Door Handle | €25 | THEVULGO",
     description: isEs
-      ? "Reparación de manillas sueltas desde 25€. Apriete, ajuste y estabilización de manillas, pomos y herrajes visibles que se mueven o se sienten inseguros."
-      : "Fix loose door handles from €25. Tightening and stabilizing loose handles, knobs and visible fittings that move, wobble or feel unreliable.",
+      ? "Reparación de manillas sueltas por 25 €. Apriete, ajuste y estabilización de manillas, pomos y herrajes visibles que se mueven o se sienten inseguros."
+      : "Fix loose door handles for €25. Tightening and stabilizing loose handles, knobs and visible fittings that move, wobble or feel unreliable.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta reparar una manilla suelta?",
-    a: "La reparación de manilla suelta empieza desde 25€. El precio depende del tipo de manilla, tornillos, estado del herraje, puerta, cierre y si hace falta una pieza nueva.",
+    a: "La reparación de manilla suelta cuesta 25 €. El precio depende del tipo de manilla, tornillos, estado del herraje, puerta, cierre y si hace falta una pieza nueva.",
   },
   {
     q: "¿Pueden apretar una manilla que se mueve?",
@@ -241,7 +241,7 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 25€",
+                "25 €",
                 "Manillas que se mueven",
                 "Pomos sueltos",
                 "Apriete de herrajes",
@@ -312,7 +312,7 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 25€. Presupuesto según fotos, vídeo y dificultad.",
+              text: "25 €. Presupuesto según fotos, vídeo y dificultad.",
             },
           ].map((item) => (
             <div
@@ -456,7 +456,7 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 25€
+            25 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para reparar manilla suelta

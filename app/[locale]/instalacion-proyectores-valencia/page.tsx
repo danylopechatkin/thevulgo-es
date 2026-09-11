@@ -165,27 +165,27 @@ export default async function InstalacionProyectoresValenciaPage({
 
   const prices = isEs
     ? [
-        ["Instalación básica de proyector", "desde 59 €"],
-        ["Montaje en techo con soporte", "desde 79 €"],
-        ["Montaje en pared con soporte", "desde 69 €"],
-        ["Instalación de pantalla", "desde 49 €"],
-        ["Ajuste de imagen / alineación", "desde 39 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Instalación básica de proyector", "59 €"],
+        ["Montaje en techo con soporte", "79 €"],
+        ["Montaje en pared con soporte", "69 €"],
+        ["Instalación de pantalla", "49 €"],
+        ["Ajuste de imagen / alineación", "39 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Basic projector installation", "from €59"],
-        ["Ceiling mount with bracket", "from €79"],
-        ["Wall mount with bracket", "from €69"],
-        ["Screen installation", "from €49"],
-        ["Image adjustment / alignment", "from €39"],
-        ["Visit / inspection", "from €49"],
+        ["Basic projector installation", "€59"],
+        ["Ceiling mount with bracket", "€79"],
+        ["Wall mount with bracket", "€69"],
+        ["Screen installation", "€49"],
+        ["Image adjustment / alignment", "€39"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta instalar un proyector en Valencia?",
-          a: "Depende del tipo de instalación, techo o pared, soporte, altura, cableado, distancia de proyección, pantalla y ajuste necesario. Una instalación básica suele empezar desde 59–79 €.",
+          a: "Depende del tipo de instalación, techo o pared, soporte, altura, cableado, distancia de proyección, pantalla y ajuste necesario. Una instalación básica cuesta 59–79 €.",
         },
         {
           q: "¿Instaláis proyectores en techo?",
@@ -211,7 +211,7 @@ export default async function InstalacionProyectoresValenciaPage({
     : [
         {
           q: "How much does projector installation in Valencia cost?",
-          a: "It depends on installation type, ceiling or wall, bracket, height, cabling, projection distance, screen and required adjustment. A basic installation usually starts from €59–79.",
+          a: "It depends on installation type, ceiling or wall, bracket, height, cabling, projection distance, screen and required adjustment. A basic installation costs €59–79.",
         },
         {
           q: "Do you install projectors on ceilings?",
@@ -476,7 +476,7 @@ export default async function InstalacionProyectoresValenciaPage({
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

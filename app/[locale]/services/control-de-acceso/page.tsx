@@ -251,24 +251,24 @@ export default async function AccessControlPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Diagnóstico de acceso", "desde 49 €"],
-        ["Instalación de teclado", "desde 79 €"],
-        ["Instalación RFID", "desde 79 €"],
-        ["Cerradero eléctrico", "desde 89 €"],
-        ["Cerradura magnética", "desde 99 €"],
-        ["Controlador de puerta", "desde 99 €"],
-        ["Control horario", "desde 89 €"],
-        ["Sistema para negocio", "desde 129 €"],
+        ["Diagnóstico de acceso", "49 €"],
+        ["Instalación de teclado", "79 €"],
+        ["Instalación RFID", "79 €"],
+        ["Cerradero eléctrico", "89 €"],
+        ["Cerradura magnética", "99 €"],
+        ["Controlador de puerta", "99 €"],
+        ["Control horario", "89 €"],
+        ["Sistema para negocio", "129 €"],
       ]
     : [
-        ["Access diagnostics", "from €49"],
-        ["Keypad installation", "from €79"],
-        ["RFID installation", "from €79"],
-        ["Electric strike", "from €89"],
-        ["Magnetic lock", "from €99"],
-        ["Door controller", "from €99"],
-        ["Time attendance", "from €89"],
-        ["Business access system", "from €129"],
+        ["Access diagnostics", "€49"],
+        ["Keypad installation", "€79"],
+        ["RFID installation", "€79"],
+        ["Electric strike", "€89"],
+        ["Magnetic lock", "€99"],
+        ["Door controller", "€99"],
+        ["Time attendance", "€89"],
+        ["Business access system", "€129"],
       ];
 
   const clientTypes = [
@@ -344,7 +344,7 @@ export default async function AccessControlPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta instalar control de acceso en Valencia?",
-          a: "Depende del tipo de puerta, cerradura, lector, cableado, fuente, controlador y configuración. Una instalación básica puede empezar desde 79–99 €.",
+          a: "Depende del tipo de puerta, cerradura, lector, cableado, fuente, controlador y configuración. Una instalación básica puede costar 79–99 €.",
         },
         {
           q: "¿Instaláis lectores RFID?",
@@ -378,7 +378,7 @@ export default async function AccessControlPage({ params }: Props) {
     : [
         {
           q: "How much does access control installation in Valencia cost?",
-          a: "It depends on door type, lock, reader, cabling, power supply, controller and configuration. A basic installation can start from €79–99.",
+          a: "It depends on door type, lock, reader, cabling, power supply, controller and configuration. A basic installation can cost €79–99.",
         },
         {
           q: "Do you install RFID readers?",
@@ -650,7 +650,7 @@ export default async function AccessControlPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -675,7 +675,7 @@ export default async function AccessControlPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">
@@ -883,7 +883,7 @@ export default async function AccessControlPage({ params }: Props) {
 
             <p className="mt-4 text-lg leading-8 text-neutral-700">
               {isEs
-                ? "Antes de instalar un lector o cerradura, hay que revisar la puerta, el marco, la dirección de apertura, la alimentación, el tipo de cerradura y cómo debe salir la persona desde dentro."
+                ? "Antes de instalar un lector o cerradura, hay que revisar la puerta, el marco, la dirección de apertura, la alimentación, el tipo de cerradura y cómo debe salir la persona en el interior."
                 : "Before installing a reader or lock, the door, frame, opening direction, power supply, lock type and how people exit from inside must be checked."}
             </p>
 

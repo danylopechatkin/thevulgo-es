@@ -28,11 +28,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Montaje de Muebles TV y Multimedia en Valencia | Desde 45€ | THEVULGO"
-      : "TV & Media Furniture Assembly in Valencia | From €45 | THEVULGO",
+      ? "Montaje de Muebles TV y Multimedia en Valencia | 45 € | THEVULGO"
+      : "TV & Media Furniture Assembly in Valencia | €45 | THEVULGO",
     description: isEs
-      ? "Montaje de muebles TV, consolas multimedia y unidades de entretenimiento en Valencia desde 45€. Alineación cuidada, posición estable y organización de cables."
-      : "TV stands, media consoles and entertainment unit assembly in Valencia from €45. Careful alignment, stable positioning and cable organization.",
+      ? "Montaje de muebles TV, consolas multimedia y unidades de entretenimiento en Valencia por 45 €. Alineación cuidada, posición estable y organización de cables."
+      : "TV stands, media consoles and entertainment unit assembly in Valencia for €45. Careful alignment, stable positioning and cable organization.",
     alternates: {
       canonical: `${siteUrl}/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
       languages: {
@@ -74,7 +74,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta montar un mueble TV en Valencia?",
-    a: "El montaje de muebles TV y multimedia empieza desde 45€. El precio final depende del tamaño, número de piezas, cajones, puertas, módulos, fijación a pared y organización de cables.",
+    a: "El montaje de muebles TV y multimedia cuesta 45 €. El precio final depende del tamaño, número de piezas, cajones, puertas, módulos, fijación a pared y organización de cables.",
   },
   {
     q: "¿Montan muebles TV de IKEA?",
@@ -213,8 +213,8 @@ export default async function TvMediaFurnitureAssemblyValenciaPage({
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
               Montaje de muebles TV, consolas multimedia y unidades de
-              entretenimiento desde{" "}
-              <strong className="text-neutral-950">45€</strong>. Alineación
+              entretenimiento por{" "}
+              <strong className="text-neutral-950">45 €</strong>. Alineación
               cuidada, posición estable y organización de cables para un acabado
               limpio.
             </p>
@@ -238,7 +238,7 @@ export default async function TvMediaFurnitureAssemblyValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Montaje desde 45€",
+                "Montaje por 45 €",
                 "Muebles TV y consolas",
                 "Unidades multimedia",
                 "Ajuste de puertas y cajones",
@@ -426,7 +426,7 @@ export default async function TvMediaFurnitureAssemblyValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 45€
+            45 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para montar muebles TV en Valencia

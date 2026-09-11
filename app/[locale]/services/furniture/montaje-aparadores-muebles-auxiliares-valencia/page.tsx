@@ -26,12 +26,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Montaje de Aparadores y Muebles Auxiliares en Valencia | Desde 49€ | THEVULGO"
-    : "Sideboard & Auxiliary Furniture Assembly in Valencia | From €49 | THEVULGO";
+    ? "Montaje de Aparadores y Muebles Auxiliares en Valencia | 49 € | THEVULGO"
+    : "Sideboard & Auxiliary Furniture Assembly in Valencia | €49 | THEVULGO";
 
   const description = isEs
-    ? "Montaje profesional de aparadores, muebles auxiliares, recibidores, zapateros y muebles de entrada en Valencia desde 49€. Puertas, cajones, baldas y fijación."
-    : "Professional assembly of sideboards, auxiliary cabinets, shoe cabinets and entryway furniture in Valencia from €49. Doors, drawers, shelves and wall fixing.";
+    ? "Montaje profesional de aparadores, muebles auxiliares, recibidores, zapateros y muebles de entrada en Valencia por 49 €. Puertas, cajones, baldas y fijación."
+    : "Professional assembly of sideboards, auxiliary cabinets, shoe cabinets and entryway furniture in Valencia for €49. Doors, drawers, shelves and wall fixing.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function SideboardAssemblyValenciaPage({
     ? [
         {
           q: "¿Cuánto cuesta montar un aparador en Valencia?",
-          a: "El montaje de aparadores y muebles auxiliares empieza desde 49€. El precio final depende del tamaño, número de puertas, cajones, baldas, tipo de mueble y si hace falta fijación a pared.",
+          a: "El montaje de aparadores y muebles auxiliares cuesta 49 €. El precio final depende del tamaño, número de puertas, cajones, baldas, tipo de mueble y si hace falta fijación a pared.",
         },
         {
           q: "¿Montan aparadores IKEA?",
@@ -153,7 +153,7 @@ export default async function SideboardAssemblyValenciaPage({
     : [
         {
           q: "How much does sideboard assembly cost in Valencia?",
-          a: "Sideboard and auxiliary furniture assembly starts from €49. Final price depends on size, number of doors, drawers, shelves, furniture type and whether wall fixing is needed.",
+          a: "Sideboard and auxiliary furniture assembly costs €49. Final price depends on size, number of doors, drawers, shelves, furniture type and whether wall fixing is needed.",
         },
         {
           q: "Do you assemble IKEA sideboards?",
@@ -269,7 +269,7 @@ export default async function SideboardAssemblyValenciaPage({
 
   const notIncluded = isEs
     ? [
-        "Transporte del mueble desde tienda",
+        "Transporte del mueble de la tienda",
         "Reparación de piezas rotas de fábrica",
         "Modificaciones estructurales no indicadas por el fabricante",
         "Anclaje a pared si la pared no permite una fijación segura",
@@ -408,8 +408,8 @@ export default async function SideboardAssemblyValenciaPage({
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
               {isEs
-                ? "Montaje de aparadores, armarios auxiliares y muebles de entrada desde 49€. Puertas, cajones, baldas, tiradores, alineación cuidada y estructura estable para uso diario."
-                : "Assembly of sideboards, auxiliary cabinets and entryway furniture from €49. Doors, drawers, shelves, handles, careful alignment and stable structure for everyday use."}
+                ? "Montaje de aparadores, armarios auxiliares y muebles de entrada por 49 €. Puertas, cajones, baldas, tiradores, alineación cuidada y estructura estable para uso diario."
+                : "Assembly of sideboards, auxiliary cabinets and entryway furniture for €49. Doors, drawers, shelves, handles, careful alignment and stable structure for everyday use."}
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -426,7 +426,7 @@ export default async function SideboardAssemblyValenciaPage({
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {(isEs
                 ? [
-                    "Montaje desde 49€",
+                    "Montaje por 49 €",
                     "Aparadores y recibidores",
                     "Armarios auxiliares",
                     "Ajuste de puertas y cajones",
@@ -434,7 +434,7 @@ export default async function SideboardAssemblyValenciaPage({
                     "Valencia y alrededores",
                   ]
                 : [
-                    "Assembly from €49",
+                    "Assembly for €49",
                     "Sideboards and entryway units",
                     "Auxiliary cabinets",
                     "Door and drawer adjustment",
@@ -642,7 +642,7 @@ export default async function SideboardAssemblyValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 49€" : "From €49"}
+            {isEs ? "49 €" : "€49"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs ? "Presupuesto para montar aparadores en Valencia" : "Quote for sideboard assembly in Valencia"}

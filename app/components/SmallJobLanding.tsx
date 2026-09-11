@@ -13,7 +13,7 @@ export type SmallJobCopy = {
   badge: string;
   title: string;
   intro: string;
-  startingPrice: string;
+  priceLabel: string;
   includedTitle: string;
   includedIntro: string;
   included: string[];
@@ -100,7 +100,7 @@ export default function SmallJobLanding({ locale, path, serviceName, copy, relat
             <h1 className="mt-6 text-4xl font-black tracking-tight sm:text-6xl">{copy.title}</h1>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-700">{copy.intro}</p>
             <div className="mt-7 flex flex-wrap gap-2 text-sm font-bold">
-              <span className="rounded-full bg-neutral-950 px-4 py-2 text-white">{copy.startingPrice}</span>
+              <span className="rounded-full bg-neutral-950 px-4 py-2 text-white">{copy.priceLabel}</span>
               <span className="rounded-full bg-yellow-100 px-4 py-2">Valencia & nearby</span>
               <span className="rounded-full bg-yellow-100 px-4 py-2">ES / EN</span>
             </div>

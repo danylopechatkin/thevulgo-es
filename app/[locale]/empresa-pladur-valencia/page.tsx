@@ -241,21 +241,21 @@ export default async function EmpresaPladurValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Visita / revisión", "desde 49 €"],
-        ["Reparación pequeña", "desde 35 €"],
-        ["Parche + lijado básico", "desde 45 €"],
-        ["Reparación de techo", "desde 49 €"],
-        ["Instalación básica de pladur", "desde 79 €"],
+        ["Visita / revisión", "49 €"],
+        ["Reparación pequeña", "35 €"],
+        ["Parche + lijado básico", "45 €"],
+        ["Reparación de techo", "49 €"],
+        ["Instalación básica de pladur", "79 €"],
         ["Tabique de pladur", "presupuesto"],
         ["Falso techo de pladur", "presupuesto"],
         ["Trabajo para local u oficina", "presupuesto"],
       ]
     : [
-        ["Visit / inspection", "from €49"],
-        ["Small repair", "from €35"],
-        ["Patch + basic sanding", "from €45"],
-        ["Ceiling repair", "from €49"],
-        ["Basic drywall installation", "from €79"],
+        ["Visit / inspection", "€49"],
+        ["Small repair", "€35"],
+        ["Patch + basic sanding", "€45"],
+        ["Ceiling repair", "€49"],
+        ["Basic drywall installation", "€79"],
         ["Drywall partition", "quote"],
         ["Plasterboard false ceiling", "quote"],
         ["Shop or office work", "quote"],
@@ -287,7 +287,7 @@ export default async function EmpresaPladurValenciaPage({ params }: Props) {
         },
         {
           q: "¿Cuánto cobra una empresa de pladur en Valencia?",
-          a: "Depende de metros, materiales, altura, estructura, acabado y dificultad. Las reparaciones pequeñas pueden empezar desde 35 €, pero tabiques, techos y reformas necesitan presupuesto.",
+          a: "Depende de metros, materiales, altura, estructura, acabado y dificultad. Las reparaciones pequeñas pueden costar 35 €, pero tabiques, techos y reformas necesitan presupuesto.",
         },
         {
           q: "¿Trabajáis con particulares?",
@@ -321,7 +321,7 @@ export default async function EmpresaPladurValenciaPage({ params }: Props) {
         },
         {
           q: "How much does a drywall company in Valencia charge?",
-          a: "It depends on measurements, materials, height, framing, finish and difficulty. Small repairs can start from €35, but partitions, ceilings and renovations require a quote.",
+          a: "It depends on measurements, materials, height, framing, finish and difficulty. Small repairs can cost €35, but partitions, ceilings and renovations require a quote.",
         },
         {
           q: "Do you work with private clients?",
@@ -598,7 +598,7 @@ export default async function EmpresaPladurValenciaPage({ params }: Props) {
           <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
             <h3 className="flex items-center gap-2 text-xl font-black">
               <Euro className="h-6 w-6 text-yellow-500" />
-              {isEs ? "Precios orientativos" : "Guide prices"}
+              {isEs ? "Precios de servicios" : "Service prices"}
             </h3>
 
             <div className="mt-5 space-y-3">

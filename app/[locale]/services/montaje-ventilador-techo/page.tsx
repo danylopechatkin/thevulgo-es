@@ -131,12 +131,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Montaje de ventilador de techo en Valencia desde 45 € | THEVULGO"
-    : "Ceiling Fan Mounting in Valencia From €45 | THEVULGO";
+    ? "Montaje de ventilador de techo en Valencia por 45 € | THEVULGO"
+    : "Ceiling Fan Mounting in Valencia | €45 | THEVULGO";
 
   const description = isEs
-    ? "Montaje de ventilador de techo en Valencia desde 45 €. 2 ventiladores 85 €, 3 ventiladores 125 €. Desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente incluidos."
-    : "Ceiling fan mounting in Valencia from €45. 2 fans €85, 3 fans €125. Old light or fan removal and connection to the existing electrical point included.";
+    ? "Montaje de ventilador de techo en Valencia por 45 €. 2 ventiladores 85 €, 3 ventiladores 125 €. Desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente incluidos."
+    : "Ceiling fan mounting in Valencia for €45. 2 fans €85, 3 fans €125. Old light or fan removal and connection to the existing electrical point included.";
 
   return {
     title,
@@ -198,14 +198,14 @@ export default async function CeilingFanMountingPage({ params }: Props) {
       ? "Montaje de ventiladores de techo en Valencia"
       : "Ceiling fan mounting in Valencia",
     title: isEs
-      ? "Montaje de ventilador de techo desde 45 €"
-      : "Ceiling fan mounting from €45",
+      ? "Montaje de ventilador de techo por 45 €"
+      : "Ceiling fan mounting for €45",
     subtitle: isEs
       ? "Instalamos ventiladores de techo con luz, mando, aspas retráctiles o modelos clásicos. El precio incluye desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente."
       : "We install ceiling fans with light, remote control, retractable blades or classic models. The price includes removal of the old lamp or fan and connection to the existing electrical point.",
     primaryCta: isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp",
     secondaryCta: isEs ? "Ver precios" : "See prices",
-    heroBadge1: isEs ? "Desde 45 €" : "From €45",
+    heroBadge1: isEs ? "45 €" : "€45",
     heroBadge2: isEs ? "Mismo día según disponibilidad" : "Same day depending on availability",
     heroBadge3: isEs ? "Precio claro antes de empezar" : "Clear price before starting",
   };

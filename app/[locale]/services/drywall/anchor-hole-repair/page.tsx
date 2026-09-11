@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reparación de Agujeros de Tacos en Valencia | Desde 29€ | THEVULGO"
-    : "Anchor Hole Repair in Valencia | From €29 | THEVULGO";
+    ? "Reparación de Agujeros de Tacos en Valencia | 29 € | THEVULGO"
+    : "Anchor Hole Repair in Valencia | €29 | THEVULGO";
 
   const description = isEs
-    ? "Reparación de agujeros de tacos, anclajes, tornillos y marcas de soportes en Valencia desde 29€. Relleno, alisado y preparación para pintura."
-    : "Anchor hole repair in Valencia from €29. Wall plug holes, screw holes and bracket marks repaired with filling, smoothing and paint preparation.";
+    ? "Reparación de agujeros de tacos, anclajes, tornillos y marcas de soportes en Valencia por 29 €. Relleno, alisado y preparación para pintura."
+    : "Anchor hole repair in Valencia for €29. Wall plug holes, screw holes and bracket marks repaired with filling, smoothing and paint preparation.";
 
   return {
     title,
@@ -119,7 +119,7 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta reparar agujeros de tacos en Valencia?",
-          a: "El servicio empieza desde 29€. El precio final depende del número de agujeros, tamaño, tipo de pared, acabado esperado y si hace falta pintura.",
+          a: "El servicio cuesta 29 €. El precio final depende del número de agujeros, tamaño, tipo de pared, acabado esperado y si hace falta pintura.",
         },
         {
           q: "¿Podéis reparar marcas después de quitar un soporte de TV o estante?",
@@ -149,7 +149,7 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
         },
         {
           q: "How much does anchor hole repair cost in Valencia?",
-          a: "The service starts from €29. Final price depends on number of holes, size, wall type, expected finish and whether painting is needed.",
+          a: "The service costs €29. Final price depends on number of holes, size, wall type, expected finish and whether painting is needed.",
         },
         {
           q: "Can you repair marks after removing a TV bracket or shelf?",
@@ -256,13 +256,13 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 29€",
+        "29 €",
         "Agujeros de tacos y anclajes",
         "Marcas de soportes retirados",
         "Relleno limpio y alisado",
       ]
     : [
-        "From €29",
+        "€29",
         "Wall plug and anchor holes",
         "Removed bracket marks",
         "Clean filling and smoothing",
@@ -511,7 +511,7 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <CircleDot className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 29€" : "From €29"}
+                {isEs ? "29 €" : "€29"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -777,7 +777,7 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 29€" : "From €29"}
+            {isEs ? "29 €" : "€29"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

@@ -28,11 +28,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Montaje de TV en Valencia | Desde 49€ | THEVULGO"
-      : "TV Mounting in Valencia | From €49 | THEVULGO",
+      ? "Montaje de TV en Valencia | 49 € | THEVULGO"
+      : "TV Mounting in Valencia | €49 | THEVULGO",
     description: isEs
-      ? "Montaje profesional de TV en Valencia desde 49€. Instalación limpia, soportes fijos o articulados, ocultación de cables, Samsung Frame y TVs grandes."
-      : "Professional TV mounting in Valencia from €49. Clean installation, fixed or full-motion brackets, cable management, Samsung Frame and large TVs.",
+      ? "Montaje profesional de TV en Valencia por 49 €. Instalación limpia, soportes fijos o articulados, ocultación de cables, Samsung Frame y TVs grandes."
+      : "Professional TV mounting in Valencia for €49. Clean installation, fixed or full-motion brackets, cable management, Samsung Frame and large TVs.",
     alternates: {
       canonical: `${siteUrl}/${locale}/montaje-tv-valencia`,
       languages: {
@@ -42,8 +42,8 @@ export async function generateMetadata({
     },
     openGraph: {
       title: isEs
-        ? "Montaje de TV en Valencia | Desde 49€"
-        : "TV Mounting in Valencia | From €49",
+        ? "Montaje de TV en Valencia | 49 €"
+        : "TV Mounting in Valencia | €49",
       description: isEs
         ? "Instalación limpia, rápida y profesional de televisores en Valencia y alrededores."
         : "Clean, fast and professional TV mounting in Valencia and nearby areas.",
@@ -75,7 +75,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta montar una TV en Valencia?",
-    a: "El montaje estándar de TV en Valencia empieza desde 49€. El precio final depende del tamaño del televisor, tipo de soporte, tipo de pared, ocultación de cables y si hace falta instalar una toma eléctrica.",
+    a: "El montaje estándar de TV en Valencia cuesta 49 €. El precio final depende del tamaño del televisor, tipo de soporte, tipo de pared, ocultación de cables y si hace falta instalar una toma eléctrica.",
   },
   {
     q: "¿Pueden instalar televisores grandes de 65, 75, 85 o 98 pulgadas?",
@@ -210,8 +210,8 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Instalación profesional de televisores en pared desde{" "}
-              <strong className="text-neutral-950">49€</strong>. Soportes fijos,
+              Instalación profesional de televisores en pared por{" "}
+              <strong className="text-neutral-950">49 €</strong>. Soportes fijos,
               inclinables o articulados, gestión de cables, montaje de TVs
               grandes y acabado limpio sin sorpresas.
             </p>
@@ -235,7 +235,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Instalación desde 49€",
+                "Instalación por 49 €",
                 "Soportes fijos o articulados",
                 "Ocultación de cables",
                 "TVs grandes y Samsung Frame",
@@ -339,7 +339,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             Antes de perforar, revisamos el tipo de pared, la altura ideal, el
             tamaño del televisor, el tipo de soporte y la posición de enchufes o
             dispositivos. El objetivo es que la TV quede centrada, nivelada,
-            segura y cómoda para ver desde el sofá, la cama, una sala de espera
+            segura y cómoda para ver en el sofá, la cama, una sala de espera
             o una zona comercial.
           </p>
 
@@ -485,10 +485,10 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             Precio claro
           </p>
           <h2 className="mt-3 text-4xl font-black">
-            Montaje de TV desde 49€
+            Montaje de TV por 49 €
           </h2>
           <p className="mt-6 text-lg font-medium leading-8 text-neutral-900">
-            El precio estándar empieza desde 49€. El coste final puede variar si
+            El precio estándar es de 49 €. El coste final puede variar si
             necesitas soporte incluido, instalación de TV grande, ocultación de
             cables, trabajo eléctrico, canaleta o montaje especial.
           </p>

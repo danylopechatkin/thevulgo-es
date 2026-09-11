@@ -167,27 +167,27 @@ export default async function ElectricistaValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Cambio de enchufe", "desde 35 €"],
-        ["Cambio de interruptor", "desde 35 €"],
-        ["Instalación de lámpara", "desde 39 €"],
-        ["Instalación de aplique", "desde 39 €"],
+        ["Cambio de enchufe", "35 €"],
+        ["Cambio de interruptor", "35 €"],
+        ["Instalación de lámpara", "39 €"],
+        ["Instalación de aplique", "39 €"],
         ["Instalación de tira LED", "según trabajo"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Outlet replacement", "from €35"],
-        ["Switch replacement", "from €35"],
-        ["Light installation", "from €39"],
-        ["Wall light installation", "from €39"],
+        ["Outlet replacement", "€35"],
+        ["Switch replacement", "€35"],
+        ["Light installation", "€39"],
+        ["Wall light installation", "€39"],
         ["LED strip installation", "by job"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta un electricista en Valencia?",
-          a: "Depende del trabajo, materiales, tiempo, acceso y dificultad. Los trabajos pequeños como cambio de enchufe o interruptor suelen empezar desde 35 €, y una visita o revisión desde 49 €.",
+          a: "Depende del trabajo, materiales, tiempo, acceso y dificultad. Los trabajos pequeños como cambio de enchufe o interruptor cuestan 35 €, y una visita o revisión por 49 €.",
         },
         {
           q: "¿Hacéis trabajos eléctricos urgentes?",
@@ -213,7 +213,7 @@ export default async function ElectricistaValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does an electrician in Valencia cost?",
-          a: "It depends on the job, materials, time, access and difficulty. Small jobs like outlet or switch replacement usually start from €35, and a visit or inspection from €49.",
+          a: "It depends on the job, materials, time, access and difficulty. Small jobs like outlet or switch replacement cost €35, and a visit or inspection for €49.",
         },
         {
           q: "Do you do urgent electrical jobs?",
@@ -470,7 +470,7 @@ export default async function ElectricistaValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

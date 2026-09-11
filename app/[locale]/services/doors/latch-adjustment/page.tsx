@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Ajuste de Pestillo de Puerta | Desde 29€ | THEVULGO"
-      : "Latch Adjustment | From €29 | THEVULGO",
+      ? "Ajuste de Pestillo de Puerta | 29 € | THEVULGO"
+      : "Latch Adjustment | €29 | THEVULGO",
     description: isEs
-      ? "Ajuste de pestillos de puerta desde 29€. Correcciones pequeñas cuando la puerta no engancha bien, no cierra correctamente o necesita mejor alineación."
-      : "Door latch adjustment from €29. Small latch corrections when the door does not catch properly, sticks, misaligns or needs smoother closing.",
+      ? "Ajuste de pestillos de puerta por 29 €. Correcciones pequeñas cuando la puerta no engancha bien, no cierra correctamente o necesita mejor alineación."
+      : "Door latch adjustment for €29. Small latch corrections when the door does not catch properly, sticks, misaligns or needs smoother closing.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta ajustar un pestillo de puerta?",
-    a: "El ajuste de pestillo empieza desde 29€. El precio depende del tipo de puerta, pestillo, cerradero, manilla, alineación, estado del marco y dificultad del ajuste.",
+    a: "El ajuste de pestillo cuesta 29 €. El precio depende del tipo de puerta, pestillo, cerradero, manilla, alineación, estado del marco y dificultad del ajuste.",
   },
   {
     q: "¿Pueden arreglar una puerta que no engancha bien?",
@@ -241,7 +241,7 @@ export default async function LatchAdjustmentPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 29€",
+                "29 €",
                 "Puerta que no engancha",
                 "Ajuste de pestillo",
                 "Cerradero y alineación",
@@ -312,7 +312,7 @@ export default async function LatchAdjustmentPage({ params }: PageProps) {
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 29€. Presupuesto según fotos, vídeo y dificultad.",
+              text: "29 €. Presupuesto según fotos, vídeo y dificultad.",
             },
           ].map((item) => (
             <div
@@ -457,7 +457,7 @@ export default async function LatchAdjustmentPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para ajustar pestillo de puerta

@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Apriete de Bisagras de Puerta | Desde 25€ | THEVULGO"
-      : "Hinge Tightening | From €25 | THEVULGO",
+      ? "Apriete de Bisagras de Puerta | 25 € | THEVULGO"
+      : "Hinge Tightening | €25 | THEVULGO",
     description: isEs
-      ? "Apriete de bisagras de puerta desde 25€. Corrección de bisagras sueltas que afectan la apertura, cierre o alineación de puertas interiores."
-      : "Door hinge tightening from €25. Tightening loose hinges and making small corrections to improve door opening, closing and alignment.",
+      ? "Apriete de bisagras de puerta por 25 €. Corrección de bisagras sueltas que afectan la apertura, cierre o alineación de puertas interiores."
+      : "Door hinge tightening for €25. Tightening loose hinges and making small corrections to improve door opening, closing and alignment.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta apretar bisagras de puerta?",
-    a: "El apriete de bisagras empieza desde 25€. El precio depende del número de bisagras, tipo de puerta, estado de tornillos, desalineación y dificultad del ajuste.",
+    a: "El apriete de bisagras cuesta 25 €. El precio depende del número de bisagras, tipo de puerta, estado de tornillos, desalineación y dificultad del ajuste.",
   },
   {
     q: "¿Las bisagras sueltas pueden hacer que la puerta roce?",
@@ -241,7 +241,7 @@ export default async function HingeTighteningPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 25€",
+                "25 €",
                 "Bisagras sueltas",
                 "Puertas que rozan",
                 "Mejor apertura y cierre",
@@ -312,7 +312,7 @@ export default async function HingeTighteningPage({ params }: PageProps) {
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 25€. Presupuesto según fotos, vídeo y dificultad.",
+              text: "25 €. Presupuesto según fotos, vídeo y dificultad.",
             },
           ].map((item) => (
             <div
@@ -455,7 +455,7 @@ export default async function HingeTighteningPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 25€
+            25 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para apretar bisagras de puerta

@@ -27,12 +27,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reparación de Recortes en Pladur en Valencia | Desde 49€ | THEVULGO"
-    : "Drywall Cutout Repair in Valencia | From €49 | THEVULGO";
+    ? "Reparación de Recortes en Pladur en Valencia | 49 € | THEVULGO"
+    : "Drywall Cutout Repair in Valencia | €49 | THEVULGO";
 
   const description = isEs
-    ? "Reparación de recortes y aberturas en pladur en Valencia desde 49€. Parcheado de huecos hechos para cables, accesorios o instalaciones anteriores."
-    : "Drywall cutout repair in Valencia from €49. Repair of openings made for cables, fittings or previous installations with patching, filling and smoothing.";
+    ? "Reparación de recortes y aberturas en pladur en Valencia por 49 €. Parcheado de huecos hechos para cables, accesorios o instalaciones anteriores."
+    : "Drywall cutout repair in Valencia for €49. Repair of openings made for cables, fittings or previous installations with patching, filling and smoothing.";
 
   return {
     title,
@@ -117,7 +117,7 @@ export default async function DrywallCutoutRepairPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta reparar una abertura en pladur en Valencia?",
-          a: "El servicio empieza desde 49€. El precio final depende del tamaño del recorte, tipo de pared, profundidad, acceso, material necesario y acabado esperado.",
+          a: "El servicio cuesta 49 €. El precio final depende del tamaño del recorte, tipo de pared, profundidad, acceso, material necesario y acabado esperado.",
         },
         {
           q: "¿Sirve para huecos hechos por cables o instalaciones anteriores?",
@@ -143,7 +143,7 @@ export default async function DrywallCutoutRepairPage({ params }: PageProps) {
         },
         {
           q: "How much does drywall opening repair cost in Valencia?",
-          a: "The service starts from €49. Final price depends on cutout size, wall type, depth, access, required material and expected finish.",
+          a: "The service costs €49. Final price depends on cutout size, wall type, depth, access, required material and expected finish.",
         },
         {
           q: "Is this for holes made by cables or previous installations?",
@@ -243,13 +243,13 @@ export default async function DrywallCutoutRepairPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 49€",
+        "49 €",
         "Aberturas por cables o cajas",
         "Parcheado, relleno y alisado",
         "Ideal tras instalaciones retiradas",
       ]
     : [
-        "From €49",
+        "€49",
         "Openings from cables or boxes",
         "Patching, filling and smoothing",
         "Ideal after removed installations",
@@ -382,7 +382,7 @@ export default async function DrywallCutoutRepairPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Cable className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 49€" : "From €49"}
+                {isEs ? "49 €" : "€49"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -518,7 +518,7 @@ export default async function DrywallCutoutRepairPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 49€" : "From €49"}
+            {isEs ? "49 €" : "€49"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

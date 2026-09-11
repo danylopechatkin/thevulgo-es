@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Preparación y Nivelación Básica de Pared en Valencia | Desde 45€ | THEVULGO"
-    : "Wall Levelling Prep in Valencia | From €45 | THEVULGO";
+    ? "Preparación y Nivelación Básica de Pared en Valencia | 45 € | THEVULGO"
+    : "Wall Levelling Prep in Valencia | €45 | THEVULGO";
 
   const description = isEs
-    ? "Preparación y corrección básica de superficie de pared en Valencia desde 45€. Alisado local, mejora visible y preparación para un acabado más limpio."
-    : "Wall levelling prep in Valencia from €45. Basic wall surface correction, local smoothing and prep for a cleaner visible finish.";
+    ? "Preparación y corrección básica de superficie de pared en Valencia por 45 €. Alisado local, mejora visible y preparación para un acabado más limpio."
+    : "Wall levelling prep in Valencia for €45. Basic wall surface correction, local smoothing and prep for a cleaner visible finish.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function WallLevellingPrepPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta la preparación de pared en Valencia?",
-          a: "El servicio empieza desde 45€. El precio final depende del tamaño de la zona, estado de la pared, profundidad de irregularidades, material necesario y acabado esperado.",
+          a: "El servicio cuesta 45 €. El precio final depende del tamaño de la zona, estado de la pared, profundidad de irregularidades, material necesario y acabado esperado.",
         },
         {
           q: "¿Es una nivelación completa de pared?",
@@ -141,7 +141,7 @@ export default async function WallLevellingPrepPage({ params }: PageProps) {
         },
         {
           q: "How much does wall levelling prep cost in Valencia?",
-          a: "The service starts from €45. Final price depends on area size, wall condition, depth of irregularities, required material and expected finish.",
+          a: "The service costs €45. Final price depends on area size, wall condition, depth of irregularities, required material and expected finish.",
         },
         {
           q: "Is this full wall levelling?",
@@ -241,13 +241,13 @@ export default async function WallLevellingPrepPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 45€",
+        "45 €",
         "Corrección básica de superficie",
         "Alisado local",
         "Preparación para acabado limpio",
       ]
     : [
-        "From €45",
+        "€45",
         "Basic surface correction",
         "Local smoothing",
         "Prep for a cleaner finish",
@@ -382,7 +382,7 @@ export default async function WallLevellingPrepPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Layers3 className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 45€" : "From €45"}
+                {isEs ? "45 €" : "€45"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -518,7 +518,7 @@ export default async function WallLevellingPrepPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 45€" : "From €45"}
+            {isEs ? "45 €" : "€45"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

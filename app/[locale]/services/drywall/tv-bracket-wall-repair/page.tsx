@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reparación de Pared Tras Quitar Soporte TV en Valencia | Desde 39€ | THEVULGO"
-    : "TV Bracket Wall Repair in Valencia | From €39 | THEVULGO";
+    ? "Reparación de Pared Tras Quitar Soporte TV en Valencia | 39 € | THEVULGO"
+    : "TV Bracket Wall Repair in Valencia | €39 | THEVULGO";
 
   const description = isEs
-    ? "Reparación de pared después de quitar soporte de TV en Valencia desde 39€. Relleno de agujeros, marcas de bracket, alisado y preparación para retoque."
-    : "TV bracket wall repair in Valencia from €39. Wall restoration after TV bracket removal or media setup changes with hole filling and smoothing.";
+    ? "Reparación de pared después de quitar soporte de TV en Valencia por 39 €. Relleno de agujeros, marcas de bracket, alisado y preparación para retoque."
+    : "TV bracket wall repair in Valencia for €39. Wall restoration after TV bracket removal or media setup changes with hole filling and smoothing.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function TvBracketWallRepairPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta reparar una pared después de quitar un bracket de TV?",
-          a: "El servicio empieza desde 39€. El precio final depende del número de agujeros, tamaño de las marcas, tipo de pared, acabado esperado y si hace falta pintura.",
+          a: "El servicio cuesta 39 €. El precio final depende del número de agujeros, tamaño de las marcas, tipo de pared, acabado esperado y si hace falta pintura.",
         },
         {
           q: "¿Podéis reparar agujeros grandes de tacos o tornillos de TV?",
@@ -141,7 +141,7 @@ export default async function TvBracketWallRepairPage({ params }: PageProps) {
         },
         {
           q: "How much does wall repair after TV bracket removal cost?",
-          a: "The service starts from €39. Final price depends on number of holes, mark size, wall type, expected finish and whether painting is needed.",
+          a: "The service costs €39. Final price depends on number of holes, mark size, wall type, expected finish and whether painting is needed.",
         },
         {
           q: "Can you repair large wall plug or screw holes from a TV mount?",
@@ -241,13 +241,13 @@ export default async function TvBracketWallRepairPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 39€",
+        "39 €",
         "Agujeros de soporte TV",
         "Marcas de bracket y media setup",
         "Relleno y alisado local",
       ]
     : [
-        "From €39",
+        "€39",
         "TV bracket holes",
         "Bracket and media setup marks",
         "Local filling and smoothing",
@@ -382,7 +382,7 @@ export default async function TvBracketWallRepairPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Tv className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 39€" : "From €39"}
+                {isEs ? "39 €" : "€39"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -518,7 +518,7 @@ export default async function TvBracketWallRepairPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 39€" : "From €39"}
+            {isEs ? "39 €" : "€39"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

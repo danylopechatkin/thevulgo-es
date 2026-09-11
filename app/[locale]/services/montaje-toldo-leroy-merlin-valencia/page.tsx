@@ -73,7 +73,7 @@ const faqEs = [
   {
     question: "¿Cuánto cuesta el montaje de un toldo Leroy Merlin en Valencia?",
     answer:
-      "El precio empieza desde 79 €. El coste final depende del tamaño del toldo, peso, altura, tipo de pared, soportes incluidos y si hay que desmontar un toldo antiguo.",
+      "El precio es de 79 €. El coste final depende del tamaño del toldo, peso, altura, tipo de pared, soportes incluidos y si hay que desmontar un toldo antiguo.",
   },
   {
     question: "¿Qué fotos necesitáis para dar presupuesto?",
@@ -106,7 +106,7 @@ const faqEn = [
   {
     question: "How much does Leroy Merlin awning mounting cost in Valencia?",
     answer:
-      "Prices start from €79. The final cost depends on awning size, weight, height, wall type, included brackets and whether an old awning needs to be removed.",
+      "Prices are €79. The final cost depends on awning size, weight, height, wall type, included brackets and whether an old awning needs to be removed.",
   },
   {
     question: "What photos do you need for a quote?",
@@ -125,8 +125,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Montaje de Toldo Leroy Merlin en Valencia | Desde 79 € | THEVULGO"
-    : "Leroy Merlin Awning Mounting in Valencia | From €79 | THEVULGO";
+    ? "Montaje de Toldo Leroy Merlin en Valencia | 79 € | THEVULGO"
+    : "Leroy Merlin Awning Mounting in Valencia | €79 | THEVULGO";
 
   const description = isEs
     ? "Montaje de toldos comprados en Leroy Merlin en Valencia. Montamos toldos manuales y eléctricos para patio, terraza, balcón o fachada. Presupuesto por WhatsApp."
@@ -436,7 +436,7 @@ export default async function MontajeToldoLeroyMerlinValenciaPage({
                 <div className="mt-8 flex flex-wrap gap-3 text-sm text-neutral-300">
                   <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2">
                     <Euro className="h-4 w-4 text-amber-300" />
-                    {isEs ? "Desde 79 €" : "From €79"}
+                    {isEs ? "79 €" : "€79"}
                   </span>
                   <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2">
                     <PackageCheck className="h-4 w-4 text-amber-300" />
@@ -457,10 +457,10 @@ export default async function MontajeToldoLeroyMerlinValenciaPage({
                     </div>
                     <div>
                       <p className="text-sm text-neutral-400">
-                        {isEs ? "Precio inicial" : "Starting price"}
+                        {isEs ? "Precio" : "Price"}
                       </p>
                       <p className="text-3xl font-bold">
-                        {isEs ? "Desde 79 €" : "From €79"}
+                        {isEs ? "79 €" : "€79"}
                       </p>
                     </div>
                   </div>

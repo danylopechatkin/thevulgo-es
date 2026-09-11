@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Ajuste de Tapas y Embellecedores en Valencia | Desde 25€ | THEVULGO"
-    : "Socket / Cover Straightening in Valencia | From €25 | THEVULGO";
+    ? "Ajuste de Tapas y Embellecedores en Valencia | 25 € | THEVULGO"
+    : "Socket / Cover Straightening in Valencia | €25 | THEVULGO";
 
   const description = isEs
-    ? "Ajuste básico de tapas, placas, embellecedores y accesorios visibles en Valencia desde 25€. Corrección de piezas sueltas, torcidas o mal alineadas."
-    : "Basic socket, cover and plate straightening in Valencia from €25. Correction of loose covers, visible plates and small accessory alignment.";
+    ? "Ajuste básico de tapas, placas, embellecedores y accesorios visibles en Valencia por 25 €. Corrección de piezas sueltas, torcidas o mal alineadas."
+    : "Basic socket, cover and plate straightening in Valencia for €25. Correction of loose covers, visible plates and small accessory alignment.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function SocketCoverStraighteningPage({
         },
         {
           q: "¿Cuánto cuesta ajustar una tapa o placa en Valencia?",
-          a: "El servicio empieza desde 25€. El precio final depende del tipo de pieza, estado de la pared, número de tapas o placas y si hace falta material adicional.",
+          a: "El servicio cuesta 25 €. El precio final depende del tipo de pieza, estado de la pared, número de tapas o placas y si hace falta material adicional.",
         },
         {
           q: "¿Trabajáis con tapas de enchufes e interruptores?",
@@ -137,7 +137,7 @@ export default async function SocketCoverStraighteningPage({
         },
         {
           q: "How much does socket or cover straightening cost in Valencia?",
-          a: "The service starts from €25. Final price depends on the part type, wall condition, number of covers or plates and whether extra material is needed.",
+          a: "The service costs €25. Final price depends on the part type, wall condition, number of covers or plates and whether extra material is needed.",
         },
         {
           q: "Do you work with socket and switch covers?",
@@ -237,13 +237,13 @@ export default async function SocketCoverStraighteningPage({
 
   const heroPoints = isEs
     ? [
-        "Desde 25€",
+        "25 €",
         "Tapas y placas visibles",
         "Ajuste exterior básico",
         "Mejor alineación y acabado",
       ]
     : [
-        "From €25",
+        "€25",
         "Visible covers and plates",
         "Basic external adjustment",
         "Better alignment and finish",
@@ -380,7 +380,7 @@ export default async function SocketCoverStraighteningPage({
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Square className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 25€" : "From €25"}
+                {isEs ? "25 €" : "€25"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -516,7 +516,7 @@ export default async function SocketCoverStraighteningPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 25€" : "From €25"}
+            {isEs ? "25 €" : "€25"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

@@ -167,27 +167,27 @@ export default async function InstalacionArmariosValenciaPage({
 
   const prices = isEs
     ? [
-        ["Instalación de armario pequeño", "desde 49 €"],
-        ["Instalación de armario mediano", "desde 69 €"],
-        ["Instalación de armario grande", "desde 89 €"],
-        ["Instalación de armario IKEA Pax", "desde 89 €"],
+        ["Instalación de armario pequeño", "49 €"],
+        ["Instalación de armario mediano", "69 €"],
+        ["Instalación de armario grande", "89 €"],
+        ["Instalación de armario IKEA Pax", "89 €"],
         ["Ajuste de puertas / correderas", "según trabajo"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small wardrobe installation", "from €49"],
-        ["Medium wardrobe installation", "from €69"],
-        ["Large wardrobe installation", "from €89"],
-        ["IKEA Pax wardrobe installation", "from €89"],
+        ["Small wardrobe installation", "€49"],
+        ["Medium wardrobe installation", "€69"],
+        ["Large wardrobe installation", "€89"],
+        ["IKEA Pax wardrobe installation", "€89"],
         ["Door / sliding door adjustment", "by job"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta la instalación de armarios en Valencia?",
-          a: "Depende del tamaño del armario, número de puertas, cajones, accesorios, dificultad, estado del suelo, tipo de pared y si necesita fijación. Los trabajos pequeños suelen empezar desde 49 €.",
+          a: "Depende del tamaño del armario, número de puertas, cajones, accesorios, dificultad, estado del suelo, tipo de pared y si necesita fijación. Los trabajos pequeños cuestan 49 €.",
         },
         {
           q: "¿Cuál es la diferencia entre montaje e instalación de armarios?",
@@ -213,7 +213,7 @@ export default async function InstalacionArmariosValenciaPage({
     : [
         {
           q: "How much does wardrobe installation in Valencia cost?",
-          a: "It depends on wardrobe size, number of doors, drawers, accessories, difficulty, floor condition, wall type and whether fixing is needed. Small jobs usually start from €49.",
+          a: "It depends on wardrobe size, number of doors, drawers, accessories, difficulty, floor condition, wall type and whether fixing is needed. Small jobs cost €49.",
         },
         {
           q: "What is the difference between wardrobe assembly and installation?",
@@ -478,7 +478,7 @@ export default async function InstalacionArmariosValenciaPage({
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Cambio de Bisagras de Puerta | Desde 35€ | THEVULGO"
-      : "Door Hinge Replacement | From €35 | THEVULGO",
+      ? "Cambio de Bisagras de Puerta | 35 € | THEVULGO"
+      : "Door Hinge Replacement | €35 | THEVULGO",
     description: isEs
-      ? "Cambio de bisagras de puerta desde 35€. Sustitución de bisagras visibles desgastadas o dañadas cuando el herraje compatible ya está disponible."
-      : "Door hinge replacement from €35. Replacement of visible worn or damaged door hinges when compatible hardware is already available or provided.",
+      ? "Cambio de bisagras de puerta por 35 €. Sustitución de bisagras visibles desgastadas o dañadas cuando el herraje compatible ya está disponible."
+      : "Door hinge replacement for €35. Replacement of visible worn or damaged door hinges when compatible hardware is already available or provided.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta cambiar bisagras de puerta?",
-    a: "El cambio de bisagras de puerta empieza desde 35€. El precio depende del número de bisagras, tipo de puerta, estado del marco, tornillos, compatibilidad del herraje y dificultad del trabajo.",
+    a: "El cambio de bisagras de puerta cuesta 35 €. El precio depende del número de bisagras, tipo de puerta, estado del marco, tornillos, compatibilidad del herraje y dificultad del trabajo.",
   },
   {
     q: "¿Pueden cambiar bisagras desgastadas o dañadas?",
@@ -244,7 +244,7 @@ export default async function CambioBisagrasPuertaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 35€",
+                "35 €",
                 "Bisagras desgastadas",
                 "Bisagras dañadas",
                 "Herraje compatible",
@@ -316,7 +316,7 @@ export default async function CambioBisagrasPuertaPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 35€. Presupuesto según fotos, piezas y dificultad.",
+              text: "35 €. Presupuesto según fotos, piezas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -460,7 +460,7 @@ export default async function CambioBisagrasPuertaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 35€
+            35 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para cambiar bisagras de puerta

@@ -230,20 +230,20 @@ export default async function WallHoleRepairValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Agujeros pequeños de tacos", "desde 35 €"],
-        ["Varios agujeros en una pared", "desde 39 €"],
-        ["Agujeros de soporte de TV", "desde 45 €"],
-        ["Agujero en pladur", "desde 49 €"],
-        ["Lijado y preparación", "desde 35 €"],
-        ["Retoque de pintura", "desde 49 €"],
+        ["Agujeros pequeños de tacos", "35 €"],
+        ["Varios agujeros en una pared", "39 €"],
+        ["Agujeros de soporte de TV", "45 €"],
+        ["Agujero en pladur", "49 €"],
+        ["Lijado y preparación", "35 €"],
+        ["Retoque de pintura", "49 €"],
       ]
     : [
-        ["Small plug holes", "from €35"],
-        ["Several holes on one wall", "from €39"],
-        ["TV bracket holes", "from €45"],
-        ["Drywall hole", "from €49"],
-        ["Sanding and preparation", "from €35"],
-        ["Paint touch-up", "from €49"],
+        ["Small plug holes", "€35"],
+        ["Several holes on one wall", "€39"],
+        ["TV bracket holes", "€45"],
+        ["Drywall hole", "€49"],
+        ["Sanding and preparation", "€35"],
+        ["Paint touch-up", "€49"],
       ];
 
   const process = isEs
@@ -292,7 +292,7 @@ export default async function WallHoleRepairValenciaPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta reparar agujeros en una pared?",
-          a: "Las reparaciones pequeñas suelen empezar desde 35 €. El precio depende del número de agujeros, tamaño, tipo de pared y si hace falta pintar.",
+          a: "Las reparaciones pequeñas cuestan 35 €. El precio depende del número de agujeros, tamaño, tipo de pared y si hace falta pintar.",
         },
         {
           q: "¿Podéis tapar agujeros de un soporte de TV?",
@@ -326,7 +326,7 @@ export default async function WallHoleRepairValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does wall hole repair cost?",
-          a: "Small repairs usually start from €35. The price depends on the number of holes, size, wall type and whether painting is needed.",
+          a: "Small repairs cost €35. The price depends on the number of holes, size, wall type and whether painting is needed.",
         },
         {
           q: "Can you fill holes from a TV bracket?",
@@ -570,7 +570,7 @@ export default async function WallHoleRepairValenciaPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -589,7 +589,7 @@ export default async function WallHoleRepairValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

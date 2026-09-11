@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Pequeñas Reparaciones de Muebles en Valencia | Desde 29€ | THEVULGO"
-    : "Furniture Touch-Up Fixes in Valencia | From €29 | THEVULGO";
+    ? "Pequeñas Reparaciones de Muebles en Valencia | 29 € | THEVULGO"
+    : "Furniture Touch-Up Fixes in Valencia | €29 | THEVULGO";
 
   const description = isEs
-    ? "Pequeñas correcciones de muebles en Valencia desde 29€. Ajustes simples, fijaciones, pequeñas reparaciones visibles y problemas de montaje."
-    : "Furniture touch-up fixes in Valencia from €29. Simple corrections for small furniture issues, fitting problems and visible adjustments.";
+    ? "Pequeñas correcciones de muebles en Valencia por 29 €. Ajustes simples, fijaciones, pequeñas reparaciones visibles y problemas de montaje."
+    : "Furniture touch-up fixes in Valencia for €29. Simple corrections for small furniture issues, fitting problems and visible adjustments.";
 
   return {
     title,
@@ -116,7 +116,7 @@ export default async function FurnitureTouchUpFixesPage({
         },
         {
           q: "¿Cuánto cuesta reparar un mueble pequeño?",
-          a: "El servicio empieza desde 29€. El precio depende del tipo de mueble, problema, tiempo estimado, piezas necesarias y complejidad.",
+          a: "El servicio cuesta 29 €. El precio depende del tipo de mueble, problema, tiempo estimado, piezas necesarias y complejidad.",
         },
         {
           q: "¿Arregláis cajones o puertas que no cierran bien?",
@@ -138,7 +138,7 @@ export default async function FurnitureTouchUpFixesPage({
         },
         {
           q: "How much does small furniture repair cost?",
-          a: "The service starts from €29. Final price depends on furniture type, issue, estimated time, required parts and complexity.",
+          a: "The service costs €29. Final price depends on furniture type, issue, estimated time, required parts and complexity.",
         },
         {
           q: "Can you fix drawers or doors that do not close properly?",
@@ -242,13 +242,13 @@ export default async function FurnitureTouchUpFixesPage({
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {(isEs
                 ? [
-                    "Desde 29€",
+                    "29 €",
                     "Pequeños problemas",
                     "Ajustes simples",
                     "Mejor uso diario",
                   ]
                 : [
-                    "From €29",
+                    "€29",
                     "Small issues",
                     "Simple fixes",
                     "Better usability",

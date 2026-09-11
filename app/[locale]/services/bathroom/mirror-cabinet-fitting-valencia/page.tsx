@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Armario con Espejo en Valencia | Desde 49€ | THEVULGO"
-      : "Mirror Cabinet Fitting in Valencia | From €49 | THEVULGO",
+      ? "Instalación de Armario con Espejo en Valencia | 49 € | THEVULGO"
+      : "Mirror Cabinet Fitting in Valencia | €49 | THEVULGO",
     description: isEs
-      ? "Instalación de armarios con espejo en Valencia desde 49€. Montaje seguro, alineación limpia y unidades prácticas de almacenaje para baños."
-      : "Mirror cabinet fitting in Valencia from €49. Secure installation, clean alignment and practical bathroom storage units for everyday use.",
+      ? "Instalación de armarios con espejo en Valencia por 49 €. Montaje seguro, alineación limpia y unidades prácticas de almacenaje para baños."
+      : "Mirror cabinet fitting in Valencia for €49. Secure installation, clean alignment and practical bathroom storage units for everyday use.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar un armario con espejo en Valencia?",
-    a: "La instalación de armario con espejo empieza desde 49€. El precio depende del tamaño, peso, tipo de pared, sistema de fijación, altura y dificultad del montaje.",
+    a: "La instalación de armario con espejo cuesta 49 €. El precio depende del tamaño, peso, tipo de pared, sistema de fijación, altura y dificultad del montaje.",
   },
   {
     q: "¿Instalan armarios con espejo suspendidos?",
@@ -260,7 +260,7 @@ export default async function MirrorCabinetFittingValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 49€",
+                "49 €",
                 "Armarios con espejo",
                 "Más almacenaje",
                 "Alineación limpia",
@@ -331,7 +331,7 @@ export default async function MirrorCabinetFittingValenciaPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 49€. Presupuesto según fotos, medidas y dificultad.",
+              text: "49 €. Presupuesto según fotos, medidas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -446,7 +446,7 @@ export default async function MirrorCabinetFittingValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 49€
+            49 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar armario con espejo en Valencia

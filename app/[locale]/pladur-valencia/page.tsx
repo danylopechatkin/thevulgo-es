@@ -166,27 +166,27 @@ export default async function PladurValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Reparación pequeña de pladur", "desde 35 €"],
-        ["Parche y preparación", "desde 45 €"],
-        ["Reparación de techo de pladur", "desde 49 €"],
-        ["Instalación básica de pladur", "desde 79 €"],
+        ["Reparación pequeña de pladur", "35 €"],
+        ["Parche y preparación", "45 €"],
+        ["Reparación de techo de pladur", "49 €"],
+        ["Instalación básica de pladur", "79 €"],
         ["Techo de pladur / falso techo", "presupuesto"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small drywall repair", "from €35"],
-        ["Patch and preparation", "from €45"],
-        ["Drywall ceiling repair", "from €49"],
-        ["Basic plasterboard installation", "from €79"],
+        ["Small drywall repair", "€35"],
+        ["Patch and preparation", "€45"],
+        ["Drywall ceiling repair", "€49"],
+        ["Basic plasterboard installation", "€79"],
         ["Plasterboard ceiling / false ceiling", "quote"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta un trabajo de pladur en Valencia?",
-          a: "Depende del tipo de trabajo, metros, altura, materiales, estado de la pared o techo, acabado y dificultad. Las reparaciones pequeñas pueden empezar desde 35 € y trabajos más grandes requieren presupuesto.",
+          a: "Depende del tipo de trabajo, metros, altura, materiales, estado de la pared o techo, acabado y dificultad. Las reparaciones pequeñas pueden costar 35 € y trabajos más grandes requieren presupuesto.",
         },
         {
           q: "¿Hacéis techos de pladur y falsos techos?",
@@ -212,7 +212,7 @@ export default async function PladurValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does drywall work in Valencia cost?",
-          a: "It depends on the job type, measurements, height, materials, wall or ceiling condition, finish and difficulty. Small repairs can start from €35 and larger jobs require a quote.",
+          a: "It depends on the job type, measurements, height, materials, wall or ceiling condition, finish and difficulty. Small repairs can cost €35 and larger jobs require a quote.",
         },
         {
           q: "Do you install plasterboard ceilings and false ceilings?",
@@ -467,7 +467,7 @@ export default async function PladurValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

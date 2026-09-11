@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Montaje Eléctrico Básico en Valencia | Desde 35€ | THEVULGO"
-      : "Basic Electrical Installation in Valencia | From €35 | THEVULGO",
+      ? "Montaje Eléctrico Básico en Valencia | 35 € | THEVULGO"
+      : "Basic Electrical Installation in Valencia | €35 | THEVULGO",
     description: isEs
-      ? "Montaje eléctrico básico en Valencia desde 35€. Conexión de accesorios eléctricos simples, enchufes, interruptores, lámparas y pequeños trabajos con acabado ordenado."
-      : "Basic electrical installation in Valencia from €35. Simple electrical accessories, sockets, switches, lamps and small clean-finish electrical jobs.",
+      ? "Montaje eléctrico básico en Valencia por 35 €. Conexión de accesorios eléctricos simples, enchufes, interruptores, lámparas y pequeños trabajos con acabado ordenado."
+      : "Basic electrical installation in Valencia for €35. Simple electrical accessories, sockets, switches, lamps and small clean-finish electrical jobs.",
     alternates: {
       canonical: `${siteUrl}/${locale}/services/electrical/montaje-electrico-basico-valencia`,
       languages: {
@@ -74,7 +74,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta un montaje eléctrico básico en Valencia?",
-    a: "El montaje eléctrico básico empieza desde 35€. El precio final depende del tipo de accesorio, estado del punto existente, material necesario, altura, acceso y dificultad.",
+    a: "El montaje eléctrico básico cuesta 35 €. El precio final depende del tipo de accesorio, estado del punto existente, material necesario, altura, acceso y dificultad.",
   },
   {
     q: "¿Qué incluye un montaje eléctrico básico?",
@@ -202,8 +202,8 @@ export default async function BasicElectricalInstallationValenciaPage({
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Montaje y conexión de accesorios eléctricos simples desde{" "}
-              <strong className="text-neutral-950">35€</strong>, con acabado
+              Montaje y conexión de accesorios eléctricos simples de{" "}
+              <strong className="text-neutral-950">35 €</strong>, con acabado
               ordenado para casas, apartamentos, oficinas pequeñas y pisos de
               alquiler.
             </p>
@@ -227,7 +227,7 @@ export default async function BasicElectricalInstallationValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 35€",
+                "35 €",
                 "Accesorios eléctricos simples",
                 "Enchufes e interruptores",
                 "Lámparas y apliques",
@@ -412,7 +412,7 @@ export default async function BasicElectricalInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 35€
+            35 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para montaje eléctrico básico en Valencia

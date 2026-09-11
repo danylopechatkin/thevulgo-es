@@ -101,7 +101,7 @@ const faqsEs = [
   {
     question: "¿Cuánto cuesta instalar un toldo en Valencia?",
     answer:
-      "Instalar un toldo en Valencia cuesta desde 145 €. El precio final depende del tamaño, peso, tipo de pared, altura, acceso y si hace falta trabajar con una segunda persona.",
+      "Instalar un toldo en Valencia cuesta por 145 €. El precio final depende del tamaño, peso, tipo de pared, altura, acceso y si hace falta trabajar con una segunda persona.",
   },
   {
     question: "¿Instaláis toldos comprados en Leroy Merlin?",
@@ -129,7 +129,7 @@ const faqsEn = [
   {
     question: "How much does it cost to install an awning in Valencia?",
     answer:
-      "Installing an awning in Valencia starts from €145. The final price depends on size, weight, wall type, height, access and whether a second person is needed.",
+      "Installing an awning in Valencia costs €145. The final price depends on size, weight, wall type, height, access and whether a second person is needed.",
   },
   {
     question: "Do you install awnings bought from Leroy Merlin?",
@@ -159,11 +159,11 @@ function getContent(locale: string) {
   return {
     isEs,
     title: isEs
-      ? "Instalar un Toldo en Valencia | Desde 145€ | THEVULGO"
-      : "Install an Awning in Valencia | From €145 | THEVULGO",
+      ? "Instalar un Toldo en Valencia | 145 € | THEVULGO"
+      : "Install an Awning in Valencia | €145 | THEVULGO",
     description: isEs
-      ? "Instalar un toldo en Valencia desde 145€. Toldos manuales, eléctricos, Leroy Merlin, Naterial y Calima. Presupuesto rápido por WhatsApp."
-      : "Install an awning in Valencia from €145. Manual and electric awnings, Leroy Merlin, Naterial and Calima models. Fast quote by WhatsApp.",
+      ? "Instalar un toldo en Valencia por 145 €. Toldos manuales, eléctricos, Leroy Merlin, Naterial y Calima. Presupuesto rápido por WhatsApp."
+      : "Install an awning in Valencia for €145. Manual and electric awnings, Leroy Merlin, Naterial and Calima models. Fast quote by WhatsApp.",
     h1: isEs ? "Instalar un Toldo en Valencia" : "Install an Awning in Valencia",
     heroText: isEs
       ? "Si ya tiene el toldo comprado y necesita instalarlo, podemos ayudarle con un montaje seguro, nivelado y preparado para el uso diario."
@@ -353,7 +353,7 @@ export default async function InstalarToldoValenciaPage({ params }: Props) {
 
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 {[
-                  content.isEs ? "Desde 145€" : "From €145",
+                  content.isEs ? "145 €" : "€145",
                   content.isEs
                     ? "Toldos manuales y eléctricos"
                     : "Manual and electric awnings",
@@ -408,8 +408,8 @@ export default async function InstalarToldoValenciaPage({ params }: Props) {
                 </p>
                 <h2 className="mt-5 text-4xl font-black tracking-tight md:text-5xl">
                   {content.isEs
-                    ? "Instalar un toldo desde 145€"
-                    : "Install an awning from €145"}
+                    ? "Instalar un toldo por 145 €"
+                    : "Install an awning for €145"}
                 </h2>
                 <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-300">
                   {content.isEs
@@ -421,10 +421,10 @@ export default async function InstalarToldoValenciaPage({ params }: Props) {
               <div className="rounded-[2rem] border border-yellow-400/40 bg-white/5 p-6">
                 <div className="rounded-3xl bg-yellow-400 p-7 text-neutral-950">
                   <p className="text-sm font-black uppercase tracking-[0.2em]">
-                    {content.isEs ? "Desde" : "From"}
+                    {content.isEs ? "Precio" : "Price"}
                   </p>
                   <div className="mt-3 flex items-end gap-2">
-                    <span className="text-7xl font-black leading-none">145€</span>
+                    <span className="text-7xl font-black leading-none">145 €</span>
                     <span className="mb-2 text-lg font-bold">
                       {content.isEs ? "instalación" : "installation"}
                     </span>
@@ -442,7 +442,7 @@ export default async function InstalarToldoValenciaPage({ params }: Props) {
               {[
                 {
                   title: content.isEs ? "Toldo pequeño" : "Small awning",
-                  price: content.isEs ? "desde 145€" : "from €145",
+                  price: content.isEs ? "145 €" : "€145",
                   text: content.isEs
                     ? "Instalación sencilla con acceso cómodo y pared adecuada."
                     : "Simple installation with easy access and a suitable wall.",
@@ -450,7 +450,7 @@ export default async function InstalarToldoValenciaPage({ params }: Props) {
                 },
                 {
                   title: content.isEs ? "Toldo mediano" : "Medium awning",
-                  price: "160€ - 200€",
+                  price: "160 € - 200 €",
                   text: content.isEs
                     ? "Instalación con varios soportes, nivelación y prueba final."
                     : "Installation with several brackets, leveling and final test.",
@@ -458,7 +458,7 @@ export default async function InstalarToldoValenciaPage({ params }: Props) {
                 },
                 {
                   title: content.isEs ? "Toldo grande" : "Large awning",
-                  price: "200€ - 280€",
+                  price: "200 € - 280 €",
                   text: content.isEs
                     ? "Modelos anchos o pesados que pueden requerir dos personas."
                     : "Wide or heavy models that may require two people.",
@@ -715,7 +715,7 @@ export default async function InstalarToldoValenciaPage({ params }: Props) {
                 </h2>
                 <p className="mt-6 text-lg leading-8 text-neutral-600">
                   {content.isEs
-                    ? "La instalación se organiza para que el trabajo sea claro, seguro y limpio desde el primer mensaje hasta la prueba final."
+                    ? "La instalación se organiza para que el trabajo sea claro, seguro y limpio con el primer mensaje hasta la prueba final."
                     : "The installation is organized so the work is clear, safe and clean from the first message to the final test."}
                 </p>
 
@@ -1091,8 +1091,8 @@ export default async function InstalarToldoValenciaPage({ params }: Props) {
 
             <h2 className="mt-8 text-4xl font-black tracking-tight md:text-6xl">
               {content.isEs
-                ? "Instalar un toldo en Valencia desde 145€"
-                : "Install an awning in Valencia from €145"}
+                ? "Instalar un toldo en Valencia por 145 €"
+                : "Install an awning in Valencia for €145"}
             </h2>
 
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-neutral-300">

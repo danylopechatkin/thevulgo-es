@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Ajuste de Puertas Desalineadas | Desde 39€ | THEVULGO"
-      : "Door Alignment Adjustment | From €39 | THEVULGO",
+      ? "Ajuste de Puertas Desalineadas | 39 € | THEVULGO"
+      : "Door Alignment Adjustment | €39 | THEVULGO",
     description: isEs
-      ? "Ajuste básico de puertas desalineadas desde 39€. Corrección de puertas que rozan, cierran mal o quedan desniveladas en viviendas y apartamentos."
-      : "Door alignment adjustment from €39. Basic correction for doors that rub, sit unevenly or do not close smoothly in homes and apartments.",
+      ? "Ajuste básico de puertas desalineadas por 39 €. Corrección de puertas que rozan, cierran mal o quedan desniveladas en viviendas y apartamentos."
+      : "Door alignment adjustment for €39. Basic correction for doors that rub, sit unevenly or do not close smoothly in homes and apartments.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta ajustar una puerta desalineada?",
-    a: "El ajuste básico de puerta empieza desde 39€. El precio depende del tipo de puerta, bisagras, roce, marco, dificultad del ajuste y si hacen falta piezas adicionales.",
+    a: "El ajuste básico de puerta cuesta 39 €. El precio depende del tipo de puerta, bisagras, roce, marco, dificultad del ajuste y si hacen falta piezas adicionales.",
   },
   {
     q: "¿Pueden arreglar una puerta que roza?",
@@ -243,7 +243,7 @@ export default async function DoorAlignmentAdjustmentPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 39€",
+                "39 €",
                 "Puertas que rozan",
                 "Puertas que cierran mal",
                 "Ajuste de bisagras",
@@ -314,7 +314,7 @@ export default async function DoorAlignmentAdjustmentPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 39€. Presupuesto según fotos, vídeo y dificultad.",
+              text: "39 €. Presupuesto según fotos, vídeo y dificultad.",
             },
           ].map((item) => (
             <div
@@ -460,7 +460,7 @@ export default async function DoorAlignmentAdjustmentPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para ajustar una puerta desalineada

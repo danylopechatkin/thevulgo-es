@@ -30,11 +30,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Cambio de Bombín de Cerradura | Desde 39€ | THEVULGO"
-      : "Lock Cylinder Replacement | From €39 | THEVULGO",
+      ? "Cambio de Bombín de Cerradura | 39 € | THEVULGO"
+      : "Lock Cylinder Replacement | €39 | THEVULGO",
     description: isEs
-      ? "Cambio de bombín de cerradura desde 39€. Sustitución de cilindros visibles compatibles cuando la pieza nueva ya está disponible y el trabajo es sencillo."
-      : "Lock cylinder replacement from €39. Replacement of compatible visible lock cylinders when the new part is available and the setup is suitable.",
+      ? "Cambio de bombín de cerradura por 39 €. Sustitución de cilindros visibles compatibles cuando la pieza nueva ya está disponible y el trabajo es sencillo."
+      : "Lock cylinder replacement for €39. Replacement of compatible visible lock cylinders when the new part is available and the setup is suitable.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -77,7 +77,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta cambiar un bombín de cerradura?",
-    a: "El cambio de bombín empieza desde 39€. El precio depende del tipo de puerta, cilindro, tornillos, acceso, compatibilidad de la pieza nueva y dificultad del trabajo.",
+    a: "El cambio de bombín cuesta 39 €. El precio depende del tipo de puerta, cilindro, tornillos, acceso, compatibilidad de la pieza nueva y dificultad del trabajo.",
   },
   {
     q: "¿Pueden cambiar un bombín si ya tengo la pieza nueva?",
@@ -246,7 +246,7 @@ export default async function CambioBombinCerraduraPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 39€",
+                "39 €",
                 "Bombín compatible",
                 "Cilindro visible",
                 "Pieza nueva disponible",
@@ -317,7 +317,7 @@ export default async function CambioBombinCerraduraPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 39€. Presupuesto según fotos, pieza y dificultad.",
+              text: "39 €. Presupuesto según fotos, pieza y dificultad.",
             },
           ].map((item) => (
             <div
@@ -461,7 +461,7 @@ export default async function CambioBombinCerraduraPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para cambiar bombín de cerradura

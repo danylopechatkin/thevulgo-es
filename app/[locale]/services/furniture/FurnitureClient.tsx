@@ -93,8 +93,8 @@ export default function FurnitureClient() {
     {
       title: isEs ? "Precio transparente" : "Transparent pricing",
       text: isEs
-        ? "Precios iniciales claros y estimación antes de empezar el trabajo."
-        : "Clear starting prices and estimate logic before the job starts.",
+        ? "Precios claros y estimación antes de empezar el trabajo."
+        : "Clear prices and estimate logic before the job starts.",
       icon: <ShieldCheck className="h-5 w-5" />,
     },
   ];
@@ -105,7 +105,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Montaje profesional de muebles IKEA tipo flat-pack: armarios, camas, muebles, cómodas y estanterías. Ajuste cuidadoso, alineación correcta y estructura estable para uso diario."
         : "Professional assembly of IKEA flat-pack furniture including wardrobes, beds, cabinets, dressers and shelving units.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Hammer className="h-5 w-5" />,
       className: "lg:col-span-2",
       href: `/${locale}/montaje-muebles-ikea-valencia`,
@@ -115,7 +115,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Montaje y alineación de armarios correderos o estándar."
         : "Sliding or standard wardrobes assembled and aligned properly.",
-      price: isEs ? "desde €69" : "from €69",
+      price: isEs ? "69 €" : "€69",
       icon: <Boxes className="h-5 w-5" />,
       className: "",
       href: `/${locale}/montaje-armario-valencia`,
@@ -125,7 +125,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Montaje de cama estándar, ajuste de estructura y alineación estable."
         : "Standard bed setup, frame fitting and stable final alignment.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <BedDouble className="h-5 w-5" />,
       className: "",
       href: `/${locale}/services/furniture/montaje-cama-valencia`,
@@ -135,7 +135,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Montaje limpio de cajoneras con guías y ajuste correcto de cajones."
         : "Drawer units assembled cleanly with proper rail fitting.",
-      price: isEs ? "desde €45" : "from €45",
+      price: isEs ? "45 €" : "€45",
       icon: <FolderOpen className="h-5 w-5" />,
       className: "",
       href: `/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
@@ -145,7 +145,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Montaje de estanterías, librerías y unidades independientes."
         : "Freestanding shelving and bookcase assembly.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Boxes className="h-5 w-5" />,
       className: "",
       href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
@@ -155,7 +155,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Montaje de muebles TV, consolas multimedia y unidades de entretenimiento con alineación cuidada y posición estable."
         : "Assembly of TV stands, media consoles and entertainment units with careful alignment and stable positioning.",
-      price: isEs ? "desde €45" : "from €45",
+      price: isEs ? "45 €" : "€45",
       icon: <Package className="h-5 w-5" />,
       className: "lg:col-span-2",
       href: `/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
@@ -165,7 +165,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Montaje de escritorios, mesas de trabajo y zonas compactas de oficina en casa."
         : "Home office desks, work tables and compact workstations.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <LampDesk className="h-5 w-5" />,
       className: "",
       href: `/${locale}/services/furniture/montaje-escritorios-valencia`,
@@ -175,7 +175,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Montaje de estructuras, tableros y patas con resultado final estable."
         : "Table frames, tops and legs assembled with stable final setup.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Package className="h-5 w-5" />,
       className: "",
       href: `/${locale}/services/furniture/montaje-mesas-comedor-valencia`,
@@ -185,7 +185,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Montaje de aparadores, armarios auxiliares y muebles de entrada."
         : "Storage cabinets, sideboards and hallway furniture.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Boxes className="h-5 w-5" />,
       className: "",
       href: `/${locale}/services/furniture/montaje-aparadores-muebles-auxiliares-valencia`,
@@ -195,7 +195,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Montaje simple de sofás y piezas modulares cuando el sistema lo permite."
         : "Simple sofa assembly and modular seating setup when applicable.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Package className="h-5 w-5" />,
       className: "",
       href: `/${locale}/services/furniture/montaje-sofas-modulares-valencia`,
@@ -205,7 +205,7 @@ export default function FurnitureClient() {
       desc: isEs
         ? "Fijación profesional anti-vuelco para armarios, muebles altos, estanterías y almacenamiento alto."
         : "Professional anti-tip wall fixing for wardrobes, cabinets, shelving units and tall storage furniture.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <ShieldCheck className="h-5 w-5" />,
       className: "lg:col-span-2",
       href: `/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
@@ -274,7 +274,7 @@ export default function FurnitureClient() {
         ? "¿Tengo que desempaquetar todo antes de la cita?"
         : "Do I need to unpack everything before the appointment?",
       a: isEs
-        ? "No necesariamente. Se puede montar desde las cajas, pero tener todas las piezas disponibles y la zona preparada ayuda a acelerar el trabajo."
+        ? "No necesariamente. Se puede montar con las piezas en sus cajas, pero tener todas las piezas disponibles y la zona preparada ayuda a acelerar el trabajo."
         : "Not necessarily. Furniture can be assembled from boxed items, but having all parts available and the room prepared helps speed up the process.",
     },
     {

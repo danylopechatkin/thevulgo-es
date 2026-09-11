@@ -161,27 +161,27 @@ export default async function InstaladorPladurValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Reparación pequeña de pladur", "desde 49 €"],
-        ["Tapar agujeros o golpes", "desde 49 €"],
-        ["Instalación de pared de pladur", "desde 120 €"],
+        ["Reparación pequeña de pladur", "49 €"],
+        ["Tapar agujeros o golpes", "49 €"],
+        ["Instalación de pared de pladur", "120 €"],
         ["Techo falso de pladur", "según m²"],
-        ["Refuerzo para TV / estantería", "desde 59 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Refuerzo para TV / estantería", "59 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small drywall repair", "from €49"],
-        ["Cover holes or damage", "from €49"],
-        ["Drywall wall installation", "from €120"],
+        ["Small drywall repair", "€49"],
+        ["Cover holes or damage", "€49"],
+        ["Drywall wall installation", "€120"],
         ["False drywall ceiling", "by m²"],
-        ["Reinforcement for TV / shelf", "from €59"],
-        ["Visit / inspection", "from €49"],
+        ["Reinforcement for TV / shelf", "€59"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta un instalador de pladur en Valencia?",
-          a: "Depende del tipo de trabajo, metros, materiales, altura, acabado y estado de la zona. Las reparaciones pequeñas suelen empezar desde 49 €, y los trabajos más grandes se calculan por caso o por m².",
+          a: "Depende del tipo de trabajo, metros, materiales, altura, acabado y estado de la zona. Las reparaciones pequeñas cuestan 49 €, y los trabajos más grandes se calculan por caso o por m².",
         },
         {
           q: "¿Hacéis reparaciones pequeñas de pladur?",
@@ -207,7 +207,7 @@ export default async function InstaladorPladurValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does a drywall installer in Valencia cost?",
-          a: "It depends on the job type, meters, materials, height, finish and current condition. Small repairs usually start from €49, while larger jobs are estimated case by case or by m².",
+          a: "It depends on the job type, meters, materials, height, finish and current condition. Small repairs cost €49, while larger jobs are estimated case by case or by m².",
         },
         {
           q: "Do you do small drywall repairs?",
@@ -470,7 +470,7 @@ export default async function InstaladorPladurValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

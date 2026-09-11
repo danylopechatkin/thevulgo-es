@@ -74,7 +74,7 @@ const faqEs = [
   {
     question: "¿Cuánto cuesta instalar un toldo de patio en Valencia?",
     answer:
-      "El precio empieza desde 79 €. El coste final depende del tamaño del toldo, tipo de pared, altura, peso, número de soportes y si hay que retirar un toldo antiguo.",
+      "El precio es de 79 €. El coste final depende del tamaño del toldo, tipo de pared, altura, peso, número de soportes y si hay que retirar un toldo antiguo.",
   },
   {
     question: "¿Qué información necesitan para dar presupuesto?",
@@ -102,7 +102,7 @@ const faqEn = [
   {
     question: "How much does patio awning installation cost in Valencia?",
     answer:
-      "Prices start from €79. The final price depends on awning size, wall type, height, weight, number of brackets and whether an old awning needs to be removed.",
+      "Prices are €79. The final price depends on awning size, wall type, height, weight, number of brackets and whether an old awning needs to be removed.",
   },
   {
     question: "What information do you need for a quote?",
@@ -116,8 +116,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de Toldos para Patios en Valencia | Desde 79 € | THEVULGO"
-    : "Patio Awning Installation in Valencia | From €79 | THEVULGO";
+    ? "Instalación de Toldos para Patios en Valencia | 79 € | THEVULGO"
+    : "Patio Awning Installation in Valencia | €79 | THEVULGO";
 
   const description = isEs
     ? "Instalación profesional de toldos para patios en Valencia. Montaje seguro en ladrillo, hormigón o fachada. Presupuesto por WhatsApp."
@@ -245,7 +245,7 @@ export default async function InstalacionToldoPatioValenciaPage({
     intro: isEs
       ? "Instalamos toldos para patios, terrazas interiores y zonas exteriores en Valencia. Montaje seguro, nivelado y adaptado al tipo de pared."
       : "We install awnings for patios, private terraces and outdoor areas in Valencia. Secure, level and adapted to the wall type.",
-    price: isEs ? "Desde 79 €" : "From €79",
+    price: isEs ? "79 €" : "€79",
     cta: isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp",
     secondaryCta: isEs ? "Ver otros servicios" : "See other services",
   };
@@ -416,7 +416,7 @@ export default async function InstalacionToldoPatioValenciaPage({
                     </div>
                     <div>
                       <p className="text-sm text-neutral-400">
-                        {isEs ? "Precio inicial" : "Starting price"}
+                        {isEs ? "Precio" : "Price"}
                       </p>
                       <p className="text-3xl font-bold">{content.price}</p>
                     </div>

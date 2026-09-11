@@ -258,24 +258,24 @@ export default async function AlarmSystemsPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Diagnóstico de alarma", "desde 49 €"],
-        ["Instalación de alarma inalámbrica", "desde 69 €"],
-        ["Instalación de alarma cableada", "desde 89 €"],
-        ["Configuración de sensores", "desde 49 €"],
-        ["Configuración de app / hub", "desde 49 €"],
-        ["Instalación de sirena", "desde 59 €"],
-        ["Alarma para negocio", "desde 99 €"],
-        ["Mantenimiento / revisión", "desde 49 €"],
+        ["Diagnóstico de alarma", "49 €"],
+        ["Instalación de alarma inalámbrica", "69 €"],
+        ["Instalación de alarma cableada", "89 €"],
+        ["Configuración de sensores", "49 €"],
+        ["Configuración de app / hub", "49 €"],
+        ["Instalación de sirena", "59 €"],
+        ["Alarma para negocio", "99 €"],
+        ["Mantenimiento / revisión", "49 €"],
       ]
     : [
-        ["Alarm diagnostics", "from €49"],
-        ["Wireless alarm installation", "from €69"],
-        ["Wired alarm installation", "from €89"],
-        ["Sensor configuration", "from €49"],
-        ["App / hub setup", "from €49"],
-        ["Siren installation", "from €59"],
-        ["Business alarm", "from €99"],
-        ["Maintenance / check", "from €49"],
+        ["Alarm diagnostics", "€49"],
+        ["Wireless alarm installation", "€69"],
+        ["Wired alarm installation", "€89"],
+        ["Sensor configuration", "€49"],
+        ["App / hub setup", "€49"],
+        ["Siren installation", "€59"],
+        ["Business alarm", "€99"],
+        ["Maintenance / check", "€49"],
       ];
 
   const clientTypes = [
@@ -351,7 +351,7 @@ export default async function AlarmSystemsPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta instalar una alarma en Valencia?",
-          a: "Depende del tipo de alarma, número de sensores, sirena, teclado, hub, cableado y configuración. Una instalación básica puede empezar desde 69–89 €.",
+          a: "Depende del tipo de alarma, número de sensores, sirena, teclado, hub, cableado y configuración. Una instalación básica puede costar 69–89 €.",
         },
         {
           q: "¿Instaláis alarmas inalámbricas?",
@@ -385,7 +385,7 @@ export default async function AlarmSystemsPage({ params }: Props) {
     : [
         {
           q: "How much does alarm installation in Valencia cost?",
-          a: "It depends on alarm type, number of sensors, siren, keypad, hub, cabling and configuration. A basic installation can start from €69–89.",
+          a: "It depends on alarm type, number of sensors, siren, keypad, hub, cabling and configuration. A basic installation can cost €69–89.",
         },
         {
           q: "Do you install wireless alarms?",
@@ -575,7 +575,7 @@ export default async function AlarmSystemsPage({ params }: Props) {
                   icon: MonitorSmartphone,
                   title: isEs ? "App y notificaciones" : "App and notifications",
                   text: isEs
-                    ? "Configuración de usuarios, avisos y control desde móvil."
+                    ? "Configuración de usuarios, avisos y control con el móvil."
                     : "User setup, alerts and mobile control configuration.",
                 },
               ].map((item) => (
@@ -657,7 +657,7 @@ export default async function AlarmSystemsPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -682,7 +682,7 @@ export default async function AlarmSystemsPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

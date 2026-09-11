@@ -98,8 +98,8 @@ export default function ElectricalClient() {
     {
       title: isEs ? "Precio transparente" : "Transparent pricing",
       text: isEs
-        ? "Precios iniciales claros y lógica de presupuesto antes de empezar."
-        : "Clear starting prices and estimate logic before work begins.",
+        ? "Precios claros y lógica de presupuesto antes de empezar."
+        : "Clear prices and estimate logic before work begins.",
       icon: <ShieldCheck className="h-5 w-5" />,
     },
   ];
@@ -110,7 +110,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Luces de techo, lámparas y sustitución simple de iluminación para casas y apartamentos."
         : "Ceiling lights, lamps and simple lighting replacement for homes and apartments.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -119,7 +119,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Instalación de lámparas colgantes con posición cuidada y acabado limpio."
         : "Pendant light installation with careful positioning and clean finish.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <LampCeiling className="h-5 w-5" />,
       className: "",
     },
@@ -128,7 +128,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Instalación limpia y segura de iluminación montada en pared."
         : "Wall-mounted lighting installed neatly and securely.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "",
     },
@@ -137,7 +137,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Sustitución de interruptores dañados, antiguos o desgastados."
         : "Replacement of damaged or outdated light switches.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Power className="h-5 w-5" />,
       className: "",
     },
@@ -146,7 +146,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Sustitución de enchufes y tapas para una instalación más limpia."
         : "Replacement of wall sockets and faceplates for a cleaner setup.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Plug className="h-5 w-5" />,
       className: "",
     },
@@ -155,7 +155,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Montaje y conexión de accesorios eléctricos simples con acabado ordenado."
         : "Mounting and connecting simple electrical fixtures with tidy final setup.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Zap className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -164,7 +164,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Instalación simple de tiras LED para estantes, escritorios o iluminación decorativa."
         : "Simple LED strip installation for shelves, desks or accent lighting.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "",
     },
@@ -173,7 +173,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Sustitución de extractores compatibles de baño o cocina."
         : "Replacement of compatible bathroom or kitchen extractor fans.",
-      price: isEs ? "desde €45" : "from €45",
+      price: isEs ? "45 €" : "€45",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -182,7 +182,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Sustitución simple de luces de espejo y accesorios de baño."
         : "Simple replacement of mirror lights and bathroom fixtures.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "",
     },
@@ -191,7 +191,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Retirada de luz antigua e instalación limpia de una nueva lámpara compatible."
         : "Old ceiling light removed and new fixture installed cleanly.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <LampCeiling className="h-5 w-5" />,
       className: "",
     },
@@ -200,7 +200,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Sustitución simple de regulador cuando la instalación existente es compatible."
         : "Simple dimmer replacement where the existing setup is compatible.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <BadgePlus className="h-5 w-5" />,
       className: "",
     },
@@ -209,7 +209,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Ordenado simple de cables visibles y organización de accesorios eléctricos."
         : "Simple visible cable cleanup and power accessory organization.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Plug className="h-5 w-5" />,
       className: "",
     },
@@ -218,7 +218,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Instalación básica de iluminación compatible para espejo o zona de lavabo."
         : "Basic installation of compatible mirror and vanity lighting.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -227,7 +227,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Retirada de una lámpara antigua y sustitución por una nueva compatible."
         : "Old fixture taken down and replaced with a new compatible one.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <CircleOff className="h-5 w-5" />,
       className: "",
     },
@@ -236,7 +236,7 @@ export default function ElectricalClient() {
       desc: isEs
         ? "Sustitución simple de iluminación en cocinas y zonas de servicio."
         : "Simple lighting replacement in kitchens and utility areas.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "",
     },

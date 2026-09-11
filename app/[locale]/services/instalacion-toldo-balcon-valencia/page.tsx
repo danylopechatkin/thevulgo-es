@@ -158,7 +158,7 @@ const awningTypes = [
     titleEs: "Toldo tipo estor",
     titleEn: "Vertical screen awning",
     textEs:
-      "El toldo tipo estor es útil para balcones donde se necesita protección frontal, más privacidad o reducir el sol directo desde delante. Revisamos la fijación superior y los puntos laterales.",
+      "El toldo tipo estor es útil para balcones donde se necesita protección frontal, más privacidad o reducir el sol directo por delante. Revisamos la fijación superior y los puntos laterales.",
     textEn:
       "A vertical screen awning is useful for balconies where frontal protection, more privacy or reduced direct sun is needed. We check the top fixing and side points.",
   },
@@ -215,7 +215,7 @@ const priceCards = [
   {
     titleEs: "Toldo manual pequeño",
     titleEn: "Small manual awning",
-    price: "desde 79 €",
+    price: "79 €",
     textEs:
       "Para balcones pequeños con acceso sencillo y pared resistente. Precio orientativo según fotos.",
     textEn:
@@ -224,7 +224,7 @@ const priceCards = [
   {
     titleEs: "Toldo grande o pesado",
     titleEn: "Large or heavy awning",
-    price: "desde 99 €",
+    price: "99 €",
     textEs:
       "Para toldos de brazo extensible, cofre, semicofre o instalaciones con más peso y dificultad.",
     textEn:
@@ -246,9 +246,9 @@ const faqs = [
     questionEs: "¿Cuánto cuesta instalar un toldo para balcón en Valencia?",
     questionEn: "How much does balcony awning installation cost in Valencia?",
     answerEs:
-      "El precio depende del tamaño del toldo, peso, tipo de pared, altura, acceso y si es manual o eléctrico. Para una instalación sencilla, el precio puede empezar desde 79 €.",
+      "El precio depende del tamaño del toldo, peso, tipo de pared, altura, acceso y si es manual o eléctrico. Para una instalación sencilla, el precio puede costar 79 €.",
     answerEn:
-      "The price depends on awning size, weight, wall type, height, access and whether it is manual or electric. For a simple installation, the price can start from €79.",
+      "The price depends on awning size, weight, wall type, height, access and whether it is manual or electric. For a simple installation, the price can cost €79.",
   },
   {
     questionEs: "¿Instaláis toldos comprados en Leroy Merlin, Amazon o Bauhaus?",
@@ -514,7 +514,7 @@ export default async function InstalacionToldoBalconValenciaPage({
               <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
                 <p className="text-2xl font-black text-white">79 €</p>
                 <p className="mt-1 text-sm text-neutral-400">
-                  {isEs ? "desde instalación simple" : "from simple install"}
+                  {isEs ? "instalación simple" : "simple installation"}
                 </p>
               </div>
 
@@ -833,7 +833,7 @@ export default async function InstalacionToldoBalconValenciaPage({
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/10 px-4 py-2 text-sm font-medium text-amber-200">
                 <Euro className="h-4 w-4" />
-                {isEs ? "Precios orientativos" : "Indicative prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl">

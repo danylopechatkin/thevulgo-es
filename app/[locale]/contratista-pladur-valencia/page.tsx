@@ -330,7 +330,7 @@ export default async function Page({ params }: Props) {
     {
       title: isEs ? "Para obra pequeña y grande" : "Small and large projects",
       text: isEs
-        ? "Desde una reparación o tabique hasta techos, locales y reformas completas."
+        ? "Reparaciones, tabiques, techos, locales y reformas completas."
         : "From a repair or partition to ceilings, commercial units and full renovations.",
       icon: <Building2 className="h-5 w-5" />,
     },

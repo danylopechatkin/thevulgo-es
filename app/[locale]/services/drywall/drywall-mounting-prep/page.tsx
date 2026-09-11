@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Preparación de Pladur para Montaje en Valencia | Desde 35€ | THEVULGO"
-    : "Drywall Mounting Prep in Valencia | From €35 | THEVULGO";
+    ? "Preparación de Pladur para Montaje en Valencia | 35 € | THEVULGO"
+    : "Drywall Mounting Prep in Valencia | €35 | THEVULGO";
 
   const description = isEs
-    ? "Preparación de zonas de pladur para montaje en pared en Valencia desde 35€. Revisión, marcado y preparación para una instalación más segura y limpia."
-    : "Drywall mounting prep in Valencia from €35. Preparation of drywall areas for safer and cleaner wall mounting.";
+    ? "Preparación de zonas de pladur para montaje en pared en Valencia por 35 €. Revisión, marcado y preparación para una instalación más segura y limpia."
+    : "Drywall mounting prep in Valencia for €35. Preparation of drywall areas for safer and cleaner wall mounting.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function DrywallMountingPrepPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta preparar pladur para montaje en Valencia?",
-          a: "El servicio empieza desde 35€. El precio final depende del tipo de pared, objeto a montar, número de puntos, acceso, peso aproximado y material necesario.",
+          a: "El servicio cuesta 35 €. El precio final depende del tipo de pared, objeto a montar, número de puntos, acceso, peso aproximado y material necesario.",
         },
         {
           q: "¿Sirve para montar estantes, espejos o accesorios?",
@@ -141,7 +141,7 @@ export default async function DrywallMountingPrepPage({ params }: PageProps) {
         },
         {
           q: "How much does drywall mounting prep cost in Valencia?",
-          a: "The service starts from €35. Final price depends on wall type, item being mounted, number of points, access, approximate weight and required material.",
+          a: "The service costs €35. Final price depends on wall type, item being mounted, number of points, access, approximate weight and required material.",
         },
         {
           q: "Is this suitable for shelves, mirrors or accessories?",
@@ -217,8 +217,8 @@ export default async function DrywallMountingPrepPage({ params }: PageProps) {
   };
 
   const heroPoints = isEs
-    ? ["Desde 35€", "Preparación para montaje", "Pladur y paredes ligeras", "Según peso y superficie"]
-    : ["From €35", "Mounting preparation", "Drywall and light walls", "Based on weight and surface"];
+    ? ["35 €", "Preparación para montaje", "Pladur y paredes ligeras", "Según peso y superficie"]
+    : ["€35", "Mounting preparation", "Drywall and light walls", "Based on weight and surface"];
 
   const included = isEs
     ? [
@@ -304,7 +304,7 @@ export default async function DrywallMountingPrepPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Layers3 className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 35€" : "From €35"}
+                {isEs ? "35 €" : "€35"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs ? "Zona revisada. Montaje más limpio. Mejor preparación." : "Area checked. Cleaner mounting. Better preparation."}
@@ -413,7 +413,7 @@ export default async function DrywallMountingPrepPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 35€" : "From €35"}
+            {isEs ? "35 €" : "€35"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs ? "Envía fotos de la pared y del objeto" : "Send photos of the wall and item"}

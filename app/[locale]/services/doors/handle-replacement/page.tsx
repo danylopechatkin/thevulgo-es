@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Cambio de Manilla de Puerta | Desde 29€ | THEVULGO"
-      : "Door Handle Replacement | From €29 | THEVULGO",
+      ? "Cambio de Manilla de Puerta | 29 € | THEVULGO"
+      : "Door Handle Replacement | €29 | THEVULGO",
     description: isEs
-      ? "Cambio de manillas de puerta desde 29€. Sustitución de manillas gastadas, rotas o antiguas por herrajes más limpios y modernos para puertas interiores."
-      : "Door handle replacement from €29. Replace worn, damaged or outdated door handles with cleaner, better-looking hardware for interior doors.",
+      ? "Cambio de manillas de puerta por 29 €. Sustitución de manillas gastadas, rotas o antiguas por herrajes más limpios y modernos para puertas interiores."
+      : "Door handle replacement for €29. Replace worn, damaged or outdated door handles with cleaner, better-looking hardware for interior doors.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta cambiar una manilla de puerta?",
-    a: "El cambio de manilla de puerta empieza desde 29€. El precio depende del tipo de manilla, puerta, herraje, tornillos, compatibilidad y si hay que ajustar el cierre.",
+    a: "El cambio de manilla de puerta cuesta 29 €. El precio depende del tipo de manilla, puerta, herraje, tornillos, compatibilidad y si hay que ajustar el cierre.",
   },
   {
     q: "¿Pueden cambiar una manilla rota?",
@@ -241,7 +241,7 @@ export default async function HandleReplacementPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 29€",
+                "29 €",
                 "Manillas gastadas o rotas",
                 "Pomos y manillas interiores",
                 "Herrajes más limpios",
@@ -312,7 +312,7 @@ export default async function HandleReplacementPage({ params }: PageProps) {
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 29€. Presupuesto según fotos, manilla y dificultad.",
+              text: "29 €. Presupuesto según fotos, manilla y dificultad.",
             },
           ].map((item) => (
             <div
@@ -456,7 +456,7 @@ export default async function HandleReplacementPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para cambiar manilla de puerta

@@ -157,27 +157,27 @@ export default async function TechosPladurValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Reparación pequeña de techo", "desde 49 €"],
-        ["Tapar agujero en techo", "desde 49 €"],
-        ["Registro o acceso en techo", "desde 59 €"],
+        ["Reparación pequeña de techo", "49 €"],
+        ["Tapar agujero en techo", "49 €"],
+        ["Registro o acceso en techo", "59 €"],
         ["Falso techo de pladur", "según m²"],
         ["Preparación para iluminación", "según trabajo"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small ceiling repair", "from €49"],
-        ["Cover ceiling hole", "from €49"],
-        ["Ceiling access panel", "from €59"],
+        ["Small ceiling repair", "€49"],
+        ["Cover ceiling hole", "€49"],
+        ["Ceiling access panel", "€59"],
         ["False drywall ceiling", "by m²"],
         ["Lighting preparation", "by job"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta hacer un techo de pladur en Valencia?",
-          a: "Depende de los metros, altura, estructura, materiales, iluminación, registros y nivel de acabado. Las reparaciones pequeñas suelen empezar desde 49 €, y los falsos techos se valoran por m² o por trabajo.",
+          a: "Depende de los metros, altura, estructura, materiales, iluminación, registros y nivel de acabado. Las reparaciones pequeñas cuestan 49 €, y los falsos techos se valoran por m² o por trabajo.",
         },
         {
           q: "¿Hacéis reparación de techos de pladur?",
@@ -203,7 +203,7 @@ export default async function TechosPladurValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does a drywall ceiling cost in Valencia?",
-          a: "It depends on meters, height, structure, materials, lighting, access panels and finish level. Small repairs usually start from €49, and false ceilings are estimated by m² or by job.",
+          a: "It depends on meters, height, structure, materials, lighting, access panels and finish level. Small repairs cost €49, and false ceilings are estimated by m² or by job.",
         },
         {
           q: "Do you repair drywall ceilings?",
@@ -455,7 +455,7 @@ export default async function TechosPladurValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

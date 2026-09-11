@@ -98,12 +98,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Cambiar lámpara por ventilador en Valencia desde 45 € | THEVULGO"
-    : "Replace Lamp With Ceiling Fan in Valencia From €45 | THEVULGO";
+    ? "Cambiar lámpara por ventilador en Valencia por 45 € | THEVULGO"
+    : "Replace Lamp With Ceiling Fan in Valencia | €45 | THEVULGO";
 
   const description = isEs
-    ? "Cambio de lámpara por ventilador de techo en Valencia desde 45 €. Desmontaje de la lámpara antigua, montaje del ventilador y conexión al punto eléctrico existente incluidos."
-    : "Replace a ceiling lamp with a ceiling fan in Valencia from €45. Old lamp removal, fan mounting and connection to the existing electrical point included.";
+    ? "Cambio de lámpara por ventilador de techo en Valencia por 45 €. Desmontaje de la lámpara antigua, montaje del ventilador y conexión al punto eléctrico existente incluidos."
+    : "Replace a ceiling lamp with a ceiling fan in Valencia for €45. Old lamp removal, fan mounting and connection to the existing electrical point included.";
 
   return {
     title,
@@ -338,8 +338,8 @@ export default async function ChangeLampToFanPage({ params }: Props) {
         ? "¿Cuánto cuesta cambiar una lámpara por un ventilador?"
         : "How much does it cost to replace a lamp with a fan?",
       a: isEs
-        ? "El precio es desde 45 € para un ventilador, 85 € para dos y 125 € para tres, si se usa el punto eléctrico existente."
-        : "The price is from €45 for one fan, €85 for two and €125 for three, when using the existing electrical point.",
+        ? "El precio es de 45 € para un ventilador, 85 € para dos y 125 € para tres, si se usa el punto eléctrico existente."
+        : "The price is €45 for one fan, €85 for two and €125 for three, when using the existing electrical point.",
     },
     {
       q: isEs
@@ -406,8 +406,8 @@ export default async function ChangeLampToFanPage({ params }: Props) {
 
             <h1 className="max-w-4xl text-4xl font-black tracking-tight text-neutral-950 sm:text-5xl lg:text-6xl">
               {isEs
-                ? "Cambiar lámpara por ventilador desde 45 €"
-                : "Replace a lamp with a ceiling fan from €45"}
+                ? "Cambiar lámpara por ventilador por 45 €"
+                : "Replace a lamp with a ceiling fan for €45"}
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600 sm:text-xl">
@@ -436,7 +436,7 @@ export default async function ChangeLampToFanPage({ params }: Props) {
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {[
-                isEs ? "Desde 45 €" : "From €45",
+                isEs ? "45 €" : "€45",
                 isEs ? "Lámpara retirada incluida" : "Old lamp removal included",
                 isEs ? "Punto eléctrico existente" : "Existing light point",
               ].map((item) => (
@@ -730,7 +730,7 @@ export default async function ChangeLampToFanPage({ params }: Props) {
                 <ul className="mt-4 space-y-3 text-sm leading-6 text-white/75">
                   <li>
                     {isEs
-                      ? "• Lámpara actual vista desde abajo"
+                      ? "• Lámpara actual vista por abajo"
                       : "• Current lamp from below"}
                   </li>
                   <li>

@@ -101,12 +101,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de ventilador smart en Valencia desde 45 € | THEVULGO"
-    : "Smart Ceiling Fan Installation in Valencia From €45 | THEVULGO";
+    ? "Instalación de ventilador smart en Valencia por 45 € | THEVULGO"
+    : "Smart Ceiling Fan Installation in Valencia | €45 | THEVULGO";
 
   const description = isEs
-    ? "Instalación de ventilador smart en Valencia desde 45 €. Montaje, conexión, app, WiFi, mando, luz LED, velocidades y prueba final."
-    : "Smart ceiling fan installation in Valencia from €45. Mounting, connection, app, WiFi, remote, LED light, speeds and final test.";
+    ? "Instalación de ventilador smart en Valencia por 45 €. Montaje, conexión, app, WiFi, mando, luz LED, velocidades y prueba final."
+    : "Smart ceiling fan installation in Valencia for €45. Mounting, connection, app, WiFi, remote, LED light, speeds and final test.";
 
   return {
     title,
@@ -262,7 +262,7 @@ export default async function SmartFanPage({ params }: Props) {
   ];
 
   const smartChecks = [
-    isEs ? "Encendido y apagado desde app" : "On/off from app",
+    isEs ? "Encendido y apagado con la app" : "On/off from app",
     isEs ? "Control de luz LED" : "LED light control",
     isEs ? "Velocidades del ventilador" : "Fan speeds",
     isEs ? "Temporizador si está disponible" : "Timer if available",
@@ -276,8 +276,8 @@ export default async function SmartFanPage({ params }: Props) {
         ? "¿Cuánto cuesta instalar un ventilador smart?"
         : "How much does it cost to install a smart fan?",
       a: isEs
-        ? "El precio es desde 45 € para un ventilador, 85 € para dos y 125 € para tres, usando el punto eléctrico existente."
-        : "The price is from €45 for one fan, €85 for two and €125 for three, using the existing electrical point.",
+        ? "El precio es de 45 € para un ventilador, 85 € para dos y 125 € para tres, usando el punto eléctrico existente."
+        : "The price is €45 for one fan, €85 for two and €125 for three, using the existing electrical point.",
     },
     {
       q: isEs
@@ -433,8 +433,8 @@ export default async function SmartFanPage({ params }: Props) {
 
             <h1 className="max-w-4xl text-4xl font-black tracking-tight text-neutral-950 sm:text-5xl lg:text-6xl">
               {isEs
-                ? "Instalación de ventilador smart desde 45 €"
-                : "Smart ceiling fan installation from €45"}
+                ? "Instalación de ventilador smart por 45 €"
+                : "Smart ceiling fan installation for €45"}
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600 sm:text-xl">
@@ -463,7 +463,7 @@ export default async function SmartFanPage({ params }: Props) {
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {[
-                isEs ? "Desde 45 €" : "From €45",
+                isEs ? "45 €" : "€45",
                 isEs ? "WiFi y app" : "WiFi and app",
                 isEs ? "Prueba completa" : "Full test",
               ].map((item) => (
@@ -867,7 +867,7 @@ export default async function SmartFanPage({ params }: Props) {
 
               <p className="mt-5 text-lg leading-8 text-neutral-600">
                 {isEs
-                  ? "Muchos ventiladores actuales vienen con varias funciones: control desde el móvil, mando, cambio de temperatura de luz, temporizador, modo noche y compatibilidad con asistentes. Nosotros hacemos el montaje y revisamos las funciones principales para que puedas usarlo desde el primer día."
+                  ? "Muchos ventiladores actuales vienen con varias funciones: control con el móvil, mando, cambio de temperatura de luz, temporizador, modo noche y compatibilidad con asistentes. Nosotros hacemos el montaje y revisamos las funciones principales para que puedas usarlo ya el primer día."
                   : "Many current fans include several functions: phone control, remote, light temperature change, timer, night mode and assistant compatibility. We handle the installation and check the main functions so you can use it from day one."}
               </p>
             </div>
@@ -877,9 +877,9 @@ export default async function SmartFanPage({ params }: Props) {
                 {[
                   {
                     icon: Smartphone,
-                    title: isEs ? "Control desde móvil" : "Phone control",
+                    title: isEs ? "Control con el móvil" : "Phone control",
                     text: isEs
-                      ? "Prueba básica desde la app del fabricante."
+                      ? "Prueba básica con la app del fabricante."
                       : "Basic test from the manufacturer app.",
                   },
                   {
@@ -1138,7 +1138,7 @@ export default async function SmartFanPage({ params }: Props) {
 
           <div className="mx-auto mt-8 grid max-w-4xl gap-3 sm:grid-cols-3">
             {[
-              isEs ? "Montaje desde 45 €" : "Installation from €45",
+              isEs ? "Montaje por 45 €" : "Installation for €45",
               isEs ? "App y mando" : "App and remote",
               isEs ? "Valencia y alrededores" : "Valencia and nearby areas",
             ].map((item) => (

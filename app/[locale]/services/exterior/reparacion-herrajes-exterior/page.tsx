@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Reparación de Herrajes Exteriores | Desde 35€ | THEVULGO"
-      : "Outdoor Hardware Fixing | From €35 | THEVULGO",
+      ? "Reparación de Herrajes Exteriores | 35 € | THEVULGO"
+      : "Outdoor Hardware Fixing | €35 | THEVULGO",
     description: isEs
-      ? "Reparación de herrajes exteriores desde 35€. Ajuste de soportes, manillas, escuadras, fijaciones y elementos exteriores visibles."
-      : "Outdoor hardware fixing from €35. Small repairs and tightening of visible outdoor fittings, brackets, handles and practical hardware elements.",
+      ? "Reparación de herrajes exteriores de 35 €. Ajuste de soportes, manillas, escuadras, fijaciones y elementos exteriores visibles."
+      : "Outdoor hardware fixing for €35. Small repairs and tightening of visible outdoor fittings, brackets, handles and practical hardware elements.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta reparar herrajes exteriores?",
-    a: "La reparación de herrajes exteriores empieza desde 35€. El precio depende del tipo de pieza, estado, acceso, fijaciones, tornillos, número de elementos y dificultad del trabajo.",
+    a: "La reparación de herrajes exteriores cuesta 35 €. El precio depende del tipo de pieza, estado, acceso, fijaciones, tornillos, número de elementos y dificultad del trabajo.",
   },
   {
     q: "¿Qué tipo de herrajes exteriores pueden revisar?",
@@ -247,7 +247,7 @@ export default async function ReparacionHerrajesExteriorPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 35€",
+                "35 €",
                 "Soportes exteriores",
                 "Manillas y tiradores",
                 "Fijaciones visibles",
@@ -318,7 +318,7 @@ export default async function ReparacionHerrajesExteriorPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 35€. Presupuesto según fotos, piezas y dificultad.",
+              text: "35 €. Presupuesto según fotos, piezas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -462,7 +462,7 @@ export default async function ReparacionHerrajesExteriorPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 35€
+            35 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para reparar herrajes exteriores

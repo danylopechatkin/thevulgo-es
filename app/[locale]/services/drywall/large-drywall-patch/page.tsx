@@ -26,12 +26,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Parche Grande de Pladur en Valencia | Desde 69€ | THEVULGO"
-    : "Large Drywall Patch in Valencia | From €69 | THEVULGO";
+    ? "Parche Grande de Pladur en Valencia | 69 € | THEVULGO"
+    : "Large Drywall Patch in Valencia | €69 | THEVULGO";
 
   const description = isEs
-    ? "Parche grande de pladur en Valencia desde 69€. Corte, preparación, parcheado, relleno, alisado y acabado para daños más visibles en paredes interiores."
-    : "Large drywall patch in Valencia from €69. Larger cutout and patch work with preparation, filling, smoothing and finishing for visible wall damage.";
+    ? "Parche grande de pladur en Valencia por 69 €. Corte, preparación, parcheado, relleno, alisado y acabado para daños más visibles en paredes interiores."
+    : "Large drywall patch in Valencia for €69. Larger cutout and patch work with preparation, filling, smoothing and finishing for visible wall damage.";
 
   return {
     title,
@@ -116,7 +116,7 @@ export default async function LargeDrywallPatchPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta un parche grande de pladur en Valencia?",
-          a: "El servicio empieza desde 69€. El precio final depende del tamaño del daño, tipo de pared, acceso, materiales, número de capas y acabado esperado.",
+          a: "El servicio cuesta 69 €. El precio final depende del tamaño del daño, tipo de pared, acceso, materiales, número de capas y acabado esperado.",
         },
         {
           q: "¿Cuándo necesito un parche grande y no una reparación pequeña?",
@@ -142,7 +142,7 @@ export default async function LargeDrywallPatchPage({ params }: PageProps) {
         },
         {
           q: "How much does a large drywall patch cost in Valencia?",
-          a: "The service starts from €69. Final price depends on damage size, wall type, access, materials, number of coats and expected finish.",
+          a: "The service costs €69. Final price depends on damage size, wall type, access, materials, number of coats and expected finish.",
         },
         {
           q: "When do I need a large patch instead of a small repair?",
@@ -240,13 +240,13 @@ export default async function LargeDrywallPatchPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 69€",
+        "69 €",
         "Corte y parche más grande",
         "Relleno, alisado y acabado",
         "Para daños visibles en pared",
       ]
     : [
-        "From €69",
+        "€69",
         "Larger cutout and patch",
         "Filling, smoothing and finishing",
         "For visible wall damage",
@@ -346,7 +346,7 @@ export default async function LargeDrywallPatchPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Layers3 className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 69€" : "From €69"}
+                {isEs ? "69 €" : "€69"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -482,7 +482,7 @@ export default async function LargeDrywallPatchPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 69€" : "From €69"}
+            {isEs ? "69 €" : "€69"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

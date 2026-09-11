@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Montaje de Mesas de Comedor en Valencia | Desde 35€ | THEVULGO"
-      : "Dining Table Assembly in Valencia | From €35 | THEVULGO",
+      ? "Montaje de Mesas de Comedor en Valencia | 35 € | THEVULGO"
+      : "Dining Table Assembly in Valencia | €35 | THEVULGO",
     description: isEs
-      ? "Montaje profesional de mesas de comedor en Valencia desde 35€. Estructuras, tableros y patas con resultado final estable, alineado y limpio."
-      : "Professional dining table assembly in Valencia from €35. Frames, tabletops and legs with a stable, aligned and clean final result.",
+      ? "Montaje profesional de mesas de comedor en Valencia por 35 €. Estructuras, tableros y patas con resultado final estable, alineado y limpio."
+      : "Professional dining table assembly in Valencia for €35. Frames, tabletops and legs with a stable, aligned and clean final result.",
     alternates: {
       canonical: `${siteUrl}/${locale}/services/furniture/montaje-mesas-comedor-valencia`,
       languages: {
@@ -73,7 +73,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta montar una mesa de comedor en Valencia?",
-    a: "El montaje de mesas de comedor empieza desde 35€. El precio final depende del tamaño, peso del tablero, tipo de patas, estructura, número de piezas y dificultad.",
+    a: "El montaje de mesas de comedor cuesta 35 €. El precio final depende del tamaño, peso del tablero, tipo de patas, estructura, número de piezas y dificultad.",
   },
   {
     q: "¿Montan mesas IKEA o de otras tiendas?",
@@ -211,8 +211,8 @@ export default async function DiningTableAssemblyValenciaPage({
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Montaje de estructuras, tableros y patas desde{" "}
-              <strong className="text-neutral-950">35€</strong>, con resultado
+              Montaje de estructuras, tableros y patas por{" "}
+              <strong className="text-neutral-950">35 €</strong>, con resultado
               final estable, alineado y limpio. Ideal para mesas de comedor,
               mesas extensibles y muebles tipo flat-pack.
             </p>
@@ -236,7 +236,7 @@ export default async function DiningTableAssemblyValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Montaje desde 35€",
+                "Montaje por 35 €",
                 "Tableros y patas",
                 "Mesas extensibles",
                 "Estructura estable",
@@ -422,7 +422,7 @@ export default async function DiningTableAssemblyValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 35€
+            35 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para montar mesa de comedor en Valencia

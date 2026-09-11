@@ -162,9 +162,9 @@ export default async function TechoRegistrableValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Visita / revisión", "desde 49 €"],
-        ["Cambio de placa dañada", "desde 35 €"],
-        ["Reparación pequeña", "desde 45 €"],
+        ["Visita / revisión", "49 €"],
+        ["Cambio de placa dañada", "35 €"],
+        ["Reparación pequeña", "45 €"],
         ["Ajuste de perfilería", "presupuesto"],
         ["Techo registrable pequeño", "presupuesto"],
         ["Techo registrable completo", "presupuesto"],
@@ -172,9 +172,9 @@ export default async function TechoRegistrableValenciaPage({ params }: Props) {
         ["Trabajo para local comercial", "presupuesto"],
       ]
     : [
-        ["Visit / inspection", "from €49"],
-        ["Damaged tile replacement", "from €35"],
-        ["Small repair", "from €45"],
+        ["Visit / inspection", "€49"],
+        ["Damaged tile replacement", "€35"],
+        ["Small repair", "€45"],
         ["Profile adjustment", "quote"],
         ["Small suspended ceiling", "quote"],
         ["Complete suspended ceiling", "quote"],
@@ -574,7 +574,7 @@ export default async function TechoRegistrableValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

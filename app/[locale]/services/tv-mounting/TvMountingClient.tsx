@@ -110,8 +110,8 @@ export default function TvMountingClient() {
     {
       title: isEs ? "Precio transparente" : "Transparent pricing",
       text: isEs
-        ? "Precios iniciales claros y estimación antes de perforar."
-        : "Clear starting prices and estimate logic before any drilling starts.",
+        ? "Precios claros y estimación antes de perforar."
+        : "Clear prices and estimate logic before any drilling starts.",
       icon: <ShieldCheck className="h-5 w-5" />,
     },
   ];
@@ -122,7 +122,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Instalación segura y nivelada de televisores en paredes adecuadas."
         : "Secure, level TV installation on suitable wall types.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Tv className="h-5 w-5" />,
       href: `/${locale}/montaje-tv-valencia`,
     },
@@ -131,7 +131,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Instalación de TVs grandes con posicionamiento cuidadoso y fijación adecuada."
         : "Installation for larger TVs with careful positioning and suitable fixing.",
-      price: isEs ? "desde €69" : "from €69",
+      price: isEs ? "69 €" : "€69",
       icon: <Monitor className="h-5 w-5" />,
       href: `/${locale}/montaje-tv-grande-valencia`,
     },
@@ -140,7 +140,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Montaje Samsung Frame con One Connect Box, cable invisible y acabado tipo cuadro."
         : "Samsung Frame mounting with One Connect Box, invisible cable and picture-frame finish.",
-      price: isEs ? "desde €69" : "from €69",
+      price: isEs ? "69 €" : "€69",
       icon: <Ruler className="h-5 w-5" />,
       href: `/${locale}/montaje-tv-samsung-frame-valencia`,
     },
@@ -149,7 +149,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Soluciones más limpias con canaletas, rutas sencillas o cable management."
         : "Cleaner look with raceways, simple routing or cable management.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Cable className="h-5 w-5" />,
       href: `/${locale}/ocultar-cables-valencia`,
     },
@@ -158,7 +158,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Soundbar, 5.1, Dolby y sistemas de audio para casa, oficina, bar o café."
         : "Soundbar, 5.1, Dolby and home audio installation for homes, offices, bars or cafés.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Speaker className="h-5 w-5" />,
       href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
     },
@@ -167,7 +167,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Instalación de proyector en techo o pared con alineación limpia."
         : "Ceiling or wall projector installation with clean alignment.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Monitor className="h-5 w-5" />,
       href: `/${locale}/montaje-proyector-valencia`,
     },
@@ -230,7 +230,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Montaje seguro para televisores de 65 pulgadas en Valencia."
         : "Safe mounting for 65 inch TVs in Valencia.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
       href: `/${locale}/montaje-tv-65-pulgadas-valencia`,
     },
     {
@@ -238,7 +238,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Instalación profesional para TVs grandes de 75 pulgadas."
         : "Professional installation for large 75 inch TVs.",
-      price: isEs ? "desde €79" : "from €79",
+      price: isEs ? "79 €" : "€79",
       href: `/${locale}/montaje-tv-75-pulgadas-valencia`,
     },
     {
@@ -246,7 +246,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Montaje de pantallas grandes de 85 pulgadas con revisión de pared."
         : "85 inch large screen mounting with wall check.",
-      price: isEs ? "desde €99" : "from €99",
+      price: isEs ? "99 €" : "€99",
       href: `/${locale}/montaje-tv-85-pulgadas-valencia`,
     },
     {
@@ -254,7 +254,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Instalación high-ticket para pantallas gigantes de 98 pulgadas."
         : "High-ticket installation for giant 98 inch screens.",
-      price: isEs ? "desde €129" : "from €129",
+      price: isEs ? "129 €" : "€129",
       href: `/${locale}/montaje-tv-98-pulgadas-valencia`,
     },
   ];
@@ -265,7 +265,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Montaje limpio de estanterías con anclajes adecuados y buena alineación."
         : "Clean shelf mounting with proper anchors and alignment.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Square className="h-5 w-5" />,
       href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
     },

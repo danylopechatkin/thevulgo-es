@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Fijación de Muebles a la Pared en Valencia | Desde 29€ | THEVULGO"
-      : "Furniture Wall Anchoring in Valencia | From €29 | THEVULGO",
+      ? "Fijación de Muebles a la Pared en Valencia | 29 € | THEVULGO"
+      : "Furniture Wall Anchoring in Valencia | €29 | THEVULGO",
     description: isEs
-      ? "Fijación profesional anti-vuelco de muebles a la pared en Valencia desde 29€. Armarios, estanterías, muebles altos y almacenamiento con anclajes adecuados."
-      : "Professional anti-tip furniture wall anchoring in Valencia from €29. Wardrobes, shelves, tall cabinets and storage units with suitable anchors.",
+      ? "Fijación profesional anti-vuelco de muebles a la pared en Valencia por 29 €. Armarios, estanterías, muebles altos y almacenamiento con anclajes adecuados."
+      : "Professional anti-tip furniture wall anchoring in Valencia for €29. Wardrobes, shelves, tall cabinets and storage units with suitable anchors.",
     alternates: {
       canonical: `${siteUrl}/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
       languages: {
@@ -73,7 +73,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta fijar un mueble a la pared en Valencia?",
-    a: "La fijación de muebles a la pared empieza desde 29€. El precio final depende del tipo de mueble, tipo de pared, altura, peso, número de anclajes y dificultad de acceso.",
+    a: "La fijación de muebles a la pared cuesta 29 €. El precio final depende del tipo de mueble, tipo de pared, altura, peso, número de anclajes y dificultad de acceso.",
   },
   {
     q: "¿Qué muebles se pueden fijar a la pared?",
@@ -211,8 +211,8 @@ export default async function FurnitureWallAnchoringValenciaPage({
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Fijación profesional anti-vuelco desde{" "}
-              <strong className="text-neutral-950">29€</strong> para armarios,
+              Fijación profesional anti-vuelco por{" "}
+              <strong className="text-neutral-950">29 €</strong> para armarios,
               muebles altos, estanterías y almacenamiento alto. Mejora la
               estabilidad y seguridad usando anclajes adecuados.
             </p>
@@ -236,7 +236,7 @@ export default async function FurnitureWallAnchoringValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Fijación desde 29€",
+                "Fijación por 29 €",
                 "Anti-vuelco",
                 "Armarios y estanterías",
                 "Muebles altos",
@@ -421,7 +421,7 @@ export default async function FurnitureWallAnchoringValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para fijar muebles a la pared en Valencia

@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Enlucido Localizado de Pared en Valencia | Desde 49€ | THEVULGO"
-    : "Skim Coat Area Repair in Valencia | From €49 | THEVULGO";
+    ? "Enlucido Localizado de Pared en Valencia | 49 € | THEVULGO"
+    : "Skim Coat Area Repair in Valencia | €49 | THEVULGO";
 
   const description = isEs
-    ? "Enlucido localizado y corrección de zonas irregulares en Valencia desde 49€. Trabajo de skim coat en parches, zonas reparadas y pequeñas secciones desiguales."
-    : "Skim coat area repair in Valencia from €49. Localized skim work for patched zones, repaired wall areas and uneven small sections.";
+    ? "Enlucido localizado y corrección de zonas irregulares en Valencia por 49 €. Trabajo de skim coat en parches, zonas reparadas y pequeñas secciones desiguales."
+    : "Skim coat area repair in Valencia for €49. Localized skim work for patched zones, repaired wall areas and uneven small sections.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function SkimCoatAreaRepairPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta un skim coat localizado en Valencia?",
-          a: "El servicio empieza desde 49€. El precio final depende del tamaño de la zona, estado de la pared, número de capas, material necesario y acabado esperado.",
+          a: "El servicio cuesta 49 €. El precio final depende del tamaño de la zona, estado de la pared, número de capas, material necesario y acabado esperado.",
         },
         {
           q: "¿Sirve para zonas parcheadas?",
@@ -141,7 +141,7 @@ export default async function SkimCoatAreaRepairPage({ params }: PageProps) {
         },
         {
           q: "How much does localized skim coat work cost in Valencia?",
-          a: "The service starts from €49. Final price depends on area size, wall condition, number of coats, required material and expected finish.",
+          a: "The service costs €49. Final price depends on area size, wall condition, number of coats, required material and expected finish.",
         },
         {
           q: "Is this suitable for patched zones?",
@@ -241,13 +241,13 @@ export default async function SkimCoatAreaRepairPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 49€",
+        "49 €",
         "Zonas parcheadas o irregulares",
         "Enlucido localizado",
         "Preparación para acabado limpio",
       ]
     : [
-        "From €49",
+        "€49",
         "Patched or uneven zones",
         "Localized skim work",
         "Prep for a cleaner finish",
@@ -371,7 +371,7 @@ export default async function SkimCoatAreaRepairPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Layers3 className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 49€" : "From €49"}
+                {isEs ? "49 €" : "€49"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -507,7 +507,7 @@ export default async function SkimCoatAreaRepairPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 49€" : "From €49"}
+            {isEs ? "49 €" : "€49"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

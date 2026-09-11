@@ -149,8 +149,8 @@ export default function DrywallClient() {
     {
       title: isEs ? "Precio transparente" : "Transparent pricing",
       text: isEs
-        ? "Precios iniciales claros y lógica de presupuesto antes de empezar."
-        : "Clear starting prices and estimate logic before work begins.",
+        ? "Precios claros y lógica de presupuesto antes de empezar."
+        : "Clear prices and estimate logic before work begins.",
       icon: <ShieldCheck className="h-5 w-5" />,
     },
   ];
@@ -161,7 +161,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Reparación de pequeños agujeros en pladur o paredes de yeso con relleno y alisado limpio."
         : "Repair of small holes in drywall or plaster walls with clean filling and smoothing.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -170,7 +170,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Reparación de daños más visibles en pared, golpes, marcas y zonas deterioradas."
         : "Patch repair for more visible wall damage, dents and impact marks.",
-      price: isEs ? "desde €45" : "from €45",
+      price: isEs ? "45 €" : "€45",
       icon: <Square className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -179,7 +179,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Trabajo de corte, parche y preparación para reparaciones de pladur más grandes."
         : "Larger cutout and patch work with more preparation and finishing.",
-      price: isEs ? "desde €69" : "from €69",
+      price: isEs ? "69 €" : "€69",
       icon: <Hammer className="h-5 w-5" />,
       className: "",
     },
@@ -188,7 +188,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Reparación de agujeros antiguos de tacos y marcas de soportes después de retirarlos."
         : "Repair of old anchor holes and bracket marks after removals.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Drill className="h-5 w-5" />,
       className: "",
     },
@@ -197,7 +197,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Preparación básica de superficie antes de pintura o retoque."
         : "Basic surface preparation before painting or touch-up work.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Paintbrush className="h-5 w-5" />,
       className: "",
     },
@@ -206,7 +206,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Reparación de aberturas hechas para cables, accesorios o instalaciones anteriores."
         : "Repair of openings made for cables, fittings or previous installations.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Square className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -215,7 +215,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Relleno y alisado de pequeñas grietas visibles en paredes y esquinas."
         : "Filling and smoothing of small visible cracks in walls and corners.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <PencilRuler className="h-5 w-5" />,
       className: "",
     },
@@ -224,7 +224,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Reparación de esquinas de pared dañadas y zonas de borde."
         : "Repair of damaged wall corners and edge areas.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Ruler className="h-5 w-5" />,
       className: "",
     },
@@ -233,7 +233,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Corrección básica de superficie para conseguir un acabado más limpio."
         : "Basic wall surface correction and prep for a cleaner finish.",
-      price: isEs ? "desde €45" : "from €45",
+      price: isEs ? "45 €" : "€45",
       icon: <Ruler className="h-5 w-5" />,
       className: "",
     },
@@ -242,7 +242,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Alisado localizado para zonas parcheadas o pequeñas secciones irregulares."
         : "Localized skim work for patched zones and uneven small sections.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <Paintbrush className="h-5 w-5" />,
       className: "",
     },
@@ -251,7 +251,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Restauración de pared después de retirar un soporte de TV o cambiar una instalación multimedia."
         : "Wall restoration after TV bracket removal or media setup changes.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Drill className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -260,7 +260,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Reparación de puntos de anclaje, tornillos y daños de montaje tras retirar estantes."
         : "Repair of shelf anchor points, screws and mounting damage.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -269,7 +269,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Reparación de marcas y golpes en pared causados por manillas o impactos."
         : "Repair of wall marks and dents caused by handles or impact.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Hammer className="h-5 w-5" />,
       className: "",
     },
@@ -278,7 +278,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Parcheo y alisado localizado en pequeñas zonas del techo."
         : "Small localized ceiling patching and smoothing.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <House className="h-5 w-5" />,
       className: "",
     },
@@ -287,7 +287,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Cierre y alisado de pequeñas aberturas de cables o instalaciones en pared."
         : "Closing and smoothing small cable or wiring openings in walls.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Drill className="h-5 w-5" />,
       className: "",
     },
@@ -296,7 +296,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Perforación limpia para soportes, accesorios o elementos de montaje cuando la pared lo permite."
         : "Clean drilling for mounts, brackets or accessories where suitable.",
-      price: isEs ? "desde €25" : "from €25",
+      price: isEs ? "25 €" : "€25",
       icon: <Drill className="h-5 w-5" />,
       className: "",
     },
@@ -305,7 +305,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Perforación básica en hormigón o ladrillo para instalaciones domésticas y accesorios."
         : "Basic drilling in concrete or brick for home installs and fixtures.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Drill className="h-5 w-5" />,
       className: "",
     },
@@ -314,7 +314,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Preparación de zonas de pladur para un montaje más seguro y limpio en pared."
         : "Preparation of drywall areas for safe and cleaner wall mounting.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <ShieldCheck className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -323,7 +323,7 @@ export default function DrywallClient() {
       desc: isEs
         ? "Trabajo de parche con lijado para dejar la zona mejor preparada para pintura."
         : "Patch work finished with sanding for better paint-ready results.",
-      price: isEs ? "desde €45" : "from €45",
+      price: isEs ? "45 €" : "€45",
       icon: <Paintbrush className="h-5 w-5" />,
       className: "",
     },

@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Espejo de Baño en Valencia | Desde 35€ | THEVULGO"
-      : "Bathroom Mirror Installation in Valencia | From €35 | THEVULGO",
+      ? "Instalación de Espejo de Baño en Valencia | 35 € | THEVULGO"
+      : "Bathroom Mirror Installation in Valencia | €35 | THEVULGO",
     description: isEs
-      ? "Instalación de espejos de baño en Valencia desde 35€. Montaje seguro en pared, altura correcta, alineación limpia y colocación visual equilibrada."
-      : "Bathroom mirror installation in Valencia from €35. Secure wall mounting with proper height, clean alignment and balanced visual placement.",
+      ? "Instalación de espejos de baño en Valencia por 35 €. Montaje seguro en pared, altura correcta, alineación limpia y colocación visual equilibrada."
+      : "Bathroom mirror installation in Valencia for €35. Secure wall mounting with proper height, clean alignment and balanced visual placement.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar un espejo de baño en Valencia?",
-    a: "La instalación de espejo de baño empieza desde 35€. El precio depende del tamaño, peso, tipo de pared, sistema de fijación, altura y dificultad de acceso.",
+    a: "La instalación de espejo de baño cuesta 35 €. El precio depende del tamaño, peso, tipo de pared, sistema de fijación, altura y dificultad de acceso.",
   },
   {
     q: "¿Instalan espejos grandes o pesados?",
@@ -260,7 +260,7 @@ export default async function BathroomMirrorInstallationValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 35€",
+                "35 €",
                 "Espejos de baño",
                 "Altura correcta",
                 "Alineación limpia",
@@ -331,7 +331,7 @@ export default async function BathroomMirrorInstallationValenciaPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 35€. Presupuesto según fotos, medidas y dificultad.",
+              text: "35 €. Presupuesto según fotos, medidas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -446,7 +446,7 @@ export default async function BathroomMirrorInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 35€
+            35 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar espejo de baño en Valencia

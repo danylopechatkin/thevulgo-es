@@ -153,7 +153,7 @@ const faqs = [
   },
   {
     q: "¿Cuánto cuesta preparar un piso antes de entregar llaves?",
-    a: "Depende de la cantidad de agujeros, estado de las paredes, materiales y urgencia. Los trabajos pequeños pueden empezar desde 35 €.",
+    a: "Depende de la cantidad de agujeros, estado de las paredes, materiales y urgencia. Los trabajos pequeños pueden costar 35 €.",
   },
   {
     q: "¿Podéis venir el mismo día?",
@@ -327,7 +327,7 @@ export default async function FinContratoAlquilerValenciaPage({ params }: Props)
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
-                ["Desde 35 €", "Pequeñas reparaciones"],
+                ["35 €", "Pequeñas reparaciones"],
                 ["Valencia", "Centro y alrededores"],
                 ["Fotos primero", "Precio claro antes de ir"],
               ].map(([title, text]) => (

@@ -115,7 +115,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Instalación de muebles y unidades compatibles de cocina con atención a la alineación, separación y posición final limpia."
         : "Installation of compatible kitchen cabinets and storage units with attention to alignment, spacing and cleaner final positioning.",
-      price: isEs ? "desde €79" : "from €79",
+      price: isEs ? "79 €" : "€79",
       icon: <ChefHat className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -124,7 +124,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Montaje seguro de muebles altos de cocina en paredes adecuadas con alineación y separación práctica."
         : "Secure mounting of upper kitchen cabinets in suitable wall types with practical alignment and spacing.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
       icon: <Drill className="h-5 w-5" />,
       className: "",
     },
@@ -133,7 +133,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Instalación y posicionamiento de muebles bajos de cocina para una distribución práctica y mejor estabilidad."
         : "Installation and positioning of lower kitchen cabinet units for practical layout and better stability.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
       icon: <Package className="h-5 w-5" />,
       className: "",
     },
@@ -142,7 +142,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Ajuste de puertas de muebles de cocina para mejorar huecos, líneas y uso diario."
         : "Adjustment of kitchen cabinet doors to improve gaps, lines and everyday usability.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <DoorOpen className="h-5 w-5" />,
       className: "",
     },
@@ -151,7 +151,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Instalación de tiradores y pomos de cocina con simetría y separación limpia en los frentes."
         : "Installation of kitchen handles and knobs with cleaner symmetry and spacing across cabinet fronts.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Hammer className="h-5 w-5" />,
       className: "",
     },
@@ -160,7 +160,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Ajuste básico de bisagras y accesorios compatibles para mejorar el movimiento y cierre de puertas."
         : "Basic adjustment of compatible hinges and fittings to improve cabinet door movement and closing feel.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -169,7 +169,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Instalación de estantes interiores o abiertos para almacenamiento, decoración u organización diaria."
         : "Installation of interior or open kitchen shelves for storage, display or daily-use organization.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Ruler className="h-5 w-5" />,
       className: "",
     },
@@ -178,7 +178,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Instalación de luces simples de cocina, luces bajo mueble o elementos compatibles para mejor visibilidad."
         : "Installation of simple kitchen lights, under-cabinet lights or compatible lighting elements for better visibility.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "lg:col-span-2",
     },
@@ -187,7 +187,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Montaje y configuración básica de iluminación bajo mueble para mejor visibilidad de encimera y ambiente."
         : "Basic mounting and setup of under-cabinet lighting for cleaner worktop visibility and kitchen atmosphere.",
-      price: isEs ? "desde €35" : "from €35",
+      price: isEs ? "35 €" : "€35",
       icon: <Lightbulb className="h-5 w-5" />,
       className: "",
     },
@@ -196,7 +196,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Instalación de barras de pared y accesorios prácticos para utensilios, almacenamiento o sistemas colgantes."
         : "Installation of wall rails and practical kitchen accessories for utensils, storage or small hanging systems.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Drill className="h-5 w-5" />,
       className: "",
     },
@@ -205,7 +205,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Colocación básica de paneles traseros y piezas de acabado compatibles cuando el trabajo es adecuado."
         : "Basic fitting and positioning of compatible kitchen back panels and finishing pieces where suitable.",
-      price: isEs ? "desde €45" : "from €45",
+      price: isEs ? "45 €" : "€45",
       icon: <Package className="h-5 w-5" />,
       className: "",
     },
@@ -214,7 +214,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Instalación de tiras de relleno, remates y piezas visibles para mejorar el acabado final."
         : "Installation of filler strips, trim pieces and visible finishing parts to improve the final kitchen look.",
-      price: isEs ? "desde €39" : "from €39",
+      price: isEs ? "39 €" : "€39",
       icon: <Ruler className="h-5 w-5" />,
       className: "",
     },
@@ -223,7 +223,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Preparación básica y ajuste de soporte para secciones compatibles de encimera cuando el alcance es sencillo."
         : "Basic prep and support fitting for compatible worktop sections where the installation scope is straightforward.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <ShieldCheck className="h-5 w-5" />,
       className: "",
     },
@@ -232,7 +232,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Ajuste y posicionamiento de muebles o unidades para electrodomésticos integrados cuando el trabajo es adecuado."
         : "Fitting and positioning of cabinets or surrounding units intended for built-in kitchen appliances where suitable.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       icon: <House className="h-5 w-5" />,
       className: "",
     },
@@ -241,7 +241,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Instalación de pequeños accesorios prácticos como soportes, barras, organizadores y elementos visibles."
         : "Installation of small practical kitchen accessories such as holders, rails, organizers and visible utility fittings.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       icon: <Wrench className="h-5 w-5" />,
       className: "",
     },
@@ -250,7 +250,7 @@ export default function KitchenClient() {
       desc: isEs
         ? "Colocación y ajuste de encimeras compatibles con alineación cuidada, soporte correcto y acabado final limpio."
         : "Positioning and fitting of compatible kitchen worktops with careful alignment, support adjustment and cleaner final finish for everyday kitchen use.",
-      price: isEs ? "desde €89" : "from €89",
+      price: isEs ? "89 €" : "€89",
       icon: <Ruler className="h-5 w-5" />,
       className: "",
     },

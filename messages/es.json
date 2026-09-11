@@ -41,7 +41,7 @@
     },
     "featured": {
       "title": "Servicios destacados",
-      "subtitle": "Trabajos reales en Valencia con instalación limpia, acabado cuidado y precio claro desde el inicio.",
+      "subtitle": "Trabajos reales en Valencia con instalación limpia, acabado cuidado y precio claro al comenzar.",
       "viewAll": "Ver todos los servicios",
       "items": {
         "0": {
@@ -125,7 +125,7 @@
     "why": {
       "badge": "Valencia · Servicio profesional",
       "title": "Trabajo limpio, fácil y sin complicaciones",
-      "subtitle": "Acabado cuidado, respuesta rápida y trato directo desde el primer mensaje.",
+      "subtitle": "Acabado cuidado, respuesta rápida y trato directo con el primer mensaje.",
       "ctaTitle": "¿Necesitas presupuesto hoy?",
       "ctaText": "Elige un servicio y consigue un precio claro antes de reservar.",
       "ctaButton": "Pedir presupuesto",
@@ -315,7 +315,7 @@
   "services": {
   "badge": "THEVULGO · Valencia",
   "title": "Servicios en Valencia",
-  "subtitle": "Categorías claras, precios orientativos y trabajo limpio desde el primer momento. Elige el servicio que necesitas y revisa los detalles.",
+  "subtitle": "Categorías claras, precios de servicios y trabajo limpio en todo momento. Elige el servicio que necesitas y revisa los detalles.",
   "viewService": "Ver servicio",
   "cta": {
     "title": "¿No sabes qué servicio elegir?",
@@ -326,121 +326,121 @@
     "airConditioning": {
       "title": "Aire acondicionado",
       "desc": "Reparación, limpieza, gas e instalación.",
-      "price": "desde 49€",
+      "price": "49 €",
       "badge": "Climatización"
     },
     "ceilingFans": {
       "title": "Ventiladores de techo",
       "desc": "Instalación, sustitución de lámpara, ventiladores con luz, mando o WiFi.",
-      "price": "desde 45€",
+      "price": "45 €",
       "badge": "Popular"
     },
     "tvMounting": {
       "title": "Montaje de TV",
       "desc": "TVs, soportes, estantes, espejos y organización limpia del cableado.",
-      "price": "desde 49€",
+      "price": "49 €",
       "badge": "Top"
     },
     "furniture": {
       "title": "Montaje de muebles",
       "desc": "IKEA, armarios, camas, muebles y pequeñas instalaciones del hogar.",
-      "price": "desde 39€",
+      "price": "39 €",
       "badge": "Popular"
     },
     "electrical": {
       "title": "Electricidad básica",
       "desc": "Luces, interruptores, enchufes y mejoras sencillas con acabado limpio.",
-      "price": "desde 35€",
+      "price": "35 €",
       "badge": "Seguro"
     },
     "plumbing": {
       "title": "Fontanería",
       "desc": "Grifos, fregaderos, inodoros, válvulas y pequeñas fugas.",
-      "price": "desde 39€",
+      "price": "39 €",
       "badge": "Rápido"
     },
     "repairs": {
       "title": "Reparaciones del hogar",
       "desc": "Pequeñas reparaciones, ajustes y mantenimiento general.",
-      "price": "desde 25€",
+      "price": "25 €",
       "badge": "Práctico"
     },
     "drywall": {
       "title": "Paredes y pladur",
       "desc": "Reparaciones, anclajes, perforaciones, cortes y preparación para acabado.",
-      "price": "desde 45€",
+      "price": "45 €",
       "badge": "Pro"
     },
     "doors": {
       "title": "Puertas y herrajes",
       "desc": "Manillas, bisagras, cerraduras, cierrapuertas y ajustes.",
-      "price": "desde 35€",
+      "price": "35 €",
       "badge": "Fix"
     },
     "smartHome": {
       "title": "Hogar inteligente",
       "desc": "Cámaras, cerraduras inteligentes, timbres y configuración de dispositivos.",
-      "price": "desde 49€",
+      "price": "49 €",
       "badge": "Smart"
     },
     "networking": {
       "title": "WiFi y redes",
       "desc": "Routers, repetidores, puntos de acceso, switches, Ethernet, RJ45 y diagnóstico de red.",
-      "price": "desde 49€",
+      "price": "49 €",
       "badge": "WiFi"
     },
     "cctv": {
       "title": "Cámaras CCTV",
       "desc": "Instalación de cámaras de seguridad, configuración NVR, acceso remoto y ajustes.",
-      "price": "desde 59€",
+      "price": "59 €",
       "badge": "CCTV"
     },
     "alarmSystems": {
       "title": "Sistemas de alarma",
       "desc": "Alarmas cableadas e inalámbricas, sensores, sirenas, teclado y mejoras de seguridad.",
-      "price": "desde 69€",
+      "price": "69 €",
       "badge": "Alarma"
     },
     "accessControl": {
       "title": "Control de acceso",
       "desc": "Teclados, lectores RFID, cerraduras eléctricas, electroimanes y acceso a puertas.",
-      "price": "desde 79€",
+      "price": "79 €",
       "badge": "Acceso"
     },
     "starlinkInternet": {
       "title": "Starlink e internet",
       "desc": "Instalación de Starlink, antenas exteriores, routers 4G/5G y enlaces punto a punto.",
-      "price": "desde 79€",
+      "price": "79 €",
       "badge": "Internet"
     },
     "commercialSecurity": {
       "title": "Seguridad para negocios",
       "desc": "Redes, CCTV, alarmas y control de acceso para oficinas, bares, locales y negocios.",
-      "price": "desde 99€",
+      "price": "99 €",
       "badge": "Negocios"
     },
     "kitchen": {
       "title": "Cocina",
       "desc": "Armarios, estantes, luces, accesorios y pequeñas instalaciones.",
-      "price": "desde 45€",
+      "price": "45 €",
       "badge": "Cocina"
     },
     "bathroom": {
       "title": "Baño",
       "desc": "Espejos, muebles, soportes, accesorios y acabados limpios.",
-      "price": "desde 39€",
+      "price": "39 €",
       "badge": "Baño"
     },
     "moveIn": {
       "title": "Preparación del hogar",
       "desc": "<strong>Cortinas</strong>, muebles e instalaciones al mudarse.",
-      "price": "desde 49€",
+      "price": "49 €",
       "badge": "Setup"
     },
     "exterior": {
       "title": "Trabajos exteriores",
       "desc": "<strong>Vallas</strong>, fachadas, tejados y reparaciones exteriores puntuales.",
-      "price": "desde 59€",
+      "price": "59 €",
       "badge": "Casa"
     }
   }
@@ -457,8 +457,8 @@
     "titleSuffix": "calculadora de presupuesto",
     "description": "Elige exactamente lo que necesitas. Añade uno o varios servicios para crear tu presupuesto.",
     "clearAll": "Borrar todo",
-    "startingPrice": "Precio inicial por unidad",
-    "subtotal": "Subtotal",
+    "unitPrice": "Precio por unidad",
+    "lineTotal": "Total del servicio",
     "customNote": "¿No encuentras el servicio exacto? Elige \"Trabajo personalizado / No está en la lista\" o descríbelo en notas."
   },
   "step3": {

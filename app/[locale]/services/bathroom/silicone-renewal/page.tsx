@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Renovación de Silicona en Baño | Desde 39€ | THEVULGO"
-      : "Bathroom Silicone Renewal | From €39 | THEVULGO",
+      ? "Renovación de Silicona en Baño | 39 € | THEVULGO"
+      : "Bathroom Silicone Renewal | €39 | THEVULGO",
     description: isEs
-      ? "Renovación de silicona en baño desde 39€. Retirada y sustitución de silicona antigua alrededor de lavabos, muebles, bañeras y zonas de ducha."
-      : "Bathroom silicone renewal from €39. Removal and replacement of old silicone around sinks, vanities, bathtubs and shower areas for a cleaner finish.",
+      ? "Renovación de silicona en baño por 39 €. Retirada y sustitución de silicona antigua alrededor de lavabos, muebles, bañeras y zonas de ducha."
+      : "Bathroom silicone renewal for €39. Removal and replacement of old silicone around sinks, vanities, bathtubs and shower areas for a cleaner finish.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta renovar la silicona del baño?",
-    a: "La renovación de silicona empieza desde 39€. El precio depende de la longitud de la junta, estado de la silicona antigua, zona de trabajo, limpieza necesaria y dificultad de acceso.",
+    a: "La renovación de silicona cuesta 39 €. El precio depende de la longitud de la junta, estado de la silicona antigua, zona de trabajo, limpieza necesaria y dificultad de acceso.",
   },
   {
     q: "¿Retiran la silicona antigua antes de aplicar la nueva?",
@@ -241,7 +241,7 @@ export default async function SiliconeRenewalPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 39€",
+                "39 €",
                 "Retirada de silicona vieja",
                 "Nueva silicona limpia",
                 "Lavabo, ducha y bañera",
@@ -312,7 +312,7 @@ export default async function SiliconeRenewalPage({ params }: PageProps) {
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 39€. Presupuesto según fotos, longitud y dificultad.",
+              text: "39 €. Presupuesto según fotos, longitud y dificultad.",
             },
           ].map((item) => (
             <div
@@ -456,7 +456,7 @@ export default async function SiliconeRenewalPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para renovar silicona de baño

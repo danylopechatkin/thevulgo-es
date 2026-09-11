@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Sellado de Huecos en Baño | Desde 29€ | THEVULGO"
-      : "Bathroom Seal & Gap Fixing | From €29 | THEVULGO",
+      ? "Sellado de Huecos en Baño | 29 € | THEVULGO"
+      : "Bathroom Seal & Gap Fixing | €29 | THEVULGO",
     description: isEs
-      ? "Sellado de pequeños huecos visibles en baño desde 29€. Sellado alrededor de elementos, juntas, accesorios y zonas visibles para un acabado más limpio."
-      : "Bathroom seal and gap fixing from €29. Sealing small visible gaps around fixtures and bathroom elements for a tidier look and better protection.",
+      ? "Sellado de pequeños huecos visibles en baño por 29 €. Sellado alrededor de elementos, juntas, accesorios y zonas visibles para un acabado más limpio."
+      : "Bathroom seal and gap fixing for €29. Sealing small visible gaps around fixtures and bathroom elements for a tidier look and better protection.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta sellar pequeños huecos en el baño?",
-    a: "El sellado de pequeños huecos en baño empieza desde 29€. El precio depende del tamaño del hueco, ubicación, material necesario, acceso y cantidad de zonas a sellar.",
+    a: "El sellado de pequeños huecos en baño cuesta 29 €. El precio depende del tamaño del hueco, ubicación, material necesario, acceso y cantidad de zonas a sellar.",
   },
   {
     q: "¿Qué tipo de huecos pueden sellar?",
@@ -241,7 +241,7 @@ export default async function SealGapFixingPage({ params }: PageProps) {
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 29€",
+                "29 €",
                 "Huecos visibles",
                 "Juntas pequeñas",
                 "Lavabos y duchas",
@@ -312,7 +312,7 @@ export default async function SealGapFixingPage({ params }: PageProps) {
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 29€. Presupuesto según fotos, tamaño y dificultad.",
+              text: "29 €. Presupuesto según fotos, tamaño y dificultad.",
             },
           ].map((item) => (
             <div
@@ -457,7 +457,7 @@ export default async function SealGapFixingPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para sellar pequeños huecos de baño

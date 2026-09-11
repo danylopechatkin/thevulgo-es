@@ -76,7 +76,7 @@ const faqEs = [
   {
     question: "¿Cuánto cuesta instalar un toldo de Leroy Merlin en Valencia?",
     answer:
-      "El precio empieza desde 79 €. El coste final depende del tamaño del toldo, peso, altura de instalación, tipo de pared, número de soportes y si hay que desmontar un toldo antiguo.",
+      "El precio es de 79 €. El coste final depende del tamaño del toldo, peso, altura de instalación, tipo de pared, número de soportes y si hay que desmontar un toldo antiguo.",
   },
   {
     question: "¿Qué necesito enviar para recibir presupuesto?",
@@ -109,7 +109,7 @@ const faqEn = [
   {
     question: "How much does Leroy Merlin awning installation cost in Valencia?",
     answer:
-      "Prices start from €79. The final cost depends on awning size, weight, installation height, wall type, number of brackets and whether an old awning needs to be removed.",
+      "Prices are €79. The final cost depends on awning size, weight, installation height, wall type, number of brackets and whether an old awning needs to be removed.",
   },
   {
     question: "What do I need to send for a quote?",
@@ -128,8 +128,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de Toldo Leroy Merlin en Valencia | Desde 79 € | THEVULGO"
-    : "Leroy Merlin Awning Installation in Valencia | From €79 | THEVULGO";
+    ? "Instalación de Toldo Leroy Merlin en Valencia | 79 € | THEVULGO"
+    : "Leroy Merlin Awning Installation in Valencia | €79 | THEVULGO";
 
   const description = isEs
     ? "Instalamos toldos comprados en Leroy Merlin en Valencia. Montaje de toldos manuales y eléctricos para patio, terraza o balcón. Presupuesto por WhatsApp."
@@ -437,7 +437,7 @@ export default async function InstalacionToldoLeroyMerlinValenciaPage({
                 <div className="mt-8 flex flex-wrap gap-3 text-sm text-neutral-300">
                   <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2">
                     <Euro className="h-4 w-4 text-amber-300" />
-                    {isEs ? "Desde 79 €" : "From €79"}
+                    {isEs ? "79 €" : "€79"}
                   </span>
                   <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2">
                     <PackageCheck className="h-4 w-4 text-amber-300" />
@@ -458,10 +458,10 @@ export default async function InstalacionToldoLeroyMerlinValenciaPage({
                     </div>
                     <div>
                       <p className="text-sm text-neutral-400">
-                        {isEs ? "Precio inicial" : "Starting price"}
+                        {isEs ? "Precio" : "Price"}
                       </p>
                       <p className="text-3xl font-bold">
-                        {isEs ? "Desde 79 €" : "From €79"}
+                        {isEs ? "79 €" : "€79"}
                       </p>
                     </div>
                   </div>

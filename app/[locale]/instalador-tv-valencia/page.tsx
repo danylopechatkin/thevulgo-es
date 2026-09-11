@@ -171,7 +171,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Instalación de TV en pared con soporte compatible, medición, nivelación y fijación segura."
         : "TV wall installation with compatible bracket, measuring, levelling and secure fixing.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       href: `/${locale}/montaje-tv-valencia`,
       icon: <Tv className="h-5 w-5" />,
     },
@@ -180,7 +180,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Servicio para colgar TV en salón, dormitorio, oficina, Airbnb, bar o local comercial."
         : "Service to hang a TV in a living room, bedroom, office, Airbnb, bar or commercial unit.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       href: `/${locale}/colgar-tv-valencia`,
       icon: <Drill className="h-5 w-5" />,
     },
@@ -189,7 +189,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Instalación completa para dejar la pantalla recta, estable y con una posición cómoda."
         : "Complete installation to leave the screen straight, stable and comfortably positioned.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       href: `/${locale}/instalar-tv-pared-valencia`,
       icon: <Monitor className="h-5 w-5" />,
     },
@@ -198,7 +198,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Montaje cuidado para Samsung Frame con alineación precisa y acabado decorativo."
         : "Careful Samsung Frame mounting with precise alignment and decorative finish.",
-      price: isEs ? "desde €69" : "from €69",
+      price: isEs ? "69 €" : "€69",
       href: `/${locale}/montaje-tv-samsung-frame-valencia`,
       icon: <Paintbrush className="h-5 w-5" />,
     },
@@ -207,7 +207,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Instalación de televisores grandes con revisión de pared, soporte y posición."
         : "Large TV installation with wall, bracket and position check.",
-      price: isEs ? "desde €79" : "from €79",
+      price: isEs ? "79 €" : "€79",
       href: `/${locale}/montaje-tv-75-pulgadas-valencia`,
       icon: <Ruler className="h-5 w-5" />,
     },
@@ -216,7 +216,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Montaje de pantallas grandes con más cuidado, ayuda y fijación adecuada."
         : "Large screen mounting with extra care, support and suitable fixing.",
-      price: isEs ? "desde €99" : "from €99",
+      price: isEs ? "99 €" : "€99",
       href: `/${locale}/montaje-tv-85-pulgadas-valencia`,
       icon: <Monitor className="h-5 w-5" />,
     },
@@ -225,7 +225,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Canaleta, rutas limpias y soluciones para mejorar el aspecto de la instalación."
         : "Raceways, clean routing and solutions to improve the look of the setup.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       href: `/${locale}/ocultar-cables-valencia`,
       icon: <Cable className="h-5 w-5" />,
     },
@@ -234,7 +234,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Montaje de barra de sonido bajo la TV o en pared con cableado ordenado."
         : "Soundbar mounting below the TV or on the wall with tidy cabling.",
-      price: isEs ? "desde €29" : "from €29",
+      price: isEs ? "29 €" : "€29",
       href: `/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
       icon: <Speaker className="h-5 w-5" />,
     },
@@ -243,7 +243,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Montaje de soporte fijo, inclinable o articulado con fijación adecuada."
         : "Fixed, tilting or full-motion TV bracket installation with suitable fixings.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
       href: `/${locale}/instalacion-soporte-tv-valencia`,
       icon: <Brackets className="h-5 w-5" />,
     },
@@ -365,28 +365,28 @@ export default function InstaladorTvClient() {
       text: isEs
         ? "Tamaño habitual para dormitorios, salones pequeños y apartamentos. Instalación rápida si la pared y soporte son adecuados."
         : "Common size for bedrooms, small living rooms and apartments. Quick installation if wall and bracket are suitable.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
     },
     {
       title: isEs ? "TV de 65 pulgadas" : "65 inch TV",
       text: isEs
         ? "Pantalla popular para salones. Requiere medir bien la altura y distancia de visión."
         : "Popular living room screen. Requires careful height and viewing distance measurement.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
     },
     {
       title: isEs ? "TV de 75 pulgadas" : "75 inch TV",
       text: isEs
         ? "Necesita más cuidado en manipulación, soporte compatible y fijación estable."
         : "Needs more careful handling, compatible bracket and stable fixing.",
-      price: isEs ? "desde €79" : "from €79",
+      price: isEs ? "79 €" : "€79",
     },
     {
       title: isEs ? "TV de 85 pulgadas" : "85 inch TV",
       text: isEs
         ? "Instalación avanzada para pantallas grandes. Es importante revisar pared, peso y soporte antes del montaje."
         : "Advanced installation for large screens. Wall, weight and bracket must be checked before mounting.",
-      price: isEs ? "desde €99" : "from €99",
+      price: isEs ? "99 €" : "€99",
     },
   ];
 
@@ -686,7 +686,7 @@ export default function InstaladorTvClient() {
                         pared. Un buen montaje necesita revisar el tipo de pared,
                         elegir los tacos adecuados, medir la altura, comprobar el
                         soporte, entender el peso de la pantalla y dejar una
-                        posición cómoda para ver la TV desde el sofá, cama o mesa.
+                        posición cómoda para ver la TV en el sofá, cama o mesa.
                       </p>
 
                       <p>
@@ -1033,8 +1033,8 @@ export default function InstaladorTvClient() {
 
                       <p>
                         En un salón normal, la pantalla debe quedar cómoda para
-                        verla desde el sofá. En un dormitorio, la altura puede
-                        cambiar porque la TV se ve desde la cama. En bares,
+                        verla en el sofá. En un dormitorio, la altura puede
+                        cambiar porque la TV se ve en la cama. En bares,
                         oficinas o locales, la posición depende de la distancia,
                         altura del público y uso principal de la pantalla.
                       </p>
@@ -1450,7 +1450,7 @@ export default function InstaladorTvClient() {
                     ? [
                         {
                           q: "¿Cuánto cuesta un instalador de TV en Valencia?",
-                          a: "El montaje básico de TV en pared empieza desde 49 €. El precio final depende del tamaño de la TV, tipo de pared, soporte, altura, ocultación de cables y dificultad del trabajo.",
+                          a: "El montaje básico de TV en pared cuesta 49 €. El precio final depende del tamaño de la TV, tipo de pared, soporte, altura, ocultación de cables y dificultad del trabajo.",
                         },
                         {
                           q: "¿Puedo montar una TV en pared de pladur?",
@@ -1492,7 +1492,7 @@ export default function InstaladorTvClient() {
                     : [
                         {
                           q: "How much does a TV installer cost in Valencia?",
-                          a: "Basic TV wall mounting starts from €49. The final price depends on TV size, wall type, bracket, height, cable concealment and job complexity.",
+                          a: "Basic TV wall mounting costs €49. The final price depends on TV size, wall type, bracket, height, cable concealment and job complexity.",
                         },
                         {
                           q: "Can a TV be mounted on drywall?",

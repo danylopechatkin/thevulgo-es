@@ -86,7 +86,7 @@ const faqs = [
   {
     question: "¿Cuánto cuesta instalar un toldo manual en Valencia?",
     answer:
-      "La instalación de un toldo manual en Valencia suele empezar desde 79 €. El precio final depende del tamaño del toldo, tipo de pared, altura, accesibilidad y si hay que desmontar un toldo antiguo.",
+      "La instalación de un toldo manual en Valencia cuesta 79 €. El precio final depende del tamaño del toldo, tipo de pared, altura, accesibilidad y si hay que desmontar un toldo antiguo.",
   },
   {
     question: "¿Instaláis toldos manuales comprados en Leroy Merlin o Bauhaus?",
@@ -120,8 +120,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de toldo manual en Valencia | Desde 79€"
-    : "Manual awning installation in Valencia | From €79";
+    ? "Instalación de toldo manual en Valencia | 79 €"
+    : "Manual awning installation in Valencia | €79";
 
   const description = isEs
     ? "Instalamos toldos manuales en Valencia. Montaje seguro en terraza, balcón y fachada. Presupuesto por WhatsApp."
@@ -286,7 +286,7 @@ export default async function ManualAwningPage({ params }: Props) {
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                 <Euro className="mb-2 h-5 w-5 text-orange-600" />
-                <p className="font-semibold">{isEs ? "Desde 79€" : "From €79"}</p>
+                <p className="font-semibold">{isEs ? "79 €" : "€79"}</p>
                 <p className="text-sm text-slate-600">
                   {isEs ? "Precio claro antes de empezar" : "Clear price before work"}
                 </p>
@@ -466,8 +466,8 @@ export default async function ManualAwningPage({ params }: Props) {
               </p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
                 {isEs
-                  ? "Precio desde 79€ para instalación de toldo manual"
-                  : "From €79 for manual awning installation"}
+                  ? "Precio de 79 € para instalación de toldo manual"
+                  : "€79 for manual awning installation"}
               </h2>
               <p className="mt-4 leading-8 text-slate-300">
                 {isEs
@@ -488,7 +488,7 @@ export default async function ManualAwningPage({ params }: Props) {
               {[
                 {
                   title: isEs ? "Instalación básica" : "Basic installation",
-                  price: "desde 79€",
+                  price: "79 €",
                   text: isEs
                     ? "Para toldo manual pequeño o medio, con acceso sencillo y pared adecuada."
                     : "For small or medium manual awning with easy access and suitable wall.",

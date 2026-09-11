@@ -163,27 +163,27 @@ export default async function InstalarProyectorTechoValenciaPage({
 
   const prices = isEs
     ? [
-        ["Instalar proyector en techo", "desde 79 €"],
-        ["Montaje de soporte de proyector", "desde 59 €"],
-        ["Instalación de pantalla", "desde 49 €"],
-        ["Ajuste de imagen y alineación", "desde 39 €"],
+        ["Instalar proyector en techo", "79 €"],
+        ["Montaje de soporte de proyector", "59 €"],
+        ["Instalación de pantalla", "49 €"],
+        ["Ajuste de imagen y alineación", "39 €"],
         ["Canaleta / cableado visible limpio", "según trabajo"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Ceiling projector installation", "from €79"],
-        ["Projector bracket mounting", "from €59"],
-        ["Screen installation", "from €49"],
-        ["Image adjustment and alignment", "from €39"],
+        ["Ceiling projector installation", "€79"],
+        ["Projector bracket mounting", "€59"],
+        ["Screen installation", "€49"],
+        ["Image adjustment and alignment", "€39"],
         ["Cable channel / tidy visible cabling", "by job"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta instalar un proyector en techo en Valencia?",
-          a: "Depende del tipo de techo, altura, soporte, peso del proyector, distancia a la pantalla, cableado y ajuste necesario. Una instalación en techo suele empezar desde 79 €.",
+          a: "Depende del tipo de techo, altura, soporte, peso del proyector, distancia a la pantalla, cableado y ajuste necesario. Una instalación en techo cuesta 79 €.",
         },
         {
           q: "¿Qué necesitáis para instalar el proyector en techo?",
@@ -209,7 +209,7 @@ export default async function InstalarProyectorTechoValenciaPage({
     : [
         {
           q: "How much does ceiling projector installation in Valencia cost?",
-          a: "It depends on ceiling type, height, bracket, projector weight, distance to the screen, cabling and required adjustment. Ceiling installation usually starts from €79.",
+          a: "It depends on ceiling type, height, bracket, projector weight, distance to the screen, cabling and required adjustment. Ceiling installation costs €79.",
         },
         {
           q: "What do you need to install the projector on the ceiling?",
@@ -474,7 +474,7 @@ export default async function InstalarProyectorTechoValenciaPage({
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

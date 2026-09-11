@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Ajuste de Cierrapuertas | Desde 39€ | THEVULGO"
-      : "Door Closer Adjustment | From €39 | THEVULGO",
+      ? "Ajuste de Cierrapuertas | 39 € | THEVULGO"
+      : "Door Closer Adjustment | €39 | THEVULGO",
     description: isEs
-      ? "Ajuste básico de cierrapuertas desde 39€. Corrección de cierrapuertas compatibles para mejorar el movimiento, reducir golpes y suavizar apertura y cierre."
-      : "Door closer adjustment from €39. Basic adjustment of compatible closers to improve door movement, reduce slamming and make opening and closing smoother.",
+      ? "Ajuste básico de cierrapuertas por 39 €. Corrección de cierrapuertas compatibles para mejorar el movimiento, reducir golpes y suavizar apertura y cierre."
+      : "Door closer adjustment for €39. Basic adjustment of compatible closers to improve door movement, reduce slamming and make opening and closing smoother.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta ajustar un cierrapuertas?",
-    a: "El ajuste de cierrapuertas empieza desde 39€. El precio depende del tipo de cierrapuertas, estado del mecanismo, puerta, tornillos, acceso y dificultad del ajuste.",
+    a: "El ajuste de cierrapuertas cuesta 39 €. El precio depende del tipo de cierrapuertas, estado del mecanismo, puerta, tornillos, acceso y dificultad del ajuste.",
   },
   {
     q: "¿Pueden ajustar un cierrapuertas que da golpes?",
@@ -243,7 +243,7 @@ export default async function AjusteCierrapuertasPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 39€",
+                "39 €",
                 "Puertas que golpean",
                 "Cierre más suave",
                 "Ajuste de velocidad",
@@ -314,7 +314,7 @@ export default async function AjusteCierrapuertasPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 39€. Presupuesto según fotos, vídeo y dificultad.",
+              text: "39 €. Presupuesto según fotos, vídeo y dificultad.",
             },
           ].map((item) => (
             <div
@@ -458,7 +458,7 @@ export default async function AjusteCierrapuertasPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para ajustar cierrapuertas

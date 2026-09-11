@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Alineación de Puertas de Armario en Valencia | Desde 35€ | THEVULGO"
-    : "Cabinet Door Alignment in Valencia | From €35 | THEVULGO";
+    ? "Alineación de Puertas de Armario en Valencia | 35 € | THEVULGO"
+    : "Cabinet Door Alignment in Valencia | €35 | THEVULGO";
 
   const description = isEs
-    ? "Alineación de puertas de armario en Valencia desde 35€. Ajustes simples de bisagras para puertas de muebles, armarios, cocina e interiores."
-    : "Cabinet door alignment in Valencia from €35. Simple hinge adjustments for cabinet doors, wardrobes, kitchen units and interior fittings.";
+    ? "Alineación de puertas de armario en Valencia por 35 €. Ajustes simples de bisagras para puertas de muebles, armarios, cocina e interiores."
+    : "Cabinet door alignment in Valencia for €35. Simple hinge adjustments for cabinet doors, wardrobes, kitchen units and interior fittings.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function CabinetDoorAlignmentPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta ajustar puertas de armario en Valencia?",
-          a: "El servicio empieza desde 35€. El precio final depende del número de puertas, tipo de bisagra, estado del mueble, acceso y tiempo necesario.",
+          a: "El servicio cuesta 35 €. El precio final depende del número de puertas, tipo de bisagra, estado del mueble, acceso y tiempo necesario.",
         },
         {
           q: "¿Podéis ajustar puertas de cocina?",
@@ -137,7 +137,7 @@ export default async function CabinetDoorAlignmentPage({ params }: PageProps) {
         },
         {
           q: "How much does cabinet door alignment cost in Valencia?",
-          a: "The service starts from €35. Final price depends on the number of doors, hinge type, cabinet condition, access and required time.",
+          a: "The service costs €35. Final price depends on the number of doors, hinge type, cabinet condition, access and required time.",
         },
         {
           q: "Can you adjust kitchen cabinet doors?",
@@ -235,13 +235,13 @@ export default async function CabinetDoorAlignmentPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 35€",
+        "35 €",
         "Ajuste de bisagras",
         "Puertas de armario y cocina",
         "Mejor cierre y alineación",
       ]
     : [
-        "From €35",
+        "€35",
         "Hinge adjustments",
         "Cabinet and kitchen doors",
         "Better closing and alignment",
@@ -374,7 +374,7 @@ export default async function CabinetDoorAlignmentPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <DoorOpen className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 35€" : "From €35"}
+                {isEs ? "35 €" : "€35"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -510,7 +510,7 @@ export default async function CabinetDoorAlignmentPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 35€" : "From €35"}
+            {isEs ? "35 €" : "€35"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

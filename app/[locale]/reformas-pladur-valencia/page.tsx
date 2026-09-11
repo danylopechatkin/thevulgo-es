@@ -204,20 +204,20 @@ export default async function ReformasPladurValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Revisión / visita", "desde 49 €"],
-        ["Reparación pequeña de pladur", "desde 35 €"],
-        ["Parche + lijado básico", "desde 45 €"],
-        ["Reparación de techo", "desde 49 €"],
+        ["Revisión / visita", "49 €"],
+        ["Reparación pequeña de pladur", "35 €"],
+        ["Parche + lijado básico", "45 €"],
+        ["Reparación de techo", "49 €"],
         ["Tabique pequeño de pladur", "presupuesto"],
         ["Falso techo de pladur", "presupuesto"],
         ["Techo registrable", "presupuesto"],
         ["Preparación para pintura", "presupuesto"],
       ]
     : [
-        ["Visit / inspection", "from €49"],
-        ["Small drywall repair", "from €35"],
-        ["Patch + basic sanding", "from €45"],
-        ["Ceiling repair", "from €49"],
+        ["Visit / inspection", "€49"],
+        ["Small drywall repair", "€35"],
+        ["Patch + basic sanding", "€45"],
+        ["Ceiling repair", "€49"],
         ["Small drywall partition", "quote"],
         ["Plasterboard false ceiling", "quote"],
         ["Suspended ceiling", "quote"],
@@ -228,7 +228,7 @@ export default async function ReformasPladurValenciaPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta una reforma de pladur en Valencia?",
-          a: "Depende de metros, materiales, altura, estructura, acabado, dificultad y si hace falta pintura. Las reparaciones pequeñas pueden empezar desde 35 €, pero una reforma de pladur completa necesita presupuesto.",
+          a: "Depende de metros, materiales, altura, estructura, acabado, dificultad y si hace falta pintura. Las reparaciones pequeñas pueden costar 35 €, pero una reforma de pladur completa necesita presupuesto.",
         },
         {
           q: "¿Hacéis reformas de pladur en pisos y locales?",
@@ -262,7 +262,7 @@ export default async function ReformasPladurValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does a plasterboard renovation in Valencia cost?",
-          a: "It depends on measurements, materials, height, structure, finish, difficulty and whether painting is needed. Small repairs can start from €35, but a full plasterboard renovation requires a quote.",
+          a: "It depends on measurements, materials, height, structure, finish, difficulty and whether painting is needed. Small repairs can cost €35, but a full plasterboard renovation requires a quote.",
         },
         {
           q: "Do you do plasterboard renovations in apartments and shops?",
@@ -523,7 +523,7 @@ export default async function ReformasPladurValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">
@@ -555,7 +555,7 @@ export default async function ReformasPladurValenciaPage({ params }: Props) {
 
         <p className="mt-4 max-w-3xl text-neutral-700">
           {isEs
-            ? "Este cluster ayuda a Google a entender que THEVULGO trabaja pladur en Valencia desde varias intenciones de búsqueda: presupuesto, empresa, reformas, falsos techos, reparación y tabiques."
+            ? "Este cluster ayuda a Google a entender que THEVULGO trabaja pladur en Valencia para varias intenciones de búsqueda: presupuesto, empresa, reformas, falsos techos, reparación y tabiques."
             : "This cluster helps Google understand that THEVULGO works with drywall in Valencia across several search intents: quote, company, renovation, false ceilings, repair and partitions."}
         </p>
 

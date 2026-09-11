@@ -164,27 +164,27 @@ export default async function InstalacionPladurValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Instalación básica de pladur", "desde 79 €"],
-        ["Pared o cierre pequeño de pladur", "desde 89 €"],
+        ["Instalación básica de pladur", "79 €"],
+        ["Pared o cierre pequeño de pladur", "89 €"],
         ["Techo de pladur / falso techo", "presupuesto"],
-        ["Reparación o modificación", "desde 49 €"],
-        ["Preparación para focos", "desde 49 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Reparación o modificación", "49 €"],
+        ["Preparación para focos", "49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Basic plasterboard installation", "from €79"],
-        ["Small plasterboard wall or closure", "from €89"],
+        ["Basic plasterboard installation", "€79"],
+        ["Small plasterboard wall or closure", "€89"],
         ["Plasterboard ceiling / false ceiling", "quote"],
-        ["Repair or modification", "from €49"],
-        ["Spotlight preparation", "from €49"],
-        ["Visit / inspection", "from €49"],
+        ["Repair or modification", "€49"],
+        ["Spotlight preparation", "€49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta instalar pladur en Valencia?",
-          a: "Depende del tipo de instalación, metros, altura, materiales, estructura, acceso, acabado y dificultad. Los trabajos pequeños pueden empezar desde 79 €, pero techos, paredes o tabiques completos requieren presupuesto.",
+          a: "Depende del tipo de instalación, metros, altura, materiales, estructura, acceso, acabado y dificultad. Los trabajos pequeños pueden costar 79 €, pero techos, paredes o tabiques completos requieren presupuesto.",
         },
         {
           q: "¿Instaláis techos de pladur?",
@@ -210,7 +210,7 @@ export default async function InstalacionPladurValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does plasterboard installation in Valencia cost?",
-          a: "It depends on job type, measurements, height, materials, structure, access, finish and difficulty. Small jobs can start from €79, but full ceilings, walls or partitions require a quote.",
+          a: "It depends on job type, measurements, height, materials, structure, access, finish and difficulty. Small jobs can cost €79, but full ceilings, walls or partitions require a quote.",
         },
         {
           q: "Do you install plasterboard ceilings?",
@@ -469,7 +469,7 @@ export default async function InstalacionPladurValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

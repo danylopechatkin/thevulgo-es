@@ -1,4 +1,5 @@
 "use client";
+import { formatPublicPrice } from "@/lib/public-pricing";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -180,7 +181,7 @@ export default function FanLeadForm({ locale }: { locale: string }) {
                   <p className="text-sm font-bold text-neutral-600">
                     {fanCount} {isEs ? (fanCount === 1 ? "ventilador" : "ventiladores") : (fanCount === 1 ? "fan" : "fans")}
                   </p>
-                  <p className="mt-1 text-3xl font-black">{selectedPackage.price} €</p>
+                  <p className="mt-1 text-3xl font-black">{formatPublicPrice(selectedPackage.price, locale)}</p>
                 </div>
                 <p className="mt-5 text-base leading-7 text-neutral-700">
                   {isEs
@@ -255,7 +256,7 @@ export default function FanLeadForm({ locale }: { locale: string }) {
                 >
                   {active && <BadgeCheck className="absolute right-4 top-4 h-5 w-5" />}
                   <span className="block text-sm font-bold text-neutral-600">{item.count} {isEs ? (item.count === 1 ? "ventilador" : "ventiladores") : (item.count === 1 ? "fan" : "fans")}</span>
-                  <span className="mt-2 block text-3xl font-black">{item.price} €</span>
+                  <span className="mt-2 block text-3xl font-black">{formatPublicPrice(item.price, locale)}</span>
                   <span className="mt-1 block text-xs font-semibold text-neutral-600">{isEs ? "Precio del pack" : "Package price"}</span>
                 </button>
               );
@@ -343,7 +344,7 @@ export default function FanLeadForm({ locale }: { locale: string }) {
           <div className="mt-7 flex flex-col items-center justify-between gap-4 rounded-2xl bg-neutral-950 p-5 text-white sm:flex-row">
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-neutral-400">{isEs ? "Precio seleccionado" : "Selected price"}</p>
-              <p className="mt-1 text-3xl font-black">{selectedPackage.price} €</p>
+              <p className="mt-1 text-3xl font-black">{formatPublicPrice(selectedPackage.price, locale)}</p>
             </div>
             <button disabled={sending || processingPhotos} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-400 px-7 py-4 font-black text-black transition hover:scale-[1.02] disabled:opacity-60 sm:w-auto">
               {sending ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}

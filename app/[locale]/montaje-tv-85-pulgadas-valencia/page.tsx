@@ -42,8 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "85 Inch TV Mounting Valencia | Professional Installation | THEVULGO";
 
   const description = isEs
-    ? "Montaje profesional de TV de 85 pulgadas en Valencia. Instalación segura, soporte compatible, revisión de pared, nivelación precisa y ocultación de cables. Desde 99€."
-    : "Professional 85 inch TV mounting in Valencia. Safe installation, compatible bracket, wall check, precise levelling and cable concealment. From €99.";
+    ? "Montaje profesional de TV de 85 pulgadas en Valencia. Instalación segura, soporte compatible, revisión de pared, nivelación precisa y ocultación de cables. 99 €."
+    : "Professional 85 inch TV mounting in Valencia. Safe installation, compatible bracket, wall check, precise levelling and cable concealment. €99.";
 
   const url = `${baseUrl}/${locale}/montaje-tv-85-pulgadas-valencia`;
 
@@ -190,8 +190,8 @@ export default async function Page({ params }: Props) {
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "El montaje de una TV de 85 pulgadas empieza desde 99 €. El precio final depende del tipo de pared, soporte, altura, ocultación de cables, ayuda necesaria y dificultad del trabajo."
-            : "85 inch TV mounting starts from €99. The final price depends on wall type, bracket, height, cable concealment, required help and job complexity.",
+            ? "El montaje de una TV de 85 pulgadas cuesta 99 €. El precio final depende del tipo de pared, soporte, altura, ocultación de cables, ayuda necesaria y dificultad del trabajo."
+            : "85 inch TV mounting costs €99. The final price depends on wall type, bracket, height, cable concealment, required help and job complexity.",
         },
       },
       {
@@ -264,8 +264,8 @@ export default async function Page({ params }: Props) {
     secondaryCta: isEs ? "WhatsApp rápido" : "Quick WhatsApp",
 
     heroNote: isEs
-      ? "Desde 99 €. Precio final según pared, soporte, altura, ayuda necesaria, cableado y dificultad."
-      : "From €99. Final price depends on wall, bracket, height, required help, cabling and complexity.",
+      ? "99 €. Precio final según pared, soporte, altura, ayuda necesaria, cableado y dificultad."
+      : "€99. Final price depends on wall, bracket, height, required help, cabling and complexity.",
 
     servicesTitle: isEs
       ? "Servicio para montar TV de 85 pulgadas"
@@ -533,7 +533,7 @@ export default async function Page({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta montar una TV de 85 pulgadas en Valencia?",
-          a: "El montaje empieza desde 99 €. El precio final depende del tipo de pared, soporte, altura, cableado, ayuda necesaria y dificultad.",
+          a: "El montaje cuesta 99 €. El precio final depende del tipo de pared, soporte, altura, cableado, ayuda necesaria y dificultad.",
         },
         {
           q: "¿Se puede colgar una TV de 85 pulgadas en pladur?",
@@ -567,7 +567,7 @@ export default async function Page({ params }: Props) {
     : [
         {
           q: "How much does it cost to mount an 85 inch TV in Valencia?",
-          a: "Mounting starts from €99. Final price depends on wall type, bracket, height, cabling, required help and complexity.",
+          a: "Mounting costs €99. Final price depends on wall type, bracket, height, cabling, required help and complexity.",
         },
         {
           q: "Can an 85 inch TV be mounted on drywall?",
@@ -932,7 +932,7 @@ export default async function Page({ params }: Props) {
                           distribución del salón.
                         </p>
                         <p>
-                          Normalmente se busca que la pantalla quede cómoda desde
+                          Normalmente se busca que la pantalla quede cómoda en
                           el sofá, teniendo en cuenta la distancia de visión, el
                           tamaño del mueble, la altura del soporte y el centro
                           visual de la TV.

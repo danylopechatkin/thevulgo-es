@@ -337,7 +337,7 @@ export default async function CableConcealmentValenciaPage({
           </p>
 
           <p>
-            Antes de empezar revisamos qué cables hay que ocultar, desde dónde
+            Antes de empezar revisamos qué cables hay que ocultar, dónde
             salen, hasta dónde tienen que llegar, qué tipo de pared tienes y si
             conviene usar canaleta, reorganización detrás del mueble, recorrido
             exterior discreto o una solución más avanzada.

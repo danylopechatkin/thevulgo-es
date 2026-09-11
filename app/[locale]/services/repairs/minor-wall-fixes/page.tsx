@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Pequeños Arreglos de Pared en Valencia | Desde 29€ | THEVULGO"
-    : "Minor Wall Fixes in Valencia | From €29 | THEVULGO";
+    ? "Pequeños Arreglos de Pared en Valencia | 29 € | THEVULGO"
+    : "Minor Wall Fixes in Valencia | €29 | THEVULGO";
 
   const description = isEs
-    ? "Pequeños arreglos de pared en Valencia desde 29€: marcas de tornillos, agujeros pequeños, retoques locales, roces y correcciones visibles."
-    : "Minor wall fixes in Valencia from €29: screw marks, small holes, local touch-ups, scuffs and visible wall corrections.";
+    ? "Pequeños arreglos de pared en Valencia por 29 €: marcas de tornillos, agujeros pequeños, retoques locales, roces y correcciones visibles."
+    : "Minor wall fixes in Valencia for €29: screw marks, small holes, local touch-ups, scuffs and visible wall corrections.";
 
   return {
     title,
@@ -118,7 +118,7 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta reparar marcas de tornillos en Valencia?",
-          a: "El servicio empieza desde 29€. El precio final depende del número de marcas, tamaño, estado de la pared, acabado necesario y si hace falta pintura.",
+          a: "El servicio cuesta 29 €. El precio final depende del número de marcas, tamaño, estado de la pared, acabado necesario y si hace falta pintura.",
         },
         {
           q: "¿Podéis arreglar agujeros pequeños de pared?",
@@ -144,7 +144,7 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
         },
         {
           q: "How much does screw mark repair cost in Valencia?",
-          a: "The service starts from €29. Final price depends on the number of marks, size, wall condition, required finish and whether paint is needed.",
+          a: "The service costs €29. Final price depends on the number of marks, size, wall condition, required finish and whether paint is needed.",
         },
         {
           q: "Can you fix small wall holes?",
@@ -247,13 +247,13 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 29€",
+        "29 €",
         "Marcas de tornillos",
         "Retoques locales simples",
         "Pequeñas correcciones visibles",
       ]
     : [
-        "From €29",
+        "€29",
         "Screw marks",
         "Simple local touch-ups",
         "Small visible corrections",
@@ -439,7 +439,7 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Paintbrush className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 29€" : "From €29"}
+                {isEs ? "29 €" : "€29"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -680,7 +680,7 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 29€" : "From €29"}
+            {isEs ? "29 €" : "€29"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reinstalación de Espejos en Valencia | Desde 35€ | THEVULGO"
-    : "Mirror Re-mounting in Valencia | From €35 | THEVULGO";
+    ? "Reinstalación de Espejos en Valencia | 35 € | THEVULGO"
+    : "Mirror Re-mounting in Valencia | €35 | THEVULGO";
 
   const description = isEs
-    ? "Reinstalación y ajuste de espejos en Valencia desde 35€. Re-fijación, ajuste y corrección de espejos y pequeños accesorios de pared."
-    : "Mirror re-mounting in Valencia from €35. Adjustment and re-fixing of mirrors and small wall accessories with clean, safe mounting.";
+    ? "Reinstalación y ajuste de espejos en Valencia por 35 €. Re-fijación, ajuste y corrección de espejos y pequeños accesorios de pared."
+    : "Mirror re-mounting in Valencia for €35. Adjustment and re-fixing of mirrors and small wall accessories with clean, safe mounting.";
 
   return {
     title,
@@ -114,7 +114,7 @@ export default async function MirrorRemountingPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta volver a fijar un espejo en Valencia?",
-          a: "El servicio empieza desde 35€. El precio final depende del tamaño del espejo, peso, tipo de pared, sistema de fijación, acceso y material necesario.",
+          a: "El servicio cuesta 35 €. El precio final depende del tamaño del espejo, peso, tipo de pared, sistema de fijación, acceso y material necesario.",
         },
         {
           q: "¿Podéis arreglar un espejo que está suelto?",
@@ -140,7 +140,7 @@ export default async function MirrorRemountingPage({ params }: PageProps) {
         },
         {
           q: "How much does mirror re-mounting cost in Valencia?",
-          a: "The service starts from €35. Final price depends on mirror size, weight, wall type, fixing system, access and required material.",
+          a: "The service costs €35. Final price depends on mirror size, weight, wall type, fixing system, access and required material.",
         },
         {
           q: "Can you fix a loose mirror?",
@@ -240,13 +240,13 @@ export default async function MirrorRemountingPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 35€",
+        "35 €",
         "Espejos sueltos o mal alineados",
         "Re-fijación y ajuste",
         "Pequeños accesorios de pared",
       ]
     : [
-        "From €35",
+        "€35",
         "Loose or misaligned mirrors",
         "Re-fixing and adjustment",
         "Small wall accessories",
@@ -346,7 +346,7 @@ export default async function MirrorRemountingPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Square className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 35€" : "From €35"}
+                {isEs ? "35 €" : "€35"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -482,7 +482,7 @@ export default async function MirrorRemountingPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 35€" : "From €35"}
+            {isEs ? "35 €" : "€35"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

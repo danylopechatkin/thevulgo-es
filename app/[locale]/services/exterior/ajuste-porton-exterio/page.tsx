@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Ajuste de Portón Exterior | Desde 49€ | THEVULGO"
-      : "Gate Alignment | From €49 | THEVULGO",
+      ? "Ajuste de Portón Exterior | 49 € | THEVULGO"
+      : "Gate Alignment | €49 | THEVULGO",
     description: isEs
-      ? "Ajuste de portones exteriores desde 49€. Corrección básica de portones, cancelas y accesos exteriores para mejorar apertura, cierre y uso diario."
-      : "Gate alignment from €49. Basic correction of gates and outdoor access elements to improve opening, closing and practical daily use.",
+      ? "Ajuste de portones exteriores de 49 €. Corrección básica de portones, cancelas y accesos exteriores para mejorar apertura, cierre y uso diario."
+      : "Gate alignment for €49. Basic correction of gates and outdoor access elements to improve opening, closing and practical daily use.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta ajustar un portón exterior?",
-    a: "El ajuste de portón exterior empieza desde 49€. El precio depende del tipo de portón, estado, bisagras, fijaciones, acceso, nivel de desalineación y dificultad.",
+    a: "El ajuste de portón exterior cuesta 49 €. El precio depende del tipo de portón, estado, bisagras, fijaciones, acceso, nivel de desalineación y dificultad.",
   },
   {
     q: "¿Pueden ajustar una cancela que no cierra bien?",
@@ -243,7 +243,7 @@ export default async function AjustePortonExteriorPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 49€",
+                "49 €",
                 "Portón desalineado",
                 "Cancela que roza",
                 "Mejor apertura y cierre",
@@ -314,7 +314,7 @@ export default async function AjustePortonExteriorPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 49€. Presupuesto según fotos, vídeo y dificultad.",
+              text: "49 €. Presupuesto según fotos, vídeo y dificultad.",
             },
           ].map((item) => (
             <div
@@ -459,7 +459,7 @@ export default async function AjustePortonExteriorPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 49€
+            49 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para ajustar un portón exterior

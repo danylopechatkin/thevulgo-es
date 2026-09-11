@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reparación de Accesorios de Baño en Valencia | Desde 29€ | THEVULGO"
-    : "Bathroom Accessory Fixing in Valencia | From €29 | THEVULGO";
+    ? "Reparación de Accesorios de Baño en Valencia | 29 € | THEVULGO"
+    : "Bathroom Accessory Fixing in Valencia | €29 | THEVULGO";
 
   const description = isEs
-    ? "Reparación y re-fijación de accesorios de baño en Valencia desde 29€: portarrollos, toalleros, ganchos, soportes y accesorios sueltos."
-    : "Bathroom accessory fixing in Valencia from €29: minor repair or re-fixing of holders, hooks, towel rails and loose bathroom accessories.";
+    ? "Reparación y re-fijación de accesorios de baño en Valencia por 29 €: portarrollos, toalleros, ganchos, soportes y accesorios sueltos."
+    : "Bathroom accessory fixing in Valencia for €29: minor repair or re-fixing of holders, hooks, towel rails and loose bathroom accessories.";
 
   return {
     title,
@@ -116,7 +116,7 @@ export default async function BathroomAccessoryFixingPage({
         },
         {
           q: "¿Cuánto cuesta reparar un accesorio de baño en Valencia?",
-          a: "El servicio empieza desde 29€. El precio final depende del tipo de accesorio, pared, anclajes existentes, estado de los agujeros y material necesario.",
+          a: "El servicio cuesta 29 €. El precio final depende del tipo de accesorio, pared, anclajes existentes, estado de los agujeros y material necesario.",
         },
         {
           q: "¿Podéis arreglar un toallero o portarrollos suelto?",
@@ -138,7 +138,7 @@ export default async function BathroomAccessoryFixingPage({
         },
         {
           q: "How much does bathroom accessory fixing cost in Valencia?",
-          a: "The service starts from €29. Final price depends on accessory type, wall type, existing anchors, hole condition and required material.",
+          a: "The service costs €29. Final price depends on accessory type, wall type, existing anchors, hole condition and required material.",
         },
         {
           q: "Can you fix a loose towel rail or toilet roll holder?",
@@ -238,13 +238,13 @@ export default async function BathroomAccessoryFixingPage({
 
   const heroPoints = isEs
     ? [
-        "Desde 29€",
+        "29 €",
         "Toalleros, ganchos y soportes",
         "Re-fijación de accesorios sueltos",
         "Baños, duchas y zonas de lavabo",
       ]
     : [
-        "From €29",
+        "€29",
         "Towel rails, hooks and holders",
         "Re-fixing loose accessories",
         "Bathrooms, showers and sink areas",
@@ -381,7 +381,7 @@ export default async function BathroomAccessoryFixingPage({
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Bath className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 29€" : "From €29"}
+                {isEs ? "29 €" : "€29"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -517,7 +517,7 @@ export default async function BathroomAccessoryFixingPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 29€" : "From €29"}
+            {isEs ? "29 €" : "€29"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

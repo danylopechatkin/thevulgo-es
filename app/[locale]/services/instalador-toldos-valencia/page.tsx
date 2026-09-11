@@ -89,7 +89,7 @@ const faqsEs = [
   {
     question: "¿Cuánto cuesta un instalador de toldos en Valencia?",
     answer:
-      "El servicio de instalador de toldos en Valencia empieza desde 145 €. El precio final depende del tamaño del toldo, peso, tipo de pared, altura, acceso y si hace falta una segunda persona.",
+      "El servicio de instalador de toldos en Valencia cuesta 145 €. El precio final depende del tamaño del toldo, peso, tipo de pared, altura, acceso y si hace falta una segunda persona.",
   },
   {
     question: "¿Puedo contratar solo el instalador si ya tengo el toldo comprado?",
@@ -117,7 +117,7 @@ const faqsEn = [
   {
     question: "How much does an awning installer cost in Valencia?",
     answer:
-      "Awning installer service in Valencia starts from €145. The final price depends on awning size, weight, wall type, height, access and whether a second person is needed.",
+      "Awning installer service in Valencia costs €145. The final price depends on awning size, weight, wall type, height, access and whether a second person is needed.",
   },
   {
     question: "Can I hire only the installer if I already bought the awning?",
@@ -147,11 +147,11 @@ function getContent(locale: string) {
   return {
     isEs,
     title: isEs
-      ? "Instalador de Toldos en Valencia | Desde 145€ | THEVULGO"
-      : "Awning Installer in Valencia | From €145 | THEVULGO",
+      ? "Instalador de Toldos en Valencia | 145 € | THEVULGO"
+      : "Awning Installer in Valencia | €145 | THEVULGO",
     description: isEs
-      ? "Instalador de toldos en Valencia desde 145€. Instalación de toldos manuales, eléctricos, Leroy Merlin, Naterial y Calima. Presupuesto rápido por WhatsApp."
-      : "Awning installer in Valencia from €145. Manual and electric awning installation, Leroy Merlin, Naterial and Calima models. Fast quote by WhatsApp.",
+      ? "Instalador de toldos en Valencia por 145 €. Instalación de toldos manuales, eléctricos, Leroy Merlin, Naterial y Calima. Presupuesto rápido por WhatsApp."
+      : "Awning installer in Valencia for €145. Manual and electric awning installation, Leroy Merlin, Naterial and Calima models. Fast quote by WhatsApp.",
     h1: isEs
       ? "Instalador de Toldos en Valencia"
       : "Awning Installer in Valencia",
@@ -343,7 +343,7 @@ export default async function InstaladorToldosValenciaPage({ params }: Props) {
 
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 {[
-                  content.isEs ? "Desde 145€" : "From €145",
+                  content.isEs ? "145 €" : "€145",
                   content.isEs
                     ? "Instalador de toldos manuales"
                     : "Manual awning installer",
@@ -444,8 +444,8 @@ export default async function InstaladorToldosValenciaPage({ params }: Props) {
                 </p>
                 <h2 className="mt-5 text-4xl font-black tracking-tight md:text-5xl">
                   {content.isEs
-                    ? "Instalador de toldos desde 145€"
-                    : "Awning installer from €145"}
+                    ? "Instalador de toldos por 145 €"
+                    : "Awning installer for €145"}
                 </h2>
                 <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-300">
                   {content.isEs
@@ -457,10 +457,10 @@ export default async function InstaladorToldosValenciaPage({ params }: Props) {
               <div className="rounded-[2rem] border border-yellow-400/40 bg-white/5 p-6">
                 <div className="rounded-3xl bg-yellow-400 p-7 text-neutral-950">
                   <p className="text-sm font-black uppercase tracking-[0.2em]">
-                    {content.isEs ? "Desde" : "From"}
+                    {content.isEs ? "Precio" : "Price"}
                   </p>
                   <div className="mt-3 flex items-end gap-2">
-                    <span className="text-7xl font-black leading-none">145€</span>
+                    <span className="text-7xl font-black leading-none">145 €</span>
                     <span className="mb-2 text-lg font-bold">
                       {content.isEs ? "instalador" : "installer"}
                     </span>
@@ -478,7 +478,7 @@ export default async function InstaladorToldosValenciaPage({ params }: Props) {
               {[
                 {
                   title: content.isEs ? "Toldo pequeño" : "Small awning",
-                  price: content.isEs ? "desde 145€" : "from €145",
+                  price: content.isEs ? "145 €" : "€145",
                   text: content.isEs
                     ? "Instalador para toldos pequeños con fijación estándar."
                     : "Installer for small awnings with standard fixing.",
@@ -486,7 +486,7 @@ export default async function InstaladorToldosValenciaPage({ params }: Props) {
                 },
                 {
                   title: content.isEs ? "Toldo mediano" : "Medium awning",
-                  price: "160€ - 200€",
+                  price: "160 € - 200 €",
                   text: content.isEs
                     ? "Instalación con varios soportes, nivelación y prueba."
                     : "Installation with several brackets, leveling and testing.",
@@ -494,7 +494,7 @@ export default async function InstaladorToldosValenciaPage({ params }: Props) {
                 },
                 {
                   title: content.isEs ? "Toldo grande" : "Large awning",
-                  price: "200€ - 280€",
+                  price: "200 € - 280 €",
                   text: content.isEs
                     ? "Puede requerir segunda persona para levantar y fijar con seguridad."
                     : "May require a second person to lift and fix safely.",
@@ -767,8 +767,8 @@ export default async function InstaladorToldosValenciaPage({ params }: Props) {
                     ? "¿El precio incluye materiales?"
                     : "Are materials included?",
                   answer: content.isEs
-                    ? "El precio desde 145 € corresponde a la mano de obra. Si hacen falta tacos especiales, anclaje químico u otros materiales, se confirma antes."
-                    : "The price from €145 is for labour. If special plugs, chemical anchors or other materials are needed, we confirm it first.",
+                    ? "El precio de 145 € corresponde a la mano de obra. Si hacen falta tacos especiales, anclaje químico u otros materiales, se confirma antes."
+                    : "The price for €145 is for labour. If special plugs, chemical anchors or other materials are needed, we confirm it first.",
                 },
                 {
                   question: content.isEs
@@ -817,8 +817,8 @@ export default async function InstaladorToldosValenciaPage({ params }: Props) {
 
             <h2 className="mt-8 text-4xl font-black tracking-tight md:text-6xl">
               {content.isEs
-                ? "Instalador de toldos en Valencia desde 145€"
-                : "Awning installer in Valencia from €145"}
+                ? "Instalador de toldos en Valencia por 145 €"
+                : "Awning installer in Valencia for €145"}
             </h2>
 
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-neutral-300">

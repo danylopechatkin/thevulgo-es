@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "Install TV on Wall Valencia | Professional TV Mounting | THEVULGO";
 
   const description = isEs
-    ? "Servicio profesional para instalar TV en pared en Valencia. Montaje seguro, soporte fijo, inclinable o articulado, TVs grandes, pladur, ladrillo, hormigón y ocultación de cables. Desde 49€."
-    : "Professional service to install TV on wall in Valencia. Safe mounting, fixed, tilting or full-motion brackets, large TVs, drywall, brick, concrete and cable concealment. From €49.";
+    ? "Servicio profesional para instalar TV en pared en Valencia. Montaje seguro, soporte fijo, inclinable o articulado, TVs grandes, pladur, ladrillo, hormigón y ocultación de cables. 49 €."
+    : "Professional service to install TV on wall in Valencia. Safe mounting, fixed, tilting or full-motion brackets, large TVs, drywall, brick, concrete and cable concealment. €49.";
 
   const url = `${baseUrl}/${locale}/instalar-tv-pared-valencia`;
 
@@ -194,8 +194,8 @@ export default async function Page({ params }: Props) {
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "La instalación básica de TV en pared empieza desde 49 €. El precio final depende del tamaño de la TV, tipo de pared, soporte, altura, ocultación de cables y dificultad."
-            : "Basic TV wall installation starts from €49. The final price depends on TV size, wall type, bracket, height, cable concealment and complexity.",
+            ? "La instalación básica de TV en pared cuesta 49 €. El precio final depende del tamaño de la TV, tipo de pared, soporte, altura, ocultación de cables y dificultad."
+            : "Basic TV wall installation costs €49. The final price depends on TV size, wall type, bracket, height, cable concealment and complexity.",
         },
       },
       {
@@ -270,8 +270,8 @@ export default async function Page({ params }: Props) {
     secondaryCta: isEs ? "WhatsApp rápido" : "Quick WhatsApp",
 
     heroNote: isEs
-      ? "Desde 49 €. Precio final según pared, tamaño de TV, soporte, altura y cableado."
-      : "From €49. Final price depends on wall, TV size, bracket, height and cabling.",
+      ? "49 €. Precio final según pared, tamaño de TV, soporte, altura y cableado."
+      : "€49. Final price depends on wall, TV size, bracket, height and cabling.",
 
     servicesTitle: isEs
       ? "Servicio para instalar TV en pared"
@@ -483,28 +483,28 @@ export default async function Page({ params }: Props) {
       text: isEs
         ? "Tamaño habitual para dormitorios, salones pequeños y apartamentos."
         : "Common size for bedrooms, small living rooms and apartments.",
-      price: isEs ? "desde €49" : "from €49",
+      price: isEs ? "49 €" : "€49",
     },
     {
       title: isEs ? "TV 65 pulgadas" : "65 inch TV",
       text: isEs
         ? "Muy común en salones. Requiere medir bien altura y distancia de visión."
         : "Very common in living rooms. Requires proper height and viewing distance.",
-      price: isEs ? "desde €59" : "from €59",
+      price: isEs ? "59 €" : "€59",
     },
     {
       title: isEs ? "TV 75 pulgadas" : "75 inch TV",
       text: isEs
         ? "Pantalla grande con más peso, más cuidado y soporte adecuado."
         : "Large screen with more weight, extra care and suitable bracket.",
-      price: isEs ? "desde €79" : "from €79",
+      price: isEs ? "79 €" : "€79",
     },
     {
       title: isEs ? "TV 85 pulgadas" : "85 inch TV",
       text: isEs
         ? "Instalación avanzada para pantallas grandes y paredes bien revisadas."
         : "Advanced installation for large screens and carefully checked walls.",
-      price: isEs ? "desde €99" : "from €99",
+      price: isEs ? "99 €" : "€99",
     },
   ];
 
@@ -566,7 +566,7 @@ export default async function Page({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta instalar una TV en pared en Valencia?",
-          a: "El montaje básico empieza desde 49 €. El precio final depende de tamaño, tipo de pared, soporte, altura, cableado y dificultad.",
+          a: "El montaje básico cuesta 49 €. El precio final depende de tamaño, tipo de pared, soporte, altura, cableado y dificultad.",
         },
         {
           q: "¿Puedo instalar una TV en pared de pladur?",
@@ -600,7 +600,7 @@ export default async function Page({ params }: Props) {
     : [
         {
           q: "How much does it cost to install a TV on the wall in Valencia?",
-          a: "Basic mounting starts from €49. Final price depends on size, wall type, bracket, height, cabling and complexity.",
+          a: "Basic mounting costs €49. Final price depends on size, wall type, bracket, height, cabling and complexity.",
         },
         {
           q: "Can I install a TV on drywall?",

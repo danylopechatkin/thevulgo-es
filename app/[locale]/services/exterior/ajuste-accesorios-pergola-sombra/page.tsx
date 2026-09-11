@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Ajuste de Accesorios de Pérgola y Sombra | Desde 49€ | THEVULGO"
-      : "Pergola / Shade Accessory Fitting | From €49 | THEVULGO",
+      ? "Ajuste de Accesorios de Pérgola y Sombra | 49 € | THEVULGO"
+      : "Pergola / Shade Accessory Fitting | €49 | THEVULGO",
     description: isEs
-      ? "Ajuste de accesorios de pérgola y sombra desde 49€. Montaje y ajuste básico de accesorios compatibles, elementos de sombra y soportes exteriores sencillos."
-      : "Pergola and shade accessory fitting from €49. Basic fitting and adjustment of compatible pergola accessories, shade elements and simple outdoor support items.",
+      ? "Ajuste de accesorios de pérgola y sombra por 49 €. Montaje y ajuste básico de accesorios compatibles, elementos de sombra y soportes exteriores sencillos."
+      : "Pergola and shade accessory fitting for €49. Basic fitting and adjustment of compatible pergola accessories, shade elements and simple outdoor support items.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta ajustar accesorios de pérgola o sombra?",
-    a: "El ajuste de accesorios de pérgola y sombra empieza desde 49€. El precio depende del tipo de accesorio, superficie, altura, fijaciones, acceso, piezas disponibles y dificultad.",
+    a: "El ajuste de accesorios de pérgola y sombra cuesta 49 €. El precio depende del tipo de accesorio, superficie, altura, fijaciones, acceso, piezas disponibles y dificultad.",
   },
   {
     q: "¿Qué accesorios de pérgola pueden instalar o ajustar?",
@@ -247,7 +247,7 @@ export default async function AjusteAccesoriosPergolaSombraPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 49€",
+                "49 €",
                 "Accesorios de pérgola",
                 "Elementos de sombra",
                 "Soportes exteriores",
@@ -318,7 +318,7 @@ export default async function AjusteAccesoriosPergolaSombraPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 49€. Presupuesto según fotos, piezas y dificultad.",
+              text: "49 €. Presupuesto según fotos, piezas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -462,7 +462,7 @@ export default async function AjusteAccesoriosPergolaSombraPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 49€
+            49 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para accesorios de pérgola y sombra

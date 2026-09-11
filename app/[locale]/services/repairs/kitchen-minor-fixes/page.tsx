@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Pequeños Arreglos de Cocina en Valencia | Desde 35€ | THEVULGO"
-    : "Kitchen Minor Fixes in Valencia | From €35 | THEVULGO";
+    ? "Pequeños Arreglos de Cocina en Valencia | 35 € | THEVULGO"
+    : "Kitchen Minor Fixes in Valencia | €35 | THEVULGO";
 
   const description = isEs
-    ? "Pequeños arreglos de cocina en Valencia desde 35€. Ajustes simples, correcciones visibles, puertas de muebles, tiradores, juntas y mejoras de uso diario."
-    : "Kitchen minor fixes in Valencia from €35. Small kitchen adjustments, visible repair work, cabinet doors, handles, joints and daily usability improvements.";
+    ? "Pequeños arreglos de cocina en Valencia por 35 €. Ajustes simples, correcciones visibles, puertas de muebles, tiradores, juntas y mejoras de uso diario."
+    : "Kitchen minor fixes in Valencia for €35. Small kitchen adjustments, visible repair work, cabinet doors, handles, joints and daily usability improvements.";
 
   return {
     title,
@@ -114,7 +114,7 @@ export default async function KitchenMinorFixesPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuestan los pequeños arreglos de cocina en Valencia?",
-          a: "El servicio empieza desde 35€. El precio final depende del número de tareas, tipo de mueble, accesorios, material necesario y tiempo estimado.",
+          a: "El servicio cuesta 35 €. El precio final depende del número de tareas, tipo de mueble, accesorios, material necesario y tiempo estimado.",
         },
         {
           q: "¿Podéis ajustar puertas de muebles de cocina?",
@@ -136,7 +136,7 @@ export default async function KitchenMinorFixesPage({ params }: PageProps) {
         },
         {
           q: "How much do kitchen minor fixes cost in Valencia?",
-          a: "The service starts from €35. Final price depends on the number of tasks, cabinet type, fittings, required material and estimated time.",
+          a: "The service costs €35. Final price depends on the number of tasks, cabinet type, fittings, required material and estimated time.",
         },
         {
           q: "Can you adjust kitchen cabinet doors?",
@@ -232,13 +232,13 @@ export default async function KitchenMinorFixesPage({ params }: PageProps) {
 
   const heroPoints = isEs
     ? [
-        "Desde 35€",
+        "35 €",
         "Muebles, puertas y tiradores",
         "Ajustes visibles de cocina",
         "Mejor uso diario",
       ]
     : [
-        "From €35",
+        "€35",
         "Cabinets, doors and handles",
         "Visible kitchen adjustments",
         "Better daily usability",
@@ -371,7 +371,7 @@ export default async function KitchenMinorFixesPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <ChefHat className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 35€" : "From €35"}
+                {isEs ? "35 €" : "€35"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs
@@ -507,7 +507,7 @@ export default async function KitchenMinorFixesPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 35€" : "From €35"}
+            {isEs ? "35 €" : "€35"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs

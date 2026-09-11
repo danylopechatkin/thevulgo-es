@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Luz para Espejo de Baño | Desde 39€ | THEVULGO"
-      : "Vanity Light Installation | From €39 | THEVULGO",
+      ? "Instalación de Luz para Espejo de Baño | 39 € | THEVULGO"
+      : "Vanity Light Installation | €39 | THEVULGO",
     description: isEs
-      ? "Instalación de luces para espejo de baño y vanity lighting desde 39€. Mejor visibilidad, iluminación uniforme y acabado más moderno para baños y aseos."
-      : "Vanity light installation from €39. Mirror-area lighting for better visibility, cleaner alignment and a more finished bathroom setup.",
+      ? "Instalación de luces para espejo de baño y vanity lighting por 39 €. Mejor visibilidad, iluminación uniforme y acabado más moderno para baños y aseos."
+      : "Vanity light installation for €39. Mirror-area lighting for better visibility, cleaner alignment and a more finished bathroom setup.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar una luz para espejo de baño?",
-    a: "La instalación de luz para espejo de baño empieza desde 39€. El precio depende del tipo de luz, conexión, pared, ubicación, cableado existente y dificultad de instalación.",
+    a: "La instalación de luz para espejo de baño cuesta 39 €. El precio depende del tipo de luz, conexión, pared, ubicación, cableado existente y dificultad de instalación.",
   },
   {
     q: "¿Instalan luces LED para espejo?",
@@ -247,7 +247,7 @@ export default async function VanityLightInstallationPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 39€",
+                "39 €",
                 "Luz para espejo",
                 "Vanity lighting",
                 "Mejor visibilidad",
@@ -318,7 +318,7 @@ export default async function VanityLightInstallationPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 39€. Presupuesto según fotos, modelo y dificultad.",
+              text: "39 €. Presupuesto según fotos, modelo y dificultad.",
             },
           ].map((item) => (
             <div
@@ -462,7 +462,7 @@ export default async function VanityLightInstallationPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar luz de espejo de baño

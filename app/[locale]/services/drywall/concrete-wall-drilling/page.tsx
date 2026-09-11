@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Taladro en Hormigón o Ladrillo en Valencia | Desde 35€ | THEVULGO"
-    : "Concrete Wall Drilling in Valencia | From €35 | THEVULGO";
+    ? "Taladro en Hormigón o Ladrillo en Valencia | 35 € | THEVULGO"
+    : "Concrete Wall Drilling in Valencia | €35 | THEVULGO";
 
   const description = isEs
-    ? "Taladro básico en hormigón o ladrillo en Valencia desde 35€. Perforación limpia para instalaciones del hogar, soportes, brackets y accesorios."
-    : "Concrete wall drilling in Valencia from €35. Basic drilling in concrete or brick for home installs, mounts, brackets and fixtures.";
+    ? "Taladro básico en hormigón o ladrillo en Valencia por 35 €. Perforación limpia para instalaciones del hogar, soportes, brackets y accesorios."
+    : "Concrete wall drilling in Valencia for €35. Basic drilling in concrete or brick for home installs, mounts, brackets and fixtures.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function ConcreteWallDrillingPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta taladrar hormigón o ladrillo en Valencia?",
-          a: "El servicio empieza desde 35€. El precio final depende del número de puntos, tipo de pared, altura, acceso, diámetro necesario y objeto a fijar.",
+          a: "El servicio cuesta 35 €. El precio final depende del número de puntos, tipo de pared, altura, acceso, diámetro necesario y objeto a fijar.",
         },
         {
           q: "¿Sirve para soportes, brackets y accesorios?",
@@ -137,7 +137,7 @@ export default async function ConcreteWallDrillingPage({ params }: PageProps) {
         },
         {
           q: "How much does concrete or brick drilling cost in Valencia?",
-          a: "The service starts from €35. Final price depends on number of points, wall type, height, access, required diameter and item being fixed.",
+          a: "The service costs €35. Final price depends on number of points, wall type, height, access, required diameter and item being fixed.",
         },
         {
           q: "Is this suitable for mounts, brackets and accessories?",
@@ -209,8 +209,8 @@ export default async function ConcreteWallDrillingPage({ params }: PageProps) {
   };
 
   const heroPoints = isEs
-    ? ["Desde 35€", "Hormigón o ladrillo", "Soportes y accesorios", "Según tipo de pared"]
-    : ["From €35", "Concrete or brick", "Mounts and fixtures", "Based on wall type"];
+    ? ["35 €", "Hormigón o ladrillo", "Soportes y accesorios", "Según tipo de pared"]
+    : ["€35", "Concrete or brick", "Mounts and fixtures", "Based on wall type"];
 
   const included = isEs
     ? [
@@ -296,7 +296,7 @@ export default async function ConcreteWallDrillingPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Drill className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 35€" : "From €35"}
+                {isEs ? "35 €" : "€35"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs ? "Pared dura. Taladro correcto. Fijación preparada." : "Hard wall. Correct drilling. Fixing prepared."}
@@ -405,7 +405,7 @@ export default async function ConcreteWallDrillingPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 35€" : "From €35"}
+            {isEs ? "35 €" : "€35"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs ? "Envía fotos de la pared y del objeto" : "Send photos of the wall and item"}

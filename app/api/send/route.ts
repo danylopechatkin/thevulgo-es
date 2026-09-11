@@ -1,3 +1,4 @@
+import { calculatePublicTotal } from "@/lib/public-pricing";
 import { Resend } from "resend";
 import { createClient } from "@supabase/supabase-js";
 import { isAvailableCity, marketFromCity } from "@/lib/cities";
@@ -146,7 +147,16 @@ export async function POST(req: Request) {
       );
     }
 
-    const subtotal = Number(data.subtotal || 0);
+    let subtotal: number;
+    try {
+      subtotal = calculatePublicTotal(data.services);
+      data.services = data.services.map((service: { price: number; qty: number }) => ({
+        ...service,
+        subtotal: calculatePublicTotal([service]),
+      }));
+    } catch {
+      return Response.json({ success: false, error: "Invalid service price or quantity" }, { status: 400 });
+    }
     const iva = 0;
     const total = subtotal;
 

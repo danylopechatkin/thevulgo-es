@@ -116,7 +116,7 @@ export default function BathroomClient() {
     desc: isEs
       ? "Instalación de muebles y unidades de almacenamiento de baño con atención a la alineación, separación y posición final."
       : "Installation of bathroom cabinets and storage units with attention to alignment, spacing and a cleaner final position.",
-    price: isEs ? "desde €59" : "from €59",
+    price: isEs ? "59 €" : "€59",
     icon: <Bath className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/cabinet-installation-valencia`,
     className: "lg:col-span-2",
@@ -127,7 +127,7 @@ export default function BathroomClient() {
     desc: isEs
       ? "Montaje seguro de espejos de baño con altura correcta, alineación limpia y colocación visual equilibrada."
       : "Secure wall mounting of bathroom mirrors with proper height, cleaner alignment and more balanced visual placement.",
-    price: isEs ? "desde €35" : "from €35",
+    price: isEs ? "35 €" : "€35",
     icon: <Ruler className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/mirror-installation-valencia`,
     className: "",
@@ -138,7 +138,7 @@ export default function BathroomClient() {
     desc: isEs
       ? "Instalación de armarios con espejo y unidades prácticas de almacenamiento."
       : "Installation of mirror cabinets and practical storage units.",
-    price: isEs ? "desde €49" : "from €49",
+    price: isEs ? "49 €" : "€49",
     icon: <Package className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/mirror-cabinet-fitting-valencia`,
     className: "",
@@ -149,7 +149,7 @@ export default function BathroomClient() {
     desc: isEs
       ? "Montaje de barras, ganchos y soportes para toallas."
       : "Mounting of towel bars, hooks and holder systems.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <Hammer className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/towel-holder-installation-valencia`,
     className: "",
@@ -160,7 +160,7 @@ export default function BathroomClient() {
     desc: isEs
       ? "Instalación de portarrollos y pequeños accesorios."
       : "Installation of toilet paper holders and small wall-mounted accessories.",
-    price: isEs ? "desde €25" : "from €25",
+    price: isEs ? "25 €" : "€25",
     icon: <Hammer className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/toilet-paper-holder-installation-valencia`,
     className: "",
@@ -171,7 +171,7 @@ export default function BathroomClient() {
     desc: isEs
       ? "Instalación de estantes de baño."
       : "Installation of bathroom shelves.",
-    price: isEs ? "desde €35" : "from €35",
+    price: isEs ? "35 €" : "€35",
     icon: <Drill className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/shelf-installation-valencia`,
     className: "",
@@ -182,7 +182,7 @@ export default function BathroomClient() {
     desc: isEs
       ? "Instalación de muebles bajo lavabo."
       : "Installation of bathroom vanity units.",
-    price: isEs ? "desde €59" : "from €59",
+    price: isEs ? "59 €" : "€59",
     icon: <Bath className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/vanity-unit-installation-valencia`,
     className: "",
@@ -193,7 +193,7 @@ export default function BathroomClient() {
     desc: isEs
       ? "Instalación de iluminación compatible para espejo."
       : "Installation of compatible vanity or mirror-area lighting.",
-    price: isEs ? "desde €39" : "from €39",
+    price: isEs ? "39 €" : "€39",
     icon: <Lightbulb className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/vanity-light-installation`,
     className: "lg:col-span-2",
@@ -202,7 +202,7 @@ export default function BathroomClient() {
   {
     title: isEs ? "Cambio de alcachofa de ducha" : "Shower head replacement",
     desc: isEs ? "Cambio de alcachofa." : "Replacement of shower heads.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <ShowerHead className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/shower-head-replacement`,
     className: "",
@@ -211,7 +211,7 @@ export default function BathroomClient() {
   {
     title: isEs ? "Cambio de manguera de ducha" : "Shower hose replacement",
     desc: isEs ? "Cambio de manguera." : "Replacement of shower hoses.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <Droplets className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/shower-hose-replacement`,
     className: "",
@@ -220,7 +220,7 @@ export default function BathroomClient() {
   {
     title: isEs ? "Instalación de accesorios de baño" : "Bathroom accessory installation",
     desc: isEs ? "Accesorios de baño." : "Bathroom accessories installation.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <Wrench className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/accessory-installation`,
     className: "",
@@ -229,7 +229,7 @@ export default function BathroomClient() {
   {
     title: isEs ? "Renovación de silicona" : "Silicone renewal",
     desc: isEs ? "Cambio de silicona." : "Silicone renewal.",
-    price: isEs ? "desde €39" : "from €39",
+    price: isEs ? "39 €" : "€39",
     icon: <Droplets className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/silicone-renewal`,
     className: "",
@@ -238,7 +238,7 @@ export default function BathroomClient() {
   {
     title: isEs ? "Sellado de juntas y huecos" : "Seal & gap fixing",
     desc: isEs ? "Sellado de huecos." : "Seal and gap fixing.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <ShieldCheck className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/seal-gap-fixing`,
     className: "",
@@ -247,7 +247,7 @@ export default function BathroomClient() {
   {
     title: isEs ? "Alineación de puertas de mueble" : "Cabinet door alignment",
     desc: isEs ? "Ajuste de puertas." : "Cabinet door alignment.",
-    price: isEs ? "desde €29" : "from €29",
+    price: isEs ? "29 €" : "€29",
     icon: <Ruler className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/cabinet-door-alignment`,
     className: "",
@@ -256,7 +256,7 @@ export default function BathroomClient() {
   {
     title: isEs ? "Montaje en pared de elementos de baño" : "Wall mounting for bathroom items",
     desc: isEs ? "Montaje en pared." : "Wall mounting.",
-    price: isEs ? "desde €35" : "from €35",
+    price: isEs ? "35 €" : "€35",
     icon: <SquareDashedMousePointer className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/wall-mounting`,
     className: "",
@@ -265,7 +265,7 @@ export default function BathroomClient() {
   {
     title: isEs ? "Instalación de estante de vidrio" : "Glass shelf installation",
     desc: isEs ? "Estante de vidrio." : "Glass shelf installation.",
-    price: isEs ? "desde €35" : "from €35",
+    price: isEs ? "35 €" : "€35",
     icon: <Ruler className="h-5 w-5" />,
     href: `/${locale}/services/bathroom/glass-shelf-installation`,
     className: "",

@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Parche y Lijado de Pared en Valencia | Desde 45€ | THEVULGO"
-    : "Patch and Sand Finish in Valencia | From €45 | THEVULGO";
+    ? "Parche y Lijado de Pared en Valencia | 45 € | THEVULGO"
+    : "Patch and Sand Finish in Valencia | €45 | THEVULGO";
 
   const description = isEs
-    ? "Parcheado y lijado de pared en Valencia desde 45€. Reparación localizada con acabado más liso y mejor preparación para pintura."
-    : "Patch and sand finish in Valencia from €45. Localized patch work finished with sanding for smoother, more paint-ready results.";
+    ? "Parcheado y lijado de pared en Valencia por 45 €. Reparación localizada con acabado más liso y mejor preparación para pintura."
+    : "Patch and sand finish in Valencia for €45. Localized patch work finished with sanding for smoother, more paint-ready results.";
 
   return {
     title,
@@ -115,7 +115,7 @@ export default async function PatchAndSandFinishPage({ params }: PageProps) {
         },
         {
           q: "¿Cuánto cuesta parchear y lijar una pared en Valencia?",
-          a: "El servicio empieza desde 45€. El precio final depende del tamaño del parche, estado de la pared, número de zonas, capas necesarias y acabado esperado.",
+          a: "El servicio cuesta 45 €. El precio final depende del tamaño del parche, estado de la pared, número de zonas, capas necesarias y acabado esperado.",
         },
         {
           q: "¿El resultado queda listo para pintar?",
@@ -141,7 +141,7 @@ export default async function PatchAndSandFinishPage({ params }: PageProps) {
         },
         {
           q: "How much does patch and sand finish cost in Valencia?",
-          a: "The service starts from €45. Final price depends on patch size, wall condition, number of areas, required coats and expected finish.",
+          a: "The service costs €45. Final price depends on patch size, wall condition, number of areas, required coats and expected finish.",
         },
         {
           q: "Will the result be ready for painting?",
@@ -215,8 +215,8 @@ export default async function PatchAndSandFinishPage({ params }: PageProps) {
   };
 
   const heroPoints = isEs
-    ? ["Desde 45€", "Parche localizado", "Lijado incluido", "Mejor preparación para pintura"]
-    : ["From €45", "Localized patching", "Sanding included", "Better paint-ready prep"];
+    ? ["45 €", "Parche localizado", "Lijado incluido", "Mejor preparación para pintura"]
+    : ["€45", "Localized patching", "Sanding included", "Better paint-ready prep"];
 
   const included = isEs
     ? [
@@ -302,7 +302,7 @@ export default async function PatchAndSandFinishPage({ params }: PageProps) {
             <div className="rounded-2xl bg-yellow-400 p-8 text-black shadow-md">
               <Paintbrush className="mb-6 h-12 w-12 text-black" />
               <p className="text-sm font-black uppercase tracking-widest">
-                {isEs ? "Desde 45€" : "From €45"}
+                {isEs ? "45 €" : "€45"}
               </p>
               <h2 className="mt-3 text-3xl font-black">
                 {isEs ? "Parche reparado. Lijado limpio. Mejor base para pintar." : "Patch repaired. Clean sanding. Better base for paint."}
@@ -411,7 +411,7 @@ export default async function PatchAndSandFinishPage({ params }: PageProps) {
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            {isEs ? "Desde 45€" : "From €45"}
+            {isEs ? "45 €" : "€45"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
             {isEs ? "Envía fotos de la zona a reparar" : "Send photos of the repair area"}

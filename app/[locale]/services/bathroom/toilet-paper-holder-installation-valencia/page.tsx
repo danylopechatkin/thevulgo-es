@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Instalación de Portarrollos en Valencia | Desde 25€ | THEVULGO"
-      : "Toilet Paper Holder Installation in Valencia | From €25 | THEVULGO",
+      ? "Instalación de Portarrollos en Valencia | 25 € | THEVULGO"
+      : "Toilet Paper Holder Installation in Valencia | €25 | THEVULGO",
     description: isEs
-      ? "Instalación de portarrollos en Valencia desde 25€. Montaje de soportes para papel higiénico y pequeños accesorios de baño en posiciones cómodas."
-      : "Toilet paper holder installation in Valencia from €25. Wall-mounted bathroom accessories fitted in convenient everyday positions.",
+      ? "Instalación de portarrollos en Valencia por 25 €. Montaje de soportes para papel higiénico y pequeños accesorios de baño en posiciones cómodas."
+      : "Toilet paper holder installation in Valencia for €25. Wall-mounted bathroom accessories fitted in convenient everyday positions.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta instalar un portarrollos en Valencia?",
-    a: "La instalación de portarrollos empieza desde 25€. El precio depende del tipo de soporte, pared, azulejo, fijaciones y si hay más accesorios para instalar en la misma visita.",
+    a: "La instalación de portarrollos cuesta 25 €. El precio depende del tipo de soporte, pared, azulejo, fijaciones y si hay más accesorios para instalar en la misma visita.",
   },
   {
     q: "¿Instalan portarrollos en azulejo?",
@@ -260,7 +260,7 @@ export default async function ToiletPaperHolderInstallationValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 25€",
+                "25 €",
                 "Portarrollos de baño",
                 "Accesorios pequeños",
                 "Posición cómoda",
@@ -331,7 +331,7 @@ export default async function ToiletPaperHolderInstallationValenciaPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 25€. Presupuesto según fotos, pieza y dificultad.",
+              text: "25 €. Presupuesto según fotos, pieza y dificultad.",
             },
           ].map((item) => (
             <div
@@ -444,7 +444,7 @@ export default async function ToiletPaperHolderInstallationValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 25€
+            25 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para instalar portarrollos en Valencia

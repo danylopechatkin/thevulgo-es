@@ -274,20 +274,20 @@ export default async function WallRepairValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Tapar agujeros pequeños", "desde 35 €"],
-        ["Reparación de pared", "desde 35 €"],
-        ["Reparación de pladur", "desde 35 €"],
-        ["Grietas pequeñas", "desde 39 €"],
-        ["Retoques de pintura", "desde 49 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Tapar agujeros pequeños", "35 €"],
+        ["Reparación de pared", "35 €"],
+        ["Reparación de pladur", "35 €"],
+        ["Grietas pequeñas", "39 €"],
+        ["Retoques de pintura", "49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Fill small holes", "from €35"],
-        ["Wall repair", "from €35"],
-        ["Drywall repair", "from €35"],
-        ["Small cracks", "from €39"],
-        ["Paint touch-ups", "from €49"],
-        ["Visit / inspection", "from €49"],
+        ["Fill small holes", "€35"],
+        ["Wall repair", "€35"],
+        ["Drywall repair", "€35"],
+        ["Small cracks", "€39"],
+        ["Paint touch-ups", "€49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const process = isEs
@@ -378,7 +378,7 @@ export default async function WallRepairValenciaPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta reparar una pared en Valencia?",
-          a: "Depende del tamaño del daño, tipo de pared, materiales, pintura y tiempo. Las reparaciones pequeñas suelen empezar desde 35–49 €.",
+          a: "Depende del tamaño del daño, tipo de pared, materiales, pintura y tiempo. Las reparaciones pequeñas cuestan 35–49 €.",
         },
         {
           q: "¿Tapáis agujeros de TV, cuadros o estanterías?",
@@ -420,7 +420,7 @@ export default async function WallRepairValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does wall repair in Valencia cost?",
-          a: "It depends on damage size, wall type, materials, paint and time. Small repairs usually start from €35–49.",
+          a: "It depends on damage size, wall type, materials, paint and time. Small repairs cost €35–49.",
         },
         {
           q: "Do you fill holes from TVs, pictures or shelves?",
@@ -671,7 +671,7 @@ export default async function WallRepairValenciaPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-1 text-xs font-bold">
                 <Euro className="h-4 w-4 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </div>
 
               <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -690,7 +690,7 @@ export default async function WallRepairValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios desde" : "Prices from"}
+                {isEs ? "Precios" : "Prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

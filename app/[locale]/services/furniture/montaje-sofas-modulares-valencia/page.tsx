@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: isEs
-      ? "Montaje de Sofás Modulares en Valencia | Desde 39€ | THEVULGO"
-      : "Modular Sofa Assembly in Valencia | From €39 | THEVULGO",
+      ? "Montaje de Sofás Modulares en Valencia | 39 € | THEVULGO"
+      : "Modular Sofa Assembly in Valencia | €39 | THEVULGO",
     description: isEs
-      ? "Montaje simple de sofás y piezas modulares en Valencia desde 39€. Unión de módulos, patas, chaise longue, ajuste de piezas y posición estable."
-      : "Simple sofa and modular piece assembly in Valencia from €39. Module connection, legs, chaise longue, piece adjustment and stable positioning.",
+      ? "Montaje simple de sofás y piezas modulares en Valencia por 39 €. Unión de módulos, patas, chaise longue, ajuste de piezas y posición estable."
+      : "Simple sofa and modular piece assembly in Valencia for €39. Module connection, legs, chaise longue, piece adjustment and stable positioning.",
     alternates: {
       canonical: `${siteUrl}/${locale}/services/furniture/montaje-sofas-modulares-valencia`,
       languages: {
@@ -73,7 +73,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta montar un sofá modular en Valencia?",
-    a: "El montaje simple de sofás y piezas modulares empieza desde 39€. El precio final depende del número de módulos, patas, conectores, chaise longue, tamaño y dificultad.",
+    a: "El montaje simple de sofás y piezas modulares cuesta 39 €. El precio final depende del número de módulos, patas, conectores, chaise longue, tamaño y dificultad.",
   },
   {
     q: "¿Montan sofás IKEA?",
@@ -211,8 +211,8 @@ export default async function ModularSofaAssemblyValenciaPage({
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Montaje simple de sofás y piezas modulares desde{" "}
-              <strong className="text-neutral-950">39€</strong>, cuando el
+              Montaje simple de sofás y piezas modulares de{" "}
+              <strong className="text-neutral-950">39 €</strong>, cuando el
               sistema lo permite. Unión de módulos, patas, conectores, chaise
               longue y posición estable para el uso diario.
             </p>
@@ -236,7 +236,7 @@ export default async function ModularSofaAssemblyValenciaPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Montaje desde 39€",
+                "Montaje por 39 €",
                 "Sofás modulares",
                 "Chaise longue",
                 "Unión de módulos",
@@ -423,7 +423,7 @@ export default async function ModularSofaAssemblyValenciaPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 39€
+            39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Presupuesto para montar sofá modular en Valencia

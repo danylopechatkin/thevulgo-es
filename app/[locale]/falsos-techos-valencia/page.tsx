@@ -162,27 +162,27 @@ export default async function FalsosTechosValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Reparación pequeña en falso techo", "desde 49 €"],
-        ["Preparación para foco / parche", "desde 49 €"],
-        ["Cierre o reparación de hueco", "desde 59 €"],
-        ["Instalación básica de techo de pladur", "desde 79 €"],
+        ["Reparación pequeña en falso techo", "49 €"],
+        ["Preparación para foco / parche", "49 €"],
+        ["Cierre o reparación de hueco", "59 €"],
+        ["Instalación básica de techo de pladur", "79 €"],
         ["Falso techo completo", "presupuesto"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small false ceiling repair", "from €49"],
-        ["Spotlight preparation / patch", "from €49"],
-        ["Closure or hole repair", "from €59"],
-        ["Basic plasterboard ceiling installation", "from €79"],
+        ["Small false ceiling repair", "€49"],
+        ["Spotlight preparation / patch", "€49"],
+        ["Closure or hole repair", "€59"],
+        ["Basic plasterboard ceiling installation", "€79"],
         ["Full false ceiling", "quote"],
-        ["Visit / inspection", "from €49"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta hacer un falso techo en Valencia?",
-          a: "Depende de los metros, altura, estructura, materiales, iluminación, acceso, acabado y dificultad. Las reparaciones pequeñas pueden empezar desde 49 €, pero un falso techo completo requiere presupuesto.",
+          a: "Depende de los metros, altura, estructura, materiales, iluminación, acceso, acabado y dificultad. Las reparaciones pequeñas pueden costar 49 €, pero un falso techo completo requiere presupuesto.",
         },
         {
           q: "¿Hacéis falsos techos de pladur?",
@@ -208,7 +208,7 @@ export default async function FalsosTechosValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does a false ceiling in Valencia cost?",
-          a: "It depends on measurements, height, structure, materials, lighting, access, finish and difficulty. Small repairs can start from €49, but a full false ceiling requires a quote.",
+          a: "It depends on measurements, height, structure, materials, lighting, access, finish and difficulty. Small repairs can cost €49, but a full false ceiling requires a quote.",
         },
         {
           q: "Do you install plasterboard false ceilings?",
@@ -459,7 +459,7 @@ export default async function FalsosTechosValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

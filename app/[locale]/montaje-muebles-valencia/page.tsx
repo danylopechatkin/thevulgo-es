@@ -45,8 +45,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Montaje de muebles en Valencia | Desde 45 €"
-    : "Furniture Assembly in Valencia | From €45";
+    ? "Montaje de muebles en Valencia | 45 €"
+    : "Furniture Assembly in Valencia | €45";
 
   const description = isEs
     ? "Montaje de muebles IKEA, armarios, camas, cómodas, mesas y estanterías en Valencia. Trabajo limpio y presupuesto rápido por WhatsApp."
@@ -169,27 +169,27 @@ export default async function MontajeMueblesValenciaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Montaje de mueble pequeño", "desde 35 €"],
-        ["Montaje de cómoda / cajonera", "desde 45 €"],
-        ["Montaje de cama", "desde 49 €"],
-        ["Montaje de armario", "desde 69 €"],
-        ["Montaje de mueble IKEA", "desde 45 €"],
-        ["Visita / revisión", "desde 49 €"],
+        ["Montaje de mueble pequeño", "35 €"],
+        ["Montaje de cómoda / cajonera", "45 €"],
+        ["Montaje de cama", "49 €"],
+        ["Montaje de armario", "69 €"],
+        ["Montaje de mueble IKEA", "45 €"],
+        ["Visita / revisión", "49 €"],
       ]
     : [
-        ["Small furniture assembly", "from €35"],
-        ["Drawer / chest assembly", "from €45"],
-        ["Bed assembly", "from €49"],
-        ["Wardrobe assembly", "from €69"],
-        ["IKEA furniture assembly", "from €45"],
-        ["Visit / inspection", "from €49"],
+        ["Small furniture assembly", "€35"],
+        ["Drawer / chest assembly", "€45"],
+        ["Bed assembly", "€49"],
+        ["Wardrobe assembly", "€69"],
+        ["IKEA furniture assembly", "€45"],
+        ["Visit / inspection", "€49"],
       ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta el montaje de muebles en Valencia?",
-          a: "Depende del tipo de mueble, tamaño, número de piezas, dificultad, marca, fijación a pared y tiempo necesario. Los muebles pequeños suelen empezar desde 35–45 €.",
+          a: "Depende del tipo de mueble, tamaño, número de piezas, dificultad, marca, fijación a pared y tiempo necesario. Los muebles pequeños cuestan 35–45 €.",
         },
         {
           q: "¿Montáis muebles IKEA?",
@@ -215,7 +215,7 @@ export default async function MontajeMueblesValenciaPage({ params }: Props) {
     : [
         {
           q: "How much does furniture assembly in Valencia cost?",
-          a: "It depends on furniture type, size, number of parts, difficulty, brand, wall fixing and time required. Small furniture usually starts from €35–45.",
+          a: "It depends on furniture type, size, number of parts, difficulty, brand, wall fixing and time required. Small furniture costs €35–45.",
         },
         {
           q: "Do you assemble IKEA furniture?",
@@ -478,7 +478,7 @@ export default async function MontajeMueblesValenciaPage({ params }: Props) {
             <div className="rounded-3xl border border-yellow-300 bg-white p-6 shadow-xl">
               <h3 className="flex items-center gap-2 text-xl font-black">
                 <Euro className="h-6 w-6 text-yellow-500" />
-                {isEs ? "Precios orientativos" : "Guide prices"}
+                {isEs ? "Precios de servicios" : "Service prices"}
               </h3>
 
               <div className="mt-5 space-y-3">

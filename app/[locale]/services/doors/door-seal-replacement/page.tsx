@@ -29,11 +29,11 @@ export async function generateMetadata({
 
   return {
     title: isEs
-      ? "Cambio de Burlete de Puerta | Desde 29€ | THEVULGO"
-      : "Door Seal Replacement | From €29 | THEVULGO",
+      ? "Cambio de Burlete de Puerta | 29 € | THEVULGO"
+      : "Door Seal Replacement | €29 | THEVULGO",
     description: isEs
-      ? "Cambio y ajuste de burletes de puerta desde 29€. Sustitución de sellos desgastados para reducir corrientes de aire, ruido y mejorar el cierre."
-      : "Door seal replacement from €29. Replacement or adjustment of worn door seals to reduce drafts, noise and improve closing comfort.",
+      ? "Cambio y ajuste de burletes de puerta por 29 €. Sustitución de sellos desgastados para reducir corrientes de aire, ruido y mejorar el cierre."
+      : "Door seal replacement for €29. Replacement or adjustment of worn door seals to reduce drafts, noise and improve closing comfort.",
     alternates: {
       canonical: `${siteUrl}/${locale}${pagePath}`,
       languages: {
@@ -76,7 +76,7 @@ const serviceAreas = [
 const faqs = [
   {
     q: "¿Cuánto cuesta cambiar un burlete de puerta?",
-    a: "El cambio de burlete de puerta empieza desde 29€. El precio depende del tipo de puerta, longitud del burlete, estado del sello anterior, compatibilidad y dificultad de instalación.",
+    a: "El cambio de burlete de puerta cuesta 29 €. El precio depende del tipo de puerta, longitud del burlete, estado del sello anterior, compatibilidad y dificultad de instalación.",
   },
   {
     q: "¿Pueden sustituir burletes desgastados?",
@@ -243,7 +243,7 @@ export default async function DoorSealReplacementPage({
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {[
-                "Desde 29€",
+                "29 €",
                 "Burletes desgastados",
                 "Menos corrientes de aire",
                 "Mejor cierre",
@@ -314,7 +314,7 @@ export default async function DoorSealReplacementPage({
             {
               icon: Star,
               title: "Precio claro",
-              text: "Desde 29€. Presupuesto según fotos, medidas y dificultad.",
+              text: "29 €. Presupuesto según fotos, medidas y dificultad.",
             },
           ].map((item) => (
             <div
@@ -459,7 +459,7 @@ export default async function DoorSealReplacementPage({
       <section className="bg-yellow-400 py-16 text-black">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <p className="text-sm font-black uppercase tracking-widest">
-            Desde 29€
+            29 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
             Precio para cambiar burlete de puerta
