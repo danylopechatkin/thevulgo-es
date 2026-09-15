@@ -1,6 +1,6 @@
-# SEO money pages — Phase 1 report
+# SEO коммерческих страниц — отчёт по Фазе 1
 
-## 1. Files changed
+## 1. Изменённые файлы
 
 - `app/[locale]/page.tsx`
 - `app/[locale]/handyman-valencia/page.tsx`
@@ -14,92 +14,94 @@
 - `docs/seo-money-pages-baseline-2026-09.md`
 - `docs/seo-money-pages-phase1-report.md`
 
-## 2. Metadata before / after
+## 2. Метаданные до и после
 
-| Page | Before | After |
+| Страница | До | После |
 |---|---|---|
-| Homepage ES | Handyman en Valencia… | THEVULGO Valencia \| Montaje, instalaciones y reparaciones |
-| Homepage EN | Handyman in Valencia… | THEVULGO Valencia \| Home Installation & Repair Services |
+| Главная ES | Handyman en Valencia… | THEVULGO Valencia \| Montaje, instalaciones y reparaciones |
+| Главная EN | Handyman in Valencia… | THEVULGO Valencia \| Home Installation & Repair Services |
 | Handyman ES | Manitas en Valencia \| Montaje y Reparaciones… | Manitas en Valencia \| TV, muebles y reparaciones… |
 | Handyman EN | Handyman in Valencia \| Assembly and Repairs… | English-Speaking Handyman in Valencia… |
-| TV hub ES | Montaje de TV en Valencia \| 49 €… | Montaje de TV en Valencia \| Instalación en pared… |
-| TV hub EN | TV Mounting in Valencia \| €49… | TV Mounting in Valencia \| Wall Installation… |
-| TV installer | Generic locale-layout metadata | Route-specific ES/EN title, description, self canonical, hreflang and robots |
-| Furniture ES/EN | Price-led title and shorter description | Requested broader furniture title and commercial description |
-| IKEA ES/EN | Price-led title and description | Requested IKEA/PAX/KALLAX-oriented title and description |
+| Основная TV ES | Montaje de TV en Valencia \| 49 €… | Montaje de TV en Valencia \| Instalación en pared… |
+| Основная TV EN | TV Mounting in Valencia \| €49… | TV Mounting in Valencia \| Wall Installation… |
+| TV installer | Общие метаданные locale layout | Собственные ES/EN title, description, self-canonical, hreflang и robots |
+| Мебель ES/EN | Заголовок с упором на цену | Запрошенные коммерческие title и description общей услуги |
+| IKEA ES/EN | Заголовок с упором на цену | Запрошенные title и description с акцентом на IKEA, PAX и KALLAX |
 
-Descriptions were updated to the Phase 1 brief verbatim where specified. Canonicals were preserved.
+Готовые описания из задания использованы без изменения смысла. Все существующие canonical URL сохранены.
 
-## 3. H1 before / after
+## 3. H1 до и после
 
 - Handyman ES: `Manitas en Valencia para reparaciones y montaje` → `Manitas en Valencia para montaje y pequeñas reparaciones`.
 - Handyman EN: `Handyman in Valencia for repairs and assembly` → `English-speaking handyman in Valencia`.
-- TV hub EN: Spanish H1 → `TV Mounting in Valencia`; ES remains `Montaje de TV en Valencia`.
-- Shelf assembly EN: Spanish H1 → `Shelf and bookcase assembly in Valencia`.
-- Wall shelf installation EN: Spanish H1 → `Wall shelf installation in Valencia`.
-- Existing IKEA, generic furniture, curtain, overlap-page and specialist-page H1s were preserved where already aligned.
+- Основная TV EN: испанский H1 → `TV Mounting in Valencia`; испанская версия осталась `Montaje de TV en Valencia`.
+- Сборка стеллажей EN: испанский H1 → `Shelf and bookcase assembly in Valencia`.
+- Настенные полки EN: испанский H1 → `Wall shelf installation in Valencia`.
+- Остальные H1 сохранены там, где уже соответствовали поисковому интенту.
 
-## 4. Internal links changed
+## 4. Внутренние ссылки
 
-- Added a direct IKEA card to the handyman page; TV, furniture, wall-shelf and curtain cards already pointed directly to canonical routes.
-- Main TV related-service cards now point directly to bracket, large-TV, Samsung Frame, cable hiding, soundbar and handyman canonical routes.
-- IKEA related links now distinguish generic furniture, wardrobe installation, shelf assembly and wall-shelf installation; its handyman label now points to `/handyman-valencia`.
-- Shelf assembly handyman link now points to `/handyman-valencia` rather than `/services`.
-- Existing desktop/mobile navigation already exposed a crawlable direct handyman link and was preserved.
+- На handyman-страницу добавлена прямая карточка IKEA. Ссылки на TV, мебель, настенные полки и карнизы ведут сразу на canonical-маршруты.
+- Основная TV-страница теперь напрямую ссылается на установку кронштейна, большие TV, Samsung Frame, скрытие кабелей, soundbar и handyman.
+- На странице IKEA разведены ссылки на общую сборку мебели, установку шкафов, сборку стеллажей и монтаж настенных полок.
+- Ссылки с названием handyman больше не ведут на общий `/services`.
+- Существующая индексируемая ссылка на handyman в десктопной и мобильной навигации сохранена.
 
-## 5. Localization fixes
+## 5. Локализация
 
-- Fully localized the main TV hub hero, benefits, long-form content, bracket/wall sections, pricing copy, areas, FAQs, related services, closing CTA, breadcrumbs and JSON-LD for EN.
-- Localized the shelf-assembly hero, benefits, long-form content, included-service list, shelving types, price section, coverage, headings, related links and CTAs.
-- Corrected the wall-shelf English hero/H1 and schema/breadcrumb locale text.
-- Preserved existing correct localization on handyman, furniture, IKEA, curtain, overlap and specialist pages.
+- Основная TV-страница локализована для EN: hero, преимущества, основной текст, кронштейны, типы стен, цены, зоны обслуживания, FAQ, связанные услуги, CTA, breadcrumbs и JSON-LD.
+- На странице сборки стеллажей локализованы hero, преимущества, основной текст, список работ, типы стеллажей, цены, зоны, связанные ссылки и CTA.
+- Исправлены английский hero/H1, schema и breadcrumbs страницы настенных полок.
+- Корректная существующая локализация остальных страниц сохранена.
 
-## 6. Structured data changes
+## 6. Структурированные данные
 
-- Homepage Service and LocalBusiness descriptions now describe the site as a Valencia installation/repair hub while preserving the offers array and HomeAndConstructionBusiness schema.
-- TV Service, LocalBusiness, FAQ and Breadcrumb schema now use locale-matched ES/EN text.
-- Wall-shelf Service and breadcrumb names now match the locale.
-- No ratings, review counts, guarantees or new prices were added.
+- Главная теперь описывается в Service и LocalBusiness как центр услуг по монтажу и ремонту в Валенсии. Offers и HomeAndConstructionBusiness сохранены.
+- Service, LocalBusiness, FAQ и Breadcrumb основной TV-страницы теперь соответствуют выбранной локали.
+- Service и breadcrumbs страницы настенных полок локализованы.
+- Рейтинги, количество отзывов, гарантии и новые цены не добавлялись.
 
-## 7. Sitemap changes
+## 7. Sitemap
 
-No sitemap architecture changes. All mandatory URLs were present in the production sitemap and remained in `app/sitemap.ts`.
+Архитектура sitemap не изменялась. Все обязательные URL остались в `app/sitemap.ts`.
 
-## 8. Redirect changes
+## 8. Редиректы
 
-No broad route consolidation performed in Phase 1. `next.config.ts` was not changed. Legacy shelf aliases still return one permanent redirect directly to the existing nested canonical routes; no new redirect chain was introduced.
+Широкая консолидация маршрутов в Фазе 1 не выполнялась. `next.config.ts` не изменялся. Старые короткие URL полок по-прежнему выполняют один постоянный редирект сразу на вложенный canonical URL. Новые цепочки редиректов не появились.
 
-## 9. PRICE CONSISTENCIES TO REVIEW
+## 9. ЦЕНОВЫЕ РАСХОЖДЕНИЯ ДЛЯ ПРОВЕРКИ
 
-- The main TV hub presents a standard installation at 49 €.
-- `colgar-tv-valencia` presents 49 €, 59 € and 69 € by TV size, and 79 € for full-motion mounting.
-- `instalacion-soporte-tv-valencia` presents 49 € fixed, 59 € tilting, 79 € full-motion and 69 € large-TV bracket installation.
-- `instalar-tv-pared-valencia` and `instalador-tv-valencia` present size/service variants from 49 € through 99 €.
-- These may be legitimate variants, but the hub wording can be read as a universal price. No numeric value or pricing logic was changed.
+- Основная TV-страница показывает стандартную установку за 49 €.
+- `colgar-tv-valencia`: 49 €, 59 € и 69 € по размеру TV; 79 € за поворотный кронштейн.
+- `instalacion-soporte-tv-valencia`: 49 € фиксированный, 59 € наклонный, 79 € поворотный, 69 € для большого TV.
+- `instalar-tv-pared-valencia` и `instalador-tv-valencia`: варианты от 49 € до 99 €.
+- Различия могут быть обоснованы вариантами услуги, но формулировка основной страницы может восприниматься как единая цена. Цены и их логика не изменялись.
 
-## 10. URLs deliberately preserved
+## 10. URL, сохранённые для предотвращения SEO-регрессии
 
-All homepage, handyman, TV overlap, TV specialist, furniture, IKEA, shelf and curtain URLs named in the brief were preserved. No page was deleted, redirected, canonicalized elsewhere or removed from the sitemap.
+Сохранены все указанные в задании URL главной, handyman, TV-кластера, специализированных TV-страниц, мебели, IKEA, полок и карнизов. Ни одна страница не удалена, не перенаправлена, не получила canonical на другой URL и не удалена из sitemap.
 
-## 11. Build result
+## 11. Production build
 
-Production build passed using safe placeholder values for required build-time integrations. The first environment-free build correctly stopped because `RESEND_API_KEY` is required during route initialization; no integration code was changed.
+Production build успешно завершён с безопасными тестовыми значениями обязательных build-time переменных. Первый запуск без переменных ожидаемо остановился из-за отсутствия `RESEND_API_KEY`. Код интеграций не изменялся.
 
-## 12. Lint result
+## 12. Lint
 
-Full lint remains blocked by nine pre-existing errors in `estimate/page.tsx`, `admin-login/page.tsx`, `api/send/route.ts` and `CitySwitcher.tsx`, plus existing warnings. No lint error was reported in a changed SEO route. TypeScript validation passed.
+Полный lint блокируется девятью существовавшими ранее ошибками в `estimate/page.tsx`, `admin-login/page.tsx`, `api/send/route.ts` и `CitySwitcher.tsx`, а также прежними предупреждениями. В изменённых SEO-маршрутах новых lint-ошибок нет. TypeScript прошёл проверку.
 
-## 13. Manual URL verification result
+## 13. Проверка URL
 
-- All 26 mandatory localized URLs returned HTTP 200 locally.
-- Each had a title, meta description, one meaningful H1, self canonical and index/follow behavior.
-- WhatsApp links retained `+34 610 076 942`; telephone links were preserved where the page already renders them.
-- Desktop TV and mobile handyman pages were visually checked: heroes fit, CTAs remain visible, mobile navigation/cards do not overflow, and no browser console error or framework overlay was present.
-- The four legacy shelf aliases return a single 308 directly to their nested canonical route.
+- Все 26 обязательных локализованных URL вернули HTTP 200 в локальной production-сборке.
+- На каждой странице есть title, meta description, содержательный H1, self-canonical и index/follow.
+- WhatsApp-ссылки сохранили номер `+34 610 076 942`; телефонные ссылки сохранены там, где уже отображались.
+- Основная TV-страница проверена на desktop, handyman — на mobile. Переполнения hero нет, CTA видны, мобильная навигация и карточки помещаются на экран.
+- Ошибок браузерной консоли и Next.js error overlay не обнаружено.
+- Четыре старых коротких URL полок выполняют один 308-редирект непосредственно на вложенные canonical-маршруты.
+- Все 32 автоматических теста прошли.
 
-## 14. Unresolved issues
+## 14. Нерешённые вопросы
 
-- `montaje-tv-grande-valencia` has an English metadata layer but still renders a Spanish H1/body. The brief classifies it as a specialist page to verify rather than rewrite, so it was not broadened in this deployment.
-- The wall-shelf page's English hero and SEO signals are corrected, but lower-page legacy Spanish copy remains and should receive a dedicated copy-only localization pass.
-- Repository-wide lint debt is outside this conservative SEO change and remains unchanged.
-- Phase 2 TV-cluster consolidation remains analysis-only and requires separate approval after Search Console observation.
+- `montaje-tv-grande-valencia` имеет английские метаданные, но H1 и основной контент английского URL остаются на испанском. По заданию эта специализированная страница подлежала проверке, но не полному переписыванию.
+- На английской странице настенных полок исправлены hero и SEO-сигналы, однако в нижней части остаётся прежний испанский текст. Рекомендуется отдельный проход, ограниченный локализацией.
+- Общий lint-долг репозитория не относится к этой консервативной SEO-задаче и не изменялся.
+- Фаза 2 по консолидации TV-кластера остаётся только аналитической и требует отдельного согласования после периода наблюдения в Search Console.
