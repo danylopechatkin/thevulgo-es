@@ -8,7 +8,11 @@ import { SITE_ORIGIN } from "@/lib/seo";
 type Props = { params: Promise<{ locale: string; slug: string[] }> };
 const baseUrl = SITE_ORIGIN;
 
-export function generateStaticParams() { return MADRID_ROUTES.map((route) => ({ slug: route.path.split("/") })); }
+export function generateStaticParams() {
+  return ["es", "en"].flatMap((locale) =>
+    MADRID_ROUTES.map((route) => ({ locale, slug: route.path.split("/") }))
+  );
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params; const path = slug.join("/");

@@ -73,6 +73,8 @@ export function humanizeServicePath(path: string, locale: string) {
   const overrides: Record<string, [string, string]> = {
     services: ["Todos los servicios", "All services"],
     handyman: ["Servicio de manitas", "Handyman service"],
+    "montaje-tv": ["Montaje de TV", "TV mounting"],
+    "montaje-muebles": ["Montaje de muebles", "Furniture assembly"],
     "tv-mounting": ["Instalación de TV", "TV mounting"],
     electrical: ["Electricidad básica", "Basic electrical"],
     plumbing: ["Fontanería básica", "Basic plumbing"],

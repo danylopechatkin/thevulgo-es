@@ -13,11 +13,13 @@ const locales = ["es", "en"] as const;
 const paths = ["", ...MADRID_ROUTES.map((route) => route.path)];
 const failures: string[] = [];
 let checked = 0;
+const results: Array<{ market: string; locale: string; route: string; status: number }> = [];
 
 async function verifyPage(locale: string, market: Exclude<Market, "valencia">, city: string, path: string) {
   const pathname = `/${locale}/${market}${path ? `/${path}` : ""}`;
   try {
     const response = await fetch(`${baseUrl}${pathname}`, { redirect: "manual" });
+    results.push({ market, locale, route: path || "(root)", status: response.status });
     assert.equal(response.status, 200, `${pathname} returned ${response.status}`);
     const html = await response.text();
 
@@ -38,21 +40,46 @@ async function verifyPage(locale: string, market: Exclude<Market, "valencia">, c
   }
 }
 
+const invalidPaths = [
+  { locale: "es", market: "madrid", path: "this-route-does-not-exist" },
+  { locale: "en", market: "barcelona", path: "not-a-real-service" },
+  { locale: "es", market: "alicante", path: "fake-service" },
+] as const;
+
+async function verifyInvalidPage({ locale, market, path }: (typeof invalidPaths)[number]) {
+  const pathname = `/${locale}/${market}/${path}`;
+  try {
+    const response = await fetch(`${baseUrl}${pathname}`, { redirect: "manual" });
+    results.push({ market, locale, route: path, status: response.status });
+    assert.equal(response.status, 404, `${pathname} returned ${response.status}, expected 404`);
+    checked += 1;
+  } catch (error) {
+    failures.push(error instanceof Error ? error.message : String(error));
+  }
+}
+
 async function main() {
   const jobs = markets.flatMap(({ market, city }) =>
     locales.flatMap((locale) => paths.map((path) => () => verifyPage(locale, market, city, path)))
   );
 
-  for (let index = 0; index < jobs.length; index += 20) {
-    await Promise.all(jobs.slice(index, index + 20).map((job) => job()));
+  for (let index = 0; index < jobs.length; index += 8) {
+    await Promise.all(jobs.slice(index, index + 8).map((job) => job()));
+  }
+
+  for (const invalidPath of invalidPaths) await verifyInvalidPage(invalidPath);
+
+  console.log("market\tlocale\troute\tstatus");
+  for (const result of results) {
+    console.log(`${result.market}\t${result.locale}\t${result.route}\t${result.status}`);
   }
 
   if (failures.length > 0) {
     console.error(failures.slice(0, 50).join("\n"));
-    console.error(`Failed ${failures.length} of ${jobs.length} city route checks.`);
+    console.error(`Failed ${failures.length} of ${jobs.length + invalidPaths.length} city route checks.`);
     process.exitCode = 1;
   } else {
-    console.log(`Passed ${checked} city route, navigation and WhatsApp checks.`);
+    console.log(`Passed ${checked} city route, navigation, WhatsApp and invalid-route checks.`);
   }
 }
 
