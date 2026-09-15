@@ -45,12 +45,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Montaje de muebles en Valencia | 45 €"
-    : "Furniture Assembly in Valencia | €45";
+    ? "Montaje de muebles en Valencia | IKEA, armarios y camas | THEVULGO"
+    : "Furniture Assembly in Valencia | IKEA, Beds & Wardrobes | THEVULGO";
 
   const description = isEs
-    ? "Montaje de muebles IKEA, armarios, camas, cómodas, mesas y estanterías en Valencia. Trabajo limpio y presupuesto rápido por WhatsApp."
-    : "IKEA furniture, wardrobes, beds, drawers, tables and shelves assembled in Valencia. Clean work and a fast WhatsApp estimate.";
+    ? "Montaje de muebles en Valencia: IKEA y otras marcas, armarios, camas, cómodas, mesas, escritorios y estanterías. Presupuesto por fotos y WhatsApp."
+    : "Furniture assembly in Valencia for IKEA and other brands, wardrobes, beds, dressers, tables, desks and shelving. Send photos by WhatsApp for a quote.";
 
   return {
     title,

@@ -12,12 +12,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Handyman en Valencia | Montaje TV, muebles y reparaciones | THEVULGO"
-    : "Handyman in Valencia | TV Mounting, Furniture & Repairs | THEVULGO";
+    ? "THEVULGO Valencia | Montaje, instalaciones y reparaciones"
+    : "THEVULGO Valencia | Home Installation & Repair Services";
 
   const description = isEs
-    ? "Handyman en Valencia para montaje de TV, montaje de muebles, reparaciones, electricidad básica, fontanería básica, pladur, puertas, cocina, baño y mudanzas. Respuesta rápida, acabado limpio y presupuesto claro."
-    : "Handyman in Valencia for TV mounting, furniture assembly, repairs, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom and move-in jobs. Fast response, clean finish and clear estimate.";
+    ? "Servicios para el hogar en Valencia: montaje de TV y muebles, instalaciones, pequeñas reparaciones, electricidad básica, fontanería básica, pladur y otros trabajos. Presupuesto claro por WhatsApp."
+    : "Home installation and repair services in Valencia: TV mounting, furniture assembly, small repairs, basic electrical, basic plumbing, drywall and other home jobs. Clear quote by WhatsApp.";
 
   return {
     title,
@@ -113,8 +113,8 @@ export default async function Page({ params }: Props) {
       "Gandía",
     ],
     description: isEs
-      ? "Servicios de handyman en Valencia: montaje de TV, muebles, reparaciones, electricidad básica, fontanería básica, pladur, puertas, cocina, baño y mudanzas."
-      : "Handyman services in Valencia: TV mounting, furniture assembly, repairs, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom and move-in jobs.",
+      ? "Servicios de montaje y reparaciones en Valencia: montaje de TV, muebles, reparaciones, electricidad básica, fontanería básica, pladur, puertas, cocina, baño y mudanzas."
+      : "Home installation and repair services in Valencia: TV mounting, furniture assembly, repairs, basic electrical, basic plumbing, drywall, doors, kitchen, bathroom and move-in jobs.",
     makesOffer: services.map((service) => ({
       "@type": "Offer",
       itemOffered: {
@@ -150,8 +150,8 @@ export default async function Page({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "Service",
     name: isEs
-      ? "Servicios de handyman en Valencia"
-      : "Handyman services in Valencia",
+      ? "Servicios de montaje y reparaciones en Valencia"
+      : "Home installation and repair services in Valencia",
     provider: {
       "@type": "HomeAndConstructionBusiness",
       name: "THEVULGO",

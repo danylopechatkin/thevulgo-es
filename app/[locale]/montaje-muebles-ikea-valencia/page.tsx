@@ -28,12 +28,12 @@ export async function generateMetadata({
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Montaje de Muebles IKEA en Valencia | 39 € | THEVULGO"
-    : "IKEA Furniture Assembly in Valencia | €39 | THEVULGO";
+    ? "Montaje IKEA en Valencia | Armarios, camas y muebles | THEVULGO"
+    : "IKEA Furniture Assembly in Valencia | THEVULGO";
 
   const description = isEs
-    ? "Montaje profesional de muebles IKEA en Valencia por 39 €. Armarios, camas, cómodas, estanterías, muebles flat-pack, ajuste de puertas, cajones y fijación a pared."
-    : "Professional IKEA furniture assembly in Valencia for €39. Wardrobes, beds, dressers, shelves, flat-pack furniture, door and drawer adjustment and wall fixing.";
+    ? "Montaje de muebles IKEA en Valencia: armarios PAX, camas, cómodas, KALLAX, estanterías y muebles TV. Envía el modelo o fotos por WhatsApp para recibir presupuesto."
+    : "IKEA furniture assembly in Valencia for PAX wardrobes, beds, dressers, KALLAX, shelving and TV units. Send the model or photos by WhatsApp for a quote.";
 
   return {
     title,
@@ -819,20 +819,20 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
                   href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
                 },
                 {
-                  title: "Colgar cuadros en Valencia",
-                  href: `/${locale}/colgar-cuadros-valencia`,
+                  title: "Instalación de armarios",
+                  href: `/${locale}/instalacion-armarios-valencia`,
                 },
                 {
-                  title: "Instalar espejo en pared",
-                  href: `/${locale}/services/bathroom/mirror-installation-valencia`,
+                  title: "Montaje de estanterías",
+                  href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
+                },
+                {
+                  title: "Manitas en Valencia",
+                  href: `/${locale}/handyman-valencia`,
                 },
                 {
                   title: "Montaje de TV en Valencia",
                   href: `/${locale}/montaje-tv-valencia`,
-                },
-                {
-                  title: "Servicios handyman Valencia",
-                  href: `/${locale}/services`,
                 },
               ]
             : [
@@ -845,20 +845,20 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
                   href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
                 },
                 {
-                  title: "Picture hanging in Valencia",
-                  href: `/${locale}/colgar-cuadros-valencia`,
+                  title: "Wardrobe installation",
+                  href: `/${locale}/instalacion-armarios-valencia`,
                 },
                 {
-                  title: "Mirror installation",
-                  href: `/${locale}/services/bathroom/mirror-installation-valencia`,
+                  title: "Shelf assembly",
+                  href: `/${locale}/services/furniture/montaje-estanterias-valencia`,
+                },
+                {
+                  title: "Handyman in Valencia",
+                  href: `/${locale}/handyman-valencia`,
                 },
                 {
                   title: "TV mounting in Valencia",
                   href: `/${locale}/montaje-tv-valencia`,
-                },
-                {
-                  title: "Handyman services Valencia",
-                  href: `/${locale}/services`,
                 },
               ]
           ).map((item) => (

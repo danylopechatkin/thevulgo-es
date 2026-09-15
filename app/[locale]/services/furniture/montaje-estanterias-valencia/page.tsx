@@ -36,6 +36,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: `${siteUrl}/${locale}/services/furniture/montaje-estanterias-valencia`,
       languages: {
         es: `${siteUrl}/es/services/furniture/montaje-estanterias-valencia`,
+        en: `${siteUrl}/en/services/furniture/montaje-estanterias-valencia`,
+        "x-default": `${siteUrl}/es/services/furniture/montaje-estanterias-valencia`,
       },
     },
     openGraph: {
@@ -110,6 +112,7 @@ export default async function ShelvingAssemblyValenciaPage({
 }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const t = (es: string, en: string) => (isEs ? es : en);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -202,19 +205,15 @@ export default async function ShelvingAssemblyValenciaPage({
           <div>
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-yellow-100 px-4 py-2 text-sm font-black text-neutral-900 shadow-sm">
               <MapPin className="h-4 w-4 text-yellow-600" />
-              Estanterías · Librerías · Módulos · IKEA · Flat-pack
+              {t("Estanterías · Librerías · Módulos · IKEA · Flat-pack", "Shelves · Bookcases · Storage units · IKEA · Flat-pack")}
             </div>
 
             <h1 className="text-4xl font-black tracking-tight md:text-6xl">
-              Montaje de estanterías{" "}
-              <span className="text-yellow-500">en Valencia</span>
+              {t("Montaje de estanterías", "Shelf and bookcase assembly")} <span className="text-yellow-500">{t("en Valencia", "in Valencia")}</span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Montaje de estanterías, librerías y unidades independientes de{" "}
-              <strong className="text-neutral-950">39 €</strong>. Alineación
-              correcta, estructura estable y fijación a pared si hace falta para
-              mayor seguridad.
+              {t("Montaje de estanterías, librerías y unidades independientes por ", "Shelf, bookcase and freestanding storage assembly for ")}<strong className="text-neutral-950">{t("39 €", "€39")}</strong>. {t("Alineación correcta, estructura estable y fijación a pared si hace falta para mayor seguridad.", "Correct alignment, a stable structure and wall fixing when needed for safety.")}
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -222,7 +221,7 @@ export default async function ShelvingAssemblyValenciaPage({
                 href={whatsappUrl}
                 className="inline-flex items-center justify-center rounded-xl bg-yellow-400 px-6 py-4 font-black text-black shadow-md transition hover:scale-105 hover:bg-yellow-300"
               >
-                Pedir presupuesto por WhatsApp
+                {t("Pedir presupuesto por WhatsApp", "Request a quote on WhatsApp")}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
 
@@ -230,19 +229,19 @@ export default async function ShelvingAssemblyValenciaPage({
                 href={`tel:+${phoneNumber}`}
                 className="inline-flex items-center justify-center rounded-xl border border-neutral-300 bg-white px-6 py-4 font-black text-neutral-950 shadow-sm transition hover:scale-105 hover:border-yellow-400"
               >
-                Llamar ahora
+                {t("Llamar ahora", "Call now")}
               </a>
             </div>
 
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
-              {[
+              {(isEs ? [
                 "Montaje por 39 €",
                 "Estanterías y librerías",
                 "Unidades independientes",
                 "Alineación correcta",
                 "Fijación a pared si hace falta",
                 "Valencia y alrededores",
-              ].map((item) => (
+              ] : ["Assembly for €39", "Shelves and bookcases", "Freestanding units", "Correct alignment", "Wall fixing when needed", "Valencia and nearby areas"]).map((item) => (
                 <div key={item} className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-yellow-500" />
                   {item}
@@ -261,18 +260,17 @@ export default async function ShelvingAssemblyValenciaPage({
                 Shelving assembly. Straight. Stable. Clean.
               </h2>
               <p className="mt-4 font-medium leading-7 text-neutral-900">
-                Montamos la estructura, alineamos módulos, revisamos estabilidad
-                y fijamos a la pared cuando es recomendable.
+                {t("Montamos la estructura, alineamos módulos, revisamos estabilidad y fijamos a la pared cuando es recomendable.", "We assemble the structure, align modules, check stability and fix it to the wall when recommended.")}
               </p>
             </div>
 
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              {[
+              {(isEs ? [
                 ["Bookcases", "Librerías y estanterías grandes"],
                 ["Freestanding units", "Módulos independientes"],
                 ["Wall safety", "Fijación a pared si conviene"],
                 ["Fast replies", "Respuesta rápida por WhatsApp"],
-              ].map(([title, text]) => (
+              ] : [["Bookcases", "Large bookcases and shelving units"], ["Freestanding units", "Independent storage modules"], ["Wall safety", "Wall fixing when appropriate"], ["Fast replies", "Quick replies on WhatsApp"]]).map(([title, text]) => (
                 <div
                   key={title}
                   className="rounded-2xl border border-yellow-200 bg-yellow-50 p-4 shadow-sm"
@@ -288,7 +286,7 @@ export default async function ShelvingAssemblyValenciaPage({
 
       <section className="mx-auto max-w-7xl px-5 py-14 md:px-8">
         <div className="grid gap-6 md:grid-cols-4">
-          {[
+          {(isEs ? [
             {
               icon: Wrench,
               title: "Montaje completo",
@@ -309,7 +307,12 @@ export default async function ShelvingAssemblyValenciaPage({
               title: "Precio claro",
               text: "Presupuesto antes del trabajo según fotos y dificultad.",
             },
-          ].map((item) => (
+          ] : [
+            { icon: Wrench, title: "Complete assembly", text: "Frame, shelves, modules, back panel and accessories." },
+            { icon: Ruler, title: "Correct alignment", text: "We check level, vertical alignment and the fit of each part." },
+            { icon: ShieldCheck, title: "Stable structure", text: "We check firmness and fixing for everyday use." },
+            { icon: Star, title: "Clear price", text: "A quote before the work based on photos and difficulty." },
+          ]).map((item) => (
             <div
               key={item.title}
               className="rounded-2xl border border-yellow-200 bg-yellow-50 p-6 shadow-sm"
@@ -324,41 +327,22 @@ export default async function ShelvingAssemblyValenciaPage({
 
       <section className="mx-auto max-w-4xl px-5 py-10 md:px-8">
         <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-          Montaje profesional de estanterías y librerías en Valencia
+          {t("Montaje profesional de estanterías y librerías en Valencia", "Professional shelf and bookcase assembly in Valencia")}
         </h2>
 
         <div className="mt-6 space-y-5 text-lg leading-8 text-neutral-700">
-          <p>
-            En THEVULGO realizamos montaje de estanterías en Valencia para pisos,
-            casas, apartamentos, oficinas, locales y propiedades de alquiler.
-            Montamos librerías, estanterías independientes, módulos de
-            almacenamiento, cubos, muebles auxiliares y unidades tipo flat-pack.
-          </p>
-
-          <p>
-            Una estantería bien montada debe quedar recta, estable y segura. Por
-            eso revisamos la estructura, baldas, uniones, trasera, patas,
-            nivelación y verticalidad. En estanterías altas o estrechas,
-            recomendamos fijación a pared cuando sea necesario.
-          </p>
-
-          <p>
-            También montamos estanterías IKEA, Leroy Merlin, Amazon, JYSK,
-            Conforama, Bauhaus, Carrefour y otros muebles similares. Si tienes
-            una librería grande o varios módulos, envíanos fotos o modelo para
-            calcular mejor el tiempo y el presupuesto.
-          </p>
+          {(isEs ? ["En THEVULGO realizamos montaje de estanterías en Valencia para pisos, casas, apartamentos, oficinas, locales y propiedades de alquiler. Montamos librerías, estanterías independientes, módulos de almacenamiento, cubos, muebles auxiliares y unidades tipo flat-pack.", "Una estantería bien montada debe quedar recta, estable y segura. Por eso revisamos la estructura, baldas, uniones, trasera, patas, nivelación y verticalidad. En estanterías altas o estrechas, recomendamos fijación a pared cuando sea necesario.", "También montamos estanterías IKEA, Leroy Merlin, Amazon, JYSK, Conforama, Bauhaus, Carrefour y otros muebles similares. Si tienes una librería grande o varios módulos, envíanos fotos o modelo para calcular mejor el tiempo y el presupuesto."] : ["THEVULGO assembles shelving in Valencia for homes, apartments, offices, commercial spaces and rental properties. We assemble bookcases, freestanding shelves, storage units, cubes, occasional furniture and flat-pack units.", "A properly assembled shelving unit should be straight, stable and safe. We check the structure, shelves, joints, back panel, feet, level and vertical alignment. For tall or narrow units, we recommend wall fixing when needed.", "We also assemble shelving from IKEA, Leroy Merlin, Amazon, JYSK, Conforama, Bauhaus, Carrefour and similar brands. Send the model or photos of large bookcases or multiple units for an accurate quote."]).map((p) => <p key={p}>{p}</p>)}
         </div>
       </section>
 
       <section className="bg-yellow-50 py-16">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <h2 className="text-3xl font-black md:text-4xl">
-            ¿Qué incluye el montaje de estanterías?
+            {t("¿Qué incluye el montaje de estanterías?", "What does shelf assembly include?")}
           </h2>
 
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {[
+            {(isEs ? [
               "Revisión de piezas e instrucciones",
               "Montaje de estructura principal",
               "Instalación de baldas",
@@ -368,7 +352,7 @@ export default async function ShelvingAssemblyValenciaPage({
               "Fijación a pared si hace falta",
               "Comprobación final de estabilidad",
               "Presupuesto claro antes del trabajo",
-            ].map((item) => (
+            ] : ["Parts and instructions check", "Main frame assembly", "Shelf installation", "Freestanding module assembly", "Level check", "Back panel and joint adjustment", "Wall fixing when needed", "Final stability check", "Clear quote before work"]).map((item) => (
               <div
                 key={item}
                 className="flex items-start gap-3 rounded-2xl border border-yellow-200 bg-white p-5 shadow-sm"
@@ -383,11 +367,11 @@ export default async function ShelvingAssemblyValenciaPage({
 
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <h2 className="mb-8 text-3xl font-black md:text-4xl">
-          Tipos de estanterías que montamos
+          {t("Tipos de estanterías que montamos", "Types of shelving we assemble")}
         </h2>
 
         <div className="grid gap-8 md:grid-cols-4">
-          {[
+          {(isEs ? [
             {
               title: "Librerías",
               text: "Montaje de librerías pequeñas, medianas y grandes para salón u oficina.",
@@ -404,7 +388,7 @@ export default async function ShelvingAssemblyValenciaPage({
               title: "Estanterías altas",
               text: "Revisión de estabilidad y fijación a pared cuando sea recomendable.",
             },
-          ].map((item) => (
+          ] : [{ title: "Bookcases", text: "Small, medium and large bookcases for living rooms or offices." }, { title: "Open shelving", text: "Open units for decoration, books, boxes and storage." }, { title: "Freestanding units", text: "Cubes, occasional units, room dividers and storage modules." }, { title: "Tall shelving", text: "Stability review and wall fixing when recommended." }]).map((item) => (
             <div
               key={item.title}
               className="rounded-3xl border border-yellow-300 bg-white p-7 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
@@ -425,18 +409,16 @@ export default async function ShelvingAssemblyValenciaPage({
             39 €
           </p>
           <h2 className="mt-3 text-4xl font-black">
-            Presupuesto para montar estanterías en Valencia
+            {t("Presupuesto para montar estanterías en Valencia", "Quote for shelf assembly in Valencia")}
           </h2>
           <p className="mt-6 text-lg font-medium leading-8 text-neutral-900">
-            El precio depende del tamaño, número de módulos, altura, peso,
-            dificultad, fijación a pared y si hay varios muebles en una visita.
-            Envíanos fotos o modelo y te damos un precio claro.
+            {t("El precio depende del tamaño, número de módulos, altura, peso, dificultad, fijación a pared y si hay varios muebles en una visita. Envíanos fotos o modelo y te damos un precio claro.", "The price depends on size, number of modules, height, weight, difficulty, wall fixing and whether several items are assembled in one visit. Send photos or the model for a clear quote.")}
           </p>
 
           <div className="mt-8 rounded-3xl border border-yellow-600/30 bg-white p-6 text-left shadow-xl">
-            <h3 className="text-xl font-black">El precio depende de:</h3>
+            <h3 className="text-xl font-black">{t("El precio depende de:", "The price depends on:")}</h3>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              {[
+              {(isEs ? [
                 "Tipo de estantería",
                 "Tamaño y altura",
                 "Número de módulos",
@@ -445,7 +427,7 @@ export default async function ShelvingAssemblyValenciaPage({
                 "Peso y estabilidad",
                 "Varios muebles",
                 "Distancia fuera de Valencia",
-              ].map((item) => (
+              ] : ["Type of shelving", "Size and height", "Number of modules", "Number of shelves", "Wall fixing", "Weight and stability", "Several furniture items", "Distance outside Valencia"]).map((item) => (
                 <div key={item} className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-yellow-500" />
                   <span className="font-medium">{item}</span>
@@ -458,7 +440,7 @@ export default async function ShelvingAssemblyValenciaPage({
             href={whatsappUrl}
             className="mt-8 inline-flex items-center justify-center rounded-xl bg-black px-7 py-4 font-black text-white shadow-md transition hover:scale-105"
           >
-            Enviar fotos y pedir precio
+            {t("Enviar fotos y pedir precio", "Send photos and request a price")}
             <ArrowRight className="ml-2 h-5 w-5" />
           </a>
         </div>
@@ -466,12 +448,10 @@ export default async function ShelvingAssemblyValenciaPage({
 
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <h2 className="text-3xl font-black md:text-4xl">
-          Zonas donde trabajamos
+          {t("Zonas donde trabajamos", "Areas we cover")}
         </h2>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-700">
-          Realizamos montaje de estanterías y librerías en Valencia ciudad y
-          alrededores. Si estás fuera de Valencia, envíanos tu dirección y te
-          confirmamos disponibilidad.
+          {t("Realizamos montaje de estanterías y librerías en Valencia ciudad y alrededores. Si estás fuera de Valencia, envíanos tu dirección y te confirmamos disponibilidad.", "We assemble shelving and bookcases in Valencia city and nearby areas. If you are outside Valencia, send us your address so we can confirm coverage.")}
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -489,7 +469,7 @@ export default async function ShelvingAssemblyValenciaPage({
       <section className="bg-yellow-50 py-16">
         <div className="mx-auto max-w-4xl px-5 md:px-8">
           <h2 className="text-3xl font-black md:text-4xl">
-            Preguntas frecuentes
+            {t("Preguntas frecuentes", "Frequently asked questions")}
           </h2>
 
           <div className="mt-8 space-y-4">
@@ -511,11 +491,11 @@ export default async function ShelvingAssemblyValenciaPage({
 
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <h2 className="text-3xl font-black md:text-4xl">
-          Servicios relacionados
+          {t("Servicios relacionados", "Related services")}
         </h2>
 
         <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {[
+          {(isEs ? [
             {
               title: "Instalación de estanterías en pared",
               href: `/${locale}/services/furniture/instalacion-estanterias-valencia`,
@@ -538,9 +518,9 @@ export default async function ShelvingAssemblyValenciaPage({
             },
             {
               title: "Servicios handyman Valencia",
-              href: `/${locale}/services`,
+              href: `/${locale}/handyman-valencia`,
             },
-          ].map((item) => (
+          ] : [{ title: "Wall shelf installation", href: `/${locale}/services/furniture/instalacion-estanterias-valencia` }, { title: "IKEA furniture assembly", href: `/${locale}/montaje-muebles-ikea-valencia` }, { title: "Wardrobe assembly", href: `/${locale}/montaje-armario-valencia` }, { title: "Chest of drawers assembly", href: `/${locale}/services/furniture/montaje-comodas-cajoneras-valencia` }, { title: "TV mounting in Valencia", href: `/${locale}/montaje-tv-valencia` }, { title: "Handyman in Valencia", href: `/${locale}/handyman-valencia` }]).map((item) => (
             <Link
               key={item.title}
               href={item.href}
@@ -548,7 +528,7 @@ export default async function ShelvingAssemblyValenciaPage({
             >
               <p className="text-xl font-black">{item.title}</p>
               <p className="mt-3 inline-flex items-center font-bold text-neutral-700 group-hover:text-black">
-                Ver servicio
+                {t("Ver servicio", "View service")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </p>
             </Link>
@@ -559,18 +539,17 @@ export default async function ShelvingAssemblyValenciaPage({
       <section className="bg-yellow-400 py-16">
         <div className="mx-auto max-w-4xl px-5 text-center md:px-8">
           <h2 className="text-4xl font-black tracking-tight">
-            ¿Quieres montar una estantería en Valencia?
+            {t("¿Quieres montar una estantería en Valencia?", "Need a shelving unit assembled in Valencia?")}
           </h2>
           <p className="mt-5 text-lg font-medium text-neutral-900">
-            Envíanos fotos de la estantería, cajas o modelo. Te damos un
-            presupuesto claro antes de empezar.
+            {t("Envíanos fotos de la estantería, cajas o modelo. Te damos un presupuesto claro antes de empezar.", "Send photos of the shelving, boxes or model. We will provide a clear quote before work begins.")}
           </p>
 
           <a
             href={whatsappUrl}
             className="mt-8 inline-flex items-center justify-center rounded-xl bg-black px-8 py-4 font-black text-white shadow-xl transition hover:scale-105"
           >
-            Pedir presupuesto ahora
+            {t("Pedir presupuesto ahora", "Request a quote now")}
             <ArrowRight className="ml-2 h-5 w-5" />
           </a>
         </div>

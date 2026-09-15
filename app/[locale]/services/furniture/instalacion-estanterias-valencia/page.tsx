@@ -38,6 +38,8 @@ export async function generateMetadata({
       canonical: `${siteUrl}/${locale}/services/furniture/instalacion-estanterias-valencia`,
       languages: {
         es: `${siteUrl}/es/services/furniture/instalacion-estanterias-valencia`,
+        en: `${siteUrl}/en/services/furniture/instalacion-estanterias-valencia`,
+        "x-default": `${siteUrl}/es/services/furniture/instalacion-estanterias-valencia`,
       },
     },
     openGraph: {
@@ -112,6 +114,7 @@ export default async function ShelfInstallationValenciaPage({
 }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const t = (es: string, en: string) => (isEs ? es : en);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -124,7 +127,7 @@ export default async function ShelfInstallationValenciaPage({
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Instalación de Estanterías en Valencia",
+    name: t("Instalación de Estanterías en Valencia", "Shelf Installation in Valencia"),
     serviceType: "Shelf installation",
     provider: {
       "@type": "LocalBusiness",
@@ -149,8 +152,7 @@ export default async function ShelfInstallationValenciaPage({
     telephone: "+34610076942",
     areaServed: "Valencia",
     priceRange: "€€",
-    description:
-      "Instalación de estanterías, baldas, muebles de pared, montaje de TV, pequeños trabajos y servicios handyman en Valencia.",
+    description: t("Instalación de estanterías, baldas, muebles de pared, montaje de TV y pequeños trabajos en Valencia.", "Shelf, wall storage and TV installation plus small home jobs in Valencia."),
   };
 
   const faqSchema = {
@@ -173,19 +175,19 @@ export default async function ShelfInstallationValenciaPage({
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
+        name: t("Inicio", "Home"),
         item: `${siteUrl}/${locale}`,
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Services",
+        name: t("Servicios", "Services"),
         item: `${siteUrl}/${locale}/services`,
       },
       {
         "@type": "ListItem",
         position: 3,
-        name: "Instalación de Estanterías en Valencia",
+        name: t("Instalación de Estanterías en Valencia", "Shelf Installation in Valencia"),
         item: `${siteUrl}/${locale}/services/furniture/instalacion-estanterias-valencia`,
       },
     ],
@@ -203,18 +205,15 @@ export default async function ShelfInstallationValenciaPage({
           <div>
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-yellow-300 bg-yellow-100 px-4 py-2 text-sm font-black text-neutral-900 shadow-sm">
               <MapPin className="h-4 w-4 text-yellow-600" />
-              Estanterías, baldas y repisas en Valencia
+              {t("Estanterías, baldas y repisas en Valencia", "Shelves, wall shelves and ledges in Valencia")}
             </div>
 
             <h1 className="text-4xl font-black tracking-tight md:text-6xl">
-              Instalación de estanterías{" "}
-              <span className="text-yellow-500">en Valencia</span>
+              {t("Instalación de estanterías", "Wall shelf installation")} <span className="text-yellow-500">{t("en Valencia", "in Valencia")}</span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              Montaje limpio y seguro de estanterías, baldas, repisas y estantes
-              flotantes. Nivelación precisa, fijaciones adecuadas y acabado
-              ordenado para casas, apartamentos, oficinas y locales.
+              {t("Montaje limpio y seguro de estanterías, baldas, repisas y estantes flotantes. Nivelación precisa, fijaciones adecuadas y acabado ordenado para casas, apartamentos, oficinas y locales.", "Clean and secure installation of shelves, ledges and floating shelves. Accurate levelling, suitable fixings and a tidy finish for homes, apartments, offices and commercial spaces.")}
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -222,7 +221,7 @@ export default async function ShelfInstallationValenciaPage({
                 href={whatsappUrl}
                 className="inline-flex items-center justify-center rounded-xl bg-yellow-400 px-6 py-4 font-black text-black shadow-md transition hover:scale-105 hover:bg-yellow-300"
               >
-                Pedir presupuesto por WhatsApp
+                {t("Pedir presupuesto por WhatsApp", "Request a quote on WhatsApp")}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
 
@@ -230,7 +229,7 @@ export default async function ShelfInstallationValenciaPage({
                 href={`tel:+${phoneNumber}`}
                 className="inline-flex items-center justify-center rounded-xl border border-neutral-300 bg-white px-6 py-4 font-black text-neutral-950 shadow-sm transition hover:scale-105 hover:border-yellow-400"
               >
-                Llamar ahora
+                {t("Llamar ahora", "Call now")}
               </a>
             </div>
 

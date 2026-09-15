@@ -30,11 +30,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
   const title = isEs
-    ? "Manitas en Valencia | Montaje y Reparaciones | THEVULGO"
-    : "Handyman in Valencia | Assembly and Repairs | THEVULGO";
+    ? "Manitas en Valencia | TV, muebles y reparaciones | THEVULGO"
+    : "English-Speaking Handyman in Valencia | THEVULGO";
   const description = isEs
-    ? "Manitas en Valencia para montar muebles, colgar TV, espejos, cuadros y estantes, instalar ventiladores, lámparas, cortinas y hacer pequeñas reparaciones."
-    : "Handyman in Valencia for furniture assembly, TV, mirrors, pictures, shelves, ceiling fans, lights, curtains and small home repairs.";
+    ? "Servicio de manitas en Valencia para montar TV, muebles IKEA, estanterías, cortinas y pequeñas reparaciones. Envía fotos por WhatsApp y recibe un presupuesto claro."
+    : "English-speaking handyman in Valencia for TV mounting, IKEA furniture, shelves, curtain rails and small repairs. Send photos on WhatsApp for a clear quote.";
   return {
     title,
     description,
@@ -71,6 +71,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
   const services = [
     { title: isEs ? "Montaje de TV" : "TV mounting", price: "49 €", href: `/${locale}/montaje-tv-valencia`, icon: Tv },
     { title: isEs ? "Montaje de muebles" : "Furniture assembly", price: "45 €", href: `/${locale}/montaje-muebles-valencia`, icon: Sofa },
+    { title: isEs ? "Montaje de muebles IKEA" : "IKEA furniture assembly", price: "39 €", href: `/${locale}/montaje-muebles-ikea-valencia`, icon: Sofa },
     { title: isEs ? "Instalación de ventiladores" : "Ceiling fan installation", price: "45 €", href: `/${locale}/services/instalacion-ventilador-techo-valencia`, icon: Wrench },
     { title: isEs ? "Lámparas y apliques" : "Lights and wall lamps", price: "35 €", href: `/${locale}/instalacion-lampara-valencia`, icon: Plug },
     { title: isEs ? "Colgar espejos" : "Mirror hanging", price: "35 €", href: `/${locale}/colgar-espejos-valencia`, icon: ImageIcon },
@@ -166,12 +167,12 @@ export default async function HandymanValenciaPage({ params }: Props) {
               {isEs ? "Valencia y alrededores" : "Valencia and nearby"}
             </div>
             <h1 className="mt-6 text-4xl font-black tracking-tight sm:text-6xl">
-              {isEs ? "Manitas en Valencia para reparaciones y montaje" : "Handyman in Valencia for repairs and assembly"}
+              {isEs ? "Manitas en Valencia para montaje y pequeñas reparaciones" : "English-speaking handyman in Valencia"}
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-700">
               {isEs
-                ? "Montamos TV y muebles, ajustamos puertas, colgamos espejos y realizamos pequeñas reparaciones. Envía fotos y recibe un presupuesto claro por WhatsApp."
-                : "We mount TVs and furniture, adjust doors, hang mirrors and handle small repairs. Send photos and get a clear quote by WhatsApp."}
+                ? "Montaje de TV, muebles IKEA, estanterías, barras y rieles de cortina y pequeñas reparaciones en Valencia. Envía fotos por WhatsApp para revisar el trabajo y recibir un presupuesto claro antes de reservar."
+                : "TV mounting, IKEA furniture assembly, shelves, curtain rods and rails, and small home repairs in Valencia. Send photos by WhatsApp so the job can be reviewed and quoted before booking."}
             </p>
             <div className="mt-6 flex flex-wrap gap-2 text-sm font-bold">
               {[isEs ? "35 €" : "€35", isEs ? "Respuesta rápida" : "Fast response", isEs ? "Presupuesto antes de empezar" : "Quote before starting", "ES / EN"].map((item) => (
