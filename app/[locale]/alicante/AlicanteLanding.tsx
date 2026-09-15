@@ -49,7 +49,7 @@ export default function AlicanteLanding({ locale, servicePath }: { locale: strin
     "@type": "Service",
     name: title,
     url: `https://www.thevulgo.es/${locale}/alicante${servicePath ? `/${servicePath}` : ""}`,
-    provider: { "@type": "Organization", name: "THEVULGO", url: "https://www.thevulgo.es", telephone: `+${phone}` },
+    provider: { "@type": "Organization", name: "THEVULGO", url: "https://www.thevulgo.es", logo: "https://www.thevulgo.es/favicon.ico", telephone: `+${phone}` },
     areaServed: { "@type": "City", name: "Alicante" },
     serviceType: serviceName,
   };

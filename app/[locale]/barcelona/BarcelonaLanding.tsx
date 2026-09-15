@@ -49,7 +49,7 @@ export default function BarcelonaLanding({ locale, servicePath }: { locale: stri
     "@type": "Service",
     name: title,
     url: `https://www.thevulgo.es/${locale}/barcelona${servicePath ? `/${servicePath}` : ""}`,
-    provider: { "@type": "Organization", name: "THEVULGO", url: "https://www.thevulgo.es", telephone: `+${phone}` },
+    provider: { "@type": "Organization", name: "THEVULGO", url: "https://www.thevulgo.es", logo: "https://www.thevulgo.es/favicon.ico", telephone: `+${phone}` },
     areaServed: { "@type": "City", name: "Barcelona" },
     serviceType: serviceName,
   };

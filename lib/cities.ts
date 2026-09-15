@@ -1,4 +1,5 @@
 import { MADRID_ROUTE_BY_PATH, MADRID_ROUTE_BY_SOURCE } from "./madridRoutes";
+import { serviceLabelForPath } from "./serviceLabels";
 
 export const MADRID_DISTRICTS = [
   "Centro", "Arganzuela", "Retiro", "Salamanca", "Chamartín", "Tetuán",
@@ -69,28 +70,7 @@ export function marketBasePath(locale: string, market: Market) {
 }
 
 export function humanizeServicePath(path: string, locale: string) {
-  const slug = path.split("/").filter(Boolean).at(-1) || "handyman";
-  const overrides: Record<string, [string, string]> = {
-    services: ["Todos los servicios", "All services"],
-    handyman: ["Servicio de manitas", "Handyman service"],
-    "montaje-tv": ["Montaje de TV", "TV mounting"],
-    "montaje-muebles": ["Montaje de muebles", "Furniture assembly"],
-    "tv-mounting": ["Instalación de TV", "TV mounting"],
-    electrical: ["Electricidad básica", "Basic electrical"],
-    plumbing: ["Fontanería básica", "Basic plumbing"],
-    furniture: ["Montaje de muebles", "Furniture assembly"],
-    drywall: ["Pladur y reparación de paredes", "Drywall and wall repair"],
-    repairs: ["Pequeñas reparaciones", "Small repairs"],
-    doors: ["Puertas y herrajes", "Doors and hardware"],
-    bathroom: ["Trabajos de baño", "Bathroom jobs"],
-    kitchen: ["Trabajos de cocina", "Kitchen jobs"],
-    exterior: ["Trabajos exteriores", "Exterior jobs"],
-    "smart-home": ["Smart Home", "Smart Home"],
-    "move-in": ["Preparación de vivienda", "Move-in setup"],
-  };
-  if (overrides[slug]) return overrides[slug][locale === "es" ? 0 : 1];
-  const label = slug.replaceAll("-", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
-  return label;
+  return serviceLabelForPath(path, locale);
 }
 
 export function toMadridPath(pathname: string, locale: string) {
