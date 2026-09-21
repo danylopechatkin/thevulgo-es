@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { BookOpen, Fan, Menu, MessageCircle, Wind, Wrench, X } from "lucide-react";
+import { BookOpen, Fan, Hammer, Menu, MessageCircle, Wind, Wrench, X } from "lucide-react";
 import { marketBasePath, marketName } from "@/lib/cities";
 import { marketWhatsAppHref } from "@/lib/marketLinks";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
@@ -22,6 +22,7 @@ export default function MobileHeaderMenu({ locale }: Props) {
 
   const links = [
     { href: `${base}/services`, label: isEs ? "Servicios" : "Services", icon: Wrench },
+    ...(cityMarket ? [] : [{ href: `/${locale}/${isEs ? "reformas-valencia" : "renovations-valencia"}`, label: isEs ? "Reformas" : "Renovations", icon: Hammer }]),
     ...(cityMarket ? [] : [{ href: `/${locale}/services/aire-acondicionado`, label: isEs ? "Aire acondicionado" : "Air conditioning", icon: Wind }]),
     { href: cityMarket ? `${base}/handyman` : `${base}/handyman-valencia`, label: isEs ? "Manitas" : "Handyman", icon: Wrench },
     { href: cityMarket ? `${base}/services/instalacion-ventilador-techo` : `${base}/services/instalacion-ventilador-techo-valencia`, label: isEs ? "Ventiladores" : "Ceiling fans", icon: Fan },

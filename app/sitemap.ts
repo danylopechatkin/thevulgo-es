@@ -3,6 +3,7 @@ import { guides } from "./[locale]/guias/guides-data";
 import { MADRID_ROUTES } from "@/lib/madridRoutes";
 import { AC_SEO_PAGES } from "@/lib/acSeoPages";
 import { absoluteUrl } from "@/lib/seo";
+import { RENOVATION_CATEGORIES } from "@/lib/renovationCatalog";
 
 const locales = ["es", "en"] as const;
 
@@ -315,6 +316,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: locale === "es" ? 1 : 0.9,
     });
+
+    const renovationRoot = locale === "es" ? "reformas-valencia" : "renovations-valencia";
+    const renovationKey = locale === "es" ? "es" : "en";
+    pages.push({ url: absoluteUrl(`/${locale}/${renovationRoot}`), changeFrequency: "weekly", priority: locale === "es" ? 1 : 0.9 });
+    for (const category of RENOVATION_CATEGORIES) {
+      const categoryPath = `${renovationRoot}/${category.slug[renovationKey]}`;
+      pages.push({ url: absoluteUrl(`/${locale}/${categoryPath}`), changeFrequency: "weekly", priority: locale === "es" ? 0.9 : 0.8 });
+      for (const service of category.services) {
+        if (service.existingPath) continue;
+        pages.push({ url: absoluteUrl(`/${locale}/${categoryPath}/${service.slug[renovationKey]}`), changeFrequency: "monthly", priority: locale === "es" ? 0.82 : 0.72 });
+      }
+    }
 
     pages.push({
       url: absoluteUrl(`/${locale}/madrid`),

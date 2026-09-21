@@ -10,6 +10,8 @@ export type CatalogService = {
   badgeEs?: string;
 };
 
+import { RENOVATION_CATEGORIES } from "./renovationCatalog";
+
 export const MINIMUM_SERVICE_VISIT_EUR = 49;
 
 export const SERVICE_CATALOG: Record<string, CatalogService[]> = {
@@ -1467,7 +1469,22 @@ export const SERVICE_CATALOG: Record<string, CatalogService[]> = {
 };
 
 export function getCatalogServices(category: string): CatalogService[] {
-  return SERVICE_CATALOG[category] ?? [];
+  const existing = SERVICE_CATALOG[category];
+  if (existing) return existing;
+  if (!category.startsWith("Renovation:")) return [];
+  const categoryId = category.slice("Renovation:".length);
+  const renovation = RENOVATION_CATEGORIES.find((item) => item.id === categoryId);
+  return renovation?.services.map((item) => ({
+    id: item.id,
+    label: item.title.en,
+    labelEs: item.title.es,
+    // Quote-only projects enter the CRM as a paid/confirmed assessment slot.
+    price: item.priceCents == null ? MINIMUM_SERVICE_VISIT_EUR : item.priceCents / 100,
+    priceLabel: item.priceCents == null ? "Project quotation" : undefined,
+    priceLabelEs: item.priceCents == null ? "Presupuesto por proyecto" : undefined,
+    badge: item.requiresSiteVisit ? "Site assessment" : undefined,
+    badgeEs: item.requiresSiteVisit ? "Visita técnica" : undefined,
+  })) ?? [];
 }
 
 function normalizeCatalogText(value: string) {

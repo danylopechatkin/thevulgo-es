@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import {usePathname, useSearchParams} from "next/navigation";
+import {RENOVATION_CATEGORIES} from "@/lib/renovationCatalog";
 
 export default function LanguageSwitcher({locale}: {locale: string}) {
   const pathname = usePathname();
@@ -12,7 +13,21 @@ export default function LanguageSwitcher({locale}: {locale: string}) {
 
     if (!segments[1]) return `/${newLocale}`;
 
-    segments[1] = newLocale;
+    const currentLocale = segments[1] === "en" ? "en" : "es";
+    const targetLocale = newLocale === "en" ? "en" : "es";
+    const isRenovationPath = segments[2] === "reformas-valencia" || segments[2] === "renovations-valencia";
+
+    if (isRenovationPath) {
+      segments[2] = targetLocale === "es" ? "reformas-valencia" : "renovations-valencia";
+      const category = RENOVATION_CATEGORIES.find((item) => item.slug[currentLocale] === segments[3]);
+      if (category) {
+        segments[3] = category.slug[targetLocale];
+        const service = category.services.find((item) => item.slug[currentLocale] === segments[4]);
+        if (service) segments[4] = service.slug[targetLocale];
+      }
+    }
+
+    segments[1] = targetLocale;
     const switchedPath = segments.join("/") || "/";
     const query = searchParams.toString();
     return `${switchedPath}${query ? `?${query}` : ""}`;

@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { calculatePublicTotal, formatPublicPrice, formatCatalogPrice } from "@/lib/public-pricing";
 import { CatalogService, getCatalogServices } from "@/lib/serviceCatalog";
+import { RENOVATION_CATEGORIES } from "@/lib/renovationCatalog";
 import {
   Calculator,
   ClipboardList,
@@ -42,7 +43,8 @@ type CategoryKey =
   | "kitchen"
   | "bathroom"
   | "move-in"
-  | "exterior";
+  | "exterior"
+  | string;
 
 type ServiceItem = CatalogService;
 
@@ -59,7 +61,7 @@ type CategoryConfig = {
 
 type SelectOption = string | { value: string; label: string };
 
-const CATEGORY_KEYS: CategoryKey[] = [
+const CATEGORY_KEYS: CategoryKey[] = Array.from(new Set([
   "tv-mounting",
   "handyman",
   "ceiling-fans",
@@ -75,7 +77,8 @@ const CATEGORY_KEYS: CategoryKey[] = [
   "bathroom",
   "move-in",
   "exterior",
-];
+  ...RENOVATION_CATEGORIES.map((category) => category.id),
+]));
 
 const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
   handyman: {
@@ -230,6 +233,19 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
   },
 };
 
+for (const renovation of RENOVATION_CATEGORIES) {
+  CATEGORY_DATA[renovation.id] = {
+    title: renovation.shortTitle.en,
+    titleEs: renovation.shortTitle.es,
+    icon: <Hammer className="h-5 w-5" />,
+    subtitle: renovation.intro.en,
+    subtitleEs: renovation.intro.es,
+    badge: "Renovation",
+    badgeEs: "Reformas",
+    services: getCatalogServices(`Renovation:${renovation.id}`),
+  };
+}
+
 function isCategoryKey(value: string | null): value is CategoryKey {
   return CATEGORY_KEYS.includes(value as CategoryKey);
 }
@@ -356,7 +372,9 @@ function EstimatePageContent() {
     const raw = searchParams.get("category");
     if (isCategoryKey(raw)) {
       setCategory(raw);
-      setQuantities({});
+      const requestedService = searchParams.get("service");
+      const serviceExists = requestedService && CATEGORY_DATA[raw].services.some((service) => service.id === requestedService);
+      setQuantities(serviceExists ? { [requestedService]: 1 } : {});
     }
   }, [searchParams]);
 
