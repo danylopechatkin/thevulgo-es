@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   BadgeCheck,
   CalendarDays,
@@ -58,9 +58,7 @@ export default function TvMiniCalculator({
 }) {
   const es = locale === "es";
   const baseOptions = options.filter((option) => option.kind === "base");
-  const extras = options.filter((option) => option.kind === "extra");
   const [baseId, setBaseId] = useState(baseOptions[0]?.id || "");
-  const [extraIds, setExtraIds] = useState<string[]>([]);
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
@@ -78,13 +76,7 @@ export default function TvMiniCalculator({
   const started = useRef(false);
   const today = madridToday();
 
-  const selected = useMemo(
-    () =>
-      options.filter(
-        (option) => option.id === baseId || extraIds.includes(option.id),
-      ),
-    [options, baseId, extraIds],
-  );
+  const selected = baseOptions.filter((option) => option.id === baseId);
   const total = selected.reduce((sum, option) => sum + option.price, 0);
   const availableTimes = TIMES.filter((time) => !bookedTimes.includes(time));
 
@@ -140,15 +132,6 @@ export default function TvMiniCalculator({
     }));
     setError("");
   };
-  const toggleExtra = (id: string) => {
-    markStarted();
-    setExtraIds((current) =>
-      current.includes(id)
-        ? current.filter((item) => item !== id)
-        : [...current, id],
-    );
-  };
-
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError("");
@@ -321,30 +304,7 @@ export default function TvMiniCalculator({
         </div>
       </fieldset>
 
-      <fieldset className="mt-4 border-t border-yellow-200 pt-4">
-        <legend className="px-1 text-xs font-black uppercase tracking-wide text-neutral-500">
-          {es ? "Extras opcionales" : "Optional extras"}
-        </legend>
-        <div className="mt-2 flex flex-wrap gap-2">
-          {extras.map((option) => (
-            <label
-              key={option.id}
-              className={`flex cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-xs font-bold transition ${extraIds.includes(option.id) ? "border-yellow-500 bg-yellow-50" : "border-neutral-200 hover:border-yellow-400"}`}
-            >
-              <input
-                type="checkbox"
-                checked={extraIds.includes(option.id)}
-                onChange={() => toggleExtra(option.id)}
-                className="h-4 w-4 accent-yellow-400"
-              />
-              <span>{option.label}</span>
-              <strong>€{option.price}</strong>
-            </label>
-          ))}
-        </div>
-      </fieldset>
-
-      <div className="mt-4 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="mt-4 grid min-w-0 grid-cols-1 gap-3 border-t border-yellow-200 pt-4 sm:grid-cols-2">
         <label className="block min-w-0 text-xs font-extrabold">
           {es ? "Nombre *" : "Name *"}
           <input
