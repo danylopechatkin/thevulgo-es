@@ -2,10 +2,14 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  BadgeCheck,
   CalendarDays,
   CheckCircle2,
   LoaderCircle,
   Mail,
+  MapPin,
+  Phone,
+  Send,
   Tv,
 } from "lucide-react";
 import {
@@ -23,8 +27,7 @@ type FormState = {
   name: string;
   email: string;
   phone: string;
-  area: string;
-  address: string;
+  location: string;
   date: string;
   time: string;
 };
@@ -62,14 +65,14 @@ export default function TvMiniCalculator({
     name: "",
     email: "",
     phone: "",
-    area: "",
-    address: "",
+    location: "",
     date: "",
     time: "",
   });
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
   const [loadingAvailability, setLoadingAvailability] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const started = useRef(false);
@@ -154,10 +157,10 @@ export default function TvMiniCalculator({
       !form.name.trim() ||
       !form.email.trim() ||
       !form.phone.trim() ||
-      !form.area.trim() ||
-      !form.address.trim() ||
+      !form.location.trim() ||
       !form.date ||
-      !form.time
+      !form.time ||
+      !privacyAccepted
     ) {
       setError(
         es
@@ -177,8 +180,8 @@ export default function TvMiniCalculator({
           email: form.email.trim(),
           phone: form.phone.trim(),
           city: "Valencia",
-          area: form.area.trim(),
-          houseAddress: form.address.trim(),
+          area: form.location.trim(),
+          houseAddress: form.location.trim(),
           apartmentNumber: "",
           addressDetails: "",
           preferredDate: form.date,
@@ -266,132 +269,155 @@ export default function TvMiniCalculator({
     <form
       id="tv-calculator"
       onSubmit={submit}
-      className="rounded-3xl border border-yellow-300 bg-white p-5 shadow-2xl sm:p-7"
+      className="rounded-[1.75rem] border-2 border-yellow-400 bg-white p-4 shadow-2xl sm:p-5"
     >
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[.16em] text-yellow-600">
-            {es ? "Reserva rápida" : "Quick request"}
+      <div className="flex items-center gap-3">
+        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-yellow-400">
+          <Tv className="h-5 w-5" />
+        </span>
+        <div className="min-w-0">
+          <p className="text-[11px] font-black uppercase tracking-[.16em] text-yellow-600">
+            {es ? "Reserva rápida · 2 minutos" : "Quick request · 2 minutes"}
           </p>
-          <h2 className="mt-2 text-2xl font-black">
-            {es ? "Calcula y elige fecha" : "Calculate and choose a date"}
+          <h2 className="text-xl font-black leading-tight">
+            {es ? "Elige tu montaje de TV" : "Choose your TV installation"}
           </h2>
         </div>
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-yellow-400">
-          <Tv />
-        </span>
       </div>
-      <label className="mt-5 block text-sm font-bold">
-        {es ? "Tamaño de la TV" : "TV size"}
-        <select
-          value={baseId}
-          onChange={(event) => {
-            markStarted();
-            setBaseId(event.target.value);
-          }}
-          className="mt-2 w-full rounded-xl border border-neutral-300 bg-white p-3"
-        >
-          {baseOptions.map((option) => (
-            <option key={option.id} value={option.id}>
-              {option.label} · €{option.price}
-            </option>
-          ))}
-        </select>
-      </label>
-      <fieldset className="mt-5">
-        <legend className="text-sm font-bold">
-          {es ? "Añadir al mismo trabajo" : "Add to the same job"}
+
+      <fieldset className="mt-4">
+        <legend className="sr-only">
+          {es ? "Tamaño de la TV" : "TV size"}
         </legend>
-        <div className="mt-2 grid gap-2 sm:grid-cols-2">
+        <div className="grid grid-cols-2 gap-2">
+          {baseOptions.map((option) => {
+            const active = option.id === baseId;
+            return (
+              <button
+                key={option.id}
+                type="button"
+                aria-pressed={active}
+                onClick={() => {
+                  markStarted();
+                  setBaseId(option.id);
+                }}
+                className={`relative rounded-2xl border-2 p-3 text-left transition active:scale-[.98] ${active ? "border-black bg-yellow-400 shadow-md" : "border-neutral-200 hover:border-yellow-400"}`}
+              >
+                {active ? (
+                  <BadgeCheck className="absolute right-3 top-3 h-4 w-4" />
+                ) : null}
+                <span className="block pr-5 text-xs font-bold leading-4 text-neutral-600">
+                  {option.label.replace(
+                    /Instalación de TV |TV installation /i,
+                    "",
+                  )}
+                </span>
+                <strong className="mt-1 block text-2xl font-black">
+                  €{option.price}
+                </strong>
+              </button>
+            );
+          })}
+        </div>
+      </fieldset>
+
+      <fieldset className="mt-4 border-t border-yellow-200 pt-4">
+        <legend className="px-1 text-xs font-black uppercase tracking-wide text-neutral-500">
+          {es ? "Extras opcionales" : "Optional extras"}
+        </legend>
+        <div className="mt-2 flex flex-wrap gap-2">
           {extras.map((option) => (
             <label
               key={option.id}
-              className={`flex cursor-pointer items-center gap-3 rounded-xl border p-3 text-sm font-semibold ${extraIds.includes(option.id) ? "border-yellow-500 bg-yellow-50" : "border-neutral-200"}`}
+              className={`flex cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-xs font-bold transition ${extraIds.includes(option.id) ? "border-yellow-500 bg-yellow-50" : "border-neutral-200 hover:border-yellow-400"}`}
             >
               <input
                 type="checkbox"
                 checked={extraIds.includes(option.id)}
                 onChange={() => toggleExtra(option.id)}
+                className="h-4 w-4 accent-yellow-400"
               />
-              <span className="flex-1">{option.label}</span>
+              <span>{option.label}</span>
               <strong>€{option.price}</strong>
             </label>
           ))}
         </div>
       </fieldset>
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
-        <label className="text-sm font-bold">
-          {es ? "Nombre" : "Name"}
+
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        <label className="block text-xs font-extrabold">
+          {es ? "Nombre *" : "Name *"}
           <input
             value={form.name}
             onChange={(event) => update("name", event.target.value)}
-            className="mt-2 w-full rounded-xl border border-neutral-300 p-3"
+            className="input-style mt-1.5"
+            placeholder={es ? "Tu nombre" : "Your name"}
             autoComplete="name"
             required
           />
         </label>
-        <label className="text-sm font-bold">
-          WhatsApp
-          <input
-            value={form.phone}
-            onChange={(event) => update("phone", event.target.value)}
-            className="mt-2 w-full rounded-xl border border-neutral-300 p-3"
-            type="tel"
-            autoComplete="tel"
-            required
-          />
+        <label className="block text-xs font-extrabold">
+          WhatsApp *
+          <span className="relative mt-1.5 block">
+            <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+            <input
+              value={form.phone}
+              onChange={(event) => update("phone", event.target.value)}
+              className="input-style pl-10"
+              placeholder="+34 600 000 000"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              required
+            />
+          </span>
         </label>
-        <label className="text-sm font-bold">
-          Email
+        <label className="block text-xs font-extrabold">
+          Email *
           <input
             value={form.email}
             onChange={(event) => update("email", event.target.value)}
-            className="mt-2 w-full rounded-xl border border-neutral-300 p-3"
+            className="input-style mt-1.5"
+            placeholder="email@example.com"
             type="email"
             autoComplete="email"
             required
           />
         </label>
-        <label className="text-sm font-bold">
-          {es ? "Zona / barrio" : "Area"}
-          <input
-            value={form.area}
-            onChange={(event) => update("area", event.target.value)}
-            className="mt-2 w-full rounded-xl border border-neutral-300 p-3"
-            autoComplete="address-level2"
-            required
-          />
+        <label className="block text-xs font-extrabold">
+          {es ? "Zona o dirección *" : "Area or address *"}
+          <span className="relative mt-1.5 block">
+            <MapPin className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+            <input
+              value={form.location}
+              onChange={(event) => update("location", event.target.value)}
+              className="input-style pl-10"
+              placeholder={
+                es ? "Ej. Benimaclet, Mislata…" : "E.g. Benimaclet, Mislata…"
+              }
+              autoComplete="street-address"
+              required
+            />
+          </span>
         </label>
-      </div>
-      <label className="mt-3 block text-sm font-bold">
-        {es ? "Dirección" : "Address"}
-        <input
-          value={form.address}
-          onChange={(event) => update("address", event.target.value)}
-          className="mt-2 w-full rounded-xl border border-neutral-300 p-3"
-          autoComplete="street-address"
-          required
-        />
-      </label>
-      <div className="mt-3 grid gap-3 sm:grid-cols-2">
-        <label className="text-sm font-bold">
-          {es ? "Fecha preferida" : "Preferred date"}
+        <label className="block text-xs font-extrabold">
+          {es ? "Fecha preferida *" : "Preferred date *"}
           <input
             value={form.date}
             min={today}
             onChange={(event) => update("date", event.target.value)}
-            className="mt-2 w-full rounded-xl border border-neutral-300 p-3"
+            className="input-style mt-1.5"
             type="date"
             required
           />
         </label>
-        <label className="text-sm font-bold">
-          {es ? "Hora disponible" : "Available time"}
+        <label className="block text-xs font-extrabold">
+          {es ? "Hora disponible *" : "Available time *"}
           <select
             value={form.time}
             onChange={(event) => update("time", event.target.value)}
             disabled={!form.date || loadingAvailability}
-            className="mt-2 w-full rounded-xl border border-neutral-300 bg-white p-3 disabled:bg-neutral-100"
+            className="input-style mt-1.5 disabled:bg-neutral-100"
             required
           >
             <option value="">
@@ -411,6 +437,29 @@ export default function TvMiniCalculator({
           </select>
         </label>
       </div>
+
+      <label className="mt-3 flex cursor-pointer items-start gap-2 rounded-xl border border-neutral-200 p-3 text-[11px] leading-4 text-neutral-600">
+        <input
+          type="checkbox"
+          checked={privacyAccepted}
+          onChange={(event) => setPrivacyAccepted(event.target.checked)}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-yellow-400"
+          required
+        />
+        <span>
+          {es
+            ? "Acepto el uso de mis datos para gestionar esta solicitud."
+            : "I agree to the use of my details to manage this request."}{" "}
+          <a
+            href={`/${locale}/privacy`}
+            target="_blank"
+            className="font-bold underline decoration-yellow-400 underline-offset-2"
+          >
+            {es ? "Privacidad" : "Privacy"}
+          </a>
+        </span>
+      </label>
+
       {error ? (
         <p
           role="alert"
@@ -419,32 +468,36 @@ export default function TvMiniCalculator({
           {error}
         </p>
       ) : null}
-      <div className="mt-5 flex items-center justify-between rounded-2xl bg-neutral-950 p-4 text-white">
+      <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-neutral-950 p-3.5 text-white">
         <div>
-          <p className="text-xs uppercase tracking-widest text-neutral-400">
-            {es ? "Total calculado" : "Calculated total"}
+          <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+            {es ? "Precio seleccionado" : "Selected price"}
           </p>
-          <p className="text-3xl font-black">€{total}</p>
+          <p className="text-2xl font-black">€{total}</p>
         </div>
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-xl bg-yellow-400 px-5 py-3 font-black text-black disabled:opacity-60"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-4 py-3 text-sm font-black text-black transition hover:scale-[1.02] disabled:opacity-60"
         >
           {submitting ? (
-            <LoaderCircle className="animate-spin" />
+            <LoaderCircle className="h-5 w-5 animate-spin" />
           ) : es ? (
-            "Enviar solicitud"
+            <>
+              <Send className="h-4 w-4" /> Solicitar montaje
+            </>
           ) : (
-            "Send request"
+            <>
+              <Send className="h-4 w-4" /> Request installation
+            </>
           )}
         </button>
       </div>
-      <p className="mt-3 flex items-center gap-2 text-xs leading-5 text-neutral-500">
+      <p className="mt-2 flex items-center justify-center gap-1.5 text-center text-[10px] leading-4 text-neutral-500">
         <CalendarDays className="h-4 w-4 shrink-0" />
         {es
-          ? "La franja queda solicitada. Confirmaremos el trabajo y te contactaremos por WhatsApp."
-          : "The time slot is requested. We will confirm the work and contact you on WhatsApp."}
+          ? "Sin pago ahora. Confirmamos contigo por WhatsApp."
+          : "No payment now. We confirm with you on WhatsApp."}
       </p>
     </form>
   );
