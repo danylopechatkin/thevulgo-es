@@ -5,7 +5,6 @@ import { useParams } from "next/navigation";
 import {
   ArrowRight,
   Check,
-  ChefHat,
   Drill,
   Hammer,
   MessageCircle,
@@ -13,6 +12,7 @@ import {
   ShieldCheck,
   Sparkles,
   Tv,
+  Wrench,
 } from "lucide-react";
 import AvailabilityBadge from "@/app/components/AvailabilityBadge";
 import MobileStickyCta from "@/app/components/MobileStickyCta";
@@ -34,12 +34,6 @@ export default function HomeClient({
   const price = (category: string, fallback: number) =>
     getCatalogServices(category)[0]?.price ?? fallback;
   const serviceHref = (slug: string) => `${base}/${slug}`;
-  const kitchenHref =
-    market === "valencia"
-      ? es
-        ? "/es/montaje-cocinas-valencia"
-        : "/en/kitchen-assembly-valencia"
-      : serviceHref("services/kitchen");
   const generalWa = buildWhatsAppHref("general", locale, city);
   const cards: Array<{
     icon: typeof Tv;
@@ -80,14 +74,14 @@ export default function HomeClient({
       href: serviceHref("montaje-muebles-valencia"),
     },
     {
-      icon: ChefHat,
-      service: "kitchen",
-      title: es ? "Montaje de cocinas" : "Kitchen assembly",
+      icon: Wrench,
+      service: "repairs",
+      title: es ? "Reparaciones del hogar" : "Home repairs",
       text: es
-        ? "Módulos sueltos o una cocina completa."
-        : "Individual units or a complete kitchen fit-out.",
-      price: price("Kitchen", 149),
-      href: kitchenHref,
+        ? "Puertas, bisagras, sellados, paredes y pequeños daños."
+        : "Doors, hinges, sealing, walls and everyday damage.",
+      price: price("Repairs", 35),
+      href: serviceHref("services/repairs"),
     },
   ];
   const secondary = es
@@ -119,13 +113,13 @@ export default function HomeClient({
             </p>
             <h1 className="mt-3 max-w-3xl text-4xl font-black leading-[1.02] tracking-tight sm:text-6xl">
               {es
-                ? `Manitas e instalaciones para tu hogar en ${city}`
-                : `Handyman & home installation in ${city}`}
+                ? `Manitas, montaje y reparaciones en ${city}`
+                : `Handyman, mounting & home repairs in ${city}`}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600">
               {es
-                ? "Montaje de TV, muebles, cocinas y pequeñas reparaciones. Precios claros antes de empezar y un único contacto por WhatsApp."
-                : "TV mounting, furniture and kitchen assembly, plus small home repairs. Clear pricing before work starts and one easy WhatsApp contact."}
+                ? "Montaje de TV, montaje de muebles, manitas y reparaciones del hogar. Envía fotos, recibe un precio claro y reserva la visita por WhatsApp."
+                : "TV mounting, furniture assembly, handyman visits and home repairs. Send photos, get a clear price and book through WhatsApp."}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
@@ -313,6 +307,84 @@ export default function HomeClient({
         )}
       </section>
 
+      <section className="border-y border-neutral-200 bg-[#fffdf5]">
+        <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
+          <div className="max-w-3xl">
+            <p className="text-sm font-black uppercase tracking-[.18em] text-yellow-600">
+              {es ? "El servicio adecuado" : "The right service"}
+            </p>
+            <h2 className="mt-3 text-3xl font-black sm:text-5xl">
+              {es
+                ? "Cuéntanos el resultado, no el nombre del oficio"
+                : "Tell us the result, not the trade name"}
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-neutral-600">
+              {es
+                ? "No necesitas saber si el trabajo corresponde a un montador, manitas o técnico. Con fotos, medidas y una breve lista podemos definir el alcance y separar cualquier tarea que requiera un profesional autorizado."
+                : "You do not need to decide whether the job needs an installer, handyman or specialist. Photos, dimensions and a short list let us define the scope and identify anything that needs a licensed professional."}
+            </p>
+          </div>
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {(es
+              ? [
+                  [
+                    "Trabajo único",
+                    "Una TV, un mueble o una reparación concreta con alcance definido.",
+                  ],
+                  [
+                    "Lista de pendientes",
+                    "Agrupamos trabajos compatibles para aprovechar mejor una visita.",
+                  ],
+                  [
+                    "Proyecto de reforma",
+                    "Varias estancias, acabados u oficios con planificación y presupuesto por fases.",
+                  ],
+                ]
+              : [
+                  [
+                    "One clear job",
+                    "A TV, a piece of furniture or one repair with a defined scope.",
+                  ],
+                  [
+                    "A list of jobs",
+                    "We group compatible tasks to make one visit more efficient.",
+                  ],
+                  [
+                    "Renovation project",
+                    "Several rooms, finishes or trades planned and quoted in stages.",
+                  ],
+                ]
+            ).map(([title, text], index) => (
+              <article
+                key={title}
+                className={`rounded-3xl p-6 ${index === 1 ? "bg-neutral-950 text-white" : "border border-neutral-200 bg-white"}`}
+              >
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-[#ffcc00] font-black text-black">
+                  {index + 1}
+                </span>
+                <h3 className="mt-5 text-xl font-black">{title}</h3>
+                <p
+                  className={`mt-3 leading-7 ${index === 1 ? "text-neutral-300" : "text-neutral-600"}`}
+                >
+                  {text}
+                </p>
+              </article>
+            ))}
+          </div>
+          {market === "valencia" && (
+            <Link
+              href={es ? "/es/reformas-valencia" : "/renovations-valencia"}
+              className="mt-8 inline-flex items-center gap-2 rounded-xl border border-neutral-300 bg-white px-5 py-3 font-black transition hover:border-black"
+            >
+              {es
+                ? "Explorar reformas en Valencia"
+                : "Explore renovations in Valencia"}
+              <ArrowRight size={17} />
+            </Link>
+          )}
+        </div>
+      </section>
+
       <section className="border-y border-neutral-200 bg-neutral-50">
         <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
           <h2 className="text-3xl font-black">
@@ -340,6 +412,74 @@ export default function HomeClient({
                 <h3 className="mt-4 font-black">{t}</h3>
                 <p className="mt-1 text-sm text-neutral-600">{d}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[.18em] text-neutral-500">
+              FAQ
+            </p>
+            <h2 className="mt-3 text-3xl font-black sm:text-4xl">
+              {es ? "Antes de reservar" : "Before you book"}
+            </h2>
+            <p className="mt-4 leading-7 text-neutral-600">
+              {es
+                ? "La mejor estimación empieza con fotos claras, medidas aproximadas y la lista completa de trabajos."
+                : "The best estimate starts with clear photos, approximate dimensions and your complete job list."}
+            </p>
+          </div>
+          <div className="space-y-3">
+            {(es
+              ? [
+                  [
+                    "¿Puedo pedir varios trabajos en la misma visita?",
+                    "Sí. Envíanos la lista completa para comprobar qué tareas son compatibles y preparar tiempo, herramientas y materiales.",
+                  ],
+                  [
+                    "¿Cómo confirmáis el precio?",
+                    "Revisamos fotos, medidas, soporte, acceso y acabado esperado. Confirmamos el alcance antes de empezar.",
+                  ],
+                  [
+                    "¿Trabajáis con clientes que hablan inglés?",
+                    "Sí. Toda la información principal y el proceso de presupuesto están disponibles en español e inglés.",
+                  ],
+                  [
+                    "¿Hacéis reformas además de trabajos pequeños?",
+                    "Sí. Las reformas se valoran con un alcance separado, mediciones y visita técnica cuando corresponde.",
+                  ],
+                ]
+              : [
+                  [
+                    "Can I book several jobs in one visit?",
+                    "Yes. Send the complete list so we can check compatibility and plan time, tools and materials.",
+                  ],
+                  [
+                    "How do you confirm the price?",
+                    "We review photos, dimensions, substrate, access and the expected finish, then confirm scope before work starts.",
+                  ],
+                  [
+                    "Can I communicate in English?",
+                    "Yes. The main information and quotation journey are available in both English and Spanish.",
+                  ],
+                  [
+                    "Do you handle renovations as well as small jobs?",
+                    "Yes. Renovations use a separate scope, measurements and a site visit where appropriate.",
+                  ],
+                ]
+            ).map(([question, answer]) => (
+              <details
+                key={question}
+                className="rounded-2xl border border-neutral-200 bg-white p-5"
+              >
+                <summary className="cursor-pointer font-black">
+                  {question}
+                </summary>
+                <p className="mt-3 leading-7 text-neutral-600">{answer}</p>
+              </details>
             ))}
           </div>
         </div>
