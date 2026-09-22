@@ -2,7 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { BookOpen, Fan, Hammer, Menu, MessageCircle, Wind, Wrench, X } from "lucide-react";
+import {
+  BookOpen,
+  Hammer,
+  Menu,
+  MessageCircle,
+  Tv,
+  Wind,
+  Wrench,
+  X,
+} from "lucide-react";
 import { marketBasePath, marketName } from "@/lib/cities";
 import { marketWhatsAppHref } from "@/lib/marketLinks";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
@@ -21,12 +30,44 @@ export default function MobileHeaderMenu({ locale }: Props) {
   const close = () => setOpen(false);
 
   const links = [
-    { href: `${base}/services`, label: isEs ? "Servicios" : "Services", icon: Wrench },
-    ...(cityMarket ? [] : [{ href: `/${locale}/${isEs ? "reformas-valencia" : "renovations-valencia"}`, label: isEs ? "Reformas" : "Renovations", icon: Hammer }]),
-    ...(cityMarket ? [] : [{ href: `/${locale}/services/aire-acondicionado`, label: isEs ? "Aire acondicionado" : "Air conditioning", icon: Wind }]),
-    { href: cityMarket ? `${base}/handyman` : `${base}/handyman-valencia`, label: isEs ? "Manitas" : "Handyman", icon: Wrench },
-    { href: cityMarket ? `${base}/services/instalacion-ventilador-techo` : `${base}/services/instalacion-ventilador-techo-valencia`, label: isEs ? "Ventiladores" : "Ceiling fans", icon: Fan },
-    { href: `/${locale}/guias`, label: isEs ? "Guías" : "Guides", icon: BookOpen },
+    {
+      href: `${base}/services`,
+      label: isEs ? "Servicios" : "Services",
+      icon: Wrench,
+    },
+    ...(cityMarket
+      ? []
+      : [
+          {
+            href: `/${locale}/${isEs ? "reformas-valencia" : "renovations-valencia"}`,
+            label: isEs ? "Reformas" : "Renovations",
+            icon: Hammer,
+          },
+        ]),
+    ...(cityMarket
+      ? []
+      : [
+          {
+            href: `/${locale}/services/aire-acondicionado`,
+            label: isEs ? "Aire acondicionado" : "Air conditioning",
+            icon: Wind,
+          },
+        ]),
+    {
+      href: cityMarket ? `${base}/handyman` : `${base}/handyman-valencia`,
+      label: isEs ? "Manitas" : "Handyman",
+      icon: Wrench,
+    },
+    {
+      href: cityMarket ? `${base}/montaje-tv` : `${base}/montaje-tv-valencia`,
+      label: isEs ? "Montaje TV" : "TV mounting",
+      icon: Tv,
+    },
+    {
+      href: `/${locale}/guias`,
+      label: isEs ? "Guías" : "Guides",
+      icon: BookOpen,
+    },
     { href: `${base}#faq`, label: "FAQ", icon: MessageCircle },
   ];
 
@@ -62,10 +103,16 @@ export default function MobileHeaderMenu({ locale }: Props) {
           <div className="relative mx-3 mt-2 overflow-hidden rounded-3xl border border-yellow-300 bg-white p-4 shadow-2xl">
             <div className="mb-3 flex items-center justify-between">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.18em] text-yellow-600">THEVULGO</p>
-                <p className="mt-1 text-xl font-black">{isEs ? "¿Qué necesitas?" : "What do you need?"}</p>
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-yellow-600">
+                  THEVULGO
+                </p>
+                <p className="mt-1 text-xl font-black">
+                  {isEs ? "¿Qué necesitas?" : "What do you need?"}
+                </p>
               </div>
-              <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold">{city}</span>
+              <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold">
+                {city}
+              </span>
             </div>
 
             <nav className="grid grid-cols-2 gap-2">

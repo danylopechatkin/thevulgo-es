@@ -1,7 +1,9 @@
-
 "use client";
 
-import { findManualCustomers, type ManualCustomer } from "@/lib/manual-customers";
+import {
+  findManualCustomers,
+  type ManualCustomer,
+} from "@/lib/manual-customers";
 import AdminNav from "./components/AdminNav";
 import OrdersCalendar from "./components/OrdersCalendar";
 import OrderPaymentPanel from "./components/OrderPaymentPanel";
@@ -36,7 +38,13 @@ import {
   X,
 } from "lucide-react";
 
-type Status = "new" | "confirmed" | "in_progress" | "completed" | "done" | "cancelled";
+type Status =
+  | "new"
+  | "confirmed"
+  | "in_progress"
+  | "completed"
+  | "done"
+  | "cancelled";
 type Service = {
   id?: string;
   label: string;
@@ -99,6 +107,9 @@ type Order = {
   completed_email_delivery_error?: string | null;
   referral_code: string | null;
   completed_at: string | null;
+  attribution_source?: string | null;
+  attribution_service?: string | null;
+  attribution_page_path?: string | null;
 };
 type OrderHistory = {
   id: string;
@@ -107,7 +118,13 @@ type OrderHistory = {
   previous_data: Record<string, unknown> | null;
   new_data: Record<string, unknown> | null;
 };
-type Worker = { user_id: string; full_name: string; email: string; primary_city?: string; service_cities?: string[] };
+type Worker = {
+  user_id: string;
+  full_name: string;
+  email: string;
+  primary_city?: string;
+  service_cities?: string[];
+};
 type WorkerJobPhoto = {
   id: string;
   photoType: "before" | "after" | "issue";
@@ -147,7 +164,13 @@ type WorkerAssignment = {
     | Array<{ full_name: string; email: string }>
     | null;
 };
-type ManualService = { category?: string; id: string; label: string; price: number; qty: number };
+type ManualService = {
+  category?: string;
+  id: string;
+  label: string;
+  price: number;
+  qty: number;
+};
 type ManualClient = ManualCustomer;
 
 const money = (value: number) =>
@@ -215,7 +238,15 @@ export default function AdminClient() {
   const [manualServices, setManualServices] = useState<ManualService[]>(() => {
     const first = getCatalogServices("Repairs")[0];
     return first
-      ? [{ category: "Repairs", id: first.id, label: first.label, price: first.price, qty: 1 }]
+      ? [
+          {
+            category: "Repairs",
+            id: first.id,
+            label: first.label,
+            price: first.price,
+            qty: 1,
+          },
+        ]
       : [];
   });
   const [referenceNow] = useState(() => Date.now());
@@ -345,7 +376,9 @@ export default function AdminClient() {
     () => ({
       booked: orders.filter((order) => !["cancelled"].includes(order.status))
         .length,
-      completed: orders.filter((order) => ["completed", "done"].includes(order.status)).length,
+      completed: orders.filter((order) =>
+        ["completed", "done"].includes(order.status),
+      ).length,
       revenue: orders
         .filter((order) => ["completed", "done"].includes(order.status))
         .reduce((sum, order) => sum + Number(order.total), 0),
@@ -483,9 +516,7 @@ export default function AdminClient() {
       !manual.address ||
       !manual.preferred_date
     ) {
-      setError(
-        "Name, phone, area, address and appointment are required.",
-      );
+      setError("Name, phone, area, address and appointment are required.");
       return;
     }
     const services = manualServices
@@ -510,11 +541,18 @@ export default function AdminClient() {
       response = await fetch("/api/admin/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...manual, client_profile_id: manual.client_profile_id || undefined, category: manualServices[0]?.category || manual.category, services }),
+        body: JSON.stringify({
+          ...manual,
+          client_profile_id: manual.client_profile_id || undefined,
+          category: manualServices[0]?.category || manual.category,
+          services,
+        }),
       });
       result = await response.json();
     } catch {
-      setError("Could not reach the server. Your order details are still here; please try again.");
+      setError(
+        "Could not reach the server. Your order details are still here; please try again.",
+      );
       return;
     } finally {
       setSaving(false);
@@ -1259,8 +1297,13 @@ function OrderPanel({
                           {workers
                             .filter(
                               (worker) =>
-                                worker.user_id !== currentAssignment.worker_id &&
-                                (worker.service_cities || [worker.primary_city || "Valencia"]).includes(order.city),
+                                worker.user_id !==
+                                  currentAssignment.worker_id &&
+                                (
+                                  worker.service_cities || [
+                                    worker.primary_city || "Valencia",
+                                  ]
+                                ).includes(order.city),
                             )
                             .map((worker) => (
                               <option
@@ -1282,7 +1325,9 @@ function OrderPanel({
                       </div>
                       <button
                         type="button"
-                        onClick={() => void unassignWorker(currentAssignment.id)}
+                        onClick={() =>
+                          void unassignWorker(currentAssignment.id)
+                        }
                         className="mt-3 w-full rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-black text-red-700 transition hover:bg-red-100"
                       >
                         Unassign contractor
@@ -1313,7 +1358,11 @@ function OrderPanel({
                         {workers
                           .filter(
                             (worker) =>
-                              (worker.service_cities || [worker.primary_city || "Valencia"]).includes(order.city) &&
+                              (
+                                worker.service_cities || [
+                                  worker.primary_city || "Valencia",
+                                ]
+                              ).includes(order.city) &&
                               !assignments.some(
                                 (assignment) =>
                                   assignment.worker_id === worker.user_id &&
@@ -1748,8 +1797,8 @@ function OrderPanel({
                 })
               ) : (
                 <p className="text-sm text-gray-500">
-                  No recorded changes yet. New updates to this order will
-                  appear here automatically.
+                  No recorded changes yet. New updates to this order will appear
+                  here automatically.
                 </p>
               )}
             </div>
@@ -1870,7 +1919,9 @@ function OrderEditor({
             value={draft.city}
             onChange={(event) => onChange("city", event.target.value)}
           >
-            {['Valencia', 'Madrid', 'Barcelona', 'Alicante'].map((city) => <option key={city}>{city}</option>)}
+            {["Valencia", "Madrid", "Barcelona", "Alicante"].map((city) => (
+              <option key={city}>{city}</option>
+            ))}
           </select>
         </Field>
         <Field label="Area / neighbourhood">
@@ -1908,6 +1959,16 @@ function OrderEditor({
               </option>
             ))}
           </select>
+        </Field>
+        <Field label="Lead source">
+          <div className="rounded-xl border border-gray-200 bg-gray-50 p-3 text-sm font-bold">
+            {draft.attribution_source || "Not recorded"}
+            {draft.attribution_page_path ? (
+              <span className="mt-1 block font-normal text-gray-500">
+                {draft.attribution_page_path}
+              </span>
+            ) : null}
+          </div>
         </Field>
         <Field label="Date">
           <input
@@ -2415,10 +2476,16 @@ function historyPresentation(entry: OrderHistory): {
       detail: `A fresh secure payment request was sent to ${String(after.email || "the customer")}.`,
       tone: "success",
     };
-  if (crmEvent === "payment_link_email_failed" || crmEvent === "worker_payment_link_email_failed")
+  if (
+    crmEvent === "payment_link_email_failed" ||
+    crmEvent === "worker_payment_link_email_failed"
+  )
     return {
       title: "Payment-link email failed",
-      detail: String(after.error || "The secure link was created, but the email could not be sent."),
+      detail: String(
+        after.error ||
+          "The secure link was created, but the email could not be sent.",
+      ),
       tone: "danger",
     };
   if (crmEvent === "payment_link_email_event") {
@@ -2428,7 +2495,9 @@ function historyPresentation(entry: OrderHistory): {
       detail: after.recipient
         ? `Resend recorded ${emailEvent} for ${String(after.recipient)}.`
         : `Resend recorded the latest payment-email event.`,
-      tone: ["failed", "bounced", "complained", "suppressed"].includes(emailEvent)
+      tone: ["failed", "bounced", "complained", "suppressed"].includes(
+        emailEvent,
+      )
         ? "danger"
         : "success",
     };
@@ -2704,14 +2773,18 @@ export function ManualOrderForm({
   const dialogRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const closeRef = useRef(onClose);
-  useEffect(() => { closeRef.current = onClose; }, [onClose]);
+  useEffect(() => {
+    closeRef.current = onClose;
+  }, [onClose]);
   const [keyboardOpen, setKeyboardOpen] = useState(false);
-  const [customerMode, setCustomerMode] = useState<"select" | "selected" | "new">(
-    manual.full_name ? "selected" : "select",
-  );
+  const [customerMode, setCustomerMode] = useState<
+    "select" | "selected" | "new"
+  >(manual.full_name ? "selected" : "select");
   const [needsName, setNeedsName] = useState(!manual.full_name);
   const [needsPhone, setNeedsPhone] = useState(!manual.phone);
-  const [selectedClient, setSelectedClient] = useState<ManualClient | null>(null);
+  const [selectedClient, setSelectedClient] = useState<ManualClient | null>(
+    null,
+  );
   const [differentAddress, setDifferentAddress] = useState(false);
   const [customerQuery, setCustomerQuery] = useState("");
   const [clients, setClients] = useState<ManualClient[]>([]);
@@ -2729,10 +2802,13 @@ export function ManualOrderForm({
     let frame = 0;
     const updateViewport = () => {
       const focused = document.activeElement;
-      const editing = focused instanceof HTMLElement && focused.matches("input, textarea, [contenteditable=true]");
+      const editing =
+        focused instanceof HTMLElement &&
+        focused.matches("input, textarea, [contenteditable=true]");
       const height = viewport?.height ?? window.innerHeight;
       if (!editing) fullHeight = Math.max(fullHeight, window.innerHeight);
-      const keyboard = editing && Math.max(fullHeight, window.innerHeight) - height > 120;
+      const keyboard =
+        editing && Math.max(fullHeight, window.innerHeight) - height > 120;
       setKeyboardOpen(keyboard);
       if (dialogRef.current) {
         dialogRef.current.style.height = `${height}px`;
@@ -2740,19 +2816,36 @@ export function ManualOrderForm({
       }
       if (keyboard && focused instanceof HTMLElement) {
         cancelAnimationFrame(frame);
-        frame = requestAnimationFrame(() => focused.scrollIntoView({ block: "nearest" }));
+        frame = requestAnimationFrame(() =>
+          focused.scrollIntoView({ block: "nearest" }),
+        );
       }
     };
-    const onOrientation = () => { fullHeight = window.innerHeight; updateViewport(); };
+    const onOrientation = () => {
+      fullHeight = window.innerHeight;
+      updateViewport();
+    };
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") { event.preventDefault(); closeRef.current(); }
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeRef.current();
+      }
       if (event.key !== "Tab") return;
-      const focusable = Array.from(dialogRef.current?.querySelectorAll<HTMLElement>(
-        'button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), summary, [tabindex="0"]',
-      ) ?? []).filter((element) => element.getClientRects().length > 0);
-      const first = focusable[0], last = focusable.at(-1);
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
-      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      const focusable = Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), summary, [tabindex="0"]',
+        ) ?? [],
+      ).filter((element) => element.getClientRects().length > 0);
+      const first = focusable[0],
+        last = focusable.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      }
+      if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
     };
     // Focus the dialog, not a text input: opening it must not summon the phone keyboard.
     dialogRef.current?.querySelector<HTMLFormElement>("form")?.focus();
@@ -2774,38 +2867,63 @@ export function ManualOrderForm({
       document.removeEventListener("focusin", updateViewport);
       document.removeEventListener("focusout", updateViewport);
       document.removeEventListener("keydown", onKeyDown);
-      if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus();
+      if (previousFocus instanceof HTMLElement && previousFocus.isConnected)
+        previousFocus.focus();
     };
   }, []);
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch("/api/admin/clients", { cache: "no-store", signal: controller.signal })
+    fetch("/api/admin/clients", {
+      cache: "no-store",
+      signal: controller.signal,
+    })
       .then(async (response) => {
         if (!response.ok) throw new Error("Unable to load customers");
         const payload = (await response.json()) as { clients?: ManualClient[] };
         setClients(Array.isArray(payload.clients) ? payload.clients : []);
       })
-      .catch(() => { if (!controller.signal.aborted) setClientsError(true); })
-      .finally(() => { if (!controller.signal.aborted) setClientsLoading(false); });
+      .catch(() => {
+        if (!controller.signal.aborted) setClientsError(true);
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setClientsLoading(false);
+      });
     return () => controller.abort();
   }, [clientRetry]);
 
-  const storedClient = clients.find((client) => client.id === manual.client_profile_id);
+  const storedClient = clients.find(
+    (client) => client.id === manual.client_profile_id,
+  );
   const activeClient = selectedClient || storedClient;
-  const showDifferentAddress = differentAddress || Boolean(!selectedClient && storedClient &&
-    ["city", "area", "address", "apartment"].some((key) => manual[key] !== (storedClient[key as keyof ManualClient] || "")));
+  const showDifferentAddress =
+    differentAddress ||
+    Boolean(
+      !selectedClient &&
+        storedClient &&
+        ["city", "area", "address", "apartment"].some(
+          (key) =>
+            manual[key] !== (storedClient[key as keyof ManualClient] || ""),
+        ),
+    );
 
-  const matches = useMemo(() => findManualCustomers(clients, customerQuery), [clients, customerQuery]);
+  const matches = useMemo(
+    () => findManualCustomers(clients, customerQuery),
+    [clients, customerQuery],
+  );
   const savedAddress = (client: ManualClient) => ({
-    city: client.city || "Valencia", area: client.area || "",
-    address: client.address || "", apartment: client.apartment || "",
+    city: client.city || "Valencia",
+    area: client.area || "",
+    address: client.address || "",
+    apartment: client.apartment || "",
   });
   const selectClient = (client: ManualClient) => {
     onChange({
       client_profile_id: client.id,
-      full_name: client.full_name || "", phone: client.phone || client.alternate_phone || "",
-      email: client.email || "", ...savedAddress(client),
+      full_name: client.full_name || "",
+      phone: client.phone || client.alternate_phone || "",
+      email: client.email || "",
+      ...savedAddress(client),
     });
     setNeedsName(!client.full_name);
     setNeedsPhone(!client.phone && !client.alternate_phone);
@@ -2813,10 +2931,13 @@ export function ManualOrderForm({
     setDifferentAddress(!client.address || !client.area || !client.city);
     setCustomerMode("selected");
     setCustomerQuery("");
-    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+    if (document.activeElement instanceof HTMLElement)
+      document.activeElement.blur();
     requestAnimationFrame(() => {
       summaryRef.current?.focus({ preventScroll: true });
-      summaryRef.current?.closest("section")?.scrollIntoView({ block: "start" });
+      summaryRef.current
+        ?.closest("section")
+        ?.scrollIntoView({ block: "start" });
     });
   };
   const changeCustomer = () => {
@@ -2828,8 +2949,21 @@ export function ManualOrderForm({
     setSelectedClient(null);
     setCustomerMode("new");
     setDifferentAddress(false);
-    onChange({ client_profile_id: "", full_name: "", phone: "", email: "", city: "Valencia", area: "", address: "", apartment: "" });
-    requestAnimationFrame(() => dialogRef.current?.querySelector<HTMLInputElement>('[name="customer-name"]')?.focus());
+    onChange({
+      client_profile_id: "",
+      full_name: "",
+      phone: "",
+      email: "",
+      city: "Valencia",
+      area: "",
+      address: "",
+      apartment: "",
+    });
+    requestAnimationFrame(() =>
+      dialogRef.current
+        ?.querySelector<HTMLInputElement>('[name="customer-name"]')
+        ?.focus(),
+    );
   };
 
   const manualTotal = services.reduce(
@@ -2838,10 +2972,17 @@ export function ManualOrderForm({
     0,
   );
   return (
-    <div ref={dialogRef} className="fixed inset-x-0 top-0 z-50 flex h-[100dvh] items-center justify-center bg-black/60 sm:p-6">
+    <div
+      ref={dialogRef}
+      className="fixed inset-x-0 top-0 z-50 flex h-[100dvh] items-center justify-center bg-black/60 sm:p-6"
+    >
       <form
         onSubmit={(event) => {
-          if (customerMode === "select") { event.preventDefault(); searchRef.current?.focus(); return; }
+          if (customerMode === "select") {
+            event.preventDefault();
+            searchRef.current?.focus();
+            return;
+          }
           void onSubmit(event);
         }}
         tabIndex={-1}
@@ -2857,7 +2998,10 @@ export function ManualOrderForm({
               <Sparkles className="h-4 w-4" />
               Spain operations
             </p>
-            <h2 id="manual-order-title" className="mt-1 text-2xl font-black tracking-tight sm:text-3xl">
+            <h2
+              id="manual-order-title"
+              className="mt-1 text-2xl font-black tracking-tight sm:text-3xl"
+            >
               New manual order
             </h2>
             <p className="mt-1 hidden text-sm text-white/55 sm:block">
@@ -2873,49 +3017,55 @@ export function ManualOrderForm({
             <X className="h-5 w-5" />
           </button>
         </div>
-        <div className="min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pb-6 scroll-pb-6 sm:p-6" data-manual-order-scroll>
+        <div
+          className="min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pb-6 scroll-pb-6 sm:p-6"
+          data-manual-order-scroll
+        >
           <details className="rounded-2xl border border-black/10 bg-white">
-            <summary className="cursor-pointer px-4 py-3 text-sm font-bold">Import from WhatsApp <span className="font-normal text-gray-500">· optional</span></summary>
-          <AiOrderImport
-            onApply={(order, parsedServices) => {
-              setSelectedClient(null);
-              setNeedsName(!order.fullName && !manual.full_name);
-              setNeedsPhone(!order.phone && !manual.phone);
-              setCustomerMode("selected");
-              setDifferentAddress(true);
-              onChange({
-                client_profile_id: "",
-                full_name: order.fullName || manual.full_name,
-                phone: order.phone || manual.phone,
-                email: order.email || manual.email,
-                city: order.city || manual.city,
-                area: order.area || manual.area,
-                address:
-                  [order.houseAddress, order.postalCode]
-                    .filter(Boolean)
-                    .join(", ") || manual.address,
-                apartment: order.apartmentNumber || manual.apartment,
-                preferred_date: order.preferredDate || manual.preferred_date,
-                preferred_time: order.preferredTime || manual.preferred_time,
-                category: order.category || manual.category,
-                notes: order.notes || manual.notes,
-              });
-              const mapped = parsedServices.map((service) => {
-                const matched = findCatalogService(
-                  order.category || manual.category,
-                  service.label,
-                );
-                return {
+            <summary className="cursor-pointer px-4 py-3 text-sm font-bold">
+              Import from WhatsApp{" "}
+              <span className="font-normal text-gray-500">· optional</span>
+            </summary>
+            <AiOrderImport
+              onApply={(order, parsedServices) => {
+                setSelectedClient(null);
+                setNeedsName(!order.fullName && !manual.full_name);
+                setNeedsPhone(!order.phone && !manual.phone);
+                setCustomerMode("selected");
+                setDifferentAddress(true);
+                onChange({
+                  client_profile_id: "",
+                  full_name: order.fullName || manual.full_name,
+                  phone: order.phone || manual.phone,
+                  email: order.email || manual.email,
+                  city: order.city || manual.city,
+                  area: order.area || manual.area,
+                  address:
+                    [order.houseAddress, order.postalCode]
+                      .filter(Boolean)
+                      .join(", ") || manual.address,
+                  apartment: order.apartmentNumber || manual.apartment,
+                  preferred_date: order.preferredDate || manual.preferred_date,
+                  preferred_time: order.preferredTime || manual.preferred_time,
                   category: order.category || manual.category,
-                  id: matched?.id || "manual",
-                  label: matched?.label || service.label || "Custom job",
-                  price: service.price ?? matched?.price ?? 0,
-                  qty: service.qty || 1,
-                };
-              });
-              if (mapped.length) onServices(mapped);
-            }}
-          />
+                  notes: order.notes || manual.notes,
+                });
+                const mapped = parsedServices.map((service) => {
+                  const matched = findCatalogService(
+                    order.category || manual.category,
+                    service.label,
+                  );
+                  return {
+                    category: order.category || manual.category,
+                    id: matched?.id || "manual",
+                    label: matched?.label || service.label || "Custom job",
+                    price: service.price ?? matched?.price ?? 0,
+                    qty: service.qty || 1,
+                  };
+                });
+                if (mapped.length) onServices(mapped);
+              }}
+            />
           </details>
           <section className="rounded-2xl border border-black/5 bg-white p-4 sm:p-5">
             <div className="flex items-center gap-3">
@@ -2932,45 +3082,157 @@ export function ManualOrderForm({
             {customerMode === "select" ? (
               <div className="mt-5">
                 <Field label="Select existing customer">
-                  <input ref={searchRef} type="search" autoComplete="off" autoCorrect="off" spellCheck={false}
-                    placeholder="Name, phone or email" value={customerQuery}
-                    aria-controls="manual-customer-results" aria-describedby="manual-customer-status"
+                  <input
+                    ref={searchRef}
+                    type="search"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    placeholder="Name, phone or email"
+                    value={customerQuery}
+                    aria-controls="manual-customer-results"
+                    aria-describedby="manual-customer-status"
                     onChange={(event) => setCustomerQuery(event.target.value)}
-                    onKeyDown={(event) => { if (event.key === "Enter") event.preventDefault(); }} />
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") event.preventDefault();
+                    }}
+                  />
                 </Field>
                 <div className="mt-3 flex items-center justify-between gap-2">
-                  <p id="manual-customer-status" role="status" className="text-xs font-bold text-gray-500">
-                    {customerQuery.trim() ? `${matches.length} matching customers` : "Recent customers"}
+                  <p
+                    id="manual-customer-status"
+                    role="status"
+                    className="text-xs font-bold text-gray-500"
+                  >
+                    {customerQuery.trim()
+                      ? `${matches.length} matching customers`
+                      : "Recent customers"}
                   </p>
-                  <button type="button" onClick={createCustomer} className="min-h-11 rounded-xl px-2 text-sm font-bold text-black underline decoration-yellow-400 decoration-2 underline-offset-4">
+                  <button
+                    type="button"
+                    onClick={createCustomer}
+                    className="min-h-11 rounded-xl px-2 text-sm font-bold text-black underline decoration-yellow-400 decoration-2 underline-offset-4"
+                  >
                     + Create new customer
                   </button>
                 </div>
-                <ClientMatches error={clientsError} onRetry={() => { setClientsError(false); setClientsLoading(true); setClientRetry((value) => value + 1); }}
-                  loading={clientsLoading} matches={matches} onSelect={selectClient} />
+                <ClientMatches
+                  error={clientsError}
+                  onRetry={() => {
+                    setClientsError(false);
+                    setClientsLoading(true);
+                    setClientRetry((value) => value + 1);
+                  }}
+                  loading={clientsLoading}
+                  matches={matches}
+                  onSelect={selectClient}
+                />
               </div>
             ) : (
               <div className="mt-5">
                 {customerMode === "selected" ? (
-                  <div ref={summaryRef} tabIndex={-1} className="rounded-2xl border border-yellow-200 bg-yellow-50/60 p-4 outline-none focus-visible:ring-2 focus-visible:ring-yellow-500">
-                    <p className="text-xs font-bold uppercase tracking-wide text-gray-500">{activeClient ? "Selected customer" : "Customer details"}</p>
-                    <p className="mt-1 break-words text-lg font-black">{manual.full_name || "Add customer name"}</p>
-                    <p className="mt-1 break-words text-sm text-gray-700">{manual.phone || "Phone needed"}</p>
-                    {manual.email ? <p className="mt-1 break-all text-sm text-gray-600">{manual.email}</p> : null}
-                    <button type="button" onClick={changeCustomer} className="mt-2 min-h-11 rounded-xl text-sm font-bold underline underline-offset-4">Change customer</button>
-                    {needsName ? <Field label="Full name"><input required minLength={2} value={manual.full_name} onChange={(event) => onChange({ full_name: event.target.value })} /></Field> : null}
-                    {needsPhone ? <Field label="Phone"><input required type="tel" minLength={7} value={manual.phone} onChange={(event) => onChange({ phone: event.target.value })} /></Field> : null}
+                  <div
+                    ref={summaryRef}
+                    tabIndex={-1}
+                    className="rounded-2xl border border-yellow-200 bg-yellow-50/60 p-4 outline-none focus-visible:ring-2 focus-visible:ring-yellow-500"
+                  >
+                    <p className="text-xs font-bold uppercase tracking-wide text-gray-500">
+                      {activeClient ? "Selected customer" : "Customer details"}
+                    </p>
+                    <p className="mt-1 break-words text-lg font-black">
+                      {manual.full_name || "Add customer name"}
+                    </p>
+                    <p className="mt-1 break-words text-sm text-gray-700">
+                      {manual.phone || "Phone needed"}
+                    </p>
+                    {manual.email ? (
+                      <p className="mt-1 break-all text-sm text-gray-600">
+                        {manual.email}
+                      </p>
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={changeCustomer}
+                      className="mt-2 min-h-11 rounded-xl text-sm font-bold underline underline-offset-4"
+                    >
+                      Change customer
+                    </button>
+                    {needsName ? (
+                      <Field label="Full name">
+                        <input
+                          required
+                          minLength={2}
+                          value={manual.full_name}
+                          onChange={(event) =>
+                            onChange({ full_name: event.target.value })
+                          }
+                        />
+                      </Field>
+                    ) : null}
+                    {needsPhone ? (
+                      <Field label="Phone">
+                        <input
+                          required
+                          type="tel"
+                          minLength={7}
+                          value={manual.phone}
+                          onChange={(event) =>
+                            onChange({ phone: event.target.value })
+                          }
+                        />
+                      </Field>
+                    ) : null}
                   </div>
                 ) : (
                   <>
                     <div className="mb-3 flex items-center justify-between gap-2">
                       <h4 className="font-black">New customer</h4>
-                      <button type="button" onClick={changeCustomer} className="min-h-11 text-sm font-bold underline underline-offset-4">Select existing instead</button>
+                      <button
+                        type="button"
+                        onClick={changeCustomer}
+                        className="min-h-11 text-sm font-bold underline underline-offset-4"
+                      >
+                        Select existing instead
+                      </button>
                     </div>
                     <div className="grid min-w-0 gap-4 sm:grid-cols-2">
-                      <Field label="Full name"><input name="customer-name" autoComplete="name" required minLength={2} maxLength={160} value={manual.full_name} onChange={(event) => onChange({ full_name: event.target.value })} /></Field>
-                      <Field label="Phone"><input autoComplete="tel" required type="tel" minLength={7} maxLength={80} value={manual.phone} onChange={(event) => onChange({ phone: event.target.value })} /></Field>
-                      <Field label="Email"><input autoComplete="email" type="email" maxLength={240} value={manual.email} onChange={(event) => onChange({ email: event.target.value })} /></Field>
+                      <Field label="Full name">
+                        <input
+                          name="customer-name"
+                          autoComplete="name"
+                          required
+                          minLength={2}
+                          maxLength={160}
+                          value={manual.full_name}
+                          onChange={(event) =>
+                            onChange({ full_name: event.target.value })
+                          }
+                        />
+                      </Field>
+                      <Field label="Phone">
+                        <input
+                          autoComplete="tel"
+                          required
+                          type="tel"
+                          minLength={7}
+                          maxLength={80}
+                          value={manual.phone}
+                          onChange={(event) =>
+                            onChange({ phone: event.target.value })
+                          }
+                        />
+                      </Field>
+                      <Field label="Email">
+                        <input
+                          autoComplete="email"
+                          type="email"
+                          maxLength={240}
+                          value={manual.email}
+                          onChange={(event) =>
+                            onChange({ email: event.target.value })
+                          }
+                        />
+                      </Field>
                     </div>
                   </>
                 )}
@@ -2979,52 +3241,109 @@ export function ManualOrderForm({
                   <fieldset className="mt-3 space-y-2">
                     <legend className="sr-only">Address for this order</legend>
                     <label className="flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border border-black/10 p-3 text-sm">
-                      <input type="radio" name="order-address" checked={!showDifferentAddress} disabled={!activeClient.address || !activeClient.area || !activeClient.city}
-                        onChange={() => { onChange(savedAddress(activeClient)); setSelectedClient(activeClient); setDifferentAddress(false); }} className="mt-1 h-4 w-4 accent-yellow-500" />
-                      <span><b>Use saved address</b><span className="mt-1 block text-gray-600">{[activeClient.address, activeClient.apartment, activeClient.area, activeClient.city].filter(Boolean).join(", ") || "No saved address"}</span>
-                      {!activeClient.address || !activeClient.area || !activeClient.city ? <span className="block text-amber-800">Complete the address below for this order.</span> : null}</span>
+                      <input
+                        type="radio"
+                        name="order-address"
+                        checked={!showDifferentAddress}
+                        disabled={
+                          !activeClient.address ||
+                          !activeClient.area ||
+                          !activeClient.city
+                        }
+                        onChange={() => {
+                          onChange(savedAddress(activeClient));
+                          setSelectedClient(activeClient);
+                          setDifferentAddress(false);
+                        }}
+                        className="mt-1 h-4 w-4 accent-yellow-500"
+                      />
+                      <span>
+                        <b>Use saved address</b>
+                        <span className="mt-1 block text-gray-600">
+                          {[
+                            activeClient.address,
+                            activeClient.apartment,
+                            activeClient.area,
+                            activeClient.city,
+                          ]
+                            .filter(Boolean)
+                            .join(", ") || "No saved address"}
+                        </span>
+                        {!activeClient.address ||
+                        !activeClient.area ||
+                        !activeClient.city ? (
+                          <span className="block text-amber-800">
+                            Complete the address below for this order.
+                          </span>
+                        ) : null}
+                      </span>
                     </label>
                     <label className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-black/10 p-3 text-sm font-bold">
-                      <input type="radio" name="order-address" checked={showDifferentAddress} onChange={() => {
-                        setDifferentAddress(true);
-                        onChange({ city: activeClient.city || "Valencia", area: "", address: "", apartment: "" });
-                      }} className="h-4 w-4 accent-yellow-500" />Different address for this order
+                      <input
+                        type="radio"
+                        name="order-address"
+                        checked={showDifferentAddress}
+                        onChange={() => {
+                          setDifferentAddress(true);
+                          onChange({
+                            city: activeClient.city || "Valencia",
+                            area: "",
+                            address: "",
+                            apartment: "",
+                          });
+                        }}
+                        className="h-4 w-4 accent-yellow-500"
+                      />
+                      Different address for this order
                     </label>
                   </fieldset>
                 ) : null}
-                {customerMode === "new" || showDifferentAddress || !activeClient ? (
+                {customerMode === "new" ||
+                showDifferentAddress ||
+                !activeClient ? (
                   <div className="mt-3 grid min-w-0 gap-4 sm:grid-cols-2">
-              <Field label="City">
-                <select
-                  value={manual.city}
-                  onChange={(e) => onChange({ city: e.target.value })}
-                >
-                  {['Valencia', 'Madrid', 'Barcelona', 'Alicante'].map((city) => <option key={city}>{city}</option>)}
-                </select>
-              </Field>
-              <Field label="Area / neighbourhood">
-                <input
-                  required
-                  value={manual.area}
-                  onChange={(e) => onChange({ area: e.target.value })}
-                />
-              </Field>
-              <Field label="Service address">
-                <input
-                  required
-                  value={manual.address}
-                  onChange={(e) => onChange({ address: e.target.value })}
-                />
-              </Field>
-              <Field label="Unit / apartment">
-                <input
-                  value={manual.apartment}
-                  onChange={(e) => onChange({ apartment: e.target.value })}
-                />
-              </Field>
+                    <Field label="City">
+                      <select
+                        value={manual.city}
+                        onChange={(e) => onChange({ city: e.target.value })}
+                      >
+                        {["Valencia", "Madrid", "Barcelona", "Alicante"].map(
+                          (city) => (
+                            <option key={city}>{city}</option>
+                          ),
+                        )}
+                      </select>
+                    </Field>
+                    <Field label="Area / neighbourhood">
+                      <input
+                        required
+                        value={manual.area}
+                        onChange={(e) => onChange({ area: e.target.value })}
+                      />
+                    </Field>
+                    <Field label="Service address">
+                      <input
+                        required
+                        value={manual.address}
+                        onChange={(e) => onChange({ address: e.target.value })}
+                      />
+                    </Field>
+                    <Field label="Unit / apartment">
+                      <input
+                        value={manual.apartment}
+                        onChange={(e) =>
+                          onChange({ apartment: e.target.value })
+                        }
+                      />
+                    </Field>
                   </div>
                 ) : null}
-                {showDifferentAddress && activeClient ? <p className="mt-3 text-xs text-gray-500">Used for this order. The customer’s saved address is unchanged.</p> : null}
+                {showDifferentAddress && activeClient ? (
+                  <p className="mt-3 text-xs text-gray-500">
+                    Used for this order. The customer’s saved address is
+                    unchanged.
+                  </p>
+                ) : null}
               </div>
             )}
           </section>
@@ -3094,45 +3413,105 @@ export function ManualOrderForm({
             {services.map((service, index) => {
               const category = service.category || manual.category;
               const catalog = getCatalogServices(category);
-              const update = (updates: Partial<ManualService>) => onServices(
-                services.map((item, i) => i === index ? { ...item, ...updates } : item),
-              );
+              const update = (updates: Partial<ManualService>) =>
+                onServices(
+                  services.map((item, i) =>
+                    i === index ? { ...item, ...updates } : item,
+                  ),
+                );
               return (
-                <div key={index} className="mt-4 min-w-0 rounded-2xl bg-[#f7f7f4] p-3">
+                <div
+                  key={index}
+                  className="mt-4 min-w-0 rounded-2xl bg-[#f7f7f4] p-3"
+                >
                   <div className="mb-3 flex items-center justify-between gap-2">
-                    <span className="text-sm font-bold">Service {index + 1}</span>
-                    <button type="button" onClick={() => onServices(services.filter((_, i) => i !== index))}
+                    <span className="text-sm font-bold">
+                      Service {index + 1}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        onServices(services.filter((_, i) => i !== index))
+                      }
                       aria-label={`Remove service line ${index + 1}`}
-                      className="flex min-h-11 items-center gap-1 rounded-xl px-3 text-sm font-bold text-red-700 hover:bg-red-50">
+                      className="flex min-h-11 items-center gap-1 rounded-xl px-3 text-sm font-bold text-red-700 hover:bg-red-50"
+                    >
                       <X className="h-4 w-4" /> Remove
                     </button>
                   </div>
                   <div className="grid min-w-0 gap-3 sm:grid-cols-2">
                     <Field label="Service category">
-                      <select value={category} onChange={(event) => {
-                        update({ category: event.target.value, id: "", label: "", price: 0 });
-                      }}>
-                        {Object.keys(SERVICE_CATALOG).map((name) => <option key={name}>{name}</option>)}
+                      <select
+                        value={category}
+                        onChange={(event) => {
+                          update({
+                            category: event.target.value,
+                            id: "",
+                            label: "",
+                            price: 0,
+                          });
+                        }}
+                      >
+                        {Object.keys(SERVICE_CATALOG).map((name) => (
+                          <option key={name}>{name}</option>
+                        ))}
                       </select>
                     </Field>
                     <Field label="Service">
-                      <select required value={service.id} onChange={(event) => {
-                        const found = catalog.find((item) => item.id === event.target.value);
-                        if (found) update({ category, id: found.id, label: found.label, price: found.price });
-                      }}>
-                        <option value="" disabled>Select service</option>
-                        {service.id && !catalog.some((item) => item.id === service.id) ?
-                          <option value={service.id}>{service.label}</option> : null}
-                        {catalog.map((item) => <option key={item.id} value={item.id}>{item.label} — {item.priceLabel || money(item.price)}</option>)}
+                      <select
+                        required
+                        value={service.id}
+                        onChange={(event) => {
+                          const found = catalog.find(
+                            (item) => item.id === event.target.value,
+                          );
+                          if (found)
+                            update({
+                              category,
+                              id: found.id,
+                              label: found.label,
+                              price: found.price,
+                            });
+                        }}
+                      >
+                        <option value="" disabled>
+                          Select service
+                        </option>
+                        {service.id &&
+                        !catalog.some((item) => item.id === service.id) ? (
+                          <option value={service.id}>{service.label}</option>
+                        ) : null}
+                        {catalog.map((item) => (
+                          <option key={item.id} value={item.id}>
+                            {item.label} —{" "}
+                            {item.priceLabel || money(item.price)}
+                          </option>
+                        ))}
                       </select>
                     </Field>
                     <Field label="Unit price (EUR)">
-                      <input required type="number" min="0.01" step="0.01" value={service.price}
-                        onChange={(event) => update({ price: Number(event.target.value) })} />
+                      <input
+                        required
+                        type="number"
+                        min="0.01"
+                        step="0.01"
+                        value={service.price}
+                        onChange={(event) =>
+                          update({ price: Number(event.target.value) })
+                        }
+                      />
                     </Field>
                     <Field label="Quantity">
-                      <input required type="number" min="1" step="1" value={service.qty}
-                        onChange={(event) => update({ qty: Number(event.target.value) })} />
+                      <input
+                        required
+                        type="number"
+                        min="1"
+                        step="1"
+                        value={service.qty}
+                        onChange={(event) =>
+                          update({ qty: Number(event.target.value) })
+                        }
+                      />
                     </Field>
                   </div>
                 </div>
@@ -3143,7 +3522,13 @@ export function ManualOrderForm({
               onClick={() =>
                 onServices([
                   ...services,
-                  { category: manual.category, id: "", label: "", price: 0, qty: 1 },
+                  {
+                    category: manual.category,
+                    id: "",
+                    label: "",
+                    price: 0,
+                    qty: 1,
+                  },
                 ])
               }
               className="mt-4 flex items-center gap-2 rounded-xl border border-dashed border-yellow-500 px-4 py-2.5 text-sm font-black text-yellow-800 transition hover:bg-yellow-50"
@@ -3152,14 +3537,31 @@ export function ManualOrderForm({
             </button>
           </section>
         </div>
-        {submitError ? <p role="alert" className="shrink-0 border-t border-red-200 bg-red-50 px-4 py-2 text-sm text-red-800">{submitError}</p> : null}
-        <div hidden={keyboardOpen} className={`${keyboardOpen ? "hidden" : "flex"} relative z-10 shrink-0 items-center justify-between gap-4 border-t border-black/10 bg-white/90 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_16px_rgba(0,0,0,0.04)] backdrop-blur-xl sm:px-6`} data-manual-order-actions>
+        {submitError ? (
+          <p
+            role="alert"
+            className="shrink-0 border-t border-red-200 bg-red-50 px-4 py-2 text-sm text-red-800"
+          >
+            {submitError}
+          </p>
+        ) : null}
+        <div
+          hidden={keyboardOpen}
+          className={`${keyboardOpen ? "hidden" : "flex"} relative z-10 shrink-0 items-center justify-between gap-4 border-t border-black/10 bg-white/90 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_16px_rgba(0,0,0,0.04)] backdrop-blur-xl sm:px-6`}
+          data-manual-order-actions
+        >
           <div className="min-w-0">
             <p className="text-xs text-gray-500">Total</p>
-            <p className="whitespace-nowrap text-xl font-black">{money(manualTotal)}</p>
+            <p className="whitespace-nowrap text-xl font-black">
+              {money(manualTotal)}
+            </p>
           </div>
-          <button disabled={saving || services.length === 0 || customerMode === "select"}
-            className="min-h-12 rounded-xl bg-yellow-400 px-6 py-3 text-sm font-black transition hover:bg-yellow-300 disabled:opacity-50">
+          <button
+            disabled={
+              saving || services.length === 0 || customerMode === "select"
+            }
+            className="min-h-12 rounded-xl bg-yellow-400 px-6 py-3 text-sm font-black transition hover:bg-yellow-300 disabled:opacity-50"
+          >
             {saving ? "Saving…" : "Create order"}
           </button>
         </div>
@@ -3191,7 +3593,10 @@ function AiOrderImport({
       // Phone screenshots contain a lot of pixels but little extra information.
       // Keeping the long edge at 1200px makes the request reliable and cheaper.
       const maxEdge = 1200;
-      const scale = Math.min(1, maxEdge / Math.max(image.naturalWidth, image.naturalHeight));
+      const scale = Math.min(
+        1,
+        maxEdge / Math.max(image.naturalWidth, image.naturalHeight),
+      );
       const canvas = document.createElement("canvas");
       canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
       canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
@@ -3217,25 +3622,35 @@ function AiOrderImport({
     setError("");
     try {
       const selected = Array.from(files);
-      const imageFiles = selected.filter((file) => file.type.startsWith("image/"));
+      const imageFiles = selected.filter((file) =>
+        file.type.startsWith("image/"),
+      );
       const nonImage = selected.find((file) => !file.type.startsWith("image/"));
       if (imageFiles.length) {
-        const urls = await Promise.all(imageFiles.slice(0, 6).map(compressImage));
+        const urls = await Promise.all(
+          imageFiles.slice(0, 6).map(compressImage),
+        );
         setImages((current) => [...current, ...urls].slice(0, 6));
       }
       if (!nonImage) return;
       if (nonImage.name.toLowerCase().endsWith(".zip")) {
-        const archive = unzipSync(new Uint8Array(await nonImage.arrayBuffer()), {
-          filter: (entry) => entry.name.toLowerCase().endsWith(".txt"),
-        });
+        const archive = unzipSync(
+          new Uint8Array(await nonImage.arrayBuffer()),
+          {
+            filter: (entry) => entry.name.toLowerCase().endsWith(".txt"),
+          },
+        );
         const chat = Object.values(archive)[0];
-        if (!chat) throw new Error("ZIP does not contain a WhatsApp TXT export");
+        if (!chat)
+          throw new Error("ZIP does not contain a WhatsApp TXT export");
         setText(strFromU8(chat).slice(-100000));
         return;
       }
       setText((await nonImage.text()).slice(-100000));
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "Could not read files");
+      setError(
+        reason instanceof Error ? reason.message : "Could not read files",
+      );
     }
   }
   async function parse() {
@@ -3327,32 +3742,50 @@ function ClientMatches({
   onSelect: (client: ManualClient) => void;
 }) {
   return (
-    <div id="manual-customer-results" className="mt-2 divide-y divide-black/5 rounded-xl border border-black/10 bg-white p-1">
+    <div
+      id="manual-customer-results"
+      className="mt-2 divide-y divide-black/5 rounded-xl border border-black/10 bg-white p-1"
+    >
       {loading ? (
         <p className="px-3 py-3 text-sm font-semibold text-gray-500">
           Loading customers…
         </p>
       ) : error ? (
-        <button type="button" onClick={onRetry} className="p-3 text-sm text-red-700">Could not load customers. Retry</button>
+        <button
+          type="button"
+          onClick={onRetry}
+          className="p-3 text-sm text-red-700"
+        >
+          Could not load customers. Retry
+        </button>
       ) : matches.length === 0 ? (
-        <p className="p-3 text-sm text-gray-500">No customers found. Search again or create a new customer.</p>
+        <p className="p-3 text-sm text-gray-500">
+          No customers found. Search again or create a new customer.
+        </p>
       ) : (
         matches.map((client) => (
           <button
             key={client.id}
             type="button"
-
             onClick={() => onSelect(client)}
             className="block w-full break-words rounded-xl px-3 py-3 text-left transition hover:bg-yellow-50 focus:bg-yellow-50"
           >
             <span className="block font-bold text-gray-900">
               {client.full_name || "Unnamed customer"}
             </span>
-            <span className="mt-1 block text-sm text-gray-700">{client.phone || client.alternate_phone || "No phone saved"}</span>
-            <span className="mt-1 block text-xs leading-5 text-gray-500">
-              {[client.address, client.area, client.city].filter(Boolean).join(" · ") || "No address saved"}
+            <span className="mt-1 block text-sm text-gray-700">
+              {client.phone || client.alternate_phone || "No phone saved"}
             </span>
-            {client.email ? <span className="block break-all text-xs leading-5 text-gray-500">{client.email}</span> : null}
+            <span className="mt-1 block text-xs leading-5 text-gray-500">
+              {[client.address, client.area, client.city]
+                .filter(Boolean)
+                .join(" · ") || "No address saved"}
+            </span>
+            {client.email ? (
+              <span className="block break-all text-xs leading-5 text-gray-500">
+                {client.email}
+              </span>
+            ) : null}
           </button>
         ))
       )}
@@ -3376,5 +3809,3 @@ function Field({
     </label>
   );
 }
-
-

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, Hammer, Wind } from "lucide-react";
+import { ChevronDown, Hammer, Tv, Wind } from "lucide-react";
 import { marketBasePath } from "@/lib/cities";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
 
@@ -155,14 +155,11 @@ export default function MarketDesktopNav({
         {locale === "es" ? "Manitas" : "Handyman"}
       </Link>
       <Link
-        href={
-          cityMarket
-            ? `${base}/services/instalacion-ventilador-techo`
-            : `${base}/services/instalacion-ventilador-techo-valencia`
-        }
-        className="hover:text-black"
+        href={cityMarket ? `${base}/montaje-tv` : `${base}/montaje-tv-valencia`}
+        className="inline-flex items-center gap-1.5 hover:text-black"
       >
-        {locale === "es" ? "Ventiladores" : "Ceiling fans"}
+        <Tv className="h-4 w-4" />
+        {locale === "es" ? "Montaje TV" : "TV mounting"}
       </Link>
       <Link href={`/${locale}/guias`} className="hover:text-black">
         {labels.tips}

@@ -13,8 +13,15 @@ const supabaseAdmin = createClient(
       persistSession: false,
       autoRefreshToken: false,
     },
-  }
+  },
 );
+
+type OrderService = {
+  label?: string;
+  price: number;
+  qty: number;
+  subtotal?: number;
+};
 
 function formatMadridFromUTC(date: string) {
   return new Intl.DateTimeFormat("en-GB", {
@@ -35,7 +42,7 @@ export async function POST(req: Request) {
     if (!isAvailableCity(city)) {
       return Response.json(
         { success: false, error: "Unsupported city" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     const market = marketFromCity(city);
@@ -71,35 +78,35 @@ export async function POST(req: Request) {
     if (!data.fullName || typeof data.fullName !== "string") {
       return Response.json(
         { success: false, error: "Invalid name" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!Array.isArray(data.services) || data.services.length === 0) {
       return Response.json(
         { success: false, error: "No services selected" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!data.preferredDate || !data.preferredTime) {
       return Response.json(
         { success: false, error: "Missing date or time" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!data.city || !data.area || !data.houseAddress) {
       return Response.json(
         { success: false, error: "Missing address data" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
       return Response.json(
         { success: false, error: "Invalid email format" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -112,27 +119,26 @@ export async function POST(req: Request) {
     ) {
       return Response.json(
         { success: false, error: "Invalid date or time" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const scheduledAt = madridLocalDateTimeToUtc(preferredDate, preferredTime);
 
-    const { data: existingOrder, error: slotCheckError } =
-      await supabaseAdmin
-        .from("orders")
-        .select("id")
-        .eq("preferred_date", preferredDate)
-        .eq("preferred_time", preferredTime)
-        .eq("city", city)
-        .limit(1)
-        .maybeSingle();
+    const { data: existingOrder, error: slotCheckError } = await supabaseAdmin
+      .from("orders")
+      .select("id")
+      .eq("preferred_date", preferredDate)
+      .eq("preferred_time", preferredTime)
+      .eq("city", city)
+      .limit(1)
+      .maybeSingle();
 
     if (slotCheckError) {
       console.error("❌ AVAILABILITY CHECK ERROR:", slotCheckError);
       return Response.json(
         { success: false, error: "Could not check availability" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -143,19 +149,24 @@ export async function POST(req: Request) {
           error: "This time is already booked",
           code: "SLOT_TAKEN",
         },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
     let subtotal: number;
     try {
       subtotal = calculatePublicTotal(data.services);
-      data.services = data.services.map((service: { price: number; qty: number }) => ({
-        ...service,
-        subtotal: calculatePublicTotal([service]),
-      }));
+      data.services = data.services.map(
+        (service: { price: number; qty: number }) => ({
+          ...service,
+          subtotal: calculatePublicTotal([service]),
+        }),
+      );
     } catch {
-      return Response.json({ success: false, error: "Invalid service price or quantity" }, { status: 400 });
+      return Response.json(
+        { success: false, error: "Invalid service price or quantity" },
+        { status: 400 },
+      );
     }
     const iva = 0;
     const total = subtotal;
@@ -202,8 +213,16 @@ export async function POST(req: Request) {
           utm_campaign: data.utmCampaign || null,
           utm_term: data.utmTerm || null,
           utm_content: data.utmContent || null,
-          attribution_source: "calculator",
-          attribution_page_path: `/${locale}/estimate`,
+          attribution_source:
+            data.attributionSource === "tv_mini_calculator"
+              ? "tv_mini_calculator"
+              : "calculator",
+          attribution_service: data.attributionService || data.category || null,
+          attribution_page_path:
+            typeof data.attributionPagePath === "string" &&
+            data.attributionPagePath.startsWith("/")
+              ? data.attributionPagePath.slice(0, 300)
+              : `/${locale}/estimate`,
         },
       ])
       .select("id")
@@ -219,13 +238,13 @@ export async function POST(req: Request) {
             error: "This time is already booked",
             code: "SLOT_TAKEN",
           },
-          { status: 409 }
+          { status: 409 },
         );
       }
 
       return Response.json(
         { success: false, error: "Failed to save order to CRM" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -234,15 +253,25 @@ export async function POST(req: Request) {
     });
 
     const labels = {
-      clientSubject: isEs
-        ? `Hemos recibido tu solicitud en ${city} — THEVULGO`
-        : `We received your ${city} request — THEVULGO`,
+      clientSubject:
+        data.attributionSource === "tv_mini_calculator"
+          ? isEs
+            ? "Solicitud de montaje de TV recibida — THEVULGO"
+            : "TV mounting request received — THEVULGO"
+          : isEs
+            ? `Hemos recibido tu solicitud en ${city} — THEVULGO`
+            : `We received your ${city} request — THEVULGO`,
 
       requestTitle: isEs ? "Solicitud recibida" : "Request received",
 
-      requestText: isEs
-        ? `Hola ${data.fullName}, hemos recibido tu solicitud para ${city}. Te contactaremos pronto para confirmar los detalles.`
-        : `Hi ${data.fullName}, we received your request for ${city}. We will contact you shortly to confirm the details.`,
+      requestText:
+        data.attributionSource === "tv_mini_calculator"
+          ? isEs
+            ? `Hola ${data.fullName}, hemos recibido tu solicitud de montaje de TV. Revisaremos los detalles y te escribiremos por WhatsApp para confirmar la instalación.`
+            : `Hi ${data.fullName}, we received your TV mounting request. We will review the details and message you on WhatsApp to confirm the installation.`
+          : isEs
+            ? `Hola ${data.fullName}, hemos recibido tu solicitud para ${city}. Te contactaremos pronto para confirmar los detalles.`
+            : `Hi ${data.fullName}, we received your request for ${city}. We will contact you shortly to confirm the details.`,
 
       category: isEs ? "Categoría" : "Category",
       subtotal: "Subtotal",
@@ -269,13 +298,13 @@ export async function POST(req: Request) {
         : "Once they book, you also get 10% off your next job.",
 
       footer: isEs
-        ? `Precio claro. Sin sorpresas.<br/>${city} · Respuesta rápida`
-        : `Clear pricing. No surprises.<br/>${city} · Fast response`,
+        ? `Solicitud recibida. Te escribiremos por WhatsApp.<br/>${city} · Respuesta rápida`
+        : `Request received. We will message you on WhatsApp.<br/>${city} · Fast response`,
     };
 
     const servicesHtml = (Array.isArray(data.services) ? data.services : [])
       .map(
-        (item: any) => `
+        (item: OrderService) => `
 <tr>
   <td style="padding:10px 15px;font-size:13px;color:#000;">
     ${item.label} (${item.qty} × €${item.price})
@@ -284,7 +313,7 @@ export async function POST(req: Request) {
     €${Number(item.subtotal || 0).toFixed(2)}
   </td>
 </tr>
-`
+`,
       )
       .join("");
 
@@ -292,7 +321,7 @@ export async function POST(req: Request) {
       from: "TheVulgo <info@thevulgo.es>",
       to: ["info@thevulgo.es"],
       replyTo: "info@thevulgo.es",
-      subject: `[${city}] New estimate request from ${data.fullName}`,
+      subject: `[${city}] ${data.attributionSource === "tv_mini_calculator" ? "TV mini-calculator" : "New estimate"} request from ${data.fullName}`,
       html: `
         <h2>New Request</h2>
         <p><b>Name:</b> ${data.fullName}</p>
@@ -302,6 +331,7 @@ export async function POST(req: Request) {
         <p><b>Source URL:</b> ${data.sourceUrl || "—"}</p>
         <p><b>Market:</b> ${market}</p>
         <p><b>Category:</b> ${data.category || "—"}</p>
+        <p><b>Funnel:</b> ${data.attributionSource || "calculator"}</p>
         <p><b>City:</b> ${city}</p>
         <p><b>Area:</b> ${data.area || "—"}</p>
         <p><b>Address:</b> ${data.houseAddress || "—"}</p>
@@ -316,8 +346,8 @@ export async function POST(req: Request) {
         <ul>
           ${(Array.isArray(data.services) ? data.services : [])
             .map(
-              (item: any) =>
-                `<li>${item.label} × ${item.qty} — €${Number(item.subtotal || 0).toFixed(2)}</li>`
+              (item: OrderService) =>
+                `<li>${item.label} × ${item.qty} — €${Number(item.subtotal || 0).toFixed(2)}</li>`,
             )
             .join("")}
         </ul>
@@ -333,7 +363,7 @@ export async function POST(req: Request) {
     if (adminResult.error) {
       return Response.json(
         { success: false, error: "Admin email failed" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -470,7 +500,7 @@ ${labels.footer}
       if (clientResult?.error) {
         return Response.json(
           { success: false, error: "Client email failed" },
-          { status: 500 }
+          { status: 500 },
         );
       }
     }
@@ -493,18 +523,20 @@ ${labels.footer}
 
     return Response.json({
       success: true,
+      orderId: insertedOrder?.id || null,
       adminEmailId: adminResult.data?.id || null,
       clientEmailId: clientResult?.data?.id || null,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const caughtError = error instanceof Error ? error : null;
     console.error("❌ SEND API ERROR:", {
-      message: error?.message,
-      stack: error?.stack,
+      message: caughtError?.message,
+      stack: caughtError?.stack,
     });
 
     return Response.json(
       { success: false, error: "Error sending email" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -90,7 +90,8 @@ export function trackMarketingEvent(
   const adEvent =
     eventName === "whatsapp_click"
       ? "contact"
-      : eventName === "estimate_submitted"
+      : eventName === "estimate_submitted" ||
+          eventName === "tv_calculator_submitted"
         ? "generate_lead"
         : eventName === "estimate_click"
           ? "begin_checkout"
