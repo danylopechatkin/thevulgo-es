@@ -4,17 +4,25 @@ import { createClient } from "@supabase/supabase-js";
 import { isAvailableCity, marketFromCity } from "@/lib/cities";
 import { madridLocalDateTimeToUtc } from "@/lib/time";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-    },
-  },
-);
+function getServerClients() {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!resendApiKey || !supabaseUrl || !supabaseServiceRoleKey) {
+    throw new Error("Order server configuration is missing");
+  }
+
+  return {
+    resend: new Resend(resendApiKey),
+    supabaseAdmin: createClient(supabaseUrl, supabaseServiceRoleKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    }),
+  };
+}
 
 type OrderService = {
   label?: string;
@@ -33,6 +41,7 @@ function formatMadridFromUTC(date: string) {
 
 export async function POST(req: Request) {
   try {
+    const { resend, supabaseAdmin } = getServerClients();
     const data = await req.json();
 
     const locale = data.locale === "es" ? "es" : "en";

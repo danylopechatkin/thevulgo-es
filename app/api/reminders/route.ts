@@ -4,12 +4,22 @@ import { isAvailableCity } from "@/lib/cities";
 
 export const dynamic = "force-dynamic";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  { auth: { persistSession: false, autoRefreshToken: false } },
-);
+function getServerClients() {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!resendApiKey || !supabaseUrl || !serviceRoleKey) {
+    throw new Error("Reminder server configuration is missing");
+  }
+
+  return {
+    resend: new Resend(resendApiKey),
+    supabase: createClient(supabaseUrl, serviceRoleKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    }),
+  };
+}
 const LEAD_REMINDER_MARKER = "[lead-reminder-email-sent]";
 const escapeHtml = (value: unknown) => String(value || "").replace(/[&<>\"]/g, (character) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '\"': "&quot;",
@@ -17,6 +27,7 @@ const escapeHtml = (value: unknown) => String(value || "").replace(/[&<>\"]/g, (
 
 export async function GET() {
   try {
+    const { resend, supabase } = getServerClients();
     const { data: orders, error } = await supabase
       .from("orders")
       .select("*")
