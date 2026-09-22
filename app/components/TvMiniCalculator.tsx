@@ -344,8 +344,8 @@ export default function TvMiniCalculator({
         </div>
       </fieldset>
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <label className="block text-xs font-extrabold">
+      <div className="mt-4 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
+        <label className="block min-w-0 text-xs font-extrabold">
           {es ? "Nombre *" : "Name *"}
           <input
             value={form.name}
@@ -356,9 +356,9 @@ export default function TvMiniCalculator({
             required
           />
         </label>
-        <label className="block text-xs font-extrabold">
+        <label className="block min-w-0 text-xs font-extrabold">
           WhatsApp *
-          <span className="relative mt-1.5 block">
+          <span className="relative mt-1.5 block min-w-0">
             <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
             <input
               value={form.phone}
@@ -372,7 +372,7 @@ export default function TvMiniCalculator({
             />
           </span>
         </label>
-        <label className="block text-xs font-extrabold">
+        <label className="block min-w-0 text-xs font-extrabold">
           Email *
           <input
             value={form.email}
@@ -384,9 +384,9 @@ export default function TvMiniCalculator({
             required
           />
         </label>
-        <label className="block text-xs font-extrabold">
+        <label className="block min-w-0 text-xs font-extrabold">
           {es ? "Zona o dirección *" : "Area or address *"}
-          <span className="relative mt-1.5 block">
+          <span className="relative mt-1.5 block min-w-0">
             <MapPin className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
             <input
               value={form.location}
@@ -400,18 +400,18 @@ export default function TvMiniCalculator({
             />
           </span>
         </label>
-        <label className="block text-xs font-extrabold">
+        <label className="block min-w-0 text-xs font-extrabold">
           {es ? "Fecha preferida *" : "Preferred date *"}
           <input
             value={form.date}
             min={today}
             onChange={(event) => update("date", event.target.value)}
-            className="input-style mt-1.5"
+            className="input-style mt-1.5 block"
             type="date"
             required
           />
         </label>
-        <label className="block text-xs font-extrabold">
+        <label className="block min-w-0 text-xs font-extrabold">
           {es ? "Hora disponible *" : "Available time *"}
           <select
             value={form.time}
@@ -438,7 +438,7 @@ export default function TvMiniCalculator({
         </label>
       </div>
 
-      <label className="mt-3 flex cursor-pointer items-start gap-2 rounded-xl border border-neutral-200 p-3 text-[11px] leading-4 text-neutral-600">
+      <label className="mt-3 flex w-full min-w-0 cursor-pointer items-start gap-2 rounded-xl border border-neutral-200 p-3 text-[11px] leading-4 text-neutral-600">
         <input
           type="checkbox"
           checked={privacyAccepted}
@@ -446,7 +446,7 @@ export default function TvMiniCalculator({
           className="mt-0.5 h-4 w-4 shrink-0 accent-yellow-400"
           required
         />
-        <span>
+        <span className="min-w-0 flex-1">
           {es
             ? "Acepto el uso de mis datos para gestionar esta solicitud."
             : "I agree to the use of my details to manage this request."}{" "}
@@ -468,8 +468,8 @@ export default function TvMiniCalculator({
           {error}
         </p>
       ) : null}
-      <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-neutral-950 p-3.5 text-white">
-        <div>
+      <div className="mt-4 grid w-full min-w-0 grid-cols-[minmax(0,1fr)_minmax(150px,1.35fr)] items-center gap-3 rounded-2xl bg-neutral-950 p-3.5 text-white">
+        <div className="min-w-0">
           <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">
             {es ? "Precio seleccionado" : "Selected price"}
           </p>
@@ -478,7 +478,7 @@ export default function TvMiniCalculator({
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-4 py-3 text-sm font-black text-black transition hover:scale-[1.02] disabled:opacity-60"
+          className="inline-flex min-h-14 min-w-0 w-full items-center justify-center gap-2 rounded-xl bg-yellow-400 px-3 py-3 text-center text-sm font-black leading-tight text-black transition hover:scale-[1.02] disabled:opacity-60"
         >
           {submitting ? (
             <LoaderCircle className="h-5 w-5 animate-spin" />
