@@ -32,16 +32,22 @@ export default function MarketingTracker() {
       if (!target) return;
       const label = (target.textContent || target.getAttribute("aria-label") || "CTA").trim().replace(/\s+/g, " ").slice(0, 100);
       const href = target instanceof HTMLAnchorElement ? target.getAttribute("href") || "" : "";
-      const metadata = { href, city, locale };
-      trackMarketingEvent("cta_click", { pagePath: pathname, source: label, metadata });
+      const ctaLocation = target.getAttribute("data-cta-location") || "unknown";
+      const service = target.getAttribute("data-service") || null;
+      const declaredEvent = target.getAttribute("data-event") || undefined;
+      const metadata = { href, city, locale, ctaLocation, service };
+      trackMarketingEvent(declaredEvent || "cta_click", { pagePath: pathname, source: ctaLocation, metadata });
+      if (declaredEvent && declaredEvent !== "cta_click") {
+        trackMarketingEvent("cta_click", { pagePath: pathname, source: ctaLocation, metadata });
+      }
       if (/wa\.me\//i.test(href)) {
-        trackMarketingEvent("whatsapp_click", { pagePath: pathname, source: label, metadata });
+        if (declaredEvent !== "whatsapp_click") trackMarketingEvent("whatsapp_click", { pagePath: pathname, source: ctaLocation, metadata });
         void fetch("/api/whatsapp-click", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           keepalive: true,
           body: JSON.stringify({
-            source: label || "website",
+            source: `${ctaLocation}:${service || "general"}`,
             pagePath: pathname,
             messageType: "city_quote",
             ...getClientAttribution(),

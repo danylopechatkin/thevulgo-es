@@ -74,6 +74,6 @@ export async function POST(request: Request) {
     }
     return Response.json({ ok: !error });
   } catch {
-    return Response.json({ ok: false }, { status: 204 });
+    return new Response(null, { status: 204 });
   }
 }

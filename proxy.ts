@@ -5,7 +5,8 @@ import { NextResponse, type NextRequest } from "next/server";
 const handleI18nRouting = createIntlMiddleware({
   locales: ["en", "es"],
   defaultLocale: "en",
-  localePrefix: "always",
+  localePrefix: "as-needed",
+  alternateLinks: false,
 });
 
 export async function proxy(request: NextRequest) {

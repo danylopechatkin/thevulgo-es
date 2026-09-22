@@ -12,12 +12,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "THEVULGO Valencia | Montaje, instalaciones y reparaciones"
-    : "THEVULGO Valencia | Home Installation & Repair Services";
+    ? "Manitas Valencia | TV, IKEA y reparaciones | THEVULGO"
+    : "Handyman Valencia | TV, IKEA & Home Repairs | THEVULGO";
 
   const description = isEs
-    ? "Servicios para el hogar en Valencia: montaje de TV y muebles, instalaciones, pequeñas reparaciones, electricidad básica, fontanería básica, pladur y otros trabajos. Presupuesto claro por WhatsApp."
-    : "Home installation and repair services in Valencia: TV mounting, furniture assembly, small repairs, basic electrical, basic plumbing, drywall and other home jobs. Clear quote by WhatsApp.";
+    ? "Manitas en Valencia para montar TV, muebles IKEA y cocinas, además de pequeñas reparaciones. Precio claro y presupuesto rápido por WhatsApp."
+    : "Handyman in Valencia for TV mounting, IKEA furniture, kitchen assembly and small repairs. Clear pricing and a fast WhatsApp quote.";
 
   return {
     title,
@@ -43,16 +43,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "drywall Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}`,
+      canonical: isEs ? `${baseUrl}/es` : baseUrl,
       languages: {
         es: `${baseUrl}/es`,
-        en: `${baseUrl}/en`,
+        en: baseUrl,
+        "x-default": baseUrl,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}`,
+      url: isEs ? `${baseUrl}/es` : baseUrl,
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -87,16 +88,10 @@ export default async function Page({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
     name: "THEVULGO",
-    url: `${baseUrl}/${locale}`,
+    url: isEs ? `${baseUrl}/es` : baseUrl,
     telephone: "+34610076942",
     priceRange: "€€",
     image: `${baseUrl}/og-image.jpg`,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Valencia",
-      addressRegion: "Valencia",
-      addressCountry: "ES",
-    },
     areaServed: [
       "Valencia",
       "Campanar",
@@ -141,7 +136,7 @@ export default async function Page({ params }: Props) {
         "@type": "ListItem",
         position: 1,
         name: isEs ? "Inicio" : "Home",
-        item: `${baseUrl}/${locale}`,
+        item: isEs ? `${baseUrl}/es` : baseUrl,
       },
     ],
   };
@@ -162,7 +157,7 @@ export default async function Page({ params }: Props) {
       name: "Valencia",
     },
     serviceType: services,
-    url: `${baseUrl}/${locale}`,
+    url: isEs ? `${baseUrl}/es` : baseUrl,
   };
 
   return (
@@ -184,7 +179,7 @@ export default async function Page({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
 
-      <HomeClient />
+      <HomeClient locale={locale} />
     </>
   );
 }

@@ -47,11 +47,11 @@ export async function generateMetadata({
         ? "Servicios profesionales de manitas en Valencia: montaje de TV, muebles, electricidad básica, fontanería y reparaciones del hogar."
         : "Professional handyman services in Valencia: TV mounting, furniture assembly, basic electrical, plumbing and home repairs.",
     alternates: {
-      canonical: `${SITE_ORIGIN}/${locale}`,
+      canonical: locale === "es" ? `${SITE_ORIGIN}/es` : SITE_ORIGIN,
       languages: {
         es: `${SITE_ORIGIN}/es`,
-        en: `${SITE_ORIGIN}/en`,
-        "x-default": `${SITE_ORIGIN}/es`,
+        en: SITE_ORIGIN,
+        "x-default": SITE_ORIGIN,
       },
     },
     robots: { index: true, follow: true },

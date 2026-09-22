@@ -286,6 +286,11 @@ type SitemapOptions = {
   priority: number;
 };
 
+function localizedPath(locale: (typeof locales)[number], route = "") {
+  const suffix = route ? `/${route}` : "";
+  return locale === "en" ? suffix || "/" : `/es${suffix}`;
+}
+
 /**
  * Добавляет массив маршрутов в sitemap.
  */
@@ -297,7 +302,7 @@ function addRoutes(
 ) {
   for (const route of routes) {
     sitemap.push({
-      url: absoluteUrl(`/${locale}/${route}`),
+      url: absoluteUrl(localizedPath(locale, route)),
       changeFrequency: options.changeFrequency,
       priority: options.priority,
     });
@@ -312,25 +317,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
      * Homepage
      */
     pages.push({
-      url: absoluteUrl(`/${locale}`),
+      url: absoluteUrl(localizedPath(locale)),
       changeFrequency: "weekly",
       priority: locale === "es" ? 1 : 0.9,
     });
 
+    pages.push({
+      url: absoluteUrl(localizedPath(locale, locale === "es" ? "montaje-cocinas-valencia" : "kitchen-assembly-valencia")),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    });
+
     const renovationRoot = locale === "es" ? "reformas-valencia" : "renovations-valencia";
     const renovationKey = locale === "es" ? "es" : "en";
-    pages.push({ url: absoluteUrl(`/${locale}/${renovationRoot}`), changeFrequency: "weekly", priority: locale === "es" ? 1 : 0.9 });
+    pages.push({ url: absoluteUrl(localizedPath(locale, renovationRoot)), changeFrequency: "weekly", priority: locale === "es" ? 1 : 0.9 });
     for (const category of RENOVATION_CATEGORIES) {
       const categoryPath = `${renovationRoot}/${category.slug[renovationKey]}`;
-      pages.push({ url: absoluteUrl(`/${locale}/${categoryPath}`), changeFrequency: "weekly", priority: locale === "es" ? 0.9 : 0.8 });
+      pages.push({ url: absoluteUrl(localizedPath(locale, categoryPath)), changeFrequency: "weekly", priority: locale === "es" ? 0.9 : 0.8 });
       for (const service of category.services) {
         if (service.existingPath) continue;
-        pages.push({ url: absoluteUrl(`/${locale}/${categoryPath}/${service.slug[renovationKey]}`), changeFrequency: "monthly", priority: locale === "es" ? 0.82 : 0.72 });
+        pages.push({ url: absoluteUrl(localizedPath(locale, `${categoryPath}/${service.slug[renovationKey]}`)), changeFrequency: "monthly", priority: locale === "es" ? 0.82 : 0.72 });
       }
     }
 
     pages.push({
-      url: absoluteUrl(`/${locale}/madrid`),
+      url: absoluteUrl(localizedPath(locale, "madrid")),
       changeFrequency: "weekly",
       priority: locale === "es" ? 0.95 : 0.85,
     });
@@ -343,7 +354,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     );
 
     pages.push({
-      url: absoluteUrl(`/${locale}/barcelona`),
+      url: absoluteUrl(localizedPath(locale, "barcelona")),
       changeFrequency: "weekly",
       priority: locale === "es" ? 0.95 : 0.85,
     });
@@ -356,7 +367,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     );
 
     pages.push({
-      url: absoluteUrl(`/${locale}/alicante`),
+      url: absoluteUrl(localizedPath(locale, "alicante")),
       changeFrequency: "weekly",
       priority: locale === "es" ? 0.95 : 0.85,
     });

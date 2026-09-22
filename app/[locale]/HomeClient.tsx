@@ -1,855 +1,377 @@
 "use client";
 
-import React, { useState } from "react";
 import Link from "next/link";
-import { useTranslations, useLocale } from "next-intl";
+import { useParams } from "next/navigation";
 import {
-  Sparkles,
-  Zap,
-  ShieldCheck,
-  Wrench,
   ArrowRight,
   Check,
-  Clock,
-  MapPin,
+  ChefHat,
+  Drill,
+  Hammer,
   MessageCircle,
-  BadgeCheck,
-  MessageSquare,
-  Camera,
+  PackageCheck,
+  ShieldCheck,
+  Sparkles,
+  Tv,
 } from "lucide-react";
-import { marketBasePath, type AvailableCity, type Market } from "@/lib/cities";
-import { marketEstimateHref, marketServiceHref, marketWhatsAppHref } from "@/lib/marketLinks";
+import AvailabilityBadge from "@/app/components/AvailabilityBadge";
+import MobileStickyCta from "@/app/components/MobileStickyCta";
+import { buildWhatsAppHref, type CommercialService } from "@/lib/commercial";
+import type { Market } from "@/lib/cities";
+import { getCatalogServices } from "@/lib/serviceCatalog";
 
-export default function HomePage({
+type Props = { locale?: string; city?: string; market?: Market };
+
+export default function HomeClient({
+  locale: localeProp,
   city = "Valencia",
   market = "valencia",
-}: {
-  city?: AvailableCity;
-  market?: Market;
-}) {
-  const locale = useLocale();
-  const translate = useTranslations("home");
-  const cityText = (text: string) => text.replaceAll("Valencia", city);
-  const t = (key: Parameters<typeof translate>[0]) => cityText(translate(key));
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const cityBasePath = marketBasePath(locale, market);
-  const estimateHref = marketEstimateHref(locale, market);
-
-  const whatsappEnabled = true;
-
-  const whatsappHref = marketWhatsAppHref({ locale, market });
-
-  const FAQS = [
+}: Props) {
+  const routeParams = useParams<{ locale?: string }>();
+  const locale = localeProp ?? routeParams.locale ?? "en";
+  const es = locale === "es";
+  const base = market === "valencia" ? `/${locale}` : `/${locale}/${market}`;
+  const price = (category: string, fallback: number) =>
+    getCatalogServices(category)[0]?.price ?? fallback;
+  const serviceHref = (slug: string) => `${base}/${slug}`;
+  const kitchenHref =
+    market === "valencia"
+      ? es
+        ? "/es/montaje-cocinas-valencia"
+        : "/en/kitchen-assembly-valencia"
+      : serviceHref("services/kitchen");
+  const generalWa = buildWhatsAppHref("general", locale, city);
+  const cards: Array<{
+    icon: typeof Tv;
+    service: CommercialService;
+    title: string;
+    text: string;
+    price: number;
+    href: string;
+  }> = [
     {
-      q: t("faq.items.0.q"),
-      a: t("faq.items.0.a"),
+      icon: Tv,
+      service: "tv",
+      title: es ? "Montaje de TV" : "TV mounting",
+      text: es
+        ? "Soporte, nivelado y cables bien resueltos."
+        : "Secure bracket, clean levelling and tidy cables.",
+      price: price("TV Mounting", 59),
+      href: serviceHref("montaje-tv-valencia"),
     },
     {
-      q: t("faq.items.1.q"),
-      a: t("faq.items.1.a"),
+      icon: Hammer,
+      service: "handyman",
+      title: es ? "Manitas y reparaciones" : "Handyman & repairs",
+      text: es
+        ? "Una visita para esa lista que llevas aplazando."
+        : "One visit for the jobs you have been putting off.",
+      price: price("Handyman", 35),
+      href: serviceHref("handyman-valencia"),
     },
     {
-      q: t("faq.items.2.q"),
-      a: t("faq.items.2.a"),
+      icon: PackageCheck,
+      service: "furniture",
+      title: es ? "Montaje de muebles" : "Furniture assembly",
+      text: es
+        ? "IKEA y otras marcas, montado correctamente."
+        : "IKEA and other brands, assembled correctly.",
+      price: price("Furniture Assembly", 49),
+      href: serviceHref("montaje-muebles-valencia"),
     },
     {
-      q: t("faq.items.3.q"),
-      a: t("faq.items.3.a"),
-    },
-    {
-      q: t("faq.items.4.q"),
-      a: t("faq.items.4.a"),
-    },
-    {
-      q: t("faq.items.5.q"),
-      a: t("faq.items.5.a"),
-    },
-    {
-      q: t("faq.items.6.q"),
-      a: t("faq.items.6.a"),
-    },
-    {
-      q: t("faq.items.7.q"),
-      a: t("faq.items.7.a"),
+      icon: ChefHat,
+      service: "kitchen",
+      title: es ? "Montaje de cocinas" : "Kitchen assembly",
+      text: es
+        ? "Módulos sueltos o una cocina completa."
+        : "Individual units or a complete kitchen fit-out.",
+      price: price("Kitchen", 149),
+      href: kitchenHref,
     },
   ];
+  const secondary = es
+    ? [
+        "Cortinas y estores",
+        "Estantes y espejos",
+        "Lámparas",
+        "Silicona y sellados",
+        "Ajustes de puertas",
+        "Reparaciones pequeñas",
+      ]
+    : [
+        "Curtains and blinds",
+        "Shelves and mirrors",
+        "Light fittings",
+        "Silicone and sealing",
+        "Door adjustments",
+        "Small repairs",
+      ];
 
   return (
-    <div className="overflow-x-hidden bg-white text-black font-sans">
-      {/* HERO */}
+    <main className="bg-white text-neutral-950">
+      <section className="relative overflow-hidden border-b border-neutral-200 bg-[radial-gradient(circle_at_75%_20%,#fff4b8_0,transparent_38%)]">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-[1.1fr_.9fr] md:px-8 md:py-24">
+          <div>
+            <AvailabilityBadge locale={locale} />
+            <p className="mt-6 text-sm font-black uppercase tracking-[.18em] text-neutral-500">
+              THEVULGO · {city}
+            </p>
+            <h1 className="mt-3 max-w-3xl text-4xl font-black leading-[1.02] tracking-tight sm:text-6xl">
+              {es
+                ? `Manitas e instalaciones para tu hogar en ${city}`
+                : `Handyman & home installation in ${city}`}
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600">
+              {es
+                ? "Montaje de TV, muebles, cocinas y pequeñas reparaciones. Precios claros antes de empezar y un único contacto por WhatsApp."
+                : "TV mounting, furniture and kitchen assembly, plus small home repairs. Clear pricing before work starts and one easy WhatsApp contact."}
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={generalWa}
+                data-event="whatsapp_click"
+                data-cta-location="hero"
+                data-service="general"
+                className="rounded-xl bg-[#ffcc00] px-6 py-4 text-center font-black shadow-lg shadow-yellow-200"
+              >
+                <MessageCircle className="mr-2 inline" size={20} />
+                {es ? "Pedir presupuesto por WhatsApp" : "Get a WhatsApp quote"}
+              </a>
+              <a
+                href="#services"
+                data-event="services_click"
+                data-cta-location="hero"
+                className="rounded-xl border border-neutral-300 px-6 py-4 text-center font-bold"
+              >
+                {es ? "Ver servicios" : "Explore services"}
+              </a>
+            </div>
+            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-neutral-700">
+              {[
+                es ? "Respuesta rápida" : "Fast reply",
+                es ? "Precio acordado" : "Price agreed first",
+                es ? "Trabajo limpio" : "Clean finish",
+              ].map((x) => (
+                <span key={x}>
+                  <Check className="mr-1 inline text-emerald-600" size={16} />
+                  {x}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-3xl bg-neutral-950 p-7 text-white shadow-2xl md:p-10">
+            <Sparkles className="text-[#ffcc00]" />
+            <h2 className="mt-8 text-3xl font-black">
+              {es ? "¿Varias cosas pendientes?" : "Several jobs on your list?"}
+            </h2>
+            <p className="mt-3 leading-7 text-neutral-300">
+              {es
+                ? "Envíanos fotos y una lista. Organizamos los trabajos en una sola visita siempre que sea posible."
+                : "Send photos and a list. We group the work into one visit whenever practical."}
+            </p>
+            <a
+              href={buildWhatsAppHref("handyman", locale, city)}
+              data-event="multi_job_click"
+              data-cta-location="hero"
+              data-service="handyman"
+              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-black text-black"
+            >
+              {es ? "Enviar mi lista" : "Send my job list"}
+              <ArrowRight size={18} />
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section
-        id="top"
-        className="relative flex min-h-0 flex-col items-center justify-center overflow-hidden bg-white px-4 pb-10 pt-10 text-center sm:min-h-[88vh] sm:pb-0 sm:pt-24"
+        id="services"
+        className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24"
       >
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-white" />
-          <div className="absolute left-1/2 -top-28 h-[620px] w-[620px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
-          <div className="absolute right-10 top-28 h-[380px] w-[380px] rounded-full bg-yellow-100/70 blur-3xl" />
-        </div>
-
-        <div className="w-full max-w-6xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-yellow-400 text-sm font-medium text-gray-800 mb-6 bg-white/80 backdrop-blur shadow-sm">
-            <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
-            {t("hero.badge")}
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl md:text-[56px] lg:text-6xl font-extrabold text-black leading-tight mb-6 text-center">
-            <span className="block">{t("hero.title1")}</span>
-
-            <span className="block text-yellow-400 tracking-[0.08em] mt-3">
-              {t("hero.title2")}
-            </span>
-
-            <span className="block mt-3">{t("hero.title3")}</span>
-          </h1>
-
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-            {t("hero.descriptionBefore")}{" "}
-            <span className="font-semibold text-gray-800">
-              {t("hero.descriptionHighlight")}
-            </span>
-            . {t("hero.descriptionAfter")}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <Link
-              href={marketServiceHref(locale, market)}
-              className="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold shadow-md md:hover:scale-105 transition"
-            >
-              {t("hero.exploreServices")}
-            </Link>
-
-            <Link
-              href={estimateHref}
-              className="bg-white border border-gray-300 text-black px-8 py-4 rounded-2xl font-semibold shadow-md md:hover:scale-105 transition"
-            >
-              {t("hero.estimatePrice")}
-            </Link>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-gray-700">
-            <Chip icon={<Clock className="h-4 w-4" />} text={t("hero.chips.fastReplies")} />
-            <Chip icon={<Check className="h-4 w-4" />} text={t("hero.chips.cleanFinish")} />
-            <Chip icon={<Wrench className="h-4 w-4" />} text={t("hero.chips.proTools")} />
-            <Chip icon={<MapPin className="h-4 w-4" />} text={t("hero.chips.valenciaArea")} />
-          </div>
-        </div>
-      </section>
-
-      {/* TRUST STRIP */}
-      <section className="py-10 px-4 bg-white">
-        <div className="w-full max-w-7xl mx-auto bg-white border border-yellow-400 rounded-2xl p-6 sm:p-8 shadow-xl">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
-           <TrustStat value={t("trust.typicalResponse")} label={t("trustLabels.typicalResponse")} />
-<TrustStat value={t("trust.finishDetails")} label={t("trustLabels.finishDetails")} />
-<TrustStat value={t("trust.localFocus")} label={t("trustLabels.localFocus")} />
-<TrustStat value={t("trust.pricingScope")} label={t("trustLabels.pricingScope")} />
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURED SERVICES */}
-      <section id="services" className="py-16 sm:py-20 px-4">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-extrabold">{t("featured.title")}</h2>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              {t("featured.subtitle")}
-            </p>
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <FeatureCard
-              title={t("featured.items.0.title")}
-              text={t("featured.items.0.text")}
-              badge={t("featured.items.0.badge")}
-            />
-            <FeatureCard
-              title={t("featured.items.1.title")}
-              text={t("featured.items.1.text")}
-              badge={t("featured.items.1.badge")}
-            />
-            <FeatureCard
-              title={t("featured.items.2.title")}
-              text={t("featured.items.2.text")}
-              badge={t("featured.items.2.badge")}
-            />
-            <FeatureCard
-              title={t("featured.items.3.title")}
-              text={t("featured.items.3.text")}
-              badge={t("featured.items.3.badge")}
-            />
-            <FeatureCard
-              title={t("featured.items.4.title")}
-              text={t("featured.items.4.text")}
-              badge={t("featured.items.4.badge")}
-            />
-            <FeatureCard
-              title={t("featured.items.5.title")}
-              text={t("featured.items.5.text")}
-              badge={t("featured.items.5.badge")}
-            />
-            <FeatureCard
-              title={t("featured.items.6.title")}
-              text={t("featured.items.6.text")}
-              badge={t("featured.items.6.badge")}
-            />
-            <FeatureCard
-              title={t("featured.items.7.title")}
-              text={t("featured.items.7.text")}
-              badge={t("featured.items.7.badge")}
-            />
-            <FeatureCard
-              title={t("featured.items.8.title")}
-              text={t("featured.items.8.text")}
-              badge={t("featured.items.8.badge")}
-            />
-          </div>
-
-          <div className="mt-10 text-center">
-            <Link
-              href={marketServiceHref(locale, market)}
-              className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
-            >
-              {t("featured.viewAll")} <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section id="how" className="py-16 sm:py-20 px-4 bg-white">
-        <div className="w-full max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-extrabold">{t("how.title")}</h2>
-          <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-            {t("how.subtitle")}
-          </p>
-
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <StepCard
-              n="1"
-              title={t("how.items.0.title")}
-              text={t("how.items.0.text")}
-              icon={<Wrench className="h-5 w-5" />}
-              stepLabel={t("how.step")}
-            />
-            <StepCard
-              n="2"
-              title={t("how.items.1.title")}
-              text={t("how.items.1.text")}
-              icon={<Camera className="h-5 w-5" />}
-              stepLabel={t("how.step")}
-            />
-            <StepCard
-              n="3"
-              title={t("how.items.2.title")}
-              text={t("how.items.2.text")}
-              icon={<MessageCircle className="h-5 w-5" />}
-              stepLabel={t("how.step")}
-            />
-            <StepCard
-              n="4"
-              title={t("how.items.3.title")}
-              text={t("how.items.3.text")}
-              icon={<Check className="h-5 w-5" />}
-              stepLabel={t("how.step")}
-            />
-            <StepCard
-              n="5"
-              title={t("how.items.4.title")}
-              text={t("how.items.4.text")}
-              icon={<BadgeCheck className="h-5 w-5" />}
-              stepLabel={t("how.step")}
-            />
-            <StepCard
-              n="6"
-              title={t("how.items.5.title")}
-              text={t("how.items.5.text")}
-              icon={<Sparkles className="h-5 w-5" />}
-              stepLabel={t("how.step")}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* WHY CHOOSE */}
-      <section id="why" className="relative overflow-hidden px-4 py-16 sm:py-20">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-white" />
-          <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-200/35 blur-3xl" />
-          <div className="absolute right-10 top-28 h-[360px] w-[360px] rounded-full bg-yellow-100/60 blur-3xl" />
-        </div>
-
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="mx-auto max-w-2xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-3 py-1 text-xs font-semibold text-black shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-yellow-400" />
-              {t("why.badge")}
-            </div>
-
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-black sm:text-4xl">
-              {t("why.title")}
-            </h2>
-
-            <p className="mt-3 text-sm leading-relaxed text-gray-600 sm:text-base">
-              {t("why.subtitle")}
-            </p>
-          </div>
-
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <WhyCard
-              icon={<Sparkles className="h-5 w-5" />}
-              badge={t("why.items.0.badge")}
-              title={t("why.items.0.title")}
-              text={t("why.items.0.text")}
-            />
-            <WhyCard
-              icon={<Zap className="h-5 w-5" />}
-              badge={t("why.items.1.badge")}
-              title={t("why.items.1.title")}
-              text={t("why.items.1.text")}
-            />
-            <WhyCard
-              icon={<Wrench className="h-5 w-5" />}
-              badge={t("why.items.2.badge")}
-              title={t("why.items.2.title")}
-              text={t("why.items.2.text")}
-            />
-            <WhyCard
-              icon={<ShieldCheck className="h-5 w-5" />}
-              badge={t("why.items.3.badge")}
-              title={t("why.items.3.title")}
-              text={t("why.items.3.text")}
-            />
-          </div>
-
-          <div className="mt-10 rounded-2xl border border-yellow-400 bg-white p-6 shadow-2xl sm:p-7">
-            <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-              <div>
-                <p className="text-lg font-extrabold text-black">{t("why.ctaTitle")}</p>
-                <p className="mt-1 text-sm text-gray-600">
-                  {t("why.ctaText")}
-                </p>
-              </div>
-
-              <Link
-                href={estimateHref}
-                className="inline-flex items-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 text-sm font-extrabold text-black shadow-lg transition-transform duration-200 hover:scale-[1.02]"
-              >
-                {t("why.ctaButton")} <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* TIPS & GUIDES */}
-      <section id="guides" className="py-16 sm:py-20 px-4 bg-white">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-extrabold">{t("guides.title")}</h2>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              {t("guides.subtitle")}
-            </p>
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-            <GuideCard
-              title={locale === "es" ? "Cuánto cuesta instalar un ventilador" : "How much does fan installation cost?"}
-              text={locale === "es" ? "Precio, techo, punto eléctrico y qué fotos enviar." : "Price, ceiling, electrical point and which photos to send."}
-              href={`/${locale}/guias/cuanto-cuesta-instalar-ventilador-techo-valencia`}
-            />
-            <GuideCard
-              title={locale === "es" ? "Cómo elegir soporte para TV" : "How to choose a TV wall mount"}
-              text={locale === "es" ? "VESA, peso, pared y soporte fijo o articulado." : "VESA, weight, wall and fixed or full-motion mount."}
-              href={`/${locale}/guias/como-elegir-soporte-tv-pared`}
-            />
-            <GuideCard
-              title={locale === "es" ? "Preparar un montaje IKEA" : "Prepare for IKEA assembly"}
-              text={locale === "es" ? "Espacio, cajas y detalles que ahorran tiempo." : "Space, boxes and details that save time."}
-              href={`/${locale}/guias/preparar-habitacion-montaje-muebles-ikea`}
-            />
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link
-              href={`/${locale}/guias`}
-              className="inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 font-extrabold text-black shadow-lg transition hover:bg-yellow-300"
-            >
-              {locale === "es" ? "Ver las 20 guías" : "View all 20 guides"}
-              <ArrowRight className="h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section id="faq" className="py-16 sm:py-20 px-4 bg-white">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-extrabold">{t("faq.title")}</h2>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              {t("faq.subtitle")}
-            </p>
-          </div>
-
-          <div className="mt-10 max-w-5xl mx-auto md:flex gap-6">
-            <div className="flex-1 space-y-4">
-              {FAQS.filter((_, i) => i % 2 === 0).map((x) => {
-                const idx = FAQS.indexOf(x);
-                return (
-                  <FaqItem
-                    key={x.q}
-                    q={x.q}
-                    a={x.a}
-                    isOpen={openFaq === idx}
-                    onToggle={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  />
-                );
-              })}
-            </div>
-
-            <div className="flex-1 space-y-4 mt-4 md:mt-0">
-              {FAQS.filter((_, i) => i % 2 === 1).map((x) => {
-                const idx = FAQS.indexOf(x);
-                return (
-                  <FaqItem
-                    key={x.q}
-                    q={x.q}
-                    a={x.a}
-                    isOpen={openFaq === idx}
-                    onToggle={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CONTACT / PICKER */}
-      <section id="contact" className="relative overflow-hidden py-16 sm:py-20">
-        <ServicePickerSection
-          serviceBasePath={`${cityBasePath}/services`}
-          whatsappEnabled={whatsappEnabled}
-          whatsappHref={whatsappHref}
-        />
-      </section>
-
-      {/* FOOTER */}
-      <footer className="py-10 text-center bg-white border-t border-gray-200 px-4">
-        <p className="text-lg font-extrabold">{t("footer.brand")}</p>
-        <p className="text-gray-500 mt-2">
-          © {new Date().getFullYear()} {t("footer.rights")}
+        <p className="text-sm font-black uppercase tracking-[.18em] text-neutral-500">
+          {es ? "Servicios principales" : "Core services"}
         </p>
-        <div className="mt-4 flex flex-wrap justify-center gap-3 text-xs text-gray-600">
-          <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 bg-white">
-            <MapPin className="h-4 w-4" /> {t("footer.location")}
-          </span>
-          <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 bg-white">
-            <Clock className="h-4 w-4" /> {t("footer.fastResponse")}
-          </span>
-          <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 bg-white">
-            <ShieldCheck className="h-4 w-4" /> {t("footer.cleanFinish")}
-          </span>
-        </div>
-      </footer>
-    </div>
-  );
-}
-
-/* ================= Components ================= */
-
-function Chip({ icon, text }: { icon: React.ReactNode; text: string }) {
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 shadow-sm">
-      <span className="text-gray-700">{icon}</span>
-      <span>{text}</span>
-    </span>
-  );
-}
-
-function FeatureCard({
-  title,
-  text,
-  badge,
-}: {
-  title: string;
-  text: string;
-  badge?: string;
-}) {
-  return (
-    <div className="bg-white border border-yellow-400 rounded-2xl p-6 shadow-md hover:shadow-xl hover:scale-[1.02] transition">
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="text-xl font-extrabold">{title}</h3>
-        {badge ? (
-          <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-red-500 text-white">
-            {badge}
-          </span>
-        ) : null}
-      </div>
-      <p className="mt-3 text-gray-700">{text}</p>
-    </div>
-  );
-}
-
-function CategoryCard({ title, items }: { title: string; items: string[] }) {
-  return (
-    <div className="bg-white border border-yellow-400 rounded-2xl p-6 sm:p-7 shadow-xl md:hover:shadow-2xl transition md:hover:scale-105 text-left">
-      <h3 className="text-lg sm:text-xl font-bold text-black">{title}</h3>
-      <ul className="mt-4 space-y-2 text-gray-700 text-sm sm:text-base">
-        {items.map((t) => (
-          <li key={t} className="flex gap-3">
-            <span className="mt-2 h-2 w-2 rounded-full bg-yellow-400 shrink-0" />
-            <span>{t}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function TrustStat({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="select-none">
-      <div className="text-2xl sm:text-3xl font-extrabold text-yellow-400">{value}</div>
-      <div className="mt-1 text-sm font-semibold text-gray-900">{label}</div>
-    </div>
-  );
-}
-
-function WhyCard({
-  icon,
-  badge,
-  title,
-  text,
-}: {
-  icon: React.ReactNode;
-  badge: string;
-  title: string;
-  text: string;
-}) {
-  return (
-    <div className="group relative cursor-pointer overflow-hidden rounded-2xl border border-yellow-400 bg-white p-6 shadow-xl transition-transform duration-200 hover:scale-[1.02]">
-      <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-yellow-200/40 blur-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
-
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-          {icon}
-        </div>
-
-        <span className="rounded-full bg-red-500 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-          {badge}
-        </span>
-      </div>
-
-      <h3 className="mt-4 text-base font-extrabold text-black">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-gray-600">{text}</p>
-    </div>
-  );
-}
-
-function StepCard({
-  n,
-  title,
-  text,
-  icon,
-  stepLabel,
-}: {
-  n: string;
-  title: string;
-  text: string;
-  icon: React.ReactNode;
-  stepLabel: string;
-}) {
-  return (
-    <div className="bg-white border border-yellow-400 rounded-2xl p-6 shadow-xl md:hover:shadow-2xl transition md:hover:scale-[1.02] text-left">
-      <div className="flex items-center justify-between">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-          {icon}
-        </div>
-        <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-red-500 text-white">
-          {stepLabel} {n}
-        </span>
-      </div>
-      <h3 className="mt-4 text-lg font-extrabold text-black">{title}</h3>
-      <p className="mt-2 text-sm text-gray-600 leading-relaxed">{text}</p>
-    </div>
-  );
-}
-
-function GuideCard({ title, text, href }: { title: string; text: string; href: string }) {
-  return (
-    <Link
-      href={href}
-      className="group bg-white border border-yellow-400 rounded-2xl p-6 shadow-xl md:hover:shadow-2xl transition md:hover:scale-[1.02] text-left"
-    >
-      <h3 className="text-lg font-extrabold text-black">{title}</h3>
-      <p className="mt-2 text-sm text-gray-600 leading-relaxed">{text}</p>
-      <span className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-black">
-        {"→"}
-      </span>
-    </Link>
-  );
-}
-
-function ProofCard({
-  icon,
-  title,
-  items,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  items: string[];
-}) {
-  return (
-    <div className="bg-white border border-yellow-400 rounded-2xl p-6 shadow-xl md:hover:shadow-2xl transition md:hover:scale-[1.02] text-left">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">
-          {icon}
-        </div>
-        <span className="rounded-full bg-red-500 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-          PRO
-        </span>
-      </div>
-      <h3 className="mt-4 text-lg font-extrabold text-black">{title}</h3>
-      <ul className="mt-4 space-y-2 text-sm text-gray-700">
-        {items.map((t) => (
-          <li key={t} className="flex gap-3">
-            <span className="mt-2 h-2 w-2 rounded-full bg-yellow-400 shrink-0" />
-            <span>{t}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function FaqItem({
-  q,
-  a,
-  isOpen,
-  onToggle,
-}: {
-  q: string;
-  a: string;
-  isOpen: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <div className="rounded-2xl border border-yellow-400 bg-white shadow-md transition hover:shadow-xl">
-      <button
-        type="button"
-        onClick={onToggle}
-        className="w-full p-5 text-left flex items-center justify-between gap-4"
-      >
-        <span className="font-extrabold text-black">{q}</span>
-        <span
-          className={`text-yellow-400 font-extrabold transition-transform ${
-            isOpen ? "rotate-45" : ""
-          }`}
-        >
-          +
-        </span>
-      </button>
-
-      <div
-        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-          isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-        }`}
-      >
-        <div className="overflow-hidden">
-          <div className="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-            {a}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ===== Service Picker ===== */
-
-function ServicePickerSection({
-  serviceBasePath,
-  whatsappEnabled,
-  whatsappHref,
-}: {
-  serviceBasePath: string;
-  whatsappEnabled: boolean;
-  whatsappHref: string;
-}) {
-  const t = useTranslations("home");
-  const items = [
-    {
-      title: t("picker.items.0.title"),
-      desc: t.raw("picker.items.0.desc") as string,
-      slug: "tv-mounting",
-      badge: t("picker.items.0.badge"),
-    },
-    {
-      title: t("picker.items.1.title"),
-      desc: t.raw("picker.items.1.desc") as string,
-      slug: "furniture",
-      badge: t("picker.items.1.badge"),
-    },
-    {
-      title: t("picker.items.2.title"),
-      desc: t.raw("picker.items.2.desc") as string,
-      slug: "electrical",
-      badge: t("picker.items.2.badge"),
-    },
-    {
-      title: t("picker.items.3.title"),
-      desc: t.raw("picker.items.3.desc") as string,
-      slug: "plumbing",
-      badge: t("picker.items.3.badge"),
-    },
-    {
-      title: t("picker.items.4.title"),
-      desc: t.raw("picker.items.4.desc") as string,
-      slug: "repairs",
-      badge: t("picker.items.4.badge"),
-    },
-    {
-      title: t("picker.items.5.title"),
-      desc: t.raw("picker.items.5.desc") as string,
-      slug: "drywall",
-      badge: t("picker.items.5.badge"),
-    },
-    {
-      title: t("picker.items.6.title"),
-      desc: t.raw("picker.items.6.desc") as string,
-      slug: "doors",
-      badge: t("picker.items.6.badge"),
-    },
-    {
-      title: t("picker.items.7.title"),
-      desc: t.raw("picker.items.7.desc") as string,
-      slug: "smart-home",
-      badge: t("picker.items.7.badge"),
-    },
-    {
-      title: t("picker.items.8.title"),
-      desc: t.raw("picker.items.8.desc") as string,
-      slug: "kitchen",
-      badge: t("picker.items.8.badge"),
-    },
-    {
-      title: t("picker.items.9.title"),
-      desc: t.raw("picker.items.9.desc") as string,
-      slug: "bathroom",
-      badge: t("picker.items.9.badge"),
-    },
-    {
-      title: t("picker.items.10.title"),
-      desc: t.raw("picker.items.10.desc") as string,
-      slug: "move-in",
-      badge: t("picker.items.10.badge"),
-    },
-    {
-      title: t("picker.items.11.title"),
-      desc: t.raw("picker.items.11.desc") as string,
-      slug: "exterior",
-      badge: t("picker.items.11.badge"),
-    },
-  ];
-
-  return (
-    <section className="relative w-full overflow-hidden bg-white py-16 sm:py-20">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-white" />
-        <div className="absolute left-1/2 top-[-160px] h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-200/40 blur-3xl" />
-        <div className="absolute right-[-160px] top-[120px] h-[420px] w-[420px] rounded-full bg-yellow-100/70 blur-3xl" />
-        <div className="absolute left-[-180px] bottom-[-220px] h-[520px] w-[520px] rounded-full bg-yellow-100/60 blur-3xl" />
-      </div>
-
-      <div className="mx-auto flex w-full max-w-7xl overflow-x-hidden px-4 py-8 max-[720px]:py-6 max-[640px]:py-5">
-        <div className="mx-auto flex w-full max-w-6xl flex-col overflow-hidden rounded-[28px] border border-yellow-400 bg-white p-8 pb-10 shadow-xl">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-3 py-1 text-xs font-semibold text-black shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-yellow-400" />
-              {t("picker.badge")}
-            </div>
-
-            <h2 className="mt-4 font-extrabold tracking-tight text-black text-4xl max-[720px]:text-3xl max-[640px]:text-2xl">
-              {t("picker.title")}
-            </h2>
-
-            <p className="mt-3 text-gray-600 text-base max-[720px]:text-sm max-[640px]:text-xs">
-              {t("picker.subtitle")}
-            </p>
-
-            <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
-              <Link
-                href={serviceBasePath}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-3 text-sm font-extrabold text-black shadow-lg transition hover:scale-[1.02]"
+        <h2 className="mt-3 text-3xl font-black sm:text-5xl">
+          {es
+            ? "Elige el trabajo. Nosotros lo resolvemos."
+            : "Choose the job. We’ll sort it."}
+        </h2>
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {cards.map(
+            ({ icon: Icon, service, title, text, price: from, href }) => (
+              <article
+                key={service}
+                className="flex flex-col rounded-2xl border border-neutral-200 p-6 transition hover:-translate-y-1 hover:shadow-xl"
               >
-                {t("picker.openAll")} <ArrowRight className="h-4 w-4" />
-              </Link>
-
-              {whatsappEnabled ? (
+                <Icon size={30} />
+                <h3 className="mt-6 text-xl font-black">{title}</h3>
+                <p className="mt-2 flex-1 text-sm leading-6 text-neutral-600">
+                  {text}
+                </p>
+                <p className="mt-6 text-sm font-bold">
+                  {es ? "Precio de referencia" : "Reference price"}{" "}
+                  <span className="text-2xl">€{from}</span>
+                </p>
+                <Link
+                  href={href}
+                  data-event="service_view"
+                  data-cta-location="service-card"
+                  data-service={service}
+                  className="mt-4 inline-flex items-center gap-2 font-black underline decoration-[#ffcc00] decoration-4 underline-offset-4"
+                >
+                  {es ? "Ver precios" : "View prices"}
+                  <ArrowRight size={16} />
+                </Link>
                 <a
-                  href={whatsappHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-black shadow-md transition hover:scale-[1.02]"
+                  href={buildWhatsAppHref(service, locale, city)}
+                  data-event="whatsapp_click"
+                  data-cta-location="service-card"
+                  data-service={service}
+                  className="mt-5 rounded-xl bg-neutral-950 px-4 py-3 text-center text-sm font-bold text-white"
                 >
-                  <MessageSquare className="h-4 w-4" /> {t("picker.whatsapp")}
+                  WhatsApp
                 </a>
-              ) : (
-                <button
-                  disabled
-                  title={t("picker.whatsappDisabled")}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-black shadow-md opacity-60 cursor-not-allowed"
-                >
-                  <MessageSquare className="h-4 w-4" /> {t("picker.whatsapp")}
-                </button>
-              )}
-            </div>
+              </article>
+            ),
+          )}
+        </div>
+      </section>
+
+      <section className="bg-neutral-950 text-white">
+        <div className="mx-auto grid max-w-7xl gap-8 px-5 py-16 md:grid-cols-2 md:px-8">
+          <div>
+            <Drill className="text-[#ffcc00]" size={34} />
+            <h2 className="mt-5 text-3xl font-black sm:text-4xl">
+              {es
+                ? "Una visita. Varios trabajos."
+                : "One visit. Multiple jobs."}
+            </h2>
+            <p className="mt-4 max-w-xl leading-7 text-neutral-300">
+              {es
+                ? "TV, estantes, lámparas, ajustes y pequeñas reparaciones: dinos todo lo que necesitas para preparar una visita eficiente."
+                : "TVs, shelves, lights, adjustments and small repairs: tell us the full list so we can plan an efficient visit."}
+            </p>
           </div>
+          <div className="flex items-center">
+            <a
+              href={buildWhatsAppHref("handyman", locale, city)}
+              data-event="multi_job_click"
+              data-cta-location="multi-job"
+              data-service="handyman"
+              className="w-full rounded-2xl bg-[#ffcc00] p-6 text-center text-xl font-black text-black"
+            >
+              {es ? "Enviar lista y fotos" : "Send your list and photos"}
+            </a>
+          </div>
+        </div>
+      </section>
 
-          <div className="mt-6 max-[720px]:mt-5 flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-[720px]:gap-3 max-[640px]:gap-2 content-start pb-1">
-            {items.map((x) => (
-              <Link
-                key={x.slug}
-                href={`${serviceBasePath}/${x.slug}`}
-                className="group relative rounded-2xl border border-yellow-400 bg-white text-left shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-[2px] hover:bg-yellow-50/40 hover:border-yellow-500 p-6 max-[720px]:p-4 max-[640px]:p-3 flex flex-col justify-between min-h-[152px] max-[720px]:min-h-[126px] max-[640px]:min-h-[110px]"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md h-11 w-11 max-[720px]:h-10 max-[720px]:w-10 max-[640px]:h-9 max-[640px]:w-9">
-                    <span className="font-black max-[640px]:text-sm">V</span>
-                  </div>
+      <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <h2 className="text-3xl font-black">
+          {es ? "Más ayuda para tu hogar" : "More help around your home"}
+        </h2>
+        <div className="mt-7 flex flex-wrap gap-3">
+          {secondary.map((x) => (
+            <a
+              key={x}
+              href={buildWhatsAppHref("general", locale, city)}
+              data-event="secondary_service_click"
+              data-cta-location="service-card"
+              className="rounded-full border border-neutral-300 px-4 py-2.5 text-sm font-bold hover:border-black hover:bg-neutral-50"
+            >
+              {x}
+            </a>
+          ))}
+        </div>
+        {market === "valencia" && (
+          <div className="mt-12 grid gap-6 rounded-3xl bg-[#fff5c2] p-7 md:grid-cols-[1fr_auto] md:items-center md:p-10">
+            <div>
+              <p className="text-sm font-black uppercase tracking-widest">
+                {es ? "Pack mudanza" : "Move-in setup"}
+              </p>
+              <h2 className="mt-2 text-3xl font-black">
+                {es
+                  ? "Deja la vivienda lista de una vez"
+                  : "Get the whole home ready at once"}
+              </h2>
+              <p className="mt-3 text-neutral-700">
+                {es
+                  ? "Muebles, TV, cortinas, estantes y pequeños ajustes en una visita planificada."
+                  : "Furniture, TV, curtains, shelves and small fixes in one planned visit."}
+              </p>
+            </div>
+            <a
+              href={buildWhatsAppHref("move-in", locale, city)}
+              data-event="move_in_click"
+              data-cta-location="service-card"
+              data-service="move-in"
+              className="rounded-xl bg-black px-6 py-4 text-center font-black text-white"
+            >
+              {es ? "Planear mi visita" : "Plan my visit"}
+            </a>
+          </div>
+        )}
+      </section>
 
-                  <span className="rounded-full bg-red-500 text-white font-extrabold uppercase tracking-wide text-[10px] px-2 py-1 max-[640px]:text-[9px]">
-                    {x.badge}
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="mt-4 font-extrabold text-black text-base max-[720px]:text-sm max-[640px]:text-[13px]">
-                    {x.title}
-                  </h3>
-
-                  <p
-                    className="mt-2 text-gray-800 leading-relaxed text-sm max-[820px]:hidden"
-                    dangerouslySetInnerHTML={{ __html: x.desc }}
-                  />
-
-                  <div className="mt-4 inline-flex items-center gap-2 font-extrabold text-black text-sm max-[720px]:text-[13px] max-[640px]:text-[12px]">
-                    {t("picker.seeDetails")}
-                    <span className="text-yellow-400 transition-transform duration-200 group-hover:translate-x-1">
-                      →
-                    </span>
-                  </div>
-                </div>
-              </Link>
+      <section className="border-y border-neutral-200 bg-neutral-50">
+        <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+          <h2 className="text-3xl font-black">
+            {es ? "Cómo funciona" : "How it works"}
+          </h2>
+          <div className="mt-9 grid gap-6 md:grid-cols-4">
+            {(es
+              ? [
+                  ["1", "Envía fotos", "Cuéntanos qué necesitas."],
+                  ["2", "Precio claro", "Confirmamos alcance y coste."],
+                  ["3", "Elegimos hora", "Acordamos una franja de visita."],
+                  ["4", "Trabajo terminado", "Limpio, probado y revisado."],
+                ]
+              : [
+                  ["1", "Send photos", "Tell us what needs doing."],
+                  ["2", "Clear price", "We confirm scope and cost."],
+                  ["3", "Pick a time", "We agree a visit window."],
+                  ["4", "Job completed", "Clean, tested and checked."],
+                ]
+            ).map(([n, t, d]) => (
+              <div key={n}>
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-[#ffcc00] font-black">
+                  {n}
+                </span>
+                <h3 className="mt-4 font-black">{t}</h3>
+                <p className="mt-1 text-sm text-neutral-600">{d}</p>
+              </div>
             ))}
           </div>
-
-          <div className="mt-4 text-center text-xs text-gray-500">
-            {t("picker.bottomNote")}
-          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section className="mx-auto max-w-4xl px-5 py-20 text-center">
+        <ShieldCheck className="mx-auto" size={40} />
+        <h2 className="mt-5 text-4xl font-black">
+          {es
+            ? "¿Qué quieres resolver esta semana?"
+            : "What do you want sorted this week?"}
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-neutral-600">
+          {es
+            ? "Envíanos unas fotos. Te diremos qué necesitamos, el precio y la primera disponibilidad."
+            : "Send a few photos. We’ll confirm what is needed, the price and the first availability."}
+        </p>
+        <a
+          href={generalWa}
+          data-event="whatsapp_click"
+          data-cta-location="final"
+          data-service="general"
+          className="mt-8 inline-block rounded-xl bg-[#ffcc00] px-7 py-4 font-black"
+        >
+          {es ? "Hablar por WhatsApp" : "Talk on WhatsApp"}
+        </a>
+      </section>
+      <MobileStickyCta
+        href={generalWa}
+        locale={locale}
+        servicesHref="#services"
+      />
+    </main>
   );
 }
