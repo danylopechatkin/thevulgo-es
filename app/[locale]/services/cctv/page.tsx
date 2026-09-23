@@ -287,17 +287,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/cctv`,
+      canonical: `${baseUrl}${locale === "es" ? "/es" : ""}/services/cctv`,
       languages: {
         es: `${baseUrl}/es/services/cctv`,
-        en: `${baseUrl}/en/services/cctv`,
+        en: `${baseUrl}/services/cctv`,
         "x-default": `${baseUrl}/es/services/cctv`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/cctv`,
+      url: `${baseUrl}${locale === "es" ? "/es" : ""}/services/cctv`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -308,7 +308,7 @@ export default async function CctvPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/services/cctv`;
+  const pageUrl = `${baseUrl}${locale === "es" ? "/es" : ""}/services/cctv`;
   const estimateHref = `/${locale}/estimate?category=cctv`;
 
   const whatsappText = encodeURIComponent(
@@ -525,7 +525,7 @@ export default async function CctvPage({ params }: Props) {
             itemOffered: {
               "@type": "Service",
               name: isEs ? item.es : item.en,
-              url: `${baseUrl}/${locale}/services/cctv/${item.slug}`,
+              url: `${baseUrl}${locale === "es" ? "/es" : ""}/services/cctv/${item.slug}`,
             },
           })),
         },
@@ -554,7 +554,7 @@ export default async function CctvPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Servicios" : "Services",
-            item: `${baseUrl}/${locale}/services`,
+            item: `${baseUrl}${locale === "es" ? "/es" : ""}/services`,
           },
           {
             "@type": "ListItem",

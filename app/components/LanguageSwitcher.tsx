@@ -9,26 +9,34 @@ export default function LanguageSwitcher({locale}: {locale: string}) {
   const searchParams = useSearchParams();
 
   const switchLocale = (newLocale: string) => {
-    const segments = pathname.split("/");
-
-    if (!segments[1]) return `/${newLocale}`;
-
-    const currentLocale = segments[1] === "en" ? "en" : "es";
-    const targetLocale = newLocale === "en" ? "en" : "es";
-    const isRenovationPath = segments[2] === "reformas-valencia" || segments[2] === "renovations-valencia";
+    const segments = pathname.split("/").filter(Boolean);
+    const hasLocalePrefix = segments[0] === "es" || segments[0] === "en";
+    const currentLocale: "en" | "es" =
+      hasLocalePrefix && segments[0] === "es" ? "es" : "en";
+    const targetLocale: "en" | "es" = newLocale === "en" ? "en" : "es";
+    const routeSegments = hasLocalePrefix ? segments.slice(1) : segments;
+    const isRenovationPath =
+      routeSegments[0] === "reformas-valencia" ||
+      routeSegments[0] === "renovations-valencia";
 
     if (isRenovationPath) {
-      segments[2] = targetLocale === "es" ? "reformas-valencia" : "renovations-valencia";
-      const category = RENOVATION_CATEGORIES.find((item) => item.slug[currentLocale] === segments[3]);
+      routeSegments[0] =
+        targetLocale === "es" ? "reformas-valencia" : "renovations-valencia";
+      const category = RENOVATION_CATEGORIES.find(
+        (item) => item.slug[currentLocale] === routeSegments[1],
+      );
       if (category) {
-        segments[3] = category.slug[targetLocale];
-        const service = category.services.find((item) => item.slug[currentLocale] === segments[4]);
-        if (service) segments[4] = service.slug[targetLocale];
+        routeSegments[1] = category.slug[targetLocale];
+        const service = category.services.find(
+          (item) => item.slug[currentLocale] === routeSegments[2],
+        );
+        if (service) routeSegments[2] = service.slug[targetLocale];
       }
     }
 
-    segments[1] = targetLocale;
-    const switchedPath = segments.join("/") || "/";
+    const localePrefix = targetLocale === "es" ? "/es" : "";
+    const routePath = routeSegments.length ? `/${routeSegments.join("/")}` : "";
+    const switchedPath = `${localePrefix}${routePath}` || "/";
     const query = searchParams.toString();
     return `${switchedPath}${query ? `?${query}` : ""}`;
   };

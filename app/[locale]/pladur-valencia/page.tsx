@@ -87,17 +87,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}${pagePath}`,
+      canonical: `${baseUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       languages: {
         es: `${baseUrl}/es${pagePath}`,
-        en: `${baseUrl}/en${pagePath}`,
+        en: `${baseUrl}${pagePath}`,
         "x-default": `${baseUrl}/es${pagePath}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}${pagePath}`,
+      url: `${baseUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -255,14 +255,14 @@ export default async function PladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}${pagePath}#service`,
+        "@id": `${baseUrl}${locale === "es" ? "/es" : ""}${pagePath}#service`,
         name: isEs ? "Pladur en Valencia" : "Drywall / Plasterboard in Valencia",
         serviceType: isEs ? "Servicios de pladur" : "Drywall and plasterboard services",
         provider: {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}${pagePath}`,
+        url: `${baseUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -302,7 +302,7 @@ export default async function PladurValenciaPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Pladur Valencia" : "Drywall Valencia",
-            item: `${baseUrl}/${locale}${pagePath}`,
+            item: `${baseUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
           },
         ],
       },

@@ -54,16 +54,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/electrical/cambio-extractor-valencia`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/cambio-extractor-valencia`,
       languages: {
         es: `${siteUrl}/es/services/electrical/cambio-extractor-valencia`,
-        en: `${siteUrl}/en/services/electrical/cambio-extractor-valencia`,
+        en: `${siteUrl}/services/electrical/cambio-extractor-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/electrical/cambio-extractor-valencia`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/cambio-extractor-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -501,7 +501,7 @@ export default async function ExtractorReplacementValenciaPage({
         "@type": "ListItem",
         position: 2,
         name: isEs ? "Servicios" : "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
@@ -509,7 +509,7 @@ export default async function ExtractorReplacementValenciaPage({
         name: isEs
           ? "Cambio de Extractor en Valencia"
           : "Extractor Fan Replacement in Valencia",
-        item: `${siteUrl}/${locale}/services/electrical/cambio-extractor-valencia`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/cambio-extractor-valencia`,
       },
     ],
   };

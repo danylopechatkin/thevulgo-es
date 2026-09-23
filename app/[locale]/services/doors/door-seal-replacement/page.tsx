@@ -35,10 +35,10 @@ export async function generateMetadata({
       ? "Cambio y ajuste de burletes de puerta por 29 €. Sustitución de sellos desgastados para reducir corrientes de aire, ruido y mejorar el cierre."
       : "Door seal replacement for €29. Replacement or adjustment of worn door seals to reduce drafts, noise and improve closing comfort.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +48,7 @@ export async function generateMetadata({
       description: isEs
         ? "Sustitución de burletes y sellos de puerta para mejor aislamiento y cierre."
         : "Replacement of worn door seals for better insulation and cleaner door fit.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -182,19 +182,19 @@ export default async function DoorSealReplacementPage({
         "@type": "ListItem",
         position: 2,
         name: "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Doors",
-        item: `${siteUrl}/${locale}/services/doors`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services/doors`,
       },
       {
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Cambio de Burlete de Puerta" : "Door Seal Replacement",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       },
     ],
   };

@@ -35,10 +35,10 @@ export async function generateMetadata({
       ? "Ajuste de pestillos de puerta por 29 €. Correcciones pequeñas cuando la puerta no engancha bien, no cierra correctamente o necesita mejor alineación."
       : "Door latch adjustment for €29. Small latch corrections when the door does not catch properly, sticks, misaligns or needs smoother closing.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +48,7 @@ export async function generateMetadata({
       description: isEs
         ? "Corrección de pestillos, cierre y alineación para puertas interiores."
         : "Latch, catch and closing alignment correction for interior doors.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -180,19 +180,19 @@ export default async function LatchAdjustmentPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 2,
         name: "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Doors",
-        item: `${siteUrl}/${locale}/services/doors`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services/doors`,
       },
       {
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Ajuste de Pestillo de Puerta" : "Latch Adjustment",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       },
     ],
   };

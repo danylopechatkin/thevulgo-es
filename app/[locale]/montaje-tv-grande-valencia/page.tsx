@@ -35,7 +35,7 @@ export async function generateMetadata({
       ? "Montaje profesional de televisores grandes en Valencia. Instalación segura de TVs de 65, 75, 85 y 98 pulgadas, soportes reforzados, nivelación precisa y acabado limpio."
       : "Professional large TV mounting in Valencia. Safe installation for 65, 75, 85 and 98 inch TVs, reinforced brackets, precise leveling and clean finish.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-tv-grande-valencia`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}/montaje-tv-grande-valencia`,
       languages: {
         es: `${siteUrl}/es/montaje-tv-grande-valencia`,
       },
@@ -47,7 +47,7 @@ export async function generateMetadata({
       description: isEs
         ? "Instalación segura y limpia de televisores grandes en Valencia y alrededores."
         : "Safe and clean large TV installation in Valencia and nearby areas.",
-      url: `${siteUrl}/${locale}/montaje-tv-grande-valencia`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}/montaje-tv-grande-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -180,13 +180,13 @@ export default async function LargeTvMountingValenciaPage({
         "@type": "ListItem",
         position: 2,
         name: "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Montaje de TV Grande en Valencia",
-        item: `${siteUrl}/${locale}/montaje-tv-grande-valencia`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/montaje-tv-grande-valencia`,
       },
     ],
   };

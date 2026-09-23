@@ -33,10 +33,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje eléctrico básico en Valencia por 35 €. Conexión de accesorios eléctricos simples, enchufes, interruptores, lámparas y pequeños trabajos con acabado ordenado."
       : "Basic electrical installation in Valencia for €35. Simple electrical accessories, sockets, switches, lamps and small clean-finish electrical jobs.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/electrical/montaje-electrico-basico-valencia`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/montaje-electrico-basico-valencia`,
       languages: {
         es: `${siteUrl}/es/services/electrical/montaje-electrico-basico-valencia`,
-        en: `${siteUrl}/en/services/electrical/montaje-electrico-basico-valencia`,
+        en: `${siteUrl}/services/electrical/montaje-electrico-basico-valencia`,
       },
     },
     openGraph: {
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje y conexión de accesorios eléctricos simples con acabado ordenado."
         : "Simple electrical accessory installation with a clean finish.",
-      url: `${siteUrl}/${locale}/services/electrical/montaje-electrico-basico-valencia`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/montaje-electrico-basico-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -171,12 +171,12 @@ export default async function BasicElectricalInstallationValenciaPage({
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: `${siteUrl}/${locale}` },
-      { "@type": "ListItem", position: 2, name: "Services", item: `${siteUrl}/${locale}/services` },
+      { "@type": "ListItem", position: 2, name: "Services", item: `${siteUrl}${locale === "es" ? "/es" : ""}/services` },
       {
         "@type": "ListItem",
         position: 3,
         name: "Montaje Eléctrico Básico en Valencia",
-        item: `${siteUrl}/${locale}/services/electrical/montaje-electrico-basico-valencia`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/montaje-electrico-basico-valencia`,
       },
     ],
   };

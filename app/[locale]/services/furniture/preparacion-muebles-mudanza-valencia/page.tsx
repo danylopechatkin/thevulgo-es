@@ -56,16 +56,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "home setup Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/furniture/preparacion-muebles-mudanza-valencia`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/preparacion-muebles-mudanza-valencia`,
       languages: {
         es: `${siteUrl}/es/services/furniture/preparacion-muebles-mudanza-valencia`,
-        en: `${siteUrl}/en/services/furniture/preparacion-muebles-mudanza-valencia`,
+        en: `${siteUrl}/services/furniture/preparacion-muebles-mudanza-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/furniture/preparacion-muebles-mudanza-valencia`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/preparacion-muebles-mudanza-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -100,7 +100,7 @@ export default async function MoveInFurnitureSetupValenciaPage({
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/furniture/preparacion-muebles-mudanza-valencia`;
+  const pageUrl = `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/preparacion-muebles-mudanza-valencia`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -367,7 +367,7 @@ export default async function MoveInFurnitureSetupValenciaPage({
         "@type": "ListItem",
         position: 2,
         name: isEs ? "Servicios" : "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",

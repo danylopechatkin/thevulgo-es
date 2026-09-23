@@ -52,16 +52,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/electrical/instalacion-tira-led-valencia`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/instalacion-tira-led-valencia`,
       languages: {
         es: `${siteUrl}/es/services/electrical/instalacion-tira-led-valencia`,
-        en: `${siteUrl}/en/services/electrical/instalacion-tira-led-valencia`,
+        en: `${siteUrl}/services/electrical/instalacion-tira-led-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/electrical/instalacion-tira-led-valencia`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/instalacion-tira-led-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -497,7 +497,7 @@ export default async function LedStripInstallationValenciaPage({
         "@type": "ListItem",
         position: 2,
         name: isEs ? "Servicios" : "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
@@ -505,7 +505,7 @@ export default async function LedStripInstallationValenciaPage({
         name: isEs
           ? "Instalación de Tira LED en Valencia"
           : "LED Strip Installation in Valencia",
-        item: `${siteUrl}/${locale}/services/electrical/instalacion-tira-led-valencia`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/instalacion-tira-led-valencia`,
       },
     ],
   };

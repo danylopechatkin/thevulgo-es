@@ -305,16 +305,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/${slug}`,
+      canonical: `${baseUrl}${locale === "es" ? "/es" : ""}/services/${slug}`,
       languages: {
         es: `${baseUrl}/es/services/${slug}`,
-        en: `${baseUrl}/en/services/${slug}`,
+        en: `${baseUrl}/services/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/${slug}`,
+      url: `${baseUrl}${locale === "es" ? "/es" : ""}/services/${slug}`,
       type: "website",
     },
   };

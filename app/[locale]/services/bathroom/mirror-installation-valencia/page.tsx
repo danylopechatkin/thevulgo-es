@@ -35,10 +35,10 @@ export async function generateMetadata({
       ? "Instalación de espejos de baño en Valencia por 35 €. Montaje seguro en pared, altura correcta, alineación limpia y colocación visual equilibrada."
       : "Bathroom mirror installation in Valencia for €35. Secure wall mounting with proper height, clean alignment and balanced visual placement.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +48,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje seguro y limpio de espejos de baño en Valencia y alrededores."
         : "Clean and secure bathroom mirror mounting in Valencia and nearby areas.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -184,13 +184,13 @@ export default async function BathroomMirrorInstallationValenciaPage({
         "@type": "ListItem",
         position: 2,
         name: "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Bathroom",
-        item: `${siteUrl}/${locale}/services/bathroom`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services/bathroom`,
       },
       {
         "@type": "ListItem",
@@ -198,7 +198,7 @@ export default async function BathroomMirrorInstallationValenciaPage({
         name: isEs
           ? "Instalación de Espejo de Baño en Valencia"
           : "Bathroom Mirror Installation in Valencia",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       },
     ],
   };

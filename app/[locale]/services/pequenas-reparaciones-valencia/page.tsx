@@ -56,32 +56,32 @@ const relatedLinks = [
     en: "Handyman in Valencia",
   },
   {
-    href: "/reparacion-paredes-valencia",
+    href: "/services/reparacion-paredes-valencia",
     es: "Reparación de paredes",
     en: "Wall repair",
   },
   {
-    href: "/retoques-pintura-valencia",
+    href: "/services/retoques-pintura-valencia",
     es: "Retoques de pintura",
     en: "Paint touch-ups",
   },
   {
-    href: "/reparacion-agujeros-pared-valencia",
+    href: "/services/reparacion-agujeros-pared-valencia",
     es: "Reparación de agujeros",
     en: "Wall hole repair",
   },
   {
-    href: "/puesta-a-punto-vivienda-valencia",
+    href: "/services/puesta-a-punto-vivienda-valencia",
     es: "Puesta a punto de vivienda",
     en: "Home preparation service",
   },
   {
-    href: "/reparaciones-antes-entrega-piso-valencia",
+    href: "/services/puesta-a-punto-vivienda-valencia",
     es: "Reparaciones antes de entregar un piso",
     en: "Repairs before handing over a flat",
   },
   {
-    href: "/preparacion-piso-airbnb-valencia",
+    href: "/services/mantenimiento-airbnb-valencia",
     es: "Preparación de piso para Airbnb",
     en: "Airbnb apartment preparation",
   },
@@ -309,7 +309,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? "Servicio de pequeñas reparaciones del hogar en Valencia. Arreglos de pared, pintura, puertas, cajones, muebles, enchufes, lámparas y puesta a punto de viviendas."
     : "Small home repair service in Valencia. Wall fixes, paint touch-ups, doors, drawers, furniture, sockets, lights and home preparation.";
 
-  const canonical = `${baseUrl}/${locale}/${slug}`;
+  const canonical = `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`;
 
   return {
     title,
@@ -318,7 +318,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical,
       languages: {
         es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        en: `${baseUrl}/${slug}`,
       },
     },
     openGraph: {
@@ -351,7 +351,7 @@ export default async function PequenasReparacionesValenciaPage({
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: "THEVULGO",
-    url: `${baseUrl}/${locale}/${slug}`,
+    url: `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`,
     telephone: `+${phone}`,
     areaServed: areas,
     address: {
@@ -411,7 +411,7 @@ export default async function PequenasReparacionesValenciaPage({
         "@type": "ListItem",
         position: 2,
         name: isEs ? "Servicios" : "Services",
-        item: `${baseUrl}/${locale}/services`,
+        item: `${baseUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
@@ -419,7 +419,7 @@ export default async function PequenasReparacionesValenciaPage({
         name: isEs
           ? "Pequeñas reparaciones Valencia"
           : "Small repairs Valencia",
-        item: `${baseUrl}/${locale}/${slug}`,
+        item: `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`,
       },
     ],
   };
@@ -824,7 +824,7 @@ export default async function PequenasReparacionesValenciaPage({
               {relatedLinks.map((link) => (
                 <Link
                   key={link.href}
-                  href={`/${locale}${link.href}`}
+                  href={`${isEs ? "/es" : ""}${link.href}`}
                   className="group flex items-center justify-between rounded-2xl border border-white/10 bg-neutral-950/70 p-5 transition hover:border-amber-300/50 hover:bg-white/[0.08]"
                 >
                   <span className="font-medium">

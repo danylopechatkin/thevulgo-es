@@ -100,17 +100,17 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/${locale}/${slug}`,
+      canonical: `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`,
       languages: {
         es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        en: `${baseUrl}/${slug}`,
         "x-default": `${baseUrl}/es/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/${slug}`,
+      url: `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`,
       siteName: "THEVULGO Valencia",
       locale: locale === "es" ? "es_ES" : "en_US",
       type: "website",
@@ -127,7 +127,7 @@ export default async function InstalacionToldosValenciaPage({
     whatsappText
   )}`;
 
-  const pageUrl = `${baseUrl}/${locale}/${slug}`;
+  const pageUrl = `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`;
 
   const jsonLd = [
     {
@@ -195,7 +195,7 @@ export default async function InstalacionToldosValenciaPage({
           "@type": "ListItem",
           position: 2,
           name: "Servicios",
-          item: `${baseUrl}/${locale}/services`,
+          item: `${baseUrl}${locale === "es" ? "/es" : ""}/services`,
         },
         {
           "@type": "ListItem",

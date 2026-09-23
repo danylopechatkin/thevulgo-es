@@ -131,34 +131,18 @@ const rootSeoPages = [
 const serviceSeoPages = [
   // Toldos
   "services/instalacion-toldos-valencia",
-  "services/montaje-toldos-valencia",
-  "services/instalar-toldo-valencia",
-  "services/instalador-toldos-valencia",
-  "services/manitas-instalacion-toldos-valencia",
-  "services/instalacion-toldo-manual-valencia",
   "services/instalacion-toldo-electrico-valencia",
-  "services/instalacion-toldo-terraza-valencia",
-  "services/instalacion-toldo-balcon-valencia",
-  "services/instalacion-toldo-patio-valencia",
   "services/instalacion-toldo-leroy-merlin-valencia",
-  "services/montaje-toldo-leroy-merlin-valencia",
 
   // Rental property preparation
-  "services/reparacion-piso-alquiler-valencia",
-  "services/reparaciones-antes-entrega-piso-valencia",
   "services/reparacion-paredes-valencia",
   "services/retoques-pintura-valencia",
   "services/reparacion-agujeros-pared-valencia",
-  "services/fin-contrato-alquiler-valencia",
-  "services/devolver-piso-propietario-valencia",
-  "services/puesta-a-punto-piso-valencia",
   "services/puesta-a-punto-vivienda-valencia",
   "services/pequenas-reparaciones-valencia",
 
   // Airbnb
   "services/mantenimiento-airbnb-valencia",
-  "services/reparaciones-airbnb-valencia",
-  "services/handyman-airbnb-valencia",
 
   // Ceiling fans
   "services/instalacion-ventilador-techo-valencia",

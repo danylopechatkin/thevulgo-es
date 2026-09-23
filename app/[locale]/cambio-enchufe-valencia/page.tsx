@@ -34,10 +34,10 @@ export async function generateMetadata({
       ? "Cambio de enchufe en Valencia por 29 €. Sustitución de enchufes dañados, antiguos o tapas para una instalación más limpia en casas y apartamentos."
       : "Socket replacement in Valencia for €29. Replacement of damaged, old sockets and covers for cleaner installations.",
     alternates: {
-  canonical: `${siteUrl}/${locale}/cambio-enchufe-valencia`,
+  canonical: `${siteUrl}${locale === "es" ? "/es" : ""}/cambio-enchufe-valencia`,
   languages: {
     es: `${siteUrl}/es/cambio-enchufe-valencia`,
-    en: `${siteUrl}/en/cambio-enchufe-valencia`,
+    en: `${siteUrl}/cambio-enchufe-valencia`,
     "x-default": `${siteUrl}/es/cambio-enchufe-valencia`,
   },
 },
@@ -52,7 +52,7 @@ robots: {
       description: isEs
         ? "Cambio limpio y profesional de enchufes en Valencia."
         : "Clean and professional socket replacement in Valencia.",
-      url: `${siteUrl}/${locale}/cambio-enchufe-valencia`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}/cambio-enchufe-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -182,13 +182,13 @@ export default async function SocketReplacementPage({
         "@type": "ListItem",
         position: 2,
         name: "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Cambio de Enchufe en Valencia",
-        item: `${siteUrl}/${locale}/cambio-enchufe-valencia`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/cambio-enchufe-valencia`,
       },
     ],
   };

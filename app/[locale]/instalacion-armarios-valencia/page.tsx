@@ -86,17 +86,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/instalacion-armarios-valencia`,
+      canonical: `${baseUrl}${locale === "es" ? "/es" : ""}/instalacion-armarios-valencia`,
       languages: {
         es: `${baseUrl}/es/instalacion-armarios-valencia`,
-        en: `${baseUrl}/en/instalacion-armarios-valencia`,
+        en: `${baseUrl}/instalacion-armarios-valencia`,
         "x-default": `${baseUrl}/es/instalacion-armarios-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/instalacion-armarios-valencia`,
+      url: `${baseUrl}${locale === "es" ? "/es" : ""}/instalacion-armarios-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -256,7 +256,7 @@ export default async function InstalacionArmariosValenciaPage({
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/instalacion-armarios-valencia#service`,
+        "@id": `${baseUrl}${locale === "es" ? "/es" : ""}/instalacion-armarios-valencia#service`,
         name: isEs
           ? "Instalación de armarios en Valencia"
           : "Wardrobe installation in Valencia",
@@ -267,7 +267,7 @@ export default async function InstalacionArmariosValenciaPage({
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/instalacion-armarios-valencia`,
+        url: `${baseUrl}${locale === "es" ? "/es" : ""}/instalacion-armarios-valencia`,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -309,7 +309,7 @@ export default async function InstalacionArmariosValenciaPage({
             name: isEs
               ? "Instalación de armarios Valencia"
               : "Wardrobe installation Valencia",
-            item: `${baseUrl}/${locale}/instalacion-armarios-valencia`,
+            item: `${baseUrl}${locale === "es" ? "/es" : ""}/instalacion-armarios-valencia`,
           },
         ],
       },

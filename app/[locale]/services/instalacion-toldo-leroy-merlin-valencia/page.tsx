@@ -135,7 +135,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? "Instalamos toldos comprados en Leroy Merlin en Valencia. Montaje de toldos manuales y eléctricos para patio, terraza o balcón. Presupuesto por WhatsApp."
     : "We install awnings bought at Leroy Merlin in Valencia. Manual and electric awning mounting for patios, terraces and balconies. Quote by WhatsApp.";
 
-  const url = `${baseUrl}/${locale}/${slug}`;
+  const url = `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`;
 
   return {
     title,
@@ -144,7 +144,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: url,
       languages: {
         es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        en: `${baseUrl}/${slug}`,
       },
     },
     openGraph: {
@@ -170,7 +170,7 @@ export default async function InstalacionToldoLeroyMerlinValenciaPage({
   )}`;
 
   const faq = isEs ? faqEs : faqEn;
-  const pageUrl = `${baseUrl}/${locale}/${slug}`;
+  const pageUrl = `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`;
 
   const jsonLd = [
     {
@@ -234,7 +234,7 @@ export default async function InstalacionToldoLeroyMerlinValenciaPage({
           "@type": "ListItem",
           position: 2,
           name: isEs ? "Servicios" : "Services",
-          item: `${baseUrl}/${locale}/services`,
+          item: `${baseUrl}${locale === "es" ? "/es" : ""}/services`,
         },
         {
           "@type": "ListItem",
@@ -356,15 +356,15 @@ export default async function InstalacionToldoLeroyMerlinValenciaPage({
 
   const relatedLinks = [
     {
-      href: `/${locale}/services/instalar-toldo-valencia`,
+      href: `/${locale}/services/instalacion-toldos-valencia`,
       label: isEs ? "Instalar toldo en Valencia" : "Awning installation Valencia",
     },
     {
-      href: `/${locale}/services/instalacion-toldo-patio-valencia`,
+      href: `/${locale}/services/instalacion-toldos-valencia`,
       label: isEs ? "Toldo para patio" : "Patio awning installation",
     },
     {
-      href: `/${locale}/services/instalacion-toldo-balcon-valencia`,
+      href: `/${locale}/services/instalacion-toldos-valencia`,
       label: isEs ? "Toldo para balcón" : "Balcony awning installation",
     },
     {
@@ -372,7 +372,7 @@ export default async function InstalacionToldoLeroyMerlinValenciaPage({
       label: isEs ? "Toldo eléctrico" : "Electric awning installation",
     },
     {
-      href: `/${locale}/services/instalacion-toldo-manual-valencia`,
+      href: `/${locale}/services/instalacion-toldos-valencia`,
       label: isEs ? "Toldo manual" : "Manual awning installation",
     },
     {

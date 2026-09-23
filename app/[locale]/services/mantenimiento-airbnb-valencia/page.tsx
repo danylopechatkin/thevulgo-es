@@ -133,17 +133,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/${slug}`,
+      canonical: `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`,
       languages: {
         es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        en: `${baseUrl}/${slug}`,
         "x-default": `${baseUrl}/es/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/${slug}`,
+      url: `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -155,7 +155,7 @@ export default async function AirbnbMaintenanceValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/${slug}`;
+  const pageUrl = `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`;
   const estimateHref = `/${locale}/estimate?category=repairs`;
 
   const whatsappText = encodeURIComponent(
@@ -426,7 +426,7 @@ export default async function AirbnbMaintenanceValenciaPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Servicios" : "Services",
-            item: `${baseUrl}/${locale}/services`,
+            item: `${baseUrl}${locale === "es" ? "/es" : ""}/services`,
           },
           {
             "@type": "ListItem",
@@ -544,7 +544,7 @@ export default async function AirbnbMaintenanceValenciaPage({ params }: Props) {
           </div>
 
           <Link
-            href={`/${locale}/services/reparaciones-antes-entrega-piso-valencia`}
+            href={`/${locale}/services/puesta-a-punto-vivienda-valencia`}
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-5 py-3 text-sm font-bold shadow-sm transition hover:scale-105"
           >
             {isEs ? "Reparaciones antes de entregar piso" : "Repairs before handover"}

@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import {
+  GSC_404_REDIRECTS,
+  SEO_CONSOLIDATION_REDIRECTS,
+} from "./lib/gsc404Redirects";
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -54,30 +58,22 @@ const movedNestedPages = {
 const nextConfig: NextConfig = {
   async redirects() {
     return [
+      ...GSC_404_REDIRECTS,
+      ...SEO_CONSOLIDATION_REDIRECTS,
       // Old URLs without a language prefix. Send them directly to the final
       // English page to avoid a locale redirect followed by another redirect.
       {
         source: "/instalar-soundbar-valencia",
-        destination: "/en/services/tv-mounting/instalar-soundbar-valencia",
-        permanent: true,
-      },
-      {
-        source: "/montaje-estanterias-valencia",
-        destination: "/en/services/furniture/montaje-estanterias-valencia",
-        permanent: true,
-      },
-      {
-        source: "/instalacion-tira-led-valencia",
-        destination: "/en/services/electrical/instalacion-tira-led-valencia",
+        destination: "/services/tv-mounting/instalar-soundbar-valencia",
         permanent: true,
       },
       ...legacyServiceSlugs.map((slug) => ({
-        source: `/:locale/${slug}`,
+        source: `/:locale(en|es)/${slug}`,
         destination: `/:locale/services/${slug}`,
         permanent: true,
       })),
       ...Object.entries(movedNestedPages).map(([source, destination]) => ({
-        source: `/:locale/${source}`,
+        source: `/:locale(en|es)/${source}`,
         destination: `/:locale/${destination}`,
         permanent: true,
       })),

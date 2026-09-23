@@ -217,17 +217,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/control-de-acceso`,
+      canonical: `${baseUrl}${locale === "es" ? "/es" : ""}/services/control-de-acceso`,
       languages: {
         es: `${baseUrl}/es/services/control-de-acceso`,
-        en: `${baseUrl}/en/services/control-de-acceso`,
+        en: `${baseUrl}/services/control-de-acceso`,
         "x-default": `${baseUrl}/es/services/control-de-acceso`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/control-de-acceso`,
+      url: `${baseUrl}${locale === "es" ? "/es" : ""}/services/control-de-acceso`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -238,7 +238,7 @@ export default async function AccessControlPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/services/control-de-acceso`;
+  const pageUrl = `${baseUrl}${locale === "es" ? "/es" : ""}/services/control-de-acceso`;
   const estimateHref = `/${locale}/estimate?category=access-control`;
 
   const whatsappText = encodeURIComponent(
@@ -455,7 +455,7 @@ export default async function AccessControlPage({ params }: Props) {
             itemOffered: {
               "@type": "Service",
               name: isEs ? item.es : item.en,
-              url: `${baseUrl}/${locale}/services/control-de-acceso/${item.slug}`,
+              url: `${baseUrl}${locale === "es" ? "/es" : ""}/services/control-de-acceso/${item.slug}`,
             },
           })),
         },
@@ -484,7 +484,7 @@ export default async function AccessControlPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Servicios" : "Services",
-            item: `${baseUrl}/${locale}/services`,
+            item: `${baseUrl}${locale === "es" ? "/es" : ""}/services`,
           },
           {
             "@type": "ListItem",

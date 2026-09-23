@@ -35,10 +35,10 @@ export async function generateMetadata({
       ? "Instalación de muebles bajo lavabo en Valencia por 59 €. Colocación de vanity units con alineación limpia, buena posición y acabado más ordenado alrededor del lavabo."
       : "Vanity unit installation in Valencia for €59. Bathroom vanity units fitted with clean positioning, alignment and a better final layout around the sink area.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +48,7 @@ export async function generateMetadata({
       description: isEs
         ? "Instalación limpia de muebles bajo lavabo y vanity units para baños en Valencia."
         : "Clean bathroom vanity unit installation around the sink area in Valencia.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -184,13 +184,13 @@ export default async function VanityUnitInstallationValenciaPage({
         "@type": "ListItem",
         position: 2,
         name: "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Bathroom",
-        item: `${siteUrl}/${locale}/services/bathroom`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services/bathroom`,
       },
       {
         "@type": "ListItem",
@@ -198,7 +198,7 @@ export default async function VanityUnitInstallationValenciaPage({
         name: isEs
           ? "Instalación de Mueble Bajo Lavabo en Valencia"
           : "Vanity Unit Installation in Valencia",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`,
       },
     ],
   };

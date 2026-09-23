@@ -72,12 +72,12 @@ const clusterLinks = [
     en: "Wall damage repair",
   },
   {
-    slug: "reparacion-piso-alquiler-valencia",
+    slug: "puesta-a-punto-vivienda-valencia",
     es: "Reparación de piso de alquiler",
     en: "Rental apartment repair",
   },
   {
-    slug: "reparaciones-antes-entrega-piso-valencia",
+    slug: "puesta-a-punto-vivienda-valencia",
     es: "Reparaciones antes de entregar un piso",
     en: "Repairs before handover",
   },
@@ -129,17 +129,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/${slug}`,
+      canonical: `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`,
       languages: {
         es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        en: `${baseUrl}/${slug}`,
         "x-default": `${baseUrl}/es/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/${slug}`,
+      url: `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -151,7 +151,7 @@ export default async function WallHoleRepairValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/${slug}`;
+  const pageUrl = `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`;
   const estimateHref = `/${locale}/estimate?category=repairs`;
 
   const whatsappText = encodeURIComponent(
@@ -418,7 +418,7 @@ export default async function WallHoleRepairValenciaPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Servicios" : "Services",
-            item: `${baseUrl}/${locale}/services`,
+            item: `${baseUrl}${locale === "es" ? "/es" : ""}/services`,
           },
           {
             "@type": "ListItem",

@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Fijación profesional anti-vuelco de muebles a la pared en Valencia por 29 €. Armarios, estanterías, muebles altos y almacenamiento con anclajes adecuados."
       : "Professional anti-tip furniture wall anchoring in Valencia for €29. Wardrobes, shelves, tall cabinets and storage units with suitable anchors.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/fijacion-muebles-pared-valencia`,
       languages: {
         es: `${siteUrl}/es/services/furniture/fijacion-muebles-pared-valencia`,
       },
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Fijación anti-vuelco para armarios, estanterías y muebles altos en Valencia."
         : "Anti-tip anchoring for wardrobes, shelves and tall furniture in Valencia.",
-      url: `${siteUrl}/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/fijacion-muebles-pared-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -179,13 +179,13 @@ export default async function FurnitureWallAnchoringValenciaPage({
         "@type": "ListItem",
         position: 2,
         name: "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Fijación de Muebles a la Pared en Valencia",
-        item: `${siteUrl}/${locale}/services/furniture/fijacion-muebles-pared-valencia`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/fijacion-muebles-pared-valencia`,
       },
     ],
   };

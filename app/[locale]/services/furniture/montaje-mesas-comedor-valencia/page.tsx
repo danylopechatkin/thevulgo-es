@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje profesional de mesas de comedor en Valencia por 35 €. Estructuras, tableros y patas con resultado final estable, alineado y limpio."
       : "Professional dining table assembly in Valencia for €35. Frames, tabletops and legs with a stable, aligned and clean final result.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/furniture/montaje-mesas-comedor-valencia`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/montaje-mesas-comedor-valencia`,
       languages: {
         es: `${siteUrl}/es/services/furniture/montaje-mesas-comedor-valencia`,
       },
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje limpio de mesas de comedor, tableros, patas y estructuras en Valencia."
         : "Clean dining table assembly, tabletops, legs and frames in Valencia.",
-      url: `${siteUrl}/${locale}/services/furniture/montaje-mesas-comedor-valencia`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/montaje-mesas-comedor-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -179,13 +179,13 @@ export default async function DiningTableAssemblyValenciaPage({
         "@type": "ListItem",
         position: 2,
         name: "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Mesas de Comedor en Valencia",
-        item: `${siteUrl}/${locale}/services/furniture/montaje-mesas-comedor-valencia`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/montaje-mesas-comedor-valencia`,
       },
     ],
   };

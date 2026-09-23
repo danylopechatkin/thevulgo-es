@@ -33,10 +33,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje profesional de estanterías, librerías y unidades independientes en Valencia por 39 €. Alineación correcta, estructura estable y fijación a pared si hace falta."
       : "Professional shelf, bookcase and freestanding unit assembly in Valencia for €39. Correct alignment, stable structure and wall fixing if needed.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/furniture/montaje-estanterias-valencia`,
+      canonical: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/montaje-estanterias-valencia`,
       languages: {
         es: `${siteUrl}/es/services/furniture/montaje-estanterias-valencia`,
-        en: `${siteUrl}/en/services/furniture/montaje-estanterias-valencia`,
+        en: `${siteUrl}/services/furniture/montaje-estanterias-valencia`,
         "x-default": `${siteUrl}/es/services/furniture/montaje-estanterias-valencia`,
       },
     },
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje de estanterías, librerías y unidades independientes en Valencia."
         : "Shelf, bookcase and freestanding unit assembly in Valencia.",
-      url: `${siteUrl}/${locale}/services/furniture/montaje-estanterias-valencia`,
+      url: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/montaje-estanterias-valencia`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -182,13 +182,13 @@ export default async function ShelvingAssemblyValenciaPage({
         "@type": "ListItem",
         position: 2,
         name: "Services",
-        item: `${siteUrl}/${locale}/services`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Estanterías en Valencia",
-        item: `${siteUrl}/${locale}/services/furniture/montaje-estanterias-valencia`,
+        item: `${siteUrl}${locale === "es" ? "/es" : ""}/services/furniture/montaje-estanterias-valencia`,
       },
     ],
   };

@@ -149,16 +149,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/${locale}/${slug}`,
+      canonical: `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`,
       languages: {
         es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        en: `${baseUrl}/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/${slug}`,
+      url: `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -175,7 +175,7 @@ export default async function ElectricAwningPage({ params }: Props) {
     whatsappText
   )}`;
 
-  const pageUrl = `${baseUrl}/${locale}/${slug}`;
+  const pageUrl = `${baseUrl}${locale === "es" ? "/es" : ""}/${slug}`;
 
   const jsonLd = [
     {
@@ -238,7 +238,7 @@ export default async function ElectricAwningPage({ params }: Props) {
           "@type": "ListItem",
           position: 2,
           name: isEs ? "Servicios" : "Services",
-          item: `${baseUrl}/${locale}/services`,
+          item: `${baseUrl}${locale === "es" ? "/es" : ""}/services`,
         },
         {
           "@type": "ListItem",
@@ -293,7 +293,7 @@ export default async function ElectricAwningPage({ params }: Props) {
               </a>
 
               <Link
-                href={`/${locale}/services/instalacion-toldo-manual-valencia`}
+                href={`/${locale}/services/instalacion-toldos-valencia`}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-4 text-base font-semibold text-slate-950 shadow-sm transition hover:bg-slate-50"
               >
                 {isEs ? "Ver toldo manual" : "See manual awning"}
@@ -700,13 +700,13 @@ export default async function ElectricAwningPage({ params }: Props) {
               <div className="grid gap-3 sm:grid-cols-2">
                 {[
                   {
-                    href: `/${locale}/services/instalar-toldo-valencia`,
+                    href: `/${locale}/services/instalacion-toldos-valencia`,
                     label: isEs
                       ? "Instalar toldo en Valencia"
                       : "Awning installation in Valencia",
                   },
                   {
-                    href: `/${locale}/services/instalacion-toldo-manual-valencia`,
+                    href: `/${locale}/services/instalacion-toldos-valencia`,
                     label: isEs
                       ? "Instalación de toldo manual"
                       : "Manual awning installation",
