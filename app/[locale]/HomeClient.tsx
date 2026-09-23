@@ -16,9 +16,11 @@ import {
 } from "lucide-react";
 import AvailabilityBadge from "@/app/components/AvailabilityBadge";
 import MobileStickyCta from "@/app/components/MobileStickyCta";
+import AcCleaningPromoCard from "@/app/components/AcCleaningPromoCard";
 import { buildWhatsAppHref, type CommercialService } from "@/lib/commercial";
 import type { Market } from "@/lib/cities";
 import { getCatalogServices } from "@/lib/serviceCatalog";
+import { acDeepCleaningPromotion } from "@/lib/acPromotion";
 
 type Props = { locale?: string; city?: string; market?: Market };
 
@@ -177,6 +179,10 @@ export default function HomeClient({
           </div>
         </div>
       </section>
+
+      {market === "valencia" && acDeepCleaningPromotion.active && (
+        <AcCleaningPromoCard locale={locale} source="homepage" variant="home" />
+      )}
 
       <section
         id="services"

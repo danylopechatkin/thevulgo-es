@@ -3,7 +3,11 @@
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { calculatePublicTotal, formatPublicPrice, formatCatalogPrice } from "@/lib/public-pricing";
+import {
+  calculatePublicTotal,
+  formatPublicPrice,
+  formatCatalogPrice,
+} from "@/lib/public-pricing";
 import { CatalogService, getCatalogServices } from "@/lib/serviceCatalog";
 import { RENOVATION_CATEGORIES } from "@/lib/renovationCatalog";
 import {
@@ -26,8 +30,21 @@ import {
   Package,
   Home,
 } from "lucide-react";
-import { ALICANTE_DISTRICTS, AVAILABLE_CITIES, BARCELONA_DISTRICTS, MADRID_DISTRICTS, marketFromCity } from "@/lib/cities";
-import { getClientAttribution, trackMarketingEvent } from "@/lib/client-attribution";
+import {
+  ALICANTE_DISTRICTS,
+  AVAILABLE_CITIES,
+  BARCELONA_DISTRICTS,
+  MADRID_DISTRICTS,
+  marketFromCity,
+} from "@/lib/cities";
+import {
+  getClientAttribution,
+  trackMarketingEvent,
+} from "@/lib/client-attribution";
+import {
+  AC_DEEP_CLEANING_SERVICE_ID,
+  acDeepCleaningPromotion,
+} from "@/lib/acPromotion";
 type CategoryKey =
   | "handyman"
   | "tv-mounting"
@@ -61,24 +78,26 @@ type CategoryConfig = {
 
 type SelectOption = string | { value: string; label: string };
 
-const CATEGORY_KEYS: CategoryKey[] = Array.from(new Set([
-  "tv-mounting",
-  "handyman",
-  "ceiling-fans",
-  "air-conditioning",
-  "electrical",
-  "plumbing",
-  "furniture",
-  "drywall",
-  "repairs",
-  "doors",
-  "smart-home",
-  "kitchen",
-  "bathroom",
-  "move-in",
-  "exterior",
-  ...RENOVATION_CATEGORIES.map((category) => category.id),
-]));
+const CATEGORY_KEYS: CategoryKey[] = Array.from(
+  new Set([
+    "tv-mounting",
+    "handyman",
+    "ceiling-fans",
+    "air-conditioning",
+    "electrical",
+    "plumbing",
+    "furniture",
+    "drywall",
+    "repairs",
+    "doors",
+    "smart-home",
+    "kitchen",
+    "bathroom",
+    "move-in",
+    "exterior",
+    ...RENOVATION_CATEGORIES.map((category) => category.id),
+  ]),
+);
 
 const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
   handyman: {
@@ -86,7 +105,8 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
     titleEs: "Handyman / Manitas",
     icon: <Hammer className="h-5 w-5" />,
     subtitle: "General home repairs, assembly, installation and maintenance.",
-    subtitleEs: "Reparaciones, montaje, instalaciones y mantenimiento del hogar.",
+    subtitleEs:
+      "Reparaciones, montaje, instalaciones y mantenimiento del hogar.",
     badge: "All-in-one",
     badgeEs: "Todo en uno",
     services: getCatalogServices("Handyman"),
@@ -96,7 +116,8 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
     titleEs: "Instalación de TV",
     icon: <Tv className="h-5 w-5" />,
     subtitle: "TV installation, brackets, cable routing and clean wall setups.",
-    subtitleEs: "Instalación de televisores, soportes, cables y montaje limpio.",
+    subtitleEs:
+      "Instalación de televisores, soportes, cables y montaje limpio.",
     badge: "Top",
     badgeEs: "Top",
     services: getCatalogServices("TV Mounting"),
@@ -106,7 +127,8 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
     titleEs: "Ventiladores de techo",
     icon: <Fan className="h-5 w-5" />,
     subtitle: "Installation and replacement of ceiling fans in your city.",
-    subtitleEs: "Instalación y sustitución de ventiladores de techo en tu ciudad.",
+    subtitleEs:
+      "Instalación y sustitución de ventiladores de techo en tu ciudad.",
     badge: "Popular",
     badgeEs: "Popular",
     services: getCatalogServices("Ceiling Fans"),
@@ -264,7 +286,14 @@ function EstimatePageContent() {
   const locale = useLocale();
   const isEs = locale === "es";
   const requestedMarket = searchParams.get("market");
-  const defaultCity = requestedMarket === "madrid" ? "Madrid" : requestedMarket === "barcelona" ? "Barcelona" : requestedMarket === "alicante" ? "Alicante" : "Valencia";
+  const defaultCity =
+    requestedMarket === "madrid"
+      ? "Madrid"
+      : requestedMarket === "barcelona"
+        ? "Barcelona"
+        : requestedMarket === "alicante"
+          ? "Alicante"
+          : "Valencia";
 
   const initialCategory = (() => {
     const raw = searchParams.get("category");
@@ -273,10 +302,14 @@ function EstimatePageContent() {
 
   const [category, setCategory] = useState<CategoryKey>(initialCategory);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const [submitStage, setSubmitStage] = useState<"build" | "review" | "success">("build");
+  const [submitStage, setSubmitStage] = useState<
+    "build" | "review" | "success"
+  >("build");
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [fieldStatus, setFieldStatus] = useState<Record<string, "default" | "error" | "success">>({});
+  const [fieldStatus, setFieldStatus] = useState<
+    Record<string, "default" | "error" | "success">
+  >({});
   const [isSending, setIsSending] = useState(false);
   const [sendError, setSendError] = useState("");
   const [hasTriedNext, setHasTriedNext] = useState(false);
@@ -307,16 +340,74 @@ function EstimatePageContent() {
     Madrid: [...MADRID_DISTRICTS],
     Barcelona: [...BARCELONA_DISTRICTS],
     Alicante: [...ALICANTE_DISTRICTS],
-    Valencia: ["Ciutat Vella", "Russafa", "El Pla del Remei", "La Gran Via", "Campanar", "Marxalenes", "Morvedre", "Trinitat", "Benimaclet", "Algirós", "El Cabanyal - El Canyamelar", "La Malva-rosa", "Aiora", "Amistat", "Mestalla", "Patraix", "Safranar", "Favara", "Arrancapins", "Botànic", "La Roqueta", "La Petxina", "Benicalap", "Torrefiel", "Orriols", "Sant Antoni", "Jesús", "Sant Marcel·lí", "Camí Real", "Malilla", "Monteolivete", "En Corts", "Natzaret", "Quatre Carreres", "Beniferri", "Benimàmet"],
+    Valencia: [
+      "Ciutat Vella",
+      "Russafa",
+      "El Pla del Remei",
+      "La Gran Via",
+      "Campanar",
+      "Marxalenes",
+      "Morvedre",
+      "Trinitat",
+      "Benimaclet",
+      "Algirós",
+      "El Cabanyal - El Canyamelar",
+      "La Malva-rosa",
+      "Aiora",
+      "Amistat",
+      "Mestalla",
+      "Patraix",
+      "Safranar",
+      "Favara",
+      "Arrancapins",
+      "Botànic",
+      "La Roqueta",
+      "La Petxina",
+      "Benicalap",
+      "Torrefiel",
+      "Orriols",
+      "Sant Antoni",
+      "Jesús",
+      "Sant Marcel·lí",
+      "Camí Real",
+      "Malilla",
+      "Monteolivete",
+      "En Corts",
+      "Natzaret",
+      "Quatre Carreres",
+      "Beniferri",
+      "Benimàmet",
+    ],
   };
 
   const CITY_OPTIONS: SelectOption[] = [...AVAILABLE_CITIES];
 
-  const TIME_OPTIONS = ["07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
+  const TIME_OPTIONS = [
+    "07:00",
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+    "23:00",
+  ];
 
   useEffect(() => {
     if (!client.preferredDate) {
+      // This effect resets availability when the externally selected date is cleared.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setBookedTimes([]);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAvailabilityError("");
       return;
     }
@@ -333,7 +424,7 @@ function EstimatePageContent() {
           {
             cache: "no-store",
             signal: controller.signal,
-          }
+          },
         );
 
         const result = await response.json();
@@ -345,7 +436,7 @@ function EstimatePageContent() {
         setBookedTimes(
           Array.isArray(result.bookedTimes)
             ? result.bookedTimes.map((time: string) => time.slice(0, 5))
-            : []
+            : [],
         );
       } catch (error) {
         if ((error as Error).name === "AbortError") return;
@@ -354,7 +445,7 @@ function EstimatePageContent() {
         setAvailabilityError(
           isEs
             ? "No se pudo comprobar la disponibilidad. Inténtalo de nuevo."
-            : "Could not check availability. Please try again."
+            : "Could not check availability. Please try again.",
         );
       } finally {
         if (!controller.signal.aborted) {
@@ -371,10 +462,26 @@ function EstimatePageContent() {
   useEffect(() => {
     const raw = searchParams.get("category");
     if (isCategoryKey(raw)) {
+      // URL parameters are the external source used to hydrate the requested calculator state.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCategory(raw);
       const requestedService = searchParams.get("service");
-      const serviceExists = requestedService && CATEGORY_DATA[raw].services.some((service) => service.id === requestedService);
-      setQuantities(serviceExists ? { [requestedService]: 1 } : {});
+      const serviceExists =
+        requestedService &&
+        CATEGORY_DATA[raw].services.some(
+          (service) => service.id === requestedService,
+        );
+      const requestedQuantity = Math.max(
+        1,
+        Math.min(
+          20,
+          Number.parseInt(searchParams.get("quantity") || "1", 10) || 1,
+        ),
+      );
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setQuantities(
+        serviceExists ? { [requestedService]: requestedQuantity } : {},
+      );
     }
   }, [searchParams]);
 
@@ -396,7 +503,10 @@ function EstimatePageContent() {
       });
   }, [currentCategory.services, quantities, isEs]);
 
-  const estimatedTotal = useMemo(() => calculatePublicTotal(selectedServices), [selectedServices]);
+  const estimatedTotal = useMemo(
+    () => calculatePublicTotal(selectedServices),
+    [selectedServices],
+  );
 
   const subtotal = Number(estimatedTotal.toFixed(2));
   const total = subtotal;
@@ -430,12 +540,14 @@ function EstimatePageContent() {
     hourCycle: "h23",
   }).formatToParts(new Date());
 
-  const getMadridPart = (type: string) => madridNowParts.find((part) => part.type === type)?.value || "";
+  const getMadridPart = (type: string) =>
+    madridNowParts.find((part) => part.type === type)?.value || "";
   const todayDateString = `${getMadridPart("year")}-${getMadridPart("month")}-${getMadridPart("day")}`;
   const minSelectableDate = todayDateString;
   const madridCurrentHour = Number(getMadridPart("hour"));
   const madridCurrentMinute = Number(getMadridPart("minute"));
-  const nextAvailableHour = madridCurrentMinute > 0 ? madridCurrentHour + 1 : madridCurrentHour;
+  const nextAvailableHour =
+    madridCurrentMinute > 0 ? madridCurrentHour + 1 : madridCurrentHour;
 
   const availableTimeOptions =
     !client.preferredDate || isAvailabilityLoading || availabilityError
@@ -473,8 +585,10 @@ function EstimatePageContent() {
     if (!hasContact) {
       errors.push(t("errors.contact"));
     } else {
-      if (client.email.trim() && !isValidEmail(client.email)) errors.push(t("errors.email"));
-      if (client.phone.trim() && !isValidPhone(client.phone)) errors.push(t("errors.phone"));
+      if (client.email.trim() && !isValidEmail(client.email))
+        errors.push(t("errors.email"));
+      if (client.phone.trim() && !isValidPhone(client.phone))
+        errors.push(t("errors.phone"));
     }
 
     if (!displayCity?.trim()) errors.push(t("errors.city"));
@@ -482,14 +596,35 @@ function EstimatePageContent() {
     if (!client.houseAddress.trim()) errors.push(t("errors.address"));
 
     if (!client.preferredDate.trim()) errors.push(t("errors.date"));
-    else if (client.preferredDate < todayDateString) errors.push(t("errors.pastDate"));
+    else if (client.preferredDate < todayDateString)
+      errors.push(t("errors.pastDate"));
 
     if (!client.preferredTime.trim()) errors.push(t("errors.time"));
-    else if (client.preferredDate === todayDateString && Number(client.preferredTime.split(":")[0]) < nextAvailableHour) errors.push(t("errors.timeToday"));
-    else if (!availableTimeOptions.includes(client.preferredTime)) errors.push(t("errors.timeUnavailable"));
+    else if (
+      client.preferredDate === todayDateString &&
+      Number(client.preferredTime.split(":")[0]) < nextAvailableHour
+    )
+      errors.push(t("errors.timeToday"));
+    else if (!availableTimeOptions.includes(client.preferredTime))
+      errors.push(t("errors.timeUnavailable"));
 
     return errors;
-  }, [hasSelectedServices, client.fullName, client.email, client.phone, client.area, client.houseAddress, client.preferredDate, client.preferredTime, displayCity, hasContact, todayDateString, nextAvailableHour, availableTimeOptions, t]);
+  }, [
+    hasSelectedServices,
+    client.fullName,
+    client.email,
+    client.phone,
+    client.area,
+    client.houseAddress,
+    client.preferredDate,
+    client.preferredTime,
+    displayCity,
+    hasContact,
+    todayDateString,
+    nextAvailableHour,
+    availableTimeOptions,
+    t,
+  ]);
 
   const setFieldValue = (field: string, value: string) => {
     setClient((prev) => ({ ...prev, [field]: value }));
@@ -541,7 +676,10 @@ function EstimatePageContent() {
         isValid = false;
     }
 
-    setFieldStatus((prev) => ({ ...prev, [field]: isValid ? "success" : "default" }));
+    setFieldStatus((prev) => ({
+      ...prev,
+      [field]: isValid ? "success" : "default",
+    }));
   };
 
   const validateEstimateForm = () => {
@@ -703,10 +841,9 @@ function EstimatePageContent() {
           setClient((prev) => ({ ...prev, preferredTime: "" }));
           setFieldErrors((prev) => ({
             ...prev,
-            preferredTime:
-              isEs
-                ? "Esta hora acaba de ser reservada. Elige otra hora."
-                : "This time was just booked. Please choose another time.",
+            preferredTime: isEs
+              ? "Esta hora acaba de ser reservada. Elige otra hora."
+              : "This time was just booked. Please choose another time.",
           }));
         }
         throw new Error(result.error || "Failed to send request");
@@ -718,6 +855,21 @@ function EstimatePageContent() {
         service: categoryTitle,
         metadata: { city: displayCity, locale },
       });
+      const acCleaning = selectedServices.find(
+        (service) => service.id === AC_DEEP_CLEANING_SERVICE_ID,
+      );
+      if (acCleaning) {
+        trackMarketingEvent("ac_cleaning_booking_completed", {
+          source: "calculator",
+          service: AC_DEEP_CLEANING_SERVICE_ID,
+          metadata: {
+            locale,
+            units: acCleaning.qty,
+            value: acCleaning.subtotal,
+            currency: acDeepCleaningPromotion.currency,
+          },
+        });
+      }
     } catch (error) {
       console.error("SEND REQUEST ERROR:", error);
       setSendError(t("errors.sendError"));
@@ -727,10 +879,20 @@ function EstimatePageContent() {
   };
 
   useEffect(() => {
-    if (client.preferredTime && !availableTimeOptions.includes(client.preferredTime)) {
+    if (
+      client.preferredTime &&
+      !availableTimeOptions.includes(client.preferredTime)
+    ) {
+      // Availability changed outside the form, so discard a slot that is no longer valid.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setClient((prev) => ({ ...prev, preferredTime: "" }));
     }
-  }, [client.preferredDate, client.preferredTime, todayDateString, availableTimeOptions]);
+  }, [
+    client.preferredDate,
+    client.preferredTime,
+    todayDateString,
+    availableTimeOptions,
+  ]);
 
   return (
     <div className="min-h-screen overflow-x-clip bg-white text-black font-sans lg:overflow-x-visible">
@@ -781,7 +943,9 @@ function EstimatePageContent() {
                               setQuantities({});
                             }}
                             className={`group w-[65vw] max-w-[300px] min-h-[220px] shrink-0 snap-start rounded-2xl border p-5 text-left transition-all duration-200 ${
-                              active ? "border-yellow-500 bg-yellow-50 shadow-lg" : "border-yellow-400 bg-white"
+                              active
+                                ? "border-yellow-500 bg-yellow-50 shadow-lg"
+                                : "border-yellow-400 bg-white"
                             }`}
                           >
                             <div className="flex items-start justify-between gap-3">
@@ -821,7 +985,9 @@ function EstimatePageContent() {
                             setQuantities({});
                           }}
                           className={`group min-h-[185px] rounded-2xl border p-4 text-left transition-all duration-200 ${
-                            active ? "border-yellow-500 bg-yellow-50 shadow-sm" : "border-yellow-400 bg-white"
+                            active
+                              ? "border-yellow-500 bg-yellow-50 shadow-sm"
+                              : "border-yellow-400 bg-white"
                           }`}
                         >
                           <div className="flex items-start justify-between gap-2">
@@ -857,8 +1023,8 @@ function EstimatePageContent() {
                     </div>
                     <h2 className="mt-4 text-2xl font-extrabold text-black sm:text-3xl">
                       {isEs
-  ? `${t("step2.titlePrefix")} ${categoryTitle.toLowerCase()}`
-  : `${categoryTitle} ${t("step2.titleSuffix")}`}
+                        ? `${t("step2.titlePrefix")} ${categoryTitle.toLowerCase()}`
+                        : `${categoryTitle} ${t("step2.titleSuffix")}`}
                     </h2>
                     <p className="mt-2 text-sm leading-7 text-gray-600 sm:text-base">
                       {t("step2.description")}
@@ -881,7 +1047,9 @@ function EstimatePageContent() {
                   {currentCategory.services.map((service) => {
                     const qty = quantities[service.id] || 0;
                     const serviceLabel = isEs ? service.labelEs : service.label;
-                    const serviceBadge = isEs ? service.badgeEs || service.badge : service.badge;
+                    const serviceBadge = isEs
+                      ? service.badgeEs || service.badge
+                      : service.badge;
 
                     return (
                       <div
@@ -890,7 +1058,9 @@ function EstimatePageContent() {
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div>
-                            <h3 className="text-lg font-extrabold text-black">{serviceLabel}</h3>
+                            <h3 className="text-lg font-extrabold text-black">
+                              {serviceLabel}
+                            </h3>
                             {serviceBadge ? (
                               <span className="mt-2 inline-flex rounded-full bg-yellow-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-yellow-700">
                                 {serviceBadge}
@@ -899,12 +1069,21 @@ function EstimatePageContent() {
                           </div>
 
                           <div className="rounded-full bg-yellow-50 px-3 py-1 text-sm font-extrabold text-yellow-600">
+                            {service.regularPrice && (
+                              <span className="mr-2 text-neutral-400 line-through">
+                                {isEs
+                                  ? `${service.regularPrice} €`
+                                  : `€${service.regularPrice}`}
+                              </span>
+                            )}
                             {formatCatalogPrice(service, locale)}
                           </div>
                         </div>
 
                         <div className="mt-5 flex items-center justify-between gap-4">
-                          <div className="text-sm text-gray-600">{isEs ? "Precio" : "Price"}</div>
+                          <div className="text-sm text-gray-600">
+                            {isEs ? "Precio" : "Price"}
+                          </div>
 
                           <div className="flex items-center gap-2">
                             <button
@@ -930,15 +1109,21 @@ function EstimatePageContent() {
                         </div>
 
                         <div className="mt-4 flex items-center justify-between">
-                          <span className="text-sm text-gray-500">{t("step2.lineTotal")}</span>
-                          <span className="text-base font-extrabold text-black">{formatPublicPrice(qty * service.price, locale)}</span>
+                          <span className="text-sm text-gray-500">
+                            {t("step2.lineTotal")}
+                          </span>
+                          <span className="text-base font-extrabold text-black">
+                            {formatPublicPrice(qty * service.price, locale)}
+                          </span>
                         </div>
                       </div>
                     );
                   })}
                 </div>
 
-                <p className="mt-4 text-xs text-gray-500">{t("step2.customNote")}</p>
+                <p className="mt-4 text-xs text-gray-500">
+                  {t("step2.customNote")}
+                </p>
               </section>
 
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
@@ -1022,7 +1207,11 @@ function EstimatePageContent() {
 
                   {hasAreaOptions && (
                     <SelectField
-                      label={client.city === "Valencia" ? t("form.area") : t("form.areaNeighborhood")}
+                      label={
+                        client.city === "Valencia"
+                          ? t("form.area")
+                          : t("form.areaNeighborhood")
+                      }
                       icon={<MapPin className="h-4 w-4" />}
                       value={client.area}
                       onChange={(v) => {
@@ -1030,7 +1219,11 @@ function EstimatePageContent() {
                         setFieldSuccessIfValid("area", v);
                       }}
                       options={selectedCityAreas}
-                      placeholder={client.city === "Valencia" ? t("form.chooseArea") : t("form.chooseAreaNeighborhood")}
+                      placeholder={
+                        client.city === "Valencia"
+                          ? t("form.chooseArea")
+                          : t("form.chooseAreaNeighborhood")
+                      }
                       error={fieldErrors.area}
                       status={fieldStatus.area || "default"}
                     />
@@ -1064,7 +1257,9 @@ function EstimatePageContent() {
                     label={t("form.apartmentNumber")}
                     icon={<Home className="h-4 w-4" />}
                     value={client.apartmentNumber}
-                    onChange={(v) => setClient((prev) => ({ ...prev, apartmentNumber: v }))}
+                    onChange={(v) =>
+                      setClient((prev) => ({ ...prev, apartmentNumber: v }))
+                    }
                     placeholder={t("form.apartmentPlaceholder")}
                   />
 
@@ -1072,7 +1267,9 @@ function EstimatePageContent() {
                     label={t("form.addressDetails")}
                     icon={<Home className="h-4 w-4" />}
                     value={client.addressDetails}
-                    onChange={(v) => setClient((prev) => ({ ...prev, addressDetails: v }))}
+                    onChange={(v) =>
+                      setClient((prev) => ({ ...prev, addressDetails: v }))
+                    }
                     placeholder={t("form.addressDetailsPlaceholder")}
                   />
 
@@ -1083,30 +1280,38 @@ function EstimatePageContent() {
                     </label>
 
                     <div className="mb-3">
-                      <p className="mb-2 text-xs font-semibold text-gray-500">{t("form.preferredDate")}</p>
+                      <p className="mb-2 text-xs font-semibold text-gray-500">
+                        {t("form.preferredDate")}
+                      </p>
 
                       <input
                         type="date"
                         min={minSelectableDate}
                         value={client.preferredDate}
-                        onChange={(e) => setFieldValue("preferredDate", e.target.value)}
+                        onChange={(e) =>
+                          setFieldValue("preferredDate", e.target.value)
+                        }
                         onBlur={() => setFieldSuccessIfValid("preferredDate")}
                         className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition appearance-none ${
                           fieldStatus.preferredDate === "error"
                             ? "border-red-400 bg-red-50 focus:border-red-500"
                             : fieldStatus.preferredDate === "success"
-                            ? "border-green-500 bg-green-50 focus:border-green-600"
-                            : "border-gray-300 focus:border-yellow-400"
+                              ? "border-green-500 bg-green-50 focus:border-green-600"
+                              : "border-gray-300 focus:border-yellow-400"
                         }`}
                       />
 
                       {fieldErrors.preferredDate ? (
-                        <p className="mt-2 text-xs font-medium text-red-600">{fieldErrors.preferredDate}</p>
+                        <p className="mt-2 text-xs font-medium text-red-600">
+                          {fieldErrors.preferredDate}
+                        </p>
                       ) : null}
                     </div>
 
                     <div>
-                      <p className="mb-2 text-xs font-semibold text-gray-500">{t("form.preferredTime")}</p>
+                      <p className="mb-2 text-xs font-semibold text-gray-500">
+                        {t("form.preferredTime")}
+                      </p>
 
                       <select
                         value={client.preferredTime}
@@ -1115,14 +1320,16 @@ function EstimatePageContent() {
                           isAvailabilityLoading ||
                           Boolean(availabilityError)
                         }
-                        onChange={(e) => setFieldValue("preferredTime", e.target.value)}
+                        onChange={(e) =>
+                          setFieldValue("preferredTime", e.target.value)
+                        }
                         onBlur={() => setFieldSuccessIfValid("preferredTime")}
                         className={`w-full rounded-xl border px-4 py-3 text-sm text-black outline-none transition appearance-none ${
                           fieldStatus.preferredTime === "error"
                             ? "border-red-400 bg-red-50 focus:border-red-500"
                             : fieldStatus.preferredTime === "success"
-                            ? "border-green-500 bg-green-50 focus:border-green-600"
-                            : "border-gray-300 focus:border-yellow-400"
+                              ? "border-green-500 bg-green-50 focus:border-green-600"
+                              : "border-gray-300 focus:border-yellow-400"
                         }`}
                       >
                         <option value="">
@@ -1144,10 +1351,14 @@ function EstimatePageContent() {
                           {availabilityError}
                         </p>
                       ) : fieldErrors.preferredTime ? (
-                        <p className="mt-2 text-xs font-medium text-red-600">{fieldErrors.preferredTime}</p>
+                        <p className="mt-2 text-xs font-medium text-red-600">
+                          {fieldErrors.preferredTime}
+                        </p>
                       ) : (
                         <p className="mt-3 text-xs leading-6 text-gray-500">
-                          {client.preferredDate === todayDateString ? t("form.todayTimeNote") : t("form.normalTimeNote")}
+                          {client.preferredDate === todayDateString
+                            ? t("form.todayTimeNote")
+                            : t("form.normalTimeNote")}
                           <br />
                           <span className="text-gray-400">
                             {isEs
@@ -1167,7 +1378,12 @@ function EstimatePageContent() {
 
                     <textarea
                       value={client.notes}
-                      onChange={(e) => setClient((prev) => ({ ...prev, notes: e.target.value }))}
+                      onChange={(e) =>
+                        setClient((prev) => ({
+                          ...prev,
+                          notes: e.target.value,
+                        }))
+                      }
                       placeholder={t("form.notesPlaceholder")}
                       className="min-h-[150px] w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-sm text-black outline-none transition focus:border-yellow-400"
                     />
@@ -1184,8 +1400,12 @@ function EstimatePageContent() {
                       <Calculator className="h-4 w-4" />
                       {t("summary.badge")}
                     </div>
-                    <h2 className="mt-4 text-2xl font-extrabold text-black">{t("summary.title")}</h2>
-                    <p className="mt-2 text-sm leading-6 text-gray-600">{t("summary.description")}</p>
+                    <h2 className="mt-4 text-2xl font-extrabold text-black">
+                      {t("summary.title")}
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-gray-600">
+                      {t("summary.description")}
+                    </p>
                   </div>
 
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-400 text-black shadow-md">
@@ -1195,8 +1415,12 @@ function EstimatePageContent() {
 
                 {submitStage === "build" && (
                   <div className="mt-4 rounded-2xl border border-yellow-400 bg-yellow-50/40 p-4 shadow-sm">
-                    <p className="text-xs text-gray-600">{t("summary.selectedCategory")}</p>
-                    <p className="text-sm font-bold text-black">{categoryTitle}</p>
+                    <p className="text-xs text-gray-600">
+                      {t("summary.selectedCategory")}
+                    </p>
+                    <p className="text-sm font-bold text-black">
+                      {categoryTitle}
+                    </p>
                   </div>
                 )}
 
@@ -1208,17 +1432,25 @@ function EstimatePageContent() {
                       </div>
                     ) : (
                       selectedServices.map((item) => (
-                        <div key={item.id} className="rounded-2xl border border-yellow-400 bg-white px-4 py-3 shadow-sm">
+                        <div
+                          key={item.id}
+                          className="rounded-2xl border border-yellow-400 bg-white px-4 py-3 shadow-sm"
+                        >
                           <div className="flex items-start justify-between gap-3">
                             <div>
-                              <p className="font-bold text-black">{item.displayLabel}</p>
+                              <p className="font-bold text-black">
+                                {item.displayLabel}
+                              </p>
                               <p className="mt-1 text-xs text-gray-500">
-                                {item.qty} × {formatPublicPrice(item.price, locale)}
+                                {item.qty} ×{" "}
+                                {formatPublicPrice(item.price, locale)}
                               </p>
                             </div>
 
                             <div className="flex shrink-0 items-center gap-3">
-                              <div className="whitespace-nowrap text-sm font-extrabold text-black">{formatPublicPrice(item.subtotal, locale)}</div>
+                              <div className="whitespace-nowrap text-sm font-extrabold text-black">
+                                {formatPublicPrice(item.subtotal, locale)}
+                              </div>
 
                               <button
                                 type="button"
@@ -1240,74 +1472,102 @@ function EstimatePageContent() {
                 )}
 
                 {submitStage === "build" && (
-  <div className="mt-6">
-    {!hasTriedNext || liveErrors.length === 0 ? (
-      <button
-        type="button"
-        onClick={handleNextStep}
-        className={`inline-flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-extrabold text-black shadow-lg transition ${
-          hasSelectedServices
-            ? "bg-yellow-400 hover:scale-[1.02]"
-            : "bg-yellow-300 hover:bg-yellow-400"
-        }`}
-      >
-        {t("summary.next")}
-        <ArrowRight className="h-4 w-4" />
-      </button>
-    ) : (
-      <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-red-600">
-        <p className="text-sm font-bold">{t("errors.fixTitle")}</p>
+                  <div className="mt-6">
+                    {!hasTriedNext || liveErrors.length === 0 ? (
+                      <button
+                        type="button"
+                        onClick={handleNextStep}
+                        className={`inline-flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-extrabold text-black shadow-lg transition ${
+                          hasSelectedServices
+                            ? "bg-yellow-400 hover:scale-[1.02]"
+                            : "bg-yellow-300 hover:bg-yellow-400"
+                        }`}
+                      >
+                        {t("summary.next")}
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    ) : (
+                      <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-red-600">
+                        <p className="text-sm font-bold">
+                          {t("errors.fixTitle")}
+                        </p>
 
-        <ul className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 text-sm lg:grid-cols-2">
-          {liveErrors.map((error, index) => (
-            <li key={index} className="leading-5">
-              • {error}
-            </li>
-          ))}
-        </ul>
-      </div>
-    )}
-  </div>
-)}
+                        <ul className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 text-sm lg:grid-cols-2">
+                          {liveErrors.map((error, index) => (
+                            <li key={index} className="leading-5">
+                              • {error}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
                 {submitStage === "review" && (
                   <>
                     <div className="mt-6 max-h-[70vh] flex-1 overflow-y-auto pr-2 space-y-4">
                       <div className="rounded-2xl border border-yellow-400 bg-yellow-50/50 p-4">
-                        <p className="text-sm font-bold text-black">{t("review.title")}</p>
-                        <p className="mt-1 text-sm text-gray-600">{t("review.description")}</p>
+                        <p className="text-sm font-bold text-black">
+                          {t("review.title")}
+                        </p>
+                        <p className="mt-1 text-sm text-gray-600">
+                          {t("review.description")}
+                        </p>
                       </div>
 
                       <ReviewCard title={t("review.client")}>
                         <p>
-                          <span className="text-gray-500">{t("review.name")}:</span>{" "}
-                          <span className="font-semibold">{client.fullName || "—"}</span>
+                          <span className="text-gray-500">
+                            {t("review.name")}:
+                          </span>{" "}
+                          <span className="font-semibold">
+                            {client.fullName || "—"}
+                          </span>
                         </p>
                         <p>
-                          <span className="text-gray-500">{t("review.phone")}:</span>{" "}
-                          <span className="font-semibold">{client.phone || "—"}</span>
+                          <span className="text-gray-500">
+                            {t("review.phone")}:
+                          </span>{" "}
+                          <span className="font-semibold">
+                            {client.phone || "—"}
+                          </span>
                         </p>
                         <p>
-                          <span className="text-gray-500">{t("review.email")}:</span>{" "}
-                          <span className="font-semibold">{client.email || "—"}</span>
+                          <span className="text-gray-500">
+                            {t("review.email")}:
+                          </span>{" "}
+                          <span className="font-semibold">
+                            {client.email || "—"}
+                          </span>
                         </p>
                       </ReviewCard>
 
                       <ReviewCard title={t("review.category")}>
-                        <p className="font-semibold text-black">{categoryTitle}</p>
+                        <p className="font-semibold text-black">
+                          {categoryTitle}
+                        </p>
                       </ReviewCard>
 
                       <ReviewCard title={t("review.selectedServices")}>
                         <div className="space-y-3">
                           {selectedServices.map((item) => (
-                            <div key={item.id} className="flex items-center justify-between gap-3 border-b border-gray-100 pb-2">
+                            <div
+                              key={item.id}
+                              className="flex items-center justify-between gap-3 border-b border-gray-100 pb-2"
+                            >
                               <div className="flex flex-col">
-                                <span className="font-semibold text-black">{item.displayLabel}</span>
+                                <span className="font-semibold text-black">
+                                  {item.displayLabel}
+                                </span>
                                 <span className="text-xs text-gray-500">
-                                  {item.qty} × {formatPublicPrice(item.price, locale)}
+                                  {item.qty} ×{" "}
+                                  {formatPublicPrice(item.price, locale)}
                                 </span>
                               </div>
 
-                              <span className="font-semibold text-black">{formatPublicPrice(item.subtotal, locale)}</span>
+                              <span className="font-semibold text-black">
+                                {formatPublicPrice(item.subtotal, locale)}
+                              </span>
                             </div>
                           ))}
                         </div>
@@ -1323,7 +1583,6 @@ function EstimatePageContent() {
                             </span>
                           </div>
                         </div>
-
                       </ReviewCard>
 
                       <ReviewCard title={t("review.address")}>
@@ -1333,11 +1592,15 @@ function EstimatePageContent() {
 
                         <p className="text-gray-700">
                           {client.houseAddress || "—"}
-                          {client.apartmentNumber ? `, ${client.apartmentNumber}` : ""}
+                          {client.apartmentNumber
+                            ? `, ${client.apartmentNumber}`
+                            : ""}
                         </p>
 
                         {client.addressDetails && (
-                          <p className="text-xs text-gray-500">{client.addressDetails}</p>
+                          <p className="text-xs text-gray-500">
+                            {client.addressDetails}
+                          </p>
                         )}
                       </ReviewCard>
 
@@ -1347,16 +1610,22 @@ function EstimatePageContent() {
 
                           <p className="font-semibold text-black">
                             {client.preferredDate || "—"}{" "}
-                            {client.preferredTime ? `${isEs ? "a las" : "at"} ${client.preferredTime}` : ""}
+                            {client.preferredTime
+                              ? `${isEs ? "a las" : "at"} ${client.preferredTime}`
+                              : ""}
                           </p>
                         </div>
                       </ReviewCard>
 
                       <ReviewCard title={t("review.notes")}>
-                        <p className="text-black">{client.notes.trim() || t("review.noNotes")}</p>
+                        <p className="text-black">
+                          {client.notes.trim() || t("review.noNotes")}
+                        </p>
                       </ReviewCard>
 
-                      <p className="text-center text-xs text-gray-500">{t("review.noPayment")}</p>
+                      <p className="text-center text-xs text-gray-500">
+                        {t("review.noPayment")}
+                      </p>
 
                       {sendError && (
                         <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
@@ -1365,7 +1634,7 @@ function EstimatePageContent() {
                       )}
                     </div>
 
-                   <div className="mt-6 shrink-0 pb-4">
+                    <div className="mt-6 shrink-0 pb-4">
                       <div className="flex gap-3">
                         <button
                           type="button"
@@ -1398,9 +1667,13 @@ function EstimatePageContent() {
                         </div>
 
                         <div>
-                          <p className="text-lg font-extrabold text-black">{t("success.title")}</p>
+                          <p className="text-lg font-extrabold text-black">
+                            {t("success.title")}
+                          </p>
 
-                          <p className="mt-2 text-sm leading-6 text-gray-600">{t("success.description")}</p>
+                          <p className="mt-2 text-sm leading-6 text-gray-600">
+                            {t("success.description")}
+                          </p>
 
                           <div className="mt-4 space-y-1 text-sm text-gray-700">
                             <p>• {t("success.point1")}</p>
@@ -1490,7 +1763,9 @@ function ReviewCard({
 }) {
   return (
     <div className="rounded-2xl border border-yellow-400 bg-white p-4 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{title}</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+        {title}
+      </p>
       <div className="mt-2 space-y-2 text-sm text-black">{children}</div>
     </div>
   );
@@ -1537,14 +1812,16 @@ function Field({
           disabled
             ? "cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400"
             : status === "error"
-            ? "border-red-400 bg-red-50 text-black focus:border-red-500"
-            : status === "success"
-            ? "border-green-500 bg-green-50 text-black focus:border-green-600"
-            : "border-gray-300 bg-white text-black focus:border-yellow-400"
+              ? "border-red-400 bg-red-50 text-black focus:border-red-500"
+              : status === "success"
+                ? "border-green-500 bg-green-50 text-black focus:border-green-600"
+                : "border-gray-300 bg-white text-black focus:border-yellow-400"
         }`}
       />
 
-      {error ? <p className="mt-2 text-xs font-medium text-red-600">{error}</p> : null}
+      {error ? (
+        <p className="mt-2 text-xs font-medium text-red-600">{error}</p>
+      ) : null}
     </div>
   );
 }
@@ -1583,8 +1860,8 @@ function SelectField({
             status === "error"
               ? "border-red-400 bg-red-50 text-black focus:border-red-500"
               : status === "success"
-              ? "border-green-500 bg-green-50 text-black focus:border-green-600"
-              : "border-gray-300 bg-white text-black focus:border-yellow-400"
+                ? "border-green-500 bg-green-50 text-black focus:border-green-600"
+                : "border-gray-300 bg-white text-black focus:border-yellow-400"
           }`}
         >
           <option value="">{placeholder || "Select option"}</option>
@@ -1600,7 +1877,9 @@ function SelectField({
         </div>
       </div>
 
-      {error ? <p className="mt-2 text-xs font-medium text-red-600">{error}</p> : null}
+      {error ? (
+        <p className="mt-2 text-xs font-medium text-red-600">{error}</p>
+      ) : null}
     </div>
   );
 }

@@ -16,6 +16,11 @@ const eventSchema = z.object({
     "estimate_submitted",
     "order_confirmed",
     "order_completed",
+    "ac_promo_view",
+    "ac_promo_click",
+    "ac_cleaning_booking_click",
+    "ac_cleaning_whatsapp_click",
+    "ac_cleaning_booking_completed",
   ]),
   eventId: z.string().uuid(),
   sessionId: z.string().uuid(),
@@ -33,7 +38,9 @@ const eventSchema = z.object({
   deviceType: z.enum(["mobile", "tablet", "desktop"]),
   durationMs: z.number().int().min(0).max(86400000).optional(),
   scrollDepth: z.number().int().min(0).max(100).optional(),
-  metadata: z.record(z.union([z.string(), z.number(), z.boolean(), z.null()])).optional(),
+  metadata: z
+    .record(z.union([z.string(), z.number(), z.boolean(), z.null()]))
+    .optional(),
 });
 
 export async function POST(request: Request) {
@@ -68,8 +75,14 @@ export async function POST(request: Request) {
     if (!error) {
       const city = cityFromTrackedPath(value.pagePath);
       await Promise.all([
-        database.from("marketing_events").update({ city }).eq("event_id", value.eventId),
-        database.from("analytics_sessions").update({ city }).eq("session_id", value.sessionId),
+        database
+          .from("marketing_events")
+          .update({ city })
+          .eq("event_id", value.eventId),
+        database
+          .from("analytics_sessions")
+          .update({ city })
+          .eq("session_id", value.sessionId),
       ]);
     }
     return Response.json({ ok: !error });

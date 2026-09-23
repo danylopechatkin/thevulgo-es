@@ -88,12 +88,14 @@ export function trackMarketingEvent(
     ...attribution,
   });
   const adEvent =
-    eventName === "whatsapp_click"
+    eventName === "whatsapp_click" || eventName === "ac_cleaning_whatsapp_click"
       ? "contact"
       : eventName === "estimate_submitted" ||
-          eventName === "tv_calculator_submitted"
+          eventName === "tv_calculator_submitted" ||
+          eventName === "ac_cleaning_booking_completed"
         ? "generate_lead"
-        : eventName === "estimate_click"
+        : eventName === "estimate_click" ||
+            eventName === "ac_cleaning_booking_click"
           ? "begin_checkout"
           : "page_view";
   const adWindow = window as Window & { gtag?: (...args: unknown[]) => void };

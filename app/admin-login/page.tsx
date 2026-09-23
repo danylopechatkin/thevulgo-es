@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
         console.error("❌ LOGIN ERROR", {
           message: error.message,
           name: error.name,
-          status: (error as any)?.status || null,
+          status: error.status || null,
         });
 
         setError(error.message || "Login failed");
@@ -51,13 +51,15 @@ export default function AdminLoginPage() {
       console.log("✅ LOGIN OK, REDIRECT TO /admin");
 
       window.location.href = "/admin";
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const caught =
+        err instanceof Error ? err : new Error("Unexpected login error");
       console.error("❌ LOGIN EXCEPTION", {
-        message: err?.message || "Unknown error",
-        stack: err?.stack || null,
+        message: caught.message,
+        stack: caught.stack || null,
       });
 
-      setError(err?.message || "Unexpected login error");
+      setError(caught.message);
       setLoading(false);
     }
   };

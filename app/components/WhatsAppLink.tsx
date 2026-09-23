@@ -14,6 +14,8 @@ type Props = {
   service?: string;
   message?: string;
   onClick?: () => void;
+  eventName?: string;
+  eventMetadata?: Record<string, string | number | boolean | null>;
 };
 
 function buildMessage(service?: string, customMessage?: string) {
@@ -31,6 +33,8 @@ export default function WhatsAppLink({
   service,
   message,
   onClick,
+  eventName,
+  eventMetadata,
 }: Props) {
   const text = buildMessage(service, message);
   const href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
@@ -39,6 +43,13 @@ export default function WhatsAppLink({
     onClick?.();
     const attribution = getClientAttribution();
     trackMarketingEvent("whatsapp_click", { source, service });
+    if (eventName) {
+      trackMarketingEvent(eventName, {
+        source,
+        service,
+        metadata: eventMetadata,
+      });
+    }
     const payload = JSON.stringify({
       source,
       service: service || null,
