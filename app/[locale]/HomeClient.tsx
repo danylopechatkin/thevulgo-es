@@ -106,7 +106,7 @@ export default function HomeClient({
 
   return (
     <main className="bg-white text-neutral-950">
-      <section className="relative overflow-hidden border-b border-neutral-200 bg-[radial-gradient(circle_at_75%_20%,#fff4b8_0,transparent_38%)]">
+      <section className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_20%,#fff4b8_0,transparent_38%)]">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-[1.1fr_.9fr] md:px-8 md:py-24">
           <div>
             <AvailabilityBadge locale={locale} />

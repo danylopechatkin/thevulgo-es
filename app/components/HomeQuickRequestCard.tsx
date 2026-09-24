@@ -210,7 +210,7 @@ export default function HomeQuickRequestCard({
 
   if (step === "success") {
     return (
-      <div className="flex min-h-[430px] flex-col justify-center rounded-3xl bg-neutral-950 p-7 text-white shadow-2xl md:p-9">
+      <div className="flex min-h-[430px] flex-col justify-center rounded-3xl bg-neutral-950 p-7 font-sans text-white shadow-2xl [&_button]:font-[inherit] md:p-9">
         <span className="grid h-11 w-11 place-items-center rounded-full bg-emerald-100">
           <CheckCircle2 className="h-6 w-6 text-emerald-700" />
         </span>
@@ -240,7 +240,7 @@ export default function HomeQuickRequestCard({
   }
 
   return (
-    <div className="min-h-[430px] rounded-3xl bg-neutral-950 p-6 text-white shadow-2xl md:p-8">
+    <div className="min-h-[430px] rounded-3xl bg-neutral-950 p-6 font-sans text-white shadow-2xl [&_button]:font-[inherit] [&_input]:font-[inherit] [&_textarea]:font-[inherit] md:p-8">
       <div className="flex items-center gap-3">
         <Sparkles className="h-6 w-6 shrink-0 text-[#ffcc00]" />
         <div>
