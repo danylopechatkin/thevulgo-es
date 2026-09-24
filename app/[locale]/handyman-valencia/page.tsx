@@ -160,28 +160,28 @@ export default async function HandymanValenciaPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <section className="relative overflow-hidden border-b border-yellow-200 bg-[radial-gradient(circle_at_top_right,_#fef08a_0,_#fff_38%)]">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(500px,.9fr)] lg:gap-10 lg:px-8 lg:py-20 xl:grid-cols-[minmax(0,1fr)_600px]">
-          <div>
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(500px,.9fr)] lg:gap-10 lg:px-8 lg:py-14 xl:grid-cols-[minmax(0,1fr)_600px]">
+          <div className="lg:-translate-y-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-2 text-sm font-bold shadow-sm">
               <MapPin className="h-4 w-4 text-yellow-500" />
               {isEs ? "Valencia y alrededores" : "Valencia and nearby"}
             </div>
-            <h1 className="mt-6 text-4xl font-black tracking-tight sm:text-6xl">
+            <h1 className="mt-5 max-w-[620px] text-4xl font-black leading-[1.02] tracking-tight sm:text-5xl xl:text-[3.25rem]">
               {isEs ? "Manitas en Valencia para montaje y pequeñas reparaciones" : "English-speaking handyman in Valencia"}
             </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-700">
+            <p className="mt-5 max-w-[600px] text-lg leading-8 text-neutral-700">
               {isEs
                 ? "Montaje de TV, muebles IKEA, estanterías, barras y rieles de cortina y pequeñas reparaciones en Valencia. Envía fotos por WhatsApp para revisar el trabajo y recibir un presupuesto claro antes de reservar."
                 : "TV mounting, IKEA furniture assembly, shelves, curtain rods and rails, and small home repairs in Valencia. Send photos by WhatsApp so the job can be reviewed and quoted before booking."}
             </p>
-            <div className="mt-6 flex flex-wrap gap-2 text-sm font-bold">
+            <div className="mt-5 flex flex-wrap gap-2 text-sm font-bold">
               {[isEs ? "35 €" : "€35", isEs ? "Respuesta rápida" : "Fast response", isEs ? "Presupuesto antes de empezar" : "Quote before starting", "ES / EN"].map((item) => (
                 <span key={item} className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-4 py-2 text-white">
                   <Check className="h-4 w-4 text-yellow-400" /> {item}
                 </span>
               ))}
             </div>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-400 px-6 py-4 font-black text-black shadow-lg transition hover:-translate-y-0.5 hover:bg-yellow-300">
                 <MessageCircle className="h-5 w-5" />
                 {isEs ? "Enviar fotos y pedir presupuesto" : "Send photos and request a quote"}

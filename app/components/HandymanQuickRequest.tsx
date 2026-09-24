@@ -376,7 +376,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
   return (
     <form
       onSubmit={submit}
-      className="rounded-[1.75rem] border-2 border-yellow-400 bg-white p-4 shadow-2xl sm:p-5 lg:-translate-y-5"
+      className="rounded-[1.75rem] border-2 border-yellow-400 bg-white p-4 shadow-2xl sm:p-5 lg:-translate-y-8"
     >
       <div className="flex items-center gap-3">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-yellow-400">
