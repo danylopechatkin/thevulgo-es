@@ -29,7 +29,56 @@ type OrderService = {
   price: number;
   qty: number;
   subtotal?: number;
+  photo_paths?: string[];
 };
+
+type SendRequestData = {
+  [key: string]: unknown;
+  addressDetails?: string;
+  analyticsSessionId?: string;
+  apartmentNumber?: string;
+  area?: string;
+  attributionPagePath?: string;
+  attributionService?: string;
+  attributionSource?: string;
+  category?: string;
+  city?: string;
+  ctaId?: string;
+  deviceType?: string;
+  displayedPrice?: number | string;
+  email?: string;
+  firstTouch?: { source?: string };
+  flexibleSchedule?: boolean;
+  fullName?: string;
+  gclid?: string;
+  houseAddress?: string;
+  landingPage?: string;
+  lastTouch?: { source?: string };
+  locale?: string;
+  notes?: string;
+  phone?: string;
+  preferredDate?: string;
+  preferredTime?: string;
+  promoId?: string;
+  selectedPrice?: number | string;
+  serviceCategory?: string;
+  serviceId?: string;
+  services?: OrderService[];
+  sourceUrl?: string;
+  utmCampaign?: string;
+  utmContent?: string;
+  utmMedium?: string;
+  utmSource?: string;
+  utmTerm?: string;
+  visitorId?: string;
+};
+
+const HANDYMAN_PHOTO_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+]);
+const HANDYMAN_PHOTO_BUCKET = "worker-job-photos";
 
 function formatMadridFromUTC(date: string) {
   return new Intl.DateTimeFormat("en-GB", {
@@ -42,12 +91,42 @@ function formatMadridFromUTC(date: string) {
 export async function POST(req: Request) {
   try {
     const { resend, supabaseAdmin } = getServerClients();
-    const data = await req.json();
+    const contentType = req.headers.get("content-type") || "";
+    let data: SendRequestData;
+    let photoFiles: File[] = [];
+    if (contentType.includes("multipart/form-data")) {
+      const formData = await req.formData();
+      const payload = formData.get("payload");
+      if (typeof payload !== "string") {
+        return Response.json(
+          { success: false, error: "Invalid request payload" },
+          { status: 400 },
+        );
+      }
+      data = JSON.parse(payload) as SendRequestData;
+      photoFiles = formData
+        .getAll("photos")
+        .filter((entry): entry is File => entry instanceof File);
+    } else {
+      data = (await req.json()) as SendRequestData;
+    }
 
     const locale = data.locale === "es" ? "es" : "en";
     const isEs = locale === "es";
     const isHandymanQuickRequest =
       data.attributionSource === "handyman_quick_request";
+    if (
+      photoFiles.length > 5 ||
+      photoFiles.some(
+        (file) =>
+          !HANDYMAN_PHOTO_TYPES.has(file.type) || file.size > 6 * 1024 * 1024,
+      )
+    ) {
+      return Response.json(
+        { success: false, error: "Use up to 5 JPG, PNG or WebP photos of 6 MB each." },
+        { status: 400 },
+      );
+    }
     const city = String(data.city || "").trim();
 
     if (!isAvailableCity(city)) {
@@ -139,13 +218,45 @@ export async function POST(req: Request) {
       );
     }
 
+    const photoPaths: string[] = [];
+    if (isHandymanQuickRequest && photoFiles.length) {
+      const extensionByType: Record<string, string> = {
+        "image/jpeg": "jpg",
+        "image/png": "png",
+        "image/webp": "webp",
+      };
+      for (const file of photoFiles) {
+        const path = `customer-requests/${requestId}/${crypto.randomUUID()}.${extensionByType[file.type]}`;
+        const { error: photoError } = await supabaseAdmin.storage
+          .from(HANDYMAN_PHOTO_BUCKET)
+          .upload(path, file, { contentType: file.type, upsert: false });
+        if (photoError) {
+          if (photoPaths.length) {
+            await supabaseAdmin.storage
+              .from(HANDYMAN_PHOTO_BUCKET)
+              .remove(photoPaths);
+          }
+          console.error("Handyman photo upload failed", {
+            requestId,
+            error: photoError.message,
+          });
+          return Response.json(
+            { success: false, error: "Could not upload photos" },
+            { status: 500 },
+          );
+        }
+        photoPaths.push(path);
+      }
+    }
+
     let subtotal: number;
     try {
       subtotal = calculatePublicTotal(data.services);
       data.services = data.services.map(
-        (service: { price: number; qty: number }) => ({
+        (service: { price: number; qty: number }, index: number) => ({
           ...service,
           subtotal: calculatePublicTotal([service]),
+          ...(index === 0 && photoPaths.length ? { photo_paths: photoPaths } : {}),
         }),
       );
     } catch {
@@ -223,6 +334,11 @@ export async function POST(req: Request) {
       .single();
 
     if (orderInsertError) {
+      if (photoPaths.length) {
+        await supabaseAdmin.storage
+          .from(HANDYMAN_PHOTO_BUCKET)
+          .remove(photoPaths);
+      }
       console.error("❌ SUPABASE INSERT ERROR:", orderInsertError);
 
       if (orderInsertError.code === "23505") {
@@ -326,6 +442,17 @@ export async function POST(req: Request) {
       )
       .join("");
 
+    const signedPhotoUrls = (
+      await Promise.all(
+        photoPaths.map(async (path) => {
+          const { data: signed } = await supabaseAdmin.storage
+            .from(HANDYMAN_PHOTO_BUCKET)
+            .createSignedUrl(path, 60 * 60 * 24 * 30);
+          return signed?.signedUrl || null;
+        }),
+      )
+    ).filter((url): url is string => Boolean(url));
+
     const adminResult = await resend.emails.send({
       from: "TheVulgo <info@thevulgo.es>",
       to: ["info@thevulgo.es"],
@@ -355,6 +482,7 @@ export async function POST(req: Request) {
         <p><b>Notes:</b> ${data.notes || "—"}</p>
         <p><b>Total:</b> ${isHandymanQuickRequest ? "Pending quote" : `€${total.toFixed(2)}`}</p>
         ${insertedOrder?.id ? `<p><b>CRM order ID:</b> ${insertedOrder.id}</p>` : ""}
+        ${signedPhotoUrls.length ? `<h3>Fotos del trabajo</h3><ul>${signedPhotoUrls.map((url, index) => `<li><a href="${url}">Ver foto ${index + 1}</a></li>`).join("")}</ul>` : ""}
         ${
           isHandymanQuickRequest
             ? `<h3>Trabajo</h3><p>${data.notes || "—"}</p>`
@@ -466,6 +594,7 @@ ${isHandymanQuickRequest && data.flexibleSchedule ? `<br/><span style="font-size
 <div style="font-size:13px;color:#555;">
 ${data.notes || labels.noNotes}
 </div>
+${isHandymanQuickRequest && photoPaths.length ? `<div style="margin-top:8px;font-size:13px;font-weight:700;">${isEs ? "Fotos recibidas" : "Photos received"}: ${photoPaths.length}</div>` : ""}
 </td>
 </tr>
 

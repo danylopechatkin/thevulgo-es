@@ -51,6 +51,7 @@ type Service = {
   price: number;
   qty: number;
   subtotal: number;
+  photo_paths?: string[];
 };
 type Order = {
   id: string;
@@ -1224,6 +1225,24 @@ function OrderPanel({
                     </span>
                   </div>
                 ))}
+                {order.services?.some((service) => service.photo_paths?.length) ? (
+                  <div className="mt-4 border-t border-yellow-200 pt-4">
+                    <p className="font-black">Customer request photos</p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {order.services.flatMap((service) => service.photo_paths || []).map((_, index) => (
+                        <a
+                          key={index}
+                          href={`/api/admin/orders/${order.id}/request-photo?index=${index}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="rounded-xl border border-neutral-300 bg-neutral-50 px-3 py-2 text-sm font-bold"
+                        >
+                          View photo {index + 1}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </div>
               {order.deposit_required ? (
                 <p className="mt-3 text-sm font-black text-yellow-700">

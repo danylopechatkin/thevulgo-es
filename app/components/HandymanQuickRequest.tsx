@@ -5,13 +5,16 @@ import {
   ArrowRight,
   CalendarDays,
   CheckCircle2,
+  ImagePlus,
   LoaderCircle,
   Mail,
   MapPin,
   Phone,
   Send,
+  X,
   Wrench,
 } from "lucide-react";
+import Image from "next/image";
 import {
   getClientAttribution,
   trackMarketingEvent,
@@ -57,17 +60,32 @@ const emptyForm: FormState = {
   flexibleSchedule: false,
 };
 
+type SelectedPhoto = { file: File; preview: string };
+const PHOTO_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+const MAX_PHOTOS = 5;
+const MAX_PHOTO_SIZE = 6 * 1024 * 1024;
+
 export default function HandymanQuickRequest({ locale }: { locale: string }) {
   const es = locale === "es";
   const [form, setForm] = useState<FormState>(emptyForm);
   const [submittedRequest, setSubmittedRequest] = useState<FormState | null>(null);
+  const [photos, setPhotos] = useState<SelectedPhoto[]>([]);
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
   const [loadingAvailability, setLoadingAvailability] = useState(false);
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const started = useRef(false);
+  const photosRef = useRef<SelectedPhoto[]>([]);
   const today = madridToday();
+
+  useEffect(() => {
+    photosRef.current = photos;
+  }, [photos]);
+
+  useEffect(() => () => {
+    photosRef.current.forEach((photo) => URL.revokeObjectURL(photo.preview));
+  }, []);
 
   useEffect(() => {
     trackMarketingEvent("calculator_view", {
@@ -156,54 +174,57 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
 
     try {
       const attribution = getClientAttribution();
+      const payload = {
+        fullName: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim(),
+        city: "Valencia",
+        area: form.location.trim(),
+        houseAddress: form.location.trim(),
+        apartmentNumber: "",
+        addressDetails: "",
+        preferredDate: form.date,
+        preferredTime: form.time,
+        flexibleSchedule: form.flexibleSchedule,
+        notes: form.description.trim(),
+        category: "Manitas",
+        services: [
+          {
+            id: "handyman-quick-request",
+            label: es ? "Servicio de manitas" : "Handyman service",
+            price: 0,
+            qty: 1,
+            description: form.description.trim(),
+            flexible_schedule: form.flexibleSchedule,
+          },
+        ],
+        locale,
+        sourceUrl: window.location.href,
+        attributionSource: "handyman_quick_request",
+        attributionService: "Handyman",
+        attributionPagePath: window.location.pathname,
+        analyticsSessionId: attribution.sessionId,
+        landingPage: attribution.landingPage,
+        utmSource: attribution.utmSource,
+        utmMedium: attribution.utmMedium,
+        utmCampaign: attribution.utmCampaign,
+        utmTerm: attribution.utmTerm,
+        utmContent: attribution.utmContent,
+        visitorId: attribution.visitorId,
+        gclid: attribution.gclid,
+        firstTouch: attribution.firstTouch,
+        lastTouch: attribution.lastTouch,
+        deviceType: attribution.deviceType,
+        serviceCategory: "handyman",
+        serviceId: "handyman_quick_request",
+        ctaId: "handyman_hero_quick_request",
+      };
+      const requestBody = new FormData();
+      requestBody.append("payload", JSON.stringify(payload));
+      photos.forEach(({ file }) => requestBody.append("photos", file));
       const response = await fetch("/api/send", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: form.name.trim(),
-          email: form.email.trim(),
-          phone: form.phone.trim(),
-          city: "Valencia",
-          area: form.location.trim(),
-          houseAddress: form.location.trim(),
-          apartmentNumber: "",
-          addressDetails: "",
-          preferredDate: form.date,
-          preferredTime: form.time,
-          flexibleSchedule: form.flexibleSchedule,
-          notes: form.description.trim(),
-          category: "Manitas",
-          services: [
-            {
-              id: "handyman-quick-request",
-              label: es ? "Servicio de manitas" : "Handyman service",
-              price: 0,
-              qty: 1,
-              description: form.description.trim(),
-              flexible_schedule: form.flexibleSchedule,
-            },
-          ],
-          locale,
-          sourceUrl: window.location.href,
-          attributionSource: "handyman_quick_request",
-          attributionService: "Handyman",
-          attributionPagePath: window.location.pathname,
-          analyticsSessionId: attribution.sessionId,
-          landingPage: attribution.landingPage,
-          utmSource: attribution.utmSource,
-          utmMedium: attribution.utmMedium,
-          utmCampaign: attribution.utmCampaign,
-          utmTerm: attribution.utmTerm,
-          utmContent: attribution.utmContent,
-          visitorId: attribution.visitorId,
-          gclid: attribution.gclid,
-          firstTouch: attribution.firstTouch,
-          lastTouch: attribution.lastTouch,
-          deviceType: attribution.deviceType,
-          serviceCategory: "handyman",
-          serviceId: "handyman_quick_request",
-          ctaId: "handyman_hero_quick_request",
-        }),
+        body: requestBody,
       });
       const body = await response.json();
       if (!response.ok || !body.success) {
@@ -292,12 +313,11 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
           <div className="mt-3 grid gap-2 border-t border-neutral-200 pt-3 text-sm font-semibold text-neutral-700">
             <p className="flex items-center gap-2">
               <CalendarDays className="h-4 w-4 shrink-0 text-yellow-600" />
-              <span className="capitalize">{formattedDate}</span> · {submittedRequest.time}
-              {submittedRequest.flexibleSchedule
-                ? es
-                  ? " · Flexible"
-                  : " · Flexible"
-                : ""}
+              {submittedRequest.flexibleSchedule ? (
+                es ? "Horario flexible" : "Flexible schedule"
+              ) : (
+                <><span className="capitalize">{formattedDate}</span> · {submittedRequest.time}</>
+              )}
             </p>
             <p className="flex items-start gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-yellow-600" />
@@ -357,7 +377,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
   return (
     <form
       onSubmit={submit}
-      className="rounded-[1.75rem] border-2 border-yellow-400 bg-white p-4 shadow-2xl sm:p-5"
+      className="rounded-[1.75rem] border-2 border-yellow-400 bg-white p-4 shadow-2xl sm:p-5 lg:-translate-y-5"
     >
       <div className="flex items-center gap-3">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-yellow-400">
@@ -380,7 +400,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
           onChange={(event) => update("description", event.target.value)}
           rows={3}
           maxLength={1200}
-          className="mt-1.5 min-h-24 w-full resize-y rounded-xl border border-neutral-300 bg-white px-4 py-3 text-base font-normal text-neutral-950 outline-none transition placeholder:text-neutral-400 focus:border-yellow-500 focus:ring-4 focus:ring-yellow-100"
+          className="mt-1.5 h-24 w-full resize-y rounded-xl border border-neutral-300 bg-white px-4 py-3 text-base font-normal text-neutral-950 outline-none transition placeholder:text-neutral-400 focus:border-yellow-500 focus:ring-4 focus:ring-yellow-100"
           placeholder={
             es
               ? "Ej. Necesito reparar un agujero en pladur y volver a colocar una estantería."
@@ -389,6 +409,82 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
           required
         />
       </label>
+
+      <div className="mt-3 rounded-2xl border border-neutral-200 bg-neutral-50 p-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-xs font-extrabold">
+              {es ? "Fotos del trabajo" : "Job photos"}
+            </p>
+            <p className="mt-0.5 text-[11px] leading-4 text-neutral-500">
+              {es
+                ? "Opcional, pero nos ayuda a darte un presupuesto más preciso."
+                : "Optional, but it helps us give you a more accurate quote."}
+            </p>
+          </div>
+          <label className="inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-neutral-950 bg-white px-4 py-2 text-xs font-black transition hover:border-yellow-500 disabled:opacity-50">
+            <ImagePlus className="h-4 w-4" />
+            {es ? "+ Añadir fotos" : "+ Add photos"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              className="sr-only"
+              disabled={photos.length >= MAX_PHOTOS}
+              onChange={(event) => {
+                const selected = Array.from(event.target.files || []);
+                const remaining = MAX_PHOTOS - photos.length;
+                const invalid = selected.find(
+                  (file) =>
+                    !PHOTO_TYPES.has(file.type) || file.size > MAX_PHOTO_SIZE,
+                );
+                if (invalid) {
+                  setError(
+                    es
+                      ? "Usa fotos JPG, PNG o WebP de hasta 6 MB."
+                      : "Use JPG, PNG or WebP photos up to 6 MB.",
+                  );
+                } else if (selected.length > remaining) {
+                  setError(
+                    es
+                      ? "Puedes añadir hasta 5 fotos."
+                      : "You can add up to 5 photos.",
+                  );
+                }
+                const accepted = selected
+                  .filter(
+                    (file) =>
+                      PHOTO_TYPES.has(file.type) && file.size <= MAX_PHOTO_SIZE,
+                  )
+                  .slice(0, remaining)
+                  .map((file) => ({ file, preview: URL.createObjectURL(file) }));
+                setPhotos((current) => [...current, ...accepted]);
+                event.target.value = "";
+              }}
+            />
+          </label>
+        </div>
+        {photos.length ? (
+          <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-5">
+            {photos.map((photo, index) => (
+              <div key={photo.preview} className="relative aspect-square overflow-hidden rounded-xl border border-neutral-200 bg-white">
+                <Image src={photo.preview} alt={es ? `Foto ${index + 1}` : `Photo ${index + 1}`} fill unoptimized className="object-cover" />
+                <button
+                  type="button"
+                  aria-label={es ? `Eliminar foto ${index + 1}` : `Remove photo ${index + 1}`}
+                  onClick={() => {
+                    URL.revokeObjectURL(photo.preview);
+                    setPhotos((current) => current.filter((item) => item !== photo));
+                  }}
+                  className="absolute right-1 top-1 grid h-7 w-7 place-items-center rounded-full bg-neutral-950 text-white shadow"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : null}
+      </div>
 
       <div className="mt-3 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
         <label className="block min-w-0 text-xs font-extrabold">
