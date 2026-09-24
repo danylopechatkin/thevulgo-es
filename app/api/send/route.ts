@@ -161,7 +161,11 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!data.city || !data.area || !data.houseAddress) {
+    if (
+      !data.city ||
+      !data.houseAddress ||
+      (!isHandymanQuickRequest && !data.area)
+    ) {
       return Response.json(
         { success: false, error: "Missing address data" },
         { status: 400 },
@@ -471,15 +475,14 @@ export async function POST(req: Request) {
         <p><b>Category:</b> ${data.category || "—"}</p>
         <p><b>Funnel:</b> ${data.attributionSource || "calculator"}</p>
         <p><b>City:</b> ${city}</p>
-        <p><b>Area:</b> ${data.area || "—"}</p>
+        ${isHandymanQuickRequest ? "" : `<p><b>Area:</b> ${data.area || "—"}</p>`}
         <p><b>Address:</b> ${data.houseAddress || "—"}</p>
-        <p><b>Apartment:</b> ${data.apartmentNumber || "—"}</p>
-        <p><b>Extra details:</b> ${data.addressDetails || "—"}</p>
+        ${isHandymanQuickRequest ? "" : `<p><b>Apartment:</b> ${data.apartmentNumber || "—"}</p><p><b>Extra details:</b> ${data.addressDetails || "—"}</p>`}
         <p><b>Preferred date:</b> ${data.preferredDate || "—"}</p>
         <p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>
         ${isHandymanQuickRequest ? `<p><b>Flexible schedule:</b> ${data.flexibleSchedule ? "Yes" : "No"}</p>` : ""}
         <p><b>Scheduled UTC:</b> ${scheduledAt}</p>
-        <p><b>Notes:</b> ${data.notes || "—"}</p>
+        ${isHandymanQuickRequest ? "" : `<p><b>Notes:</b> ${data.notes || "—"}</p>`}
         <p><b>Total:</b> ${isHandymanQuickRequest ? "Pending quote" : `€${total.toFixed(2)}`}</p>
         ${insertedOrder?.id ? `<p><b>CRM order ID:</b> ${insertedOrder.id}</p>` : ""}
         ${signedPhotoUrls.length ? `<h3>Fotos del trabajo</h3><ul>${signedPhotoUrls.map((url, index) => `<li><a href="${url}">Ver foto ${index + 1}</a></li>`).join("")}</ul>` : ""}
@@ -569,12 +572,11 @@ ${labels.total}
 <tr>
 <td style="padding:0 30px 20px 30px;">
 <div style="font-size:12px;color:#666;">${labels.address}</div>
-<div style="font-weight:700;">
-${city}, ${data.area || ""}
-</div>
-<div style="font-size:13px;color:#555;">
-${data.houseAddress || ""} ${data.apartmentNumber || ""}
-</div>
+${
+  isHandymanQuickRequest
+    ? `<div style="font-weight:700;">${data.houseAddress || ""}, ${city}</div>`
+    : `<div style="font-weight:700;">${city}, ${data.area || ""}</div><div style="font-size:13px;color:#555;">${data.houseAddress || ""} ${data.apartmentNumber || ""}</div>`
+}
 </td>
 </tr>
 

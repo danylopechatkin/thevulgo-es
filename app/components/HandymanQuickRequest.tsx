@@ -178,7 +178,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
         email: form.email.trim(),
         phone: form.phone.trim(),
         city: "Valencia",
-        area: form.location.trim(),
+        area: "",
         houseAddress: form.location.trim(),
         apartmentNumber: "",
         addressDetails: "",
@@ -312,11 +312,12 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
           <div className="mt-3 grid gap-2 border-t border-neutral-200 pt-3 text-sm font-semibold text-neutral-700">
             <p className="flex items-center gap-2">
               <CalendarDays className="h-4 w-4 shrink-0 text-yellow-600" />
+              <span className="capitalize">{formattedDate}</span> · {submittedRequest.time}
               {submittedRequest.flexibleSchedule ? (
-                es ? "Horario flexible" : "Flexible schedule"
-              ) : (
-                <><span className="capitalize">{formattedDate}</span> · {submittedRequest.time}</>
-              )}
+                <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-[10px] font-black text-neutral-700">
+                  {es ? "Horario flexible" : "Flexible schedule"}
+                </span>
+              ) : null}
             </p>
             <p className="flex items-start gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-yellow-600" />
