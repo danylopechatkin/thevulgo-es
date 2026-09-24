@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import TvMiniCalculator from "@/app/components/TvMiniCalculator";
+import TvMiniCalculator, {
+  TvHeroWhatsAppCta,
+} from "@/app/components/TvMiniCalculator";
 import { getCatalogServices } from "@/lib/serviceCatalog";
 import {
   CheckCircle2,
@@ -297,15 +299,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={whatsappUrl}
-                className="inline-flex items-center justify-center rounded-xl bg-yellow-400 px-6 py-4 font-black text-black shadow-md transition hover:scale-105 hover:bg-yellow-300"
-              >
-                {isEs
-                  ? "Pedir presupuesto por WhatsApp"
-                  : "Request a quote on WhatsApp"}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              <TvHeroWhatsAppCta locale={locale} href={whatsappUrl} />
 
               <a
                 href={`tel:+${phoneNumber}`}

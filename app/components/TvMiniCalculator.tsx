@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
+  ArrowRight,
   BadgeCheck,
   CalendarDays,
   CheckCircle2,
@@ -16,6 +17,7 @@ import {
   getClientAttribution,
   trackMarketingEvent,
 } from "@/lib/client-attribution";
+import { marketWhatsAppHref } from "@/lib/marketLinks";
 
 type TvOption = {
   id: string;
@@ -31,6 +33,12 @@ type FormState = {
   date: string;
   time: string;
 };
+type SubmittedRequest = FormState & {
+  service: string;
+  price: number;
+};
+
+const TV_BOOKING_SUCCESS_EVENT = "thevulgo:tv-booking-success";
 
 const TIMES = Array.from(
   { length: 14 },
@@ -73,6 +81,8 @@ export default function TvMiniCalculator({
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [submittedRequest, setSubmittedRequest] =
+    useState<SubmittedRequest | null>(null);
   const started = useRef(false);
   const today = madridToday();
 
@@ -222,7 +232,15 @@ export default function TvMiniCalculator({
         service: baseId,
         metadata: { calculator_type: "tv_mini", value: total, currency: "EUR", locale },
       });
+      setSubmittedRequest({
+        ...form,
+        service: selected[0]?.label || (es ? "Montaje de TV" : "TV mounting"),
+        price: total,
+      });
       setSuccess(true);
+      window.dispatchEvent(
+        new CustomEvent(TV_BOOKING_SUCCESS_EVENT, { detail: true }),
+      );
     } catch (cause) {
       trackMarketingEvent("booking_submit_failed", { source: "tv_landing", service: baseId, metadata: { calculator_type: "tv_mini", error_type: "api_failure", endpoint: "/api/send", locale } });
       setError(
@@ -240,27 +258,116 @@ export default function TvMiniCalculator({
     }
   };
 
-  if (success)
+  const startAnotherRequest = () => {
+    setSuccess(false);
+    setSubmittedRequest(null);
+    setError("");
+    window.dispatchEvent(
+      new CustomEvent(TV_BOOKING_SUCCESS_EVENT, { detail: false }),
+    );
+  };
+
+  const formattedDate = submittedRequest?.date
+    ? new Intl.DateTimeFormat(es ? "es-ES" : "en-GB", {
+        day: "numeric",
+        month: "long",
+      }).format(new Date(`${submittedRequest.date}T12:00:00`))
+    : "";
+
+  const successWhatsAppHref = marketWhatsAppHref({
+    locale,
+    market: "valencia",
+    serviceName: es ? "montaje de TV" : "TV mounting",
+  });
+
+  if (success && submittedRequest)
     return (
       <div
         id="tv-calculator"
-        className="rounded-3xl border border-emerald-200 bg-white p-7 shadow-2xl"
+        className="h-fit rounded-[1.75rem] border-2 border-yellow-400 bg-white p-5 shadow-2xl sm:p-6"
       >
-        <span className="grid h-14 w-14 place-items-center rounded-full bg-emerald-100">
-          <CheckCircle2 className="h-8 w-8 text-emerald-700" />
-        </span>
-        <h2 className="mt-5 text-3xl font-black">
-          {es ? "Solicitud recibida" : "Request received"}
-        </h2>
-        <p className="mt-3 leading-7 text-neutral-600">
-          {es
-            ? "Te hemos enviado un email con el resumen. Revisaremos la solicitud y te escribiremos por WhatsApp para confirmar los detalles y la visita."
-            : "We sent a summary by email. We will review the request and message you on WhatsApp to confirm the details and visit."}
-        </p>
-        <div className="mt-5 flex items-center gap-2 rounded-xl bg-yellow-50 p-4 font-bold">
-          <Mail className="h-5 w-5" />
-          {form.email}
+        <div className="flex items-start gap-3">
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-emerald-100">
+            <CheckCircle2 className="h-6 w-6 text-emerald-700" />
+          </span>
+          <div className="min-w-0">
+            <h2 className="text-2xl font-black leading-tight">
+              {es ? "Solicitud recibida" : "Request received"}
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-neutral-600">
+              {es
+                ? `¡Perfecto, ${submittedRequest.name}! Ya tenemos tu solicitud. Te escribiremos por WhatsApp para confirmar los detalles de la visita.`
+                : `Perfect, ${submittedRequest.name}! We have your request. We will message you on WhatsApp to confirm the visit details.`}
+            </p>
+          </div>
         </div>
+
+        <div className="mt-4 rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <p className="font-black">{es ? "Montaje de TV" : "TV mounting"}</p>
+              <p className="mt-0.5 text-sm text-neutral-600">
+                {submittedRequest.service.replace(
+                  /Instalación de TV |TV installation /i,
+                  "",
+                )}
+              </p>
+            </div>
+            <p className="shrink-0 text-xl font-black">€{submittedRequest.price}</p>
+          </div>
+          <div className="mt-3 grid gap-2 border-t border-neutral-200 pt-3 text-sm font-semibold text-neutral-700">
+            <p className="flex items-center gap-2">
+              <CalendarDays className="h-4 w-4 shrink-0 text-yellow-600" />
+              <span className="capitalize">{formattedDate}</span> · {submittedRequest.time}
+            </p>
+            <p className="flex items-start gap-2">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-yellow-600" />
+              <span className="break-words">{submittedRequest.location}, Valencia</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-2 text-sm font-bold text-neutral-700 sm:grid-cols-3 sm:gap-3">
+          <p className="flex items-center gap-2 text-emerald-700">
+            <CheckCircle2 className="h-4 w-4 shrink-0" />
+            {es ? "Solicitud recibida" : "Request received"}
+          </p>
+          <p className="flex items-center gap-2 before:text-yellow-600 before:content-['→']">
+            {es ? "Confirmación por WhatsApp" : "WhatsApp confirmation"}
+          </p>
+          <p className="flex items-center gap-2 before:text-yellow-600 before:content-['→']">
+            {es ? "Visita del técnico" : "Technician visit"}
+          </p>
+        </div>
+
+        <a
+          href={successWhatsAppHref}
+          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-400 px-5 py-3.5 font-black text-black shadow-sm transition hover:bg-yellow-300"
+        >
+          {es ? "Abrir WhatsApp" : "Open WhatsApp"}
+          <ArrowRight className="h-5 w-5" />
+        </a>
+
+        <div className="mt-4 flex min-w-0 items-start gap-2 rounded-xl bg-yellow-50 p-3 text-sm">
+          <Mail className="mt-0.5 h-4 w-4 shrink-0" />
+          <div className="min-w-0">
+            <p className="text-neutral-600">
+              {es ? "Resumen enviado a" : "Summary sent to"}
+            </p>
+            <p className="break-all font-bold">{submittedRequest.email}</p>
+          </div>
+        </div>
+
+        <p className="mt-4 text-center text-xs text-neutral-500">
+          {es ? "¿Has cometido un error?" : "Made a mistake?"}{" "}
+          <button
+            type="button"
+            onClick={startAnotherRequest}
+            className="font-bold text-neutral-950 underline decoration-yellow-400 underline-offset-4"
+          >
+            {es ? "Enviar otra solicitud" : "Send another request"}
+          </button>
+        </p>
       </div>
     );
 
@@ -476,5 +583,41 @@ export default function TvMiniCalculator({
           : "No payment now. We confirm with you on WhatsApp."}
       </p>
     </form>
+  );
+}
+
+export function TvHeroWhatsAppCta({
+  locale,
+  href,
+}: {
+  locale: string;
+  href: string;
+}) {
+  const es = locale === "es";
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const handleSuccess = (event: Event) => {
+      setSubmitted(Boolean((event as CustomEvent<boolean>).detail));
+    };
+    window.addEventListener(TV_BOOKING_SUCCESS_EVENT, handleSuccess);
+    return () =>
+      window.removeEventListener(TV_BOOKING_SUCCESS_EVENT, handleSuccess);
+  }, []);
+
+  return (
+    <a
+      href={href}
+      className="inline-flex items-center justify-center rounded-xl bg-yellow-400 px-6 py-4 font-black text-black shadow-md transition hover:scale-105 hover:bg-yellow-300"
+    >
+      {submitted
+        ? es
+          ? "¿Necesitas añadir algo? Escríbenos por WhatsApp"
+          : "Need to add something? Message us on WhatsApp"
+        : es
+          ? "Pedir presupuesto por WhatsApp"
+          : "Request a quote on WhatsApp"}
+      <ArrowRight className="ml-2 h-5 w-5 shrink-0" />
+    </a>
   );
 }
