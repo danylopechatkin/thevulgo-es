@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import HandymanQuickRequest from "@/app/components/HandymanQuickRequest";
 import {
   ArrowRight,
   BadgeCheck,
   Check,
-  CheckCircle2,
   Clock3,
   DoorOpen,
   Euro,
@@ -192,19 +192,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-yellow-300 bg-neutral-950 p-7 text-white shadow-2xl">
-            <p className="text-sm font-bold uppercase tracking-[.2em] text-yellow-400">{isEs ? "Pide presupuesto en 1 minuto" : "Request a quote in 1 minute"}</p>
-            <h2 className="mt-3 text-3xl font-black">{isEs ? "Solo necesitamos 4 datos" : "We only need 4 details"}</h2>
-            <div className="mt-6 space-y-4">
-              {[isEs ? "Qué trabajo necesitas" : "What job you need", isEs ? "Fotos claras" : "Clear photos", isEs ? "Barrio o zona" : "Neighbourhood or area", isEs ? "Cuándo lo necesitas" : "When you need it"].map((item, index) => (
-                <div key={item} className="flex items-center gap-4 rounded-2xl border border-neutral-700 bg-neutral-900 p-4">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-yellow-400 font-black text-black">{index + 1}</span>
-                  <span className="font-semibold">{item}</span>
-                </div>
-              ))}
-            </div>
-            <p className="mt-6 text-sm leading-6 text-neutral-300">{isEs ? "Te diremos qué se puede hacer, el precio orientativo y la disponibilidad antes de confirmar." : "We will tell you what can be done, the guide price and availability before confirming."}</p>
-          </div>
+          <HandymanQuickRequest locale={locale} />
         </div>
       </section>
 

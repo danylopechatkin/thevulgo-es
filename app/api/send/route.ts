@@ -46,6 +46,8 @@ export async function POST(req: Request) {
 
     const locale = data.locale === "es" ? "es" : "en";
     const isEs = locale === "es";
+    const isHandymanQuickRequest =
+      data.attributionSource === "handyman_quick_request";
     const city = String(data.city || "").trim();
 
     if (!isAvailableCity(city)) {
@@ -205,8 +207,9 @@ export async function POST(req: Request) {
           selected_price: Number.isFinite(Number(data.selectedPrice)) ? Number(data.selectedPrice) : subtotal,
           final_price: total,
           attribution_source:
-            data.attributionSource === "tv_mini_calculator"
-              ? "tv_mini_calculator"
+            data.attributionSource === "tv_mini_calculator" ||
+            isHandymanQuickRequest
+              ? data.attributionSource
               : "calculator",
           attribution_service: data.attributionService || data.category || null,
           attribution_page_path:
@@ -246,7 +249,11 @@ export async function POST(req: Request) {
 
     const labels = {
       clientSubject:
-        data.attributionSource === "tv_mini_calculator"
+        isHandymanQuickRequest
+          ? isEs
+            ? "Solicitud recibida | THEVULGO Valencia"
+            : "Request received | THEVULGO Valencia"
+          : data.attributionSource === "tv_mini_calculator"
           ? isEs
             ? "Solicitud de montaje de TV recibida — THEVULGO"
             : "TV mounting request received — THEVULGO"
@@ -257,7 +264,11 @@ export async function POST(req: Request) {
       requestTitle: isEs ? "Solicitud recibida" : "Request received",
 
       requestText:
-        data.attributionSource === "tv_mini_calculator"
+        isHandymanQuickRequest
+          ? isEs
+            ? `Hola ${data.fullName}, hemos recibido tu solicitud de servicio de manitas. Revisaremos los detalles y te escribiremos por WhatsApp para confirmar el presupuesto y la visita.`
+            : `Hi ${data.fullName}, we received your handyman service request. We will review the details and message you on WhatsApp to confirm the quote and visit.`
+          : data.attributionSource === "tv_mini_calculator"
           ? isEs
             ? `Hola ${data.fullName}, hemos recibido tu solicitud de montaje de TV. Revisaremos los detalles y te escribiremos por WhatsApp para confirmar la instalación.`
             : `Hi ${data.fullName}, we received your TV mounting request. We will review the details and message you on WhatsApp to confirm the installation.`
@@ -270,7 +281,13 @@ export async function POST(req: Request) {
       total: "Total",
       address: isEs ? "Dirección" : "Address",
       schedule: isEs ? "Horario" : "Schedule",
-      notes: isEs ? "Notas" : "Notes",
+      notes: isHandymanQuickRequest
+        ? isEs
+          ? "Trabajo solicitado"
+          : "Requested work"
+        : isEs
+          ? "Notas"
+          : "Notes",
       noNotes: isEs ? "Sin notas adicionales" : "No additional notes",
 
       referralTitle: isEs
@@ -290,8 +307,8 @@ export async function POST(req: Request) {
         : "Once they book, you also get 10% off your next job.",
 
       footer: isEs
-        ? `Solicitud recibida. Te escribiremos por WhatsApp.<br/>${city} · Respuesta rápida`
-        : `Request received. We will message you on WhatsApp.<br/>${city} · Fast response`,
+        ? `${isHandymanQuickRequest ? "No se realizará ningún cobro hasta confirmar contigo el trabajo y el precio.<br/>" : ""}Solicitud recibida. Te escribiremos por WhatsApp.<br/>${city} · Respuesta rápida`
+        : `${isHandymanQuickRequest ? "No payment will be taken until we confirm the work and price with you.<br/>" : ""}Request received. We will message you on WhatsApp.<br/>${city} · Fast response`,
     };
 
     const servicesHtml = (Array.isArray(data.services) ? data.services : [])
@@ -313,7 +330,9 @@ export async function POST(req: Request) {
       from: "TheVulgo <info@thevulgo.es>",
       to: ["info@thevulgo.es"],
       replyTo: "info@thevulgo.es",
-      subject: `[${city}] ${data.attributionSource === "tv_mini_calculator" ? "TV mini-calculator" : "New estimate"} request from ${data.fullName}`,
+      subject: isHandymanQuickRequest
+        ? `[${city}] Nueva solicitud de Manitas — ${data.fullName}`
+        : `[${city}] ${data.attributionSource === "tv_mini_calculator" ? "TV mini-calculator" : "New estimate"} request from ${data.fullName}`,
       html: `
         <h2>New Request</h2>
         <p><b>Name:</b> ${data.fullName}</p>
@@ -331,18 +350,23 @@ export async function POST(req: Request) {
         <p><b>Extra details:</b> ${data.addressDetails || "—"}</p>
         <p><b>Preferred date:</b> ${data.preferredDate || "—"}</p>
         <p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>
+        ${isHandymanQuickRequest ? `<p><b>Flexible schedule:</b> ${data.flexibleSchedule ? "Yes" : "No"}</p>` : ""}
         <p><b>Scheduled UTC:</b> ${scheduledAt}</p>
         <p><b>Notes:</b> ${data.notes || "—"}</p>
-        <p><b>Total:</b> €${total.toFixed(2)}</p>
-        <h3>Selected services</h3>
-        <ul>
-          ${(Array.isArray(data.services) ? data.services : [])
-            .map(
-              (item: OrderService) =>
-                `<li>${item.label} × ${item.qty} — €${Number(item.subtotal || 0).toFixed(2)}</li>`,
-            )
-            .join("")}
-        </ul>
+        <p><b>Total:</b> ${isHandymanQuickRequest ? "Pending quote" : `€${total.toFixed(2)}`}</p>
+        ${insertedOrder?.id ? `<p><b>CRM order ID:</b> ${insertedOrder.id}</p>` : ""}
+        ${
+          isHandymanQuickRequest
+            ? `<h3>Trabajo</h3><p>${data.notes || "—"}</p>`
+            : `<h3>Selected services</h3><ul>${(
+                Array.isArray(data.services) ? data.services : []
+              )
+                .map(
+                  (item: OrderService) =>
+                    `<li>${item.label} × ${item.qty} — €${Number(item.subtotal || 0).toFixed(2)}</li>`,
+                )
+                .join("")}</ul>`
+        }
       `,
     });
 
@@ -400,16 +424,16 @@ ${data.category || "—"}
 </td>
 </tr>
 
-${servicesHtml}
+${isHandymanQuickRequest ? "" : servicesHtml}
 
-<tr>
+${isHandymanQuickRequest ? "" : `<tr>
 <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">
 ${labels.total}
 </td>
 <td style="padding:15px;border-top:1px solid #ddd;text-align:right;font-weight:800;">
 €${total.toFixed(2)}
 </td>
-</tr>
+</tr>`}
 </table>
 </td>
 </tr>
@@ -431,6 +455,7 @@ ${data.houseAddress || ""} ${data.apartmentNumber || ""}
 <div style="font-size:12px;color:#666;">${labels.schedule}</div>
 <div style="font-weight:700;">
 ${formatMadridFromUTC(scheduledAt)}
+${isHandymanQuickRequest && data.flexibleSchedule ? `<br/><span style="font-size:12px;color:#666;">${isEs ? "Horario flexible" : "Flexible schedule"}</span>` : ""}
 </div>
 </td>
 </tr>
