@@ -10,7 +10,6 @@ import {
   Mail,
   MapPin,
   Phone,
-  Send,
   X,
   Wrench,
 } from "lucide-react";
@@ -393,14 +392,14 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
         </div>
       </div>
 
-      <label className="mt-4 block text-xs font-extrabold">
+      <label className="mt-3 block text-xs font-extrabold">
         {es ? "¿Qué necesitas reparar o instalar? *" : "What do you need repaired or installed? *"}
         <textarea
           value={form.description}
           onChange={(event) => update("description", event.target.value)}
           rows={3}
           maxLength={1200}
-          className="mt-1.5 h-24 w-full resize-y rounded-xl border border-neutral-300 bg-white px-4 py-3 text-base font-normal text-neutral-950 outline-none transition placeholder:text-neutral-400 focus:border-yellow-500 focus:ring-4 focus:ring-yellow-100"
+          className="mt-1.5 h-[84px] w-full resize-y rounded-xl border border-neutral-300 bg-white px-4 py-3 text-base font-normal text-neutral-950 outline-none transition placeholder:text-neutral-400 focus:border-yellow-500 focus:ring-4 focus:ring-yellow-100"
           placeholder={
             es
               ? "Ej. Necesito reparar un agujero en pladur y volver a colocar una estantería."
@@ -410,21 +409,19 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
         />
       </label>
 
-      <div className="mt-3 rounded-2xl border border-neutral-200 bg-neutral-50 p-3">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-2.5 rounded-xl border border-neutral-200 bg-neutral-50 p-2.5">
+        <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-xs font-extrabold">
               {es ? "Fotos del trabajo" : "Job photos"}
             </p>
-            <p className="mt-0.5 text-[11px] leading-4 text-neutral-500">
-              {es
-                ? "Opcional, pero nos ayuda a darte un presupuesto más preciso."
-                : "Optional, but it helps us give you a more accurate quote."}
+            <p className="text-[10px] leading-4 text-neutral-500">
+              {es ? "Opcional · Hasta 5 fotos" : "Optional · Up to 5 photos"}
             </p>
           </div>
-          <label className="inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-neutral-950 bg-white px-4 py-2 text-xs font-black transition hover:border-yellow-500 disabled:opacity-50">
+          <label className="inline-flex min-h-9 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-neutral-300 bg-white px-3 py-1.5 text-xs font-black transition hover:border-yellow-500">
             <ImagePlus className="h-4 w-4" />
-            {es ? "+ Añadir fotos" : "+ Add photos"}
+            {es ? "Añadir fotos" : "Add photos"}
             <input
               type="file"
               accept="image/jpeg,image/png,image/webp"
@@ -465,7 +462,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
           </label>
         </div>
         {photos.length ? (
-          <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-5">
+          <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-5">
             {photos.map((photo, index) => (
               <div key={photo.preview} className="relative aspect-square overflow-hidden rounded-xl border border-neutral-200 bg-white">
                 <Image src={photo.preview} alt={es ? `Foto ${index + 1}` : `Photo ${index + 1}`} fill unoptimized className="object-cover" />
@@ -486,7 +483,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
         ) : null}
       </div>
 
-      <div className="mt-3 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="mt-2.5 grid min-w-0 grid-cols-1 gap-2.5 sm:grid-cols-2">
         <label className="block min-w-0 text-xs font-extrabold">
           {es ? "Nombre *" : "Name *"}
           <input className="input-style mt-1.5" value={form.name} onChange={(event) => update("name", event.target.value)} autoComplete="name" required />
@@ -513,21 +510,22 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
           {es ? "Fecha preferida *" : "Preferred date *"}
           <input className="input-style tv-date-input mt-1.5 block" value={form.date} min={today} onChange={(event) => update("date", event.target.value)} type="date" required />
         </label>
-        <label className="block min-w-0 text-xs font-extrabold">
-          {es ? "Hora disponible *" : "Available time *"}
-          <select className="input-style mt-1.5 disabled:bg-neutral-100" value={form.time} onChange={(event) => update("time", event.target.value)} disabled={!form.date || loadingAvailability} required>
-            <option value="">{loadingAvailability ? (es ? "Comprobando…" : "Checking…") : es ? "Seleccionar hora" : "Choose a time"}</option>
-            {availableTimes.map((time) => <option key={time} value={time}>{time}</option>)}
-          </select>
-        </label>
+        <div className="min-w-0">
+          <label className="block text-xs font-extrabold">
+            {es ? "Hora disponible *" : "Available time *"}
+            <select className="input-style mt-1.5 disabled:bg-neutral-100" value={form.time} onChange={(event) => update("time", event.target.value)} disabled={!form.date || loadingAvailability} required>
+              <option value="">{loadingAvailability ? (es ? "Comprobando…" : "Checking…") : es ? "Seleccionar hora" : "Choose a time"}</option>
+              {availableTimes.map((time) => <option key={time} value={time}>{time}</option>)}
+            </select>
+          </label>
+          <label className="mt-1.5 flex cursor-pointer items-center gap-2 text-[11px] font-semibold text-neutral-600">
+            <input type="checkbox" checked={form.flexibleSchedule} onChange={(event) => update("flexibleSchedule", event.target.checked)} className="h-3.5 w-3.5 shrink-0 accent-yellow-400" />
+            {es ? "Horario flexible" : "Flexible schedule"}
+          </label>
+        </div>
       </div>
 
-      <label className="mt-3 flex cursor-pointer items-center gap-2 rounded-xl border border-neutral-200 p-3 text-xs font-semibold text-neutral-700">
-        <input type="checkbox" checked={form.flexibleSchedule} onChange={(event) => update("flexibleSchedule", event.target.checked)} className="h-4 w-4 shrink-0 accent-yellow-400" />
-        {es ? "Soy flexible con la fecha y hora" : "I am flexible with the date and time"}
-      </label>
-
-      <label className="mt-3 flex cursor-pointer items-start gap-2 rounded-xl border border-neutral-200 p-3 text-[11px] leading-4 text-neutral-600">
+      <label className="mt-2.5 flex cursor-pointer items-start gap-2 text-[10px] leading-4 text-neutral-500">
         <input type="checkbox" checked={privacyAccepted} onChange={(event) => setPrivacyAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-yellow-400" required />
         <span>
           {es ? "Acepto el uso de mis datos para gestionar esta solicitud." : "I agree to the use of my details to manage this request."}{" "}
@@ -535,23 +533,13 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
         </span>
       </label>
 
-      {error ? <p role="alert" className="mt-3 rounded-xl bg-red-50 p-3 text-sm font-bold text-red-700">{error}</p> : null}
+      {error ? <p role="alert" className="mt-2.5 rounded-xl bg-red-50 p-3 text-sm font-bold text-red-700">{error}</p> : null}
 
-      <div className="mt-4 grid gap-3 rounded-2xl bg-neutral-950 p-3.5 text-white sm:grid-cols-[1fr_auto] sm:items-center">
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">
-            {es ? "Presupuesto personalizado" : "Personal quote"}
-          </p>
-          <p className="mt-1 text-xs leading-5 text-neutral-300">
-            {es ? "Te confirmaremos el precio antes de realizar el trabajo." : "We will confirm the price before carrying out the work."}
-          </p>
-        </div>
-        <button type="submit" disabled={submitting} className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-yellow-400 px-4 py-3 text-sm font-black text-black transition hover:bg-yellow-300 disabled:opacity-60 sm:w-auto">
-          {submitting ? <LoaderCircle className="h-5 w-5 animate-spin" /> : <><Send className="h-4 w-4" />{es ? "Solicitar presupuesto" : "Request quote"}</>}
-        </button>
-      </div>
-      <p className="mt-2 text-center text-[10px] leading-4 text-neutral-500">
-        {es ? "Sin pago ahora. Revisamos tu solicitud y te escribimos por WhatsApp." : "No payment now. We review your request and message you on WhatsApp."}
+      <button type="submit" disabled={submitting} className="mt-3 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 text-sm font-black text-black shadow-sm transition hover:bg-yellow-300 disabled:opacity-60">
+        {submitting ? <LoaderCircle className="h-5 w-5 animate-spin" /> : <>{es ? "Solicitar presupuesto" : "Request quote"}<ArrowRight className="h-5 w-5" /></>}
+      </button>
+      <p className="mt-1.5 text-center text-[10px] leading-4 text-neutral-500">
+        {es ? "Sin pago ahora · Te confirmamos el precio antes de realizar el trabajo." : "No payment now · We confirm the price before carrying out the work."}
       </p>
     </form>
   );

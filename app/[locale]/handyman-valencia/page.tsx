@@ -160,7 +160,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <section className="relative overflow-hidden border-b border-yellow-200 bg-[radial-gradient(circle_at_top_right,_#fef08a_0,_#fff_38%)]">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-14 lg:grid-cols-[1.15fr_.85fr] lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(500px,.9fr)] lg:gap-10 lg:px-8 lg:py-20 xl:grid-cols-[minmax(0,1fr)_600px]">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-white px-4 py-2 text-sm font-bold shadow-sm">
               <MapPin className="h-4 w-4 text-yellow-500" />
