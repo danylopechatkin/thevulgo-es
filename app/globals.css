@@ -4,6 +4,19 @@
   .input-style {
     @apply h-14 min-w-0 w-full max-w-full rounded-xl border border-neutral-300 bg-white px-4 text-base text-neutral-950 outline-none transition placeholder:text-neutral-400 focus:border-yellow-500 focus:ring-4 focus:ring-yellow-100;
   }
+
+  .tv-date-input {
+    padding-block: 0;
+    line-height: normal;
+  }
+
+  .tv-date-input::-webkit-date-and-time-value,
+  .tv-date-input::-webkit-datetime-edit {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    padding: 0;
+  }
 }
 
 :root {

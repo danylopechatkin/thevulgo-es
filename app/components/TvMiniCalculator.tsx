@@ -284,7 +284,7 @@ export default function TvMiniCalculator({
     return (
       <div
         id="tv-calculator"
-        className="h-fit rounded-[1.75rem] border-2 border-yellow-400 bg-white p-5 shadow-2xl sm:p-6"
+        className="h-fit rounded-[1.75rem] border-2 border-yellow-400 bg-white p-5 shadow-2xl sm:p-6 md:-translate-y-6"
       >
         <div className="flex items-start gap-3">
           <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-emerald-100">
@@ -375,7 +375,7 @@ export default function TvMiniCalculator({
     <form
       id="tv-calculator"
       onSubmit={submit}
-      className="rounded-[1.75rem] border-2 border-yellow-400 bg-white p-4 shadow-2xl sm:p-5"
+      className="rounded-[1.75rem] border-2 border-yellow-400 bg-white p-4 shadow-2xl sm:p-5 md:-translate-y-6"
     >
       <div className="flex items-center gap-3">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-yellow-400">
@@ -489,7 +489,7 @@ export default function TvMiniCalculator({
             value={form.date}
             min={today}
             onChange={(event) => update("date", event.target.value)}
-            className="input-style mt-1.5 block"
+            className="input-style tv-date-input mt-1.5 block"
             type="date"
             required
           />
