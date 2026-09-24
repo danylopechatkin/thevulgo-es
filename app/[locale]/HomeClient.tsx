@@ -161,8 +161,10 @@ export default function HomeClient({
       </section>
 
       {market === "valencia" && acDeepCleaningPromotion.active && (
-        <AcCleaningPromoCard locale={locale} source="homepage" variant="home" />
-      )}
+  <div className="mt-8">
+    <AcCleaningPromoCard locale={locale} source="homepage" variant="home" />
+  </div>
+)}
 
       <section
         id="services"
