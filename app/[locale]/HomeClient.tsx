@@ -10,13 +10,13 @@ import {
   MessageCircle,
   PackageCheck,
   ShieldCheck,
-  Sparkles,
   Tv,
   Wrench,
 } from "lucide-react";
 import AvailabilityBadge from "@/app/components/AvailabilityBadge";
 import MobileStickyCta from "@/app/components/MobileStickyCta";
 import AcCleaningPromoCard from "@/app/components/AcCleaningPromoCard";
+import HomeQuickRequestCard from "@/app/components/HomeQuickRequestCard";
 import { buildWhatsAppHref, type CommercialService } from "@/lib/commercial";
 import type { Market } from "@/lib/cities";
 import { getCatalogServices } from "@/lib/serviceCatalog";
@@ -156,27 +156,7 @@ export default function HomeClient({
               ))}
             </div>
           </div>
-          <div className="rounded-3xl bg-neutral-950 p-7 text-white shadow-2xl md:p-10">
-            <Sparkles className="text-[#ffcc00]" />
-            <h2 className="mt-8 text-3xl font-black">
-              {es ? "¿Varias cosas pendientes?" : "Several jobs on your list?"}
-            </h2>
-            <p className="mt-3 leading-7 text-neutral-300">
-              {es
-                ? "Envíanos fotos y una lista. Organizamos los trabajos en una sola visita siempre que sea posible."
-                : "Send photos and a list. We group the work into one visit whenever practical."}
-            </p>
-            <a
-              href={buildWhatsAppHref("handyman", locale, city)}
-              data-event="multi_job_click"
-              data-cta-location="hero"
-              data-service="handyman"
-              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-black text-black"
-            >
-              {es ? "Enviar mi lista" : "Send my job list"}
-              <ArrowRight size={18} />
-            </a>
-          </div>
+          <HomeQuickRequestCard locale={locale} city={city} />
         </div>
       </section>
 

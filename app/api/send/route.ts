@@ -115,6 +115,10 @@ export async function POST(req: Request) {
     const isEs = locale === "es";
     const isHandymanQuickRequest =
       data.attributionSource === "handyman_quick_request";
+    const isHomepageQuickRequest =
+      data.attributionSource === "homepage_quick_request";
+    const isQuickQuoteRequest =
+      isHandymanQuickRequest || isHomepageQuickRequest;
     if (
       photoFiles.length > 5 ||
       photoFiles.some(
@@ -154,7 +158,10 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!data.preferredDate || !data.preferredTime) {
+    if (
+      !isHomepageQuickRequest &&
+      (!data.preferredDate || !data.preferredTime)
+    ) {
       return Response.json(
         { success: false, error: "Missing date or time" },
         { status: 400 },
@@ -164,7 +171,7 @@ export async function POST(req: Request) {
     if (
       !data.city ||
       !data.houseAddress ||
-      (!isHandymanQuickRequest && !data.area)
+      (!isQuickQuoteRequest && !data.area)
     ) {
       return Response.json(
         { success: false, error: "Missing address data" },
@@ -179,51 +186,57 @@ export async function POST(req: Request) {
       );
     }
 
-    const preferredDate = String(data.preferredDate).trim();
-    const preferredTime = String(data.preferredTime).trim().slice(0, 5);
+    let preferredDate: string | null = null;
+    let preferredTime: string | null = null;
+    let scheduledAt: string | null = null;
 
-    if (
-      !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate) ||
-      !/^\d{2}:\d{2}$/.test(preferredTime)
-    ) {
-      return Response.json(
-        { success: false, error: "Invalid date or time" },
-        { status: 400 },
-      );
-    }
+    if (!isHomepageQuickRequest) {
+      preferredDate = String(data.preferredDate).trim();
+      preferredTime = String(data.preferredTime).trim().slice(0, 5);
 
-    const scheduledAt = madridLocalDateTimeToUtc(preferredDate, preferredTime);
+      if (
+        !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate) ||
+        !/^\d{2}:\d{2}$/.test(preferredTime)
+      ) {
+        return Response.json(
+          { success: false, error: "Invalid date or time" },
+          { status: 400 },
+        );
+      }
 
-    const { data: existingOrder, error: slotCheckError } = await supabaseAdmin
-      .from("orders")
-      .select("id")
-      .eq("preferred_date", preferredDate)
-      .eq("preferred_time", preferredTime)
-      .eq("city", city)
-      .limit(1)
-      .maybeSingle();
+      scheduledAt = madridLocalDateTimeToUtc(preferredDate, preferredTime);
 
-    if (slotCheckError) {
-      console.error("❌ AVAILABILITY CHECK ERROR:", slotCheckError);
-      return Response.json(
-        { success: false, error: "Could not check availability" },
-        { status: 500 },
-      );
-    }
+      const { data: existingOrder, error: slotCheckError } = await supabaseAdmin
+        .from("orders")
+        .select("id")
+        .eq("preferred_date", preferredDate)
+        .eq("preferred_time", preferredTime)
+        .eq("city", city)
+        .limit(1)
+        .maybeSingle();
 
-    if (existingOrder) {
-      return Response.json(
-        {
-          success: false,
-          error: "This time is already booked",
-          code: "SLOT_TAKEN",
-        },
-        { status: 409 },
-      );
+      if (slotCheckError) {
+        console.error("❌ AVAILABILITY CHECK ERROR:", slotCheckError);
+        return Response.json(
+          { success: false, error: "Could not check availability" },
+          { status: 500 },
+        );
+      }
+
+      if (existingOrder) {
+        return Response.json(
+          {
+            success: false,
+            error: "This time is already booked",
+            code: "SLOT_TAKEN",
+          },
+          { status: 409 },
+        );
+      }
     }
 
     const photoPaths: string[] = [];
-    if (isHandymanQuickRequest && photoFiles.length) {
+    if (isQuickQuoteRequest && photoFiles.length) {
       const extensionByType: Record<string, string> = {
         "image/jpeg": "jpg",
         "image/png": "png",
@@ -323,7 +336,7 @@ export async function POST(req: Request) {
           final_price: total,
           attribution_source:
             data.attributionSource === "tv_mini_calculator" ||
-            isHandymanQuickRequest
+            isQuickQuoteRequest
               ? data.attributionSource
               : "calculator",
           attribution_service: data.attributionService || data.category || null,
@@ -369,7 +382,7 @@ export async function POST(req: Request) {
 
     const labels = {
       clientSubject:
-        isHandymanQuickRequest
+        isQuickQuoteRequest
           ? isEs
             ? "Solicitud recibida | THEVULGO Valencia"
             : "Request received | THEVULGO Valencia"
@@ -384,7 +397,11 @@ export async function POST(req: Request) {
       requestTitle: isEs ? "Solicitud recibida" : "Request received",
 
       requestText:
-        isHandymanQuickRequest
+        isHomepageQuickRequest
+          ? isEs
+            ? `Hola ${data.fullName}, hemos recibido tu solicitud desde la web. Revisaremos los detalles y te escribiremos por WhatsApp para confirmar el presupuesto.`
+            : `Hi ${data.fullName}, we received your website request. We will review the details and message you on WhatsApp to confirm the quote.`
+          : isHandymanQuickRequest
           ? isEs
             ? `Hola ${data.fullName}, hemos recibido tu solicitud de servicio de manitas. Revisaremos los detalles y te escribiremos por WhatsApp para confirmar el presupuesto y la visita.`
             : `Hi ${data.fullName}, we received your handyman service request. We will review the details and message you on WhatsApp to confirm the quote and visit.`
@@ -401,7 +418,7 @@ export async function POST(req: Request) {
       total: "Total",
       address: isEs ? "Dirección" : "Address",
       schedule: isEs ? "Horario" : "Schedule",
-      notes: isHandymanQuickRequest
+      notes: isQuickQuoteRequest
         ? isEs
           ? "Trabajo solicitado"
           : "Requested work"
@@ -427,8 +444,8 @@ export async function POST(req: Request) {
         : "Once they book, you also get 10% off your next job.",
 
       footer: isEs
-        ? `${isHandymanQuickRequest ? "No se realizará ningún cobro hasta confirmar contigo el trabajo y el precio.<br/>" : ""}Solicitud recibida. Te escribiremos por WhatsApp.<br/>${city} · Respuesta rápida`
-        : `${isHandymanQuickRequest ? "No payment will be taken until we confirm the work and price with you.<br/>" : ""}Request received. We will message you on WhatsApp.<br/>${city} · Fast response`,
+        ? `${isQuickQuoteRequest ? "No se realizará ningún cobro hasta confirmar contigo el trabajo y el precio.<br/>" : ""}Solicitud recibida. Te escribiremos por WhatsApp.<br/>${city} · Respuesta rápida`
+        : `${isQuickQuoteRequest ? "No payment will be taken until we confirm the work and price with you.<br/>" : ""}Request received. We will message you on WhatsApp.<br/>${city} · Fast response`,
     };
 
     const servicesHtml = (Array.isArray(data.services) ? data.services : [])
@@ -461,7 +478,9 @@ export async function POST(req: Request) {
       from: "TheVulgo <info@thevulgo.es>",
       to: ["info@thevulgo.es"],
       replyTo: "info@thevulgo.es",
-      subject: isHandymanQuickRequest
+      subject: isHomepageQuickRequest
+        ? `[${city}] Nueva solicitud desde la web — ${data.fullName}`
+        : isHandymanQuickRequest
         ? `[${city}] Nueva solicitud de Manitas — ${data.fullName}`
         : `[${city}] ${data.attributionSource === "tv_mini_calculator" ? "TV mini-calculator" : "New estimate"} request from ${data.fullName}`,
       html: `
@@ -475,19 +494,16 @@ export async function POST(req: Request) {
         <p><b>Category:</b> ${data.category || "—"}</p>
         <p><b>Funnel:</b> ${data.attributionSource || "calculator"}</p>
         <p><b>City:</b> ${city}</p>
-        ${isHandymanQuickRequest ? "" : `<p><b>Area:</b> ${data.area || "—"}</p>`}
+        ${isQuickQuoteRequest ? "" : `<p><b>Area:</b> ${data.area || "—"}</p>`}
         <p><b>Address:</b> ${data.houseAddress || "—"}</p>
-        ${isHandymanQuickRequest ? "" : `<p><b>Apartment:</b> ${data.apartmentNumber || "—"}</p><p><b>Extra details:</b> ${data.addressDetails || "—"}</p>`}
-        <p><b>Preferred date:</b> ${data.preferredDate || "—"}</p>
-        <p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>
-        ${isHandymanQuickRequest ? `<p><b>Flexible schedule:</b> ${data.flexibleSchedule ? "Yes" : "No"}</p>` : ""}
-        <p><b>Scheduled UTC:</b> ${scheduledAt}</p>
-        ${isHandymanQuickRequest ? "" : `<p><b>Notes:</b> ${data.notes || "—"}</p>`}
-        <p><b>Total:</b> ${isHandymanQuickRequest ? "Pending quote" : `€${total.toFixed(2)}`}</p>
+        ${isQuickQuoteRequest ? "" : `<p><b>Apartment:</b> ${data.apartmentNumber || "—"}</p><p><b>Extra details:</b> ${data.addressDetails || "—"}</p>`}
+        ${isHomepageQuickRequest ? "" : `<p><b>Preferred date:</b> ${data.preferredDate || "—"}</p><p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>${isHandymanQuickRequest ? `<p><b>Flexible schedule:</b> ${data.flexibleSchedule ? "Yes" : "No"}</p>` : ""}<p><b>Scheduled UTC:</b> ${scheduledAt || "—"}</p>`}
+        ${isQuickQuoteRequest ? "" : `<p><b>Notes:</b> ${data.notes || "—"}</p>`}
+        <p><b>Total:</b> ${isQuickQuoteRequest ? "Pending quote" : `€${total.toFixed(2)}`}</p>
         ${insertedOrder?.id ? `<p><b>CRM order ID:</b> ${insertedOrder.id}</p>` : ""}
         ${signedPhotoUrls.length ? `<h3>Fotos del trabajo</h3><ul>${signedPhotoUrls.map((url, index) => `<li><a href="${url}">Ver foto ${index + 1}</a></li>`).join("")}</ul>` : ""}
         ${
-          isHandymanQuickRequest
+          isQuickQuoteRequest
             ? `<h3>Trabajo</h3><p>${data.notes || "—"}</p>`
             : `<h3>Selected services</h3><ul>${(
                 Array.isArray(data.services) ? data.services : []
@@ -555,9 +571,9 @@ ${data.category || "—"}
 </td>
 </tr>
 
-${isHandymanQuickRequest ? "" : servicesHtml}
+${isQuickQuoteRequest ? "" : servicesHtml}
 
-${isHandymanQuickRequest ? "" : `<tr>
+${isQuickQuoteRequest ? "" : `<tr>
 <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">
 ${labels.total}
 </td>
@@ -573,22 +589,22 @@ ${labels.total}
 <td style="padding:0 30px 20px 30px;">
 <div style="font-size:12px;color:#666;">${labels.address}</div>
 ${
-  isHandymanQuickRequest
+  isQuickQuoteRequest
     ? `<div style="font-weight:700;">${data.houseAddress || ""}, ${city}</div>`
     : `<div style="font-weight:700;">${city}, ${data.area || ""}</div><div style="font-size:13px;color:#555;">${data.houseAddress || ""} ${data.apartmentNumber || ""}</div>`
 }
 </td>
 </tr>
 
-<tr>
+${isHomepageQuickRequest ? "" : `<tr>
 <td style="padding:0 30px 20px 30px;">
 <div style="font-size:12px;color:#666;">${labels.schedule}</div>
 <div style="font-weight:700;">
-${formatMadridFromUTC(scheduledAt)}
+${scheduledAt ? formatMadridFromUTC(scheduledAt) : "—"}
 ${isHandymanQuickRequest && data.flexibleSchedule ? `<br/><span style="font-size:12px;color:#666;">${isEs ? "Horario flexible" : "Flexible schedule"}</span>` : ""}
 </div>
 </td>
-</tr>
+</tr>`}
 
 <tr>
 <td style="padding:0 30px 30px 30px;">
@@ -596,7 +612,7 @@ ${isHandymanQuickRequest && data.flexibleSchedule ? `<br/><span style="font-size
 <div style="font-size:13px;color:#555;">
 ${data.notes || labels.noNotes}
 </div>
-${isHandymanQuickRequest && photoPaths.length ? `<div style="margin-top:8px;font-size:13px;font-weight:700;">${isEs ? "Fotos recibidas" : "Photos received"}: ${photoPaths.length}</div>` : ""}
+${isQuickQuoteRequest && photoPaths.length ? `<div style="margin-top:8px;font-size:13px;font-weight:700;">${isEs ? "Fotos recibidas" : "Photos received"}: ${photoPaths.length}</div>` : ""}
 </td>
 </tr>
 
