@@ -483,7 +483,51 @@ export async function POST(req: Request) {
         : isHandymanQuickRequest
         ? `[${city}] Nueva solicitud de Manitas — ${data.fullName}`
         : `[${city}] ${data.attributionSource === "tv_mini_calculator" ? "TV mini-calculator" : "New estimate"} request from ${data.fullName}`,
-      html: `
+      html: isQuickQuoteRequest
+        ? `
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:32px 12px;font-family:Arial,sans-serif;color:#171717;">
+<tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.08);">
+  <tr>
+    <td style="background:#080808;padding:24px 28px;color:#ffffff;">
+      <div style="font-size:12px;font-weight:800;letter-spacing:.12em;color:#ffcc00;text-transform:uppercase;">THEVULGO · ${city}</div>
+      <div style="margin-top:7px;font-size:24px;font-weight:800;">Nueva solicitud · Manitas</div>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:26px 28px 10px;">
+      <div style="font-size:20px;font-weight:800;">${data.fullName}</div>
+      <div style="margin-top:8px;font-size:14px;line-height:1.7;color:#444;">
+        <div><strong>WhatsApp:</strong> ${data.phone || "—"}</div>
+        ${data.email ? `<div><strong>Email:</strong> ${data.email}</div>` : ""}
+        <div><strong>Dirección:</strong> ${data.houseAddress || "—"}, ${city}</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:18px 28px;">
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#fffbea;border:1px solid #facc15;border-radius:12px;">
+        <tr><td style="padding:18px;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6500;">Trabajo solicitado</div>
+          <div style="margin-top:9px;font-size:15px;line-height:1.6;color:#222;">${data.notes || "—"}</div>
+        </td></tr>
+      </table>
+    </td>
+  </tr>
+  ${signedPhotoUrls.length ? `<tr><td style="padding:4px 28px 20px;"><div style="font-size:15px;font-weight:800;">Fotos del trabajo</div><div style="margin-top:8px;line-height:1.8;">${signedPhotoUrls.map((url, index) => `<a href="${url}" style="display:block;color:#171717;font-size:14px;font-weight:700;text-decoration:underline;text-decoration-color:#facc15;text-underline-offset:3px;">Ver foto ${index + 1}</a>`).join("")}</div></td></tr>` : ""}
+  ${insertedOrder?.id ? `<tr><td style="padding:0 28px 18px;font-size:12px;color:#777;">CRM order ID: ${insertedOrder.id}</td></tr>` : ""}
+  <tr>
+    <td style="border-top:1px solid #eeeeee;background:#fafafa;padding:16px 28px;font-size:11px;line-height:1.7;color:#888;">
+      <strong>Detalles técnicos</strong><br/>
+      Idioma: ${locale} · Mercado: ${market} · Funnel: ${data.attributionSource || "homepage_quick_request"}<br/>
+      Source URL: ${data.sourceUrl || "—"}
+    </td>
+  </tr>
+</table>
+</td></tr>
+</table>
+        `
+        : `
         <h2>New Request</h2>
         <p><b>Name:</b> ${data.fullName}</p>
         <p><b>Phone:</b> ${data.phone || "—"}</p>
@@ -616,7 +660,7 @@ ${isQuickQuoteRequest && photoPaths.length ? `<div style="margin-top:8px;font-si
 </td>
 </tr>
 
-<tr>
+${isQuickQuoteRequest ? "" : `<tr>
 <td style="padding:0 30px 30px 30px;">
 <table width="100%" style="background:#fff8db;border:1px solid #facc15;border-radius:14px;">
 <tr>
@@ -640,7 +684,7 @@ ${labels.referralText3}
 </tr>
 </table>
 </td>
-</tr>
+</tr>`}
 
 <tr>
 <td style="background:#fafafa;padding:20px 30px;font-size:12px;color:#777;line-height:1.6;">
