@@ -244,7 +244,7 @@ export default function HomeQuickRequestCard({
       <div className="flex items-center gap-3">
         <Sparkles className="h-6 w-6 shrink-0 text-[#ffcc00]" />
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[.16em] text-yellow-400">
+          <p className="text-xs font-black uppercase tracking-[.16em] text-yellow-400">
             {es ? `Paso ${step} de 2` : `Step ${step} of 2`}
           </p>
           <h2 className="text-2xl font-black">
@@ -261,12 +261,12 @@ export default function HomeQuickRequestCard({
 
       {step === 1 ? (
         <div className="mt-5">
-          <p className="text-sm text-neutral-300">
+          <p className="text-base leading-6 text-neutral-300">
             {es
               ? "Cuéntanos qué necesitas y te damos presupuesto."
               : "Tell us what you need and we will prepare a quote."}
           </p>
-          <label className="mt-4 block text-xs font-bold">
+          <label className="mt-4 block text-sm font-bold">
             {es ? "¿Qué necesitas hacer?" : "What do you need done?"}
             <textarea
               value={description}
@@ -276,8 +276,7 @@ export default function HomeQuickRequestCard({
               }}
               rows={4}
               maxLength={1200}
-              className="mt-1.5 h-28 w-full resize-none rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm font-normal text-white outline-none transition placeholder:text-neutral-500 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20"
-              placeholder={
+className="mt-1.5 h-28 w-full resize-none rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-base font-normal text-white outline-none transition placeholder:text-neutral-500 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20"              placeholder={
                 es
                   ? "Ej. montar una TV, reparar una pared y colgar dos estanterías..."
                   : "E.g. mount a TV, repair a wall and hang two shelves..."
@@ -288,10 +287,10 @@ export default function HomeQuickRequestCard({
           <div className="mt-3 rounded-xl border border-neutral-800 bg-neutral-900/70 p-3">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-bold">
+                <p className="text-sm font-bold">
                   {es ? "Añadir fotos" : "Add photos"}
                 </p>
-                <p className="text-[10px] text-neutral-400">
+                <p className="text-xs text-neutral-400">
                   {es ? "Opcional · Hasta 5 fotos" : "Optional · Up to 5 photos"}
                 </p>
               </div>
@@ -345,11 +344,11 @@ export default function HomeQuickRequestCard({
       ) : (
         <form onSubmit={submit} className="mt-5">
           <div className="grid gap-3 sm:grid-cols-2">
-            <label className="text-xs font-bold">
+            <label className="text-sm font-bold">
               {es ? "Nombre *" : "Name *"}
               <input value={contact.name} onChange={(event) => setContact((current) => ({ ...current, name: event.target.value }))} className="mt-1.5 h-12 w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 text-sm text-white outline-none focus:border-yellow-400" autoComplete="name" required />
             </label>
-            <label className="text-xs font-bold">
+            <label className="text-sm font-bold">
               WhatsApp *
               <input value={contact.phone} onChange={(event) => setContact((current) => ({ ...current, phone: event.target.value }))} className="mt-1.5 h-12 w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 text-sm text-white outline-none focus:border-yellow-400" type="tel" inputMode="tel" autoComplete="tel" required />
             </label>
