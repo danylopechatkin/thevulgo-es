@@ -50,6 +50,8 @@ export default function AcCleaningStickyCta({ locale }: { locale: string }) {
           data-event="ac_cleaning_booking_click"
           data-service={AC_DEEP_CLEANING_SERVICE_ID}
           data-cta-location="cleaning-sticky"
+          data-analytics-cta="ac_cleaning_sticky_book"
+          data-promo-id="ac_deep_clean_49"
           className="rounded-xl bg-yellow-400 px-6 py-3 text-sm font-black text-black"
         >
           {isEs ? "Reservar" : "Book"}

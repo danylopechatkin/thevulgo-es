@@ -63,6 +63,10 @@ export async function POST(request: Request) {
       potential_value: Math.max(0, Number(body.potential_value) || 0),
       notes: clean(body.notes, 5000),
       source: clean(body.source, 120) || "whatsapp",
+      contact_reference: clean(body.contact_reference, 32) || null,
+      attribution_confidence: clean(body.contact_reference, 32) ? "manual" : "unknown",
+      lost_reason_code: body.lost_reason_code || null,
+      lost_reason_comment: clean(body.lost_reason_comment, 500) || null,
     })
     .select("*")
     .single();

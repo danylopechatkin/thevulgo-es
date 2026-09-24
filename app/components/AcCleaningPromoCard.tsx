@@ -33,6 +33,9 @@ export default function AcCleaningPromoCard({
     locale,
     value: price,
     currency: acDeepCleaningPromotion.currency,
+    promo_id: "ac_deep_clean_49",
+    displayed_price: price,
+    regular_price: acDeepCleaningPromotion.regularPrice,
   };
 
   useEffect(() => {
@@ -45,6 +48,9 @@ export default function AcCleaningPromoCard({
         locale,
         value: price,
         currency: acDeepCleaningPromotion.currency,
+        promo_id: "ac_deep_clean_49",
+        displayed_price: price,
+        regular_price: acDeepCleaningPromotion.regularPrice,
       },
     });
   }, [source, locale, price]);
@@ -140,6 +146,8 @@ export default function AcCleaningPromoCard({
                 data-event={primaryEvent}
                 data-service={AC_DEEP_CLEANING_SERVICE_ID}
                 data-cta-location={source}
+                data-analytics-cta={`ac_${source}_${isHub ? "book" : "promo"}`}
+                data-promo-id="ac_deep_clean_49"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-6 py-4 font-black shadow-md transition hover:bg-yellow-300"
               >
                 {isHub

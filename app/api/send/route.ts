@@ -56,33 +56,8 @@ export async function POST(req: Request) {
     }
     const market = marketFromCity(city);
 
-    console.log("📩 NEW ORDER REQUEST:", {
-      name: data.fullName,
-      email: data.email,
-      phone: data.phone,
-      date: data.preferredDate,
-      time: data.preferredTime,
-      locale,
-      servicesCount: Array.isArray(data.services) ? data.services.length : 0,
-    });
-
-    const ip =
-      req.headers.get("x-forwarded-for") ||
-      req.headers.get("x-real-ip") ||
-      "unknown";
-
-    const userAgent = req.headers.get("user-agent") || "unknown";
-    const timestamp = new Date().toISOString();
-
-    console.log("📥 NEW REQUEST:", {
-      time: timestamp,
-      ip,
-      userAgent,
-      name: data.fullName,
-      email: data.email,
-      locale,
-      servicesCount: Array.isArray(data.services) ? data.services.length : 0,
-    });
+    const requestId = crypto.randomUUID();
+    console.log("Order request received", { requestId, locale, servicesCount: Array.isArray(data.services) ? data.services.length : 0 });
 
     if (!data.fullName || typeof data.fullName !== "string") {
       return Response.json(
@@ -180,13 +155,7 @@ export async function POST(req: Request) {
     const iva = 0;
     const total = subtotal;
 
-    console.log("💾 SAVING TO DB:", {
-      scheduled_at: scheduledAt,
-      subtotal,
-      iva,
-      total,
-      locale,
-    });
+    console.log("Saving order", { requestId, subtotal, total, locale });
 
     const { data: insertedOrder, error: orderInsertError } = await supabaseAdmin
       .from("orders")
@@ -222,6 +191,19 @@ export async function POST(req: Request) {
           utm_campaign: data.utmCampaign || null,
           utm_term: data.utmTerm || null,
           utm_content: data.utmContent || null,
+          visitor_id: data.visitorId || null,
+          gclid: data.gclid || null,
+          first_touch_source: data.firstTouch?.source || null,
+          last_touch_source: data.lastTouch?.source || null,
+          attribution_confidence: data.analyticsSessionId ? "session_matched" : "unknown",
+          service_category: data.serviceCategory || null,
+          service_id: data.serviceId || null,
+          cta_id: data.ctaId || null,
+          device_type: data.deviceType || null,
+          promo_id: data.promoId || null,
+          displayed_price: Number.isFinite(Number(data.displayedPrice)) ? Number(data.displayedPrice) : null,
+          selected_price: Number.isFinite(Number(data.selectedPrice)) ? Number(data.selectedPrice) : subtotal,
+          final_price: total,
           attribution_source:
             data.attributionSource === "tv_mini_calculator"
               ? "tv_mini_calculator"
@@ -257,7 +239,8 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log("✅ ORDER SAVED:", {
+    console.log("Order saved", {
+      requestId,
       orderId: insertedOrder?.id,
     });
 
@@ -366,7 +349,7 @@ export async function POST(req: Request) {
     console.log("📧 ADMIN EMAIL RESULT:", {
       success: !adminResult.error,
       id: adminResult.data?.id,
-      error: adminResult.error,
+      error: adminResult.error ? "delivery_failed" : null,
     });
 
     if (adminResult.error) {
@@ -503,7 +486,7 @@ ${labels.footer}
       console.log("📧 CLIENT EMAIL RESULT:", {
         success: !clientResult?.error,
         id: clientResult?.data?.id,
-        error: clientResult?.error,
+        error: clientResult?.error ? "delivery_failed" : null,
       });
 
       if (clientResult?.error) {
@@ -540,7 +523,6 @@ ${labels.footer}
     const caughtError = error instanceof Error ? error : null;
     console.error("❌ SEND API ERROR:", {
       message: caughtError?.message,
-      stack: caughtError?.stack,
     });
 
     return Response.json(

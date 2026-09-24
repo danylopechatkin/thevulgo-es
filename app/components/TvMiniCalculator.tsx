@@ -76,6 +76,10 @@ export default function TvMiniCalculator({
   const started = useRef(false);
   const today = madridToday();
 
+  useEffect(() => {
+    trackMarketingEvent("calculator_view", { source: "tv_landing", service: "tv_standard_mount", metadata: { calculator_type: "tv_mini", locale } });
+  }, [locale]);
+
   const selected = baseOptions.filter((option) => option.id === baseId);
   const total = selected.reduce((sum, option) => sum + option.price, 0);
   const availableTimes = TIMES.filter((time) => !bookedTimes.includes(time));
@@ -111,18 +115,19 @@ export default function TvMiniCalculator({
   const markStarted = () => {
     if (started.current) return;
     started.current = true;
-    trackMarketingEvent("tv_calculator_started", {
+    trackMarketingEvent("calculator_started", {
       source: "tv_landing",
-      service: "TV Mounting",
+      service: "tv_standard_mount",
+      metadata: { calculator_type: "tv_mini", locale },
     });
   };
   const update = (field: keyof FormState, value: string) => {
     markStarted();
     if (field === "date" && value) {
-      trackMarketingEvent("tv_calculator_date_selected", {
+      trackMarketingEvent("schedule_completed", {
         source: "tv_landing",
         service: "TV Mounting",
-        metadata: { date: value },
+        metadata: { calculator_type: "tv_mini", locale },
       });
     }
     setForm((current) => ({
@@ -153,6 +158,7 @@ export default function TvMiniCalculator({
       return;
     }
     setSubmitting(true);
+    trackMarketingEvent("booking_submit_attempt", { source: "tv_landing", service: baseId, metadata: { calculator_type: "tv_mini", locale, current_price: total, quantity: 1 } });
     try {
       const attribution = getClientAttribution();
       const response = await fetch("/api/send", {
@@ -194,6 +200,15 @@ export default function TvMiniCalculator({
           utmCampaign: attribution.utmCampaign,
           utmTerm: attribution.utmTerm,
           utmContent: attribution.utmContent,
+          visitorId: attribution.visitorId,
+          gclid: attribution.gclid,
+          firstTouch: attribution.firstTouch,
+          lastTouch: attribution.lastTouch,
+          deviceType: attribution.deviceType,
+          serviceCategory: "tv",
+          serviceId: baseId,
+          displayedPrice: total,
+          selectedPrice: total,
         }),
       });
       const body = await response.json();
@@ -202,13 +217,14 @@ export default function TvMiniCalculator({
           setForm((current) => ({ ...current, time: "" }));
         throw new Error(body.error || "submit");
       }
-      trackMarketingEvent("tv_calculator_submitted", {
+      trackMarketingEvent("booking_completed", {
         source: "tv_landing",
-        service: "TV Mounting",
-        metadata: { total, date: form.date, time: form.time },
+        service: baseId,
+        metadata: { calculator_type: "tv_mini", value: total, currency: "EUR", locale },
       });
       setSuccess(true);
     } catch (cause) {
+      trackMarketingEvent("booking_submit_failed", { source: "tv_landing", service: baseId, metadata: { calculator_type: "tv_mini", error_type: "api_failure", endpoint: "/api/send", locale } });
       setError(
         cause instanceof Error &&
           cause.message === "This time is already booked"

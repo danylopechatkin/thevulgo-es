@@ -2,10 +2,6 @@
 
 import type { ReactNode } from "react";
 import { whatsappNumber } from "../site-config";
-import {
-  getClientAttribution,
-  trackMarketingEvent,
-} from "@/lib/client-attribution";
 
 type Props = {
   children: ReactNode;
@@ -16,6 +12,8 @@ type Props = {
   onClick?: () => void;
   eventName?: string;
   eventMetadata?: Record<string, string | number | boolean | null>;
+  ctaId?: string;
+  placement?: string;
 };
 
 function buildMessage(service?: string, customMessage?: string) {
@@ -35,41 +33,14 @@ export default function WhatsAppLink({
   onClick,
   eventName,
   eventMetadata,
+  ctaId,
+  placement,
 }: Props) {
   const text = buildMessage(service, message);
   const href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 
   function track() {
     onClick?.();
-    const attribution = getClientAttribution();
-    trackMarketingEvent("whatsapp_click", { source, service });
-    if (eventName) {
-      trackMarketingEvent(eventName, {
-        source,
-        service,
-        metadata: eventMetadata,
-      });
-    }
-    const payload = JSON.stringify({
-      source,
-      service: service || null,
-      pagePath: window.location.pathname,
-      messageType: message ? "custom" : "service_quote",
-      ...attribution,
-    });
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(
-        "/api/whatsapp-click",
-        new Blob([payload], { type: "application/json" }),
-      );
-      return;
-    }
-    void fetch("/api/whatsapp-click", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: payload,
-      keepalive: true,
-    });
   }
 
   return (
@@ -79,6 +50,11 @@ export default function WhatsAppLink({
       rel="noopener noreferrer"
       onClick={track}
       className={className}
+      data-event={eventName || "whatsapp_click"}
+      data-service={service}
+      data-analytics-cta={ctaId || source}
+      data-cta-location={placement || source}
+      data-promo-id={eventMetadata?.promo_id || undefined}
     >
       {children}
     </a>

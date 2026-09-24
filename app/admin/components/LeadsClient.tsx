@@ -32,6 +32,9 @@ type Lead = {
   notes: string;
   source: string;
   lost_reason: string;
+  lost_reason_code: string | null;
+  lost_reason_comment: string | null;
+  contact_reference: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -51,6 +54,9 @@ const empty: Form = {
   notes: "",
   source: "whatsapp",
   lost_reason: "",
+  lost_reason_code: null,
+  lost_reason_comment: null,
+  contact_reference: null,
 };
 const money = (value: number) =>
   new Intl.NumberFormat("en-IE", {
@@ -214,6 +220,9 @@ export default function LeadsClient({ mode }: { mode: "leads" | "today" }) {
       notes: lead.notes,
       source: lead.source,
       lost_reason: lead.lost_reason || "",
+      lost_reason_code: lead.lost_reason_code || null,
+      lost_reason_comment: lead.lost_reason_comment || null,
+      contact_reference: lead.contact_reference || null,
     });
     setShowForm(true);
   };
@@ -549,16 +558,25 @@ export default function LeadsClient({ mode }: { mode: "leads" | "today" }) {
                     className="min-h-28"
                   />
                 </Field>
+                <Field label="WhatsApp reference">
+                  <input value={form.contact_reference || ""} onChange={(event) => set("contact_reference", event.target.value.toUpperCase())} placeholder="TV-A8F42C" />
+                </Field>
                 {form.status === "lost" ? (
-                  <Field label="Why was this lead lost?">
-                    <input
-                      value={form.lost_reason}
-                      onChange={(event) =>
-                        set("lost_reason", event.target.value)
-                      }
-                      placeholder="Price, no response, timing, competitor…"
-                    />
-                  </Field>
+                  <>
+                    <Field label="Why was this lead lost?">
+                      <select value={form.lost_reason_code || ""} onChange={(event) => set("lost_reason_code", event.target.value)} required>
+                        <option value="">Select a reason</option>
+                        <option value="price_too_high">Price too high</option><option value="no_response">No response</option>
+                        <option value="no_availability">No availability</option><option value="outside_service_area">Outside service area</option>
+                        <option value="competitor">Chose competitor</option><option value="unsupported_job">Unsupported job</option>
+                        <option value="customer_postponed">Customer postponed</option><option value="duplicate">Duplicate</option>
+                        <option value="spam">Spam</option><option value="other">Other</option>
+                      </select>
+                    </Field>
+                    <Field label="Lost reason comment">
+                      <input value={form.lost_reason_comment || ""} onChange={(event) => set("lost_reason_comment", event.target.value)} required={form.lost_reason_code === "other"} placeholder="Optional, required for Other" />
+                    </Field>
+                  </>
                 ) : null}
                 <button
                   disabled={saving}

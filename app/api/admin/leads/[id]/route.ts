@@ -50,6 +50,14 @@ export async function PATCH(
   if (body.notes !== undefined) updates.notes = clean(body.notes, 5000);
   if (body.lost_reason !== undefined)
     updates.lost_reason = clean(body.lost_reason, 500);
+  if (body.lost_reason_code !== undefined)
+    updates.lost_reason_code = body.lost_reason_code || null;
+  if (body.lost_reason_comment !== undefined)
+    updates.lost_reason_comment = clean(body.lost_reason_comment, 500) || null;
+  if (body.contact_reference !== undefined) {
+    updates.contact_reference = clean(body.contact_reference, 32) || null;
+    updates.attribution_confidence = body.contact_reference ? "manual" : "unknown";
+  }
   if (body.last_contacted_at !== undefined)
     updates.last_contacted_at = body.last_contacted_at || null;
   if (body.converted_order_id !== undefined)

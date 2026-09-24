@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import {
@@ -316,6 +316,7 @@ function EstimatePageContent() {
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
   const [availabilityError, setAvailabilityError] = useState("");
+  const analyticsStarted = useRef(false);
   const orderedCategoryKeys = [
     category,
     ...CATEGORY_KEYS.filter((key) => key !== category),
@@ -511,7 +512,18 @@ function EstimatePageContent() {
   const subtotal = Number(estimatedTotal.toFixed(2));
   const total = subtotal;
 
+  useEffect(() => {
+    trackMarketingEvent("calculator_view", { source: "estimate", metadata: { calculator_type: "main", locale } });
+  }, [locale]);
+  const markCalculatorStarted = () => {
+    if (analyticsStarted.current) return;
+    analyticsStarted.current = true;
+    trackMarketingEvent("calculator_started", { source: "estimate", metadata: { calculator_type: "main", locale } });
+  };
+
   const setQty = (id: string, value: number) => {
+    markCalculatorStarted();
+    trackMarketingEvent(value > 0 ? "quantity_changed" : "service_selected", { source: "estimate", service: id, metadata: { calculator_type: "main", category, quantity: Math.max(0, value), current_price: total } });
     setQuantities((prev) => {
       const next = { ...prev };
       if (value <= 0) delete next[id];
@@ -776,8 +788,15 @@ function EstimatePageContent() {
   };
 
   const handleNextStep = () => {
+    markCalculatorStarted();
     setHasTriedNext(true);
     if (!validateEstimateForm()) return;
+    const common = { calculator_type: "main", category, locale, current_price: total, quantity: selectedServices.reduce((sum, item) => sum + item.qty, 0), extras_count: Math.max(0, selectedServices.length - 1), city: displayCity, area: client.area };
+    trackMarketingEvent("details_completed", { source: "estimate", service: selectedServices[0]?.id, metadata: common });
+    trackMarketingEvent("location_completed", { source: "estimate", service: selectedServices[0]?.id, metadata: common });
+    trackMarketingEvent("schedule_completed", { source: "estimate", service: selectedServices[0]?.id, metadata: common });
+    trackMarketingEvent("contact_completed", { source: "estimate", service: selectedServices[0]?.id, metadata: common });
+    trackMarketingEvent("review_viewed", { source: "estimate", service: selectedServices[0]?.id, metadata: common });
     setSubmitStage("review");
   };
 
@@ -792,6 +811,7 @@ function EstimatePageContent() {
       setSendError("");
 
       const attribution = getClientAttribution();
+      trackMarketingEvent("booking_submit_attempt", { source: "estimate", service: selectedServices[0]?.id, metadata: { calculator_type: "main", category, locale, current_price: total } });
       const payload = {
         fullName: client.fullName,
         email: client.email,
@@ -825,6 +845,15 @@ function EstimatePageContent() {
         utmCampaign: attribution.utmCampaign,
         utmTerm: attribution.utmTerm,
         utmContent: attribution.utmContent,
+        visitorId: attribution.visitorId,
+        gclid: attribution.gclid,
+        firstTouch: attribution.firstTouch,
+        lastTouch: attribution.lastTouch,
+        deviceType: attribution.deviceType,
+        serviceCategory: category,
+        serviceId: selectedServices[0]?.id || "other",
+        displayedPrice: total,
+        selectedPrice: total,
       };
 
       const response = await fetch("/api/send", {
@@ -850,16 +879,16 @@ function EstimatePageContent() {
       }
 
       setSubmitStage("success");
-      trackMarketingEvent("estimate_submitted", {
+      trackMarketingEvent("booking_completed", {
         source: "calculator",
-        service: categoryTitle,
-        metadata: { city: displayCity, locale },
+        service: selectedServices[0]?.id || categoryTitle,
+        metadata: { calculator_type: "main", category, city: displayCity, locale, value: total, currency: "EUR" },
       });
       const acCleaning = selectedServices.find(
         (service) => service.id === AC_DEEP_CLEANING_SERVICE_ID,
       );
       if (acCleaning) {
-        trackMarketingEvent("ac_cleaning_booking_completed", {
+        trackMarketingEvent("promo_click", {
           source: "calculator",
           service: AC_DEEP_CLEANING_SERVICE_ID,
           metadata: {
@@ -867,11 +896,13 @@ function EstimatePageContent() {
             units: acCleaning.qty,
             value: acCleaning.subtotal,
             currency: acDeepCleaningPromotion.currency,
+            promo_id: "ac_deep_clean_49",
           },
         });
       }
     } catch (error) {
       console.error("SEND REQUEST ERROR:", error);
+      trackMarketingEvent("booking_submit_failed", { source: "estimate", service: selectedServices[0]?.id, metadata: { calculator_type: "main", error_type: "api_failure", endpoint: "/api/send", locale } });
       setSendError(t("errors.sendError"));
     } finally {
       setIsSending(false);
@@ -939,6 +970,8 @@ function EstimatePageContent() {
                             key={key}
                             type="button"
                             onClick={() => {
+                              markCalculatorStarted();
+                              trackMarketingEvent("category_selected", { source: "estimate", service: key, metadata: { calculator_type: "main", category: key, locale } });
                               setCategory(key);
                               setQuantities({});
                             }}
@@ -981,6 +1014,8 @@ function EstimatePageContent() {
                           key={key}
                           type="button"
                           onClick={() => {
+                            markCalculatorStarted();
+                            trackMarketingEvent("category_selected", { source: "estimate", service: key, metadata: { calculator_type: "main", category: key, locale } });
                             setCategory(key);
                             setQuantities({});
                           }}

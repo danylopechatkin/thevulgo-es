@@ -1,5 +1,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
+import { createHash } from "node:crypto";
+import { sanitizeReferrer } from "@/lib/analytics/channel";
 
 const PHOTO_BUCKET = "fan-lead-photos";
 const MAX_PHOTOS = 4;
@@ -103,13 +105,14 @@ export async function POST(request: Request) {
 
     const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
     const clientIp = clean(forwardedFor || request.headers.get("x-real-ip") || "unknown", 80);
+    const requestFingerprint = createHash("sha256").update(`thevulgo:${clientIp}`).digest("hex");
     const hourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
     const { count: recentIpCount } = await supabase
       .from("leads")
       .select("id", { count: "exact", head: true })
       .eq("source", "website-fan-form")
       .gte("created_at", hourAgo)
-      .ilike("notes", `%IP: ${clientIp}%`);
+      .eq("request_fingerprint", requestFingerprint);
     if ((recentIpCount || 0) >= 5) {
       return Response.json({ success: false, error: "Too many requests" }, { status: 429 });
     }
@@ -146,17 +149,6 @@ export async function POST(request: Request) {
       : `${fanCount} ceiling ${fanCount === 1 ? "fan" : "fans"} — €${price}`;
     const followUpAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
     const attribution = typeof body.attribution === "object" && body.attribution ? body.attribution : {};
-    const attributionDetails = [
-      clean(attribution.gclid, 300) && `GCLID: ${clean(attribution.gclid, 300)}`,
-      clean(attribution.utm_source, 200) && `UTM source: ${clean(attribution.utm_source, 200)}`,
-      clean(attribution.utm_medium, 200) && `UTM medium: ${clean(attribution.utm_medium, 200)}`,
-      clean(attribution.utm_campaign, 300) && `UTM campaign: ${clean(attribution.utm_campaign, 300)}`,
-      clean(attribution.utm_term, 300) && `UTM term: ${clean(attribution.utm_term, 300)}`,
-      clean(attribution.utm_content, 300) && `UTM content: ${clean(attribution.utm_content, 300)}`,
-      clean(attribution.landing_page, 500) && `Landing page: ${clean(attribution.landing_page, 500)}`,
-      clean(attribution.referrer, 500) && `Referrer: ${clean(attribution.referrer, 500)}`,
-      clean(attribution.captured_at, 80) && `Attribution captured: ${clean(attribution.captured_at, 80)}`,
-    ].filter(Boolean);
     const details = [
       `Zona: ${area}`,
       installationType && `Instalación: ${installationType}`,
@@ -165,8 +157,6 @@ export async function POST(request: Request) {
       notes && `Comentario: ${notes}`,
       photoUrls.length && `Fotos:\n${photoUrls.join("\n")}`,
       `Consentimiento de privacidad: aceptado ${new Date().toISOString()}`,
-      ...attributionDetails,
-      `IP: ${clientIp}`,
       "Origen: formulario corto de ventiladores",
     ].filter(Boolean).join("\n");
 
@@ -183,6 +173,26 @@ export async function POST(request: Request) {
       potential_value: price,
       notes: details,
       source: "website-fan-form",
+      analytics_session_id: clean(attribution.sessionId, 80) || null,
+      visitor_id: clean(attribution.visitorId, 80) || null,
+      landing_page: clean(attribution.landingPage, 300) || null,
+      current_page: `/${locale}/services/instalacion-ventilador-techo-valencia`,
+      locale,
+      service_category: "handyman",
+      service_id: "ceiling_fan_install",
+      first_touch_source: clean(attribution.firstTouch?.source, 80) || null,
+      last_touch_source: clean(attribution.lastTouch?.source, 80) || null,
+      attribution_confidence: attribution.sessionId ? "session_matched" : "unknown",
+      referrer: sanitizeReferrer(attribution.referrer) || null,
+      device_type: clean(attribution.deviceType, 20) || null,
+      gclid: clean(attribution.gclid, 300) || null,
+      utm_source: clean(attribution.utmSource, 200) || null,
+      utm_medium: clean(attribution.utmMedium, 200) || null,
+      utm_campaign: clean(attribution.utmCampaign, 300) || null,
+      utm_term: clean(attribution.utmTerm, 300) || null,
+      utm_content: clean(attribution.utmContent, 300) || null,
+      area,
+      request_fingerprint: requestFingerprint,
     }).select("id").single();
     if (leadError) {
       console.error("Fan lead insert failed", leadError);

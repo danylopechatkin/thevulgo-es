@@ -1,9 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import LanguageSwitcher from "@/app/components/LanguageSwitcher";
-import WhatsAppConversionTracker from "@/app/components/WhatsAppConversionTracker";
 import HeaderEstimateLink from "@/app/components/HeaderEstimateLink";
 import MobileHeaderMenu from "@/app/components/MobileHeaderMenu";
 import CitySwitcher from "@/app/components/CitySwitcher";
@@ -11,9 +9,10 @@ import { MarketLabel, MarketWhatsApp } from "@/app/components/MarketHeaderDetail
 import MarketDesktopNav from "@/app/components/MarketDesktopNav";
 import MarketHomeLink from "@/app/components/MarketHomeLink";
 import MarketingTracker from "@/app/components/MarketingTracker";
+import AnalyticsConsent from "@/app/components/AnalyticsConsent";
+import AnalyticsDebugPanel from "@/app/components/AnalyticsDebugPanel";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
@@ -81,23 +80,9 @@ export default async function LocaleLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen overflow-x-hidden bg-white font-sans text-black antialiased`}
         data-locale={locale}
       >
-        <Script
-  async
-  src="https://www.googletagmanager.com/gtag/js?id=AW-18261040714"
-  strategy="afterInteractive"
-/>
-
-<Script id="google-ads-tag" strategy="afterInteractive">
-  {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-18261040714');
-  `}
-</Script>
-
-        <WhatsAppConversionTracker />
         <MarketingTracker />
+        <AnalyticsConsent locale={locale} />
+        <AnalyticsDebugPanel />
 
         <NextIntlClientProvider messages={messages}>
           <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-md">
@@ -140,7 +125,6 @@ export default async function LocaleLayout({
 
           {children}
 
-          <Analytics />
           <SpeedInsights />
         </NextIntlClientProvider>
       </div>

@@ -27,6 +27,9 @@ export type Lead = {
   notes: string;
   source: string;
   lost_reason: string;
+  lost_reason_code: string | null;
+  lost_reason_comment: string | null;
+  contact_reference: string | null;
   converted_order_id: string | null;
   last_contacted_at: string | null;
   created_at: string;

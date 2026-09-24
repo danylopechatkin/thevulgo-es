@@ -1,9 +1,10 @@
 "use client";
 import { formatPublicPrice } from "@/lib/public-pricing";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { BadgeCheck, CheckCircle2, Fan, ImagePlus, Loader2, MapPin, Phone, Send, X } from "lucide-react";
+import { getClientAttribution, trackMarketingEvent } from "@/lib/client-attribution";
 
 const packages = [
   { count: 1, price: 45 },
@@ -73,9 +74,11 @@ export default function FanLeadForm({ locale }: { locale: string }) {
       : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
   );
   const selectedPackage = packages.find((item) => item.count === fanCount)!;
+  const started = useRef(false);
+  useEffect(() => { trackMarketingEvent("form_view", { source: "fan_form", service: "ceiling_fan_install", metadata: { form_type: "fan_lead", locale } }); }, [locale]);
+  const markStarted = () => { if (!started.current) { started.current = true; trackMarketingEvent("form_started", { source: "fan_form", service: "ceiling_fan_install", metadata: { form_type: "fan_lead", locale } }); } };
 
-  const update = (field: keyof typeof form, value: string) =>
-    setForm((current) => ({ ...current, [field]: value }));
+  const update = (field: keyof typeof form, value: string) => { markStarted(); setForm((current) => ({ ...current, [field]: value })); };
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -89,42 +92,22 @@ export default function FanLeadForm({ locale }: { locale: string }) {
       return;
     }
     setSending(true);
+    trackMarketingEvent("form_submit_attempt", { source: "fan_form", service: "ceiling_fan_install", metadata: { form_type: "fan_lead", locale, quantity: fanCount, current_price: selectedPackage.price } });
     try {
-      const params = new URLSearchParams(window.location.search);
-      const attribution = {
-        gclid: params.get("gclid") || "",
-        utm_source: params.get("utm_source") || "",
-        utm_medium: params.get("utm_medium") || "",
-        utm_campaign: params.get("utm_campaign") || "",
-        utm_term: params.get("utm_term") || "",
-        utm_content: params.get("utm_content") || "",
-        landing_page: window.location.pathname,
-        referrer: document.referrer,
-        captured_at: new Date().toISOString(),
-      };
-      const hasCampaignData = Object.entries(attribution).some(
-        ([key, value]) => key !== "landing_page" && key !== "referrer" && Boolean(value),
-      );
-      if (hasCampaignData) localStorage.setItem("thevulgo_fan_attribution", JSON.stringify(attribution));
-      let savedAttribution: typeof attribution | null = null;
-      try {
-        const stored = JSON.parse(localStorage.getItem("thevulgo_fan_attribution") || "null");
-        const capturedAt = new Date(stored?.captured_at || 0).getTime();
-        if (stored && Date.now() - capturedAt <= 30 * 24 * 60 * 60 * 1000) savedAttribution = stored;
-      } catch {
-        localStorage.removeItem("thevulgo_fan_attribution");
-      }
+      const attribution = getClientAttribution();
       const response = await fetch("/api/fan-leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, fanCount, locale, photos, privacyAccepted, submissionKey, attribution: savedAttribution || attribution }),
+        body: JSON.stringify({ ...form, fanCount, locale, photos, privacyAccepted, submissionKey, attribution }),
       });
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.error);
       setClientEmailSent(result.clientEmailSent !== false);
       setSent(true);
       setSuccessModalOpen(true);
+      trackMarketingEvent("lead_created", { source: "fan_form", service: "ceiling_fan_install", metadata: { form_type: "fan_lead", locale, quantity: fanCount, value: selectedPackage.price, currency: "EUR" } });
     } catch {
+      trackMarketingEvent("form_submit_failed", { source: "fan_form", service: "ceiling_fan_install", metadata: { form_type: "fan_lead", error_type: "api_failure", endpoint: "/api/fan-leads", locale } });
       setError(isEs
         ? "No se pudo enviar. Revisa los datos o escríbenos por WhatsApp."
         : "We could not send it. Check your details or contact us on WhatsApp.");
@@ -251,7 +234,7 @@ export default function FanLeadForm({ locale }: { locale: string }) {
                 <button
                   key={item.count}
                   type="button"
-                  onClick={() => setFanCount(item.count)}
+                  onClick={() => { markStarted(); setFanCount(item.count); }}
                   className={`relative rounded-2xl border-2 p-5 text-left transition active:scale-[0.98] ${active ? "border-black bg-yellow-400 shadow-lg" : "border-neutral-200 bg-white hover:border-yellow-400"}`}
                 >
                   {active && <BadgeCheck className="absolute right-4 top-4 h-5 w-5" />}

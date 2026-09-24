@@ -18,7 +18,7 @@ export default function WhatsAppConversionLink({
   location = "content",
 }: Props) {
   return (
-    <a href={href} className={className} data-event="whatsapp_click" data-service={service} data-cta-location={location}>
+    <a href={href} className={className} data-event="whatsapp_click" data-service={service} data-analytics-cta={`${service}_${location}_whatsapp`} data-cta-location={location}>
       {children}
     </a>
   );

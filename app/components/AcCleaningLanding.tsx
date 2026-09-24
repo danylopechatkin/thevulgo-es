@@ -28,6 +28,9 @@ export default function AcCleaningLanding({ locale }: { locale: string }) {
     value: price,
     currency: acDeepCleaningPromotion.currency,
     units: 1,
+    promo_id: "ac_deep_clean_49",
+    displayed_price: price,
+    regular_price: acDeepCleaningPromotion.regularPrice,
   };
   const included = isEs
     ? [
@@ -151,6 +154,8 @@ export default function AcCleaningLanding({ locale }: { locale: string }) {
                 data-event="ac_cleaning_booking_click"
                 data-service={AC_DEEP_CLEANING_SERVICE_ID}
                 data-cta-location="cleaning-hero"
+                data-analytics-cta="ac_cleaning_hero_book"
+                data-promo-id="ac_deep_clean_49"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 font-black shadow-lg"
               >
                 {isEs ? `Reservar por ${price} €` : `Book for €${price}`}
@@ -249,6 +254,8 @@ export default function AcCleaningLanding({ locale }: { locale: string }) {
                   data-event="ac_cleaning_booking_click"
                   data-service={AC_DEEP_CLEANING_SERVICE_ID}
                   data-cta-location="cleaning-quantity"
+                  data-analytics-cta="ac_cleaning_quantity_book"
+                  data-promo-id="ac_deep_clean_49"
                   className="flex items-center justify-between rounded-xl bg-yellow-50 px-5 py-4 font-bold"
                 >
                   <span>
@@ -314,6 +321,8 @@ export default function AcCleaningLanding({ locale }: { locale: string }) {
             data-event="ac_cleaning_booking_click"
             data-service={AC_DEEP_CLEANING_SERVICE_ID}
             data-cta-location="cleaning-footer"
+            data-analytics-cta="ac_cleaning_footer_book"
+            data-promo-id="ac_deep_clean_49"
             className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 font-black"
           >
             {isEs ? `Reservar por ${price} €` : `Book for €${price}`}

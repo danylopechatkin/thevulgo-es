@@ -34,3 +34,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Commercial Analytics 2.0
+
+First-party analytics is consent-gated by default. Set `NEXT_PUBLIC_FIRST_PARTY_ANALYTICS_MODE=legitimate_interest` only after a documented privacy/legal review if the privacy-preserving first-party mode should run without analytics consent. Google Ads always requires Advertising consent.
+
+For sanitized event diagnostics in development or staging, set `NEXT_PUBLIC_ANALYTICS_DEBUG=true`. The debug panel is disabled in production and never displays contact fields.
+
+Apply `supabase/migrations/20260923235946_commercial_analytics_2_0.sql` before deploying application code that sends Analytics 2.0 events or uses the Owner Dashboard.
