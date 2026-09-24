@@ -352,12 +352,12 @@ className="mt-1.5 h-28 w-full resize-none rounded-xl border border-neutral-700 b
               WhatsApp *
               <input value={contact.phone} onChange={(event) => setContact((current) => ({ ...current, phone: event.target.value }))} className="mt-1.5 h-12 w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 text-sm text-white outline-none focus:border-yellow-400" type="tel" inputMode="tel" autoComplete="tel" required />
             </label>
-            <label className="text-xs font-bold sm:col-span-2">
-              {es ? "Zona o dirección *" : "Area or address *"}
+            <label className="text-sm font-bold sm:col-span-2">
+  {es ? "Zona o dirección *" : "Area or address *"}
               <input value={contact.address} onChange={(event) => setContact((current) => ({ ...current, address: event.target.value }))} className="mt-1.5 h-12 w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 text-sm text-white outline-none focus:border-yellow-400" autoComplete="street-address" required />
             </label>
-            <label className="text-xs font-bold sm:col-span-2">
-              Email <span className="font-normal text-neutral-400">({es ? "opcional" : "optional"})</span>
+            <label className="text-sm font-bold sm:col-span-2">
+  Email <span className="font-normal text-neutral-400">({es ? "opcional" : "optional"})</span>
               <input value={contact.email} onChange={(event) => setContact((current) => ({ ...current, email: event.target.value }))} className="mt-1.5 h-12 w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 text-sm text-white outline-none focus:border-yellow-400" type="email" autoComplete="email" />
             </label>
           </div>
