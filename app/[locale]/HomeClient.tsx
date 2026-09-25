@@ -27,6 +27,7 @@ import { buildWhatsAppHref, type CommercialService } from "@/lib/commercial";
 import type { Market } from "@/lib/cities";
 import { getCatalogServices } from "@/lib/serviceCatalog";
 import { acDeepCleaningPromotion } from "@/lib/acPromotion";
+import { localizedPath } from "@/lib/technicalRoutes";
 
 type Props = { locale?: string; city?: string; market?: Market };
 
@@ -230,7 +231,7 @@ export default function HomeClient({
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-400">THEVULGO SECURITY & NETWORKS</p><h2 className="mt-3 text-3xl font-black sm:text-5xl">{es ? "Instalaciones de seguridad y redes" : "Security & Network Installations"}</h2><p className="mt-4 max-w-3xl leading-7 text-neutral-300">{es ? "CCTV, WiFi profesional, fibra, cableado y control de acceso para viviendas y negocios en Valencia." : "CCTV, professional WiFi, fiber, cabling and access control for Valencia homes and businesses."}</p></div>
-              <Link href={es ? "/es/services/security-networks" : "/services/security-networks"} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 font-black text-black">{es ? "Explorar Seguridad y Redes" : "Explore Security & Networks"}<ArrowRight className="h-5 w-5" /></Link>
+              <Link href={localizedPath(locale, "services/security-networks")} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 font-black text-black">{es ? "Explorar Seguridad y Redes" : "Explore Security & Networks"}<ArrowRight className="h-5 w-5" /></Link>
             </div>
             <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[

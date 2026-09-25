@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { getTechnicalLeaf } from "@/lib/securityNetworkCatalog";
 import { localizedPath, localizedUrl } from "@/lib/technicalRoutes";
+import TechnicalLeafDirectory from "@/app/components/technical/TechnicalLeafDirectory";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -240,7 +241,7 @@ export default async function AccessControlPage({ params }: Props) {
   const isEs = locale === "es";
 
   const pageUrl = `${baseUrl}${locale === "es" ? "/es" : ""}/services/control-de-acceso`;
-  const estimateHref = `/${locale}/estimate?category=access-control`;
+  const estimateHref = `${localizedPath(locale, "estimate")}?category=access-control`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -479,7 +480,7 @@ export default async function AccessControlPage({ params }: Props) {
             "@type": "ListItem",
             position: 1,
             name: isEs ? "Inicio" : "Home",
-            item: `${baseUrl}/${locale}`,
+            item: localizedUrl(locale),
           },
           {
             "@type": "ListItem",
@@ -609,7 +610,7 @@ export default async function AccessControlPage({ params }: Props) {
           </div>
 
           <Link
-            href={`/${locale}/estimate?category=access-control`}
+              href={`${localizedPath(locale, "estimate")}?category=access-control`}
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-5 py-3 text-sm font-bold shadow-sm transition hover:scale-105"
           >
             {isEs ? "Pedir presupuesto" : "Request estimate"}
@@ -1023,6 +1024,7 @@ export default async function AccessControlPage({ params }: Props) {
           </div>
         </div>
       </section>
+      <TechnicalLeafDirectory category="access-control" locale={locale} />
     </main>
   );
 }

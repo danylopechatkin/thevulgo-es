@@ -13,11 +13,12 @@ import {
   TriangleAlert,
 } from "lucide-react";
 import { getGuide, guides, textFor } from "../guides-data";
+import { localizedPath, localizedUrl } from "@/lib/technicalRoutes";
+import { WHATSAPP_NUMBER } from "@/lib/marketLinks";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
 const baseUrl = "https://www.thevulgo.es";
-const phone = "34610076942";
 
 export function generateStaticParams() {
   return ["es", "en"].flatMap((locale) =>
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title = `${textFor(guide.title, locale)} | THEVULGO`;
   const description = textFor(guide.description, locale);
-  const canonical = `${baseUrl}/${locale}/guias/${slug}`;
+  const canonical = localizedUrl(locale, `guias/${slug}`);
 
   return {
     title,
@@ -41,7 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical,
       languages: {
         es: `${baseUrl}/es/guias/${slug}`,
-        en: `${baseUrl}/en/guias/${slug}`,
+        en: localizedUrl("en", `guias/${slug}`),
+        "x-default": localizedUrl("en", `guias/${slug}`),
       },
     },
     openGraph: {
@@ -61,14 +63,14 @@ export default async function GuideArticlePage({ params }: Props) {
   if (!guide) notFound();
 
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/guias/${guide.slug}`;
+  const pageUrl = localizedUrl(locale, `guias/${guide.slug}`);
   const title = textFor(guide.title, locale);
   const description = textFor(guide.description, locale);
   const category = textFor(guide.category, locale);
   const related = guides
     .filter((item) => item.slug !== guide.slug && textFor(item.category, locale) === category)
     .slice(0, 3);
-  const whatsapp = `https://wa.me/${phone}?text=${encodeURIComponent(
+  const whatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     isEs
       ? `Hola, he leído la guía “${title}” y necesito presupuesto en Valencia.`
       : `Hello, I read “${title}” and need a quote in Valencia.`
@@ -105,8 +107,8 @@ export default async function GuideArticlePage({ params }: Props) {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: isEs ? "Inicio" : "Home", item: `${baseUrl}/${locale}` },
-        { "@type": "ListItem", position: 2, name: isEs ? "Guías" : "Guides", item: `${baseUrl}/${locale}/guias` },
+        { "@type": "ListItem", position: 1, name: isEs ? "Inicio" : "Home", item: localizedUrl(locale) },
+        { "@type": "ListItem", position: 2, name: isEs ? "Guías" : "Guides", item: localizedUrl(locale, "guias") },
         { "@type": "ListItem", position: 3, name: title, item: pageUrl },
       ],
     },
@@ -129,7 +131,7 @@ export default async function GuideArticlePage({ params }: Props) {
           <header className="border-b border-yellow-300 bg-[#fffdf0]">
             <div className="mx-auto max-w-5xl px-5 py-12 sm:px-8 sm:py-16">
               <Link
-                href={`/${locale}/guias`}
+                href={localizedPath(locale, "guias")}
                 className="inline-flex items-center gap-2 text-sm font-bold text-gray-700 hover:text-black"
               >
                 <ArrowLeft className="h-4 w-4" /> {isEs ? "Todas las guías" : "All guides"}
@@ -202,7 +204,7 @@ export default async function GuideArticlePage({ params }: Props) {
                 <p className="mt-3 text-sm leading-6 text-gray-600">
                   {isEs ? "Envía fotos y recibe una valoración clara antes de reservar." : "Send photos and receive a clear assessment before booking."}
                 </p>
-                <Link href={`/${locale}/${guide.serviceHref}`} className="mt-5 flex items-center justify-between rounded-2xl bg-yellow-400 px-5 py-4 font-black hover:bg-yellow-300">
+                <Link href={localizedPath(locale, guide.serviceHref)} className="mt-5 flex items-center justify-between rounded-2xl bg-yellow-400 px-5 py-4 font-black hover:bg-yellow-300">
                   {textFor(guide.serviceLabel, locale)} <ArrowRight className="h-5 w-5" />
                 </Link>
                 <a href={whatsapp} className="mt-3 flex items-center justify-center gap-2 rounded-2xl border border-gray-300 px-5 py-4 font-bold hover:border-black">
@@ -219,7 +221,7 @@ export default async function GuideArticlePage({ params }: Props) {
               <div className="flex items-center gap-3"><BookOpen className="h-6 w-6" /><h2 className="text-3xl font-black">{isEs ? "Guías relacionadas" : "Related guides"}</h2></div>
               <div className="mt-7 grid gap-4 md:grid-cols-3">
                 {related.map((item) => (
-                  <Link key={item.slug} href={`/${locale}/guias/${item.slug}`} className="group rounded-2xl border border-gray-200 bg-white p-5 hover:border-yellow-400">
+                  <Link key={item.slug} href={localizedPath(locale, `guias/${item.slug}`)} className="group rounded-2xl border border-gray-200 bg-white p-5 hover:border-yellow-400">
                     <span className="text-xs font-black uppercase tracking-wide text-gray-500">{textFor(item.category, locale)}</span>
                     <h3 className="mt-2 font-extrabold group-hover:underline">{textFor(item.title, locale)}</h3>
                     <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold">{isEs ? "Leer" : "Read"} <ArrowRight className="h-4 w-4" /></span>

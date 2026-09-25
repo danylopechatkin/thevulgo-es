@@ -410,6 +410,7 @@ function EstimatePageContent() {
     useState<TechnicalProjectDetails | null>(null);
   const [technicalConfiguratorComplete, setTechnicalConfiguratorComplete] =
     useState(false);
+  const [serviceSelectionTouched, setServiceSelectionTouched] = useState(false);
   const [submitStage, setSubmitStage] = useState<
     "build" | "review" | "success"
   >("build");
@@ -574,6 +575,9 @@ function EstimatePageContent() {
       // URL parameters are the external source used to hydrate the requested calculator state.
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setCategory(raw);
+      setServiceSelectionTouched(false);
+      setTechnicalProjectDetails(null);
+      setTechnicalConfiguratorComplete(false);
       const requestedService = searchParams.get("service");
       const serviceExists =
         requestedService &&
@@ -638,15 +642,18 @@ function EstimatePageContent() {
   const subtotal = Number(estimatedTotal.toFixed(2));
   const total = subtotal;
   const requestedTechnicalService = searchParams.get("service");
-  const deepTechnicalCategory = ["cctv", "networking", "fiber"].includes(category)
+  const deepTechnicalCategory = ["cctv", "networking", "fiber", "access-control", "intercom", "alarms", "commercial"].includes(category)
     ? (category as DeepTechnicalCategory)
     : null;
-  const activeTechnicalService = requestedTechnicalService || selectedServices[0]?.id;
+  const activeTechnicalService = serviceSelectionTouched
+    ? selectedServices[0]?.id
+    : requestedTechnicalService || selectedServices[0]?.id;
   const isShortTechnicalService = Boolean(
     activeTechnicalService &&
       (activeTechnicalService.includes("diagnostic") ||
         activeTechnicalService.includes("repair") ||
-        activeTechnicalService.includes("remote-viewing")),
+        activeTechnicalService.includes("remote-viewing") ||
+        activeTechnicalService.includes("app-setup")),
   );
   const shouldUseDeepConfigurator = Boolean(
     deepTechnicalCategory && selectedServices.length > 0 && !isShortTechnicalService,
@@ -675,6 +682,7 @@ function EstimatePageContent() {
       setTechnicalProjectDetails(null);
       setTechnicalConfiguratorComplete(false);
     }
+    setServiceSelectionTouched(true);
     setQuantities((prev) => {
       const next = { ...prev };
       if (value <= 0) delete next[id];
@@ -685,7 +693,12 @@ function EstimatePageContent() {
 
   const addOne = (id: string) => setQty(id, (quantities[id] || 0) + 1);
   const removeOne = (id: string) => setQty(id, (quantities[id] || 0) - 1);
-  const clearAll = () => setQuantities({});
+  const clearAll = () => {
+    setServiceSelectionTouched(true);
+    setQuantities({});
+    setTechnicalProjectDetails(null);
+    setTechnicalConfiguratorComplete(false);
+  };
 
   const selectedCityAreas = CITY_AREA_OPTIONS[client.city] || [];
   const hasAreaOptions = selectedCityAreas.length > 0;
@@ -1139,6 +1152,7 @@ function EstimatePageContent() {
                               markCalculatorStarted();
                               trackMarketingEvent("category_selected", { source: "estimate", service: key, metadata: { calculator_type: "main", category: key, locale } });
                               setCategory(key);
+                              setServiceSelectionTouched(true);
                               setQuantities({});
                               setTechnicalProjectDetails(null);
                               setTechnicalConfiguratorComplete(false);
@@ -1185,6 +1199,7 @@ function EstimatePageContent() {
                             markCalculatorStarted();
                             trackMarketingEvent("category_selected", { source: "estimate", service: key, metadata: { calculator_type: "main", category: key, locale } });
                             setCategory(key);
+                            setServiceSelectionTouched(true);
                             setQuantities({});
                             setTechnicalProjectDetails(null);
                             setTechnicalConfiguratorComplete(false);
@@ -1972,6 +1987,7 @@ function EstimatePageContent() {
                       onClick={() => {
                         setSubmitStage("build");
                         setQuantities({});
+                        setServiceSelectionTouched(true);
                         setTechnicalProjectDetails(null);
                         setTechnicalConfiguratorComplete(false);
                         setFormErrors({});

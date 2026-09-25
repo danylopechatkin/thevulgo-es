@@ -32,7 +32,13 @@ export default function TechnicalProjectConfigurator({ category, locale, value, 
 
   const update = (key: string, next: string | number | boolean | string[]) => {
     setShowError(false);
-    onChange({ ...value, [key]: next, requiresReview: technicalProjectRequiresReview({ ...value, [key]: next }) });
+    const updated = {
+      ...value,
+      [key]: next,
+      ...(category === "alarms" && key === "monitoringChoice" ? { requestedMonitoring: next === "yes" } : {}),
+      ...(category === "commercial" && key === "systems" ? { multiSystem: Array.isArray(next) && next.length > 1 } : {}),
+    };
+    onChange({ ...updated, requiresReview: technicalProjectRequiresReview(updated) });
   };
 
   const next = () => {
@@ -91,6 +97,14 @@ export default function TechnicalProjectConfigurator({ category, locale, value, 
         </p>
       ) : null}
 
+      {category === "alarms" && value.monitoringChoice === "yes" && stepIndex === steps.length - 1 ? (
+        <p className="mt-6 rounded-2xl border border-yellow-300 bg-yellow-50 p-4 text-sm leading-6 text-neutral-700">
+          {isEs
+            ? "Revisaremos qué parte de la instalación podemos realizar y qué servicios deben contratarse con un proveedor autorizado. THEVULGO no presta monitorización CRA ni respuesta policial."
+            : "We will review which installation work we can carry out and which services require an authorised provider. THEVULGO does not provide alarm receiving centre monitoring or police response."}
+        </p>
+      ) : null}
+
       {showError ? (
         <p className="mt-5 text-sm font-bold text-red-600">
           {isEs ? "Completa las opciones de este paso." : "Complete the options in this step."}
@@ -135,6 +149,8 @@ function Question({ question, value, locale, update }: { question: TechnicalQues
         </div>
       ) : question.type === "text" ? (
         <input value={typeof current === "string" ? current : ""} onChange={(event) => update(question.key, event.target.value)} className="mt-3 min-h-12 w-full rounded-xl border border-neutral-300 px-4 outline-none focus:border-yellow-400" />
+      ) : question.type === "textarea" ? (
+        <textarea value={typeof current === "string" ? current : ""} onChange={(event) => update(question.key, event.target.value)} rows={4} className="mt-3 w-full resize-y rounded-xl border border-neutral-300 px-4 py-3 outline-none focus:border-yellow-400" />
       ) : (
         <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {question.options?.map((option) => {

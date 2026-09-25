@@ -34,6 +34,16 @@ const icons = {
   commercial: ShieldCheck,
 };
 
+const guideLinks = {
+  cctv: [["cctv-ip-vs-analogico", "IP vs analogue CCTV", "CCTV IP vs analógico"], ["como-funcionan-camaras-poe", "How PoE cameras work", "Cómo funcionan las cámaras PoE"], ["nvr-vs-dvr-diferencias", "NVR vs DVR", "NVR vs DVR"]],
+  networking: [["mesh-wifi-vs-puntos-acceso", "Mesh WiFi vs access points", "Mesh WiFi vs puntos de acceso"], ["cat6-vs-cat6a", "Cat6 vs Cat6A", "Cat6 vs Cat6A"], ["que-es-una-vlan", "What is a VLAN?", "¿Qué es una VLAN?"]],
+  fiber: [["fibra-monomodo-vs-multimodo", "Single-mode vs multimode", "Monomodo vs multimodo"], ["conectores-fibra-lc-vs-sc", "LC vs SC connectors", "Conectores LC vs SC"]],
+  "access-control": [["cerradero-electrico-vs-electroiman", "Electric strike vs magnetic lock", "Cerradero eléctrico vs electroimán"]],
+  intercom: [["videoportero-dos-hilos-vs-ip", "2-wire vs IP intercom", "Videoportero 2 hilos vs IP"]],
+  alarms: [],
+  commercial: [],
+} satisfies Record<TechnicalLeaf["category"], string[][]>;
+
 export default function TechnicalServiceLanding({
   service,
   locale,
@@ -59,7 +69,7 @@ export default function TechnicalServiceLanding({
       ? "Presupuesto según alcance"
       : "Quote based on project scope";
 
-  const faq = [
+  const faq = service.faq?.map((item) => ({ q: item.question[language], a: item.answer[language] })) || [
     {
       q: isEs ? "¿Podéis trabajar con mi sistema actual?" : "Can you work with my existing system?",
       a: isEs
@@ -140,8 +150,9 @@ export default function TechnicalServiceLanding({
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
+        <div className="mb-10 max-w-3xl"><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-600">{isEs ? "Cuándo es útil" : "When this service helps"}</p><h2 className="mt-3 text-3xl font-black">{isEs ? `Situaciones habituales para ${service.h1.es}` : `Typical situations for ${service.h1.en}`}</h2></div>
         <div className="grid gap-6 md:grid-cols-3">
-          {service.problems.map((item) => <article key={item.en} className="rounded-2xl border border-neutral-200 p-6 shadow-sm"><Wrench className="h-7 w-7 text-yellow-500" /><h2 className="mt-5 text-xl font-black">{item[language]}</h2><p className="mt-3 text-sm leading-6 text-neutral-600">{isEs ? "Revisamos el sistema, explicamos las opciones y confirmamos el alcance antes de realizar trabajos adicionales." : "We inspect the system, explain the options and confirm scope before additional work is carried out."}</p></article>)}
+          {service.problems.map((item, index) => <article key={item.en} className="rounded-2xl border border-neutral-200 p-6 shadow-sm"><Wrench className="h-7 w-7 text-yellow-500" /><h3 className="mt-5 text-xl font-black">{item[language]}</h3><p className="mt-3 text-sm leading-6 text-neutral-600">{service.situations[index]?.[language]}</p></article>)}
         </div>
       </section>
 
@@ -149,12 +160,9 @@ export default function TechnicalServiceLanding({
         <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
           <div className="grid gap-10 lg:grid-cols-2">
             <div><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-600">{isEs ? "Proceso" : "Process"}</p><h2 className="mt-3 text-3xl font-black">{isEs ? "De la revisión a un sistema comprobado" : "From review to a tested system"}</h2><div className="mt-7 space-y-4">{[
-              [isEs ? "1. Alcance" : "1. Scope", isEs ? "Nos cuentas el objetivo, cantidades y sistema actual." : "Tell us the objective, quantities and current system."],
-              [isEs ? "2. Revisión" : "2. Review", isEs ? "Revisamos fotos, compatibilidad, acceso y recorridos." : "We review photos, compatibility, access and routes."],
-              [isEs ? "3. Presupuesto" : "3. Quote", isEs ? "Separamos mano de obra, equipos y materiales." : "Labour, equipment and materials are separated."],
-              [isEs ? "4. Instalación" : "4. Installation", isEs ? "Instalamos, configuramos y probamos el funcionamiento." : "We install, configure and test operation."],
+              ...service.process.map((text, index) => [`${index + 1}. ${index === 0 ? (isEs ? "Alcance" : "Scope") : index === service.process.length - 1 ? (isEs ? "Pruebas" : "Testing") : (isEs ? "Planificación" : "Planning")}`, text[language]]),
             ].map(([title, text]) => <div key={title} className="rounded-2xl bg-white p-5 shadow-sm"><h3 className="font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-neutral-600">{text}</p></div>)}</div></div>
-            <div className="rounded-3xl bg-neutral-950 p-7 text-white"><CircleDollarSign className="h-9 w-9 text-yellow-400" /><h2 className="mt-5 text-3xl font-black">{service.priceMode === "surveyRequired" ? (isEs ? "Requiere revisión del proyecto" : "Project review required") : (isEs ? "Precio claro antes del trabajo" : "Clear price before work")}</h2><p className="mt-4 leading-7 text-neutral-300">{isEs ? "Los trabajos sencillos pueden tener precio fijo de mano de obra. Para cableados, varias puertas, sistemas completos o compatibilidad incierta, preparamos un alcance y presupuesto personalizado." : "Simple work can have a fixed labour price. Cabling, multiple doors, complete systems or uncertain compatibility receive a scoped project quote."}</p><div className="mt-6 rounded-2xl border border-neutral-700 p-5"><p className="font-black">{isEs ? "Visita técnica / diagnóstico — 49 €" : "Technical visit / system diagnosis — €49"}</p><p className="mt-2 text-sm text-neutral-400">{isEs ? "Cuando es la forma correcta de identificar el fallo o definir el proyecto." : "When an on-site review is the right way to identify the fault or define the project."}</p></div></div>
+            <div className="rounded-3xl bg-neutral-950 p-7 text-white"><CircleDollarSign className="h-9 w-9 text-yellow-400" /><h2 className="mt-5 text-3xl font-black">{service.priceMode === "surveyRequired" ? (isEs ? "Requiere revisión del proyecto" : "Project review required") : (isEs ? "Precio claro antes del trabajo" : "Clear price before work")}</h2><p className="mt-4 leading-7 text-neutral-300">{service.pricingNote[language]}</p><div className="mt-6 rounded-2xl border border-neutral-700 p-5"><p className="font-black">{isEs ? "Visita técnica / diagnóstico — 49 €" : "Technical visit / system diagnosis — €49"}</p><p className="mt-2 text-sm text-neutral-400">{isEs ? "Cuando es la forma correcta de identificar el fallo o definir el proyecto." : "When an on-site review is the right way to identify the fault or define the project."}</p></div></div>
           </div>
         </div>
       </section>
@@ -163,6 +171,8 @@ export default function TechnicalServiceLanding({
       {service.category === "alarms" ? <section className="mx-auto max-w-7xl px-5 py-12 md:px-8"><div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-sm leading-6 text-neutral-700">{isEs ? "THEVULGO instala y mantiene sistemas electrónicos autónomos. No se ofrece central receptora de alarmas, vigilancia privada ni aviso policial como servicio propio." : "THEVULGO installs and maintains standalone electronic systems. We do not provide alarm receiving centre, private-security monitoring or police-response services."}</div></section> : null}
 
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8"><div className="grid gap-10 lg:grid-cols-[1fr_.9fr]"><div><h2 className="text-3xl font-black">FAQ</h2><div className="mt-6 space-y-4">{faq.map((item) => <details key={item.q} className="rounded-2xl border border-neutral-200 p-5"><summary className="cursor-pointer font-black">{item.q}</summary><p className="mt-3 leading-7 text-neutral-600">{item.a}</p></details>)}</div></div><div><h2 className="text-3xl font-black">{isEs ? "Servicios relacionados" : "Related technical services"}</h2><div className="mt-6 grid gap-3">{related.map((item) => <Link key={item.id} href={localizedPath(locale, technicalLeafPath(item))} className="group flex items-center justify-between rounded-2xl border border-neutral-200 p-5 font-black transition hover:border-yellow-400 hover:bg-yellow-50"><span>{item.h1[language]}</span><ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></Link>)}</div></div></div></section>
+
+      {guideLinks[service.category].length ? <section className="border-t border-neutral-200 bg-neutral-50"><div className="mx-auto max-w-7xl px-5 py-12 md:px-8"><h2 className="text-2xl font-black">{isEs ? "Guías técnicas relacionadas" : "Related technical guides"}</h2><div className="mt-6 grid gap-3 md:grid-cols-3">{guideLinks[service.category].map(([slug, en, es]) => <Link key={slug} href={localizedPath(locale, `guias/${slug}`)} className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-white p-5 font-black hover:border-yellow-400"><span>{isEs ? es : en}</span><ArrowRight className="h-4 w-4 shrink-0" /></Link>)}</div></div></section> : null}
 
       <section className="bg-yellow-400"><div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-12 md:px-8 lg:flex-row lg:items-center lg:justify-between"><div><div className="flex items-center gap-2 text-sm font-black uppercase tracking-[.14em]"><BadgeCheck className="h-5 w-5" />Valencia & nearby</div><h2 className="mt-3 text-3xl font-black">{isEs ? "Cuéntanos el proyecto y revisamos el siguiente paso" : "Tell us the project and we’ll review the next step"}</h2></div><div className="flex flex-col gap-3 sm:flex-row"><Link href={estimateHref} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-black px-6 py-4 font-black text-white">{isEs ? "Calcular presupuesto" : "Get project estimate"}<ArrowRight className="h-5 w-5" /></Link><a href={whatsappHref} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border-2 border-black bg-white px-6 py-4 font-black"><MessageCircle className="h-5 w-5" />WhatsApp</a></div></div></section>
     </main>

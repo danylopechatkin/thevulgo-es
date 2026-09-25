@@ -436,9 +436,118 @@ const guideLibrary: Guide[] = [
   },
 ];
 
+const technicalGuides: Guide[] = [
+  {
+    slug: "cctv-ip-vs-analogico",
+    category: t("CCTV", "CCTV"),
+    title: t("CCTV IP vs analógico: qué sistema elegir", "IP vs analogue CCTV: which system should you choose?"),
+    description: t("Compara cámaras IP/PoE y sistemas coaxiales antes de ampliar o sustituir tu videovigilancia en Valencia.", "Compare IP/PoE cameras and coaxial systems before expanding or replacing CCTV in Valencia."),
+    intro: t("Ambas tecnologías pueden seguir siendo útiles. La decisión depende del cableado existente, la calidad necesaria, el grabador y si se trata de una ampliación o un sistema nuevo.", "Both technologies can remain useful. The choice depends on existing cabling, required image quality, the recorder and whether this is an expansion or a new system."),
+    points: [
+      { title: t("IP y PoE", "IP and PoE"), text: t("Una red Ethernet puede transportar datos y alimentación a cada cámara mediante PoE, con configuración desde el NVR o la red.", "Ethernet can carry data and power to each camera through PoE, with configuration handled by the NVR or network.") },
+      { title: t("Analógico existente", "Existing analogue"), text: t("El coaxial instalado puede aprovecharse si está en buen estado y el objetivo no exige rehacer toda la infraestructura.", "Installed coax can sometimes be retained when it is in good condition and the project does not justify replacing all infrastructure.") },
+      { title: t("Migración gradual", "Phased migration"), text: t("En sistemas mixtos conviene revisar grabador, fuentes, cableado y almacenamiento antes de decidir qué sustituir primero.", "For mixed systems, review the recorder, power supplies, cabling and storage before deciding what to replace first.") },
+    ],
+    mistakes: [t("Comprar cámaras incompatibles con el grabador", "Buying cameras incompatible with the recorder"), t("Ignorar la capacidad de red o PoE", "Ignoring network or PoE capacity"), t("Sustituir cableado útil sin comprobarlo", "Replacing usable cabling without checking it")],
+    advice: t("Fotografía las etiquetas del grabador y las conexiones traseras para valorar compatibilidad antes de comprar.", "Photograph the recorder label and rear connections so compatibility can be assessed before buying."),
+    serviceHref: "services/cctv/cctv-system-upgrade-valencia",
+    serviceLabel: t("Revisar mi sistema CCTV", "Review my CCTV system"),
+  },
+  {
+    slug: "como-funcionan-camaras-poe",
+    category: t("CCTV", "CCTV"), title: t("Cámaras PoE: cómo funcionan y qué necesitan", "PoE cameras: how they work and what they need"),
+    description: t("Guía práctica sobre cámaras PoE, switches, NVR, cableado y límites de distancia.", "A practical guide to PoE cameras, switches, NVRs, cabling and distance limits."),
+    intro: t("PoE permite alimentar y conectar una cámara con un solo cable de red, pero el diseño sigue necesitando potencia, puertos y rutas de cable adecuados.", "PoE powers and connects a camera over one network cable, but the design still needs suitable power, ports and cable routes."),
+    points: [{ title: t("Presupuesto PoE", "PoE budget"), text: t("El switch debe aportar potencia suficiente para todas las cámaras, especialmente modelos con iluminación o funciones adicionales.", "The switch must supply enough power for every camera, especially models with lighting or extra functions.") }, { title: t("Cableado", "Cabling"), text: t("Cat6 bien terminado y probado reduce fallos intermitentes y facilita futuras ampliaciones.", "Properly terminated and tested Cat6 reduces intermittent faults and makes future expansion easier.") }, { title: t("Red y grabación", "Network and recording"), text: t("NVR, switch, router y acceso remoto deben configurarse como un conjunto, no como equipos aislados.", "The NVR, switch, router and remote access should be configured as one system, not isolated devices.") }],
+    mistakes: [t("Usar un switch sin potencia suficiente", "Using a switch without enough power"), t("Dejar conectores expuestos al exterior", "Leaving connectors exposed outdoors"), t("No calcular almacenamiento", "Not planning storage")],
+    advice: t("Indica número de cámaras, distancias aproximadas y si habrá grabación local.", "State the camera count, approximate distances and whether local recording is required."),
+    serviceHref: "services/cctv/ip-camera-installation-valencia", serviceLabel: t("Configurar proyecto PoE", "Configure a PoE project"),
+  },
+  {
+    slug: "nvr-vs-dvr-diferencias",
+    category: t("CCTV", "CCTV"), title: t("NVR vs DVR: diferencias para un sistema CCTV", "NVR vs DVR: differences for a CCTV system"),
+    description: t("Entiende la diferencia entre grabadores IP y analógicos, sus conexiones y opciones de ampliación.", "Understand the difference between IP and analogue recorders, their connections and expansion options."),
+    intro: t("El grabador determina qué cámaras puede aceptar el sistema, cómo llega la señal y cuánto margen queda para ampliar.", "The recorder determines which cameras the system accepts, how signals arrive and how much room remains for expansion."),
+    points: [{ title: t("NVR", "NVR"), text: t("Trabaja con cámaras de red y puede recibirlas desde un switch PoE o desde puertos PoE integrados.", "It works with network cameras received through a PoE switch or integrated PoE ports.") }, { title: t("DVR", "DVR"), text: t("Recibe vídeo por coaxial desde cámaras analógicas y normalmente necesita alimentación separada.", "It receives video over coax from analogue cameras, usually with separate camera power.") }, { title: t("Capacidad", "Capacity"), text: t("Revisa canales, resolución admitida, discos y ancho de banda antes de ampliar.", "Check channels, supported resolution, disks and bandwidth before expanding.") }],
+    mistakes: [t("Confundir puertos de red con canales PoE", "Confusing network ports with PoE channels"), t("Añadir cámaras sin revisar canales", "Adding cameras without checking channels"), t("Cambiar el grabador sin revisar las cámaras", "Replacing the recorder without checking cameras")],
+    advice: t("Una foto del modelo del grabador permite comprobar canales y compatibilidad.", "A photo of the recorder model helps verify channels and compatibility."),
+    serviceHref: "services/cctv/nvr-installation-valencia", serviceLabel: t("Revisar grabador CCTV", "Review a CCTV recorder"),
+  },
+  {
+    slug: "mesh-wifi-vs-puntos-acceso",
+    category: t("Redes y WiFi", "Networks and WiFi"), title: t("Mesh WiFi vs puntos de acceso", "Mesh WiFi vs access points"),
+    description: t("Compara mesh doméstico y puntos de acceso cableados según cobertura, plantas y número de dispositivos.", "Compare home mesh and wired access points by coverage, floors and device count."),
+    intro: t("Mesh puede resolver una vivienda sin cableado, mientras que los AP con backhaul cableado suelen aportar más estabilidad en negocios y espacios grandes.", "Mesh can solve coverage in a home without cabling, while APs with wired backhaul usually provide more stability in businesses and larger spaces."),
+    points: [{ title: t("Backhaul", "Backhaul"), text: t("Si los nodos se comunican por WiFi comparten capacidad; con Ethernet cada AP dispone de un enlace más estable.", "When nodes communicate wirelessly they share capacity; Ethernet gives each AP a more stable link.") }, { title: t("Roaming", "Roaming"), text: t("La colocación, potencia y gestión coordinada influyen en el cambio entre puntos, no solo el número de equipos.", "Placement, power and coordinated management affect roaming, not just the number of devices.") }, { title: t("Uso profesional", "Business use"), text: t("Redes de invitados, TPV, CCTV o muchos clientes suelen requerir segmentación y equipos gestionables.", "Guest access, POS, CCTV or many clients often require segmentation and managed equipment.") }],
+    mistakes: [t("Poner todos los nodos en zonas sin señal", "Putting every node in a dead zone"), t("Añadir repetidores sin plan", "Adding repeaters without a plan"), t("Ignorar interferencias", "Ignoring interference")],
+    advice: t("Comparte metros, plantas, paredes y ubicación del router antes de elegir equipos.", "Share the area, floors, walls and router location before choosing equipment."),
+    serviceHref: "services/redes/mesh-wifi-installation-valencia", serviceLabel: t("Mejorar cobertura WiFi", "Improve WiFi coverage"),
+  },
+  {
+    slug: "cat6-vs-cat6a",
+    category: t("Redes y WiFi", "Networks and WiFi"), title: t("Cat6 vs Cat6A para cableado de red", "Cat6 vs Cat6A for network cabling"),
+    description: t("Diferencias prácticas de velocidad, distancia, grosor y terminación entre Cat6 y Cat6A.", "Practical differences in speed, distance, thickness and termination between Cat6 and Cat6A."),
+    intro: t("La categoría del cable no decide por sí sola el rendimiento: conectores, longitud, interferencias y calidad de terminación forman parte del enlace.", "Cable category alone does not determine performance: connectors, length, interference and termination quality are part of the link."),
+    points: [{ title: t("Cat6", "Cat6"), text: t("Es una opción habitual para puntos de red, AP y cámaras en recorridos normales.", "It is a common choice for network outlets, APs and cameras on normal runs.") }, { title: t("Cat6A", "Cat6A"), text: t("Aporta más margen para 10 GbE a distancia, pero ocupa más y exige componentes y montaje adecuados.", "It provides more margin for 10 GbE over distance, but is bulkier and requires suitable components and installation.") }, { title: t("Canal completo", "Complete channel"), text: t("Cable, keystone, patch panel y latiguillos deben corresponder al diseño previsto.", "Cable, keystone, patch panel and patch leads should match the intended design.") }],
+    mistakes: [t("Mezclar componentes sin criterio", "Mixing components without a plan"), t("Doblar o aplastar el cable", "Bending or crushing cable"), t("No etiquetar las tomas", "Not labelling outlets")],
+    advice: t("Define velocidad necesaria, distancia y uso antes de pagar por una categoría superior.", "Define required speed, distance and use before paying for a higher category."),
+    serviceHref: "services/redes/structured-cabling-valencia", serviceLabel: t("Planificar cableado", "Plan network cabling"),
+  },
+  {
+    slug: "que-es-una-vlan",
+    category: t("Redes y WiFi", "Networks and WiFi"), title: t("Qué es una VLAN y cuándo necesita una empresa", "What is a VLAN and when does a business need one?"),
+    description: t("Cómo separar personal, invitados, TPV, CCTV e IoT en una red gestionada.", "How to separate staff, guests, POS, CCTV and IoT on a managed network."),
+    intro: t("Una VLAN separa tráfico lógico sobre switches y puntos de acceso compatibles. No sustituye una configuración segura del router, pero ayuda a ordenar una red profesional.", "A VLAN separates logical traffic across compatible switches and access points. It does not replace secure router configuration, but helps organise a business network."),
+    points: [{ title: t("Segmentación", "Segmentation"), text: t("Personal, invitados, cámaras y TPV pueden tener reglas y acceso diferentes.", "Staff, guests, cameras and POS can have different rules and access.") }, { title: t("Equipamiento", "Equipment"), text: t("Router, switch y AP deben soportar etiquetado VLAN y configurarse de forma coherente.", "The router, switch and APs must support VLAN tagging and be configured consistently.") }, { title: t("Documentación", "Documentation"), text: t("Una tabla simple de redes, puertos y direcciones evita problemas al ampliar o diagnosticar.", "A simple table of networks, ports and addresses prevents problems during expansion or diagnosis.") }],
+    mistakes: [t("Crear VLAN sin reglas de enrutamiento", "Creating VLANs without routing rules"), t("Perder acceso de gestión", "Losing management access"), t("No documentar puertos", "Not documenting ports")],
+    advice: t("Enumera qué dispositivos deben comunicarse entre sí antes de diseñar la separación.", "List which devices must communicate before designing segmentation."),
+    serviceHref: "services/redes/vlan-configuration-valencia", serviceLabel: t("Configurar una red de negocio", "Configure a business network"),
+  },
+  {
+    slug: "fibra-monomodo-vs-multimodo",
+    category: t("Fibra óptica", "Fiber optic"), title: t("Fibra monomodo vs multimodo", "Single-mode vs multimode fiber"),
+    description: t("Compara alcance, ópticas y usos de fibra monomodo y multimodo en redes y enlaces entre racks.", "Compare reach, optics and uses of single-mode and multimode fiber for networks and rack links."),
+    intro: t("La elección depende de distancia, velocidad, ópticas existentes y posibilidad de ampliar. El color del cable por sí solo no basta para identificarlo.", "The choice depends on distance, speed, existing optics and future expansion. Cable colour alone is not enough to identify it."),
+    points: [{ title: t("Monomodo", "Single-mode"), text: t("Se utiliza en enlaces largos y backbones con ópticas compatibles.", "It is used for longer links and backbones with compatible optics.") }, { title: t("Multimodo", "Multimode"), text: t("Es habitual en enlaces internos de edificios y salas técnicas, según longitud y velocidad.", "It is common for internal building and equipment-room links, depending on length and speed.") }, { title: t("Compatibilidad", "Compatibility"), text: t("Fibra, conectores y módulos SFP deben coincidir con el diseño del enlace.", "Fiber, connectors and SFP modules must match the link design.") }],
+    mistakes: [t("Mezclar ópticas incompatibles", "Mixing incompatible optics"), t("Mirar directamente un conector", "Looking directly into a connector"), t("Doblar demasiado el cable", "Bending the cable too tightly")],
+    advice: t("Fotografía etiquetas de SFP, latiguillos y paneles sin desconectar enlaces activos.", "Photograph SFP, patch-lead and panel labels without disconnecting active links."),
+    serviceHref: "services/fiber/fiber-optic-installation-valencia", serviceLabel: t("Revisar enlace de fibra", "Review a fiber link"),
+  },
+  {
+    slug: "conectores-fibra-lc-vs-sc",
+    category: t("Fibra óptica", "Fiber optic"), title: t("Conectores LC vs SC en fibra óptica", "LC vs SC fiber connectors"),
+    description: t("Identifica conectores LC y SC y entiende su uso en switches, SFP, racks y paneles.", "Identify LC and SC connectors and understand their use in switches, SFPs, racks and panels."),
+    intro: t("LC y SC son formatos físicos distintos. Antes de terminar un enlace hay que confirmar tipo de fibra, pulido, polaridad y equipos de los extremos.", "LC and SC are different physical formats. Before terminating a link, confirm fiber type, polish, polarity and endpoint equipment."),
+    points: [{ title: t("LC", "LC"), text: t("Su formato compacto es habitual en módulos SFP y paneles de alta densidad.", "Its compact format is common in SFP modules and high-density panels.") }, { title: t("SC", "SC"), text: t("Es un conector mayor y muy extendido en distribución y enlaces existentes.", "It is a larger connector widely used in distribution and existing links.") }, { title: t("Adaptación", "Adapting"), text: t("Un latiguillo adecuado puede adaptar formato, pero no corrige incompatibilidades de fibra u óptica.", "A suitable patch lead can adapt format, but not fiber or optical incompatibilities.") }],
+    mistakes: [t("Tocar o ensuciar las férulas", "Touching or contaminating ferrules"), t("Forzar un conector", "Forcing a connector"), t("Ignorar UPC/APC", "Ignoring UPC/APC")],
+    advice: t("Envía fotos nítidas de conectores y etiquetas para preparar la terminación correcta.", "Send clear photos of connectors and labels to prepare the correct termination."),
+    serviceHref: "services/fiber/fiber-termination-valencia", serviceLabel: t("Solicitar terminación de fibra", "Request fiber termination"),
+  },
+  {
+    slug: "cerradero-electrico-vs-electroiman",
+    category: t("Control de acceso", "Access control"), title: t("Cerradero eléctrico vs electroimán", "Electric strike vs magnetic lock"),
+    description: t("Compara dos soluciones de cierre para control de acceso según puerta, seguridad y alimentación.", "Compare two access-control locking solutions by door, security and power requirements."),
+    intro: t("La elección depende de la puerta, marco, sentido de apertura, evacuación y comportamiento esperado ante un corte eléctrico.", "The choice depends on the door, frame, opening direction, egress and expected behaviour during a power cut."),
+    points: [{ title: t("Cerradero", "Electric strike"), text: t("Actúa sobre el cerradero del marco y puede conservar el uso de la cerradura mecánica.", "It acts on the strike in the frame and can retain use of the mechanical lock.") }, { title: t("Electroimán", "Maglock"), text: t("Mantiene la puerta cerrada mientras recibe alimentación y necesita montaje, fuente y control adecuados.", "It keeps the door locked while powered and requires suitable mounting, power and control.") }, { title: t("Puerta completa", "The complete door"), text: t("Lector, controlador, pulsador, contacto, fuente y normas de salida deben evaluarse como un sistema.", "Reader, controller, exit button, contact, power supply and egress requirements must be assessed as one system.") }],
+    mistakes: [t("Elegir sin revisar puerta y marco", "Choosing without checking door and frame"), t("Ignorar la salida segura", "Ignoring safe egress"), t("Usar una fuente inadecuada", "Using an unsuitable power supply")],
+    advice: t("Envía fotos de puerta cerrada, marco, cerradura y zona de cableado desde ambos lados.", "Send photos of the closed door, frame, lock and cable area from both sides."),
+    serviceHref: "services/control-de-acceso/electric-strike-installation-valencia", serviceLabel: t("Revisar una puerta", "Review a door"),
+  },
+  {
+    slug: "videoportero-dos-hilos-vs-ip",
+    category: t("Videoporteros", "Intercoms"), title: t("Videoportero 2 hilos vs IP", "2-wire vs IP video intercom"),
+    description: t("Compara videoporteros de dos hilos e IP según cableado, monitores, app y control de puerta.", "Compare 2-wire and IP video intercoms by cabling, monitors, app and door control."),
+    intro: t("En una sustitución importa tanto el equipo como el cable existente. En instalaciones nuevas, IP facilita integración, pero requiere una red y alimentación planificadas.", "In a replacement, existing cable matters as much as the equipment. For new installations, IP can simplify integration but requires planned networking and power."),
+    points: [{ title: t("Dos hilos", "2-wire"), text: t("Puede aprovechar ciertos recorridos existentes y simplificar reformas cuando el sistema es compatible.", "It can reuse some existing routes and simplify refurbishment when the system is compatible.") }, { title: t("IP", "IP"), text: t("Se integra con red, app y control de acceso, pero necesita switches, direcciones y segmentación adecuados.", "It integrates with networks, apps and access control, but needs suitable switches, addressing and segmentation.") }, { title: t("Compatibilidad", "Compatibility"), text: t("Placa, monitores, fuente y cerradura deben pertenecer a una arquitectura compatible.", "Entrance panel, monitors, power supply and lock must form a compatible architecture.") }],
+    mistakes: [t("Comprar solo el monitor", "Buying only the monitor"), t("Asumir compatibilidad por marca", "Assuming compatibility from brand alone"), t("No revisar el abrepuertas", "Not checking the door release")],
+    advice: t("Fotografía placa, monitor, fuente y cableado existente antes de elegir un kit.", "Photograph the entrance panel, monitor, power supply and existing wiring before choosing a kit."),
+    serviceHref: "services/intercom/video-intercom-installation-valencia", serviceLabel: t("Configurar videoportero", "Configure a video intercom"),
+  },
+];
+
 // Keep the public guide centre focused: twenty strong articles are easier to
 // maintain and interlink than a long list of thin pages.
-export const guides = [...guideLibrary.slice(0, 20), ...guideLibrary.slice(-4)];
+export const guides = [...guideLibrary.slice(0, 20), ...technicalGuides, ...guideLibrary.slice(-4)];
 
 export const getGuide = (slug: string) => guides.find((guide) => guide.slug === slug);
 

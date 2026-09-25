@@ -1233,7 +1233,7 @@ function OrderPanel({
                       {service.label} × {service.qty}
                     </span>
                     <span className="shrink-0 font-bold">
-                      {money(service.subtotal)}
+                      {service.price > 0 ? money(service.subtotal) : "Custom quote"}
                     </span>
                   </div>
                 ))}
@@ -1252,7 +1252,13 @@ function OrderPanel({
                             <p className="mt-1 font-black uppercase tracking-wide text-neutral-500">
                               {service.project_details?.category || "Technical project"}
                             </p>
-                            {service.project_details?.category && ["cctv", "networking", "fiber"].includes(service.project_details.category) ? (
+                            {service.project_details?.category === "commercial" ? (
+                              <div className="mt-2 flex flex-wrap gap-2">
+                                <span className="rounded-full bg-black px-2.5 py-1 text-[10px] font-black text-white">COMMERCIAL PROJECT</span>
+                                {service.project_details?.multiSystem ? <span className="rounded-full bg-yellow-400 px-2.5 py-1 text-[10px] font-black text-black">MULTI-SYSTEM</span> : null}
+                              </div>
+                            ) : null}
+                            {service.project_details?.category && ["cctv", "networking", "fiber", "access-control", "intercom", "alarms", "commercial"].includes(service.project_details.category) ? (
                               <ul className="mt-2 space-y-1 text-neutral-600">
                                 {formatTechnicalProjectSummary(
                                   service.project_details as TechnicalProjectDetails & { category: DeepTechnicalCategory },

@@ -16,6 +16,7 @@ import {
 import { marketBasePath, marketName } from "@/lib/cities";
 import { marketWhatsAppHref } from "@/lib/marketLinks";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
+import { localizedPath } from "@/lib/technicalRoutes";
 
 type Props = {
   locale: "es" | "en";
@@ -40,7 +41,7 @@ export default function MobileHeaderMenu({ locale }: Props) {
       ? []
       : [
           {
-            href: isEs ? "/es/services/security-networks" : "/services/security-networks",
+            href: localizedPath(locale, "services/security-networks"),
             label: isEs ? "Seguridad y Redes" : "Security & Networks",
             icon: ShieldCheck,
           },

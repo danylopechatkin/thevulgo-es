@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronDown, Hammer, ShieldCheck, Tv, Wind } from "lucide-react";
 import { marketBasePath } from "@/lib/cities";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
+import { localizedPath } from "@/lib/technicalRoutes";
 
 export default function MarketDesktopNav({
   locale,
@@ -97,7 +98,7 @@ export default function MarketDesktopNav({
       </Link>
       {!cityMarket && (
         <Link
-          href={locale === "es" ? "/es/services/security-networks" : "/services/security-networks"}
+          href={localizedPath(locale, "services/security-networks")}
           className="inline-flex items-center gap-1.5 font-extrabold hover:text-black"
         >
           <ShieldCheck className="h-4 w-4 text-yellow-500" />

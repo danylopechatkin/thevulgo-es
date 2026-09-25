@@ -45,11 +45,16 @@ export function technicalWhatsAppHref(
 
 export function technicalProjectWhatsAppHref(details: TechnicalProjectDetails, locale: string) {
   const language = locale === "es" ? "es" : "en";
-  const service = details.category === "fiber"
-    ? language === "es" ? "un proyecto de fibra" : "a fiber project"
-    : details.category === "cctv"
-      ? "CCTV"
-      : language === "es" ? "WiFi / red" : "WiFi / networking";
+  const serviceLabels: Record<TechnicalProjectDetails["category"], { es: string; en: string }> = {
+    cctv: { es: "CCTV", en: "CCTV" },
+    networking: { es: "WiFi / red", en: "WiFi / networking" },
+    fiber: { es: "un proyecto de fibra", en: "a fiber project" },
+    "access-control": { es: "control de acceso", en: "access control" },
+    intercom: { es: "videoportero / intercom", en: "an intercom / door-entry system" },
+    alarms: { es: "una alarma autónoma", en: "a standalone alarm" },
+    commercial: { es: "un proyecto técnico para negocio", en: "a business technical project" },
+  };
+  const service = serviceLabels[details.category][language];
   const heading = language === "es"
     ? `Hola, quiero presupuesto para ${service}.`
     : `Hi, I would like an estimate for ${service}.`;

@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { getTechnicalLeaf } from "@/lib/securityNetworkCatalog";
 import { localizedPath, localizedUrl } from "@/lib/technicalRoutes";
+import TechnicalLeafDirectory from "@/app/components/technical/TechnicalLeafDirectory";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -380,7 +381,7 @@ export default async function NetworkingPage({ params }: Props) {
   const isEs = locale === "es";
 
   const pageUrl = localizedUrl(locale, "services/redes");
-  const estimateHref = `/${locale}/estimate?category=networking`;
+  const estimateHref = `${localizedPath(locale, "estimate")}?category=networking`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -613,13 +614,13 @@ export default async function NetworkingPage({ params }: Props) {
             "@type": "ListItem",
             position: 1,
             name: isEs ? "Inicio" : "Home",
-            item: `${baseUrl}/${locale}`,
+            item: localizedUrl(locale),
           },
           {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Servicios" : "Services",
-            item: `${baseUrl}/${locale}/services`,
+            item: localizedUrl(locale, "services"),
           },
           {
             "@type": "ListItem",
@@ -741,7 +742,7 @@ export default async function NetworkingPage({ params }: Props) {
           </div>
 
           <Link
-            href={`/${locale}/estimate?category=networking`}
+              href={`${localizedPath(locale, "estimate")}?category=networking`}
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-5 py-3 text-sm font-bold shadow-sm transition hover:scale-105"
           >
             {isEs ? "Pedir presupuesto" : "Request estimate"}
@@ -1155,6 +1156,7 @@ export default async function NetworkingPage({ params }: Props) {
           </div>
         </div>
       </section>
+      <TechnicalLeafDirectory category="networking" locale={locale} />
     </main>
   );
 }

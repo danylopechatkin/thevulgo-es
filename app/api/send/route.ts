@@ -461,10 +461,10 @@ export async function POST(req: Request) {
         (item: OrderService) => `
 <tr>
   <td style="padding:10px 15px;font-size:13px;color:#000;">
-    ${item.label} (${item.qty} × €${item.price})
+    ${item.label}${item.price > 0 ? ` (${item.qty} × €${item.price})` : ""}
   </td>
   <td style="padding:10px 15px;text-align:right;font-size:13px;font-weight:700;color:#000;">
-    €${Number(item.subtotal || 0).toFixed(2)}
+    ${item.price > 0 ? `€${Number(item.subtotal || 0).toFixed(2)}` : (isEs ? "Presupuesto personalizado" : "Custom project quote")}
   </td>
 </tr>
 `,
@@ -473,7 +473,7 @@ export async function POST(req: Request) {
     const technicalProjectCandidate = (Array.isArray(data.services) ? data.services : []).find(
       (item: OrderService) => item.project_details,
     )?.project_details;
-    const technicalProject = technicalProjectCandidate?.category && ["cctv", "networking", "fiber"].includes(technicalProjectCandidate.category)
+    const technicalProject = technicalProjectCandidate?.category && ["cctv", "networking", "fiber", "access-control", "intercom", "alarms", "commercial"].includes(technicalProjectCandidate.category)
       ? (technicalProjectCandidate as TechnicalProjectDetails)
       : undefined;
     const technicalSummary = technicalProject
@@ -580,7 +580,7 @@ export async function POST(req: Request) {
               )
                 .map(
                   (item: OrderService) =>
-                    `<li>${item.label} × ${item.qty} — €${Number(item.subtotal || 0).toFixed(2)}</li>`,
+                    `<li>${item.label} × ${item.qty} — ${item.price > 0 ? `€${Number(item.subtotal || 0).toFixed(2)}` : (isEs ? "Presupuesto personalizado" : "Custom project quote")}</li>`,
                 )
                 .join("")}</ul>`
         }

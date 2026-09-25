@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { getTechnicalLeaf } from "@/lib/securityNetworkCatalog";
 import { localizedPath, localizedUrl } from "@/lib/technicalRoutes";
+import TechnicalLeafDirectory from "@/app/components/technical/TechnicalLeafDirectory";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -487,13 +488,13 @@ export default async function AlarmSystemsPage({ params }: Props) {
             "@type": "ListItem",
             position: 1,
             name: isEs ? "Inicio" : "Home",
-            item: `${baseUrl}/${locale}`,
+            item: localizedUrl(locale),
           },
           {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Servicios" : "Services",
-            item: `${baseUrl}/${locale}/services`,
+            item: localizedUrl(locale, "services"),
           },
           {
             "@type": "ListItem",
@@ -1027,6 +1028,7 @@ export default async function AlarmSystemsPage({ params }: Props) {
           </div>
         </div>
       </section>
+      <TechnicalLeafDirectory category="alarms" locale={locale} />
     </main>
   );
 }
