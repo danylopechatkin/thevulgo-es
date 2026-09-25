@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, Bath, Building2, Cable, Camera, ChevronDown, CookingPot, Droplets, Fence, Hammer, KeyRound, LampDesk, Lightbulb, Network, PaintRoller, PanelsTopLeft, Radio, ShieldCheck, Siren, Sofa, Trees, Tv, Wind, Wrench, Zap, type LucideIcon } from "lucide-react";
+import { ArrowRight, Bath, Building2, Cable, Camera, ChevronDown, CookingPot, Droplets, Fence, Hammer, KeyRound, Lightbulb, Network, PaintRoller, PanelsTopLeft, Radio, ShieldCheck, Siren, Sofa, Trees, Tv, Wind, Wrench, Zap, type LucideIcon } from "lucide-react";
 import { marketBasePath } from "@/lib/cities";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
 import { localizedPath } from "@/lib/technicalRoutes";
@@ -66,7 +66,7 @@ export default function MarketDesktopNav({ locale, labels }: { locale: string; l
 
   return <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 xl:flex 2xl:gap-1" aria-label={isEs ? "Navegación principal" : "Main navigation"}>
     <Dropdown trigger={<>{labels.services}<ChevronDown className="h-3.5 w-3.5" /></>} active={pathname === servicesHref} panelClass="left-0 w-[min(880px,calc(100vw-2rem))]">
-      <MegaMenuContent eyebrow={isEs ? "SERVICIOS THEVULGO" : "THEVULGO SERVICES"} title={isEs ? "Servicios para tu hogar" : "Services for your home"} items={services} allHref={servicesHref} allLabel={isEs ? "Ver todos los servicios" : "View all services"} ctaHref={localizedPath(locale, "estimate")} ctaLabel={isEs ? "Pedir presupuesto" : "Get estimate"} />
+      <MegaMenuContent eyebrow={isEs ? "SERVICIOS THEVULGO" : "THEVULGO SERVICES"} title={isEs ? "Servicios para tu hogar" : "Services for your home"} items={services} allHref={servicesHref} allLabel={isEs ? "Ver todos los servicios" : "View all services"} secondaryHref={guidesHref} secondaryLabel={isEs ? "Guías y consejos" : "Guides & tips"} ctaHref={localizedPath(locale, "estimate")} ctaLabel={isEs ? "Pedir presupuesto" : "Get estimate"} />
     </Dropdown>
 
     {!cityMarket ? <Dropdown trigger={<><ShieldCheck className="h-4 w-4 text-yellow-600" />{isEs ? "Seguridad y Redes" : "Security & Networks"}<ChevronDown className="h-3.5 w-3.5" /></>} active={technicalActive} panelClass="-left-28 w-[min(860px,calc(100vw-2rem))]">
@@ -80,17 +80,16 @@ export default function MarketDesktopNav({ locale, labels }: { locale: string; l
     {!cityMarket ? <Link href={acHref} className={`${navItem} ${isActive(acHref) ? activeItem : ""}`}><Wind className="h-4 w-4 text-yellow-600" />{isEs ? "Aire" : "AC"}</Link> : null}
     <Link href={handymanHref} className={`${navItem} ${isActive(handymanHref) ? activeItem : ""}`}><Wrench className="h-4 w-4 text-yellow-600" />{isEs ? "Manitas" : "Handyman"}</Link>
     <Link href={tvHref} className={`${navItem} ${isActive(tvHref) ? activeItem : ""}`}><Tv className="h-4 w-4 text-yellow-600" />{isEs ? "Montaje TV" : "TV Mounting"}</Link>
-    <Link href={guidesHref} className={`${navItem} hidden 2xl:inline-flex ${isActive(guidesHref) ? activeItem : ""}`}><LampDesk className="h-4 w-4 text-yellow-600" />{labels.tips}</Link>
   </nav>;
 }
 
-function MegaMenuContent({ eyebrow, title, items, allHref, allLabel, ctaHref, ctaLabel }: { eyebrow: string; title: string; items: MegaMenuItem[]; allHref: string; allLabel: string; ctaHref: string; ctaLabel: string }) {
+function MegaMenuContent({ eyebrow, title, items, allHref, allLabel, secondaryHref, secondaryLabel, ctaHref, ctaLabel }: { eyebrow: string; title: string; items: MegaMenuItem[]; allHref: string; allLabel: string; secondaryHref?: string; secondaryLabel?: string; ctaHref: string; ctaLabel: string }) {
   return <div className="p-6">
     <p className="text-xs font-black uppercase tracking-[.16em] text-yellow-600">{eyebrow}</p>
     <h2 className="mt-2 text-xl font-black text-black">{title}</h2>
     <div className="mt-5 grid grid-cols-3 gap-2">{items.map((item) => <MegaMenuCard key={item.href} item={item} />)}</div>
     <div className="mt-5 flex items-center justify-between gap-4 border-t border-neutral-100 pt-5">
-      <Link href={allHref} className="inline-flex items-center gap-2 text-sm font-black text-black hover:underline">{allLabel}<ArrowRight className="h-4 w-4" /></Link>
+      <div className="flex items-center gap-5"><Link href={allHref} className="inline-flex items-center gap-2 text-sm font-black text-black hover:underline">{allLabel}<ArrowRight className="h-4 w-4" /></Link>{secondaryHref && secondaryLabel ? <Link href={secondaryHref} className="text-sm font-bold text-neutral-500 hover:text-black hover:underline">{secondaryLabel}</Link> : null}</div>
       <Link href={ctaHref} className="inline-flex min-h-11 items-center rounded-xl bg-yellow-400 px-5 text-sm font-black text-black transition hover:bg-yellow-300">{ctaLabel}</Link>
     </div>
   </div>;
