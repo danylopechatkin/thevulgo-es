@@ -22,6 +22,8 @@ import {
   Wrench,
   Zap,
 } from "lucide-react";
+import { getTechnicalLeaf } from "@/lib/securityNetworkCatalog";
+import { localizedPath, localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -224,17 +226,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/alarmas`,
+      canonical: localizedUrl(locale, "services/alarmas"),
       languages: {
-        es: `${baseUrl}/es/services/alarmas`,
-        en: `${baseUrl}/en/services/alarmas`,
-        "x-default": `${baseUrl}/es/services/alarmas`,
+        es: localizedUrl("es", "services/alarmas"),
+        en: localizedUrl("en", "services/alarmas"),
+        "x-default": localizedUrl("en", "services/alarmas"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/alarmas`,
+      url: localizedUrl(locale, "services/alarmas"),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -245,8 +247,8 @@ export default async function AlarmSystemsPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/services/alarmas`;
-  const estimateHref = `/${locale}/estimate?category=alarm-systems`;
+  const pageUrl = localizedUrl(locale, "services/alarmas");
+  const estimateHref = `${localizedPath(locale, "estimate")}?category=alarms`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -457,12 +459,12 @@ export default async function AlarmSystemsPage({ params }: Props) {
           name: isEs
             ? "Servicios de alarmas en Valencia"
             : "Alarm system services in Valencia",
-          itemListElement: alarmPages.map((item) => ({
+          itemListElement: alarmPages.filter((item) => getTechnicalLeaf("alarms", item.slug)).map((item) => ({
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
               name: isEs ? item.es : item.en,
-              url: `${baseUrl}/${locale}/services/alarmas/${item.slug}`,
+              url: localizedUrl(locale, `services/alarmas/${item.slug}`),
             },
           })),
         },
@@ -615,7 +617,7 @@ export default async function AlarmSystemsPage({ params }: Props) {
           </div>
 
           <Link
-            href={`/${locale}/estimate?category=alarm-systems`}
+            href={`${localizedPath(locale, "estimate")}?category=alarms`}
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-5 py-3 text-sm font-bold shadow-sm transition hover:scale-105"
           >
             {isEs ? "Pedir presupuesto" : "Request estimate"}
@@ -624,10 +626,10 @@ export default async function AlarmSystemsPage({ params }: Props) {
         </div>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {alarmPages.map((item) => (
+          {alarmPages.filter((item) => getTechnicalLeaf("alarms", item.slug)).map((item) => (
             <Link
               key={item.slug}
-              href={`/${locale}/services/alarmas`}
+              href={localizedPath(locale, `services/alarmas/${item.slug}`)}
               className="group rounded-2xl border border-yellow-300 bg-white p-6 shadow-md transition hover:scale-[1.02] hover:shadow-xl"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">

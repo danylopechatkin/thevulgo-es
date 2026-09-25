@@ -4,6 +4,7 @@ import { MADRID_ROUTES } from "@/lib/madridRoutes";
 import { AC_SEO_PAGES } from "@/lib/acSeoPages";
 import { absoluteUrl } from "@/lib/seo";
 import { RENOVATION_CATEGORIES } from "@/lib/renovationCatalog";
+import { TECHNICAL_LEAVES, technicalLeafPath } from "@/lib/securityNetworkCatalog";
 
 const locales = ["es", "en"] as const;
 
@@ -36,6 +37,9 @@ const categoryPages = [
   "services/redes",
   "services/seguridad-comercial",
   "services/starlink",
+  "services/security-networks",
+  "services/fiber",
+  "services/intercom",
 
 ] as const;
 
@@ -374,6 +378,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "weekly",
         priority: locale === "es" ? 0.9 : 0.8,
       },
+    );
+
+    addRoutes(
+      pages,
+      locale,
+      TECHNICAL_LEAVES.filter((page) => page.indexable).map(technicalLeafPath),
+      { changeFrequency: "monthly", priority: locale === "es" ? 0.82 : 0.78 },
     );
 
     /**

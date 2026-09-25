@@ -24,6 +24,8 @@ import {
   Wrench,
   Zap,
 } from "lucide-react";
+import { getTechnicalLeaf } from "@/lib/securityNetworkCatalog";
+import { localizedPath, localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -356,17 +358,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/redes`,
+      canonical: localizedUrl(locale, "services/redes"),
       languages: {
-        es: `${baseUrl}/es/services/redes`,
-        en: `${baseUrl}/en/services/redes`,
-        "x-default": `${baseUrl}/es/services/redes`,
+        es: localizedUrl("es", "services/redes"),
+        en: localizedUrl("en", "services/redes"),
+        "x-default": localizedUrl("en", "services/redes"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/redes`,
+      url: localizedUrl(locale, "services/redes"),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -377,7 +379,7 @@ export default async function NetworkingPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/services/redes`;
+  const pageUrl = localizedUrl(locale, "services/redes");
   const estimateHref = `/${locale}/estimate?category=networking`;
 
   const whatsappText = encodeURIComponent(
@@ -583,12 +585,12 @@ export default async function NetworkingPage({ params }: Props) {
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs ? "Servicios WiFi y redes en Valencia" : "WiFi and networking services in Valencia",
-          itemListElement: networkingPages.map((item) => ({
+          itemListElement: networkingPages.filter((item) => getTechnicalLeaf("networking", item.slug)).map((item) => ({
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
               name: isEs ? item.es : item.en,
-              url: `${baseUrl}/${locale}/services/redes/${item.slug}`,
+              url: localizedUrl(locale, `services/redes/${item.slug}`),
             },
           })),
         },
@@ -748,10 +750,10 @@ export default async function NetworkingPage({ params }: Props) {
         </div>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {networkingPages.map((item) => (
+          {networkingPages.filter((item) => getTechnicalLeaf("networking", item.slug)).map((item) => (
             <Link
               key={item.slug}
-              href={`/${locale}/services/redes`}
+              href={localizedPath(locale, `services/redes/${item.slug}`)}
               className="group rounded-2xl border border-yellow-300 bg-white p-6 shadow-md transition hover:scale-[1.02] hover:shadow-xl"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">

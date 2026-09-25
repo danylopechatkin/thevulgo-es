@@ -11,7 +11,6 @@ import {
   Eye,
   HardDrive,
   Home,
-  Hotel,
   MapPin,
   MessageCircle,
   MonitorSmartphone,
@@ -22,6 +21,8 @@ import {
   Wifi,
   Wrench,
 } from "lucide-react";
+import { getTechnicalLeaf } from "@/lib/securityNetworkCatalog";
+import { localizedPath, localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -520,12 +521,12 @@ export default async function CctvPage({ params }: Props) {
           name: isEs
             ? "Servicios CCTV y cámaras en Valencia"
             : "CCTV and camera services in Valencia",
-          itemListElement: cctvPages.map((item) => ({
+          itemListElement: cctvPages.filter((item) => getTechnicalLeaf("cctv", item.slug)).map((item) => ({
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
               name: isEs ? item.es : item.en,
-              url: `${baseUrl}${locale === "es" ? "/es" : ""}/services/cctv/${item.slug}`,
+              url: localizedUrl(locale, `services/cctv/${item.slug}`),
             },
           })),
         },
@@ -687,10 +688,10 @@ export default async function CctvPage({ params }: Props) {
         </div>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {cctvPages.map((item) => (
+          {cctvPages.filter((item) => getTechnicalLeaf("cctv", item.slug)).map((item) => (
             <Link
               key={item.slug}
-              href={`/${locale}/services/cctv`}
+              href={localizedPath(locale, `services/cctv/${item.slug}`)}
               className="group rounded-2xl border border-yellow-300 bg-white p-6 shadow-md transition hover:scale-[1.02] hover:shadow-xl"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">

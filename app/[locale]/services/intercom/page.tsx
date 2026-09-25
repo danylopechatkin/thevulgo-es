@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import TechnicalCategoryHub from "@/app/components/technical/TechnicalCategoryHub";
+import { localizedUrl } from "@/lib/technicalRoutes";
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> { const { locale } = await params; const es = locale === "es"; const path = "services/intercom"; return { title: es ? "Videoporteros e Intercom Valencia | THEVULGO" : "Intercom & Door Entry Valencia | THEVULGO", description: es ? "Instalación, reparación y mejora de videoporteros, sistemas IP, portones y entrada de negocios en Valencia." : "Installation, repair and upgrades for intercoms, IP door entry, gates and business entry systems in Valencia.", alternates: { canonical: localizedUrl(locale, path), languages: { en: localizedUrl("en", path), es: localizedUrl("es", path), "x-default": localizedUrl("en", path) } } }; }
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) { const { locale } = await params; return <TechnicalCategoryHub category="intercom" locale={locale} />; }

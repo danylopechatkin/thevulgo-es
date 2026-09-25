@@ -4,11 +4,17 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
   ArrowRight,
+  Building2,
+  Cable,
+  Camera,
   Check,
   Drill,
   Hammer,
   MessageCircle,
   PackageCheck,
+  KeyRound,
+  Network,
+  Radio,
   ShieldCheck,
   Tv,
   Wrench,
@@ -218,6 +224,31 @@ export default function HomeClient({
           )}
         </div>
       </section>
+
+      {market === "valencia" && (
+        <section className="border-y border-neutral-800 bg-neutral-950 text-white">
+          <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+              <div><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-400">THEVULGO SECURITY & NETWORKS</p><h2 className="mt-3 text-3xl font-black sm:text-5xl">{es ? "Instalaciones de seguridad y redes" : "Security & Network Installations"}</h2><p className="mt-4 max-w-3xl leading-7 text-neutral-300">{es ? "CCTV, WiFi profesional, fibra, cableado y control de acceso para viviendas y negocios en Valencia." : "CCTV, professional WiFi, fiber, cabling and access control for Valencia homes and businesses."}</p></div>
+              <Link href={es ? "/es/services/security-networks" : "/services/security-networks"} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 font-black text-black">{es ? "Explorar Seguridad y Redes" : "Explore Security & Networks"}<ArrowRight className="h-5 w-5" /></Link>
+            </div>
+            <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                [Camera, es ? "CCTV" : "CCTV", "cctv"],
+                [Network, es ? "WiFi y Redes" : "WiFi & Networks", "redes"],
+                [Cable, es ? "Fibra y Cableado" : "Fiber & Cabling", "fiber"],
+                [KeyRound, es ? "Control de Acceso" : "Access Control", "control-de-acceso"],
+                [Radio, es ? "Videoporteros" : "Intercom", "intercom"],
+                [Building2, es ? "Sistemas para Negocios" : "Business Systems", "seguridad-comercial"],
+              ].map(([Icon, title, slug]) => (
+                <Link key={slug as string} href={`${es ? "/es" : ""}/services/${slug}`} className="group flex min-h-28 items-center gap-4 rounded-2xl border border-neutral-700 bg-neutral-900 p-5 transition hover:border-yellow-400">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-yellow-400 text-black"><Icon className="h-5 w-5" /></span><span className="font-black">{title as string}</span><ArrowRight className="ml-auto h-5 w-5 text-yellow-400 transition group-hover:translate-x-1" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="bg-neutral-950 text-white">
         <div className="mx-auto grid max-w-7xl gap-8 px-5 py-16 md:grid-cols-2 md:px-8">

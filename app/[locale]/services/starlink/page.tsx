@@ -18,11 +18,11 @@ import {
   ShieldCheck,
   Signal,
   SignalHigh,
-  Store,
   TowerControl,
   Wifi,
   Wrench,
 } from "lucide-react";
+import { localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -207,17 +207,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/starlink`,
+      canonical: localizedUrl(locale, "services/starlink"),
       languages: {
-        es: `${baseUrl}/es/services/starlink`,
-        en: `${baseUrl}/en/services/starlink`,
-        "x-default": `${baseUrl}/es/services/starlink`,
+        es: localizedUrl("es", "services/starlink"),
+        en: localizedUrl("en", "services/starlink"),
+        "x-default": localizedUrl("en", "services/starlink"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/starlink`,
+      url: localizedUrl(locale, "services/starlink"),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -228,7 +228,7 @@ export default async function StarlinkInternetPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/services/starlink`;
+  const pageUrl = localizedUrl(locale, "services/starlink");
   const estimateHref = `/${locale}/estimate?category=starlink-internet`;
 
   const whatsappText = encodeURIComponent(

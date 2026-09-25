@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import TechnicalCategoryHub from "@/app/components/technical/TechnicalCategoryHub";
+import { localizedUrl } from "@/lib/technicalRoutes";
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> { const { locale } = await params; const es = locale === "es"; const path = "services/fiber"; return { title: es ? "Fibra Óptica Valencia | Instalación y Reparación | THEVULGO" : "Fiber Optic Valencia | Installation & Repair | THEVULGO", description: es ? "Instalación, terminación, fusión, prueba y reparación de fibra óptica para negocios en Valencia." : "Fiber optic installation, termination, splicing, testing and repair for Valencia businesses.", alternates: { canonical: localizedUrl(locale, path), languages: { en: localizedUrl("en", path), es: localizedUrl("es", path), "x-default": localizedUrl("en", path) } } }; }
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) { const { locale } = await params; return <TechnicalCategoryHub category="fiber" locale={locale} />; }

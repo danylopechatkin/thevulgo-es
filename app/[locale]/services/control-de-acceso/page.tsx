@@ -21,8 +21,9 @@ import {
   Store,
   Timer,
   Warehouse,
-  Wrench,
 } from "lucide-react";
+import { getTechnicalLeaf } from "@/lib/securityNetworkCatalog";
+import { localizedPath, localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -450,12 +451,12 @@ export default async function AccessControlPage({ params }: Props) {
           name: isEs
             ? "Servicios de control de acceso en Valencia"
             : "Access control services in Valencia",
-          itemListElement: accessPages.map((item) => ({
+          itemListElement: accessPages.filter((item) => getTechnicalLeaf("access-control", item.slug)).map((item) => ({
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
               name: isEs ? item.es : item.en,
-              url: `${baseUrl}${locale === "es" ? "/es" : ""}/services/control-de-acceso/${item.slug}`,
+              url: localizedUrl(locale, `services/control-de-acceso/${item.slug}`),
             },
           })),
         },
@@ -617,10 +618,10 @@ export default async function AccessControlPage({ params }: Props) {
         </div>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {accessPages.map((item) => (
+          {accessPages.filter((item) => getTechnicalLeaf("access-control", item.slug)).map((item) => (
             <Link
               key={item.slug}
-              href={`/${locale}/services/control-de-acceso`}
+              href={localizedPath(locale, `services/control-de-acceso/${item.slug}`)}
               className="group rounded-2xl border border-yellow-300 bg-white p-6 shadow-md transition hover:scale-[1.02] hover:shadow-xl"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">

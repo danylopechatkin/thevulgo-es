@@ -7,6 +7,7 @@ import {
   Hammer,
   Menu,
   MessageCircle,
+  ShieldCheck,
   Tv,
   Wind,
   Wrench,
@@ -35,6 +36,15 @@ export default function MobileHeaderMenu({ locale }: Props) {
       label: isEs ? "Servicios" : "Services",
       icon: Wrench,
     },
+    ...(cityMarket
+      ? []
+      : [
+          {
+            href: isEs ? "/es/services/security-networks" : "/services/security-networks",
+            label: isEs ? "Seguridad y Redes" : "Security & Networks",
+            icon: ShieldCheck,
+          },
+        ]),
     ...(cityMarket
       ? []
       : [

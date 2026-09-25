@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, Hammer, Tv, Wind } from "lucide-react";
+import { ChevronDown, Hammer, ShieldCheck, Tv, Wind } from "lucide-react";
 import { marketBasePath } from "@/lib/cities";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
 
@@ -95,6 +95,15 @@ export default function MarketDesktopNav({
       <Link href={`${base}/services`} className="hover:text-black">
         {labels.services}
       </Link>
+      {!cityMarket && (
+        <Link
+          href={locale === "es" ? "/es/services/security-networks" : "/services/security-networks"}
+          className="inline-flex items-center gap-1.5 font-extrabold hover:text-black"
+        >
+          <ShieldCheck className="h-4 w-4 text-yellow-500" />
+          {locale === "es" ? "Seguridad y Redes" : "Security & Networks"}
+        </Link>
+      )}
       {!cityMarket && (
         <div className="group relative">
           <Link

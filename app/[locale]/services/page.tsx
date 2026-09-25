@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServicesClient from "./ServicesClient";
+import { localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -54,7 +55,7 @@ const serviceCategories = [
     en: "Smart home installations in Valencia",
   },
   {
-    slug: "networking",
+    slug: "redes",
     es: "WiFi, redes e internet en Valencia",
     en: "WiFi, networking and internet in Valencia",
   },
@@ -64,24 +65,39 @@ const serviceCategories = [
     en: "CCTV security cameras in Valencia",
   },
   {
-    slug: "alarm-systems",
+    slug: "alarmas",
     es: "Alarmas y sistemas de seguridad en Valencia",
     en: "Alarm systems and security in Valencia",
   },
   {
-    slug: "access-control",
+    slug: "control-de-acceso",
     es: "Control de acceso en Valencia",
     en: "Access control systems in Valencia",
   },
   {
-    slug: "starlink-internet",
+    slug: "starlink",
     es: "Starlink, antenas e internet exterior en Valencia",
     en: "Starlink, antennas and outdoor internet in Valencia",
   },
   {
-    slug: "commercial-security",
+    slug: "seguridad-comercial",
     es: "Seguridad para negocios en Valencia",
     en: "Commercial security systems in Valencia",
+  },
+  {
+    slug: "fiber",
+    es: "Fibra óptica en Valencia",
+    en: "Fiber optic services in Valencia",
+  },
+  {
+    slug: "intercom",
+    es: "Videoporteros y sistemas de entrada en Valencia",
+    en: "Intercom and door-entry systems in Valencia",
+  },
+  {
+    slug: "security-networks",
+    es: "Seguridad y redes en Valencia",
+    en: "Security and networks in Valencia",
   },
   {
     slug: "kitchen",
@@ -154,16 +170,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "commercial security Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services`,
+      canonical: localizedUrl(locale, "services"),
       languages: {
-        es: `${baseUrl}/es/services`,
-        en: `${baseUrl}/en/services`,
+        es: localizedUrl("es", "services"),
+        en: localizedUrl("en", "services"),
+        "x-default": localizedUrl("en", "services"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services`,
+      url: localizedUrl(locale, "services"),
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -179,7 +196,7 @@ export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/services`;
+  const pageUrl = localizedUrl(locale, "services");
 
   const collectionPageJsonLd = {
     "@context": "https://schema.org",
@@ -200,7 +217,7 @@ export default async function ServicesPage({ params }: Props) {
         "@type": "ListItem",
         position: 1,
         name: isEs ? "Inicio" : "Home",
-        item: `${baseUrl}/${locale}`,
+        item: localizedUrl(locale),
       },
       {
         "@type": "ListItem",
@@ -219,7 +236,7 @@ export default async function ServicesPage({ params }: Props) {
       "@type": "ListItem",
       position: index + 1,
       name: isEs ? service.es : service.en,
-      url: `${baseUrl}/${locale}/services/${service.slug}`,
+      url: localizedUrl(locale, `services/${service.slug}`),
     })),
   };
 
@@ -267,7 +284,7 @@ export default async function ServicesPage({ params }: Props) {
         itemOffered: {
           "@type": "Service",
           name: isEs ? service.es : service.en,
-          url: `${baseUrl}/${locale}/services/${service.slug}`,
+          url: localizedUrl(locale, `services/${service.slug}`),
           areaServed: "Valencia",
         },
       })),

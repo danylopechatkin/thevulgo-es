@@ -29,6 +29,13 @@ import {
   MessageSquare,
   Package,
   Home,
+  Camera,
+  Network,
+  Cable,
+  KeyRound,
+  Radio,
+  Siren,
+  Building2,
 } from "lucide-react";
 import {
   ALICANTE_DISTRICTS,
@@ -45,6 +52,7 @@ import {
   AC_DEEP_CLEANING_SERVICE_ID,
   acDeepCleaningPromotion,
 } from "@/lib/acPromotion";
+import { TECHNICAL_ESTIMATE_SERVICES } from "@/lib/securityNetworkCatalog";
 type CategoryKey =
   | "handyman"
   | "tv-mounting"
@@ -64,6 +72,16 @@ type CategoryKey =
   | string;
 
 type ServiceItem = CatalogService;
+
+const TECHNICAL_CATEGORY_KEYS = new Set([
+  "networking",
+  "cctv",
+  "fiber",
+  "access-control",
+  "intercom",
+  "alarms",
+  "commercial",
+]);
 
 type CategoryConfig = {
   title: string;
@@ -95,6 +113,13 @@ const CATEGORY_KEYS: CategoryKey[] = Array.from(
     "bathroom",
     "move-in",
     "exterior",
+    "networking",
+    "cctv",
+    "fiber",
+    "access-control",
+    "intercom",
+    "alarms",
+    "commercial",
     ...RENOVATION_CATEGORIES.map((category) => category.id),
   ]),
 );
@@ -162,6 +187,76 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryConfig> = {
     badge: "Fast",
     badgeEs: "Rápido",
     services: getCatalogServices("Plumbing"),
+  },
+  networking: {
+    title: "Networks & WiFi",
+    titleEs: "Redes y WiFi",
+    icon: <Network className="h-5 w-5" />,
+    subtitle: "WiFi, LAN, RJ45, switches, racks and business networks.",
+    subtitleEs: "WiFi, LAN, RJ45, switches, racks y redes para negocios.",
+    badge: "Technical",
+    badgeEs: "Técnico",
+    services: TECHNICAL_ESTIMATE_SERVICES.networking,
+  },
+  cctv: {
+    title: "CCTV",
+    titleEs: "CCTV",
+    icon: <Camera className="h-5 w-5" />,
+    subtitle: "Cameras, NVR/DVR, remote viewing, repair and upgrades.",
+    subtitleEs: "Cámaras, NVR/DVR, acceso remoto, reparación y mejoras.",
+    badge: "Security",
+    badgeEs: "Seguridad",
+    services: TECHNICAL_ESTIMATE_SERVICES.cctv,
+  },
+  fiber: {
+    title: "Fiber Optic",
+    titleEs: "Fibra óptica",
+    icon: <Cable className="h-5 w-5" />,
+    subtitle: "Fiber cabling, termination, splicing and troubleshooting.",
+    subtitleEs: "Cableado, terminación, fusión y diagnóstico de fibra.",
+    badge: "Infrastructure",
+    badgeEs: "Infraestructura",
+    services: TECHNICAL_ESTIMATE_SERVICES.fiber,
+  },
+  "access-control": {
+    title: "Access Control",
+    titleEs: "Control de acceso",
+    icon: <KeyRound className="h-5 w-5" />,
+    subtitle: "Readers, keypads, electric locks and controllers.",
+    subtitleEs: "Lectores, teclados, cerraduras eléctricas y controladores.",
+    badge: "Business",
+    badgeEs: "Negocios",
+    services: TECHNICAL_ESTIMATE_SERVICES["access-control"],
+  },
+  intercom: {
+    title: "Intercom",
+    titleEs: "Videoporteros",
+    icon: <Radio className="h-5 w-5" />,
+    subtitle: "Video intercom, IP entry, gates and door release.",
+    subtitleEs: "Videoporteros, entrada IP, portones y apertura de puerta.",
+    badge: "Entry",
+    badgeEs: "Entrada",
+    services: TECHNICAL_ESTIMATE_SERVICES.intercom,
+  },
+  alarms: {
+    title: "Alarm Systems",
+    titleEs: "Sistemas de alarma",
+    icon: <Siren className="h-5 w-5" />,
+    subtitle: "Standalone alarms, sensors, sirens, app setup and repair.",
+    subtitleEs: "Alarmas autónomas, sensores, sirenas, app y reparación.",
+    badge: "Standalone",
+    badgeEs: "Autónomo",
+    services: TECHNICAL_ESTIMATE_SERVICES.alarms,
+  },
+  commercial: {
+    title: "Commercial Systems",
+    titleEs: "Sistemas para negocios",
+    icon: <Building2 className="h-5 w-5" />,
+    subtitle: "Combined CCTV, network, fiber, access and cabling projects.",
+    subtitleEs: "Proyectos conjuntos de CCTV, red, fibra, acceso y cableado.",
+    badge: "Project",
+    badgeEs: "Proyecto",
+    services: TECHNICAL_ESTIMATE_SERVICES.commercial,
   },
   furniture: {
     title: "Furniture Assembly",
@@ -472,6 +567,24 @@ function EstimatePageContent() {
         CATEGORY_DATA[raw].services.some(
           (service) => service.id === requestedService,
         );
+      const technicalFallback = [
+        "networking",
+        "cctv",
+        "fiber",
+        "access-control",
+        "intercom",
+        "alarms",
+        "commercial",
+      ].includes(raw)
+        ? CATEGORY_DATA[raw].services.find((service) =>
+            service.id.includes("project-review"),
+          )?.id
+        : undefined;
+      const initialService = serviceExists
+        ? requestedService
+        : requestedService
+          ? technicalFallback
+          : undefined;
       const requestedQuantity = Math.max(
         1,
         Math.min(
@@ -481,7 +594,7 @@ function EstimatePageContent() {
       );
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuantities(
-        serviceExists ? { [requestedService]: requestedQuantity } : {},
+        initialService ? { [initialService]: requestedQuantity } : {},
       );
     }
   }, [searchParams]);
@@ -511,6 +624,9 @@ function EstimatePageContent() {
 
   const subtotal = Number(estimatedTotal.toFixed(2));
   const total = subtotal;
+  const requiresProjectReview =
+    TECHNICAL_CATEGORY_KEYS.has(category) &&
+    selectedServices.some((service) => service.price === 0);
 
   useEffect(() => {
     trackMarketingEvent("calculator_view", { source: "estimate", metadata: { calculator_type: "main", locale } });
@@ -832,6 +948,17 @@ function EstimatePageContent() {
           qty: service.qty,
           subtotal: service.subtotal,
           badge: service.displayBadge,
+          ...(TECHNICAL_CATEGORY_KEYS.has(category)
+            ? {
+                project_details: {
+                  category,
+                  projectType: service.id,
+                  quantity: service.qty,
+                  requiresReview: service.price === 0,
+                  equipmentPolicy: "quoted_separately",
+                },
+              }
+            : {}),
         })),
         subtotal,
         total,
@@ -1614,7 +1741,11 @@ function EstimatePageContent() {
                             </span>
 
                             <span className="text-xl font-extrabold text-black">
-                              {formatPublicPrice(total, locale, true)}
+                              {requiresProjectReview
+                                ? isEs
+                                  ? "Revisión del proyecto"
+                                  : "Project review required"
+                                : formatPublicPrice(total, locale, true)}
                             </span>
                           </div>
                         </div>

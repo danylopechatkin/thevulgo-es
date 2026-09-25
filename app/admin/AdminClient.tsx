@@ -52,6 +52,13 @@ type Service = {
   qty: number;
   subtotal: number;
   photo_paths?: string[];
+  project_details?: {
+    category?: string;
+    projectType?: string;
+    quantity?: number;
+    requiresReview?: boolean;
+    equipmentPolicy?: string;
+  };
 };
 type Order = {
   id: string;
@@ -1225,6 +1232,37 @@ function OrderPanel({
                     </span>
                   </div>
                 ))}
+                {order.services?.some((service) => service.project_details) ? (
+                  <div className="mt-4 border-t border-yellow-200 pt-4">
+                    <p className="font-black">Technical project details</p>
+                    <div className="mt-2 grid gap-2 text-sm sm:grid-cols-2">
+                      {order.services
+                        .filter((service) => service.project_details)
+                        .map((service, index) => (
+                          <div
+                            key={`${service.id || service.label}-technical-${index}`}
+                            className="rounded-xl bg-neutral-50 p-3"
+                          >
+                            <p className="font-bold">{service.label}</p>
+                            <p className="mt-1 text-neutral-600">
+                              Category: {service.project_details?.category || "—"}
+                            </p>
+                            <p className="text-neutral-600">
+                              Project: {service.project_details?.projectType || "—"}
+                            </p>
+                            <p className="text-neutral-600">
+                              Quantity: {service.project_details?.quantity || service.qty}
+                            </p>
+                            {service.project_details?.requiresReview ? (
+                              <p className="mt-1 font-bold text-yellow-700">
+                                Project review required · equipment quoted separately
+                              </p>
+                            ) : null}
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                ) : null}
                 {order.services?.some((service) => service.photo_paths?.length) ? (
                   <div className="mt-4 border-t border-yellow-200 pt-4">
                     <p className="font-black">Customer request photos</p>
