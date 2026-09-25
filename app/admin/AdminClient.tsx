@@ -23,6 +23,11 @@ import {
   CATEGORY_MAP,
 } from "@/lib/estimate";
 import { SERVICE_CATALOG, getCatalogServices } from "@/lib/serviceCatalog";
+import {
+  formatTechnicalProjectSummary,
+  type DeepTechnicalCategory,
+  type TechnicalProjectDetails,
+} from "@/lib/technicalConfigurator";
 import { findCatalogService } from "@/lib/serviceCatalog";
 import { strFromU8, unzipSync } from "fflate";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -58,7 +63,7 @@ type Service = {
     quantity?: number;
     requiresReview?: boolean;
     equipmentPolicy?: string;
-  };
+  } & Partial<TechnicalProjectDetails>;
 };
 type Order = {
   id: string;
@@ -1244,15 +1249,23 @@ function OrderPanel({
                             className="rounded-xl bg-neutral-50 p-3"
                           >
                             <p className="font-bold">{service.label}</p>
-                            <p className="mt-1 text-neutral-600">
-                              Category: {service.project_details?.category || "—"}
+                            <p className="mt-1 font-black uppercase tracking-wide text-neutral-500">
+                              {service.project_details?.category || "Technical project"}
                             </p>
-                            <p className="text-neutral-600">
-                              Project: {service.project_details?.projectType || "—"}
-                            </p>
-                            <p className="text-neutral-600">
-                              Quantity: {service.project_details?.quantity || service.qty}
-                            </p>
+                            {service.project_details?.category && ["cctv", "networking", "fiber"].includes(service.project_details.category) ? (
+                              <ul className="mt-2 space-y-1 text-neutral-600">
+                                {formatTechnicalProjectSummary(
+                                  service.project_details as TechnicalProjectDetails & { category: DeepTechnicalCategory },
+                                  "en",
+                                ).map((line, lineIndex) => (
+                                  <li key={`${line}-${lineIndex}`}>• {line}</li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className="mt-1 text-neutral-600">
+                                Project: {service.project_details?.projectType || "—"} · Quantity: {service.project_details?.quantity || service.qty}
+                              </p>
+                            )}
                             {service.project_details?.requiresReview ? (
                               <p className="mt-1 font-bold text-yellow-700">
                                 Project review required · equipment quoted separately

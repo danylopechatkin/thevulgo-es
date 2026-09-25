@@ -53,6 +53,15 @@ import {
   acDeepCleaningPromotion,
 } from "@/lib/acPromotion";
 import { TECHNICAL_ESTIMATE_SERVICES } from "@/lib/securityNetworkCatalog";
+import TechnicalProjectConfigurator from "@/app/components/technical/TechnicalProjectConfigurator";
+import {
+  createTechnicalProjectDetails,
+  formatTechnicalProjectSummary,
+  technicalProjectRequiresReview,
+  type DeepTechnicalCategory,
+  type TechnicalProjectDetails,
+} from "@/lib/technicalConfigurator";
+import { technicalProjectWhatsAppHref } from "@/lib/technicalWhatsApp";
 type CategoryKey =
   | "handyman"
   | "tv-mounting"
@@ -397,6 +406,10 @@ function EstimatePageContent() {
 
   const [category, setCategory] = useState<CategoryKey>(initialCategory);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [technicalProjectDetails, setTechnicalProjectDetails] =
+    useState<TechnicalProjectDetails | null>(null);
+  const [technicalConfiguratorComplete, setTechnicalConfiguratorComplete] =
+    useState(false);
   const [submitStage, setSubmitStage] = useState<
     "build" | "review" | "success"
   >("build");
@@ -624,9 +637,27 @@ function EstimatePageContent() {
 
   const subtotal = Number(estimatedTotal.toFixed(2));
   const total = subtotal;
+  const requestedTechnicalService = searchParams.get("service");
+  const deepTechnicalCategory = ["cctv", "networking", "fiber"].includes(category)
+    ? (category as DeepTechnicalCategory)
+    : null;
+  const activeTechnicalService = requestedTechnicalService || selectedServices[0]?.id;
+  const isShortTechnicalService = Boolean(
+    activeTechnicalService &&
+      (activeTechnicalService.includes("diagnostic") ||
+        activeTechnicalService.includes("repair") ||
+        activeTechnicalService.includes("remote-viewing")),
+  );
+  const shouldUseDeepConfigurator = Boolean(
+    deepTechnicalCategory && selectedServices.length > 0 && !isShortTechnicalService,
+  );
+  const effectiveTechnicalDetails = deepTechnicalCategory
+    ? technicalProjectDetails || createTechnicalProjectDetails(deepTechnicalCategory, activeTechnicalService)
+    : null;
   const requiresProjectReview =
     TECHNICAL_CATEGORY_KEYS.has(category) &&
-    selectedServices.some((service) => service.price === 0);
+    (selectedServices.some((service) => service.price === 0) ||
+      Boolean(shouldUseDeepConfigurator && effectiveTechnicalDetails && technicalProjectRequiresReview(effectiveTechnicalDetails)));
 
   useEffect(() => {
     trackMarketingEvent("calculator_view", { source: "estimate", metadata: { calculator_type: "main", locale } });
@@ -640,6 +671,10 @@ function EstimatePageContent() {
   const setQty = (id: string, value: number) => {
     markCalculatorStarted();
     trackMarketingEvent(value > 0 ? "quantity_changed" : "service_selected", { source: "estimate", service: id, metadata: { calculator_type: "main", category, quantity: Math.max(0, value), current_price: total } });
+    if (value > 0 && (quantities[id] || 0) === 0) {
+      setTechnicalProjectDetails(null);
+      setTechnicalConfiguratorComplete(false);
+    }
     setQuantities((prev) => {
       const next = { ...prev };
       if (value <= 0) delete next[id];
@@ -906,6 +941,7 @@ function EstimatePageContent() {
   const handleNextStep = () => {
     markCalculatorStarted();
     setHasTriedNext(true);
+    if (shouldUseDeepConfigurator && !technicalConfiguratorComplete) return;
     if (!validateEstimateForm()) return;
     const common = { calculator_type: "main", category, locale, current_price: total, quantity: selectedServices.reduce((sum, item) => sum + item.qty, 0), extras_count: Math.max(0, selectedServices.length - 1), city: displayCity, area: client.area };
     trackMarketingEvent("details_completed", { source: "estimate", service: selectedServices[0]?.id, metadata: common });
@@ -950,13 +986,16 @@ function EstimatePageContent() {
           badge: service.displayBadge,
           ...(TECHNICAL_CATEGORY_KEYS.has(category)
             ? {
-                project_details: {
-                  category,
-                  projectType: service.id,
-                  quantity: service.qty,
-                  requiresReview: service.price === 0,
-                  equipmentPolicy: "quoted_separately",
-                },
+                project_details:
+                  shouldUseDeepConfigurator && effectiveTechnicalDetails
+                    ? effectiveTechnicalDetails
+                    : {
+                    category,
+                    projectType: service.id,
+                    quantity: service.qty,
+                    requiresReview: service.price === 0,
+                    equipmentPolicy: "quoted_separately",
+                  },
               }
             : {}),
         })),
@@ -1101,6 +1140,8 @@ function EstimatePageContent() {
                               trackMarketingEvent("category_selected", { source: "estimate", service: key, metadata: { calculator_type: "main", category: key, locale } });
                               setCategory(key);
                               setQuantities({});
+                              setTechnicalProjectDetails(null);
+                              setTechnicalConfiguratorComplete(false);
                             }}
                             className={`group w-[65vw] max-w-[300px] min-h-[220px] shrink-0 snap-start rounded-2xl border p-5 text-left transition-all duration-200 ${
                               active
@@ -1145,6 +1186,8 @@ function EstimatePageContent() {
                             trackMarketingEvent("category_selected", { source: "estimate", service: key, metadata: { calculator_type: "main", category: key, locale } });
                             setCategory(key);
                             setQuantities({});
+                            setTechnicalProjectDetails(null);
+                            setTechnicalConfiguratorComplete(false);
                           }}
                           className={`group min-h-[185px] rounded-2xl border p-4 text-left transition-all duration-200 ${
                             active
@@ -1275,7 +1318,9 @@ function EstimatePageContent() {
                             {t("step2.lineTotal")}
                           </span>
                           <span className="text-base font-extrabold text-black">
-                            {formatPublicPrice(qty * service.price, locale)}
+                            {service.price === 0
+                              ? isEs ? "Presupuesto personalizado" : "Custom quote"
+                              : formatPublicPrice(qty * service.price, locale)}
                           </span>
                         </div>
                       </div>
@@ -1288,6 +1333,34 @@ function EstimatePageContent() {
                 </p>
               </section>
 
+              {shouldUseDeepConfigurator && deepTechnicalCategory && effectiveTechnicalDetails ? (
+                <TechnicalProjectConfigurator
+                  key={`${deepTechnicalCategory}-${activeTechnicalService || "project"}`}
+                  category={deepTechnicalCategory}
+                  locale={locale}
+                  value={effectiveTechnicalDetails}
+                  onChange={(details) => {
+                    setTechnicalProjectDetails(details);
+                    setTechnicalConfiguratorComplete(false);
+                  }}
+                  onComplete={(details) => {
+                    setTechnicalProjectDetails(details);
+                    setTechnicalConfiguratorComplete(true);
+                    trackMarketingEvent("details_completed", {
+                      source: "technical_configurator",
+                      service: activeTechnicalService,
+                      metadata: {
+                        calculator_type: `${deepTechnicalCategory}_project`,
+                        category: deepTechnicalCategory,
+                        locale,
+                        requires_review: details.requiresReview,
+                      },
+                    });
+                  }}
+                />
+              ) : null}
+
+              {!shouldUseDeepConfigurator || technicalConfiguratorComplete ? (
               <section className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-xl sm:p-8">
                 <div>
                   <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400 bg-yellow-50 px-3 py-1 text-xs font-semibold text-black">
@@ -1552,6 +1625,7 @@ function EstimatePageContent() {
                   </div>
                 </div>
               </section>
+              ) : null}
             </div>
 
             <div className="lg:sticky lg:top-[110px] lg:self-start lg:h-fit">
@@ -1605,13 +1679,17 @@ function EstimatePageContent() {
                               </p>
                               <p className="mt-1 text-xs text-gray-500">
                                 {item.qty} ×{" "}
-                                {formatPublicPrice(item.price, locale)}
+                                {item.price === 0
+                                  ? isEs ? "Revisión" : "Review"
+                                  : formatPublicPrice(item.price, locale)}
                               </p>
                             </div>
 
                             <div className="flex shrink-0 items-center gap-3">
                               <div className="whitespace-nowrap text-sm font-extrabold text-black">
-                                {formatPublicPrice(item.subtotal, locale)}
+                                {item.price === 0
+                                  ? isEs ? "Presupuesto" : "Custom quote"
+                                  : formatPublicPrice(item.subtotal, locale)}
                               </div>
 
                               <button
@@ -1630,7 +1708,7 @@ function EstimatePageContent() {
                 )}
 
                 {submitStage === "build" && (
-                  <TotalBox total={total} t={t} locale={locale} />
+                  <TotalBox total={total} t={t} locale={locale} requiresReview={requiresProjectReview} />
                 )}
 
                 {submitStage === "build" && (
@@ -1645,7 +1723,11 @@ function EstimatePageContent() {
                             : "bg-yellow-300 hover:bg-yellow-400"
                         }`}
                       >
-                        {t("summary.next")}
+                        {shouldUseDeepConfigurator && !technicalConfiguratorComplete
+                          ? isEs
+                            ? "Completa los detalles del proyecto"
+                            : "Complete project details"
+                          : t("summary.next")}
                         <ArrowRight className="h-4 w-4" />
                       </button>
                     ) : (
@@ -1723,12 +1805,16 @@ function EstimatePageContent() {
                                 </span>
                                 <span className="text-xs text-gray-500">
                                   {item.qty} ×{" "}
-                                  {formatPublicPrice(item.price, locale)}
+                                  {item.price === 0
+                                    ? isEs ? "Revisión" : "Review"
+                                    : formatPublicPrice(item.price, locale)}
                                 </span>
                               </div>
 
                               <span className="font-semibold text-black">
-                                {formatPublicPrice(item.subtotal, locale)}
+                                {item.price === 0
+                                  ? isEs ? "Presupuesto" : "Custom quote"
+                                  : formatPublicPrice(item.subtotal, locale)}
                               </span>
                             </div>
                           ))}
@@ -1750,6 +1836,21 @@ function EstimatePageContent() {
                           </div>
                         </div>
                       </ReviewCard>
+
+                      {effectiveTechnicalDetails ? (
+                        <ReviewCard title={isEs ? "Detalles técnicos" : "Technical project"}>
+                          <ul className="space-y-1">
+                            {formatTechnicalProjectSummary(effectiveTechnicalDetails, locale).map((line, index) => (
+                              <li key={`${line}-${index}`}>• {line}</li>
+                            ))}
+                          </ul>
+                          {effectiveTechnicalDetails.requiresReview ? (
+                            <p className="mt-3 rounded-lg bg-yellow-50 p-2 font-black text-yellow-800">
+                              {isEs ? "Revisión del proyecto necesaria" : "Project review required"}
+                            </p>
+                          ) : null}
+                        </ReviewCard>
+                      ) : null}
 
                       <ReviewCard title={t("review.address")}>
                         <p className="font-semibold text-black">
@@ -1854,11 +1955,25 @@ function EstimatePageContent() {
                       {t("success.note")}
                     </div>
 
+                    {effectiveTechnicalDetails ? (
+                      <a
+                        href={technicalProjectWhatsAppHref(effectiveTechnicalDetails, locale)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 text-sm font-black text-black shadow-md"
+                      >
+                        {isEs ? "Enviar fotos y resumen por WhatsApp" : "Send photos and summary on WhatsApp"}
+                        <ArrowRight className="h-4 w-4" />
+                      </a>
+                    ) : null}
+
                     <button
                       type="button"
                       onClick={() => {
                         setSubmitStage("build");
                         setQuantities({});
+                        setTechnicalProjectDetails(null);
+                        setTechnicalConfiguratorComplete(false);
                         setFormErrors({});
                         setFieldErrors({});
                         setFieldStatus({});
@@ -1905,16 +2020,18 @@ function TotalBox({
   locale,
   total,
   t,
+  requiresReview,
 }: {
   total: number;
   locale: string;
   t: (key: string) => string;
+  requiresReview?: boolean;
 }) {
   return (
     <div className="mt-6 shrink-0 rounded-2xl border-2 border-yellow-400 bg-yellow-50 p-5 shadow-md space-y-2">
       <div className="flex justify-between text-lg font-extrabold text-black">
         <span>{t("summary.total")}</span>
-        <span>{formatPublicPrice(total, locale, true)}</span>
+        <span>{requiresReview ? (locale === "es" ? "Revisión del proyecto" : "Project review") : formatPublicPrice(total, locale, true)}</span>
       </div>
     </div>
   );

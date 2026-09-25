@@ -1,5 +1,6 @@
 import { WHATSAPP_NUMBER } from "@/lib/marketLinks";
 import type { TechnicalCategoryId } from "@/lib/securityNetworkCatalog";
+import { formatTechnicalProjectSummary, type TechnicalProjectDetails } from "@/lib/technicalConfigurator";
 
 const messages: Record<TechnicalCategoryId, { en: string; es: string }> = {
   networking: {
@@ -40,4 +41,18 @@ export function technicalWhatsAppHref(
   const language = locale === "es" ? "es" : "en";
   const message = `${messages[category][language]}${detail ? `\n\n${detail}` : ""}`;
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+export function technicalProjectWhatsAppHref(details: TechnicalProjectDetails, locale: string) {
+  const language = locale === "es" ? "es" : "en";
+  const service = details.category === "fiber"
+    ? language === "es" ? "un proyecto de fibra" : "a fiber project"
+    : details.category === "cctv"
+      ? "CCTV"
+      : language === "es" ? "WiFi / red" : "WiFi / networking";
+  const heading = language === "es"
+    ? `Hola, quiero presupuesto para ${service}.`
+    : `Hi, I would like an estimate for ${service}.`;
+  const summary = formatTechnicalProjectSummary(details, locale).slice(0, 6).join(" · ");
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`${heading}\n${summary}`)}`;
 }

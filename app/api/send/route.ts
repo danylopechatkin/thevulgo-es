@@ -3,6 +3,10 @@ import { Resend } from "resend";
 import { createClient } from "@supabase/supabase-js";
 import { isAvailableCity, marketFromCity } from "@/lib/cities";
 import { madridLocalDateTimeToUtc } from "@/lib/time";
+import {
+  formatTechnicalProjectSummary,
+  type TechnicalProjectDetails,
+} from "@/lib/technicalConfigurator";
 
 function getServerClients() {
   const resendApiKey = process.env.RESEND_API_KEY;
@@ -30,6 +34,10 @@ type OrderService = {
   qty: number;
   subtotal?: number;
   photo_paths?: string[];
+  project_details?: Record<string, unknown> & {
+    category?: string;
+    requiresReview?: boolean;
+  };
 };
 
 type SendRequestData = {
@@ -462,6 +470,23 @@ export async function POST(req: Request) {
 `,
       )
       .join("");
+    const technicalProjectCandidate = (Array.isArray(data.services) ? data.services : []).find(
+      (item: OrderService) => item.project_details,
+    )?.project_details;
+    const technicalProject = technicalProjectCandidate?.category && ["cctv", "networking", "fiber"].includes(technicalProjectCandidate.category)
+      ? (technicalProjectCandidate as TechnicalProjectDetails)
+      : undefined;
+    const technicalSummary = technicalProject
+      ? formatTechnicalProjectSummary(technicalProject, locale)
+      : [];
+    const technicalDetailsHtml = technicalProject
+      ? `<div style="margin:20px 0;padding:18px;border:1px solid #facc15;border-radius:12px;background:#fffbea;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8a6500;">${isEs ? "Detalles técnicos" : "Technical project"}</div>
+          ${technicalProject.requiresReview ? `<div style="margin-top:8px;font-weight:900;color:#9a3412;">${isEs ? "REVISIÓN DEL PROYECTO NECESARIA" : "PROJECT REVIEW REQUIRED"}</div>` : ""}
+          <ul style="margin:10px 0 0;padding-left:20px;line-height:1.7;">${technicalSummary.map((line) => `<li>${line}</li>`).join("")}</ul>
+          <div style="margin-top:10px;font-size:12px;color:#666;">${isEs ? "Equipamiento y materiales por presupuestar." : "Equipment and materials quoted separately."}</div>
+        </div>`
+      : "";
 
     const signedPhotoUrls = (
       await Promise.all(
@@ -543,7 +568,8 @@ export async function POST(req: Request) {
         ${isQuickQuoteRequest ? "" : `<p><b>Apartment:</b> ${data.apartmentNumber || "—"}</p><p><b>Extra details:</b> ${data.addressDetails || "—"}</p>`}
         ${isHomepageQuickRequest ? "" : `<p><b>Preferred date:</b> ${data.preferredDate || "—"}</p><p><b>Preferred time:</b> ${data.preferredTime || "—"}</p>${isHandymanQuickRequest ? `<p><b>Flexible schedule:</b> ${data.flexibleSchedule ? "Yes" : "No"}</p>` : ""}<p><b>Scheduled UTC:</b> ${scheduledAt || "—"}</p>`}
         ${isQuickQuoteRequest ? "" : `<p><b>Notes:</b> ${data.notes || "—"}</p>`}
-        <p><b>Total:</b> ${isQuickQuoteRequest ? "Pending quote" : `€${total.toFixed(2)}`}</p>
+        <p><b>Total:</b> ${isQuickQuoteRequest || technicalProject?.requiresReview ? "Pending quote" : `€${total.toFixed(2)}`}</p>
+        ${technicalDetailsHtml}
         ${insertedOrder?.id ? `<p><b>CRM order ID:</b> ${insertedOrder.id}</p>` : ""}
         ${signedPhotoUrls.length ? `<h3>Fotos del trabajo</h3><ul>${signedPhotoUrls.map((url, index) => `<li><a href="${url}">Ver foto ${index + 1}</a></li>`).join("")}</ul>` : ""}
         ${
@@ -617,12 +643,14 @@ ${data.category || "—"}
 
 ${isQuickQuoteRequest ? "" : servicesHtml}
 
+${technicalProject ? `<tr><td colspan="2" style="padding:0 15px 15px;">${technicalDetailsHtml}</td></tr>` : ""}
+
 ${isQuickQuoteRequest ? "" : `<tr>
 <td style="padding:15px;border-top:1px solid #ddd;font-weight:800;">
 ${labels.total}
 </td>
 <td style="padding:15px;border-top:1px solid #ddd;text-align:right;font-weight:800;">
-€${total.toFixed(2)}
+${technicalProject?.requiresReview ? (isEs ? "Presupuesto personalizado" : "Custom project quote") : `€${total.toFixed(2)}`}
 </td>
 </tr>`}
 </table>
