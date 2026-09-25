@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, BadgeCheck, CheckCircle2, Clock3, Euro, MapPin, MessageCircle, ShieldCheck, Wrench } from "lucide-react";
-import { MADRID_DISTRICTS, humanizeServicePath } from "@/lib/cities";
-import { MADRID_ROUTES } from "@/lib/madridRoutes";
-import { marketWhatsAppHref, WHATSAPP_NUMBER } from "@/lib/marketLinks";
+import { humanizeServicePath, marketBasePath } from "@/lib/cities";
+import { INDEXABLE_CITY_SERVICE_PATHS, MARKET_SERVICE_ROUTES } from "@/lib/marketRoutes";
+import { marketEstimateHref, marketWhatsAppHref, WHATSAPP_NUMBER } from "@/lib/marketLinks";
+import { localizedUrl } from "@/lib/technicalRoutes";
+import { getMarketConfig } from "@/lib/markets";
 
 const phone = WHATSAPP_NUMBER;
 
@@ -28,17 +30,19 @@ function categoryFor(path: string) {
 
 export default function MadridLanding({ locale, servicePath }: { locale: string; servicePath?: string }) {
   const isEs = locale === "es";
+  const marketBase = marketBasePath(locale, "madrid");
+  const marketRoutes = MARKET_SERVICE_ROUTES.filter((route) => INDEXABLE_CITY_SERVICE_PATHS.includes(route.path as (typeof INDEXABLE_CITY_SERVICE_PATHS)[number]));
   const isHome = !servicePath;
   const serviceName = servicePath ? humanizeServicePath(servicePath, locale) : isEs ? "Servicios de manitas" : "Handyman services";
   const title = isHome
     ? isEs ? "Servicios de manitas en Madrid" : "Handyman services in Madrid"
     : `${serviceName} ${isEs ? "en" : "in"} Madrid`;
-  const estimateHref = `/${locale}/estimate?market=madrid${servicePath ? `&service=${encodeURIComponent(servicePath)}` : ""}`;
+  const estimateHref = marketEstimateHref(locale, "madrid", servicePath ? `service=${encodeURIComponent(servicePath)}` : "");
   const whatsapp = marketWhatsAppHref({ locale, market: "madrid", serviceName });
   const related = servicePath
-    ? MADRID_ROUTES.filter((route) => route.path !== servicePath && categoryFor(route.path) === categoryFor(servicePath)).slice(0, 12)
+    ? marketRoutes.filter((route) => route.path !== servicePath && categoryFor(route.path) === categoryFor(servicePath)).slice(0, 12)
     : [];
-  const grouped = MADRID_ROUTES.reduce<Record<string, typeof MADRID_ROUTES[number][]>>((result, route) => {
+  const grouped = marketRoutes.reduce<Record<string, typeof marketRoutes[number][]>>((result, route) => {
     const key = categoryFor(route.path);
     (result[key] ||= []).push(route);
     return result;
@@ -48,7 +52,7 @@ export default function MadridLanding({ locale, servicePath }: { locale: string;
     "@context": "https://schema.org",
     "@type": "Service",
     name: title,
-    url: `https://www.thevulgo.es/${locale}/madrid${servicePath ? `/${servicePath}` : ""}`,
+    url: localizedUrl(locale, `madrid${servicePath ? `/${servicePath}` : ""}`),
     provider: { "@type": "Organization", name: "THEVULGO", url: "https://www.thevulgo.es", logo: "https://www.thevulgo.es/favicon.ico", telephone: `+${phone}` },
     areaServed: { "@type": "City", name: "Madrid" },
     serviceType: serviceName,
@@ -58,9 +62,9 @@ export default function MadridLanding({ locale, servicePath }: { locale: string;
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: isEs ? "Inicio" : "Home", item: `https://www.thevulgo.es/${locale}` },
-      { "@type": "ListItem", position: 2, name: "Madrid", item: `https://www.thevulgo.es/${locale}/madrid` },
-      ...(servicePath ? [{ "@type": "ListItem", position: 3, name: serviceName, item: `https://www.thevulgo.es/${locale}/madrid/${servicePath}` }] : []),
+      { "@type": "ListItem", position: 1, name: isEs ? "Inicio" : "Home", item: localizedUrl(locale) },
+      { "@type": "ListItem", position: 2, name: "Madrid", item: localizedUrl(locale, "madrid") },
+      ...(servicePath ? [{ "@type": "ListItem", position: 3, name: serviceName, item: localizedUrl(locale, `madrid/${servicePath}`) }] : []),
     ],
   };
 
@@ -72,7 +76,7 @@ export default function MadridLanding({ locale, servicePath }: { locale: string;
       <section className="relative overflow-hidden border-b border-yellow-200 bg-[radial-gradient(circle_at_top_right,_#fef08a_0,_#fff_42%)]">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:py-20">
           <div className="mb-5 flex flex-wrap items-center gap-2 text-sm font-bold text-neutral-600">
-            <Link href={`/${locale}/madrid`} className="hover:text-black">THEVULGO · Madrid</Link>
+            <Link href={marketBase} className="hover:text-black">THEVULGO · Madrid</Link>
             {servicePath && <><span>/</span><span>{serviceName}</span></>}
           </div>
           <div className="max-w-4xl">
@@ -100,14 +104,14 @@ export default function MadridLanding({ locale, servicePath }: { locale: string;
             <h2 className="text-3xl font-black">{isEs ? "Servicios disponibles en Madrid" : "Services available in Madrid"}</h2>
             <p className="mt-3 max-w-3xl text-neutral-600">{isEs ? "El mismo catálogo de servicios de THEVULGO, organizado para reservar y medir resultados específicamente en Madrid." : "The same THEVULGO service catalogue, organised for booking and measuring results specifically in Madrid."}</p>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {categoryCards.map(([path, en, es]) => <Link key={path} href={`/${locale}/madrid/${path}`} className="group rounded-3xl border border-neutral-200 p-6 shadow-sm transition hover:-translate-y-1 hover:border-yellow-300 hover:shadow-md"><Wrench className="h-7 w-7 text-yellow-500" /><h3 className="mt-4 text-xl font-extrabold">{isEs ? es : en}</h3><span className="mt-4 inline-flex items-center gap-1 text-sm font-bold">{isEs ? "Ver servicios" : "View services"}<ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></span></Link>)}
+              {categoryCards.map(([path, en, es]) => <Link key={path} href={`${marketBase}/${path}`} className="group rounded-3xl border border-neutral-200 p-6 shadow-sm transition hover:-translate-y-1 hover:border-yellow-300 hover:shadow-md"><Wrench className="h-7 w-7 text-yellow-500" /><h3 className="mt-4 text-xl font-extrabold">{isEs ? es : en}</h3><span className="mt-4 inline-flex items-center gap-1 text-sm font-bold">{isEs ? "Ver servicios" : "View services"}<ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></span></Link>)}
             </div>
           </section>
           <section className="border-y border-neutral-200 bg-neutral-50">
             <div className="mx-auto max-w-7xl px-4 py-16">
               <h2 className="text-3xl font-black">{isEs ? "Catálogo completo" : "Full catalogue"}</h2>
               <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {Object.entries(grouped).map(([group, routes]) => <div key={group}><h3 className="mb-3 text-lg font-extrabold capitalize">{group.replaceAll("-", " ")}</h3><div className="space-y-2">{routes.map((route) => <Link key={route.path} href={`/${locale}/madrid/${route.path}`} className="flex items-center gap-2 text-sm font-semibold text-neutral-700 hover:text-black"><ArrowRight className="h-3.5 w-3.5 text-yellow-500" />{humanizeServicePath(route.path, locale)}</Link>)}</div></div>)}
+                {Object.entries(grouped).map(([group, routes]) => <div key={group}><h3 className="mb-3 text-lg font-extrabold capitalize">{group.replaceAll("-", " ")}</h3><div className="space-y-2">{routes.map((route) => <Link key={route.path} href={`${marketBase}/${route.path}`} className="flex items-center gap-2 text-sm font-semibold text-neutral-700 hover:text-black"><ArrowRight className="h-3.5 w-3.5 text-yellow-500" />{humanizeServicePath(route.path, locale)}</Link>)}</div></div>)}
               </div>
             </div>
           </section>
@@ -136,14 +140,14 @@ export default function MadridLanding({ locale, servicePath }: { locale: string;
               ].map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="h-5 w-5 shrink-0 text-green-600" />{item}</li>)}</ul>
             </aside>
           </section>
-          {related.length > 0 && <section className="border-y border-neutral-200 bg-neutral-50"><div className="mx-auto max-w-7xl px-4 py-14"><h2 className="text-2xl font-black">{isEs ? "Servicios relacionados en Madrid" : "Related services in Madrid"}</h2><div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{related.map((route) => <Link key={route.path} href={`/${locale}/madrid/${route.path}`} className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-white p-4 font-bold shadow-sm hover:border-yellow-300">{humanizeServicePath(route.path, locale)}<ArrowRight className="h-4 w-4" /></Link>)}</div></div></section>}
+          {related.length > 0 && <section className="border-y border-neutral-200 bg-neutral-50"><div className="mx-auto max-w-7xl px-4 py-14"><h2 className="text-2xl font-black">{isEs ? "Servicios relacionados en Madrid" : "Related services in Madrid"}</h2><div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{related.map((route) => <Link key={route.path} href={`${marketBase}/${route.path}`} className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-white p-4 font-bold shadow-sm hover:border-yellow-300">{humanizeServicePath(route.path, locale)}<ArrowRight className="h-4 w-4" /></Link>)}</div></div></section>}
         </>
       )}
 
       <section className="mx-auto max-w-7xl px-4 py-16">
         <h2 className="text-3xl font-black">{isEs ? "Cobertura en Madrid" : "Madrid coverage"}</h2>
         <p className="mt-3 max-w-3xl text-neutral-600">{isEs ? "La disponibilidad y el coste final se confirman según dirección, acceso, materiales y duración prevista." : "Availability and final cost are confirmed according to address, access, materials and expected duration."}</p>
-        <div className="mt-6 flex flex-wrap gap-2">{MADRID_DISTRICTS.map((district) => <span key={district} className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-2 text-sm font-semibold">{district}</span>)}</div>
+        <div className="mt-6 flex flex-wrap gap-2">{getMarketConfig("madrid").districts.map((district) => <span key={district} className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-2 text-sm font-semibold">{district}</span>)}</div>
       </section>
 
       <section className="bg-neutral-950 text-white"><div className="mx-auto max-w-5xl px-4 py-16 text-center"><h2 className="text-3xl font-black">{isEs ? `¿Necesitas ${serviceName.toLowerCase()} en Madrid?` : `Need ${serviceName.toLowerCase()} in Madrid?`}</h2><p className="mx-auto mt-4 max-w-2xl text-neutral-300">{isEs ? "Prepara tu solicitud en el calculador o envíanos fotos por WhatsApp." : "Build your request in the estimator or send us photos by WhatsApp."}</p><Link href={estimateHref} className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-7 py-4 font-extrabold text-black">{isEs ? "Empezar presupuesto" : "Start estimate"}<ArrowRight className="h-5 w-5" /></Link></div></section>

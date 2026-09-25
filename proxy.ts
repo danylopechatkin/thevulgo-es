@@ -1,6 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
+import { marketBasePath } from "@/lib/cities";
+import { MARKET_IDS, marketFromGeoCity, type Market } from "@/lib/markets";
 
 const handleI18nRouting = createIntlMiddleware({
   locales: ["en", "es"],
@@ -42,6 +44,24 @@ export async function proxy(request: NextRequest) {
     await supabase.auth.getUser();
 
     return response;
+  }
+
+  const isGenericHomepage = pathname === "/" || pathname === "/es" || pathname === "/en";
+  const isCrawler = /bot|crawler|spider|slurp|google-inspectiontool/i.test(request.headers.get("user-agent") || "");
+  if (request.method === "GET" && isGenericHomepage && !isCrawler) {
+    const saved = request.cookies.get("thevulgo_market")?.value;
+    const selectedMarket = MARKET_IDS.includes(saved as Market)
+      ? saved as Market
+      : marketFromGeoCity(request.headers.get("x-vercel-ip-city"));
+    if (selectedMarket && selectedMarket !== "valencia") {
+      const locale = pathname === "/es" ? "es" : "en";
+      const target = request.nextUrl.clone();
+      target.pathname = marketBasePath(locale, selectedMarket);
+      const response = NextResponse.redirect(target, 307);
+      response.headers.set("Cache-Control", "private, no-store");
+      if (!saved) response.cookies.set("thevulgo_market", selectedMarket, { maxAge: 60 * 60 * 24 * 270, sameSite: "lax", path: "/" });
+      return response;
+    }
   }
 
   // ALL public site routes — next-intl

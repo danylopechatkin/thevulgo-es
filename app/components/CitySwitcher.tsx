@@ -5,9 +5,12 @@ import { Check, ChevronDown, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
+import { trackMarketingEvent } from "@/lib/client-attribution";
+
+const ATTRIBUTION_PARAMS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid"];
 
 export default function CitySwitcher({ locale }: { locale: string }) {
-  const { pathname, market } = useCurrentMarket(locale);
+  const { pathname, searchParams, market } = useCurrentMarket(locale);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -27,25 +30,35 @@ export default function CitySwitcher({ locale }: { locale: string }) {
     };
   }, [open]);
 
+  const hrefFor = (targetMarket: Market) => {
+    const raw = marketPathForLocation(pathname, locale, targetMarket);
+    const [path, query = ""] = raw.split("?");
+    const params = new URLSearchParams(query);
+    for (const key of ATTRIBUTION_PARAMS) {
+      const value = searchParams.get(key);
+      if (value) params.set(key, value);
+    }
+    return `${path}${params.size ? `?${params}` : ""}`;
+  };
   const cities: Array<{ market: Market; href: string; label: string }> = [
     {
       market: "valencia",
-      href: marketPathForLocation(pathname, locale, "valencia"),
+      href: hrefFor("valencia"),
       label: "Valencia",
     },
     {
       market: "madrid",
-      href: marketPathForLocation(pathname, locale, "madrid"),
+      href: hrefFor("madrid"),
       label: "Madrid",
     },
     {
       market: "barcelona",
-      href: marketPathForLocation(pathname, locale, "barcelona"),
+      href: hrefFor("barcelona"),
       label: "Barcelona",
     },
     {
       market: "alicante",
-      href: marketPathForLocation(pathname, locale, "alicante"),
+      href: hrefFor("alicante"),
       label: "Alicante",
     },
   ];
@@ -90,7 +103,11 @@ export default function CitySwitcher({ locale }: { locale: string }) {
                   key={city.market}
                   href={city.href}
                   role="menuitem"
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    document.cookie = `thevulgo_market=${city.market}; Max-Age=${60 * 60 * 24 * 270}; Path=/; SameSite=Lax`;
+                    trackMarketingEvent("cta_click", { source: "city_switcher", ctaId: "header_city_switch", metadata: { action: "city_switch", from_market: market, to_market: city.market, source_path: pathname, target_path: city.href.split("?")[0] } });
+                    setOpen(false);
+                  }}
                   className={`flex min-h-14 items-center justify-between rounded-2xl border px-3.5 py-3 text-sm font-extrabold transition active:scale-[0.98] ${selected ? "border-yellow-400 bg-yellow-400 text-black shadow-sm" : "border-neutral-200 bg-neutral-50 text-neutral-800 hover:border-yellow-300 hover:bg-yellow-50"}`}
                 >
                   <span>{city.label}</span>

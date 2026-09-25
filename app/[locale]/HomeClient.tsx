@@ -24,10 +24,12 @@ import MobileStickyCta from "@/app/components/MobileStickyCta";
 import AcCleaningPromoCard from "@/app/components/AcCleaningPromoCard";
 import HomeQuickRequestCard from "@/app/components/HomeQuickRequestCard";
 import { buildWhatsAppHref, type CommercialService } from "@/lib/commercial";
-import type { Market } from "@/lib/cities";
+import { marketBasePath, type Market } from "@/lib/cities";
 import { getCatalogServices } from "@/lib/serviceCatalog";
 import { acDeepCleaningPromotion } from "@/lib/acPromotion";
 import { localizedPath } from "@/lib/technicalRoutes";
+import { getMarketConfig, marketSupports } from "@/lib/markets";
+import { marketServiceHref } from "@/lib/marketLinks";
 
 type Props = { locale?: string; city?: string; market?: Market };
 
@@ -39,10 +41,10 @@ export default function HomeClient({
   const routeParams = useParams<{ locale?: string }>();
   const locale = localeProp ?? routeParams.locale ?? "en";
   const es = locale === "es";
-  const base = market === "valencia" ? `/${locale}` : `/${locale}/${market}`;
+  const base = marketBasePath(locale, market);
+  const marketConfig = getMarketConfig(market);
   const price = (category: string, fallback: number) =>
     getCatalogServices(category)[0]?.price ?? fallback;
-  const serviceHref = (slug: string) => `${base}/${slug}`;
   const generalWa = buildWhatsAppHref("general", locale, city);
   const cards: Array<{
     icon: typeof Tv;
@@ -60,7 +62,7 @@ export default function HomeClient({
         ? "Soporte, nivelado y cables bien resueltos."
         : "Secure bracket, clean levelling and tidy cables.",
       price: price("TV Mounting", 59),
-      href: serviceHref("montaje-tv-valencia"),
+      href: market === "valencia" ? localizedPath(locale, "montaje-tv-valencia") : `${base}/montaje-tv`,
     },
     {
       icon: Hammer,
@@ -70,7 +72,7 @@ export default function HomeClient({
         ? "Una visita para esa lista que llevas aplazando."
         : "One visit for the jobs you have been putting off.",
       price: price("Handyman", 35),
-      href: serviceHref("handyman-valencia"),
+      href: market === "valencia" ? localizedPath(locale, "handyman-valencia") : `${base}/handyman`,
     },
     {
       icon: PackageCheck,
@@ -80,7 +82,7 @@ export default function HomeClient({
         ? "IKEA y otras marcas, montado correctamente."
         : "IKEA and other brands, assembled correctly.",
       price: price("Furniture Assembly", 49),
-      href: serviceHref("montaje-muebles-valencia"),
+      href: market === "valencia" ? localizedPath(locale, "montaje-muebles-valencia") : `${base}/montaje-muebles`,
     },
     {
       icon: Wrench,
@@ -90,7 +92,7 @@ export default function HomeClient({
         ? "Puertas, bisagras, sellados, paredes y pequeños daños."
         : "Doors, hinges, sealing, walls and everyday damage.",
       price: price("Repairs", 35),
-      href: serviceHref("services/repairs"),
+      href: marketServiceHref(locale, market, "repairs"),
     },
   ];
   const secondary = es
@@ -163,11 +165,11 @@ export default function HomeClient({
               ))}
             </div>
           </div>
-          <HomeQuickRequestCard locale={locale} city={city} />
+          <HomeQuickRequestCard locale={locale} city={city} market={market} />
         </div>
       </section>
 
-      {market === "valencia" && acDeepCleaningPromotion.active && (
+      {marketConfig.offers.acDeepCleaning && acDeepCleaningPromotion.active && (
   <div className="mt-8">
     <AcCleaningPromoCard locale={locale} source="homepage" variant="home" />
   </div>
@@ -226,12 +228,12 @@ export default function HomeClient({
         </div>
       </section>
 
-      {market === "valencia" && (
+      {marketSupports(market, "technical") && (
         <section className="border-y border-neutral-800 bg-neutral-950 text-white">
           <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-              <div><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-400">THEVULGO SECURITY & NETWORKS</p><h2 className="mt-3 text-3xl font-black sm:text-5xl">{es ? "Instalaciones de seguridad y redes" : "Security & Network Installations"}</h2><p className="mt-4 max-w-3xl leading-7 text-neutral-300">{es ? "CCTV, WiFi profesional, fibra, cableado y control de acceso para viviendas y negocios en Valencia." : "CCTV, professional WiFi, fiber, cabling and access control for Valencia homes and businesses."}</p></div>
-              <Link href={localizedPath(locale, "services/security-networks")} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 font-black text-black">{es ? "Explorar Seguridad y Redes" : "Explore Security & Networks"}<ArrowRight className="h-5 w-5" /></Link>
+              <div><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-400">THEVULGO SECURITY & NETWORKS</p><h2 className="mt-3 text-3xl font-black sm:text-5xl">{es ? "Instalaciones de seguridad y redes" : "Security & Network Installations"}</h2><p className="mt-4 max-w-3xl leading-7 text-neutral-300">{es ? `CCTV, WiFi profesional, fibra, cableado y control de acceso para viviendas y negocios en ${city}.` : `CCTV, professional WiFi, fiber, cabling and access control for homes and businesses in ${city}.`}</p></div>
+              <Link href={marketServiceHref(locale, market, "security-networks")} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 font-black text-black">{es ? "Explorar Seguridad y Redes" : "Explore Security & Networks"}<ArrowRight className="h-5 w-5" /></Link>
             </div>
             <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[
@@ -242,7 +244,7 @@ export default function HomeClient({
                 [Radio, es ? "Videoporteros" : "Intercom", "intercom"],
                 [Building2, es ? "Sistemas para Negocios" : "Business Systems", "seguridad-comercial"],
               ].map(([Icon, title, slug]) => (
-                <Link key={slug as string} href={`${es ? "/es" : ""}/services/${slug}`} className="group flex min-h-28 items-center gap-4 rounded-2xl border border-neutral-700 bg-neutral-900 p-5 transition hover:border-yellow-400">
+                <Link key={slug as string} href={marketServiceHref(locale, market, slug as string)} className="group flex min-h-28 items-center gap-4 rounded-2xl border border-neutral-700 bg-neutral-900 p-5 transition hover:border-yellow-400">
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-yellow-400 text-black"><Icon className="h-5 w-5" /></span><span className="font-black">{title as string}</span><ArrowRight className="ml-auto h-5 w-5 text-yellow-400 transition group-hover:translate-x-1" />
                 </Link>
               ))}
@@ -297,7 +299,7 @@ export default function HomeClient({
             </a>
           ))}
         </div>
-        {market === "valencia" && (
+        {marketSupports(market, "homeServices") && (
           <div className="mt-12 grid gap-6 rounded-3xl bg-[#fff5c2] p-7 md:grid-cols-[1fr_auto] md:items-center md:p-10">
             <div>
               <p className="text-sm font-black uppercase tracking-widest">
@@ -391,17 +393,34 @@ export default function HomeClient({
               </article>
             ))}
           </div>
-          {market === "valencia" && (
+          {marketSupports(market, "renovations") && (
             <Link
-              href={es ? "/es/reformas-valencia" : "/renovations-valencia"}
+              href={market === "valencia" ? localizedPath(locale, es ? "reformas-valencia" : "renovations-valencia") : `${base}/reformas`}
               className="mt-8 inline-flex items-center gap-2 rounded-xl border border-neutral-300 bg-white px-5 py-3 font-black transition hover:border-black"
             >
               {es
-                ? "Explorar reformas en Valencia"
-                : "Explore renovations in Valencia"}
+                ? `Explorar reformas en ${city}`
+                : `Explore renovations in ${city}`}
               <ArrowRight size={17} />
             </Link>
           )}
+        </div>
+      </section>
+
+      <section className="border-y border-neutral-200 bg-neutral-50">
+        <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
+          <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:items-start">
+            <div>
+              <p className="text-sm font-black uppercase tracking-[.16em] text-yellow-600">{city}</p>
+              <h2 className="mt-3 text-3xl font-black">{es ? `Servicio en ${city}` : `Service across ${city}`}</h2>
+              <p className="mt-4 leading-7 text-neutral-600">{marketConfig.localSeo[es ? "es" : "en"]}</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {marketConfig.districts.map((district) => (
+                <span key={district} className="rounded-full border border-neutral-200 bg-white px-3 py-2 text-sm font-semibold text-neutral-700">{district}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

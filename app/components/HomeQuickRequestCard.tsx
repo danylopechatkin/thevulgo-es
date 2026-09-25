@@ -18,6 +18,7 @@ import {
   trackMarketingEvent,
 } from "@/lib/client-attribution";
 import { buildWhatsAppHref } from "@/lib/commercial";
+import type { Market } from "@/lib/cities";
 
 type SelectedPhoto = { file: File; preview: string };
 type ContactDetails = {
@@ -34,9 +35,11 @@ const MAX_PHOTO_SIZE = 6 * 1024 * 1024;
 export default function HomeQuickRequestCard({
   locale,
   city,
+  market,
 }: {
   locale: string;
   city: string;
+  market: Market;
 }) {
   const es = locale === "es";
   const [step, setStep] = useState<1 | 2 | "success">(1);
@@ -104,7 +107,7 @@ export default function HomeQuickRequestCard({
     trackMarketingEvent("details_completed", {
       source: "homepage",
       service: "homepage_quick_request",
-      metadata: { calculator_type: "homepage_quick_request", locale },
+      metadata: { calculator_type: "homepage_quick_request", locale, market, city },
     });
   };
 
@@ -124,7 +127,7 @@ export default function HomeQuickRequestCard({
     trackMarketingEvent("booking_submit_attempt", {
       source: "homepage",
       service: "homepage_quick_request",
-      metadata: { calculator_type: "homepage_quick_request", locale },
+      metadata: { calculator_type: "homepage_quick_request", locale, market, city },
     });
 
     try {
@@ -134,6 +137,7 @@ export default function HomeQuickRequestCard({
         phone: contact.phone.trim(),
         email: contact.email.trim(),
         city,
+        market,
         area: "",
         houseAddress: contact.address.trim(),
         apartmentNumber: "",
@@ -185,7 +189,7 @@ export default function HomeQuickRequestCard({
       trackMarketingEvent("booking_completed", {
         source: "homepage",
         service: "homepage_quick_request",
-        metadata: { calculator_type: "homepage_quick_request", locale },
+        metadata: { calculator_type: "homepage_quick_request", locale, market, city },
       });
     } catch {
       setError(
@@ -201,6 +205,8 @@ export default function HomeQuickRequestCard({
           error_type: "api_failure",
           endpoint: "/api/send",
           locale,
+          market,
+          city,
         },
       });
     } finally {

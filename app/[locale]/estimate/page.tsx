@@ -37,13 +37,8 @@ import {
   Siren,
   Building2,
 } from "lucide-react";
-import {
-  ALICANTE_DISTRICTS,
-  AVAILABLE_CITIES,
-  BARCELONA_DISTRICTS,
-  MADRID_DISTRICTS,
-  marketFromCity,
-} from "@/lib/cities";
+import { AVAILABLE_CITIES, marketFromCity } from "@/lib/cities";
+import { getMarketConfig, MARKET_IDS, type Market } from "@/lib/markets";
 import {
   getClientAttribution,
   trackMarketingEvent,
@@ -390,14 +385,8 @@ function EstimatePageContent() {
   const locale = useLocale();
   const isEs = locale === "es";
   const requestedMarket = searchParams.get("market");
-  const defaultCity =
-    requestedMarket === "madrid"
-      ? "Madrid"
-      : requestedMarket === "barcelona"
-        ? "Barcelona"
-        : requestedMarket === "alicante"
-          ? "Alicante"
-          : "Valencia";
+  const initialMarket: Market = MARKET_IDS.includes(requestedMarket as Market) ? requestedMarket as Market : "valencia";
+  const defaultCity = getMarketConfig(initialMarket).name;
 
   const initialCategory = (() => {
     const raw = searchParams.get("category");
@@ -446,49 +435,7 @@ function EstimatePageContent() {
   });
   const availabilityCity = client.city;
 
-  const CITY_AREA_OPTIONS: Record<string, string[]> = {
-    Madrid: [...MADRID_DISTRICTS],
-    Barcelona: [...BARCELONA_DISTRICTS],
-    Alicante: [...ALICANTE_DISTRICTS],
-    Valencia: [
-      "Ciutat Vella",
-      "Russafa",
-      "El Pla del Remei",
-      "La Gran Via",
-      "Campanar",
-      "Marxalenes",
-      "Morvedre",
-      "Trinitat",
-      "Benimaclet",
-      "Algirós",
-      "El Cabanyal - El Canyamelar",
-      "La Malva-rosa",
-      "Aiora",
-      "Amistat",
-      "Mestalla",
-      "Patraix",
-      "Safranar",
-      "Favara",
-      "Arrancapins",
-      "Botànic",
-      "La Roqueta",
-      "La Petxina",
-      "Benicalap",
-      "Torrefiel",
-      "Orriols",
-      "Sant Antoni",
-      "Jesús",
-      "Sant Marcel·lí",
-      "Camí Real",
-      "Malilla",
-      "Monteolivete",
-      "En Corts",
-      "Natzaret",
-      "Quatre Carreres",
-      "Beniferri",
-      "Benimàmet",
-    ],
-  };
+  const CITY_AREA_OPTIONS = Object.fromEntries(MARKET_IDS.map((market) => [getMarketConfig(market).name, [...getMarketConfig(market).districts]]));
 
   const CITY_OPTIONS: SelectOption[] = [...AVAILABLE_CITIES];
 
@@ -667,12 +614,12 @@ function EstimatePageContent() {
       Boolean(shouldUseDeepConfigurator && effectiveTechnicalDetails && technicalProjectRequiresReview(effectiveTechnicalDetails)));
 
   useEffect(() => {
-    trackMarketingEvent("calculator_view", { source: "estimate", metadata: { calculator_type: "main", locale } });
-  }, [locale]);
+    trackMarketingEvent("calculator_view", { source: "estimate", metadata: { calculator_type: "main", locale, market: initialMarket, city: defaultCity } });
+  }, [defaultCity, initialMarket, locale]);
   const markCalculatorStarted = () => {
     if (analyticsStarted.current) return;
     analyticsStarted.current = true;
-    trackMarketingEvent("calculator_started", { source: "estimate", metadata: { calculator_type: "main", locale } });
+    trackMarketingEvent("calculator_started", { source: "estimate", metadata: { calculator_type: "main", locale, market: marketFromCity(client.city), city: client.city } });
   };
 
   const setQty = (id: string, value: number) => {

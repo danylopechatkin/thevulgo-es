@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { BookOpen, Building2, Camera, Cable, ChevronDown, CookingPot, Hammer, KeyRound, Menu, MessageCircle, Network, PaintRoller, Radio, ShieldCheck, Siren, Tv, Wind, Wrench, X, type LucideIcon } from "lucide-react";
+import { Bath, BookOpen, Building2, Camera, Cable, ChevronDown, CookingPot, Droplets, Hammer, KeyRound, Menu, MessageCircle, Network, PaintRoller, Radio, ShieldCheck, Siren, Sofa, Tv, Wind, Wrench, X, Zap, type LucideIcon } from "lucide-react";
 import { marketBasePath, marketName } from "@/lib/cities";
 import { marketWhatsAppHref } from "@/lib/marketLinks";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
 import { localizedPath } from "@/lib/technicalRoutes";
+import { marketServiceHref } from "@/lib/marketLinks";
+import { marketSupports } from "@/lib/markets";
 
 type Props = { locale: "es" | "en" };
 
@@ -14,18 +16,33 @@ export default function MobileHeaderMenu({ locale }: Props) {
   const [open, setOpen] = useState(false);
   const isEs = locale === "es";
   const { market } = useCurrentMarket(locale);
-  const cityMarket = market !== "valencia";
   const city = marketName(market);
   const base = marketBasePath(locale, market);
   const close = () => setOpen(false);
-  const renovationBase = localizedPath(locale, isEs ? "reformas-valencia" : "renovations-valencia");
+  const renovationBase = market === "valencia" ? localizedPath(locale, isEs ? "reformas-valencia" : "renovations-valencia") : `${base}/reformas`;
   const directLinks = [
-    [cityMarket ? `${base}/services` : localizedPath(locale, "services"), isEs ? "Servicios" : "Services", Wrench],
-    ...(!cityMarket ? [[localizedPath(locale, "services/aire-acondicionado"), isEs ? "Aire" : "AC", Wind] as const] : []),
-    [cityMarket ? `${base}/handyman` : localizedPath(locale, "handyman-valencia"), isEs ? "Manitas" : "Handyman", Wrench],
-    [cityMarket ? `${base}/montaje-tv` : localizedPath(locale, "montaje-tv-valencia"), isEs ? "Montaje TV" : "TV Mounting", Tv],
+    ...(marketSupports(market, "ac") ? [[marketServiceHref(locale, market, "aire-acondicionado"), isEs ? "Aire" : "AC", Wind] as const] : []),
+    [market === "valencia" ? localizedPath(locale, "handyman-valencia") : `${base}/handyman`, isEs ? "Manitas" : "Handyman", Wrench],
+    [market === "valencia" ? localizedPath(locale, "montaje-tv-valencia") : `${base}/montaje-tv`, isEs ? "Montaje TV" : "TV Mounting", Tv],
     [localizedPath(locale, "guias"), isEs ? "Guías" : "Guides", BookOpen],
   ] as const;
+  const serviceGroups = [
+    { title: isEs ? "Más solicitados" : "Most requested", items: [
+      { href: market === "valencia" ? localizedPath(locale, "handyman-valencia") : `${base}/handyman`, label: isEs ? "Manitas" : "Handyman", description: isEs ? "Reparaciones e instalaciones" : "Repairs and installations", icon: Wrench },
+      { href: market === "valencia" ? localizedPath(locale, "montaje-tv-valencia") : `${base}/montaje-tv`, label: isEs ? "Montaje TV" : "TV mounting", description: isEs ? "Soportes, nivelado y cables" : "Brackets, levelling and cables", icon: Tv },
+      { href: marketServiceHref(locale, market, "furniture"), label: isEs ? "Montaje de muebles" : "Furniture assembly", description: isEs ? "IKEA, armarios y estanterías" : "IKEA, wardrobes and shelving", icon: Sofa },
+    ] },
+    { title: isEs ? "Reparación e instalaciones" : "Repairs & installations", items: [
+      { href: marketServiceHref(locale, market, "electrical"), label: isEs ? "Electricidad" : "Electrical", description: isEs ? "Enchufes e iluminación" : "Sockets and lighting", icon: Zap },
+      { href: marketServiceHref(locale, market, "plumbing"), label: isEs ? "Fontanería" : "Plumbing", description: isEs ? "Grifos y conexiones" : "Taps and connections", icon: Droplets },
+      { href: marketServiceHref(locale, market, "drywall"), label: isEs ? "Paredes y pladur" : "Walls & drywall", description: isEs ? "Reparaciones y acabados" : "Repairs and finishes", icon: PaintRoller },
+    ] },
+    { title: isEs ? "Montaje y vivienda" : "Assembly & home", items: [
+      { href: marketServiceHref(locale, market, "kitchen"), label: isEs ? "Cocinas" : "Kitchens", description: isEs ? "Montaje y ajustes" : "Assembly and adjustments", icon: CookingPot },
+      { href: marketServiceHref(locale, market, "bathroom"), label: isEs ? "Baños" : "Bathrooms", description: isEs ? "Accesorios y sellados" : "Accessories and sealing", icon: Bath },
+      { href: marketServiceHref(locale, market, "exterior"), label: isEs ? "Exterior" : "Exterior", description: isEs ? "Terrazas e instalaciones" : "Terraces and installations", icon: Hammer },
+    ] },
+  ];
   const technical = [
     ["cctv", "CCTV", isEs ? "Cámaras, grabación y acceso remoto" : "Cameras, recording and remote viewing", Camera],
     ["redes", isEs ? "WiFi y Redes" : "WiFi & Networks", isEs ? "WiFi, Ethernet y redes profesionales" : "WiFi, Ethernet and business networks", Network],
@@ -50,19 +67,22 @@ export default function MobileHeaderMenu({ locale }: Props) {
         <div className="mb-4 flex items-center justify-between"><div><p className="text-xs font-black uppercase tracking-[.18em] text-yellow-600">THEVULGO</p><p className="mt-1 text-xl font-black">{isEs ? "¿Qué necesitas?" : "What do you need?"}</p></div><span className="rounded-full bg-yellow-50 px-3 py-1 text-xs font-bold">{city}</span></div>
 
         <nav className="space-y-2" aria-label={isEs ? "Menú móvil" : "Mobile menu"}>
-          <MobileLink href={directLinks[0][0]} label={directLinks[0][1]} Icon={directLinks[0][2]} close={close} />
+          <details className="group rounded-2xl border border-neutral-200">
+            <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 px-4 py-3 font-black"><Wrench className="h-5 w-5 text-yellow-600" /><span>{isEs ? "Servicios" : "Services"}</span><ChevronDown className="ml-auto h-4 w-4 transition group-open:rotate-180" /></summary>
+            <div className="border-t border-neutral-100 p-2">{serviceGroups.map((group) => <div key={group.title} className="mb-2 last:mb-0"><p className="px-3 pb-1 pt-2 text-[10px] font-black uppercase tracking-[.14em] text-neutral-400">{group.title}</p>{group.items.map((item) => <MobileCategoryLink key={item.href} href={item.href} label={item.label} description={item.description} Icon={item.icon} close={close} />)}</div>)}<Link href={marketServiceHref(locale, market)} onClick={close} className="mt-1 flex min-h-12 items-center rounded-xl bg-yellow-400 px-4 text-sm font-black text-black">{isEs ? "Ver todos los servicios" : "View all services"}</Link></div>
+          </details>
 
-          {!cityMarket ? <details className="group rounded-2xl border border-yellow-200 bg-yellow-50/60">
+          {marketSupports(market, "technical") ? <details className="group rounded-2xl border border-yellow-200 bg-yellow-50/60">
             <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 px-4 py-3 font-black"><ShieldCheck className="h-5 w-5 text-yellow-600" /><span>{isEs ? "Seguridad y Redes" : "Security & Networks"}</span><ChevronDown className="ml-auto h-4 w-4 transition group-open:rotate-180" /></summary>
-            <div className="border-t border-yellow-100 p-2">{technical.map(([slug, label, description, Icon]) => <MobileCategoryLink key={slug} href={localizedPath(locale, `services/${slug}`)} label={label} description={description} Icon={Icon} close={close} />)}<Link href={localizedPath(locale, "services/security-networks")} onClick={close} className="mt-1 flex min-h-12 items-center rounded-xl bg-black px-4 text-sm font-black text-white">{isEs ? "Ver todo Seguridad y Redes" : "View all Security & Networks"}</Link></div>
+            <div className="border-t border-yellow-100 p-2">{technical.map(([slug, label, description, Icon]) => <MobileCategoryLink key={slug} href={marketServiceHref(locale, market, slug)} label={label} description={description} Icon={Icon} close={close} />)}<Link href={marketServiceHref(locale, market, "security-networks")} onClick={close} className="mt-1 flex min-h-12 items-center rounded-xl bg-black px-4 text-sm font-black text-white">{isEs ? "Ver todo Seguridad y Redes" : "View all Security & Networks"}</Link></div>
           </details> : null}
 
-          {!cityMarket ? <details className="group rounded-2xl border border-neutral-200">
+          {marketSupports(market, "renovations") ? <details className="group rounded-2xl border border-neutral-200">
             <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 px-4 py-3 font-black"><Hammer className="h-5 w-5 text-yellow-600" /><span>{isEs ? "Reformas" : "Renovations"}</span><ChevronDown className="ml-auto h-4 w-4 transition group-open:rotate-180" /></summary>
             <div className="border-t border-neutral-100 p-2">{renovations.map(({ label, description, slug, icon }) => <MobileCategoryLink key={slug} href={`${renovationBase}/${slug}`} label={label} description={description} Icon={icon} close={close} />)}<Link href={renovationBase} onClick={close} className="mt-1 flex min-h-12 items-center rounded-xl bg-yellow-400 px-4 text-sm font-black text-black">{isEs ? "Ver todas las reformas" : "View all renovations"}</Link></div>
           </details> : null}
 
-          <div className="grid grid-cols-2 gap-2">{directLinks.slice(1).map(([href, label, Icon]) => <MobileLink key={href} href={href} label={label} Icon={Icon} close={close} compact />)}</div>
+          <div className="grid grid-cols-2 gap-2">{directLinks.map(([href, label, Icon]) => <MobileLink key={href} href={href} label={label} Icon={Icon} close={close} compact />)}</div>
         </nav>
 
         <a href={marketWhatsAppHref({ locale, market })} target="_blank" rel="noopener noreferrer" onClick={close} className="mt-4 flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-neutral-950 px-4 py-3 font-black text-white"><MessageCircle className="h-5 w-5 text-yellow-400" />{isEs ? "Escribir por WhatsApp" : "Message on WhatsApp"}</a>

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { guides } from "./[locale]/guias/guides-data";
-import { MADRID_ROUTES } from "@/lib/madridRoutes";
+import { INDEXABLE_CITY_SERVICE_PATHS } from "@/lib/marketRoutes";
+import { MARKET_IDS } from "@/lib/markets";
 import { AC_SEO_PAGES } from "@/lib/acSeoPages";
 import { absoluteUrl } from "@/lib/seo";
 import { RENOVATION_CATEGORIES } from "@/lib/renovationCatalog";
@@ -328,44 +329,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       }
     }
 
-    pages.push({
-      url: absoluteUrl(localizedPath(locale, "madrid")),
-      changeFrequency: "weekly",
-      priority: locale === "es" ? 0.95 : 0.85,
-    });
-
-    addRoutes(
-      pages,
-      locale,
-      MADRID_ROUTES.map((route) => `madrid/${route.path}`),
-      { changeFrequency: "monthly", priority: locale === "es" ? 0.8 : 0.7 },
-    );
-
-    pages.push({
-      url: absoluteUrl(localizedPath(locale, "barcelona")),
-      changeFrequency: "weekly",
-      priority: locale === "es" ? 0.95 : 0.85,
-    });
-
-    addRoutes(
-      pages,
-      locale,
-      MADRID_ROUTES.map((route) => `barcelona/${route.path}`),
-      { changeFrequency: "monthly", priority: locale === "es" ? 0.8 : 0.7 },
-    );
-
-    pages.push({
-      url: absoluteUrl(localizedPath(locale, "alicante")),
-      changeFrequency: "weekly",
-      priority: locale === "es" ? 0.95 : 0.85,
-    });
-
-    addRoutes(
-      pages,
-      locale,
-      MADRID_ROUTES.map((route) => `alicante/${route.path}`),
-      { changeFrequency: "monthly", priority: locale === "es" ? 0.8 : 0.7 },
-    );
+    for (const market of MARKET_IDS.filter((item) => item !== "valencia")) {
+      pages.push({
+        url: absoluteUrl(localizedPath(locale, market)),
+        changeFrequency: "weekly",
+        priority: locale === "es" ? 0.95 : 0.85,
+      });
+      addRoutes(
+        pages,
+        locale,
+        INDEXABLE_CITY_SERVICE_PATHS.map((path) => `${market}/${path}`),
+        { changeFrequency: "monthly", priority: locale === "es" ? 0.8 : 0.7 },
+      );
+    }
 
     /**
      * Category pages
