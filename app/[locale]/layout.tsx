@@ -86,7 +86,7 @@ export default async function LocaleLayout({
 
         <NextIntlClientProvider messages={messages}>
           <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-md">
-            <div className="mx-auto flex w-full max-w-[1600px] items-center gap-3 px-3 py-3 sm:px-5">
+            <div className="mx-auto flex w-full max-w-[1680px] items-center gap-2 px-3 py-3 sm:px-4 2xl:gap-3 2xl:px-5">
               <MarketHomeLink
                 locale={locale}
                 className="flex shrink-0 items-center gap-2 sm:gap-3"
@@ -103,7 +103,7 @@ export default async function LocaleLayout({
 
               <MarketDesktopNav locale={locale} labels={{ services: t("services"), tips: t("tips"), faq: t("faq"), estimate: t("estimate") }} />
 
-              <div className="ml-auto flex shrink-0 items-center justify-end gap-2">
+              <div className="ml-auto flex shrink-0 items-center justify-end gap-1.5 2xl:gap-2">
                 <CitySwitcher locale={locale} />
                 <div>
                   <LanguageSwitcher locale={locale} />
@@ -113,12 +113,12 @@ export default async function LocaleLayout({
 
                 <HeaderEstimateLink
                   locale={locale}
-                  className="hidden h-10 items-center whitespace-nowrap rounded-xl bg-yellow-400 px-3 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:inline-flex sm:h-auto sm:rounded-2xl sm:px-5 sm:py-2.5 sm:text-base"
+                  className="hidden h-10 items-center whitespace-nowrap rounded-xl bg-yellow-400 px-3 text-sm font-bold text-black shadow-sm transition hover:shadow-md sm:inline-flex 2xl:px-5 2xl:text-base"
                 >
                   {t("getEstimate")}
                 </HeaderEstimateLink>
 
-                <MarketWhatsApp locale={locale} label={t("whatsapp")} className="hidden items-center gap-2 whitespace-nowrap rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-black shadow-sm transition hover:scale-[1.02] hover:border-[#25D366]/60 hover:shadow-md sm:inline-flex sm:rounded-2xl sm:px-4 sm:py-2.5 sm:text-base" />
+                <MarketWhatsApp locale={locale} label={t("whatsapp")} className="hidden h-10 items-center gap-2 whitespace-nowrap rounded-xl border border-gray-300 bg-white px-3 text-sm font-semibold text-black shadow-sm transition hover:scale-[1.02] hover:border-[#25D366]/60 hover:shadow-md sm:inline-flex 2xl:px-4 2xl:text-base" />
               </div>
             </div>
           </header>
