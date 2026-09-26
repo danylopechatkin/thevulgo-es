@@ -105,6 +105,8 @@ export default function CitySwitcher({ locale }: { locale: string }) {
                   role="menuitem"
                   onClick={() => {
                     document.cookie = `thevulgo_market=${city.market}; Max-Age=${60 * 60 * 24 * 270}; Path=/; SameSite=Lax`;
+                    document.cookie = `thevulgo_market_source=manual; Max-Age=${60 * 60 * 24 * 270}; Path=/; SameSite=Lax`;
+                    window.dispatchEvent(new Event("thevulgo-market-change"));
                     trackMarketingEvent("cta_click", { source: "city_switcher", ctaId: "header_city_switch", metadata: { action: "city_switch", from_market: market, to_market: city.market, source_path: pathname, target_path: city.href.split("?")[0] } });
                     setOpen(false);
                   }}

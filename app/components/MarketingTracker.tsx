@@ -16,10 +16,11 @@ export default function MarketingTracker() {
     if (pathname.startsWith("/admin") || pathname.startsWith("/worker")) return;
     const startedAt = Date.now();
     const locale = localeFromPath(pathname);
-    const city = marketName(marketFromPath(pathname, locale === "es" ? "es" : "en"));
+    const market = marketFromPath(pathname, locale === "es" ? "es" : "en");
+    const city = marketName(market);
     const milestones = new Set<number>();
     let exited = false;
-    trackMarketingEvent("page_view", { pagePath: pathname, metadata: { city, locale } });
+    trackMarketingEvent("page_view", { pagePath: pathname, metadata: { market, city, locale } });
 
     const onScroll = () => {
       const available = document.documentElement.scrollHeight - window.innerHeight;
@@ -27,7 +28,7 @@ export default function MarketingTracker() {
       const depth = Math.min(100, Math.round((window.scrollY / available) * 100));
       [25, 50, 75, 90].forEach((milestone) => {
         if (depth >= milestone && !milestones.has(milestone)) {
-          milestones.add(milestone); trackMarketingEvent("scroll_depth", { pagePath: pathname, scrollDepth: milestone });
+          milestones.add(milestone); trackMarketingEvent("scroll_depth", { pagePath: pathname, scrollDepth: milestone, metadata: { market, city, locale } });
         }
       });
     };
@@ -49,21 +50,21 @@ export default function MarketingTracker() {
         const attribution = getClientAttribution();
         const payload = JSON.stringify({ clickId, eventId, contactReference, source: placement, service: taxonomy.serviceId,
           serviceCategory: taxonomy.category, pagePath: pathname, messageType: "service_quote", ctaId, ctaPlacement: placement,
-          locale, promoId: target.getAttribute("data-promo-id") || null, ...attribution });
+          locale, market, city, promoId: target.getAttribute("data-promo-id") || null, ...attribution });
         if (navigator.sendBeacon) navigator.sendBeacon("/api/whatsapp-click", new Blob([payload], { type: "application/json" }));
         else void fetch("/api/whatsapp-click", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true });
         if (readConsent()?.advertising) (window as Window & { gtag?: (...args: unknown[]) => void }).gtag?.("event", "conversion", { send_to: WA_ADS_CONVERSION });
         return;
       }
       if (/^tel:/i.test(href)) {
-        trackMarketingEvent("phone_click", { pagePath: pathname, source: placement, service: taxonomy.serviceId, ctaId, ctaPlacement: placement }); return;
+        trackMarketingEvent("phone_click", { pagePath: pathname, source: placement, service: taxonomy.serviceId, ctaId, ctaPlacement: placement, metadata: { market, city, locale } }); return;
       }
       if (/\/estimate(?:\?|$)/i.test(href)) {
-        trackMarketingEvent("estimate_click", { pagePath: pathname, source: placement, service: taxonomy.serviceId, ctaId, ctaPlacement: placement }); return;
+        trackMarketingEvent("estimate_click", { pagePath: pathname, source: placement, service: taxonomy.serviceId, ctaId, ctaPlacement: placement, metadata: { market, city, locale } }); return;
       }
-      if (declaredEvent || explicitCta) trackMarketingEvent(declaredEvent || "cta_click", { pagePath: pathname, source: placement, service: taxonomy.serviceId, ctaId, ctaPlacement: placement });
+      if (declaredEvent || explicitCta) trackMarketingEvent(declaredEvent || "cta_click", { pagePath: pathname, source: placement, service: taxonomy.serviceId, ctaId, ctaPlacement: placement, metadata: { market, city, locale } });
     };
-    const onExit = () => { if (!exited) { exited = true; trackMarketingEvent("page_exit", { pagePath: pathname, durationMs: Date.now() - startedAt, metadata: { city, locale } }); } };
+    const onExit = () => { if (!exited) { exited = true; trackMarketingEvent("page_exit", { pagePath: pathname, durationMs: Date.now() - startedAt, metadata: { market, city, locale } }); } };
     window.addEventListener("scroll", onScroll, { passive: true }); document.addEventListener("click", onClick, true); window.addEventListener("pagehide", onExit, { once: true });
     return () => { onExit(); window.removeEventListener("scroll", onScroll); document.removeEventListener("click", onClick, true); window.removeEventListener("pagehide", onExit); };
   }, [pathname]);

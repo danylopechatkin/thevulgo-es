@@ -232,6 +232,7 @@ export default function AdminClient() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [query, setQuery] = useState("");
+  const [marketFilter, setMarketFilter] = useState("all");
   const [showManual, setShowManual] = useState(false);
   const [saving, setSaving] = useState(false);
   const [manual, setManual] = useState({
@@ -370,8 +371,8 @@ export default function AdminClient() {
     const term = query.trim().toLowerCase();
     return orders.filter(
       (order) =>
-        !term ||
-        [
+        (marketFilter === "all" || order.city.toLowerCase() === marketFilter) &&
+        (!term || [
           order.full_name,
           order.phone,
           order.email,
@@ -382,9 +383,9 @@ export default function AdminClient() {
         ]
           .join(" ")
           .toLowerCase()
-          .includes(term),
+          .includes(term)),
     );
-  }, [orders, query]);
+  }, [marketFilter, orders, query]);
   const metrics = useMemo(
     () => ({
       booked: orders.filter((order) => !["cancelled"].includes(order.status))
@@ -688,12 +689,13 @@ export default function AdminClient() {
                 order history. Tap an order to open its full details.
               </p>
             </div>
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search customer, area, order…"
-              className="w-full rounded-xl border border-gray-300 px-3 py-2 sm:w-72"
-            />
+            <div className="flex w-full gap-2 sm:w-auto">
+              <select value={marketFilter} onChange={(event) => setMarketFilter(event.target.value)} aria-label="Filter orders by city" className="rounded-xl border border-gray-300 bg-white px-3 py-2 font-bold">
+                <option value="all">All cities</option>
+                {['Valencia', 'Madrid', 'Barcelona', 'Alicante'].map((city) => <option key={city} value={city.toLowerCase()}>{city}</option>)}
+              </select>
+              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search customer, area, order…" className="min-w-0 flex-1 rounded-xl border border-gray-300 px-3 py-2 sm:w-72" />
+            </div>
           </div>
           <div className="mt-4 overflow-hidden rounded-2xl border border-gray-200">
             {loading ? (
@@ -1200,6 +1202,7 @@ function OrderPanel({
           ) : (
             <>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                <Info label="Market / city" value={order.city || "—"} />
                 <Info label="Phone" value={order.phone} />
                 <Info label="Email" value={order.email || "—"} />
                 <Info

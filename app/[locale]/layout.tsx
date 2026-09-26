@@ -11,6 +11,7 @@ import MarketHomeLink from "@/app/components/MarketHomeLink";
 import MarketingTracker from "@/app/components/MarketingTracker";
 import AnalyticsConsent from "@/app/components/AnalyticsConsent";
 import AnalyticsDebugPanel from "@/app/components/AnalyticsDebugPanel";
+import MarketSuggestion from "@/app/components/MarketSuggestion";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
@@ -122,6 +123,8 @@ export default async function LocaleLayout({
               </div>
             </div>
           </header>
+
+          <MarketSuggestion locale={locale} />
 
           {children}
 

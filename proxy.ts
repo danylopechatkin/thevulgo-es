@@ -59,13 +59,25 @@ export async function proxy(request: NextRequest) {
       target.pathname = marketBasePath(locale, selectedMarket);
       const response = NextResponse.redirect(target, 307);
       response.headers.set("Cache-Control", "private, no-store");
-      if (!saved) response.cookies.set("thevulgo_market", selectedMarket, { maxAge: 60 * 60 * 24 * 270, sameSite: "lax", path: "/" });
+      if (!saved) {
+        response.cookies.set("thevulgo_market", selectedMarket, { maxAge: 60 * 60 * 24 * 270, sameSite: "lax", path: "/" });
+        response.cookies.set("thevulgo_market_source", "geo", { maxAge: 60 * 60 * 24 * 270, sameSite: "lax", path: "/" });
+      }
       return response;
     }
   }
 
   // ALL public site routes — next-intl
-  return handleI18nRouting(request);
+  const response = handleI18nRouting(request);
+  if (request.method === "GET" && !isCrawler && !request.cookies.get("thevulgo_market")) {
+    const geoMarket = marketFromGeoCity(request.headers.get("x-vercel-ip-city"));
+    if (geoMarket) {
+      response.cookies.set("thevulgo_market", geoMarket, { maxAge: 60 * 60 * 24 * 270, sameSite: "lax", path: "/" });
+      response.cookies.set("thevulgo_market_source", "geo", { maxAge: 60 * 60 * 24 * 270, sameSite: "lax", path: "/" });
+      response.headers.set("Cache-Control", "private, no-store");
+    }
+  }
+  return response;
 }
 
 export const config = {

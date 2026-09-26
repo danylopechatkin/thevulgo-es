@@ -18,6 +18,8 @@ import {
   trackMarketingEvent,
 } from "@/lib/client-attribution";
 import { marketWhatsAppHref } from "@/lib/marketLinks";
+import { marketName } from "@/lib/cities";
+import { useCurrentMarket } from "@/lib/useCurrentMarket";
 
 type TvOption = {
   id: string;
@@ -65,6 +67,8 @@ export default function TvMiniCalculator({
   options: TvOption[];
 }) {
   const es = locale === "es";
+  const { market } = useCurrentMarket(locale);
+  const city = marketName(market);
   const baseOptions = options.filter((option) => option.kind === "base");
   const [baseId, setBaseId] = useState(baseOptions[0]?.id || "");
   const [form, setForm] = useState<FormState>({
@@ -87,8 +91,8 @@ export default function TvMiniCalculator({
   const today = madridToday();
 
   useEffect(() => {
-    trackMarketingEvent("calculator_view", { source: "tv_landing", service: "tv_standard_mount", metadata: { calculator_type: "tv_mini", locale } });
-  }, [locale]);
+    trackMarketingEvent("calculator_view", { source: "tv_landing", service: "tv_standard_mount", metadata: { calculator_type: "tv_mini", locale, market, city } });
+  }, [city, locale, market]);
 
   const selected = baseOptions.filter((option) => option.id === baseId);
   const total = selected.reduce((sum, option) => sum + option.price, 0);
@@ -101,7 +105,7 @@ export default function TvMiniCalculator({
       setLoadingAvailability(true);
       try {
         const response = await fetch(
-          `/api/availability?date=${encodeURIComponent(form.date)}&city=Valencia`,
+          `/api/availability?date=${encodeURIComponent(form.date)}&city=${encodeURIComponent(city)}`,
           { cache: "no-store", signal: controller.signal },
         );
         const body = await response.json();
@@ -120,7 +124,7 @@ export default function TvMiniCalculator({
     };
     void load();
     return () => controller.abort();
-  }, [form.date, es]);
+  }, [city, form.date, es]);
 
   const markStarted = () => {
     if (started.current) return;
@@ -128,7 +132,7 @@ export default function TvMiniCalculator({
     trackMarketingEvent("calculator_started", {
       source: "tv_landing",
       service: "tv_standard_mount",
-      metadata: { calculator_type: "tv_mini", locale },
+      metadata: { calculator_type: "tv_mini", locale, market, city },
     });
   };
   const update = (field: keyof FormState, value: string) => {
@@ -137,7 +141,7 @@ export default function TvMiniCalculator({
       trackMarketingEvent("schedule_completed", {
         source: "tv_landing",
         service: "TV Mounting",
-        metadata: { calculator_type: "tv_mini", locale },
+        metadata: { calculator_type: "tv_mini", locale, market, city },
       });
     }
     setForm((current) => ({
@@ -168,7 +172,7 @@ export default function TvMiniCalculator({
       return;
     }
     setSubmitting(true);
-    trackMarketingEvent("booking_submit_attempt", { source: "tv_landing", service: baseId, metadata: { calculator_type: "tv_mini", locale, current_price: total, quantity: 1 } });
+    trackMarketingEvent("booking_submit_attempt", { source: "tv_landing", service: baseId, metadata: { calculator_type: "tv_mini", locale, market, city, current_price: total, quantity: 1 } });
     try {
       const attribution = getClientAttribution();
       const response = await fetch("/api/send", {
@@ -178,7 +182,8 @@ export default function TvMiniCalculator({
           fullName: form.name.trim(),
           email: form.email.trim(),
           phone: form.phone.trim(),
-          city: "Valencia",
+          city,
+          market,
           area: form.location.trim(),
           houseAddress: form.location.trim(),
           apartmentNumber: "",
@@ -230,7 +235,7 @@ export default function TvMiniCalculator({
       trackMarketingEvent("booking_completed", {
         source: "tv_landing",
         service: baseId,
-        metadata: { calculator_type: "tv_mini", value: total, currency: "EUR", locale },
+        metadata: { calculator_type: "tv_mini", value: total, currency: "EUR", locale, market, city },
       });
       setSubmittedRequest({
         ...form,
@@ -242,7 +247,7 @@ export default function TvMiniCalculator({
         new CustomEvent(TV_BOOKING_SUCCESS_EVENT, { detail: true }),
       );
     } catch (cause) {
-      trackMarketingEvent("booking_submit_failed", { source: "tv_landing", service: baseId, metadata: { calculator_type: "tv_mini", error_type: "api_failure", endpoint: "/api/send", locale } });
+      trackMarketingEvent("booking_submit_failed", { source: "tv_landing", service: baseId, metadata: { calculator_type: "tv_mini", error_type: "api_failure", endpoint: "/api/send", locale, market, city } });
       setError(
         cause instanceof Error &&
           cause.message === "This time is already booked"
@@ -276,7 +281,7 @@ export default function TvMiniCalculator({
 
   const successWhatsAppHref = marketWhatsAppHref({
     locale,
-    market: "valencia",
+    market,
     serviceName: es ? "montaje de TV" : "TV mounting",
   });
 
@@ -322,7 +327,7 @@ export default function TvMiniCalculator({
             </p>
             <p className="flex items-start gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-yellow-600" />
-              <span className="break-words">{submittedRequest.location}, Valencia</span>
+              <span className="break-words">{submittedRequest.location}, {city}</span>
             </p>
           </div>
         </div>

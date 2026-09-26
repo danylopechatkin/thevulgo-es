@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
-import { MADRID_ROUTES } from "../lib/madridRoutes";
+import { SERVICE_INTENT_ROUTES } from "../lib/madridRoutes";
 import { WHATSAPP_NUMBER, marketEstimateHref, marketServiceHref } from "../lib/marketLinks";
 import type { Market } from "../lib/cities";
+import { localizedPath } from "../lib/technicalRoutes";
 
 const baseUrl = process.env.CITY_TEST_BASE_URL || "http://localhost:3000";
 const markets: Array<{ market: Exclude<Market, "valencia">; city: string }> = [
@@ -10,13 +11,13 @@ const markets: Array<{ market: Exclude<Market, "valencia">; city: string }> = [
   { market: "alicante", city: "Alicante" },
 ];
 const locales = ["es", "en"] as const;
-const paths = ["", ...MADRID_ROUTES.map((route) => route.path)];
+const paths = ["", ...SERVICE_INTENT_ROUTES.map((route) => route.path)];
 const failures: string[] = [];
 let checked = 0;
 const results: Array<{ market: string; locale: string; route: string; status: number }> = [];
 
 async function verifyPage(locale: string, market: Exclude<Market, "valencia">, city: string, path: string) {
-  const pathname = `/${locale}/${market}${path ? `/${path}` : ""}`;
+  const pathname = localizedPath(locale, `${market}${path ? `/${path}` : ""}`);
   try {
     const response = await fetch(`${baseUrl}${pathname}`, { redirect: "manual" });
     results.push({ market, locale, route: path || "(root)", status: response.status });
@@ -47,7 +48,7 @@ const invalidPaths = [
 ] as const;
 
 async function verifyInvalidPage({ locale, market, path }: (typeof invalidPaths)[number]) {
-  const pathname = `/${locale}/${market}/${path}`;
+  const pathname = localizedPath(locale, `${market}/${path}`);
   try {
     const response = await fetch(`${baseUrl}${pathname}`, { redirect: "manual" });
     results.push({ market, locale, route: path, status: response.status });

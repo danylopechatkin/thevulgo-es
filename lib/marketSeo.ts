@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { humanizeServicePath, marketName, type Market } from "./cities";
-import { INDEXABLE_CITY_SERVICE_PATHS, MARKET_ROUTE_BY_PATH } from "./marketRoutes";
-import { getMarketConfig } from "./markets";
+import { INDEXABLE_CITY_SERVICE_PATHS, MARKET_ROUTE_BY_PATH, marketCategoryForPath } from "./marketRoutes";
+import { getMarketConfig, marketSupportsCategory } from "./markets";
 import { localizedUrl } from "./technicalRoutes";
 
 export function marketRoutePath(market: Market, servicePath = "") {
@@ -16,8 +16,11 @@ export function marketAlternates(market: Market, servicePath = "") {
   };
 }
 
-export function isKnownMarketServicePath(path: string) {
-  return MARKET_ROUTE_BY_PATH.has(path) || path === "reformas" || path.startsWith("reformas/");
+export function isKnownMarketServicePath(path: string, market?: Market) {
+  const known = MARKET_ROUTE_BY_PATH.has(path) || path === "reformas" || path.startsWith("reformas/");
+  if (!known || !market) return known;
+  const category = marketCategoryForPath(path);
+  return !category || marketSupportsCategory(market, category);
 }
 
 export function isIndexableMarketServicePath(path: string) {
@@ -39,7 +42,8 @@ export function buildMarketMetadata(locale: string, market: Market, servicePath 
     : config.localSeo[isEs ? "es" : "en"];
   const path = marketRoutePath(market, servicePath);
   const url = localizedUrl(locale, path);
-  const index = !servicePath || isIndexableMarketServicePath(servicePath);
+  const category = marketCategoryForPath(servicePath);
+  const index = (!servicePath || isIndexableMarketServicePath(servicePath)) && (!category || marketSupportsCategory(market, category));
 
   return {
     title,

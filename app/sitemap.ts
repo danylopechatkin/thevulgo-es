@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { guides } from "./[locale]/guias/guides-data";
-import { INDEXABLE_CITY_SERVICE_PATHS } from "@/lib/marketRoutes";
-import { MARKET_IDS } from "@/lib/markets";
+import { INDEXABLE_CITY_SERVICE_PATHS, marketCategoryForPath } from "@/lib/marketRoutes";
+import { MARKET_IDS, marketSupportsCategory } from "@/lib/markets";
 import { AC_SEO_PAGES } from "@/lib/acSeoPages";
 import { absoluteUrl } from "@/lib/seo";
 import { RENOVATION_CATEGORIES } from "@/lib/renovationCatalog";
@@ -338,7 +338,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       addRoutes(
         pages,
         locale,
-        INDEXABLE_CITY_SERVICE_PATHS.map((path) => `${market}/${path}`),
+        INDEXABLE_CITY_SERVICE_PATHS.filter((path) => {
+          const category = marketCategoryForPath(path);
+          return !category || marketSupportsCategory(market, category);
+        }).map((path) => `${market}/${path}`),
         { changeFrequency: "monthly", priority: locale === "es" ? 0.8 : 0.7 },
       );
     }

@@ -19,6 +19,8 @@ import {
   trackMarketingEvent,
 } from "@/lib/client-attribution";
 import { marketWhatsAppHref } from "@/lib/marketLinks";
+import { marketName } from "@/lib/cities";
+import { useCurrentMarket } from "@/lib/useCurrentMarket";
 
 type FormState = {
   description: string;
@@ -66,6 +68,8 @@ const MAX_PHOTO_SIZE = 6 * 1024 * 1024;
 
 export default function HandymanQuickRequest({ locale }: { locale: string }) {
   const es = locale === "es";
+  const { market } = useCurrentMarket(locale);
+  const city = marketName(market);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [submittedRequest, setSubmittedRequest] = useState<FormState | null>(null);
   const [photos, setPhotos] = useState<SelectedPhoto[]>([]);
@@ -90,9 +94,9 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
     trackMarketingEvent("calculator_view", {
       source: "handyman_landing",
       service: "handyman_quick_request",
-      metadata: { calculator_type: "handyman_quick_request", locale },
+      metadata: { calculator_type: "handyman_quick_request", locale, market, city },
     });
-  }, [locale]);
+  }, [city, locale, market]);
 
   useEffect(() => {
     if (!form.date) return;
@@ -101,7 +105,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
       setLoadingAvailability(true);
       try {
         const response = await fetch(
-          `/api/availability?date=${encodeURIComponent(form.date)}&city=Valencia`,
+          `/api/availability?date=${encodeURIComponent(form.date)}&city=${encodeURIComponent(city)}`,
           { cache: "no-store", signal: controller.signal },
         );
         const body = await response.json();
@@ -121,7 +125,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
     };
     void load();
     return () => controller.abort();
-  }, [form.date, es]);
+  }, [city, form.date, es]);
 
   const markStarted = () => {
     if (started.current) return;
@@ -129,7 +133,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
     trackMarketingEvent("calculator_started", {
       source: "handyman_landing",
       service: "handyman_quick_request",
-      metadata: { calculator_type: "handyman_quick_request", locale },
+      metadata: { calculator_type: "handyman_quick_request", locale, market, city },
     });
   };
 
@@ -168,7 +172,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
     trackMarketingEvent("booking_submit_attempt", {
       source: "handyman_landing",
       service: "handyman_quick_request",
-      metadata: { calculator_type: "handyman_quick_request", locale },
+      metadata: { calculator_type: "handyman_quick_request", locale, market, city },
     });
 
     try {
@@ -177,7 +181,8 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
         fullName: form.name.trim(),
         email: form.email.trim(),
         phone: form.phone.trim(),
-        city: "Valencia",
+        city,
+        market,
         area: "",
         houseAddress: form.location.trim(),
         apartmentNumber: "",
@@ -243,7 +248,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
       trackMarketingEvent("booking_completed", {
         source: "handyman_landing",
         service: "handyman_quick_request",
-        metadata: { calculator_type: "handyman_quick_request", locale },
+        metadata: { calculator_type: "handyman_quick_request", locale, market, city },
       });
     } catch (cause) {
       trackMarketingEvent("booking_submit_failed", {
@@ -278,7 +283,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
     : "";
   const whatsappHref = marketWhatsAppHref({
     locale,
-    market: "valencia",
+    market,
     serviceName: es ? "un servicio de manitas" : "a handyman service",
   });
   const availableTimes = TIMES.filter((time) => !bookedTimes.includes(time));
@@ -321,7 +326,7 @@ export default function HandymanQuickRequest({ locale }: { locale: string }) {
             </p>
             <p className="flex items-start gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-yellow-600" />
-              <span className="break-words">{submittedRequest.location}, Valencia</span>
+              <span className="break-words">{submittedRequest.location}, {city}</span>
             </p>
           </div>
         </div>

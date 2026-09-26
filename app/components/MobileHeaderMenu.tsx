@@ -8,7 +8,7 @@ import { marketWhatsAppHref } from "@/lib/marketLinks";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
 import { localizedPath } from "@/lib/technicalRoutes";
 import { marketServiceHref } from "@/lib/marketLinks";
-import { marketSupports } from "@/lib/markets";
+import { marketSupports, marketSupportsCategory } from "@/lib/markets";
 
 type Props = { locale: "es" | "en" };
 
@@ -22,25 +22,25 @@ export default function MobileHeaderMenu({ locale }: Props) {
   const renovationBase = market === "valencia" ? localizedPath(locale, isEs ? "reformas-valencia" : "renovations-valencia") : `${base}/reformas`;
   const directLinks = [
     ...(marketSupports(market, "ac") ? [[marketServiceHref(locale, market, "aire-acondicionado"), isEs ? "Aire" : "AC", Wind] as const] : []),
-    [market === "valencia" ? localizedPath(locale, "handyman-valencia") : `${base}/handyman`, isEs ? "Manitas" : "Handyman", Wrench],
-    [market === "valencia" ? localizedPath(locale, "montaje-tv-valencia") : `${base}/montaje-tv`, isEs ? "Montaje TV" : "TV Mounting", Tv],
+    ...(marketSupportsCategory(market, "handyman") ? [[market === "valencia" ? localizedPath(locale, "handyman-valencia") : `${base}/handyman`, isEs ? "Manitas" : "Handyman", Wrench] as const] : []),
+    ...(marketSupportsCategory(market, "tv-mounting") ? [[market === "valencia" ? localizedPath(locale, "montaje-tv-valencia") : `${base}/montaje-tv`, isEs ? "Montaje TV" : "TV Mounting", Tv] as const] : []),
     [localizedPath(locale, "guias"), isEs ? "Guías" : "Guides", BookOpen],
   ] as const;
   const serviceGroups = [
     { title: isEs ? "Más solicitados" : "Most requested", items: [
-      { href: market === "valencia" ? localizedPath(locale, "handyman-valencia") : `${base}/handyman`, label: isEs ? "Manitas" : "Handyman", description: isEs ? "Reparaciones e instalaciones" : "Repairs and installations", icon: Wrench },
-      { href: market === "valencia" ? localizedPath(locale, "montaje-tv-valencia") : `${base}/montaje-tv`, label: isEs ? "Montaje TV" : "TV mounting", description: isEs ? "Soportes, nivelado y cables" : "Brackets, levelling and cables", icon: Tv },
-      { href: marketServiceHref(locale, market, "furniture"), label: isEs ? "Montaje de muebles" : "Furniture assembly", description: isEs ? "IKEA, armarios y estanterías" : "IKEA, wardrobes and shelving", icon: Sofa },
+      { category: "handyman", href: market === "valencia" ? localizedPath(locale, "handyman-valencia") : `${base}/handyman`, label: isEs ? "Manitas" : "Handyman", description: isEs ? "Reparaciones e instalaciones" : "Repairs and installations", icon: Wrench },
+      { category: "tv-mounting", href: market === "valencia" ? localizedPath(locale, "montaje-tv-valencia") : `${base}/montaje-tv`, label: isEs ? "Montaje TV" : "TV mounting", description: isEs ? "Soportes, nivelado y cables" : "Brackets, levelling and cables", icon: Tv },
+      { category: "furniture", href: marketServiceHref(locale, market, "furniture"), label: isEs ? "Montaje de muebles" : "Furniture assembly", description: isEs ? "IKEA, armarios y estanterías" : "IKEA, wardrobes and shelving", icon: Sofa },
     ] },
     { title: isEs ? "Reparación e instalaciones" : "Repairs & installations", items: [
-      { href: marketServiceHref(locale, market, "electrical"), label: isEs ? "Electricidad" : "Electrical", description: isEs ? "Enchufes e iluminación" : "Sockets and lighting", icon: Zap },
-      { href: marketServiceHref(locale, market, "plumbing"), label: isEs ? "Fontanería" : "Plumbing", description: isEs ? "Grifos y conexiones" : "Taps and connections", icon: Droplets },
-      { href: marketServiceHref(locale, market, "drywall"), label: isEs ? "Paredes y pladur" : "Walls & drywall", description: isEs ? "Reparaciones y acabados" : "Repairs and finishes", icon: PaintRoller },
+      { category: "electrical", href: marketServiceHref(locale, market, "electrical"), label: isEs ? "Electricidad" : "Electrical", description: isEs ? "Enchufes e iluminación" : "Sockets and lighting", icon: Zap },
+      { category: "plumbing", href: marketServiceHref(locale, market, "plumbing"), label: isEs ? "Fontanería" : "Plumbing", description: isEs ? "Grifos y conexiones" : "Taps and connections", icon: Droplets },
+      { category: "drywall", href: marketServiceHref(locale, market, "drywall"), label: isEs ? "Paredes y pladur" : "Walls & drywall", description: isEs ? "Reparaciones y acabados" : "Repairs and finishes", icon: PaintRoller },
     ] },
     { title: isEs ? "Montaje y vivienda" : "Assembly & home", items: [
-      { href: marketServiceHref(locale, market, "kitchen"), label: isEs ? "Cocinas" : "Kitchens", description: isEs ? "Montaje y ajustes" : "Assembly and adjustments", icon: CookingPot },
-      { href: marketServiceHref(locale, market, "bathroom"), label: isEs ? "Baños" : "Bathrooms", description: isEs ? "Accesorios y sellados" : "Accessories and sealing", icon: Bath },
-      { href: marketServiceHref(locale, market, "exterior"), label: isEs ? "Exterior" : "Exterior", description: isEs ? "Terrazas e instalaciones" : "Terraces and installations", icon: Hammer },
+      { category: "kitchen", href: marketServiceHref(locale, market, "kitchen"), label: isEs ? "Cocinas" : "Kitchens", description: isEs ? "Montaje y ajustes" : "Assembly and adjustments", icon: CookingPot },
+      { category: "bathroom", href: marketServiceHref(locale, market, "bathroom"), label: isEs ? "Baños" : "Bathrooms", description: isEs ? "Accesorios y sellados" : "Accessories and sealing", icon: Bath },
+      { category: "exterior", href: marketServiceHref(locale, market, "exterior"), label: isEs ? "Exterior" : "Exterior", description: isEs ? "Terrazas e instalaciones" : "Terraces and installations", icon: Hammer },
     ] },
   ];
   const technical = [
@@ -69,12 +69,12 @@ export default function MobileHeaderMenu({ locale }: Props) {
         <nav className="space-y-2" aria-label={isEs ? "Menú móvil" : "Mobile menu"}>
           <details className="group rounded-2xl border border-neutral-200">
             <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 px-4 py-3 font-black"><Wrench className="h-5 w-5 text-yellow-600" /><span>{isEs ? "Servicios" : "Services"}</span><ChevronDown className="ml-auto h-4 w-4 transition group-open:rotate-180" /></summary>
-            <div className="border-t border-neutral-100 p-2">{serviceGroups.map((group) => <div key={group.title} className="mb-2 last:mb-0"><p className="px-3 pb-1 pt-2 text-[10px] font-black uppercase tracking-[.14em] text-neutral-400">{group.title}</p>{group.items.map((item) => <MobileCategoryLink key={item.href} href={item.href} label={item.label} description={item.description} Icon={item.icon} close={close} />)}</div>)}<Link href={marketServiceHref(locale, market)} onClick={close} className="mt-1 flex min-h-12 items-center rounded-xl bg-yellow-400 px-4 text-sm font-black text-black">{isEs ? "Ver todos los servicios" : "View all services"}</Link></div>
+            <div className="border-t border-neutral-100 p-2">{serviceGroups.map((group) => <div key={group.title} className="mb-2 last:mb-0"><p className="px-3 pb-1 pt-2 text-[10px] font-black uppercase tracking-[.14em] text-neutral-400">{group.title}</p>{group.items.filter((item) => marketSupportsCategory(market, item.category)).map((item) => <MobileCategoryLink key={item.href} href={item.href} label={item.label} description={item.description} Icon={item.icon} close={close} />)}</div>)}<Link href={marketServiceHref(locale, market)} onClick={close} className="mt-1 flex min-h-12 items-center rounded-xl bg-yellow-400 px-4 text-sm font-black text-black">{isEs ? "Ver todos los servicios" : "View all services"}</Link></div>
           </details>
 
           {marketSupports(market, "technical") ? <details className="group rounded-2xl border border-yellow-200 bg-yellow-50/60">
             <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 px-4 py-3 font-black"><ShieldCheck className="h-5 w-5 text-yellow-600" /><span>{isEs ? "Seguridad y Redes" : "Security & Networks"}</span><ChevronDown className="ml-auto h-4 w-4 transition group-open:rotate-180" /></summary>
-            <div className="border-t border-yellow-100 p-2">{technical.map(([slug, label, description, Icon]) => <MobileCategoryLink key={slug} href={marketServiceHref(locale, market, slug)} label={label} description={description} Icon={Icon} close={close} />)}<Link href={marketServiceHref(locale, market, "security-networks")} onClick={close} className="mt-1 flex min-h-12 items-center rounded-xl bg-black px-4 text-sm font-black text-white">{isEs ? "Ver todo Seguridad y Redes" : "View all Security & Networks"}</Link></div>
+            <div className="border-t border-yellow-100 p-2">{technical.filter(([slug]) => marketSupportsCategory(market, slug === "redes" ? "networking" : slug === "control-de-acceso" ? "access-control" : slug === "seguridad-comercial" ? "commercial" : slug)).map(([slug, label, description, Icon]) => <MobileCategoryLink key={slug} href={marketServiceHref(locale, market, slug)} label={label} description={description} Icon={Icon} close={close} />)}<Link href={marketServiceHref(locale, market, "security-networks")} onClick={close} className="mt-1 flex min-h-12 items-center rounded-xl bg-black px-4 text-sm font-black text-white">{isEs ? "Ver todo Seguridad y Redes" : "View all Security & Networks"}</Link></div>
           </details> : null}
 
           {marketSupports(market, "renovations") ? <details className="group rounded-2xl border border-neutral-200">

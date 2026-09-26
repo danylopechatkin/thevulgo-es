@@ -28,7 +28,7 @@ import { marketBasePath, type Market } from "@/lib/cities";
 import { getCatalogServices } from "@/lib/serviceCatalog";
 import { acDeepCleaningPromotion } from "@/lib/acPromotion";
 import { localizedPath } from "@/lib/technicalRoutes";
-import { getMarketConfig, marketSupports } from "@/lib/markets";
+import { getMarketConfig, marketPrice, marketSupports, marketSupportsCategory } from "@/lib/markets";
 import { marketServiceHref } from "@/lib/marketLinks";
 
 type Props = { locale?: string; city?: string; market?: Market };
@@ -43,17 +43,10 @@ export default function HomeClient({
   const es = locale === "es";
   const base = marketBasePath(locale, market);
   const marketConfig = getMarketConfig(market);
-  const price = (category: string, fallback: number) =>
-    getCatalogServices(category)[0]?.price ?? fallback;
+  const price = (category: string, serviceId: string, fallback: number) =>
+    marketPrice(market, serviceId, getCatalogServices(category)[0]?.price ?? fallback);
   const generalWa = buildWhatsAppHref("general", locale, city);
-  const cards: Array<{
-    icon: typeof Tv;
-    service: CommercialService;
-    title: string;
-    text: string;
-    price: number;
-    href: string;
-  }> = [
+  const cards = ([
     {
       icon: Tv,
       service: "tv",
@@ -61,7 +54,7 @@ export default function HomeClient({
       text: es
         ? "Soporte, nivelado y cables bien resueltos."
         : "Secure bracket, clean levelling and tidy cables.",
-      price: price("TV Mounting", 59),
+      price: price("TV Mounting", "tv-mounting", 59),
       href: market === "valencia" ? localizedPath(locale, "montaje-tv-valencia") : `${base}/montaje-tv`,
     },
     {
@@ -71,7 +64,7 @@ export default function HomeClient({
       text: es
         ? "Una visita para esa lista que llevas aplazando."
         : "One visit for the jobs you have been putting off.",
-      price: price("Handyman", 35),
+      price: price("Handyman", "handyman", 35),
       href: market === "valencia" ? localizedPath(locale, "handyman-valencia") : `${base}/handyman`,
     },
     {
@@ -81,7 +74,7 @@ export default function HomeClient({
       text: es
         ? "IKEA y otras marcas, montado correctamente."
         : "IKEA and other brands, assembled correctly.",
-      price: price("Furniture Assembly", 49),
+      price: price("Furniture Assembly", "furniture", 49),
       href: market === "valencia" ? localizedPath(locale, "montaje-muebles-valencia") : `${base}/montaje-muebles`,
     },
     {
@@ -91,10 +84,17 @@ export default function HomeClient({
       text: es
         ? "Puertas, bisagras, sellados, paredes y pequeños daños."
         : "Doors, hinges, sealing, walls and everyday damage.",
-      price: price("Repairs", 35),
+      price: price("Repairs", "repairs", 35),
       href: marketServiceHref(locale, market, "repairs"),
     },
-  ];
+  ] satisfies Array<{
+    icon: typeof Tv;
+    service: CommercialService;
+    title: string;
+    text: string;
+    price: number;
+    href: string;
+  }>).filter((card) => marketSupportsCategory(market, card.service === "tv" ? "tv-mounting" : card.service));
   const secondary = es
     ? [
         "Cortinas y estores",
@@ -118,7 +118,7 @@ export default function HomeClient({
       <section className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_20%,#fff4b8_0,transparent_38%)]">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-[1.1fr_.9fr] md:px-8 md:py-24">
           <div>
-            <AvailabilityBadge locale={locale} />
+            {marketConfig.availabilityClaim ? <AvailabilityBadge locale={locale} /> : null}
             <p className="mt-6 text-sm font-black uppercase tracking-[.18em] text-neutral-500">
               THEVULGO · {city}
             </p>

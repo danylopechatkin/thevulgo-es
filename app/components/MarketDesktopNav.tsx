@@ -8,7 +8,7 @@ import { marketBasePath, marketName } from "@/lib/cities";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
 import { localizedPath } from "@/lib/technicalRoutes";
 import { marketEstimateHref, marketServiceHref } from "@/lib/marketLinks";
-import { marketSupports } from "@/lib/markets";
+import { marketSupports, marketSupportsCategory } from "@/lib/markets";
 
 type NavLabels = { services: string; tips: string; faq: string; estimate: string };
 type MegaMenuItem = { id: string; href: string; title: string; description: string; icon: LucideIcon };
@@ -41,7 +41,7 @@ export default function MarketDesktopNav({ locale, labels }: { locale: string; l
     { id: "drywall", title: isEs ? "Paredes y pladur" : "Walls & drywall", description: isEs ? "Reparaciones, agujeros, pladur y acabados" : "Repairs, holes, drywall and finishes", href: homeServicePath("services/drywall"), icon: PaintRoller },
     { id: "bathroom", title: isEs ? "Baños" : "Bathrooms", description: isEs ? "Sanitarios, accesorios, silicona y montaje" : "Sanitary fittings, accessories, silicone and assembly", href: homeServicePath("services/bathroom"), icon: Bath },
     { id: "exterior", title: isEs ? "Exterior" : "Exterior", description: isEs ? "Terrazas, exterior y pequeñas instalaciones" : "Terraces, outdoor areas and small installations", href: homeServicePath("services/exterior"), icon: Fence },
-  ] satisfies MegaMenuItem[];
+  ].filter((item) => marketSupportsCategory(market, item.id === "tv" ? "tv-mounting" : item.id)) satisfies MegaMenuItem[];
   const technical = [
     { id: "cctv", href: marketServiceHref(locale, market, "cctv"), title: "CCTV", description: isEs ? "Cámaras, NVR/DVR y acceso remoto" : "Cameras, NVR/DVR and remote viewing", icon: Camera },
     { id: "networking", href: marketServiceHref(locale, market, "redes"), title: isEs ? "WiFi y Redes" : "WiFi & Networks", description: isEs ? "WiFi, Ethernet, RJ45, UniFi y redes profesionales" : "WiFi, Ethernet, RJ45, UniFi and business networks", icon: Network },
@@ -50,7 +50,7 @@ export default function MarketDesktopNav({ locale, labels }: { locale: string; l
     { id: "intercom", href: marketServiceHref(locale, market, "intercom"), title: isEs ? "Videoporteros" : "Intercoms", description: isEs ? "Audio, vídeo, IP y apertura de puerta" : "Audio, video, IP and door release", icon: Radio },
     { id: "alarms", href: marketServiceHref(locale, market, "alarmas"), title: isEs ? "Alarmas Autónomas" : "Standalone Alarms", description: isEs ? "Sensores, sirenas y sistemas autogestionados" : "Sensors, sirens and self-managed systems", icon: Siren },
     { id: "commercial", href: marketServiceHref(locale, market, "seguridad-comercial"), title: isEs ? "Sistemas para Negocios" : "Business Systems", description: isEs ? "Proyectos combinados para locales y oficinas" : "Combined projects for premises and offices", icon: ShieldCheck },
-  ] satisfies MegaMenuItem[];
+  ].filter((item) => marketSupportsCategory(market, item.id === "access" ? "access-control" : item.id === "commercial" ? "commercial" : item.id)) satisfies MegaMenuItem[];
   const renovations = [
     { slug: isEs ? "electricidad" : "electrical", title: isEs ? "Electricidad" : "Electrical", description: isEs ? "Instalaciones, puntos eléctricos y mejoras" : "Installations, electrical points and upgrades", icon: Zap },
     { slug: isEs ? "iluminacion" : "lighting", title: isEs ? "Iluminación" : "Lighting", description: isEs ? "Lámparas, focos y soluciones de iluminación" : "Lights, spotlights and lighting solutions", icon: Lightbulb },
@@ -80,8 +80,8 @@ export default function MarketDesktopNav({ locale, labels }: { locale: string; l
     </Dropdown> : null}
 
     {marketSupports(market, "ac") ? <Link href={acHref} className={`${navItem} ${isActive(acHref) ? activeItem : ""}`}><Wind className="h-4 w-4 text-yellow-600" />{isEs ? "Aire" : "AC"}</Link> : null}
-    <Link href={handymanHref} className={`${navItem} ${isActive(handymanHref) ? activeItem : ""}`}><Wrench className="h-4 w-4 text-yellow-600" />{isEs ? "Manitas" : "Handyman"}</Link>
-    <Link href={tvHref} className={`${navItem} ${isActive(tvHref) ? activeItem : ""}`}><Tv className="h-4 w-4 text-yellow-600" />{isEs ? "Montaje TV" : "TV Mounting"}</Link>
+    {marketSupportsCategory(market, "handyman") ? <Link href={handymanHref} className={`${navItem} ${isActive(handymanHref) ? activeItem : ""}`}><Wrench className="h-4 w-4 text-yellow-600" />{isEs ? "Manitas" : "Handyman"}</Link> : null}
+    {marketSupportsCategory(market, "tv-mounting") ? <Link href={tvHref} className={`${navItem} ${isActive(tvHref) ? activeItem : ""}`}><Tv className="h-4 w-4 text-yellow-600" />{isEs ? "Montaje TV" : "TV Mounting"}</Link> : null}
   </nav>;
 }
 

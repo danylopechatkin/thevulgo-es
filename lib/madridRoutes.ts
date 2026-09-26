@@ -192,6 +192,8 @@ export const MADRID_ROUTES: readonly MadridRoute[] = [
   { path: "techos-pladur", source: "techos-pladur-valencia" },
 ] as const;
 
+// Generic cross-market intent registry. The legacy export remains for historical tests and imports.
+export const SERVICE_INTENT_ROUTES = MADRID_ROUTES;
+
 export const MADRID_ROUTE_BY_PATH = new Map(MADRID_ROUTES.map((route) => [route.path, route]));
 export const MADRID_ROUTE_BY_SOURCE = new Map(MADRID_ROUTES.map((route) => [route.source, route]));
-

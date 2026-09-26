@@ -38,7 +38,7 @@ import {
   Building2,
 } from "lucide-react";
 import { AVAILABLE_CITIES, marketFromCity } from "@/lib/cities";
-import { getMarketConfig, MARKET_IDS, type Market } from "@/lib/markets";
+import { getMarketConfig, marketPrice, marketSupportsCategory, marketSupportsService, MARKET_IDS, type Market } from "@/lib/markets";
 import {
   getClientAttribution,
   trackMarketingEvent,
@@ -415,9 +415,10 @@ function EstimatePageContent() {
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
   const [availabilityError, setAvailabilityError] = useState("");
   const analyticsStarted = useRef(false);
+  const enabledCategoryKeys = CATEGORY_KEYS.filter((key) => marketSupportsCategory(initialMarket, key));
   const orderedCategoryKeys = [
     category,
-    ...CATEGORY_KEYS.filter((key) => key !== category),
+    ...enabledCategoryKeys.filter((key) => key !== category),
   ];
 
   const [client, setClient] = useState({
@@ -529,7 +530,7 @@ function EstimatePageContent() {
       const serviceExists =
         requestedService &&
         CATEGORY_DATA[raw].services.some(
-          (service) => service.id === requestedService,
+          (service) => service.id === requestedService && marketSupportsService(initialMarket, service.id),
         );
       const technicalFallback = [
         "networking",
@@ -561,13 +562,15 @@ function EstimatePageContent() {
         initialService ? { [initialService]: requestedQuantity } : {},
       );
     }
-  }, [searchParams]);
+  }, [initialMarket, searchParams]);
 
   const currentCategory = CATEGORY_DATA[category];
   const categoryTitle = isEs ? currentCategory.titleEs : currentCategory.title;
+  const currentMarket = marketFromCity(client.city);
+  const availableServices = useMemo(() => currentCategory.services.filter((service) => marketSupportsService(currentMarket, service.id)), [currentCategory.services, currentMarket]);
 
   const selectedServices = useMemo(() => {
-    return currentCategory.services
+    return availableServices
       .filter((service) => (quantities[service.id] || 0) > 0)
       .map((service) => {
         const qty = quantities[service.id] || 0;
@@ -575,11 +578,12 @@ function EstimatePageContent() {
           ...service,
           displayLabel: isEs ? service.labelEs : service.label,
           displayBadge: isEs ? service.badgeEs || service.badge : service.badge,
+          price: marketPrice(marketFromCity(client.city), service.id, service.price),
           qty,
-          subtotal: qty * service.price,
+          subtotal: qty * marketPrice(marketFromCity(client.city), service.id, service.price),
         };
       });
-  }, [currentCategory.services, quantities, isEs]);
+  }, [availableServices, client.city, quantities, isEs]);
 
   const estimatedTotal = useMemo(
     () => calculatePublicTotal(selectedServices),
@@ -624,7 +628,7 @@ function EstimatePageContent() {
 
   const setQty = (id: string, value: number) => {
     markCalculatorStarted();
-    trackMarketingEvent(value > 0 ? "quantity_changed" : "service_selected", { source: "estimate", service: id, metadata: { calculator_type: "main", category, quantity: Math.max(0, value), current_price: total } });
+    trackMarketingEvent(value > 0 ? "quantity_changed" : "service_selected", { source: "estimate", service: id, metadata: { calculator_type: "main", category, quantity: Math.max(0, value), current_price: total, market: marketFromCity(displayCity), city: displayCity, locale } });
     if (value > 0 && (quantities[id] || 0) === 0) {
       setTechnicalProjectDetails(null);
       setTechnicalConfiguratorComplete(false);
@@ -903,7 +907,7 @@ function EstimatePageContent() {
     setHasTriedNext(true);
     if (shouldUseDeepConfigurator && !technicalConfiguratorComplete) return;
     if (!validateEstimateForm()) return;
-    const common = { calculator_type: "main", category, locale, current_price: total, quantity: selectedServices.reduce((sum, item) => sum + item.qty, 0), extras_count: Math.max(0, selectedServices.length - 1), city: displayCity, area: client.area };
+    const common = { calculator_type: "main", category, locale, market: marketFromCity(displayCity), current_price: total, quantity: selectedServices.reduce((sum, item) => sum + item.qty, 0), extras_count: Math.max(0, selectedServices.length - 1), city: displayCity, area: client.area };
     trackMarketingEvent("details_completed", { source: "estimate", service: selectedServices[0]?.id, metadata: common });
     trackMarketingEvent("location_completed", { source: "estimate", service: selectedServices[0]?.id, metadata: common });
     trackMarketingEvent("schedule_completed", { source: "estimate", service: selectedServices[0]?.id, metadata: common });
@@ -923,7 +927,7 @@ function EstimatePageContent() {
       setSendError("");
 
       const attribution = getClientAttribution();
-      trackMarketingEvent("booking_submit_attempt", { source: "estimate", service: selectedServices[0]?.id, metadata: { calculator_type: "main", category, locale, current_price: total } });
+      trackMarketingEvent("booking_submit_attempt", { source: "estimate", service: selectedServices[0]?.id, metadata: { calculator_type: "main", category, locale, market: marketFromCity(displayCity), city: displayCity, current_price: total } });
       const payload = {
         fullName: client.fullName,
         email: client.email,
@@ -1008,7 +1012,7 @@ function EstimatePageContent() {
       trackMarketingEvent("booking_completed", {
         source: "calculator",
         service: selectedServices[0]?.id || categoryTitle,
-        metadata: { calculator_type: "main", category, city: displayCity, locale, value: total, currency: "EUR" },
+        metadata: { calculator_type: "main", category, market: marketFromCity(displayCity), city: displayCity, locale, value: total, currency: "EUR" },
       });
       const acCleaning = selectedServices.find(
         (service) => service.id === AC_DEEP_CLEANING_SERVICE_ID,
@@ -1028,7 +1032,7 @@ function EstimatePageContent() {
       }
     } catch (error) {
       console.error("SEND REQUEST ERROR:", error);
-      trackMarketingEvent("booking_submit_failed", { source: "estimate", service: selectedServices[0]?.id, metadata: { calculator_type: "main", error_type: "api_failure", endpoint: "/api/send", locale } });
+      trackMarketingEvent("booking_submit_failed", { source: "estimate", service: selectedServices[0]?.id, metadata: { calculator_type: "main", error_type: "api_failure", endpoint: "/api/send", locale, market: marketFromCity(displayCity), city: displayCity } });
       setSendError(t("errors.sendError"));
     } finally {
       setIsSending(false);
@@ -1097,7 +1101,7 @@ function EstimatePageContent() {
                             type="button"
                             onClick={() => {
                               markCalculatorStarted();
-                              trackMarketingEvent("category_selected", { source: "estimate", service: key, metadata: { calculator_type: "main", category: key, locale } });
+                              trackMarketingEvent("category_selected", { source: "estimate", service: key, metadata: { calculator_type: "main", category: key, locale, market: marketFromCity(displayCity), city: displayCity } });
                               setCategory(key);
                               setServiceSelectionTouched(true);
                               setQuantities({});
@@ -1144,7 +1148,7 @@ function EstimatePageContent() {
                           type="button"
                           onClick={() => {
                             markCalculatorStarted();
-                            trackMarketingEvent("category_selected", { source: "estimate", service: key, metadata: { calculator_type: "main", category: key, locale } });
+                            trackMarketingEvent("category_selected", { source: "estimate", service: key, metadata: { calculator_type: "main", category: key, locale, market: marketFromCity(displayCity), city: displayCity } });
                             setCategory(key);
                             setServiceSelectionTouched(true);
                             setQuantities({});
@@ -1211,7 +1215,7 @@ function EstimatePageContent() {
                 </div>
 
                 <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
-                  {currentCategory.services.map((service) => {
+                  {availableServices.map((service) => {
                     const qty = quantities[service.id] || 0;
                     const serviceLabel = isEs ? service.labelEs : service.label;
                     const serviceBadge = isEs
@@ -1919,7 +1923,7 @@ function EstimatePageContent() {
 
                     {effectiveTechnicalDetails ? (
                       <a
-                        href={technicalProjectWhatsAppHref(effectiveTechnicalDetails, locale)}
+                        href={technicalProjectWhatsAppHref(effectiveTechnicalDetails, locale, marketFromCity(displayCity))}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-yellow-400 px-5 py-4 text-sm font-black text-black shadow-md"

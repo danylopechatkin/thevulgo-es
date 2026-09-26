@@ -7,14 +7,14 @@ import MadridLanding from "../MadridLanding";
 type Props = { params: Promise<{ locale: string; slug: string[] }> };
 export function generateStaticParams() {
   return ["es", "en"].flatMap((locale) =>
-    INDEXABLE_CITY_SERVICE_PATHS.map((path) => ({ locale, slug: path.split("/") }))
+    INDEXABLE_CITY_SERVICE_PATHS.filter((path) => isKnownMarketServicePath(path, "madrid")).map((path) => ({ locale, slug: path.split("/") }))
   );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params; const path = slug.join("/");
-  if (!isKnownMarketServicePath(path)) return {};
+  if (!isKnownMarketServicePath(path, "madrid")) return {};
   return buildMarketMetadata(locale, "madrid", path);
 }
 
-export default async function MadridServicePage({ params }: Props) { const { locale, slug } = await params; const path = slug.join("/"); if (!isKnownMarketServicePath(path)) notFound(); return <MadridLanding locale={locale} servicePath={path} />; }
+export default async function MadridServicePage({ params }: Props) { const { locale, slug } = await params; const path = slug.join("/"); if (!isKnownMarketServicePath(path, "madrid")) notFound(); return <MadridLanding locale={locale} servicePath={path} />; }

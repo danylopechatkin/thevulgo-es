@@ -8,13 +8,11 @@ import {
   Clock3,
   Lightbulb,
   MapPin,
-  MessageCircle,
-  ShieldCheck,
   TriangleAlert,
 } from "lucide-react";
 import { getGuide, guides, textFor } from "../guides-data";
 import { localizedPath, localizedUrl } from "@/lib/technicalRoutes";
-import { WHATSAPP_NUMBER } from "@/lib/marketLinks";
+import MarketGuideCta from "@/app/components/MarketGuideCta";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -70,11 +68,6 @@ export default async function GuideArticlePage({ params }: Props) {
   const related = guides
     .filter((item) => item.slug !== guide.slug && textFor(item.category, locale) === category)
     .slice(0, 3);
-  const whatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    isEs
-      ? `Hola, he leído la guía “${title}” y necesito presupuesto en Valencia.`
-      : `Hello, I read “${title}” and need a quote in Valencia.`
-  )}`;
 
   const faq = [
     {
@@ -84,10 +77,10 @@ export default async function GuideArticlePage({ params }: Props) {
         : "Yes. Send photos, approximate measurements, quantity and the product reference. If a hidden difficulty appears, it is confirmed before continuing.",
     },
     {
-      q: isEs ? "¿Trabajáis en Valencia y alrededores?" : "Do you work in Valencia and nearby areas?",
+      q: isEs ? "¿En qué ciudades trabajáis?" : "Which cities do you serve?",
       a: isEs
-        ? "Sí. Atendemos Valencia y localidades cercanas según disponibilidad y tipo de trabajo."
-        : "Yes. We serve Valencia and nearby towns depending on availability and the type of job.",
+        ? "Trabajamos en Valencia, Madrid, Barcelona y Alicante. La cobertura se confirma según la dirección y el tipo de trabajo."
+        : "We serve Valencia, Madrid, Barcelona and Alicante. Coverage is confirmed according to the address and type of job.",
     },
   ];
 
@@ -140,7 +133,7 @@ export default async function GuideArticlePage({ params }: Props) {
               <div className="mt-8 flex flex-wrap items-center gap-3 text-sm font-bold">
                 <span className="rounded-full bg-yellow-400 px-4 py-2">{category}</span>
                 <span className="inline-flex items-center gap-2 text-gray-600"><Clock3 className="h-4 w-4" /> 5 min</span>
-                <span className="inline-flex items-center gap-2 text-gray-600"><MapPin className="h-4 w-4" /> Valencia</span>
+                <span className="inline-flex items-center gap-2 text-gray-600"><MapPin className="h-4 w-4" /> Valencia · Madrid · Barcelona · Alicante</span>
               </div>
 
               <h1 className="mt-6 max-w-4xl text-4xl font-black leading-[1.08] tracking-tight sm:text-6xl">
@@ -197,21 +190,7 @@ export default async function GuideArticlePage({ params }: Props) {
               </section>
             </div>
 
-            <aside className="lg:sticky lg:top-28 lg:h-fit">
-              <div className="rounded-3xl border border-yellow-400 bg-white p-6 shadow-lg">
-                <ShieldCheck className="h-8 w-8" />
-                <h2 className="mt-4 text-xl font-black">{isEs ? "¿Prefieres que lo hagamos?" : "Would you like us to do it?"}</h2>
-                <p className="mt-3 text-sm leading-6 text-gray-600">
-                  {isEs ? "Envía fotos y recibe una valoración clara antes de reservar." : "Send photos and receive a clear assessment before booking."}
-                </p>
-                <Link href={localizedPath(locale, guide.serviceHref)} className="mt-5 flex items-center justify-between rounded-2xl bg-yellow-400 px-5 py-4 font-black hover:bg-yellow-300">
-                  {textFor(guide.serviceLabel, locale)} <ArrowRight className="h-5 w-5" />
-                </Link>
-                <a href={whatsapp} className="mt-3 flex items-center justify-center gap-2 rounded-2xl border border-gray-300 px-5 py-4 font-bold hover:border-black">
-                  <MessageCircle className="h-5 w-5" /> WhatsApp
-                </a>
-              </div>
-            </aside>
+            <aside className="lg:sticky lg:top-28 lg:h-fit"><MarketGuideCta locale={locale} serviceHref={guide.serviceHref} serviceLabel={textFor(guide.serviceLabel, locale)} title={title} /></aside>
           </div>
         </article>
 

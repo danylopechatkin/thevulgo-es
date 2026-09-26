@@ -392,8 +392,8 @@ export async function POST(req: Request) {
       clientSubject:
         isQuickQuoteRequest
           ? isEs
-            ? "Solicitud recibida | THEVULGO Valencia"
-            : "Request received | THEVULGO Valencia"
+            ? `Solicitud recibida | THEVULGO ${city}`
+            : `Request received | THEVULGO ${city}`
           : data.attributionSource === "tv_mini_calculator"
           ? isEs
             ? "Solicitud de montaje de TV recibida — THEVULGO"
