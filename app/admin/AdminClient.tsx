@@ -265,6 +265,33 @@ export default function AdminClient() {
   });
   const [referenceNow] = useState(() => Date.now());
   const [recoveringOrder, setRecoveringOrder] = useState(false);
+  const [sourceLeadId, setSourceLeadId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const raw = sessionStorage.getItem("thevulgo_lead_order_draft");
+    if (!raw) return;
+    sessionStorage.removeItem("thevulgo_lead_order_draft");
+    let timer = 0;
+    try {
+      const draft = JSON.parse(raw) as {
+        leadId?: string;
+        manual?: Record<string, string>;
+        services?: ManualService[];
+      };
+      if (!draft.leadId || !draft.manual) return;
+      timer = window.setTimeout(() => {
+        setSourceLeadId(draft.leadId || null);
+        setManual((current) => ({ ...current, ...draft.manual }));
+        if (draft.services?.length) setManualServices(draft.services);
+        else setManualServices([]);
+        setShowManual(true);
+        setNotice("Lead details loaded. Review the appointment and priced services before creating the order.");
+      }, 0);
+    } catch {
+      timer = window.setTimeout(() => setError("The lead order draft could not be opened."), 0);
+    }
+    return () => window.clearTimeout(timer);
+  }, []);
 
   async function recoverDeletedOrder() {
     const raw = window.prompt(
@@ -582,6 +609,19 @@ export default function AdminClient() {
           ? "Order created, but confirmation delivery failed. Open the order and use Send confirmation to retry."
           : "Order created. The customer confirmation and business notification were sent.",
     );
+    if (sourceLeadId && result.order?.id) {
+      const leadResponse = await fetch(`/api/admin/leads/${sourceLeadId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          status: "converted",
+          converted_order_id: result.order.id,
+        }),
+      });
+      if (!leadResponse.ok)
+        setNotice((current) => `${current} The lead conversion status could not be updated automatically.`);
+      setSourceLeadId(null);
+    }
     setShowManual(false);
     setManual({
       client_profile_id: "",

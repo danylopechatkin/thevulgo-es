@@ -5,6 +5,7 @@ import {
   ACTIVE_LEAD_STATUSES,
   LEAD_STATUS_LABELS,
   LEAD_STATUSES,
+  type Lead,
   type LeadStatus,
 } from "@/lib/leads";
 import { useEffect, useMemo, useState } from "react";
@@ -17,47 +18,8 @@ import {
   EmptyCrm,
   MiniBars,
 } from "./CrmVisuals";
+import LeadWorkspace from "./LeadWorkspace";
 
-type Lead = {
-  id: string;
-  full_name: string;
-  phone: string;
-  email: string;
-  service_summary: string;
-  category: string;
-  status: LeadStatus;
-  next_action: string;
-  follow_up_at: string | null;
-  potential_value: number;
-  notes: string;
-  source: string;
-  lost_reason: string;
-  lost_reason_code: string | null;
-  lost_reason_comment: string | null;
-  contact_reference: string | null;
-  created_at: string;
-  updated_at: string;
-};
-type Form = Omit<Lead, "id" | "created_at" | "updated_at" | "follow_up_at"> & {
-  follow_up_at: string;
-};
-const empty: Form = {
-  full_name: "",
-  phone: "",
-  email: "",
-  service_summary: "",
-  category: "Repairs",
-  status: "new",
-  next_action: "Reply to the client",
-  follow_up_at: "",
-  potential_value: 0,
-  notes: "",
-  source: "whatsapp",
-  lost_reason: "",
-  lost_reason_code: null,
-  lost_reason_comment: null,
-  contact_reference: null,
-};
 const money = (value: number) =>
   new Intl.NumberFormat("en-IE", {
     style: "currency",
@@ -79,10 +41,8 @@ export default function LeadsClient({ mode }: { mode: "leads" | "today" }) {
     [error, setError] = useState(""),
     [filter, setFilter] = useState<LeadStatus | "active" | "all">("active"),
     [search, setSearch] = useState(""),
-    [form, setForm] = useState<Form>(empty),
     [editing, setEditing] = useState<Lead | null>(null),
-    [showForm, setShowForm] = useState(false),
-    [saving, setSaving] = useState(false);
+    [showForm, setShowForm] = useState(false);
   const load = async () => {
     setLoading(true);
     const response = await fetch(
@@ -198,64 +158,18 @@ export default function LeadsClient({ mode }: { mode: "leads" | "today" }) {
   const converted = leads.filter((lead) => lead.status === "converted").length;
   const closed =
     converted + leads.filter((lead) => lead.status === "lost").length;
-  const set = (key: keyof Form, value: string | number) =>
-    setForm((current) => ({ ...current, [key]: value }));
   const openNew = () => {
     setEditing(null);
-    setForm(empty);
     setShowForm(true);
   };
-  const openEdit = (lead: Lead) => {
-    setEditing(lead);
-    setForm({
-      full_name: lead.full_name,
-      phone: lead.phone,
-      email: lead.email,
-      service_summary: lead.service_summary,
-      category: lead.category,
-      status: lead.status,
-      next_action: lead.next_action,
-      follow_up_at: lead.follow_up_at ? lead.follow_up_at.slice(0, 16) : "",
-      potential_value: Number(lead.potential_value || 0),
-      notes: lead.notes,
-      source: lead.source,
-      lost_reason: lead.lost_reason || "",
-      lost_reason_code: lead.lost_reason_code || null,
-      lost_reason_comment: lead.lost_reason_comment || null,
-      contact_reference: lead.contact_reference || null,
-    });
-    setShowForm(true);
-  };
-  async function save(event: React.FormEvent) {
-    event.preventDefault();
-    if (!form.full_name && !form.phone && !form.email) {
-      setError("Add a client name, phone or email.");
-      return;
-    }
-    setSaving(true);
+  const openEdit = async (lead: Lead) => {
     setError("");
-    const response = await fetch(
-      editing ? `/api/admin/leads/${editing.id}` : "/api/admin/leads",
-      {
-        method: editing ? "PATCH" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          follow_up_at: form.follow_up_at
-            ? new Date(form.follow_up_at).toISOString()
-            : null,
-        }),
-      },
-    );
+    const response = await fetch(`/api/admin/leads/${lead.id}`);
     const result = await response.json();
-    setSaving(false);
-    if (!response.ok) {
-      setError(result.error || "Could not save lead");
-      return;
-    }
-    setShowForm(false);
-    await load();
-  }
+    if (!response.ok) { setError(result.error || "Could not load lead"); return; }
+    setEditing(result.lead);
+    setShowForm(true);
+  };
   async function update(lead: Lead, updates: Record<string, unknown>) {
     setError("");
     const response = await fetch(`/api/admin/leads/${lead.id}`, {
@@ -422,7 +336,10 @@ export default function LeadsClient({ mode }: { mode: "leads" | "today" }) {
                         }
                         className="min-w-0 rounded-xl border px-2 py-2 text-xs sm:px-3 sm:text-sm"
                       >
-                        {LEAD_STATUSES.map((status) => (
+                        {LEAD_STATUSES.filter(
+                          (status) =>
+                            status !== "converted" || lead.status === "converted",
+                        ).map((status) => (
                           <option key={status} value={status}>
                             {LEAD_STATUS_LABELS[status]}
                           </option>
@@ -468,143 +385,13 @@ export default function LeadsClient({ mode }: { mode: "leads" | "today" }) {
           </div>
         </section>
         {showForm ? (
-          <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 p-2 backdrop-blur-sm sm:p-8">
-            <form
-              onSubmit={save}
-              className="mx-auto max-w-2xl overflow-hidden rounded-[1.75rem] bg-[#f4f4f0] shadow-2xl sm:rounded-[2rem]"
-            >
-              <div className="flex items-center justify-between gap-3 bg-[#111] p-5 text-white sm:p-6">
-                <div>
-                  <p className="text-[10px] font-black uppercase tracking-[.14em] text-yellow-400">
-                    Spain operations pipeline
-                  </p>
-                  <h2 className="mt-1 text-2xl font-black">
-                    {editing ? "Edit lead" : "New lead"}
-                  </h2>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setShowForm(false)}
-                  className="rounded-xl border border-white/30 px-3 py-2 text-sm font-bold"
-                >
-                  Close
-                </button>
-              </div>
-              <div className="p-4 sm:p-6">
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <Field label="Name">
-                    <input
-                      value={form.full_name}
-                      onChange={(event) => set("full_name", event.target.value)}
-                    />
-                  </Field>
-                  <Field label="Phone">
-                    <input
-                      value={form.phone}
-                      onChange={(event) => set("phone", event.target.value)}
-                    />
-                  </Field>
-                  <Field label="Email">
-                    <input
-                      type="email"
-                      value={form.email}
-                      onChange={(event) => set("email", event.target.value)}
-                    />
-                  </Field>
-                  <Field label="Category">
-                    <input
-                      value={form.category}
-                      onChange={(event) => set("category", event.target.value)}
-                    />
-                  </Field>
-                  <Field label="Potential value (EUR)">
-                    <input
-                      type="number"
-                      min="0"
-                      value={form.potential_value}
-                      onChange={(event) =>
-                        set("potential_value", Number(event.target.value))
-                      }
-                    />
-                  </Field>
-                  <Field label="Follow-up">
-                    <input
-                      type="datetime-local"
-                      value={form.follow_up_at}
-                      onChange={(event) =>
-                        set("follow_up_at", event.target.value)
-                      }
-                    />
-                  </Field>
-                </div>
-                <Field label="Service summary">
-                  <input
-                    value={form.service_summary}
-                    onChange={(event) =>
-                      set("service_summary", event.target.value)
-                    }
-                  />
-                </Field>
-                <Field label="Next action">
-                  <input
-                    value={form.next_action}
-                    onChange={(event) => set("next_action", event.target.value)}
-                  />
-                </Field>
-                <Field label="Notes">
-                  <textarea
-                    value={form.notes}
-                    onChange={(event) => set("notes", event.target.value)}
-                    className="min-h-28"
-                  />
-                </Field>
-                <Field label="WhatsApp reference">
-                  <input value={form.contact_reference || ""} onChange={(event) => set("contact_reference", event.target.value.toUpperCase())} placeholder="TV-A8F42C" />
-                </Field>
-                {form.status === "lost" ? (
-                  <>
-                    <Field label="Why was this lead lost?">
-                      <select value={form.lost_reason_code || ""} onChange={(event) => set("lost_reason_code", event.target.value)} required>
-                        <option value="">Select a reason</option>
-                        <option value="price_too_high">Price too high</option><option value="no_response">No response</option>
-                        <option value="no_availability">No availability</option><option value="outside_service_area">Outside service area</option>
-                        <option value="competitor">Chose competitor</option><option value="unsupported_job">Unsupported job</option>
-                        <option value="customer_postponed">Customer postponed</option><option value="duplicate">Duplicate</option>
-                        <option value="spam">Spam</option><option value="other">Other</option>
-                      </select>
-                    </Field>
-                    <Field label="Lost reason comment">
-                      <input value={form.lost_reason_comment || ""} onChange={(event) => set("lost_reason_comment", event.target.value)} required={form.lost_reason_code === "other"} placeholder="Optional, required for Other" />
-                    </Field>
-                  </>
-                ) : null}
-                <button
-                  disabled={saving}
-                  className="mt-5 w-full rounded-2xl bg-yellow-400 px-5 py-3.5 font-extrabold"
-                >
-                  {saving ? "Saving…" : "Save lead"}
-                </button>
-              </div>
-            </form>
-          </div>
+          <LeadWorkspace
+            lead={editing}
+            onClose={() => setShowForm(false)}
+            onSaved={load}
+          />
         ) : null}
       </div>
     </main>
-  );
-}
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="mt-3 block min-w-0 text-sm font-bold">
-      {label}
-      <span className="mt-1 block [&_input]:min-h-12 [&_input]:w-full [&_input]:min-w-0 [&_input]:rounded-xl [&_input]:border [&_input]:bg-white [&_input]:p-3 [&_textarea]:w-full [&_textarea]:min-w-0 [&_textarea]:rounded-xl [&_textarea]:border [&_textarea]:bg-white [&_textarea]:p-3">
-        {children}
-      </span>
-    </label>
   );
 }

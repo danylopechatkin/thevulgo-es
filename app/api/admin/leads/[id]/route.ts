@@ -6,6 +6,11 @@ const clean = (value: unknown, limit: number) =>
   String(value || "")
     .trim()
     .slice(0, limit);
+const allowedExtra = [
+  "language", "market", "city", "area", "postal_code", "address", "apartment",
+  "structured_services", "requested_date", "requested_time", "quoted_value",
+  "accepted_value", "ai_summary", "ai_missing_fields", "ai_warnings",
+] as const;
 export async function GET(
   _request: Request,
   context: { params: Promise<{ id: string }> },
@@ -16,7 +21,7 @@ export async function GET(
   const { id } = await context.params;
   const { data, error } = await admin.supabase
     .from("leads")
-    .select("*")
+    .select("*, lead_conversation_imports(*)")
     .eq("id", id)
     .single();
   return error
@@ -68,14 +73,53 @@ export async function PATCH(
         { error: "Invalid lead status" },
         { status: 400 },
       );
+    if (body.status === "converted" && !body.converted_order_id)
+      return NextResponse.json(
+        { error: "Create the order before marking a lead as converted" },
+        { status: 400 },
+      );
     updates.status = body.status;
   }
-  const { data, error } = await admin.supabase
+  for (const key of allowedExtra) {
+    if (body[key] === undefined) continue;
+    if (["structured_services", "ai_missing_fields", "ai_warnings"].includes(key))
+      updates[key] = Array.isArray(body[key]) ? body[key] : [];
+    else if (["quoted_value", "accepted_value"].includes(key))
+      updates[key] = body[key] == null ? null : Math.max(0, Number(body[key]) || 0);
+    else if (["requested_date", "requested_time"].includes(key)) updates[key] = body[key] || null;
+    else updates[key] = clean(body[key], key === "ai_summary" ? 2000 : 240);
+  }
+  const database = admin.supabase;
+  if (body.conversation_import?.content_hash) {
+    const item = body.conversation_import;
+    const { data: duplicate } = await database.from("lead_conversation_imports")
+      .select("id").eq("lead_id", id).eq("content_hash", clean(item.content_hash, 64)).maybeSingle();
+    if (duplicate)
+      return NextResponse.json({ error: "This conversation was already imported" }, { status: 409 });
+  }
+  const { data, error } = await database
     .from("leads")
     .update(updates)
     .eq("id", id)
     .select("*")
     .single();
+  if (!error && body.conversation_import?.content_hash) {
+    const item = body.conversation_import;
+    const { error: importError } = await database.from("lead_conversation_imports").insert({
+      lead_id: id,
+      import_kind: "update",
+      source_type: clean(item.source_type, 20) || "paste",
+      source_files: Array.isArray(item.source_files) ? item.source_files.slice(0, 30) : [],
+      raw_text: clean(item.raw_text, 150000) || null,
+      extracted_data: item.extracted_data || {},
+      applied_changes: item.applied_changes || [],
+      warnings: Array.isArray(item.warnings) ? item.warnings : [],
+      content_hash: clean(item.content_hash, 64),
+      created_by: admin.user.id,
+    });
+    if (importError)
+      return NextResponse.json({ error: importError.message }, { status: importError.code === "23505" ? 409 : 500 });
+  }
   return error
     ? NextResponse.json({ error: error.message }, { status: 500 })
     : NextResponse.json({ lead: data });
