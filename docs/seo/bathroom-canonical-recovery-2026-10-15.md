@@ -77,6 +77,20 @@ The following correct pages were not changed and are control URLs:
 
 ## Preview verification
 
-To be completed after the Draft PR Preview is READY. Preview-only
-`x-robots-tag: noindex` is accepted as deployment protection; HTML robots
-must remain `index, follow`.
+Vercel Preview for source commit
+`29796903bfe7bd4c8223fa0ed6033d0b3a7acc85`
+(`dpl_BZATDSMsbwFZxBaMsRoTVF3ht99C`) reached `READY`.
+
+- All **32/32** Bathroom EN/ES pages returned HTTP 200 with expected public
+  canonical, reciprocal `en`/`es` alternatives, Open Graph URL, final
+  Breadcrumb and current-page JSON-LD URL; HTML robots remained
+  `index, follow`.
+- The four protected Bathroom control URLs and all seven protected Valencia
+  controls matched production for HTTP status, canonical, hreflang, HTML
+  robots, Title, Description, H1 and Open Graph URL: **11/11** matched.
+- The previously released canonical packages also passed a Preview regression
+  check: Furniture **10/10**, Repairs **34/34**, and Drywall **38/38**.
+- Preview returned `x-robots-tag: noindex` on checked pages. This is Vercel
+  Preview protection only, not an HTML robots or production SEO change.
+
+No merge or production deployment was requested or performed for this Draft PR.
