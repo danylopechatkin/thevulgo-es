@@ -19,6 +19,11 @@ type PageProps = {
 
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
+const servicePath = "/services/repairs/shelf-refixing";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
@@ -31,6 +36,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = isEs
     ? "Reajuste de estantes flojos o inestables en Valencia por 35 €. Reapriete, reposicionamiento y pequeñas correcciones para estantes pequeños."
     : "Shelf re-fixing in Valencia for €35. Re-tightening, repositioning and small corrections for loose or unstable small shelves.";
+
+  const pageUrl = serviceUrl(locale);
 
   return {
     title,
@@ -55,16 +62,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "small shelf fix Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/repairs/shelf-refixing`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/repairs/shelf-refixing`,
-        en: `${siteUrl}/en/services/repairs/shelf-refixing`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/repairs/shelf-refixing`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -80,7 +87,7 @@ export default async function ShelfRefixingPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/repairs/shelf-refixing`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs

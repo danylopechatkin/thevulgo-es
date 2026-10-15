@@ -19,6 +19,11 @@ type PageProps = {
 
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
+const servicePath = "/services/drywall/small-hole-repair";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
@@ -31,6 +36,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = isEs
     ? "Reparación de agujeros pequeños en pladur o paredes de yeso en Valencia por 29 €. Relleno limpio, alisado y corrección visible de pequeños daños."
     : "Small hole repair in drywall or plaster walls in Valencia for €29. Clean filling, smoothing and visible correction of small wall damage.";
+
+  const pageUrl = serviceUrl(locale);
 
   return {
     title,
@@ -55,16 +62,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "handyman wall repair Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/drywall/small-hole-repair`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/drywall/small-hole-repair`,
-        en: `${siteUrl}/en/services/drywall/small-hole-repair`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/drywall/small-hole-repair`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -80,7 +87,7 @@ export default async function SmallHoleRepairPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/drywall/small-hole-repair`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
