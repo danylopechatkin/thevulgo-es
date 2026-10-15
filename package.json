@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "tsx --test tests/**/*.test.ts",
-    "test:city-routes": "tsx scripts/audit-city-routes.ts"
+    "test:city-routes": "tsx scripts/audit-city-routes.ts",
+    "test:repairs-canonical": "tsx scripts/audit-repairs-canonical.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.0",

@@ -7,9 +7,16 @@ type Props = {
 
 const baseUrl = "https://www.thevulgo.es";
 
+const servicePath = "/services/repairs";
+
+function serviceUrl(locale: string) {
+  return `${baseUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Reparaciones del hogar en Valencia | Pequeños arreglos | THEVULGO"
@@ -44,17 +51,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "apartment repairs Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/repairs`,
+      canonical: pageUrl,
       languages: {
-  es: `${baseUrl}/es/services/repairs`,
-  en: `${baseUrl}/en/services/repairs`,
-  "x-default": `${baseUrl}/es/services/repairs`,
-},
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
+        "x-default": `${baseUrl}/es/services/repairs`,
+      },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/repairs`,
+      url: pageUrl,
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -69,7 +76,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function RepairsPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/services/repairs`;
+  const pageUrl = serviceUrl(locale);
 
   const offers = isEs
   ? [

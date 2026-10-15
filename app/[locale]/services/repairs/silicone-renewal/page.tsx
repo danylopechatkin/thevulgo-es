@@ -17,11 +17,18 @@ type PageProps = {
 };
 
 const siteUrl = "https://www.thevulgo.es";
+
+const servicePath = "/services/repairs/silicone-renewal";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 const phoneNumber = "34610076942";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Cambio de Silicona en Valencia | Baños, Cocinas y Juntas | THEVULGO"
@@ -55,16 +62,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "handyman silicone Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/repairs/silicone-renewal`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/repairs/silicone-renewal`,
-        en: `${siteUrl}/en/services/repairs/silicone-renewal`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/repairs/silicone-renewal`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -80,7 +87,7 @@ export default async function SiliconeRenewalPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/repairs/silicone-renewal`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs

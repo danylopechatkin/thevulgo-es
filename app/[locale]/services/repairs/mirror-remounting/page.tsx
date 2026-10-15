@@ -17,11 +17,18 @@ type PageProps = {
 };
 
 const siteUrl = "https://www.thevulgo.es";
+
+const servicePath = "/services/repairs/mirror-remounting";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 const phoneNumber = "34610076942";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Reinstalación de Espejos en Valencia | 35 € | THEVULGO"
@@ -54,16 +61,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "handyman mirror Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/repairs/mirror-remounting`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/repairs/mirror-remounting`,
-        en: `${siteUrl}/en/services/repairs/mirror-remounting`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/repairs/mirror-remounting`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -79,7 +86,7 @@ export default async function MirrorRemountingPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/repairs/mirror-remounting`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs

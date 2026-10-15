@@ -17,11 +17,18 @@ type PageProps = {
 };
 
 const siteUrl = "https://www.thevulgo.es";
+
+const servicePath = "/services/repairs/loose-handle-fixing";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 const phoneNumber = "34610076942";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Reparación de Tiradores Sueltos en Valencia | 25 € | THEVULGO"
@@ -57,16 +64,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "kitchen handle repair Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/repairs/loose-handle-fixing`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/repairs/loose-handle-fixing`,
-        en: `${siteUrl}/en/services/repairs/loose-handle-fixing`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/repairs/loose-handle-fixing`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -82,7 +89,7 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/repairs/loose-handle-fixing`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs

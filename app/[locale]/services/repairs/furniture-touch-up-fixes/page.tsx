@@ -17,11 +17,18 @@ type PageProps = {
 };
 
 const siteUrl = "https://www.thevulgo.es";
+
+const servicePath = "/services/repairs/furniture-touch-up-fixes";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 const phoneNumber = "34610076942";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Pequeñas Reparaciones de Muebles en Valencia | 29 € | THEVULGO"
@@ -54,16 +61,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "cabinet furniture fix Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/repairs/furniture-touch-up-fixes`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/repairs/furniture-touch-up-fixes`,
-        en: `${siteUrl}/en/services/repairs/furniture-touch-up-fixes`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/repairs/furniture-touch-up-fixes`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -81,7 +88,7 @@ export default async function FurnitureTouchUpFixesPage({
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/repairs/furniture-touch-up-fixes`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
