@@ -124,6 +124,16 @@ No unrelated failures were corrected in this change.
 
 ## Preview verification
 
-To be completed against the Vercel Preview created for this branch. Preview
-headers may include `x-robots-tag: noindex` as deployment protection; that
-header is not treated as a production SEO regression.
+Vercel Preview deployment `dpl_8zUtdBe4ABJpDt5xcmGQ2pbUHWdV` for commit
+`cc36f2189acc2886f662eb13df428092ce4d52fd` was READY and was checked through
+authenticated Vercel access.
+
+- **34/34** rendered Repairs pages passed the same HTTP/HTML checks as the
+  local audit: status 200, canonical, reciprocal hreflang, Open Graph URL,
+  HTML robots, JSON-LD, and final breadcrumb URL where present.
+- All seven protected Valencia pages matched their production baseline on
+  status, canonical, HTML robots, Title, Description, and H1.
+- Preview returned `x-robots-tag: noindex` on those requests. This is expected
+  Preview deployment protection and is not a production robots-policy change.
+
+No production deployment was created or promoted.
