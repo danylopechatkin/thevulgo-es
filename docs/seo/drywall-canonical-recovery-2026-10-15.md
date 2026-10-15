@@ -88,6 +88,23 @@ errors:
 
 ## GSC and Preview verification
 
-To be added after the Draft PR Preview is READY. Preview-only
-`x-robots-tag: noindex` is treated as deployment protection, not a production
-SEO regression.
+Production GSC regression (`CITY_AUDIT_SCOPE=gsc`) passed: **129** final HTTP
+200, **9** final HTTP 404, **0** 5xx, and **0** redirect loops.
+
+Vercel Preview deployment `dpl_8Y3Ka8m51VWzDjLrgxix73bWriwb` for source
+commit `4aeeaf84a52f5c006cc2905ac2e03bef0f22685c` was READY and was inspected
+through authenticated Vercel access.
+
+- **38/38** Drywall rendered HTML checks passed: HTTP 200, canonical,
+  reciprocal hreflang, Open Graph URL, HTML robots, JSON-LD, and final
+  Breadcrumb URL.
+- All four excluded Drywall control URLs (both locales for `small-hole-repair`
+  and `tv-bracket-wall-repair`) matched production exactly on HTTP status,
+  canonical, HTML robots, Title, Description, and H1.
+- All seven protected Valencia pages matched production on the same fields and
+  had no new redirects.
+- Preview responses include `x-robots-tag: noindex`, which is expected Preview
+  deployment protection. Production's HTML robots policy remains `index,
+  follow` and is unchanged.
+
+No production deployment was created or promoted.
