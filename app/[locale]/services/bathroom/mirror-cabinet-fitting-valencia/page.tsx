@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/mirror-cabinet-fitting-valencia";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Instalación de armarios con espejo en Valencia por 49 €. Montaje seguro, alineación limpia y unidades prácticas de almacenaje para baños."
       : "Mirror cabinet fitting in Valencia for €49. Secure installation, clean alignment and practical bathroom storage units for everyday use.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje limpio y seguro de armarios con espejo y unidades de almacenaje para baño."
         : "Clean and secure mirror cabinet and bathroom storage unit installation.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +200,7 @@ export default async function MirrorCabinetFittingValenciaPage({
         name: isEs
           ? "Instalación de Armario con Espejo en Valencia"
           : "Mirror Cabinet Fitting in Valencia",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

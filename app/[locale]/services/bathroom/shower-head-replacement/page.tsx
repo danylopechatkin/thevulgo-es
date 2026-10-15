@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/shower-head-replacement";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Sustitución de alcachofas de ducha y accesorios compatibles de 29 €. Mejora la comodidad, el aspecto del baño y el uso diario de la ducha."
       : "Shower head replacement for €29. Replacement of shower heads and compatible fittings for a cleaner look and better everyday comfort.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Cambio de alcachofas, duchas de mano y accesorios compatibles para baño."
         : "Replacement of shower heads, hand showers and compatible bathroom fittings.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -196,7 +198,7 @@ export default async function ShowerHeadReplacementPage({
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Cambio de Alcachofa de Ducha" : "Shower Head Replacement",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

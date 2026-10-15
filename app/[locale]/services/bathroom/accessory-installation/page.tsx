@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/accessory-installation";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Instalación de accesorios de baño por 29 €. Montaje de soportes, barras, ganchos, portarrollos, toalleros y pequeños accesorios de pared."
       : "Bathroom accessory installation for €29. Mounting holders, rails, hooks, towel bars and practical wall-mounted bathroom fittings.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje limpio de accesorios pequeños de baño, soportes, barras, ganchos y elementos de pared."
         : "Clean mounting of small bathroom accessories, holders, rails, hooks and wall-mounted fittings.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +200,7 @@ export default async function BathroomAccessoryInstallationPage({
         name: isEs
           ? "Instalación de Accesorios de Baño"
           : "Bathroom Accessory Installation",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

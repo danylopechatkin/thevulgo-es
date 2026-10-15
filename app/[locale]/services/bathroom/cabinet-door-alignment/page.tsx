@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/cabinet-door-alignment";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Ajuste de puertas de muebles de baño por 29 €. Mejora de simetría, cierre, bisagras y línea visual del mueble para un acabado más limpio."
       : "Bathroom cabinet door alignment for €29. Adjustment of cabinet doors to improve symmetry, closing feel and the visual line of bathroom furniture.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Ajuste de puertas, bisagras y líneas visuales en muebles de baño."
         : "Cabinet door, hinge and visual line adjustment for bathroom furniture.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -196,7 +198,7 @@ export default async function CabinetDoorAlignmentPage({ params }: PageProps) {
         name: isEs
           ? "Ajuste de Puertas de Mueble de Baño"
           : "Bathroom Cabinet Door Alignment",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

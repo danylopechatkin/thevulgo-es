@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/silicone-renewal";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Renovación de silicona en baño por 39 €. Retirada y sustitución de silicona antigua alrededor de lavabos, muebles, bañeras y zonas de ducha."
       : "Bathroom silicone renewal for €39. Removal and replacement of old silicone around sinks, vanities, bathtubs and shower areas for a cleaner finish.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Sustitución limpia de silicona antigua en lavabos, bañeras, duchas y muebles de baño."
         : "Clean replacement of old silicone around sinks, bathtubs, showers and bathroom furniture.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -192,7 +194,7 @@ export default async function SiliconeRenewalPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Renovación de Silicona en Baño" : "Bathroom Silicone Renewal",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

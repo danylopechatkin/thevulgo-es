@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/towel-holder-installation-valencia";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Instalación de toalleros en Valencia por 29 €. Montaje de barras, ganchos y soportes de baño con separación limpia y posición práctica."
       : "Towel holder installation in Valencia for €29. Mounting towel bars, hooks and holder systems with clean spacing and practical positioning.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje limpio de toalleros, barras, ganchos y accesorios de baño en Valencia."
         : "Clean mounting of towel bars, hooks and bathroom holder systems in Valencia.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +200,7 @@ export default async function TowelHolderInstallationValenciaPage({
         name: isEs
           ? "Instalación de Toallero en Valencia"
           : "Towel Holder Installation in Valencia",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

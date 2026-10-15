@@ -6,6 +6,9 @@ type Props = {
 };
 
 const baseUrl = "https://www.thevulgo.es";
+const servicePath = "/services/bathroom";
+const serviceUrl = (locale: string) =>
+  `${baseUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -41,16 +44,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "bathroom handyman Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/bathroom`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${baseUrl}/es/services/bathroom`,
-        en: `${baseUrl}/en/services/bathroom`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/bathroom`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -65,7 +68,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BathroomPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/services/bathroom`;
+  const pageUrl = serviceUrl(locale);
 
   const serviceJsonLd = {
     "@context": "https://schema.org",

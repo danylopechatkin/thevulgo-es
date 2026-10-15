@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/shelf-installation-valencia";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Instalación de estanterías de baño en Valencia por 35 €. Montaje de baldas para almacenaje, cosméticos, decoración y objetos de uso diario."
       : "Bathroom shelf installation in Valencia for €35. Shelves for storage, cosmetics, décor and everyday items with clean wall alignment.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje limpio y seguro de estanterías, baldas y accesorios de almacenaje para baño."
         : "Clean and secure bathroom shelf mounting for storage, cosmetics and everyday use.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +200,7 @@ export default async function BathroomShelfInstallationValenciaPage({
         name: isEs
           ? "Instalación de Estantería de Baño en Valencia"
           : "Bathroom Shelf Installation in Valencia",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };
