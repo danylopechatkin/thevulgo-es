@@ -55,11 +55,16 @@ Completed before PR creation:
 * HTML was fetched from production for both locales of both pilot pages before the change, the Renovations example, its valid Spanish counterpart, and the protected group.
 * The local production server rendered the Spanish pilot pages with correct canonical/alternates/OG/JSON-LD after the change. Its default-locale request path self-redirected at `next start` because the local middleware rewrite host is `localhost`; this does not reproduce on production, where the same public English URLs returned 200. The rendered English React output and metadata factories were used to verify the corrected EN markup before Preview.
 
-Still required after the Draft PR Preview becomes READY:
+## Draft Preview verification
 
-1. Fetch the four pilot URLs from Preview and verify their final HTML matches the expected URLs in the CSV.
-2. Repeat the 138-URL city audit against Preview; expected final statuses remain 129 × 200 and 9 × 404, with no 5xx or redirect loops. The production control run is already recorded above.
-3. Re-fetch the seven protected URLs from production/Preview and compare their recorded control fields.
+Draft PR #6 built successfully on Vercel deployment `dpl_4yJqZjh9AAf5cr1nGPfVNxdpyyke` (commit `df5e20a4fbd00cdc0a1e1f691d0fae1ae8f8e04b`, state `READY`). The Preview is protected, so it was tested through Vercel's authenticated deployment fetch rather than an unauthenticated request.
+
+* All four pilot URLs returned 200. Each EN and ES response has the expected canonical, reciprocal ES/EN hreflang pair, unchanged HTML `robots: index, follow`, correct Open Graph URL, and a public (non-`/en/`) current-page JSON-LD URL.
+* The Preview's `x-robots-tag: noindex` header is expected deployment protection. It is not an HTML robots change and is not treated as an SEO regression.
+* All seven protected Spanish Valencia URLs returned 200 with no redirect. Their canonical, HTML robots, title, and H1 exactly match the production baseline recorded in the CSV.
+* The complete 138-URL GSC regression set was fetched through the same authenticated Preview access: **129 final 200, 9 final 404, 0 final 5xx, 0 unexpected statuses, and no failed requests**. The route-audit script's loop detection remains covered by the passing production control run; the authenticated Preview fetch follows Vercel's protection flow internally and did not encounter a redirect error.
+
+No production deployment was created or promoted.
 
 ## Rollout recommendation
 
