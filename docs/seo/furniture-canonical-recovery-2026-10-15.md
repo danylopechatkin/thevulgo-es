@@ -67,6 +67,16 @@ variant are commercial-sensitive controls. They are not changed.
 
 ## Preview verification
 
-To be completed after the Draft PR Preview is READY. Preview-only
-`x-robots-tag: noindex` is accepted as deployment protection; the HTML robots
-meta remains required to be `index, follow`.
+Vercel Preview for source commit `e6a5fefe205910b4aeef682746bab510d68d9ba8`
+(`dpl_8cVN9qQXpXET2bP5MDTEmFE2rWHu`) reached `READY`.
+
+- All **10/10** rendered EN/ES Furniture pages returned HTTP 200 with the
+  expected public canonical, reciprocal `en`/`es` alternatives, current-page
+  Open Graph URL, expected `x-default` policy, and HTML `robots: index, follow`.
+- The two explicitly excluded TV/multimedia Furniture controls and all seven
+  protected Valencia controls matched production for HTTP status, canonical,
+  HTML robots, Title, Description, and H1: **9/9** comparisons matched.
+- Preview returns `x-robots-tag: noindex` on each checked page. This is Vercel
+  Preview protection only; it is not an HTML robots or production SEO change.
+
+No production deployment was requested or performed for this Draft PR.
