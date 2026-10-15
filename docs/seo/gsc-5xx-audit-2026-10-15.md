@@ -2,7 +2,7 @@
 
 ## Scope and method
 
-- Source: `THEVULGO_ES_GSC_5xx_138_URLs_2026-10-15.csv` supplied with this task.
+- Source: the original `THEVULGO_ES_GSC_5xx_138_URLs_2026-10-15.csv` supplied with this task. Its durable, committed audit ledger is [`gsc-5xx-url-audit.csv`](./gsc-5xx-url-audit.csv); it contains the same 138 source URLs and crawl dates, so it is also accepted as input by the audit script without a second copy of the export.
 - Input integrity: 138 rows and 138 unique URLs.
 - GSC crawl-date range: 2026-08-24 through 2026-10-09.
 - Production check: bounded GET requests (four at a time), manual redirect tracing, then the full set repeated with the Googlebot user-agent. The two status distributions matched.
@@ -66,6 +66,26 @@ The implementation changes only city-route display-label data and the city-route
 | `npm run build` | Passes; the resulting Next.js production server starts and serves the audit |
 | Full city audit against the local production build | Passes 939 city route, navigation, WhatsApp and invalid-route checks |
 
+## Final PR #5 verification
+
+- **Clean base confirmation:** at detached commit `0c9b89c1ed`, `npm test` already fails in `estimate keeps market while adding service context` because it expects `/en/estimate?...` while the application returns the configured default-locale path `/estimate?...`. The second existing failure is `all public source copy, metadata, FAQ and structured data are free of legacy price qualifiers`; its source scan finds eight pre-existing occurrences (including Spanish `Desde` and `Labour from €`) although it expects none.
+- **Clean base lint confirmation:** at the same commit, ESLint already reports exactly two errors, both `react-hooks/set-state-in-effect`: `app/admin/components/GrowthAnalyticsClient.tsx:17:18` synchronously calls `setLoading`/`setError` in an effect, and `app/components/AnalyticsConsent.tsx:13:50` synchronously calls `setConsent`/`setOpen` in an effect. The PR does not modify either component or `tests/public-pricing.test.ts`; its added market-navigation coverage is separate from the already failing assertion.
+- **Protected Vercel Preview:** all 138 source URLs were rechecked through Vercel's authenticated Preview access. Final results: **129 × 200, 9 × 404, 0 × 5xx, 0 redirect loops**. Every status matches the route registry expectation. The Preview sends `x-robots-tag: noindex` for all checked pages; this is preview-environment protection and is not treated as a production SEO change.
+- **Valencia safeguard on Preview:** `/es` plus all five protected commercial URLs match current production for final HTTP status, canonical, HTML `meta[name=robots]`, title and H1. All are 200. The only observed header difference is Preview's environment-level `x-robots-tag: noindex`.
+
+## Reproducing the 138-URL check after merge
+
+The committed audit ledger is the reproducible input; do not recreate a second source CSV. Start the target build or deployment, then run:
+
+```bash
+CITY_AUDIT_SCOPE=gsc \\
+GSC_5XX_CSV=docs/seo/gsc-5xx-url-audit.csv \\
+CITY_TEST_BASE_URL=https://www.thevulgo.es \\
+npm run test:city-routes
+```
+
+The script accepts both this saved audit format and the original five-column GSC export. It validates 138 unique URLs, derives each city service path from its URL, follows redirects manually, and fails for a redirect loop, a 5xx response, or a final status other than the route registry's intended 200/404.
+
 ## Deployment risk and next step
 
-The code change is confined to label data used by the non-Valencia city route segment. The outstanding risk is deployment verification, not an unproven routing rewrite. Deploy only through the PR review process, then re-run the production audit with `GSC_5XX_CSV=... CITY_TEST_BASE_URL=https://www.thevulgo.es npm run test:city-routes` and compare this table before requesting GSC validation.
+The code change is confined to label data used by the non-Valencia city route segment. The current Preview has completed the deployment verification; production has deliberately not been deployed in this task. After a normal PR merge and production deployment, re-run the committed reproduction command above against `https://www.thevulgo.es` before requesting GSC validation.

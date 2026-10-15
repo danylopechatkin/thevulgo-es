@@ -37,16 +37,79 @@ type HttpAudit = {
   durationMs: number;
 };
 
+function parseCsvLine(line: string): string[] {
+  const values: string[] = [];
+  let value = "";
+  let quoted = false;
+
+  for (let index = 0; index < line.length; index += 1) {
+    const character = line[index];
+    if (character === '"') {
+      if (quoted && line[index + 1] === '"') {
+        value += '"';
+        index += 1;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (character === "," && !quoted) {
+      values.push(value);
+      value = "";
+    } else {
+      value += character;
+    }
+  }
+
+  if (quoted) throw new Error(`Unclosed quoted value in CSV row: ${line}`);
+  values.push(value);
+  return values;
+}
+
+function routeDetailsFromUrl(url: string) {
+  const segments = new URL(url).pathname.split("/").filter(Boolean);
+  if (segments[0] === "en" || segments[0] === "es") segments.shift();
+  const [market, ...serviceSegments] = segments;
+  if (!market || serviceSegments.length === 0 || !markets.some((item) => item.market === market)) {
+    throw new Error(`Cannot derive a city service route from URL: ${url}`);
+  }
+  return { market: market as GscRow["market"], servicePath: serviceSegments.join("/") };
+}
+
 function parseGscRows(csv: string): GscRow[] {
-  const [header, ...lines] = csv.trim().replace(/^\uFEFF/, "").split(/\r?\n/);
-  assert.equal(
-    header,
-    "gsc_reported_url,gsc_last_crawl,city,locale_in_url,city_service_path",
-    "Unexpected GSC CSV header",
+  const [headerLine, ...lines] = csv.trim().replace(/^\uFEFF/, "").split(/\r?\n/);
+  const header = parseCsvLine(headerLine);
+  const sourceHeader = ["gsc_reported_url", "gsc_last_crawl", "city", "locale_in_url", "city_service_path"];
+  const savedAuditHeader = [
+    "URL",
+    "City",
+    "Locale",
+    "GSC last crawl",
+    "Before status",
+    "After status",
+    "Redirect destination",
+    "Expected status",
+    "Root cause",
+    "Fix",
+    "Result",
+  ];
+  const isSourceExport = header.join(",") === sourceHeader.join(",");
+  const isSavedAudit = header.join(",") === savedAuditHeader.join(",");
+  assert.ok(
+    isSourceExport || isSavedAudit,
+    "Unexpected GSC CSV header. Use the original GSC export or docs/seo/gsc-5xx-url-audit.csv.",
   );
 
   const rows = lines.map((line) => {
-    const [url, lastCrawl, market, locale, servicePath] = line.split(",");
+    const values = parseCsvLine(line);
+    const [url, lastCrawl, market, locale, servicePath] = isSourceExport
+      ? values
+      : (() => {
+          const [savedUrl, savedMarket, savedLocale, savedLastCrawl] = values;
+          const details = routeDetailsFromUrl(savedUrl);
+          if (savedMarket !== details.market) {
+            throw new Error(`Saved audit city does not match URL: ${line}`);
+          }
+          return [savedUrl, savedLastCrawl, details.market, savedLocale, details.servicePath];
+        })();
     if (!url || !lastCrawl || !markets.some((item) => item.market === market) || !locale || !servicePath) {
       throw new Error(`Invalid GSC CSV row: ${line}`);
     }
