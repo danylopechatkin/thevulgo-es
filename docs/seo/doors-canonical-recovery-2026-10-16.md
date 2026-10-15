@@ -56,21 +56,42 @@ are deliberately untouched. No intentional redirects were included.
   retains the two known `react-hooks/set-state-in-effect` errors in
   `GrowthAnalyticsClient.tsx` and `AnalyticsConsent.tsx`.
 
+## Final verification on the current base
+
+The branch was rebased onto current `main`
+(`4dfb1bf8320af035a8b857ad492682f0003a4258`). The only rebase conflict was
+the independent npm-script addition in `package.json`; both the Bathroom and
+Doors audit commands are retained. No page metadata or control-page files were
+involved in that conflict.
+
+- `npm run build` passed.
+- `DOORS_AUDIT_BASE_URL=http://localhost:3105`
+  `DOORS_AUDIT_REFERENCE_URL=https://www.thevulgo.es`
+  `npm run test:doors-canonical`: **22/22** rendered checks passed.
+- Current local production-build comparisons matched production for Doors
+  controls **4/4** and Valencia controls **7/7**, including HTTP status,
+  canonical, hreflang, HTML robots, Open Graph URL, Title, Description and H1.
+- The existing audit suites passed on the current build: Bathroom **32/32**,
+  Furniture **10/10**, Repairs **34/34**, Drywall **38/38**. The city audit
+  returned **129** final 200, **9** final 404, **0** 5xx and **0** redirect
+  loops.
+- `npm test` still has only the two pre-existing failures in
+  `market-navigation.test.ts` and `public-pricing.test.ts`; `npm run lint`
+  still has only the two pre-existing `react-hooks/set-state-in-effect` errors
+  in `GrowthAnalyticsClient.tsx` and `AnalyticsConsent.tsx` (plus existing
+  warnings).
+
 ## Preview verification
 
-Vercel Preview for source commit
-`8719dd062564374b708bf4fd3e36614edf86ff52`
-(`dpl_3JjPAmuy3i4QZ72TKPvfzqPfwSsv`) reached `READY`.
+Vercel Preview for the rebased source commit
+`f31a51245d8cf4fd85f6bd958a8383310452bf08`
+(`dpl_7YYjJARHJPmHVhsoWD4mngVJFTqV`) reached `READY`.
 
-- All **22/22** Doors EN/ES pages returned HTTP 200 with expected public
-  canonical, reciprocal `en`/`es` alternatives, Open Graph URL, final
-  Breadcrumb and current-page JSON-LD URL; HTML robots remained
-  `index, follow`.
-- Protected-page comparisons all matched production for HTTP status, canonical,
-  hreflang, HTML robots, Title, Description, H1 and Open Graph URL: Bathroom
-  **4/4**, Furniture **2/2**, Repairs **2/2**, Drywall **4/4**, and Valencia
-  **7/7**.
-- Preview returned `x-robots-tag: noindex` on checked pages. This is Vercel
-  Preview protection only, not an HTML robots or production SEO change.
+All **22/22** Doors EN/ES pages returned HTTP 200 with expected public
+canonical, reciprocal `en`/`es` alternatives, Open Graph URL, final Breadcrumb
+and current-page JSON-LD URL. Title, Description, H1 and HTML robots remained
+equal to production (`index, follow`). Preview returned `x-robots-tag: noindex`
+on checked pages. This is Vercel Preview protection only, not an HTML robots or
+production SEO change.
 
 No merge or production deployment was requested or performed for this Draft PR.
