@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/toilet-paper-holder-installation-valencia";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Instalación de portarrollos en Valencia por 25 €. Montaje de soportes para papel higiénico y pequeños accesorios de baño en posiciones cómodas."
       : "Toilet paper holder installation in Valencia for €25. Wall-mounted bathroom accessories fitted in convenient everyday positions.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje limpio de portarrollos y pequeños accesorios de baño en Valencia."
         : "Clean mounting of toilet paper holders and small bathroom accessories in Valencia.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +200,7 @@ export default async function ToiletPaperHolderInstallationValenciaPage({
         name: isEs
           ? "Instalación de Portarrollos en Valencia"
           : "Toilet Paper Holder Installation in Valencia",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

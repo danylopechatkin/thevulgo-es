@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/cabinet-installation-valencia";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Instalación de muebles de baño en Valencia por 59 €. Montaje de armarios, muebles auxiliares y unidades de almacenaje con alineación limpia y fijación segura."
       : "Bathroom cabinet installation in Valencia for €59. Cabinets, storage units and bathroom furniture fitted with clean alignment and secure positioning.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje limpio y seguro de muebles de baño, armarios y unidades de almacenaje en Valencia."
         : "Clean and secure bathroom cabinet, storage unit and bathroom furniture installation in Valencia.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +200,7 @@ export default async function BathroomCabinetInstallationValenciaPage({
         name: isEs
           ? "Instalación de Mueble de Baño en Valencia"
           : "Bathroom Cabinet Installation in Valencia",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

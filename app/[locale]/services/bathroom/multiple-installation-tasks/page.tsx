@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/multiple-installation-tasks";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Instalación de varios accesorios de baño en una visita. Espejos, muebles, estantes, toalleros, portarrollos, luces y pequeños montajes organizados."
       : "Multiple bathroom installation tasks in one visit. Mirrors, cabinets, shelves, holders, lights and small bathroom fittings completed efficiently.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Varios trabajos pequeños de baño en una sola visita organizada."
         : "Several small bathroom installation tasks completed in one organized visit.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -197,7 +199,7 @@ export default async function MultipleBathroomInstallationTasksPage({
         name: isEs
           ? "Instalación de Varios Accesorios de Baño"
           : "Multiple Bathroom Installation Tasks",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

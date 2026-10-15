@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/wall-mounting";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Montaje en pared para artículos de baño por 35 €. Taladro e instalación de espejos, muebles, estantes y accesorios en paredes adecuadas."
       : "Bathroom wall mounting for €35. Drilling and mounting for mirrors, cabinets, shelves and accessories in suitable wall types.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Taladro y montaje de espejos, muebles, estantes y accesorios de baño."
         : "Drilling and mounting for bathroom mirrors, cabinets, shelves and accessories.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -194,7 +196,7 @@ export default async function BathroomWallMountingPage({
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Montaje en Pared para Baño" : "Bathroom Wall Mounting",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/glass-shelf-installation";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Instalación de estantes de cristal para baño por 35 €. Montaje seguro de baldas de vidrio para cosméticos, almacenaje y decoración."
       : "Glass bathroom shelf installation for €35. Secure mounting for cosmetics, storage or decorative use with clean spacing and alignment.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje limpio y seguro de estantes de cristal para baño, cosméticos y almacenaje."
         : "Clean and secure mounting of glass bathroom shelves for cosmetics and storage.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +200,7 @@ export default async function GlassShelfInstallationPage({
         name: isEs
           ? "Instalación de Estante de Cristal para Baño"
           : "Glass Bathroom Shelf Installation",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

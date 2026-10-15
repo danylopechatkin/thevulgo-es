@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/shower-hose-replacement";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Sustitución de mangueras de ducha y conectores visibles compatibles de 29 €. Mejora el aspecto, la comodidad y el uso diario de la ducha."
       : "Shower hose replacement for €29. Replacement of shower hoses and visible connectors where the setup is straightforward and compatible.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Cambio de mangueras de ducha, conectores visibles y accesorios compatibles."
         : "Replacement of shower hoses, visible connectors and compatible bathroom fittings.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -194,7 +196,7 @@ export default async function ShowerHoseReplacementPage({
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Cambio de Manguera de Ducha" : "Shower Hose Replacement",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/bathroom/seal-gap-fixing";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Sellado de pequeños huecos visibles en baño por 29 €. Sellado alrededor de elementos, juntas, accesorios y zonas visibles para un acabado más limpio."
       : "Bathroom seal and gap fixing for €29. Sealing small visible gaps around fixtures and bathroom elements for a tidier look and better protection.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Sellado de pequeños huecos visibles alrededor de elementos de baño para un acabado más limpio."
         : "Sealing small visible bathroom gaps around fixtures and bathroom elements.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -192,7 +194,7 @@ export default async function SealGapFixingPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Sellado de Huecos en Baño" : "Bathroom Seal & Gap Fixing",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };
