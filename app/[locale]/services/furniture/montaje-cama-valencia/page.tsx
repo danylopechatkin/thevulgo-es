@@ -20,10 +20,16 @@ type PageProps = {
 
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
+const servicePath = "/services/furniture/montaje-cama-valencia";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   return {
     title: isEs
@@ -33,9 +39,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje profesional de camas en Valencia por 49 €. Camas estándar, camas IKEA, estructuras, somier, cabecero, cajones, ajuste y alineación estable."
       : "Professional bed assembly in Valencia for €49. Standard beds, IKEA beds, frames, slats, headboards, drawers, careful adjustment and stable alignment.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/furniture/montaje-cama-valencia`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/furniture/montaje-cama-valencia`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -45,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje limpio y estable de camas estándar, IKEA y estructuras flat-pack en Valencia."
         : "Clean and stable bed assembly for standard, IKEA and flat-pack bed frames in Valencia.",
-      url: `${siteUrl}/${locale}/services/furniture/montaje-cama-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -108,6 +115,7 @@ const faqs = [
 export default async function BedAssemblyValenciaPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -183,7 +191,7 @@ export default async function BedAssemblyValenciaPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Cama en Valencia",
-        item: `${siteUrl}/${locale}/services/furniture/montaje-cama-valencia`,
+        item: pageUrl,
       },
     ],
   };

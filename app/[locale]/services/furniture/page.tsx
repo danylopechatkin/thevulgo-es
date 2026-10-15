@@ -6,10 +6,16 @@ type Props = {
 };
 
 const baseUrl = "https://www.thevulgo.es";
+const servicePath = "/services/furniture";
+
+function serviceUrl(locale: string) {
+  return `${baseUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Montaje de muebles en Valencia | IKEA, armarios, camas | THEVULGO"
@@ -44,21 +50,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "furniture handyman Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/furniture`,
+      canonical: pageUrl,
       languages: {
-
-  es: `${baseUrl}/es/services/furniture`,
-
-  en: `${baseUrl}/en/services/furniture`,
-
-  "x-default": `${baseUrl}/es/services/furniture`,
-
-},
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
+        "x-default": `${baseUrl}/es/services/furniture`,
+      },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/furniture`,
+      url: pageUrl,
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -73,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function FurniturePage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/services/furniture`;
+  const pageUrl = serviceUrl(locale);
 
   const offers = isEs
   ? [

@@ -10,7 +10,8 @@
     "test": "tsx --test tests/**/*.test.ts",
     "test:city-routes": "tsx scripts/audit-city-routes.ts",
     "test:repairs-canonical": "tsx scripts/audit-repairs-canonical.ts",
-    "test:drywall-canonical": "tsx scripts/audit-drywall-canonical.ts"
+    "test:drywall-canonical": "tsx scripts/audit-drywall-canonical.ts",
+    "test:furniture-canonical": "tsx scripts/audit-furniture-canonical.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.0",
