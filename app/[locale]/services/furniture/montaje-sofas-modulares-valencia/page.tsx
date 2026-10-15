@@ -20,10 +20,16 @@ type PageProps = {
 
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
+const servicePath = "/services/furniture/montaje-sofas-modulares-valencia";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   return {
     title: isEs
@@ -33,9 +39,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje simple de sofás y piezas modulares en Valencia por 39 €. Unión de módulos, patas, chaise longue, ajuste de piezas y posición estable."
       : "Simple sofa and modular piece assembly in Valencia for €39. Module connection, legs, chaise longue, piece adjustment and stable positioning.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/furniture/montaje-sofas-modulares-valencia`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/furniture/montaje-sofas-modulares-valencia`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -45,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje simple de sofás, chaise longue y piezas modulares en Valencia."
         : "Simple assembly of sofas, chaise longue and modular pieces in Valencia.",
-      url: `${siteUrl}/${locale}/services/furniture/montaje-sofas-modulares-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -110,6 +117,7 @@ export default async function ModularSofaAssemblyValenciaPage({
 }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -185,7 +193,7 @@ export default async function ModularSofaAssemblyValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Sofás Modulares en Valencia",
-        item: `${siteUrl}/${locale}/services/furniture/montaje-sofas-modulares-valencia`,
+        item: pageUrl,
       },
     ],
   };

@@ -20,10 +20,16 @@ type PageProps = {
 
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
+const servicePath = "/services/furniture/montaje-comodas-cajoneras-valencia";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   return {
     title: isEs
@@ -33,9 +39,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje profesional de cómodas y cajoneras en Valencia por 45 €. Cajones, guías, alineación, ajuste correcto y estructura estable para uso diario."
       : "Professional dresser and drawer assembly in Valencia for €45. Drawers, runners, alignment, correct adjustment and stable structure for daily use.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/furniture/montaje-comodas-cajoneras-valencia`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -45,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje limpio de cajoneras con guías y ajuste correcto de cajones en Valencia."
         : "Clean drawer unit assembly with correct runner and drawer adjustment in Valencia.",
-      url: `${siteUrl}/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -108,6 +115,7 @@ const faqs = [
 export default async function DrawerAssemblyValenciaPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -183,7 +191,7 @@ export default async function DrawerAssemblyValenciaPage({ params }: PageProps) 
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Cómodas y Cajoneras en Valencia",
-        item: `${siteUrl}/${locale}/services/furniture/montaje-comodas-cajoneras-valencia`,
+        item: pageUrl,
       },
     ],
   };
