@@ -19,10 +19,16 @@ type PageProps = {
 
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
+const servicePath = "/services/drywall/door-handle-wall-damage-repair";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Reparación de Golpes de Manilla en Pared en Valencia | 29 € | THEVULGO"
@@ -55,16 +61,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "drywall repair Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/drywall/door-handle-wall-damage-repair`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/drywall/door-handle-wall-damage-repair`,
-        en: `${siteUrl}/en/services/drywall/door-handle-wall-damage-repair`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/drywall/door-handle-wall-damage-repair`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -82,7 +88,7 @@ export default async function DoorHandleWallDamageRepairPage({
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/drywall/door-handle-wall-damage-repair`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs

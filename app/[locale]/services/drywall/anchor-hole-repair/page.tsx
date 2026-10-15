@@ -19,10 +19,16 @@ type PageProps = {
 
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
+const servicePath = "/services/drywall/anchor-hole-repair";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Reparación de Agujeros de Tacos en Valencia | 29 € | THEVULGO"
@@ -59,16 +65,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "TV bracket wall repair Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/drywall/anchor-hole-repair`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/drywall/anchor-hole-repair`,
-        en: `${siteUrl}/en/services/drywall/anchor-hole-repair`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/drywall/anchor-hole-repair`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -84,7 +90,7 @@ export default async function AnchorHoleRepairPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/drywall/anchor-hole-repair`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
