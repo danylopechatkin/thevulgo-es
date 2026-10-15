@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/doors/reparacion-puertas-varios";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Varios trabajos de puertas y herrajes en una visita. Manillas, bisagras, pestillos, cerraderos, alineación y pequeños ajustes."
       : "Multiple door and hardware tasks in one visit. Handles, hinges, latches, alignment and minor adjustments completed efficiently.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Varias reparaciones pequeñas de puertas en una sola visita organizada."
         : "Several small door and hardware problems fixed in one efficient session.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -197,7 +199,7 @@ export default async function ReparacionPuertasVariosPage({
         name: isEs
           ? "Reparación de Puertas y Herrajes"
           : "Multiple Door & Hardware Tasks",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

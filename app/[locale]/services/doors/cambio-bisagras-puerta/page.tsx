@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/doors/cambio-bisagras-puerta";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Cambio de bisagras de puerta por 35 €. Sustitución de bisagras visibles desgastadas o dañadas cuando el herraje compatible ya está disponible."
       : "Door hinge replacement for €35. Replacement of visible worn or damaged door hinges when compatible hardware is already available or provided.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Sustitución de bisagras visibles para puertas interiores desgastadas o dañadas."
         : "Replacement of visible door hinges for worn or damaged fittings.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -194,7 +196,7 @@ export default async function CambioBisagrasPuertaPage({
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Cambio de Bisagras de Puerta" : "Door Hinge Replacement",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

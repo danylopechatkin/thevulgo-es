@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/doors/door-alignment-adjustment";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Ajuste básico de puertas desalineadas por 39 €. Corrección de puertas que rozan, cierran mal o quedan desniveladas en viviendas y apartamentos."
       : "Door alignment adjustment for €39. Basic correction for doors that rub, sit unevenly or do not close smoothly in homes and apartments.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Corrección práctica de puertas que rozan, no cierran bien o quedan torcidas."
         : "Practical correction for doors that rub, close badly or sit unevenly.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -194,7 +196,7 @@ export default async function DoorAlignmentAdjustmentPage({
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Ajuste de Puertas Desalineadas" : "Door Alignment Adjustment",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

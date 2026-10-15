@@ -21,6 +21,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/doors/cambio-bombin-cerradura";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -36,10 +38,10 @@ export async function generateMetadata({
       ? "Cambio de bombín de cerradura por 39 €. Sustitución de cilindros visibles compatibles cuando la pieza nueva ya está disponible y el trabajo es sencillo."
       : "Lock cylinder replacement for €39. Replacement of compatible visible lock cylinders when the new part is available and the setup is suitable.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -49,7 +51,7 @@ export async function generateMetadata({
       description: isEs
         ? "Sustitución de bombines y cilindros visibles compatibles para puertas."
         : "Replacement of compatible visible lock cylinders for doors.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -197,7 +199,7 @@ export default async function CambioBombinCerraduraPage({
         name: isEs
           ? "Cambio de Bombín de Cerradura"
           : "Lock Cylinder Replacement",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

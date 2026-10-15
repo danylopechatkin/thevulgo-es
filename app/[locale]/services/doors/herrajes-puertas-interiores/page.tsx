@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/doors/herrajes-puertas-interiores";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Ajuste y corrección de herrajes de 29 €. Bisagras, manillas y mecanismos visibles en puertas interiores, armarios y puertas auxiliares."
       : "Cabinet and interior door hardware service for €29. Small corrections for hinges, handles and visible mechanisms on cabinet and interior doors.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Corrección de bisagras, manillas y herrajes visibles en puertas interiores y armarios."
         : "Small hardware corrections for cabinet doors, utility doors and interior fittings.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +200,7 @@ export default async function HerrajesPuertasInterioresPage({
         name: isEs
           ? "Herrajes para Puertas Interiores y Armarios"
           : "Cabinet and Interior Door Hardware",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };
