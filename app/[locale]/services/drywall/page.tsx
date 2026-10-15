@@ -6,10 +6,16 @@ type Props = {
 };
 
 const baseUrl = "https://www.thevulgo.es";
+const servicePath = "/services/drywall";
+
+function serviceUrl(locale: string) {
+  return `${baseUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Reparación de paredes y pladur en Valencia | Parches y agujeros | THEVULGO"
@@ -44,16 +50,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "handyman drywall Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/drywall`,
+      canonical: pageUrl,
       languages: {
-        es: `${baseUrl}/es/services/drywall`,
-        en: `${baseUrl}/en/services/drywall`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/drywall`,
+      url: pageUrl,
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -68,7 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function DrywallPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/services/drywall`;
+  const pageUrl = serviceUrl(locale);
 
   const offers = [
     "Small hole repair",

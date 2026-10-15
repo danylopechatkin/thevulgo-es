@@ -19,10 +19,16 @@ type PageProps = {
 
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
+const servicePath = "/services/drywall/drywall-mounting-prep";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Preparación de Pladur para Montaje en Valencia | 35 € | THEVULGO"
@@ -55,16 +61,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "handyman drywall Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/drywall/drywall-mounting-prep`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/drywall/drywall-mounting-prep`,
-        en: `${siteUrl}/en/services/drywall/drywall-mounting-prep`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/drywall/drywall-mounting-prep`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -80,7 +86,7 @@ export default async function DrywallMountingPrepPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/drywall/drywall-mounting-prep`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs

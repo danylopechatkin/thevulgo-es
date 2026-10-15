@@ -19,10 +19,16 @@ type PageProps = {
 
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
+const servicePath = "/services/drywall/wall-levelling-prep";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Preparación y Nivelación Básica de Pared en Valencia | 45 € | THEVULGO"
@@ -55,16 +61,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "wall repair Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/drywall/wall-levelling-prep`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/drywall/wall-levelling-prep`,
-        en: `${siteUrl}/en/services/drywall/wall-levelling-prep`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/drywall/wall-levelling-prep`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -80,7 +86,7 @@ export default async function WallLevellingPrepPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/drywall/wall-levelling-prep`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
