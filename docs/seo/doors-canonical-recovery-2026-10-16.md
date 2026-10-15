@@ -48,9 +48,29 @@ are deliberately untouched. No intentional redirects were included.
   npm run test:doors-canonical`: **22/22** rendered HTML checks passed.
   The reference comparison confirms unchanged Title, Description, H1 and
   robots for all corrected pages.
+- Production regression checks: Furniture **10/10**, Repairs **34/34** and
+  Drywall **38/38** passed. The city audit returned **129** final 200,
+  **9** final 404, **0** 5xx and **0** redirect loops.
+- `npm test` retains two known unrelated failures in
+  `market-navigation.test.ts` and `public-pricing.test.ts`; `npm run lint`
+  retains the two known `react-hooks/set-state-in-effect` errors in
+  `GrowthAnalyticsClient.tsx` and `AnalyticsConsent.tsx`.
 
 ## Preview verification
 
-To be completed after the Draft PR Preview is READY. Preview-only
-`x-robots-tag: noindex` is accepted as deployment protection; HTML robots
-must remain `index, follow`.
+Vercel Preview for source commit
+`8719dd062564374b708bf4fd3e36614edf86ff52`
+(`dpl_3JjPAmuy3i4QZ72TKPvfzqPfwSsv`) reached `READY`.
+
+- All **22/22** Doors EN/ES pages returned HTTP 200 with expected public
+  canonical, reciprocal `en`/`es` alternatives, Open Graph URL, final
+  Breadcrumb and current-page JSON-LD URL; HTML robots remained
+  `index, follow`.
+- Protected-page comparisons all matched production for HTTP status, canonical,
+  hreflang, HTML robots, Title, Description, H1 and Open Graph URL: Bathroom
+  **4/4**, Furniture **2/2**, Repairs **2/2**, Drywall **4/4**, and Valencia
+  **7/7**.
+- Preview returned `x-robots-tag: noindex` on checked pages. This is Vercel
+  Preview protection only, not an HTML robots or production SEO change.
+
+No merge or production deployment was requested or performed for this Draft PR.
