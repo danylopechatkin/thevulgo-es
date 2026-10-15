@@ -15,6 +15,8 @@ import {
   marketServiceHref,
   marketWhatsAppHref,
 } from "../lib/marketLinks";
+import { MARKET_SERVICE_ROUTES } from "../lib/marketRoutes";
+import { serviceLabelForPath } from "../lib/serviceLabels";
 
 const expected = [
   ["valencia", "Valencia", "/es"],
@@ -95,4 +97,11 @@ test("estimate query remains the single market source for shared header navigati
   assert.equal(marketFromLocation("/es/estimate", "es", "unsupported"), "valencia");
   assert.equal(marketPathForLocation("/es/estimate", "es", "alicante"), "/es/estimate?market=alicante");
   assert.equal(marketPathForLocation("/es/estimate", "es", "valencia"), "/es/estimate");
+});
+
+test("every registered city-service route has labels for both locales", () => {
+  for (const { path } of MARKET_SERVICE_ROUTES) {
+    assert.notEqual(serviceLabelForPath(path, "es"), "");
+    assert.notEqual(serviceLabelForPath(path, "en"), "");
+  }
 });
