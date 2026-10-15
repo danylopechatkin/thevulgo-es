@@ -17,11 +17,18 @@ type PageProps = {
 };
 
 const siteUrl = "https://www.thevulgo.es";
+
+const servicePath = "/services/repairs/curtain-rail-adjustments";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 const phoneNumber = "34610076942";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Ajuste de Rieles de Cortina en Valencia | 29 € | THEVULGO"
@@ -57,16 +64,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "wall curtain rail repair Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/repairs/curtain-rail-adjustments`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/repairs/curtain-rail-adjustments`,
-        en: `${siteUrl}/en/services/repairs/curtain-rail-adjustments`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/repairs/curtain-rail-adjustments`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -82,7 +89,7 @@ export default async function CurtainRailAdjustmentsPage({ params }: PageProps) 
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/repairs/curtain-rail-adjustments`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs

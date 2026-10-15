@@ -18,11 +18,18 @@ type PageProps = {
 };
 
 const siteUrl = "https://www.thevulgo.es";
+
+const servicePath = "/services/repairs/minor-wall-fixes";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 const phoneNumber = "34610076942";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Pequeños Arreglos de Pared en Valencia | 29 € | THEVULGO"
@@ -58,16 +65,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "wall scuff repair Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/repairs/minor-wall-fixes`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/repairs/minor-wall-fixes`,
-        en: `${siteUrl}/en/services/repairs/minor-wall-fixes`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/repairs/minor-wall-fixes`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -83,7 +90,7 @@ export default async function MinorWallFixesPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/repairs/minor-wall-fixes`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs

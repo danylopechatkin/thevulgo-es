@@ -18,11 +18,18 @@ type PageProps = {
 };
 
 const siteUrl = "https://www.thevulgo.es";
+
+const servicePath = "/services/repairs/multiple-small-repairs";
+
+function serviceUrl(locale: string) {
+  return `${siteUrl}${locale === "es" ? "/es" : ""}${servicePath}`;
+}
 const phoneNumber = "34610076942";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = serviceUrl(locale);
 
   const title = isEs
     ? "Varias Reparaciones Pequeñas en Valencia | Presupuesto Combinado | THEVULGO"
@@ -55,16 +62,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "handyman Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/repairs/multiple-small-repairs`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/repairs/multiple-small-repairs`,
-        en: `${siteUrl}/en/services/repairs/multiple-small-repairs`,
+        es: serviceUrl("es"),
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/repairs/multiple-small-repairs`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -80,7 +87,7 @@ export default async function MultipleSmallRepairsPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/repairs/multiple-small-repairs`;
+  const pageUrl = serviceUrl(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
