@@ -76,7 +76,11 @@ No new test or lint errors were introduced by this package.
 
 ## Preview gate
 
-The Draft PR Preview must be READY and be checked against all eight rendered pages before review. Preview `x-robots-tag: noindex` is allowed only as deployment protection; HTML robots must remain `index, follow`. This section will be completed with the final branch HEAD and Vercel deployment ID after the Preview check.
+- Implementation HEAD: `a0776a6a255694d9a976446d2adfe9b3bf4e3a16`.
+- Vercel Preview: `dpl_B1HhD4yWA4XaqZ82UcuRzLGmda5f` — READY.
+- Preview URL: `https://thevulgo-lq1t1i71x-437907s-projects.vercel.app`.
+
+The protected Preview was checked directly for all 8 rendered EN/ES pages. Every response was HTTP 200 with no redirect, one final public canonical, reciprocal EN/ES hreflang, the retained x-default policy, correct `og:url`, correct current-page structured-data and final breadcrumb URLs, and HTML `robots` equal to `index, follow`. The Preview response header was `x-robots-tag: noindex`, which is accepted as Preview deployment protection and is not an HTML robots regression.
 
 ## Changed files
 
