@@ -20,6 +20,7 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/exterior/reparacion-ajuste-vallas";
+const serviceUrl = (locale: string) => `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +36,10 @@ export async function generateMetadata({
       ? "Reparación y ajuste de vallas por 59 €. Corrección de secciones de valla, límites exteriores visibles y elementos exteriores para mejorar estabilidad, función y aspecto."
       : "Fence repair and adjustment for €59. Repair and adjustment of fences, fence sections and visible outdoor boundaries to improve stability, function and appearance.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +49,7 @@ export async function generateMetadata({
       description: isEs
         ? "Ajustes y pequeñas reparaciones de vallas y límites exteriores visibles."
         : "Small fence repairs and adjustments for visible outdoor boundaries.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -196,7 +197,7 @@ export default async function ReparacionAjusteVallasPage({
         name: isEs
           ? "Reparación y Ajuste de Vallas"
           : "Fence Repair & Adjustment",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

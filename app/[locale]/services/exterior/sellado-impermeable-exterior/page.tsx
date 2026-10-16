@@ -20,6 +20,7 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/exterior/sellado-impermeable-exterior";
+const serviceUrl = (locale: string) => `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +36,10 @@ export async function generateMetadata({
       ? "Sellado impermeable exterior por 49 €. Sellado de pequeños huecos, juntas y zonas expuestas para ayudar a proteger superficies de humedad."
       : "Outdoor waterproof sealing for €49. Sealing of small exterior gaps, joints and exposed areas to help protect surfaces from moisture.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +49,7 @@ export async function generateMetadata({
       description: isEs
         ? "Sellado exterior de juntas, huecos y zonas expuestas contra humedad."
         : "Exterior sealing of gaps, joints and exposed areas against moisture.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -196,7 +197,7 @@ export default async function SelladoImpermeableExteriorPage({
         name: isEs
           ? "Sellado Impermeable Exterior"
           : "Outdoor Waterproof Sealing",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

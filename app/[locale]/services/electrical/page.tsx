@@ -6,6 +6,7 @@ type Props = {
 };
 
 const baseUrl = "https://www.thevulgo.es";
+const serviceUrl = (locale: string) => `${baseUrl}${locale === "es" ? "/es" : ""}/services/electrical`;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -44,16 +45,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "electrical handyman Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/electrical`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${baseUrl}/es/services/electrical`,
-        en: `${baseUrl}/en/services/electrical`,
+        en: `${baseUrl}/services/electrical`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/electrical`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -68,7 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ElectricalPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/services/electrical`;
+  const pageUrl = serviceUrl(locale);
 
   const offers = [
     "Light fixture installation",

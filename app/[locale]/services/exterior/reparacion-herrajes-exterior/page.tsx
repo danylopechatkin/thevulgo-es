@@ -20,6 +20,7 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/exterior/reparacion-herrajes-exterior";
+const serviceUrl = (locale: string) => `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +36,10 @@ export async function generateMetadata({
       ? "Reparación de herrajes exteriores de 35 €. Ajuste de soportes, manillas, escuadras, fijaciones y elementos exteriores visibles."
       : "Outdoor hardware fixing for €35. Small repairs and tightening of visible outdoor fittings, brackets, handles and practical hardware elements.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +49,7 @@ export async function generateMetadata({
       description: isEs
         ? "Pequeñas reparaciones y ajustes de herrajes exteriores visibles."
         : "Small repairs and tightening of visible outdoor hardware elements.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +199,7 @@ export default async function ReparacionHerrajesExteriorPage({
         name: isEs
           ? "Reparación de Herrajes Exteriores"
           : "Outdoor Hardware Fixing",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

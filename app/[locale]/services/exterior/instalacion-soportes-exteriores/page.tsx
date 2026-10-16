@@ -20,6 +20,7 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/exterior/instalacion-soportes-exteriores";
+const serviceUrl = (locale: string) => `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +36,10 @@ export async function generateMetadata({
       ? "Instalación de soportes exteriores de 39 €. Montaje de escuadras, holders, soportes y pequeños elementos de apoyo para patios, terrazas y exteriores."
       : "Outdoor shelf or bracket fitting for €39. Installation of practical brackets, holders and small exterior support elements for organized outdoor use.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +49,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje de soportes, escuadras y holders exteriores en superficies adecuadas."
         : "Installation of outdoor brackets, holders and small exterior support elements.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +199,7 @@ export default async function InstalacionSoportesExterioresPage({
         name: isEs
           ? "Instalación de Soportes Exteriores"
           : "Outdoor Shelf or Bracket Fitting",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

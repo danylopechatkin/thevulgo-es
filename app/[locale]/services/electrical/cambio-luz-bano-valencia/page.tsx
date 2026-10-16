@@ -19,6 +19,7 @@ type PageProps = {
 };
 
 const siteUrl = "https://www.thevulgo.es";
+const serviceUrl = (locale: string) => `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/cambio-luz-bano-valencia`;
 const phoneNumber = "34610076942";
 
 const serviceAreas = [
@@ -54,16 +55,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/electrical/cambio-luz-bano-valencia`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es/services/electrical/cambio-luz-bano-valencia`,
-        en: `${siteUrl}/en/services/electrical/cambio-luz-bano-valencia`,
+        en: `${siteUrl}/services/electrical/cambio-luz-bano-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/electrical/cambio-luz-bano-valencia`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -509,7 +510,7 @@ export default async function BathroomLightReplacementValenciaPage({
         name: isEs
           ? "Cambio de Luz de Baño en Valencia"
           : "Bathroom Light Replacement in Valencia",
-        item: `${siteUrl}/${locale}/services/electrical/cambio-luz-bano-valencia`,
+        item: serviceUrl(locale),
       },
     ],
   };

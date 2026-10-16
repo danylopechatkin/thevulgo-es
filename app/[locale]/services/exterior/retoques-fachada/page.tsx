@@ -20,6 +20,7 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/exterior/retoques-fachada";
+const serviceUrl = (locale: string) => `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +36,10 @@ export async function generateMetadata({
       ? "Retoques de fachada por 59 €. Trabajos básicos de mejora visible en superficies exteriores accesibles para mejorar apariencia sin reforma completa."
       : "Facade touch-up work for €59. Basic visible touch-up work on accessible exterior surfaces for practical improvement rather than full renovation.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +49,7 @@ export async function generateMetadata({
       description: isEs
         ? "Mejoras visibles en fachadas y superficies exteriores accesibles."
         : "Visible improvement work on accessible exterior surfaces.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -192,7 +193,7 @@ export default async function RetoquesFachadaPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Retoques de Fachada" : "Facade Touch-Up Work",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

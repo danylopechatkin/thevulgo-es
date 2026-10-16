@@ -20,6 +20,7 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/exterior/ajuste-accesorios-pergola-sombra";
+const serviceUrl = (locale: string) => `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +36,10 @@ export async function generateMetadata({
       ? "Ajuste de accesorios de pérgola y sombra por 49 €. Montaje y ajuste básico de accesorios compatibles, elementos de sombra y soportes exteriores sencillos."
       : "Pergola and shade accessory fitting for €49. Basic fitting and adjustment of compatible pergola accessories, shade elements and simple outdoor support items.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +49,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje y ajuste básico de accesorios compatibles de pérgola y sombra."
         : "Basic fitting and adjustment of compatible pergola and shade accessories.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -198,7 +199,7 @@ export default async function AjusteAccesoriosPergolaSombraPage({
         name: isEs
           ? "Ajuste de Accesorios de Pérgola y Sombra"
           : "Pergola / Shade Accessory Fitting",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };
