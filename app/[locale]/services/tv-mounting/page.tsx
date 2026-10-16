@@ -27,6 +27,7 @@ const serviceAreas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/services/tv-mounting`;
 
   const title = isEs
     ? "Montaje de TV en Valencia | Soportes, cables y soundbar | THEVULGO"
@@ -61,16 +62,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "TV handyman Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/tv-mounting`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/services/tv-mounting`,
-        en: `${baseUrl}/en/services/tv-mounting`,
+        en: `${baseUrl}/services/tv-mounting`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/tv-mounting`,
+      url: pageUrl,
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -85,7 +86,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function TvMountingPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/services/tv-mounting`;
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/services/tv-mounting`;
 
   const offers = isEs
   ? [

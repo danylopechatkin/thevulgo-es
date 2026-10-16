@@ -43,6 +43,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/colgar-tv-valencia`;
 
   const title = isEs
     ? "Colgar TV en Valencia | Instalación de Televisores en Pared | THEVULGO"
@@ -87,17 +88,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/colgar-tv-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/colgar-tv-valencia`,
-        en: `${baseUrl}/en/colgar-tv-valencia`,
+        en: `${baseUrl}/colgar-tv-valencia`,
         "x-default": `${baseUrl}/es/colgar-tv-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/colgar-tv-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -108,6 +109,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ColgarTvValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/colgar-tv-valencia`;
 
   const estimateHref = `/${locale}/estimate?category=tv`;
 
@@ -255,14 +257,14 @@ export default async function ColgarTvValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/colgar-tv-valencia#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs ? "Colgar TV en Valencia" : "TV wall mounting in Valencia",
         serviceType: isEs ? "Colgar TV en pared" : "TV wall mounting",
         provider: {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/colgar-tv-valencia`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -302,7 +304,7 @@ export default async function ColgarTvValenciaPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Colgar TV Valencia" : "TV wall mounting Valencia",
-            item: `${baseUrl}/${locale}/colgar-tv-valencia`,
+            item: pageUrl,
           },
         ],
       },

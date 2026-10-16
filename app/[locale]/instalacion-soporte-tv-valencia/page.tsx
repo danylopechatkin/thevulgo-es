@@ -43,6 +43,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalacion-soporte-tv-valencia`;
 
   const title = isEs
     ? "Instalación de Soporte TV en Valencia | Fijo, Inclinable y Articulado | THEVULGO"
@@ -88,17 +89,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/instalacion-soporte-tv-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/instalacion-soporte-tv-valencia`,
-        en: `${baseUrl}/en/instalacion-soporte-tv-valencia`,
+        en: `${baseUrl}/instalacion-soporte-tv-valencia`,
         "x-default": `${baseUrl}/es/instalacion-soporte-tv-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/instalacion-soporte-tv-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -111,6 +112,7 @@ export default async function InstalacionSoporteTvValenciaPage({
 }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalacion-soporte-tv-valencia`;
 
   const estimateHref = `/${locale}/estimate?category=tv`;
 
@@ -257,7 +259,7 @@ export default async function InstalacionSoporteTvValenciaPage({
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/instalacion-soporte-tv-valencia#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Instalación de soporte TV en Valencia"
           : "TV bracket installation in Valencia",
@@ -268,7 +270,7 @@ export default async function InstalacionSoporteTvValenciaPage({
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/instalacion-soporte-tv-valencia`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -310,7 +312,7 @@ export default async function InstalacionSoporteTvValenciaPage({
             name: isEs
               ? "Instalación de soporte TV Valencia"
               : "TV bracket installation Valencia",
-            item: `${baseUrl}/${locale}/instalacion-soporte-tv-valencia`,
+            item: pageUrl,
           },
         ],
       },

@@ -28,6 +28,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/services/tv-mounting/instalar-soundbar-valencia`;
 
   return {
     title: isEs
@@ -37,9 +38,10 @@ export async function generateMetadata({
       ? "Instalación de soundbar y sistemas de sonido en Valencia. Montaje bajo TV, pared, soportes, altavoces 5.1, Dolby, home cinema, cableado y configuración básica."
       : "Soundbar and home audio installation in Valencia. Under-TV mounting, wall brackets, 5.1 speakers, Dolby, home cinema, cable management and basic setup.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${siteUrl}/es/services/tv-mounting/instalar-soundbar-valencia`,
+        en: `${siteUrl}/services/tv-mounting/instalar-soundbar-valencia`,
       },
     },
     openGraph: {
@@ -49,7 +51,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje limpio de soundbar, altavoces, cableado y sistemas de sonido en Valencia."
         : "Clean soundbar, speaker, cable and home audio installation in Valencia.",
-      url: `${siteUrl}/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -114,6 +116,7 @@ export default async function SoundbarMountingValenciaPage({
 }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/services/tv-mounting/instalar-soundbar-valencia`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -188,7 +191,7 @@ export default async function SoundbarMountingValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Instalar Soundbar en Valencia",
-        item: `${siteUrl}/${locale}/services/tv-mounting/instalar-soundbar-valencia`,
+        item: pageUrl,
       },
     ],
   };
