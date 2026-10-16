@@ -63,6 +63,14 @@ It validates both locales for every route: final 200 without a redirect, one can
 
 The repository retains two known unrelated test failures (legacy `/en/estimate` expectation and public-price qualifier scan) and two known unrelated `react-hooks/set-state-in-effect` ESLint errors. They are outside this package and must not be fixed here.
 
+## Preview
+
+- Code-validation Preview: `dpl_DTNWzLKUzw3diB6GtSLGhaS5XQ8d`
+- Source commit: `d5e0db22ffe10a6e1255f6a138d7340cd66de593`
+- Status: `READY`
+
+Authenticated Preview validation passed 14/14 pages for final HTTP status, canonical, reciprocal alternatives, preserved `x-default`, Open Graph URL, rendered HTML robots and current-page structured-data URL. The Vercel Preview response has the expected protective `x-robots-tag: noindex`; rendered HTML remains `index, follow`.
+
 ## Decision
 
-**DRAFT — READY FOR PREVIEW VERIFICATION.** No merge or production deployment is authorised by this package.
+**READY FOR REVIEW.** This is a Draft-only package. No merge or production deployment is authorised by this package.
