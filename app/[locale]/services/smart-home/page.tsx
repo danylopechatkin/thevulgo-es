@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SmartHomeClient from "./SmartHomeClient";
+import { localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -44,16 +45,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "home automation Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/smart-home`,
+      canonical: localizedUrl(locale, "services/smart-home"),
       languages: {
-        es: `${baseUrl}/es/services/smart-home`,
-        en: `${baseUrl}/en/services/smart-home`,
+        es: localizedUrl("es", "services/smart-home"),
+        en: localizedUrl("en", "services/smart-home"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/smart-home`,
+      url: localizedUrl(locale, "services/smart-home"),
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -68,7 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SmartHomePage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/services/smart-home`;
+  const pageUrl = localizedUrl(locale, "services/smart-home");
 
   const offers = [
     "Smart camera installation",

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { localizedUrl } from "@/lib/technicalRoutes";
 import Link from "next/link";
 import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import {
@@ -136,17 +137,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/${slug}`,
+      canonical: localizedUrl(locale, `services/${slug}`),
       languages: {
-        es: `${baseUrl}/es/services/${slug}`,
-        en: `${baseUrl}/en/services/${slug}`,
+        es: localizedUrl("es", `services/${slug}`),
+        en: localizedUrl("en", `services/${slug}`),
         "x-default": `${baseUrl}/es/services/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/${slug}`,
+      url: localizedUrl(locale, `services/${slug}`),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -198,7 +199,7 @@ export default async function ChangeLampToFanPage({ params }: Props) {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       name: "THEVULGO",
-      url: `${baseUrl}/${locale}/services/${slug}`,
+      url: localizedUrl(locale, `services/${slug}`),
       telephone: `+${phone}`,
       priceRange: "€€",
       areaServed: areas.map((area) => ({
@@ -264,7 +265,7 @@ export default async function ChangeLampToFanPage({ params }: Props) {
           name: isEs
             ? "Cambiar lámpara por ventilador"
             : "Replace lamp with fan",
-          item: `${baseUrl}/${locale}/services/${slug}`,
+          item: localizedUrl(locale, `services/${slug}`),
         },
       ],
     },

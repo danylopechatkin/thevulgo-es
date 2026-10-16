@@ -1,6 +1,7 @@
 // app/[locale]/services/instalacion-ventilador-control-remoto/page.tsx
 
 import type { Metadata } from "next";
+import { localizedUrl } from "@/lib/technicalRoutes";
 import Link from "next/link";
 import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import {
@@ -139,17 +140,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/${slug}`,
+      canonical: localizedUrl(locale, `services/${slug}`),
       languages: {
-        es: `${baseUrl}/es/services/${slug}`,
-        en: `${baseUrl}/en/services/${slug}`,
+        es: localizedUrl("es", `services/${slug}`),
+        en: localizedUrl("en", `services/${slug}`),
         "x-default": `${baseUrl}/es/services/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/${slug}`,
+      url: localizedUrl(locale, `services/${slug}`),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -201,7 +202,7 @@ export default async function RemoteControlFanPage({ params }: Props) {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       name: "THEVULGO",
-      url: `${baseUrl}/${locale}/services/${slug}`,
+      url: localizedUrl(locale, `services/${slug}`),
       telephone: `+${phone}`,
       priceRange: "€€",
       areaServed: areas.map((area) => ({
@@ -285,7 +286,7 @@ export default async function RemoteControlFanPage({ params }: Props) {
           name: isEs
             ? "Instalación de ventilador con control remoto"
             : "Ceiling fan with remote control installation",
-          item: `${baseUrl}/${locale}/services/${slug}`,
+          item: localizedUrl(locale, `services/${slug}`),
         },
       ],
     },

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { localizedUrl } from "@/lib/technicalRoutes";
 import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import Link from "next/link";
 import FanLeadForm from "./FanLeadForm";
@@ -148,17 +149,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/instalacion-ventilador-techo-valencia`,
+      canonical: localizedUrl(locale, "services/instalacion-ventilador-techo-valencia"),
       languages: {
-        es: `${baseUrl}/es/services/instalacion-ventilador-techo-valencia`,
-        en: `${baseUrl}/en/services/instalacion-ventilador-techo-valencia`,
+        es: localizedUrl("es", "services/instalacion-ventilador-techo-valencia"),
+        en: localizedUrl("en", "services/instalacion-ventilador-techo-valencia"),
         "x-default": `${baseUrl}/es/services/instalacion-ventilador-techo-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/instalacion-ventilador-techo-valencia`,
+      url: localizedUrl(locale, "services/instalacion-ventilador-techo-valencia"),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -171,7 +172,7 @@ export default async function CeilingFanInstallationPage({
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/services/instalacion-ventilador-techo-valencia`;
+  const pageUrl = localizedUrl(locale, "services/instalacion-ventilador-techo-valencia");
 
   const estimateHref = "#fan-quote";
 

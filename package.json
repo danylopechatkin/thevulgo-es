@@ -14,7 +14,8 @@
     "test:furniture-canonical": "tsx scripts/audit-furniture-canonical.ts",
     "test:bathroom-canonical": "tsx scripts/audit-bathroom-canonical.ts",
     "test:doors-canonical": "tsx scripts/audit-doors-canonical.ts",
-    "test:exterior-electrical-canonical": "tsx scripts/audit-exterior-electrical-canonical.ts"
+    "test:exterior-electrical-canonical": "tsx scripts/audit-exterior-electrical-canonical.ts",
+    "test:other-pages-canonical": "tsx scripts/audit-other-pages-canonical.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.0",

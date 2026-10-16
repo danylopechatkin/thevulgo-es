@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PlumbingClient from "./PlumbingClient";
+import { localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -44,16 +45,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "plumbing handyman Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/plumbing`,
+      canonical: localizedUrl(locale, "services/plumbing"),
       languages: {
-        es: `${baseUrl}/es/services/plumbing`,
-        en: `${baseUrl}/en/services/plumbing`,
+        es: localizedUrl("es", "services/plumbing"),
+        en: localizedUrl("en", "services/plumbing"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/plumbing`,
+      url: localizedUrl(locale, "services/plumbing"),
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -68,7 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PlumbingPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/services/plumbing`;
+  const pageUrl = localizedUrl(locale, "services/plumbing");
 
   const offers = [
     "Faucet replacement",
