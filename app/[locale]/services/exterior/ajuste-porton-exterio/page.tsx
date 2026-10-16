@@ -20,6 +20,7 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/exterior/ajuste-porton-exterio";
+const serviceUrl = (locale: string) => `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +36,10 @@ export async function generateMetadata({
       ? "Ajuste de portones exteriores de 49 €. Corrección básica de portones, cancelas y accesos exteriores para mejorar apertura, cierre y uso diario."
       : "Gate alignment for €49. Basic correction of gates and outdoor access elements to improve opening, closing and practical daily use.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +49,7 @@ export async function generateMetadata({
       description: isEs
         ? "Corrección práctica de portones, cancelas y accesos exteriores."
         : "Practical correction of gates and outdoor access elements.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -194,7 +195,7 @@ export default async function AjustePortonExteriorPage({
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Ajuste de Portón Exterior" : "Gate Alignment",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

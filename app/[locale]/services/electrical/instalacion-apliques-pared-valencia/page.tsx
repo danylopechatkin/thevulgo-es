@@ -20,6 +20,7 @@ type PageProps = {
 };
 
 const siteUrl = "https://www.thevulgo.es";
+const serviceUrl = (locale: string) => `${siteUrl}${locale === "es" ? "/es" : ""}/services/electrical/instalacion-apliques-pared-valencia`;
 const phoneNumber = "34610076942";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -34,9 +35,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Instalación limpia y segura de apliques de pared en Valencia por 35 €. Iluminación montada en pared para casas, apartamentos, dormitorios, pasillos y salones."
       : "Clean and safe wall light installation in Valencia for €35. Wall-mounted lighting for homes, apartments, bedrooms, hallways and living rooms.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es/services/electrical/instalacion-apliques-pared-valencia`,
+        en: `${siteUrl}/services/electrical/instalacion-apliques-pared-valencia`,
       },
     },
     openGraph: {
@@ -46,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Instalación limpia y segura de iluminación montada en pared en Valencia."
         : "Clean and safe wall-mounted lighting installation in Valencia.",
-      url: `${siteUrl}/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -186,7 +188,7 @@ export default async function WallLightInstallationValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Instalación de Apliques de Pared en Valencia",
-        item: `${siteUrl}/${locale}/services/electrical/instalacion-apliques-pared-valencia`,
+        item: serviceUrl(locale),
       },
     ],
   };

@@ -20,6 +20,7 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/exterior/montaje-pared-exterior";
+const serviceUrl = (locale: string) => `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +36,10 @@ export async function generateMetadata({
       ? "Montaje en pared exterior por 39 €. Instalación de accesorios exteriores, carteles, soportes, pequeños dispositivos y elementos prácticos en superficies adecuadas."
       : "Outdoor wall mounting for €39. Mounting of exterior accessories, signs, holders, small fixtures and practical outdoor items on suitable surfaces.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -48,7 +49,7 @@ export async function generateMetadata({
       description: isEs
         ? "Instalación de accesorios, carteles, soportes y elementos exteriores en pared."
         : "Mounting exterior accessories, signs, holders and practical outdoor items.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -194,7 +195,7 @@ export default async function MontajeParedExteriorPage({
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Montaje en Pared Exterior" : "Outdoor Wall Mounting",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };
