@@ -29,6 +29,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/montaje-tv-valencia`;
 
   return {
     title: isEs
@@ -38,10 +39,10 @@ export async function generateMetadata({
       ? "Montaje de TV en pared en Valencia con soporte fijo, inclinable o articulado, nivelación, TVs grandes, Samsung Frame y cableado limpio. Presupuesto por WhatsApp."
       : "Professional TV mounting in Valencia with fixed, tilting or full-motion brackets, accurate levelling, large TVs, Samsung Frame and clean cable management. Quote by WhatsApp.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-tv-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${siteUrl}/es/montaje-tv-valencia`,
-        en: `${siteUrl}/en/montaje-tv-valencia`,
+        en: `${siteUrl}/montaje-tv-valencia`,
       },
     },
     openGraph: {
@@ -51,7 +52,7 @@ export async function generateMetadata({
       description: isEs
         ? "Instalación limpia, rápida y profesional de televisores en Valencia y alrededores."
         : "Clean, fast and professional TV mounting in Valencia and nearby areas.",
-      url: `${siteUrl}/${locale}/montaje-tv-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -149,6 +150,7 @@ const faqsEn = [
 export default async function TvMountingValenciaPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/montaje-tv-valencia`;
   const faqs = isEs ? faqsEs : faqsEn;
   const catalog = getCatalogServices("TV Mounting");
   const baseIds = new Set(["tv-small", "tv-medium"]);
@@ -237,7 +239,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 3,
         name: isEs ? "Montaje de TV en Valencia" : "TV Mounting in Valencia",
-        item: `${siteUrl}/${locale}/montaje-tv-valencia`,
+        item: pageUrl,
       },
     ],
   };
