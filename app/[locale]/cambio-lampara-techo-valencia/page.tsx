@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { localizedUrl } from "@/lib/technicalRoutes";
 import {
   CheckCircle2,
   ArrowRight,
@@ -53,16 +54,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: {
-      canonical: `${siteUrl}/${locale}/cambio-lampara-techo-valencia`,
+      canonical: localizedUrl(locale, "cambio-lampara-techo-valencia"),
       languages: {
-        es: `${siteUrl}/es/cambio-lampara-techo-valencia`,
-        en: `${siteUrl}/en/cambio-lampara-techo-valencia`,
+        es: localizedUrl("es", "cambio-lampara-techo-valencia"),
+        en: localizedUrl("en", "cambio-lampara-techo-valencia"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/cambio-lampara-techo-valencia`,
+      url: localizedUrl(locale, "cambio-lampara-techo-valencia"),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -508,7 +509,7 @@ export default async function CeilingLampReplacementValenciaPage({
         name: isEs
           ? "Cambio de Lámpara de Techo en Valencia"
           : "Ceiling Lamp Replacement in Valencia",
-        item: `${siteUrl}/${locale}/cambio-lampara-techo-valencia`,
+        item: localizedUrl(locale, "cambio-lampara-techo-valencia"),
       },
     ],
   };

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { localizedUrl } from "@/lib/technicalRoutes";
 import {
   CheckCircle2,
   ArrowRight,
@@ -33,9 +34,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Cambio de interruptor en Valencia por 29 €. Sustitución de interruptores dañados, antiguos o desgastados para casas, pisos y apartamentos."
       : "Light switch replacement in Valencia for €29. Replacement of damaged, old or worn switches for homes and apartments.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/cambio-interruptor-valencia`,
+      canonical: localizedUrl(locale, "cambio-interruptor-valencia"),
       languages: {
-        es: `${siteUrl}/es/cambio-interruptor-valencia`,
+        es: localizedUrl("es", "cambio-interruptor-valencia"),
+        en: localizedUrl("en", "cambio-interruptor-valencia"),
       },
     },
     openGraph: {
@@ -45,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Sustitución de interruptores dañados, antiguos o desgastados en Valencia."
         : "Replacement of damaged, old or worn light switches in Valencia.",
-      url: `${siteUrl}/${locale}/cambio-interruptor-valencia`,
+      url: localizedUrl(locale, "cambio-interruptor-valencia"),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -185,7 +187,7 @@ export default async function SwitchReplacementValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Cambio de Interruptor en Valencia",
-        item: `${siteUrl}/${locale}/cambio-interruptor-valencia`,
+        item: localizedUrl(locale, "cambio-interruptor-valencia"),
       },
     ],
   };

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -10,10 +11,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: isEs ? "Política de privacidad | THEVULGO" : "Privacy policy | THEVULGO",
     description: isEs ? "Información sobre el tratamiento de datos personales en THEVULGO." : "Information about personal data processing at THEVULGO.",
     alternates: {
-      canonical: `https://www.thevulgo.es/${locale}/privacy`,
+      canonical: localizedUrl(locale, "privacy"),
       languages: {
-        es: "https://www.thevulgo.es/es/privacy",
-        en: "https://www.thevulgo.es/en/privacy",
+        es: localizedUrl("es", "privacy"),
+        en: localizedUrl("en", "privacy"),
         "x-default": "https://www.thevulgo.es/es/privacy",
       },
     },

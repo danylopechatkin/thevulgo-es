@@ -1,6 +1,7 @@
 // app/[locale]/services/ventilador-techo-con-luz/page.tsx
 
 import type { Metadata } from "next";
+import { localizedUrl } from "@/lib/technicalRoutes";
 import Link from "next/link";
 import WhatsAppConversionLink from "@/app/components/WhatsAppConversionLink";
 import {
@@ -139,17 +140,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/${slug}`,
+      canonical: localizedUrl(locale, `services/${slug}`),
       languages: {
-        es: `${baseUrl}/es/services/${slug}`,
-        en: `${baseUrl}/en/services/${slug}`,
+        es: localizedUrl("es", `services/${slug}`),
+        en: localizedUrl("en", `services/${slug}`),
         "x-default": `${baseUrl}/es/services/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/${slug}`,
+      url: localizedUrl(locale, `services/${slug}`),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -201,7 +202,7 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       name: "THEVULGO",
-      url: `${baseUrl}/${locale}/services/${slug}`,
+      url: localizedUrl(locale, `services/${slug}`),
       telephone: `+${phone}`,
       priceRange: "€€",
       address: {
@@ -297,7 +298,7 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
           name: isEs
             ? "Ventilador de techo con luz"
             : "Ceiling fan with light",
-          item: `${baseUrl}/${locale}/services/${slug}`,
+          item: localizedUrl(locale, `services/${slug}`),
         },
       ],
     },

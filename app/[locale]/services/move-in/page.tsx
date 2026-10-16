@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import MoveInClient from "./MoveInClient";
+import { localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -43,16 +44,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "new apartment setup Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/move-in`,
+      canonical: localizedUrl(locale, "services/move-in"),
       languages: {
-        es: `${baseUrl}/es/services/move-in`,
-        en: `${baseUrl}/en/services/move-in`,
+        es: localizedUrl("es", "services/move-in"),
+        en: localizedUrl("en", "services/move-in"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/move-in`,
+      url: localizedUrl(locale, "services/move-in"),
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -67,7 +68,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function MoveInPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/services/move-in`;
+  const pageUrl = localizedUrl(locale, "services/move-in");
 
   const offers = [
     "Full apartment setup",

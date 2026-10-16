@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { localizedUrl } from "@/lib/technicalRoutes";
 import {
   CheckCircle2,
   ArrowRight,
@@ -34,9 +35,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Instalación de lámparas colgantes en Valencia por 39 €. Posición cuidada, altura correcta, fijación segura y acabado limpio para casas y apartamentos."
       : "Pendant lamp installation in Valencia for €39. Careful positioning, correct height, secure fixing and clean finish for homes and apartments.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/instalacion-lamparas-colgantes-valencia`,
+      canonical: localizedUrl(locale, "instalacion-lamparas-colgantes-valencia"),
       languages: {
-        es: `${siteUrl}/es/instalacion-lamparas-colgantes-valencia`,
+        es: localizedUrl("es", "instalacion-lamparas-colgantes-valencia"),
+        en: localizedUrl("en", "instalacion-lamparas-colgantes-valencia"),
       },
     },
     openGraph: {
@@ -46,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Lámparas colgantes con posición cuidada y acabado limpio en Valencia."
         : "Pendant lamps with careful positioning and clean finish in Valencia.",
-      url: `${siteUrl}/${locale}/instalacion-lamparas-colgantes-valencia`,
+      url: localizedUrl(locale, "instalacion-lamparas-colgantes-valencia"),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -186,7 +188,7 @@ export default async function PendantLampInstallationValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Instalación de Lámparas Colgantes en Valencia",
-        item: `${siteUrl}/${locale}/instalacion-lamparas-colgantes-valencia`,
+        item: localizedUrl(locale, "instalacion-lamparas-colgantes-valencia"),
       },
     ],
   };

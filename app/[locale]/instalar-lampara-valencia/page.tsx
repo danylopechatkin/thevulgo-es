@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { localizedUrl } from "@/lib/technicalRoutes";
 import {
   ArrowRight,
   BadgeCheck,
@@ -85,17 +86,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/instalar-lampara-valencia`,
+      canonical: localizedUrl(locale, "instalar-lampara-valencia"),
       languages: {
-        es: `${baseUrl}/es/instalar-lampara-valencia`,
-        en: `${baseUrl}/en/instalar-lampara-valencia`,
+        es: localizedUrl("es", "instalar-lampara-valencia"),
+        en: localizedUrl("en", "instalar-lampara-valencia"),
         "x-default": `${baseUrl}/es/instalar-lampara-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/instalar-lampara-valencia`,
+      url: localizedUrl(locale, "instalar-lampara-valencia"),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -253,7 +254,7 @@ export default async function InstalarLamparaValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/instalar-lampara-valencia#service`,
+        "@id": `${localizedUrl(locale, "instalar-lampara-valencia")}#service`,
         name: isEs
           ? "Instalar lámpara en Valencia"
           : "Light installation in Valencia",
@@ -264,7 +265,7 @@ export default async function InstalarLamparaValenciaPage({ params }: Props) {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/instalar-lampara-valencia`,
+        url: localizedUrl(locale, "instalar-lampara-valencia"),
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -306,7 +307,7 @@ export default async function InstalarLamparaValenciaPage({ params }: Props) {
             name: isEs
               ? "Instalar lámpara Valencia"
               : "Light installation Valencia",
-            item: `${baseUrl}/${locale}/instalar-lampara-valencia`,
+            item: localizedUrl(locale, "instalar-lampara-valencia"),
           },
         ],
       },

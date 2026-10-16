@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { localizedUrl } from "@/lib/technicalRoutes";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -31,13 +32,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/${locale}/guias`,
-      languages: { es: `${baseUrl}/es/guias`, en: `${baseUrl}/en/guias` },
+      canonical: localizedUrl(locale, "guias"),
+      languages: { es: localizedUrl("es", "guias"), en: localizedUrl("en", "guias") },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/guias`,
+      url: localizedUrl(locale, "guias"),
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -59,7 +60,7 @@ export default async function GuidesPage({ params }: Props) {
       "@type": "CollectionPage",
       name: isEs ? "Guías de manitas e instalaciones en Valencia" : "Handyman and installation guides in Valencia",
       description: isEs ? "Centro de guías prácticas de THEVULGO." : "THEVULGO practical guide centre.",
-      url: `${baseUrl}/${locale}/guias`,
+      url: localizedUrl(locale, "guias"),
       hasPart: guides.map((guide) => ({
         "@type": "Article",
         headline: textFor(guide.title, locale),
@@ -71,7 +72,7 @@ export default async function GuidesPage({ params }: Props) {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: isEs ? "Inicio" : "Home", item: `${baseUrl}/${locale}` },
-        { "@type": "ListItem", position: 2, name: isEs ? "Guías" : "Guides", item: `${baseUrl}/${locale}/guias` },
+        { "@type": "ListItem", position: 2, name: isEs ? "Guías" : "Guides", item: localizedUrl(locale, "guias") },
       ],
     },
   ];

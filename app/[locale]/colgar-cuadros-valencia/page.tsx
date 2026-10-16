@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { localizedUrl } from "@/lib/technicalRoutes";
 import {
   ArrowRight,
   BadgeCheck,
@@ -87,17 +88,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/colgar-cuadros-valencia`,
+      canonical: localizedUrl(locale, "colgar-cuadros-valencia"),
       languages: {
-        es: `${baseUrl}/es/colgar-cuadros-valencia`,
-        en: `${baseUrl}/en/colgar-cuadros-valencia`,
+        es: localizedUrl("es", "colgar-cuadros-valencia"),
+        en: localizedUrl("en", "colgar-cuadros-valencia"),
         "x-default": `${baseUrl}/es/colgar-cuadros-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/colgar-cuadros-valencia`,
+      url: localizedUrl(locale, "colgar-cuadros-valencia"),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -255,7 +256,7 @@ export default async function ColgarCuadrosValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/colgar-cuadros-valencia#service`,
+        "@id": `${localizedUrl(locale, "colgar-cuadros-valencia")}#service`,
         name: isEs
           ? "Colgar cuadros en Valencia"
           : "Picture hanging in Valencia",
@@ -264,7 +265,7 @@ export default async function ColgarCuadrosValenciaPage({ params }: Props) {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/colgar-cuadros-valencia`,
+        url: localizedUrl(locale, "colgar-cuadros-valencia"),
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -306,7 +307,7 @@ export default async function ColgarCuadrosValenciaPage({ params }: Props) {
             name: isEs
               ? "Colgar cuadros Valencia"
               : "Picture hanging Valencia",
-            item: `${baseUrl}/${locale}/colgar-cuadros-valencia`,
+            item: localizedUrl(locale, "colgar-cuadros-valencia"),
           },
         ],
       },

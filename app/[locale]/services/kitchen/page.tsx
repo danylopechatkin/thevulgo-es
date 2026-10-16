@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import KitchenClient from "./KitchenClient";
+import { localizedUrl } from "@/lib/technicalRoutes";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -43,16 +44,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           "kitchen handyman Valencia",
         ],
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/kitchen`,
+      canonical: localizedUrl(locale, "services/kitchen"),
       languages: {
-        es: `${baseUrl}/es/services/kitchen`,
-        en: `${baseUrl}/en/services/kitchen`,
+        es: localizedUrl("es", "services/kitchen"),
+        en: localizedUrl("en", "services/kitchen"),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/kitchen`,
+      url: localizedUrl(locale, "services/kitchen"),
       siteName: "THEVULGO",
       type: "website",
       locale: isEs ? "es_ES" : "en_US",
@@ -67,7 +68,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function KitchenPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
-  const pageUrl = `${baseUrl}/${locale}/services/kitchen`;
+  const pageUrl = localizedUrl(locale, "services/kitchen");
 
   const offers = [
     "Kitchen cabinet installation",
