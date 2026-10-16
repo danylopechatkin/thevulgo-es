@@ -29,6 +29,7 @@ const phone = "34610076942";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/handyman-valencia`;
   const title = isEs
     ? "Manitas en Valencia | TV, muebles y reparaciones | THEVULGO"
     : "English-Speaking Handyman in Valencia | THEVULGO";
@@ -39,17 +40,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/${locale}/handyman-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/handyman-valencia`,
-        en: `${baseUrl}/en/handyman-valencia`,
+        en: `${baseUrl}/handyman-valencia`,
         "x-default": `${baseUrl}/es/handyman-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/handyman-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -60,6 +61,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function HandymanValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/handyman-valencia`;
   const whatsappText = encodeURIComponent(
     isEs
       ? "Hola. Necesito un servicio de manitas en Valencia.\n\nTrabajo:\nZona:\n¿Cuándo lo necesito?:\nAdjunto fotos:"
@@ -138,7 +140,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "Service",
     name: isEs ? "Servicio de manitas en Valencia" : "Handyman service in Valencia",
-    url: `${baseUrl}/${locale}/handyman-valencia`,
+    url: pageUrl,
     provider: { "@type": "LocalBusiness", name: "THEVULGO", telephone: `+${phone}`, areaServed: "Valencia" },
     areaServed: "Valencia",
     hasOfferCatalog: {

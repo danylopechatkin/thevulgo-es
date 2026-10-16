@@ -67,6 +67,7 @@ const areaPages = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/${slug}`;
 
   const title = isEs
     ? "Manitas en Mislata Valencia | Reparaciones y Montaje | THEVULGO"
@@ -113,17 +114,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/${slug}`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        en: `${baseUrl}/${slug}`,
         "x-default": `${baseUrl}/es/${slug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/${slug}`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -135,7 +136,7 @@ export default async function HandymanMislataPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/${slug}`;
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/${slug}`;
   const estimateHref = `/${locale}/estimate?category=handyman`;
 
   const whatsappText = encodeURIComponent(
