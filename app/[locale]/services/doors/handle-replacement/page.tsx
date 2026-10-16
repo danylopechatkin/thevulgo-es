@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/doors/handle-replacement";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Cambio de manillas de puerta por 29 €. Sustitución de manillas gastadas, rotas o antiguas por herrajes más limpios y modernos para puertas interiores."
       : "Door handle replacement for €29. Replace worn, damaged or outdated door handles with cleaner, better-looking hardware for interior doors.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Sustitución de manillas, pomos y herrajes de puertas interiores."
         : "Replacement of door handles, knobs and interior door hardware.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -192,7 +194,7 @@ export default async function HandleReplacementPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Cambio de Manilla de Puerta" : "Door Handle Replacement",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

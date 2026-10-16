@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/doors/loose-handle-fixing";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Reparación de manillas sueltas por 25 €. Apriete, ajuste y estabilización de manillas, pomos y herrajes visibles que se mueven o se sienten inseguros."
       : "Fix loose door handles for €25. Tightening and stabilizing loose handles, knobs and visible fittings that move, wobble or feel unreliable.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Apriete y ajuste de manillas, pomos y herrajes sueltos de puertas interiores."
         : "Tightening and adjustment of loose handles, knobs and interior door hardware.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -192,7 +194,7 @@ export default async function LooseHandleFixingPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Reparar Manilla Suelta" : "Fix Loose Door Handle",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

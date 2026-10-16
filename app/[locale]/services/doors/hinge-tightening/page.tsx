@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/doors/hinge-tightening";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Apriete de bisagras de puerta por 25 €. Corrección de bisagras sueltas que afectan la apertura, cierre o alineación de puertas interiores."
       : "Door hinge tightening for €25. Tightening loose hinges and making small corrections to improve door opening, closing and alignment.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Apriete y corrección básica de bisagras sueltas en puertas interiores."
         : "Tightening and small correction of loose hinges on interior doors.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -192,7 +194,7 @@ export default async function HingeTighteningPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Apriete de Bisagras de Puerta" : "Hinge Tightening",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

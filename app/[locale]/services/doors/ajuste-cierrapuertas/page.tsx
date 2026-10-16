@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/doors/ajuste-cierrapuertas";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Ajuste básico de cierrapuertas por 39 €. Corrección de cierrapuertas compatibles para mejorar el movimiento, reducir golpes y suavizar apertura y cierre."
       : "Door closer adjustment for €39. Basic adjustment of compatible closers to improve door movement, reduce slamming and make opening and closing smoother.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Ajuste de cierrapuertas para mejorar cierre, movimiento y reducir golpes."
         : "Door closer adjustment to improve movement, closing action and reduce slamming.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -194,7 +196,7 @@ export default async function AjusteCierrapuertasPage({
         "@type": "ListItem",
         position: 4,
         name: isEs ? "Ajuste de Cierrapuertas" : "Door Closer Adjustment",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };

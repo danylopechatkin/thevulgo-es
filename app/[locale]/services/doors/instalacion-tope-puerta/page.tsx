@@ -20,6 +20,8 @@ type PageProps = {
 const siteUrl = "https://www.thevulgo.es";
 const phoneNumber = "34610076942";
 const pagePath = "/services/doors/instalacion-tope-puerta";
+const serviceUrl = (locale: string) =>
+  `${siteUrl}${locale === "es" ? "/es" : ""}${pagePath}`;
 
 export async function generateMetadata({
   params,
@@ -35,10 +37,10 @@ export async function generateMetadata({
       ? "Instalación de topes de puerta por 25 €. Montaje de topes sencillos para proteger paredes, muebles, manillas y evitar golpes repetidos."
       : "Door stopper installation for €25. Installation of simple door stoppers to protect walls, furniture and handles from repeated impact damage.",
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: serviceUrl(locale),
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: serviceUrl("en"),
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje de topes de puerta para proteger paredes, muebles y manillas."
         : "Door stopper mounting to protect walls, furniture and handles.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: serviceUrl(locale),
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -196,7 +198,7 @@ export default async function InstalacionTopePuertaPage({
         name: isEs
           ? "Instalación de Tope de Puerta"
           : "Door Stopper Installation",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: serviceUrl(locale),
       },
     ],
   };
