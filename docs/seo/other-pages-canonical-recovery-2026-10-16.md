@@ -110,8 +110,20 @@ legacy `/en/estimate` expectation and the public-pricing legacy qualifier scan.
 in `GrowthAnalyticsClient.tsx` and `AnalyticsConsent.tsx` (plus warnings). No
 new failure is introduced by this package.
 
-## Pending release metadata
+## Draft PR and Preview
 
-The final branch HEAD, Vercel Preview deployment ID and Draft PR URL are added
-after the branch is pushed and its Preview is `READY`. No merge or production
-deployment is authorized or performed by this package.
+Code-validation HEAD: `32ffade4d47628de462c0ab56ca2cdf20f610304`.
+
+- Draft PR: [#13](https://github.com/danylopechatkin/thevulgo-es/pull/13)
+- Vercel Preview: `dpl_EttSaYuANGhEKPa63SHZkwvgZXtR` (`READY`)
+- Preview deployment source: `32ffade4d47628de462c0ab56ca2cdf20f610304`
+
+The authenticated Preview HTML check passed 36/36 changed EN/ES pages. It
+confirmed final HTTP 200 responses, public canonical and reciprocal alternates,
+preserved robots/x-default/title/description/H1, expected Open Graph and
+current-page structured-data values. Vercel deployment protection returns its
+own redirect to ordinary unauthenticated fetches; verification therefore used
+the authenticated Vercel deployment fetch. Any Preview `x-robots-tag: noindex`
+is environment protection, not a production SEO change.
+
+No merge or production deployment is authorized or performed by this package.
