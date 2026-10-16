@@ -16,7 +16,8 @@
     "test:doors-canonical": "tsx scripts/audit-doors-canonical.ts",
     "test:exterior-electrical-canonical": "tsx scripts/audit-exterior-electrical-canonical.ts",
     "test:other-pages-canonical": "tsx scripts/audit-other-pages-canonical.ts",
-    "test:tv-commercial-canonical": "tsx scripts/audit-tv-commercial-canonical.ts"
+    "test:tv-commercial-canonical": "tsx scripts/audit-tv-commercial-canonical.ts",
+    "test:handyman-commercial-canonical": "tsx scripts/audit-handyman-commercial-canonical.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.0",
