@@ -47,6 +47,11 @@ hreflang remains unchanged.
   `GrowthAnalyticsClient.tsx` and `AnalyticsConsent.tsx`; no package-specific
   failures are expected.
 
-Preview, full regression results, final branch SHA and deployment ID are added
-to the Draft PR after the final commit. No merge or production deployment is
-part of this package.
+Code commit: `44bd2f57898465bc3908d6422f2a7555286f34eb`.
+Its Vercel Preview deployment `dpl_6TfZBQFAHpiJjUqe3XgJQge1moZc` reached
+`READY`; all **24/24** protected Preview HTML checks passed. Preview emitted
+`x-robots-tag: noindex` as expected deployment protection while HTML robots
+remained `index, follow`.
+
+The current Draft PR is #12. No merge or production deployment is part of this
+package.
