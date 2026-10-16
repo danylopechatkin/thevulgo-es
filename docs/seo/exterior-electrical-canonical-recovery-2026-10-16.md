@@ -53,5 +53,10 @@ Its Vercel Preview deployment `dpl_6TfZBQFAHpiJjUqe3XgJQge1moZc` reached
 `x-robots-tag: noindex` as expected deployment protection while HTML robots
 remained `index, follow`.
 
+Final release-validation HEAD: `70a9444fdb54980280504b593affcc9c670b60a5`.
+Its documentation-only Vercel Preview
+`dpl_CvZANFwhVmuSb7CFQqAH6jH7cwCu` is `READY`. It preserves the code-preview
+history above while confirming the final reviewed branch state.
+
 The current Draft PR is #12. No merge or production deployment is part of this
 package.
