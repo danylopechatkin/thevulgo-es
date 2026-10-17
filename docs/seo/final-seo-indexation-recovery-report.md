@@ -41,7 +41,7 @@ The Coverage export has a last reporting point of 2026-10-12 and records histori
 
 - The available 5xx drilldown contains exactly 138 unique URLs and matches the repository audit inventory exactly. Current production audit: 129 final 200, 9 intentional final 404, 0 final 5xx and 0 redirect loops.
 - The Coverage summary says 139 server errors, but no 139th URL is present in the available drilldown. **139TH GSC 5XX URL — DRILLDOWN REQUIRED.**
-- The available 404 drilldown contains 101 URLs: 76 now reach a relevant final 200 through one permanent redirect; 25 remain final 404 (six via legacy locale redirects and nineteen directly). No mass redirect was added. The stale font asset is an intentional 404; the other final 404 routes require relevance review before redirecting.
+- The available 404 drilldown contains 101 URLs: 77 now reach a relevant final 200 through one permanent redirect; 24 remain final 404 (six via legacy locale redirects and eighteen directly). No mass redirect was added. The stale font asset is an intentional 404; the other final 404 routes require relevance review before redirecting.
 - The crawled-not-indexed drilldown has 147 URLs, not the 152 reported by the Coverage summary: 70 currently return 200, 76 are historical redirect URLs and one currently returns 404. The missing five URLs require a fresh drilldown before a complete URL-level decision.
 - The discovered-not-indexed drilldown has 421 URLs and all currently return 200. Current 200 alone does not prove that Google should index them. Their indexability, internal-link support, intent and Google-selected canonical require URL Inspection or a refreshed Search Console export.
 - The noindex drilldown has 69 URLs against the summary's 70; most examples are legacy `/en/` or market variants. The missing URL requires drilldown data. No noindex policy was changed.
@@ -80,7 +80,7 @@ This section supersedes the preliminary current-status fields in the original in
 | Historical GSC issue | Exported URLs available | Current result | Production conclusion |
 |---|---:|---|---|
 | Server error (5xx) | 138 | 103 direct 200, 26 redirected 200, 2 direct 404, 7 redirected 404 | 129 final 200, 9 intentional final 404, **0 final 5xx**, 0 loops |
-| Not found (404) | 101 | 76 permanent redirects to 200, 19 direct 404, 6 locale redirects to 404 | 76 historically broken URLs are now resolved; 25 still require an explicit route decision |
+| Not found (404) | 101 | 77 permanent redirects to 200, 18 direct 404, 6 locale redirects to 404 | 77 historically broken URLs are now resolved; 24 still require an explicit route decision |
 | Crawled, not indexed | 147 | 70 direct 200, 59 redirected 200, 17 permanent redirects to 200, 1 direct 404 | HTTP alone cannot establish the indexing cause |
 | Discovered, not indexed | 421 | 421 direct 200 | HTTP alone cannot establish the indexing cause |
 
@@ -96,10 +96,10 @@ The route-by-route decision table is in `docs/seo/gsc-404-current-route-decision
 |---|---:|---|
 | KEEP 404 | 24 | 23 are service/city combinations that the current city route guard intentionally rejects as unsupported and are absent from the sitemap; one is an obsolete hashed font asset already listed as intentionally missing. A Valencia page is not a relevant replacement for a Madrid, Barcelona or Alicante URL. |
 | FIX ACTIVE ROUTE | 0 | No active route is currently known to be unintentionally returning 404. |
-| RELEVANT 301 | 1 | `/es/instalacion-lamparas-colgantes` has a one-to-one Spanish successor: `/es/instalacion-lamparas-colgantes-valencia`, which returns 200 and is in the sitemap. |
+| RELEVANT 301 | 0 pending | PR #24 released the one-to-one Spanish redirect `/es/instalacion-lamparas-colgantes` → `/es/instalacion-lamparas-colgantes-valencia`; current production verification is 308 → 200. |
 | REVIEW | 0 | No ambiguous 404 remains in this exported set. |
 
-The one redirect candidate is deliberately **not** included in this documentation PR. It requires a small, separate Draft PR with one permanent rule, a no-chain regression test and Preview verification. No broad redirect is justified by this audit.
+PR #24 released the only confirmed redirect candidate with a one-hop regression test. No broad redirect is justified by this audit.
 
 ### Crawled and discovered commercial priorities
 
@@ -135,16 +135,15 @@ Each currently self-serves at the public URL but declares its canonical as the `
 ### A — VERIFIED FIXED OR INTENTIONAL ON PRODUCTION
 
 - All 138 URLs in the available 5xx drilldown: 129 final 200, nine intentional final 404, zero final 5xx and zero redirect loops.
-- 76 of the 101 available historical 404 URLs: a permanent redirect now reaches a final 200.
+- 77 of the 101 available historical 404 URLs: a permanent redirect now reaches a final 200.
 - 24 remaining 404 decisions: intentionally retained 404s, documented individually.
 - 69 available historical noindex URLs: current noindex/404 behaviour matches the existing estimate-flow or non-indexable market policy.
 - 65 available historical canonical-alternate URLs: current final 200 pages have a single self canonical in this production audit.
 
 ### B — ACTION REQUIRED
 
-- Create a separate Draft PR for the one-to-one Spanish redirect: `/es/instalacion-lamparas-colgantes` → `/es/instalacion-lamparas-colgantes-valencia`.
-- Prepare a separate page-local metadata review for the four public TV URLs listed above. Preserve Spanish metadata, titles, H1, price, CTA, forms and routing; test rendered production-equivalent HTML before any release.
-- Keep the two fan-route decisions in policy review. Their Spanish alternates still redirect to a different broad service and must not be represented as confirmed translation pairs.
+- Draft PR #25 contains a separate page-local metadata review for the four public TV URLs listed above. Preserve Spanish metadata, titles, H1, price, CTA, forms and routing; production release remains unapproved.
+- Draft PR #26 applies the documented conservative Fan policy: its Spanish redirects remain untouched and must not be represented as translation pairs.
 
 ### C — GOOGLE DATA REQUIRED
 

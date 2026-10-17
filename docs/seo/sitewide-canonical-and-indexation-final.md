@@ -53,7 +53,9 @@ PR #24 was released to production. It provides a one-step permanent Spanish
 redirect from `/es/instalacion-lamparas-colgantes` to the live, same-language
 `/es/instalacion-lamparas-colgantes-valencia`. Production verified source 308,
 target 200, no loop, no production `x-robots-tag`, 138 city-route checks passed,
-and Vercel reported no new runtime-error cluster.
+and Vercel reported no new runtime-error cluster. The refreshed 807-URL audit
+now records 77 of 101 exported historical 404 URLs as final 200 through a
+relevant redirect; 24 remain intentionally final 404.
 
 The historical Google export remains incomplete: one 5xx URL, one 404 URL, five
 crawled-not-indexed URLs and one noindex URL are missing from the available
