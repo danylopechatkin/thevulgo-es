@@ -61,3 +61,10 @@ This package remains Draft-only. Its exact commit must receive a READY Vercel
 Preview and the rendered audit must be repeated there, with Preview's deployment
 protection `x-robots-tag: noindex` treated only as an environment header. A
 production release requires separate authorization.
+
+## Final Preview
+
+- Implementation commit: `c7aeb5ab49a683f474343ba08cc2d0ee59c6fdeb`.
+- Vercel Preview: `dpl_HEZwHoJWALK8HsgdBCMc7ykccpXV` — READY.
+- All eight EN/ES Preview pages returned 200 with the expected public canonical,
+  reciprocal hreflang, current `og:url` and HTML `index, follow`.
