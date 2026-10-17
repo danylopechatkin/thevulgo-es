@@ -47,7 +47,7 @@ const baseUrl = "https://www.thevulgo.es";
 const phone = "34610076942";
 
 export default function SmallJobLanding({ locale, path, serviceName, copy, related }: Props) {
-  const pageUrl = `${baseUrl}/${locale}/${path}`;
+  const pageUrl = `${baseUrl}${locale === "es" ? "/es" : ""}/${path}`;
   const whatsappHref = `https://wa.me/${phone}?text=${encodeURIComponent(copy.whatsappMessage)}`;
 
   const serviceSchema = {

@@ -9,6 +9,7 @@ const path = "colgar-espejos-valencia";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/${path}`;
   const title = isEs
     ? "Colgar Espejos en Valencia | Montaje Seguro | THEVULGO"
     : "Mirror Hanging in Valencia | Safe Installation | THEVULGO";
@@ -19,14 +20,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/${locale}/${path}`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/${path}`,
-        en: `${baseUrl}/en/${path}`,
+        en: `${baseUrl}/${path}`,
         "x-default": `${baseUrl}/es/${path}`,
       },
     },
-    openGraph: { title, description, url: `${baseUrl}/${locale}/${path}`, siteName: "THEVULGO", type: "website", locale: isEs ? "es_ES" : "en_GB" },
+    openGraph: { title, description, url: pageUrl, siteName: "THEVULGO", type: "website", locale: isEs ? "es_ES" : "en_GB" },
     robots: { index: true, follow: true },
   };
 }

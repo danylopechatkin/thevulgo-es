@@ -1,0 +1,40 @@
+import assert from "node:assert/strict";
+
+const baseUrl = (process.env.SPECIAL_SERVICES_AUDIT_BASE_URL || "http://localhost:3000").replace(/\/$/, "");
+const productionBaselineUrl = process.env.SPECIAL_SERVICES_PRODUCTION_BASELINE_URL?.replace(/\/$/, "");
+const siteUrl = "https://www.thevulgo.es";
+const paths = ["electricista-valencia", "ocultar-cables-valencia", "home-cinema-valencia", "instalacion-proyectores-valencia", "instalar-proyector-techo-valencia", "montaje-proyector-valencia", "colgar-espejos-valencia", "instalacion-barras-cortina-valencia"];
+
+function tags(html: string) { return html.match(/<(?:link|meta)[^>]+>/gi) ?? []; }
+function attr(tag: string, name: string) { return tag.match(new RegExp(`${name}=["']([^"']+)["']`, "i"))?.[1] ?? ""; }
+function tagWith(html: string, name: string, value: string) { return tags(html).find((tag) => new RegExp(`${name}=["']${value}["']`, "i").test(tag)) ?? ""; }
+function jsonLd(html: string) { return Array.from(html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)).map((match) => JSON.parse(match[1])); }
+function valuesByKey(value: unknown, key: string): unknown[] { if (Array.isArray(value)) return value.flatMap((item) => valuesByKey(item, key)); if (!value || typeof value !== "object") return []; const record = value as Record<string, unknown>; return [record[key], ...Object.values(record).flatMap((item) => valuesByKey(item, key))].filter((item) => item !== undefined); }
+function title(html: string) { return html.match(/<title>([\s\S]*?)<\/title>/i)?.[1].trim() ?? ""; }
+function h1(html: string) { return html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim() ?? ""; }
+function hrefs(html: string, pattern: RegExp) { return Array.from(html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>/gi)).map((match) => match[1]).filter((href) => pattern.test(href)).sort(); }
+function prices(html: string) { return (html.match(/(?:€\s?\d[\d.,]*|\d[\d.,]*\s?€)/g) ?? []).sort(); }
+function faq(html: string) { return jsonLd(html).flatMap((item) => valuesByKey(item, "mainEntity")).filter(Array.isArray).flat().filter((item) => item?.["@type"] === "Question").map((item) => JSON.stringify(item)).sort(); }
+function baselineFields(html: string, locale: "en" | "es") { return { title: title(html), description: attr(tagWith(html, "name", "description"), "content"), h1: h1(html), robots: attr(tagWith(html, "name", "robots"), "content"), xDefault: attr(tagWith(html, "hreflang", "x-default"), "href"), spanishAlternate: attr(tagWith(html, "hreflang", "es"), "href"), spanishCanonical: locale === "es" ? attr(tags(html).find((tag) => /rel=["']canonical["']/i.test(tag)) ?? "", "href") : undefined, prices: prices(html), whatsapp: hrefs(html, /(?:wa\.me|whatsapp)/i), telephone: hrefs(html, /^tel:/i), estimate: hrefs(html, /estimate/i), forms: (html.match(/<form\b/gi) ?? []).length, faq: faq(html) }; }
+
+async function check(path: string) {
+  for (const locale of ["en", "es"] as const) {
+    const pathname = locale === "es" ? `/es/${path}` : `/${path}`;
+    const expected = `${siteUrl}${pathname}`;
+    const response = await fetch(`${baseUrl}${pathname}`, { redirect: "manual" });
+    assert.equal(response.status, 200, `${pathname} status`); assert.equal(response.headers.get("location"), null, `${pathname} redirect`); assert.equal(response.headers.get("x-robots-tag"), null, `${pathname} x-robots`);
+    const html = await response.text(); const canonical = tags(html).filter((tag) => /rel=["']canonical["']/i.test(tag));
+    assert.equal(canonical.length, 1, `${pathname} canonical count`); assert.equal(attr(canonical[0], "href"), expected, `${pathname} canonical`);
+    assert.equal(attr(tagWith(html, "hreflang", "en"), "href"), `${siteUrl}/${path}`, `${pathname} EN hreflang`); assert.equal(attr(tagWith(html, "hreflang", "es"), "href"), `${siteUrl}/es/${path}`, `${pathname} ES hreflang`);
+    assert.equal(attr(tagWith(html, "property", "og:url"), "content"), expected, `${pathname} og:url`); assert.equal(attr(tagWith(html, "name", "robots"), "content"), "index, follow", `${pathname} robots`);
+    const data = jsonLd(html); const breadcrumbs = valuesByKey(data, "itemListElement").filter(Array.isArray).map((items) => (items as Array<Record<string, unknown>>).at(-1)?.item);
+    assert.ok(breadcrumbs.includes(expected), `${pathname} final breadcrumb`); assert.ok(!html.includes(`${siteUrl}/en/${path}`), `${pathname} redirecting current-page URL`);
+    if (productionBaselineUrl) {
+      const baseline = await fetch(`${productionBaselineUrl}${pathname}`, { redirect: "manual" });
+      assert.equal(baseline.status, 200, `${pathname} production baseline status`);
+      assert.deepEqual(baselineFields(html, locale), baselineFields(await baseline.text(), locale), `${pathname} protected production baseline fields`);
+    }
+  }
+}
+async function main() { await Promise.all(paths.map(check)); console.log(`Passed ${paths.length * 2} rendered Special Services canonical HTML checks.`); }
+main().catch((error) => { console.error(error); process.exitCode = 1; });

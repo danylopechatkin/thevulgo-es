@@ -27,6 +27,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/montaje-proyector-valencia`;
 
   return {
     title: isEs
@@ -36,9 +37,10 @@ export async function generateMetadata({
       ? "Montaje profesional de proyectores en Valencia. Instalación en techo o pared, nivelación precisa, gestión de cables HDMI, soportes y ajuste básico de imagen."
       : "Professional projector mounting in Valencia. Ceiling or wall installation, precise alignment, HDMI cable management, brackets and basic image setup.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-proyector-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${siteUrl}/es/montaje-proyector-valencia`,
+        en: `${siteUrl}/montaje-proyector-valencia`,
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Instalación limpia y segura de proyectores en Valencia y alrededores."
         : "Clean and safe projector installation in Valencia and nearby areas.",
-      url: `${siteUrl}/${locale}/montaje-proyector-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -113,6 +115,7 @@ export default async function ProjectorMountingValenciaPage({
 }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/montaje-proyector-valencia`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -187,7 +190,7 @@ export default async function ProjectorMountingValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Proyector en Valencia",
-        item: `${siteUrl}/${locale}/montaje-proyector-valencia`,
+        item: pageUrl,
       },
     ],
   };
