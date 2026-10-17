@@ -3,8 +3,8 @@
 ## Production baseline and releases
 
 - Starting production revision: `cd8c3f09bcc1a1e324be890d734e0b5b5a831108`.
-- Current production revision: `82a8cab9a8e185fa0ca80fab651d39f27669a0ba`.
-- Current production deployment: `dpl_F1abKhhnaeC7f9FNB46u3fxRsGTH` — `READY`.
+- Current production revision: `c281320ece6ac4082514a68325c03ecdb88769d9`.
+- Current production deployment: `dpl_GHauiQtWzK17QXTJhMuCNgurmpis` — `READY`.
 - Google Search Console Performance baseline: unavailable. The approved release waiver was used only for PRs #17, #19, #20 and #18. No traffic, position, click or impression figures are inferred from that absence.
 
 | PR | Scope | Merge SHA | Production deployment | Verified result |
@@ -14,6 +14,7 @@
 | #20 | Commercial Pladur (13 routes) | `c9cdda8fa57f3ee8b425bedee1f9a7cd46d6ad6b` | `dpl_4qfUjJdn7PHo3mFsHCGcDBxoYWLE` | 26/26 |
 | #18 | Renovations (74 routes) | `ac3e257db7511198db964dc3d1c3fea70684246a` | `dpl_FVn11HqEt6jNLsAdeYXMjDRU5xz7` | 148/148 |
 | #22 | English homepage sitemap entry | `82a8cab9a8e185fa0ca80fab651d39f27669a0ba` | `dpl_F1abKhhnaeC7f9FNB46u3fxRsGTH` | sitemap XML verified |
+| #24 | One confirmed Spanish 404 redirect | `c281320ece6ac4082514a68325c03ecdb88769d9` | `dpl_GHauiQtWzK17QXTJhMuCNgurmpis` | source 308 → same-language target 200 |
 
 The four metadata packages were released in the approved order. Every production audit checked rendered HTML, not only source metadata. The pre-existing suites stayed green: IKEA/Furniture 8/8, Handyman 14/14, TV Mounting 10/10, Other Pages 36/36, Exterior/Electrical 24/24, Doors 22/22, Bathroom 32/32, Furniture 10/10, Repairs 34/34 and Drywall 38/38.
 
@@ -155,3 +156,30 @@ Each currently self-serves at the public URL but declares its canonical as the `
 ## Validation plan
 
 Do **not** start GSC Validate Fix yet. First obtain the missing drilldowns, release and production-verify only the two explicitly scoped technical fixes after review, then inspect the commercial priority URLs. A category is ready for validation only when every affected URL is represented, current production behaviour is confirmed, and no remaining real error is hidden behind an historical aggregate count.
+
+## Sitewide sitemap canonical sweep — 2026-10-18
+
+After PR #24, the production sitemap was re-read and all **899** unique URLs
+were checked from rendered production HTML with a Googlebot-compatible request,
+manual redirect tracing and retry handling. All 899 finished at HTTP 200; no
+sitemap URL redirected, no redirect loop was found, and no response had a
+production `x-robots-tag: noindex`.
+
+The route-level evidence is in `docs/seo/sitewide-canonical-sweep-2026-10-18.csv`.
+It records final status, redirect chain, canonical, EN/ES/x-default hreflang,
+robots, Open Graph URL, applicable Service URL/@id, final breadcrumb and a
+conservative classification for every sitemap URL.
+
+- 881 URLs passed the current metadata checks.
+- 18 URL records (nine EN/ES route pairs) expose redirect-only `/en/` URLs in
+  English metadata. Four route pairs are isolated in Draft PR #25. The other
+  five route pairs are documented as separate follow-up scope, not silently
+  folded into the TV-size package.
+- The two Fan route exceptions are not in the sitemap. They remain route-policy
+  cases: English pages are standalone 200 services; the advertised Spanish
+  routes are 308 redirects to a broad service. Draft PR #26 proposes only
+  public English metadata and removes false Spanish pairs; it does not change
+  any Spanish redirect, content or sitemap entry.
+
+See `docs/seo/sitewide-canonical-and-indexation-final.md` for the final
+production evidence, the individual defect groups and the GSC-validation gate.
