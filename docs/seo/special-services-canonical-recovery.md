@@ -16,4 +16,12 @@ Only current-page canonical, EN hreflang, OG, existing Service URL/@id and final
 
 `npx --no-install tsx scripts/audit-special-services-canonical.ts` validates all 16 EN/ES rendered pages for 200 without redirect, self-canonical, reciprocal alternates, robots, OG URL, JSON-LD final breadcrumb and absence of redirecting current-page EN URLs.
 
+## Verification record
+
+- Implementation HEAD: `abdec64734956e89a587bcffebc3252863f2c083` (the code commit; this documentation-only follow-up creates a later PR head).
+- Preview: `dpl_GbQfqpWcR9kdDTCETSnxGF1HpDVC` — READY and tied to the implementation commit.
+- Local production build and the 16/16 local rendered audit passed.
+- Protected Preview audit passed all 16/16 EN/ES pages. It confirmed final HTTP 200, self-canonical, reciprocal alternatives, OG URL, HTML robots `index, follow`, and the expected Preview-only `x-robots-tag: noindex`.
+- A release remains gated on the full cross-package regression matrix, protected Valencia comparisons, city audit, and a separate GSC data decision.
+
 GSC PERFORMANCE BASELINE: **GSC DATA REQUIRED**. No production merge or deployment is authorised.
