@@ -43,6 +43,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalador-pladur-valencia`;
 
   const title = isEs
     ? "Instalador de Pladur en Valencia | Techos, Paredes y Reparaciones | THEVULGO"
@@ -82,17 +83,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/instalador-pladur-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/instalador-pladur-valencia`,
-        en: `${baseUrl}/en/instalador-pladur-valencia`,
+        en: `${baseUrl}/instalador-pladur-valencia`,
         "x-default": `${baseUrl}/es/instalador-pladur-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/instalador-pladur-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -103,6 +104,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function InstaladorPladurValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalador-pladur-valencia`;
 
   const estimateHref = `/${locale}/estimate?category=drywall`;
 
@@ -250,7 +252,7 @@ export default async function InstaladorPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/instalador-pladur-valencia#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Instalador de pladur en Valencia"
           : "Drywall installer in Valencia",
@@ -261,7 +263,7 @@ export default async function InstaladorPladurValenciaPage({ params }: Props) {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/instalador-pladur-valencia`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -303,7 +305,7 @@ export default async function InstaladorPladurValenciaPage({ params }: Props) {
             name: isEs
               ? "Instalador de pladur Valencia"
               : "Drywall installer Valencia",
-            item: `${baseUrl}/${locale}/instalador-pladur-valencia`,
+            item: pageUrl,
           },
         ],
       },

@@ -50,6 +50,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}${pagePath}`;
 
   const title = isEs
     ? "Techo Registrable en Valencia | Instalación y Presupuesto | THEVULGO"
@@ -98,17 +99,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}${pagePath}`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es${pagePath}`,
-        en: `${baseUrl}/en${pagePath}`,
+        en: `${baseUrl}${pagePath}`,
         "x-default": `${baseUrl}/es${pagePath}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}${pagePath}`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -119,6 +120,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function TechoRegistrableValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}${pagePath}`;
 
   const estimateHref = `/${locale}/estimate?category=handyman`;
 
@@ -364,7 +366,7 @@ export default async function TechoRegistrableValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}${pagePath}#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Techo registrable en Valencia"
           : "Suspended ceiling in Valencia",
@@ -375,7 +377,7 @@ export default async function TechoRegistrableValenciaPage({ params }: Props) {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}${pagePath}`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -415,7 +417,7 @@ export default async function TechoRegistrableValenciaPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Techo Registrable Valencia" : "Suspended Ceiling Valencia",
-            item: `${baseUrl}/${locale}${pagePath}`,
+            item: pageUrl,
           },
         ],
       },

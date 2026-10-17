@@ -23,6 +23,7 @@ const phoneNumber = "34610076942";
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/services/drywall/tv-bracket-wall-repair`;
 
   const title = isEs
     ? "Reparación de Pared Tras Quitar Soporte TV en Valencia | 39 € | THEVULGO"
@@ -55,16 +56,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "TV mounting wall repair Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/drywall/tv-bracket-wall-repair`,
+      canonical: pageUrl,
       languages: {
         es: `${siteUrl}/es/services/drywall/tv-bracket-wall-repair`,
-        en: `${siteUrl}/en/services/drywall/tv-bracket-wall-repair`,
+        en: `${siteUrl}/services/drywall/tv-bracket-wall-repair`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/services/drywall/tv-bracket-wall-repair`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -80,7 +81,7 @@ export default async function TvBracketWallRepairPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/services/drywall/tv-bracket-wall-repair`;
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/services/drywall/tv-bracket-wall-repair`;
 
   const whatsappText = encodeURIComponent(
     isEs
