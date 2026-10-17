@@ -46,7 +46,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? "Servicio profesional para instalar TV en pared en Valencia. Montaje seguro, soporte fijo, inclinable o articulado, TVs grandes, pladur, ladrillo, hormigón y ocultación de cables. 49 €."
     : "Professional service to install TV on wall in Valencia. Safe mounting, fixed, tilting or full-motion brackets, large TVs, drywall, brick, concrete and cable concealment. €49.";
 
-  const url = `${baseUrl}/${locale}/instalar-tv-pared-valencia`;
+  const path = "/instalar-tv-pared-valencia";
+  const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
 
   return {
     title,
@@ -54,8 +55,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: url,
       languages: {
-        es: `${baseUrl}/es/instalar-tv-pared-valencia`,
-        en: `${baseUrl}/en/instalar-tv-pared-valencia`,
+        es: `${baseUrl}/es${path}`,
+        en: `${baseUrl}${path}`,
       },
     },
     openGraph: {
@@ -113,7 +114,7 @@ export default async function Page({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/instalar-tv-pared-valencia`;
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalar-tv-pared-valencia`;
   const estimateHref = `/${locale}/estimate?category=tv-mounting`;
 
   const whatsappText = encodeURIComponent(
