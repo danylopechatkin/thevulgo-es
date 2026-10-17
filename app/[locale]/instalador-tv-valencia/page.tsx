@@ -14,7 +14,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = isEs
     ? "Instalador de TV en Valencia para montaje en pared, soportes, televisores grandes, Samsung Frame, soundbar y cableado limpio. Presupuesto por WhatsApp."
     : "TV installer in Valencia for wall mounting, brackets, large TVs, Samsung Frame, soundbars and clean cable management. Quote by WhatsApp.";
-  const url = `${baseUrl}/${locale}/instalador-tv-valencia`;
+  const path = "/instalador-tv-valencia";
+  const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
 
   return {
     title,
@@ -22,8 +23,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: url,
       languages: {
-        es: `${baseUrl}/es/instalador-tv-valencia`,
-        en: `${baseUrl}/en/instalador-tv-valencia`,
+        es: `${baseUrl}/es${path}`,
+        en: `${baseUrl}${path}`,
         "x-default": `${baseUrl}/es/instalador-tv-valencia`,
       },
     },
