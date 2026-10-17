@@ -14,6 +14,7 @@ Set `PLADUR_PRODUCTION_BASELINE_URL=https://www.thevulgo.es` to compare each can
 - Preview: `dpl_82RmTYB85B6Q3r9tkKSrTnGoNzU5` — READY and tied to the implementation commit.
 - Local production build: passed.
 - Local rendered audit: 26/26 passed after the generated URL audit caught and rejected an empty-URL draft before commit.
+- Release-readiness follow-up: a clean build at PR head confirmed that `services/drywall/tv-bracket-wall-repair` intentionally has a `Service.url` but no pre-existing `Service.@id`. The audit now asserts an absolute `${pageUrl}#service` only on the pages which already expose that identifier; it continues to reject a relative or stale identifier and does not add a new Schema.org field outside the approved scope.
 - Preview and production release remain gated on the full cross-package regression matrix, protected Valencia comparisons, city audit, and the separately required GSC data decision.
 
 GSC PERFORMANCE BASELINE: **GSC DATA REQUIRED**. No production merge/deployment is authorised.

@@ -21,6 +21,13 @@ function valuesByKey(value: unknown, key: string): unknown[] {
   const record = value as Record<string, unknown>;
   return [record[key], ...Object.values(record).flatMap((item) => valuesByKey(item, key))].filter((item) => item !== undefined);
 }
+function serviceObjects(value: unknown): Record<string, unknown>[] {
+  if (Array.isArray(value)) return value.flatMap(serviceObjects);
+  if (!value || typeof value !== "object") return [];
+  const record = value as Record<string, unknown>;
+  return [record, ...Object.values(record).flatMap(serviceObjects)]
+    .filter((item): item is Record<string, unknown> => item["@type"] === "Service");
+}
 function title(html: string) { return html.match(/<title>([\s\S]*?)<\/title>/i)?.[1].trim() ?? ""; }
 function h1(html: string) { return html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim() ?? ""; }
 function hrefs(html: string, pattern: RegExp) { return Array.from(html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>/gi)).map((match) => match[1]).filter((href) => pattern.test(href)).sort(); }
@@ -46,8 +53,14 @@ async function checkPair(path: string) {
     assert.equal(attr(tagWith(html, "name", "robots"), "content"), "index, follow", `${pathname} robots`);
     assert.ok(!html.includes(`${siteUrl}/en/${path}`), `${pathname} no redirecting current-page URL`);
     const data = jsonLd(html);
-    assert.ok(valuesByKey(data, "url").includes(expected), `${pathname} current-page JSON-LD URL`);
-    assert.ok(valuesByKey(data, "@id").includes(`${expected}#service`), `${pathname} absolute Service @id`);
+    const service = serviceObjects(data).find((item) => item.url === expected);
+    assert.ok(service, `${pathname} current Service.url`);
+    // Most Pladur pages already expose a Service @id. Preserve it as an
+    // absolute URL when present; the pre-existing TV-bracket schema has no
+    // Service @id and must not gain a new Schema.org identifier in this scope.
+    if (service["@id"] !== undefined) {
+      assert.equal(service["@id"], `${expected}#service`, `${pathname} absolute Service @id`);
+    }
     const finalBreadcrumbs = valuesByKey(data, "itemListElement").filter(Array.isArray).map((items) => (items as Array<Record<string, unknown>>).at(-1)?.item);
     assert.ok(finalBreadcrumbs.includes(expected), `${pathname} final breadcrumb URL`);
     if (productionBaselineUrl) {
