@@ -282,7 +282,7 @@ export function findRenovationService(locale: string, categorySlug: string, serv
 }
 
 export function renovationHubPath(locale: string) {
-  return `/${locale}/${locale === "es" ? "reformas-valencia" : "renovations-valencia"}`;
+  return locale === "es" ? "/es/reformas-valencia" : "/renovations-valencia";
 }
 
 export function formatRenovationPrice(item: RenovationService, locale: string) {
