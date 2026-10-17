@@ -51,6 +51,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}${pagePath}`;
 
   const title = isEs
     ? "Presupuesto de Pladur en Valencia | Precio por WhatsApp | THEVULGO"
@@ -101,17 +102,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}${pagePath}`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es${pagePath}`,
-        en: `${baseUrl}/en${pagePath}`,
+        en: `${baseUrl}${pagePath}`,
         "x-default": `${baseUrl}/es${pagePath}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}${pagePath}`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -122,6 +123,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PresupuestoPladurValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}${pagePath}`;
 
   const estimateHref = `/${locale}/estimate?category=handyman`;
 
@@ -363,7 +365,7 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}${pagePath}#service`,
+        "@id": `#service`,
         name: isEs
           ? "Presupuesto de pladur en Valencia"
           : "Drywall and plasterboard quote in Valencia",
@@ -374,7 +376,7 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}${pagePath}`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -414,7 +416,7 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Presupuesto Pladur Valencia" : "Drywall Quote Valencia",
-            item: `${baseUrl}/${locale}${pagePath}`,
+            item: pageUrl,
           },
         ],
       },
