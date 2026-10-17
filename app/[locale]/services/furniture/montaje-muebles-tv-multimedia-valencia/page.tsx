@@ -25,6 +25,8 @@ const phoneNumber = "34610076942";
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pagePath = "/services/furniture/montaje-muebles-tv-multimedia-valencia";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}${pagePath}`;
 
   return {
     title: isEs
@@ -34,9 +36,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Montaje de muebles TV, consolas multimedia y unidades de entretenimiento en Valencia por 45 €. Alineación cuidada, posición estable y organización de cables."
       : "TV stands, media consoles and entertainment unit assembly in Valencia for €45. Careful alignment, stable positioning and cable organization.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
+      canonical: pageUrl,
       languages: {
-        es: `${siteUrl}/es/services/furniture/montaje-muebles-tv-multimedia-valencia`,
+        es: `${siteUrl}/es${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
       },
     },
     openGraph: {
@@ -46,7 +49,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: isEs
         ? "Montaje limpio de muebles TV, consolas multimedia y unidades de entretenimiento en Valencia."
         : "Clean assembly of TV stands, media consoles and entertainment units in Valencia.",
-      url: `${siteUrl}/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -111,6 +114,8 @@ export default async function TvMediaFurnitureAssemblyValenciaPage({
 }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pagePath = "/services/furniture/montaje-muebles-tv-multimedia-valencia";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}${pagePath}`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -186,7 +191,7 @@ export default async function TvMediaFurnitureAssemblyValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Montaje de Muebles TV y Multimedia en Valencia",
-        item: `${siteUrl}/${locale}/services/furniture/montaje-muebles-tv-multimedia-valencia`,
+        item: pageUrl,
       },
     ],
   };

@@ -43,6 +43,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalacion-proyectores-valencia`;
 
   const title = isEs
     ? "Instalación de Proyectores en Valencia | Techo, Pared y Home Cinema | THEVULGO"
@@ -84,17 +85,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/instalacion-proyectores-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/instalacion-proyectores-valencia`,
-        en: `${baseUrl}/en/instalacion-proyectores-valencia`,
+        en: `${baseUrl}/instalacion-proyectores-valencia`,
         "x-default": `${baseUrl}/es/instalacion-proyectores-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/instalacion-proyectores-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -107,6 +108,7 @@ export default async function InstalacionProyectoresValenciaPage({
 }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalacion-proyectores-valencia`;
 
   const estimateHref = `/${locale}/estimate?category=tv`;
 
@@ -254,7 +256,7 @@ export default async function InstalacionProyectoresValenciaPage({
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/instalacion-proyectores-valencia#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Instalación de proyectores en Valencia"
           : "Projector installation in Valencia",
@@ -265,7 +267,7 @@ export default async function InstalacionProyectoresValenciaPage({
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/instalacion-proyectores-valencia`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -307,7 +309,7 @@ export default async function InstalacionProyectoresValenciaPage({
             name: isEs
               ? "Instalación de proyectores Valencia"
               : "Projector installation Valencia",
-            item: `${baseUrl}/${locale}/instalacion-proyectores-valencia`,
+            item: pageUrl,
           },
         ],
       },

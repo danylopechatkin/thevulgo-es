@@ -43,6 +43,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}${pagePath}`;
 
   return {
     title: isEs
@@ -56,10 +57,10 @@ export async function generateMetadata({
       follow: true,
     },
     alternates: {
-      canonical: `${siteUrl}/${locale}${pagePath}`,
+      canonical: pageUrl,
       languages: {
         es: `${siteUrl}/es${pagePath}`,
-        en: `${siteUrl}/en${pagePath}`,
+        en: `${siteUrl}${pagePath}`,
         "x-default": `${siteUrl}/es${pagePath}`,
       },
     },
@@ -70,7 +71,7 @@ export async function generateMetadata({
       description: isEs
         ? "Montaje y alineación de armarios correderos, estándar e IKEA en Valencia."
         : "Assembly and alignment of sliding, standard and IKEA wardrobes in Valencia.",
-      url: `${siteUrl}/${locale}${pagePath}`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -83,6 +84,7 @@ export default async function WardrobeAssemblyValenciaPage({
 }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}${pagePath}`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -202,7 +204,7 @@ export default async function WardrobeAssemblyValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: isEs ? "Montaje de Armario en Valencia" : "Wardrobe Assembly in Valencia",
-        item: `${siteUrl}/${locale}${pagePath}`,
+        item: pageUrl,
       },
     ],
   };
