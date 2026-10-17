@@ -430,7 +430,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return pages.filter((entry) => {
     const url = new URL(entry.url);
     if (/^\/..\/privacy\/?$/.test(url.pathname)) return false;
-    if (url.search || url.pathname.endsWith("/")) return false;
+    // The English homepage is the one intentional root-path URL. Keep it
+    // while continuing to reject accidental trailing-slash duplicates.
+    if (url.search || (url.pathname.endsWith("/") && url.pathname !== "/")) return false;
     if (seen.has(url.href)) return false;
     seen.add(url.href);
     return true;
