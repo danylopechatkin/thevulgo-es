@@ -18,7 +18,8 @@
     "test:other-pages-canonical": "tsx scripts/audit-other-pages-canonical.ts",
     "test:tv-commercial-canonical": "tsx scripts/audit-tv-commercial-canonical.ts",
     "test:handyman-commercial-canonical": "tsx scripts/audit-handyman-commercial-canonical.ts",
-    "test:ikea-furniture-commercial-canonical": "tsx scripts/audit-ikea-furniture-commercial-canonical.ts"
+    "test:ikea-furniture-commercial-canonical": "tsx scripts/audit-ikea-furniture-commercial-canonical.ts",
+    "test:fan-route-canonical": "tsx scripts/audit-fan-route-canonical.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.0",
