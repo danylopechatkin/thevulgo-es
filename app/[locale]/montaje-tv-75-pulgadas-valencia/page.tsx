@@ -47,7 +47,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? "Montaje profesional de TV de 75 pulgadas en Valencia. Instalación segura en pared, soporte fijo o articulado, revisión de pared, nivelación precisa y ocultación de cables. 79 €."
     : "Professional 75 inch TV mounting in Valencia. Safe wall installation, fixed or full-motion bracket, wall check, precise levelling and cable concealment. €79.";
 
-  const url = `${baseUrl}/${locale}/montaje-tv-75-pulgadas-valencia`;
+  const path = "/montaje-tv-75-pulgadas-valencia";
+  const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
 
   return {
     title,
@@ -55,8 +56,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: url,
       languages: {
-        es: `${baseUrl}/es/montaje-tv-75-pulgadas-valencia`,
-        en: `${baseUrl}/en/montaje-tv-75-pulgadas-valencia`,
+        es: `${baseUrl}/es${path}`,
+        en: `${baseUrl}${path}`,
       },
     },
     openGraph: {
@@ -111,7 +112,7 @@ export default async function Page({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/montaje-tv-75-pulgadas-valencia`;
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/montaje-tv-75-pulgadas-valencia`;
   const estimateHref = `/${locale}/estimate?category=tv-mounting`;
 
   const whatsappText = encodeURIComponent(
