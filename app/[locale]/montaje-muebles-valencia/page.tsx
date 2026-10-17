@@ -43,6 +43,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/montaje-muebles-valencia`;
 
   const title = isEs
     ? "Montaje de muebles en Valencia | IKEA, armarios y camas | THEVULGO"
@@ -90,17 +91,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/montaje-muebles-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/montaje-muebles-valencia`,
-        en: `${baseUrl}/en/montaje-muebles-valencia`,
+        en: `${baseUrl}/montaje-muebles-valencia`,
         "x-default": `${baseUrl}/es/montaje-muebles-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/montaje-muebles-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -111,6 +112,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function MontajeMueblesValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/montaje-muebles-valencia`;
 
   const estimateHref = `/${locale}/estimate?category=furniture`;
 
@@ -258,7 +260,7 @@ export default async function MontajeMueblesValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/montaje-muebles-valencia#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Montaje de muebles en Valencia"
           : "Furniture assembly in Valencia",
@@ -267,7 +269,7 @@ export default async function MontajeMueblesValenciaPage({ params }: Props) {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/montaje-muebles-valencia`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -309,7 +311,7 @@ export default async function MontajeMueblesValenciaPage({ params }: Props) {
             name: isEs
               ? "Montaje de muebles Valencia"
               : "Furniture assembly Valencia",
-            item: `${baseUrl}/${locale}/montaje-muebles-valencia`,
+            item: pageUrl,
           },
         ],
       },

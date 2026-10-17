@@ -26,6 +26,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/montaje-muebles-ikea-valencia`;
 
   const title = isEs
     ? "Montaje IKEA en Valencia | Armarios, camas y muebles | THEVULGO"
@@ -60,16 +61,16 @@ export async function generateMetadata({
           "handyman IKEA Valencia",
         ],
     alternates: {
-      canonical: `${siteUrl}/${locale}/montaje-muebles-ikea-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${siteUrl}/es/montaje-muebles-ikea-valencia`,
-        en: `${siteUrl}/en/montaje-muebles-ikea-valencia`,
+        en: `${siteUrl}/montaje-muebles-ikea-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/${locale}/montaje-muebles-ikea-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -104,7 +105,7 @@ export default async function IkeaFurnitureAssemblyValenciaPage({
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${siteUrl}/${locale}/montaje-muebles-ikea-valencia`;
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/montaje-muebles-ikea-valencia`;
 
   const whatsappText = encodeURIComponent(
     isEs
