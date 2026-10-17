@@ -18,6 +18,7 @@ const permanent = (source: string, destination: string): SeoRedirect => ({
 });
 
 export const GSC_404_REDIRECTS: readonly SeoRedirect[] = [
+  permanent("/es/instalacion-lamparas-colgantes", "/es/instalacion-lamparas-colgantes-valencia"),
   permanent("/es/montaje-escritorios-valencia", "/es/services/furniture/montaje-escritorios-valencia"),
   permanent("/es/fin-contrato-alquiler-valencia", "/es/services/puesta-a-punto-vivienda-valencia"),
   permanent("/es/devolver-piso-propietario-valencia", "/es/services/puesta-a-punto-vivienda-valencia"),

@@ -6,12 +6,23 @@ import {
   SEO_CONSOLIDATION_REDIRECTS,
 } from "../lib/gsc404Redirects";
 
-test("the GSC export is represented by 76 redirects and one intentional 404", () => {
-  assert.equal(GSC_404_REDIRECTS.length, 76);
+test("the GSC export is represented by 77 redirects and one intentional 404", () => {
+  assert.equal(GSC_404_REDIRECTS.length, 77);
   assert.equal(GSC_404_INTENTIONALLY_MISSING.length, 1);
   assert.equal(
     new Set(GSC_404_REDIRECTS.map(({ source }) => source)).size,
     GSC_404_REDIRECTS.length,
+  );
+});
+
+test("legacy Spanish pendant-light URL has one direct, language-matched successor", () => {
+  assert.deepEqual(
+    GSC_404_REDIRECTS.find(({ source }) => source === "/es/instalacion-lamparas-colgantes"),
+    {
+      source: "/es/instalacion-lamparas-colgantes",
+      destination: "/es/instalacion-lamparas-colgantes-valencia",
+      permanent: true,
+    },
   );
 });
 
