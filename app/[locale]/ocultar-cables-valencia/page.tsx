@@ -27,6 +27,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/ocultar-cables-valencia`;
 
   return {
     title: isEs
@@ -36,9 +37,10 @@ export async function generateMetadata({
       ? "Servicio para ocultar cables en Valencia. Canaletas, cableado de TV, HDMI, enchufes, organización de cables, soluciones limpias para pared, oficina y home cinema."
       : "Cable concealment service in Valencia. Trunking, TV cables, HDMI, outlets, cable management and clean wall, office and home cinema solutions.",
     alternates: {
-      canonical: `${siteUrl}/${locale}/ocultar-cables-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${siteUrl}/es/ocultar-cables-valencia`,
+        en: `${siteUrl}/ocultar-cables-valencia`,
       },
     },
     openGraph: {
@@ -48,7 +50,7 @@ export async function generateMetadata({
       description: isEs
         ? "Soluciones limpias para ocultar cables de TV, HDMI, internet, oficina y home cinema en Valencia."
         : "Clean solutions to hide TV, HDMI, internet, office and home cinema cables in Valencia.",
-      url: `${siteUrl}/${locale}/ocultar-cables-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_US",
       type: "website",
@@ -113,6 +115,7 @@ export default async function CableConcealmentValenciaPage({
 }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/ocultar-cables-valencia`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -187,7 +190,7 @@ export default async function CableConcealmentValenciaPage({
         "@type": "ListItem",
         position: 3,
         name: "Ocultar Cables en Valencia",
-        item: `${siteUrl}/${locale}/ocultar-cables-valencia`,
+        item: pageUrl,
       },
     ],
   };

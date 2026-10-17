@@ -9,6 +9,7 @@ const path = "instalacion-barras-cortina-valencia";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/${path}`;
   const title = isEs
     ? "Instalación de Barras de Cortina en Valencia | THEVULGO"
     : "Curtain Rod Installation in Valencia | THEVULGO";
@@ -19,10 +20,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/${locale}/${path}`,
-      languages: { es: `${baseUrl}/es/${path}`, en: `${baseUrl}/en/${path}`, "x-default": `${baseUrl}/es/${path}` },
+      canonical: pageUrl,
+      languages: { es: `${baseUrl}/es/${path}`, en: `${baseUrl}/${path}`, "x-default": `${baseUrl}/es/${path}` },
     },
-    openGraph: { title, description, url: `${baseUrl}/${locale}/${path}`, siteName: "THEVULGO", type: "website", locale: isEs ? "es_ES" : "en_GB" },
+    openGraph: { title, description, url: pageUrl, siteName: "THEVULGO", type: "website", locale: isEs ? "es_ES" : "en_GB" },
     robots: { index: true, follow: true },
   };
 }

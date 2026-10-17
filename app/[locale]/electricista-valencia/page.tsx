@@ -43,6 +43,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/electricista-valencia`;
 
   const title = isEs
     ? "Pequeños trabajos eléctricos en Valencia | THEVULGO"
@@ -88,17 +89,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/electricista-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/electricista-valencia`,
-        en: `${baseUrl}/en/electricista-valencia`,
+        en: `${baseUrl}/electricista-valencia`,
         "x-default": `${baseUrl}/es/electricista-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/electricista-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -109,6 +110,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ElectricistaValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/electricista-valencia`;
 
   const estimateHref = `/${locale}/estimate?category=electrical`;
 
@@ -256,7 +258,7 @@ export default async function ElectricistaValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/electricista-valencia#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs ? "Electricista en Valencia" : "Electrician in Valencia",
         serviceType: isEs
           ? "Servicios eléctricos básicos"
@@ -265,7 +267,7 @@ export default async function ElectricistaValenciaPage({ params }: Props) {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/electricista-valencia`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -305,7 +307,7 @@ export default async function ElectricistaValenciaPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Electricista Valencia" : "Electrician Valencia",
-            item: `${baseUrl}/${locale}/electricista-valencia`,
+            item: pageUrl,
           },
         ],
       },
