@@ -64,3 +64,94 @@ The Coverage export has a last reporting point of 2026-10-12 and records histori
 | noindex / canonical exclusions | Historical export assessed | One noindex URL missing from drilldown; Fan policy unresolved | No |
 
 Do not run Google Search Console **Validate Fix** yet. Obtain fresh drilldowns for the discrepancies above, make only confirmed route-level decisions, then re-run production verification. A successful HTTP 200 or source fix must not be reported as Google recrawled or indexed.
+
+## Final GSC indexation audit — 2026-10-17
+
+This section supersedes the preliminary current-status fields in the original inventory. It records a new, rate-limited production run against the production revision `82a8cab9a8e185fa0ca80fab651d39f27669a0ba`.
+
+- Source rows: 807 exactly — 138 server errors, 101 not-found URLs, 147 crawled-not-indexed URLs and 421 discovered-not-indexed URLs.
+- Method: four concurrent requests with staggered starts, manual redirect tracing (maximum ten hops) and retries after temporary network failures, HTTP 429 and HTTP 5xx. Every request completed; no temporary failure or redirect loop was recorded.
+- Per-URL evidence is saved in `docs/seo/final-seo-indexation-url-inventory.csv`. The file preserves the historical GSC category and crawl date separately from current production HTTP status, final URL, redirect chain, canonical, HTML robots, `x-robots-tag`, exact audit time and verified production SHA.
+- The production recheck is HTTP and rendered-HTML evidence only. It does not prove that Google has re-crawled, selected a canonical or indexed a URL.
+
+### Current HTTP results
+
+| Historical GSC issue | Exported URLs available | Current result | Production conclusion |
+|---|---:|---|---|
+| Server error (5xx) | 138 | 103 direct 200, 26 redirected 200, 2 direct 404, 7 redirected 404 | 129 final 200, 9 intentional final 404, **0 final 5xx**, 0 loops |
+| Not found (404) | 101 | 76 permanent redirects to 200, 19 direct 404, 6 locale redirects to 404 | 76 historically broken URLs are now resolved; 25 still require an explicit route decision |
+| Crawled, not indexed | 147 | 70 direct 200, 59 redirected 200, 17 permanent redirects to 200, 1 direct 404 | HTTP alone cannot establish the indexing cause |
+| Discovered, not indexed | 421 | 421 direct 200 | HTTP alone cannot establish the indexing cause |
+
+The Coverage summary reports 139 server errors, 102 not-found URLs and 152 crawled-not-indexed URLs. The available drilldowns are respectively short by 1, 1 and 5 URLs. The unexported rows are not treated as fixed.
+
+**139TH GSC 5XX URL — DRILLDOWN REQUIRED.**
+
+### The 25 current 404s
+
+The route-by-route decision table is in `docs/seo/gsc-404-current-route-decisions.csv`.
+
+| Decision | Count | Evidence-based outcome |
+|---|---:|---|
+| KEEP 404 | 24 | 23 are service/city combinations that the current city route guard intentionally rejects as unsupported and are absent from the sitemap; one is an obsolete hashed font asset already listed as intentionally missing. A Valencia page is not a relevant replacement for a Madrid, Barcelona or Alicante URL. |
+| FIX ACTIVE ROUTE | 0 | No active route is currently known to be unintentionally returning 404. |
+| RELEVANT 301 | 1 | `/es/instalacion-lamparas-colgantes` has a one-to-one Spanish successor: `/es/instalacion-lamparas-colgantes-valencia`, which returns 200 and is in the sitemap. |
+| REVIEW | 0 | No ambiguous 404 remains in this exported set. |
+
+The one redirect candidate is deliberately **not** included in this documentation PR. It requires a small, separate Draft PR with one permanent rule, a no-chain regression test and Preview verification. No broad redirect is justified by this audit.
+
+### Crawled and discovered commercial priorities
+
+`docs/seo/gsc-indexation-priority-urls.csv` contains a technical priority list of 30 commercial Valencia pages. It records the public URL, service intent, available historical GSC evidence, current HTTP/canonical/robots state, sitemap inclusion, source-reference evidence, duplicate risk and the required URL Inspection step.
+
+The list is ordered by commercial value, not by clicks, impressions or ranking: an up-to-date GSC Performance export was unavailable. All 30 currently return 200 with one public canonical and `index, follow` HTML robots. Sitemap presence and source references are positive technical signals, but they are not evidence of Google indexing or of adequate rendered internal-link discovery.
+
+For every priority URL, request URL Inspection before changing content, internal linking or indexation policy. Confirm the Google-selected canonical, indexed status, last crawl and any duplicate assessment. In particular, do not infer that a current 200 resolves the 147 crawled-not-indexed or 421 discovered-not-indexed classifications.
+
+### Noindex and canonical exclusions
+
+The supplementary production audit is saved in `docs/seo/gsc-exclusion-supplementary-audit.csv`.
+
+| Historical issue | Available URLs | Current production assessment |
+|---|---:|---|
+| Canonical alternate | 67 | 65 final 200 pages now have their own current canonical; two are intentional 404s. No source-level canonical conflict was found in this sample. Google history still needs URL Inspection to explain the original exclusion. |
+| noindex | 69 | 67 final 200 pages intentionally expose `noindex` (estimate flows or non-indexable market/service pages); two are intentional 404s. No mass removal is warranted. The Coverage summary reports 70, so one drilldown row is missing. |
+| Redirect page | 40 | 37 current redirects reach a final 200; three now load directly. No loop was observed. |
+| Google-selected canonical differs | 12 | Eight are legacy or historical cases that need URL Inspection evidence. Four current public pages return 200 but output an English canonical with `/en/`, which is a redirect-only URL. |
+| Redirect error | 1 | The exported apex/locale URL now completes at a final 200 without a loop. It remains a historical GSC state until Google refreshes it. |
+
+The four confirmed active canonical defects are kept out of this audit-only PR and require a narrowly scoped regression-tested fix:
+
+- `https://www.thevulgo.es/instalar-tv-pared-valencia`
+- `https://www.thevulgo.es/montaje-tv-65-pulgadas-valencia`
+- `https://www.thevulgo.es/montaje-tv-75-pulgadas-valencia`
+- `https://www.thevulgo.es/montaje-tv-85-pulgadas-valencia`
+
+Each currently self-serves at the public URL but declares its canonical as the `/en/` variant, which responds with a 307 redirect. This is a real technical contradiction, not a reason for a mass canonical edit.
+
+## GSC validation readiness — final lists
+
+### A — VERIFIED FIXED OR INTENTIONAL ON PRODUCTION
+
+- All 138 URLs in the available 5xx drilldown: 129 final 200, nine intentional final 404, zero final 5xx and zero redirect loops.
+- 76 of the 101 available historical 404 URLs: a permanent redirect now reaches a final 200.
+- 24 remaining 404 decisions: intentionally retained 404s, documented individually.
+- 69 available historical noindex URLs: current noindex/404 behaviour matches the existing estimate-flow or non-indexable market policy.
+- 65 available historical canonical-alternate URLs: current final 200 pages have a single self canonical in this production audit.
+
+### B — ACTION REQUIRED
+
+- Create a separate Draft PR for the one-to-one Spanish redirect: `/es/instalacion-lamparas-colgantes` → `/es/instalacion-lamparas-colgantes-valencia`.
+- Prepare a separate page-local metadata review for the four public TV URLs listed above. Preserve Spanish metadata, titles, H1, price, CTA, forms and routing; test rendered production-equivalent HTML before any release.
+- Keep the two fan-route decisions in policy review. Their Spanish alternates still redirect to a different broad service and must not be represented as confirmed translation pairs.
+
+### C — GOOGLE DATA REQUIRED
+
+- The missing 139th 5xx URL and the missing 102nd 404 URL.
+- Five URLs missing from the crawled-not-indexed drilldown and one URL missing from the noindex drilldown.
+- URL Inspection evidence for all commercial priority URLs: indexed status, Google-selected canonical, last crawl and exclusion reason.
+- Fresh GSC drilldowns before any category-level Validate Fix. Current HTTP verification is not a substitute for Google crawl evidence.
+
+## Validation plan
+
+Do **not** start GSC Validate Fix yet. First obtain the missing drilldowns, release and production-verify only the two explicitly scoped technical fixes after review, then inspect the commercial priority URLs. A category is ready for validation only when every affected URL is represented, current production behaviour is confirmed, and no remaining real error is hidden behind an historical aggregate count.
