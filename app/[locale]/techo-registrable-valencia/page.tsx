@@ -366,7 +366,7 @@ export default async function TechoRegistrableValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Techo registrable en Valencia"
           : "Suspended ceiling in Valencia",

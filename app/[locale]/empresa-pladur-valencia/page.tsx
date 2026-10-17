@@ -370,7 +370,7 @@ export default async function EmpresaPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Empresa de pladur en Valencia"
           : "Drywall and plasterboard company in Valencia",

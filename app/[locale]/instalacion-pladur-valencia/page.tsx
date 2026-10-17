@@ -255,7 +255,7 @@ export default async function InstalacionPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Instalación de pladur en Valencia"
           : "Plasterboard installation in Valencia",

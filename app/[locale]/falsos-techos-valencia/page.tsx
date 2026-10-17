@@ -253,7 +253,7 @@ export default async function FalsosTechosValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs ? "Falsos techos en Valencia" : "False ceilings in Valencia",
         serviceType: isEs
           ? "Instalación y reparación de falsos techos"

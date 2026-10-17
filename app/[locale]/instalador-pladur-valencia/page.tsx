@@ -252,7 +252,7 @@ export default async function InstaladorPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Instalador de pladur en Valencia"
           : "Drywall installer in Valencia",

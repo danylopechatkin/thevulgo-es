@@ -365,7 +365,7 @@ export default async function FalsoTechoPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Falso techo de pladur en Valencia"
           : "Plasterboard false ceiling in Valencia",

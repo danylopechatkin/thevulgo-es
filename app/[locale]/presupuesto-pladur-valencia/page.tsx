@@ -365,7 +365,7 @@ export default async function PresupuestoPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Presupuesto de pladur en Valencia"
           : "Drywall and plasterboard quote in Valencia",

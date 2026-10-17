@@ -364,7 +364,7 @@ export default async function PintarPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Pintar pladur en Valencia"
           : "Painting drywall and plasterboard in Valencia",

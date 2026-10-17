@@ -394,7 +394,7 @@ export default async function ReparacionPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Reparación de pladur en Valencia"
           : "Drywall and plasterboard repair in Valencia",

@@ -376,7 +376,7 @@ export default async function TabiquesPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Tabiques de pladur en Valencia"
           : "Drywall partitions in Valencia",

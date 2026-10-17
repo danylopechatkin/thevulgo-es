@@ -6,6 +6,8 @@ The English page-local URL fields previously rendered through `/en/`. This packa
 
 `scripts/audit-pladur-commercial-canonical.ts` checks all 26 rendered pages for final 200, no redirect, self canonical, reciprocal EN/ES alternates, OG, HTML robots, current-page JSON-LD URL, final Breadcrumb URL, and no redirecting EN current-page URL.
 
+Set `PLADUR_PRODUCTION_BASELINE_URL=https://www.thevulgo.es` to compare each candidate page against production while allowing only the agreed SEO URL fields. The baseline covers title, description, H1, robots, Spanish canonical/hreflang, existing x-default, price strings, CTA/WhatsApp/telephone/estimate links, form count and FAQ. This includes the protected Reformas Pladur and Techo Registrable pages.
+
 ## Verification record
 
 - Implementation HEAD: `0b7b4d16013fae1428743a754ae04b1614ca597b` (the code commit; this documentation-only follow-up creates a later PR head).

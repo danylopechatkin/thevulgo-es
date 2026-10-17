@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 
 const baseUrl = (process.env.PLADUR_AUDIT_BASE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+const productionBaselineUrl = process.env.PLADUR_PRODUCTION_BASELINE_URL?.replace(/\/$/, "");
 const siteUrl = "https://www.thevulgo.es";
 const paths = [
   "empresa-pladur-valencia", "falso-techo-pladur-valencia", "instalacion-pladur-valencia",
@@ -20,6 +21,12 @@ function valuesByKey(value: unknown, key: string): unknown[] {
   const record = value as Record<string, unknown>;
   return [record[key], ...Object.values(record).flatMap((item) => valuesByKey(item, key))].filter((item) => item !== undefined);
 }
+function title(html: string) { return html.match(/<title>([\s\S]*?)<\/title>/i)?.[1].trim() ?? ""; }
+function h1(html: string) { return html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim() ?? ""; }
+function hrefs(html: string, pattern: RegExp) { return Array.from(html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>/gi)).map((match) => match[1]).filter((href) => pattern.test(href)).sort(); }
+function prices(html: string) { return (html.match(/(?:€\s?\d[\d.,]*|\d[\d.,]*\s?€)/g) ?? []).sort(); }
+function faq(html: string) { return jsonLd(html).flatMap((item) => valuesByKey(item, "mainEntity")).filter(Array.isArray).flat().filter((item) => item?.["@type"] === "Question").map((item) => JSON.stringify(item)).sort(); }
+function baselineFields(html: string, locale: "en" | "es") { return { title: title(html), description: attr(tagWith(html, "name", "description"), "content"), h1: h1(html), robots: attr(tagWith(html, "name", "robots"), "content"), xDefault: attr(tagWith(html, "hreflang", "x-default"), "href"), spanishAlternate: attr(tagWith(html, "hreflang", "es"), "href"), spanishCanonical: locale === "es" ? attr(tags(html).find((tag) => /rel=["']canonical["']/i.test(tag)) ?? "", "href") : undefined, prices: prices(html), whatsapp: hrefs(html, /(?:wa\.me|whatsapp)/i), telephone: hrefs(html, /^tel:/i), estimate: hrefs(html, /estimate/i), forms: (html.match(/<form\b/gi) ?? []).length, faq: faq(html) }; }
 
 async function checkPair(path: string) {
   for (const locale of ["en", "es"] as const) {
@@ -40,8 +47,14 @@ async function checkPair(path: string) {
     assert.ok(!html.includes(`${siteUrl}/en/${path}`), `${pathname} no redirecting current-page URL`);
     const data = jsonLd(html);
     assert.ok(valuesByKey(data, "url").includes(expected), `${pathname} current-page JSON-LD URL`);
+    assert.ok(valuesByKey(data, "@id").includes(`${expected}#service`), `${pathname} absolute Service @id`);
     const finalBreadcrumbs = valuesByKey(data, "itemListElement").filter(Array.isArray).map((items) => (items as Array<Record<string, unknown>>).at(-1)?.item);
     assert.ok(finalBreadcrumbs.includes(expected), `${pathname} final breadcrumb URL`);
+    if (productionBaselineUrl) {
+      const baseline = await fetch(`${productionBaselineUrl}${pathname}`, { redirect: "manual" });
+      assert.equal(baseline.status, 200, `${pathname} production baseline status`);
+      assert.deepEqual(baselineFields(html, locale), baselineFields(await baseline.text(), locale), `${pathname} protected production baseline fields`);
+    }
   }
 }
 

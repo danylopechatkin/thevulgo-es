@@ -248,7 +248,7 @@ export default async function TechosPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Techos de pladur en Valencia"
           : "Drywall ceilings in Valencia",
