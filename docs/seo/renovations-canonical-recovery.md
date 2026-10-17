@@ -27,4 +27,11 @@ The shared generator has no callers outside Renovations.
 
 `npx --no-install tsx scripts/audit-renovations-canonical.ts` dynamically derives the 74 active pairs from the catalogue and validates both local rendered variants: final 200 without redirect, self-canonical, reciprocal EN/ES hreflang, preserved x-default, Open Graph URL, robots, Service URL, final breadcrumb, and absence of the redirecting English Renovations prefix.
 
+## Verification record
+
+- Implementation HEAD: `da5a9b6c3df5702f9628ec85e698b3b85ceb8497` (the code commit; this documentation-only follow-up creates a later PR head).
+- Preview: `dpl_4UoCpg5gNT2uo7Q6fB4JXhfgcy7E` — READY and tied to the implementation commit.
+- Local production build and the exhaustive 148/148 rendered HTML audit passed.
+- The 74-pair Preview is READY; a production release remains gated on the full cross-package regression matrix, protected Valencia comparisons, city audit, and a separate GSC data decision.
+
 GSC PERFORMANCE BASELINE: **GSC DATA REQUIRED**. No traffic figures or release waiver are claimed. Production merge/deployment is not authorised.
