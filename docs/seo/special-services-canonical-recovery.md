@@ -16,6 +16,8 @@ Only current-page canonical, EN hreflang, OG, existing Service URL/@id and final
 
 `npx --no-install tsx scripts/audit-special-services-canonical.ts` validates all 16 EN/ES rendered pages for 200 without redirect, self-canonical, reciprocal alternates, robots, OG URL, JSON-LD final breadcrumb and absence of redirecting current-page EN URLs.
 
+Set `SPECIAL_SERVICES_PRODUCTION_BASELINE_URL=https://www.thevulgo.es` to additionally compare the candidate HTML against production. The comparison permits only the agreed current-page SEO URL corrections and rejects changes to title, description, H1, robots, Spanish canonical/hreflang, x-default (including absence), price strings, CTA/WhatsApp/telephone/estimate links, form count and FAQ entries.
+
 ## Verification record
 
 - Implementation HEAD: `abdec64734956e89a587bcffebc3252863f2c083` (the code commit; this documentation-only follow-up creates a later PR head).
