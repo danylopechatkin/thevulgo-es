@@ -129,6 +129,7 @@ const relatedPages = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}/services/montaje-ventilador-techo`;
 
   const title = isEs
     ? "Montaje de ventilador de techo en Valencia por 45 € | THEVULGO"
@@ -171,17 +172,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/montaje-ventilador-techo`,
+      canonical: pageUrl,
       languages: {
-        es: `${baseUrl}/es/services/montaje-ventilador-techo`,
-        en: `${baseUrl}/en/services/montaje-ventilador-techo`,
-        "x-default": `${baseUrl}/es/services/montaje-ventilador-techo`,
+        en: pageUrl,
+        "x-default": pageUrl,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/montaje-ventilador-techo`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -192,6 +192,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CeilingFanMountingPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}/services/montaje-ventilador-techo`;
 
   const t = {
     eyebrow: isEs
@@ -223,7 +224,7 @@ export default async function CeilingFanMountingPage({ params }: Props) {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       name: "THEVULGO",
-      url: `${baseUrl}/${locale}/services/montaje-ventilador-techo`,
+      url: pageUrl,
       telephone: `+${phone}`,
       priceRange: "€€",
       areaServed: areas.map((area) => ({
@@ -296,7 +297,7 @@ export default async function CeilingFanMountingPage({ params }: Props) {
           "@type": "ListItem",
           position: 3,
           name: isEs ? "Montaje de ventilador de techo" : "Ceiling fan mounting",
-          item: `${baseUrl}/${locale}/services/montaje-ventilador-techo`,
+          item: pageUrl,
         },
       ],
     },
