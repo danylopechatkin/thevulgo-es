@@ -33,3 +33,11 @@ against current production; those values are unchanged.
 This is a Draft-only metadata package. No claim is made that Google has
 recrawled or indexed either page, and no production release is authorized by
 this report.
+
+## Final Preview
+
+- Implementation commit: `7b5803b20610afcb971e2389eecdf726d6587858`.
+- Vercel Preview: `dpl_4RW3XwHHLZHm39LDWzBNFggk2K5g` — READY.
+- Both English pages returned 200 with public EN canonical/hreflang/x-default,
+  no ES hreflang and `index, follow`; both legacy Spanish URLs retained their
+  exact 308 targets.
