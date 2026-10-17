@@ -47,7 +47,7 @@ The Coverage export has a last reporting point of 2026-10-12 and records histori
 
 ## Production safety checks
 
-- Seven protected Valencia controls remained HTTP 200 with their expected `/es` canonicals and `index, follow` HTML robots in the production checks.
+- Six protected Valencia service controls returned direct HTTP 200 with their expected `/es` canonicals and `index, follow` HTML robots. `/es` returns HTTP 200 to Googlebot and a 307 geo-market redirect to `/es/madrid` for the current non-bot network. The response sets `thevulgo_market_source=geo`; it is existing proxy behaviour outside this recovery scope and was not changed by the sitemap-only release.
 - The 138-URL city regression audit passed after every release: 129 final 200, 9 intentional final 404, 0 5xx and 0 loops.
 - Production page audits found no `x-robots-tag: noindex` on the indexable audited pages. Preview-only `noindex` headers were not treated as a production regression.
 - Vercel runtime-error clusters for the last hour: none.
