@@ -43,6 +43,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalar-proyector-techo-valencia`;
 
   const title = isEs
     ? "Instalar Proyector en Techo en Valencia | Soporte y Ajuste | THEVULGO"
@@ -82,17 +83,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/instalar-proyector-techo-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/instalar-proyector-techo-valencia`,
-        en: `${baseUrl}/en/instalar-proyector-techo-valencia`,
+        en: `${baseUrl}/instalar-proyector-techo-valencia`,
         "x-default": `${baseUrl}/es/instalar-proyector-techo-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/instalar-proyector-techo-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -105,6 +106,7 @@ export default async function InstalarProyectorTechoValenciaPage({
 }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalar-proyector-techo-valencia`;
 
   const estimateHref = `/${locale}/estimate?category=tv`;
 
@@ -252,7 +254,7 @@ export default async function InstalarProyectorTechoValenciaPage({
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/instalar-proyector-techo-valencia#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Instalar proyector en techo en Valencia"
           : "Ceiling projector installation in Valencia",
@@ -263,7 +265,7 @@ export default async function InstalarProyectorTechoValenciaPage({
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/instalar-proyector-techo-valencia`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -305,7 +307,7 @@ export default async function InstalarProyectorTechoValenciaPage({
             name: isEs
               ? "Instalar proyector en techo Valencia"
               : "Ceiling projector installation Valencia",
-            item: `${baseUrl}/${locale}/instalar-proyector-techo-valencia`,
+            item: pageUrl,
           },
         ],
       },

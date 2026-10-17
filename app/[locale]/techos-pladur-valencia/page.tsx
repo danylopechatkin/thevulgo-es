@@ -43,6 +43,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/techos-pladur-valencia`;
 
   const title = isEs
     ? "Techos de Pladur en Valencia | Instalación y Reparación | THEVULGO"
@@ -78,17 +79,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/techos-pladur-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/techos-pladur-valencia`,
-        en: `${baseUrl}/en/techos-pladur-valencia`,
+        en: `${baseUrl}/techos-pladur-valencia`,
         "x-default": `${baseUrl}/es/techos-pladur-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/techos-pladur-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -99,6 +100,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function TechosPladurValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/techos-pladur-valencia`;
 
   const estimateHref = `/${locale}/estimate?category=drywall`;
 
@@ -246,7 +248,7 @@ export default async function TechosPladurValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/techos-pladur-valencia#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Techos de pladur en Valencia"
           : "Drywall ceilings in Valencia",
@@ -255,7 +257,7 @@ export default async function TechosPladurValenciaPage({ params }: Props) {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/techos-pladur-valencia`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -295,7 +297,7 @@ export default async function TechosPladurValenciaPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Techos de pladur Valencia" : "Drywall ceilings Valencia",
-            item: `${baseUrl}/${locale}/techos-pladur-valencia`,
+            item: pageUrl,
           },
         ],
       },

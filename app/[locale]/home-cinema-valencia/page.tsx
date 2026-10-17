@@ -43,6 +43,7 @@ const areas = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/home-cinema-valencia`;
 
   const title = isEs
     ? "Home Cinema en Valencia | Proyector, Pantalla, TV y Sonido | THEVULGO"
@@ -89,17 +90,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/home-cinema-valencia`,
+      canonical: pageUrl,
       languages: {
         es: `${baseUrl}/es/home-cinema-valencia`,
-        en: `${baseUrl}/en/home-cinema-valencia`,
+        en: `${baseUrl}/home-cinema-valencia`,
         "x-default": `${baseUrl}/es/home-cinema-valencia`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/home-cinema-valencia`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -110,6 +111,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function HomeCinemaValenciaPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/home-cinema-valencia`;
 
   const estimateHref = `/${locale}/estimate?category=tv`;
 
@@ -257,7 +259,7 @@ export default async function HomeCinemaValenciaPage({ params }: Props) {
       },
       {
         "@type": "Service",
-        "@id": `${baseUrl}/${locale}/home-cinema-valencia#service`,
+        "@id": `${pageUrl}#service`,
         name: isEs
           ? "Instalación de home cinema en Valencia"
           : "Home cinema installation in Valencia",
@@ -268,7 +270,7 @@ export default async function HomeCinemaValenciaPage({ params }: Props) {
           "@id": `${baseUrl}/#localbusiness`,
         },
         areaServed: areas,
-        url: `${baseUrl}/${locale}/home-cinema-valencia`,
+        url: pageUrl,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: isEs
@@ -308,7 +310,7 @@ export default async function HomeCinemaValenciaPage({ params }: Props) {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Home cinema Valencia" : "Home cinema Valencia",
-            item: `${baseUrl}/${locale}/home-cinema-valencia`,
+            item: pageUrl,
           },
         ],
       },
