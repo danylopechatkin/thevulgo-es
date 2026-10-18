@@ -45,7 +45,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? "Montaje profesional de Samsung Frame en Valencia. Instalación limpia, alineación precisa, One Connect Box, ocultación de cable invisible y montaje seguro en pared. 69 €."
     : "Professional Samsung Frame TV mounting in Valencia. Clean installation, precise alignment, One Connect Box planning, cable concealment and secure wall mounting. €69.";
 
-  const url = `${baseUrl}/${locale}/montaje-tv-samsung-frame-valencia`;
+  const path = "/montaje-tv-samsung-frame-valencia";
+  const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
 
   return {
     title,
@@ -53,8 +54,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: url,
       languages: {
-        es: `${baseUrl}/es/montaje-tv-samsung-frame-valencia`,
-        en: `${baseUrl}/en/montaje-tv-samsung-frame-valencia`,
+        es: `${baseUrl}/es${path}`,
+        en: `${baseUrl}${path}`,
       },
     },
     openGraph: {
@@ -110,7 +111,7 @@ export default async function Page({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/montaje-tv-samsung-frame-valencia`;
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/montaje-tv-samsung-frame-valencia`;
   const estimateHref = `/${locale}/estimate?category=tv-mounting`;
 
   const whatsappText = encodeURIComponent(

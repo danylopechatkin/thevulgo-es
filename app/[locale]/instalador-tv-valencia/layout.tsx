@@ -10,13 +10,15 @@ const slug = "instalador-tv-valencia";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const isEs = locale === "es";
+  const path = `/${slug}`;
 
   return {
     alternates: {
-      canonical: `${baseUrl}/${locale}/${slug}`,
+      canonical: `${baseUrl}${isEs ? "/es" : ""}${path}`,
       languages: {
-        es: `${baseUrl}/es/${slug}`,
-        en: `${baseUrl}/en/${slug}`,
+        es: `${baseUrl}/es${path}`,
+        en: `${baseUrl}${path}`,
         "x-default": `${baseUrl}/es/${slug}`,
       },
     },

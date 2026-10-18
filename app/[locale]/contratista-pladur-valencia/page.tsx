@@ -44,7 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? "Contratista de pladur en Valencia para viviendas, locales, oficinas y obra nueva. Tabiques, techos de pladur, falsos techos, aislamiento acústico, trasdosados, reformas y acabados limpios."
     : "Drywall contractor in Valencia for homes, commercial units, offices and new builds. Drywall partitions, plasterboard ceilings, suspended ceilings, acoustic insulation, wall linings, renovations and clean finishes.";
 
-  const url = `${baseUrl}/${locale}/contratista-pladur-valencia`;
+  const path = "/contratista-pladur-valencia";
+  const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
 
   return {
     title,
@@ -83,8 +84,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: url,
       languages: {
-        es: `${baseUrl}/es/contratista-pladur-valencia`,
-        en: `${baseUrl}/en/contratista-pladur-valencia`,
+        es: `${baseUrl}/es${path}`,
+        en: `${baseUrl}${path}`,
       },
     },
     openGraph: {
@@ -118,7 +119,7 @@ export default async function Page({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/contratista-pladur-valencia`;
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/contratista-pladur-valencia`;
   const estimateHref = `/${locale}/estimate?category=drywall`;
 
   const whatsappText = encodeURIComponent(
