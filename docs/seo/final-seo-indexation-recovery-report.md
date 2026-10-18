@@ -3,8 +3,8 @@
 ## Production baseline and releases
 
 - Starting production revision: `cd8c3f09bcc1a1e324be890d734e0b5b5a831108`.
-- Current production revision: `c281320ece6ac4082514a68325c03ecdb88769d9`.
-- Current production deployment: `dpl_GHauiQtWzK17QXTJhMuCNgurmpis` — `READY`.
+- Current production revision: `eadea1edeffd01d177838b4304497279c2c36b85`.
+- Current production deployment: `dpl_87jPEPmgvJgJXLJzah7J7eR3i6jd` — `READY`.
 - Google Search Console Performance baseline: unavailable. The approved release waiver was used only for PRs #17, #19, #20 and #18. No traffic, position, click or impression figures are inferred from that absence.
 
 | PR | Scope | Merge SHA | Production deployment | Verified result |
@@ -15,25 +15,28 @@
 | #18 | Renovations (74 routes) | `ac3e257db7511198db964dc3d1c3fea70684246a` | `dpl_FVn11HqEt6jNLsAdeYXMjDRU5xz7` | 148/148 |
 | #22 | English homepage sitemap entry | `82a8cab9a8e185fa0ca80fab651d39f27669a0ba` | `dpl_F1abKhhnaeC7f9FNB46u3fxRsGTH` | sitemap XML verified |
 | #24 | One confirmed Spanish 404 redirect | `c281320ece6ac4082514a68325c03ecdb88769d9` | `dpl_GHauiQtWzK17QXTJhMuCNgurmpis` | source 308 → same-language target 200 |
+| #25 | TV-size canonical recovery (4 routes) | `f1999de8bae7490e5adef36246802b65360a7955` | `dpl_BYy6ZTWajw4EitQJdEpPWTBKbJaK` | 8/8 |
+| #27 | Remaining five sitemap defects (5 routes) | `812befea4ccad44a30e7499d9a6c901a28a8430d` | `dpl_AsAjE6CJdNcneiPiPUx4GvB2etTs` | 10/10 |
+| #26 | Standalone Fan-route policy (2 routes) | `eadea1edeffd01d177838b4304497279c2c36b85` | `dpl_87jPEPmgvJgJXLJzah7J7eR3i6jd` | 2 EN metadata checks + 2 ES redirect controls |
 
 The four metadata packages were released in the approved order. Every production audit checked rendered HTML, not only source metadata. The pre-existing suites stayed green: IKEA/Furniture 8/8, Handyman 14/14, TV Mounting 10/10, Other Pages 36/36, Exterior/Electrical 24/24, Doors 22/22, Bathroom 32/32, Furniture 10/10, Repairs 34/34 and Drywall 38/38.
 
 ## Canonical inventory
 
-Of the original 211 active routes, 209 now have production-verified public canonical URLs, reciprocal hreflang for their confirmed language pair, current-page Open Graph and structured-data URLs, and no erroneous English `/en/` canonical. Spanish canonical URLs, x-default policy, titles, descriptions, H1, prices, CTA, forms and robots were compared against production baselines in the package audits.
+All 211 original route decisions are now production-verified. 209 pages retain reciprocal hreflang for confirmed EN/ES translation pairs; the two Fan pages are deliberately standalone English pages, with public EN self-canonical, EN hreflang and EN `x-default`, and no false ES pair. All have current-page Open Graph and, where rendered, structured-data URLs without a legacy English `/en/` target. Spanish canonical URLs, x-default policy, titles, descriptions, H1, prices, CTA, forms and robots were compared against production baselines in the package audits.
 
-The two remaining routes are deliberately **not** counted as fixed:
+The two Fan-route decisions are deliberate exceptions to reciprocal language pairing, not unresolved defects:
 
 | Route | Status | Reason |
 |---|---|---|
-| `/services/instalar-ventilador-techo` | POLICY REVIEW REQUIRED | The published Spanish alternate returns 308 to a different general fan-installation page. |
-| `/services/montaje-ventilador-techo` | POLICY REVIEW REQUIRED | The published Spanish alternate returns 308 to that same general page although the English page has a separate intent. |
+| `/services/instalar-ventilador-techo` | EN-ONLY POLICY VERIFIED | The published Spanish candidate returns 308 to a different general fan-installation page. PR #26 retains EN self-canonical and omits false ES hreflang. |
+| `/services/montaje-ventilador-techo` | EN-ONLY POLICY VERIFIED | The published Spanish candidate returns 308 to that same general page although the English page has a separate intent. PR #26 applies the same policy. |
 
-Both pages currently return HTTP 200, but their Spanish equivalents have not been proven. A self-canonical English-only metadata correction would require an explicit policy decision about removing the false Spanish alternate and handling `x-default`. No route, redirect or content change was made.
+Both pages return HTTP 200. Their Spanish candidate endpoints remain unchanged 308 redirects, and no route, redirect, content or sitemap change was made.
 
 ## Sitemap
 
-PR #22 corrected the filter that excluded the intentional root path. Current production sitemap audit: 899 URLs, `https://www.thevulgo.es/` present, `/es` present, zero duplicate URLs, zero `/en/` URLs and zero non-root trailing-slash URLs. This confirms source and production state; it does not establish Google recrawl or indexing.
+PR #22 corrected the filter that excluded the intentional root path. The final current-production sitemap audit: 899 URLs, `https://www.thevulgo.es/` present, `/es` present, zero duplicate URLs, zero `/en/` URLs, zero non-root trailing-slash URLs, 899 final HTTP 200, zero redirect chains, zero production `x-robots-tag: noindex`, and **899 PASS** metadata records. This confirms source and production state; it does not establish Google recrawl or indexing.
 
 ## Coverage export versus current HTTP
 
@@ -48,7 +51,7 @@ The Coverage export has a last reporting point of 2026-10-12 and records histori
 
 ## Production safety checks
 
-- Six protected Valencia service controls returned direct HTTP 200 with their expected `/es` canonicals and `index, follow` HTML robots. `/es` returns HTTP 200 to Googlebot and a 307 geo-market redirect to `/es/madrid` for the current non-bot network. The response sets `thevulgo_market_source=geo`; it is existing proxy behaviour outside this recovery scope and was not changed by the sitemap-only release.
+- All seven protected Valencia controls retain their established status/canonical/robots/Title/Description/H1 baselines. The six service controls are direct 200 with expected `/es` canonicals and `index, follow`; `/es` returns 200 with the existing Valencia market cookie and 307 geo-market redirect for this non-bot network. The response sets `thevulgo_market_source=geo`; this established proxy behaviour was not changed by the recovery releases.
 - The 138-URL city regression audit passed after every release: 129 final 200, 9 intentional final 404, 0 5xx and 0 loops.
 - Production page audits found no `x-robots-tag: noindex` on the indexable audited pages. Preview-only `noindex` headers were not treated as a production regression.
 - Vercel runtime-error clusters for the last hour: none.
@@ -62,13 +65,13 @@ The Coverage export has a last reporting point of 2026-10-12 and records histori
 | Not found (404) | 101 exported URLs rechecked | 25 final 404 need intent/relevance decisions; summary reports 102 | No |
 | Crawled, not indexed | 147 exported URLs HTTP-checked | 5 missing URLs and Google-selected-canonical/indexing evidence | No |
 | Discovered, not indexed | 421 exported URLs HTTP-checked | Commercial priority and URL Inspection decisions | No |
-| noindex / canonical exclusions | Historical export assessed | One noindex URL missing from drilldown; Fan policy unresolved | No |
+| noindex / canonical exclusions | Historical export assessed | One noindex URL missing from drilldown; URL Inspection evidence remains required | No |
 
 Do not run Google Search Console **Validate Fix** yet. Obtain fresh drilldowns for the discrepancies above, make only confirmed route-level decisions, then re-run production verification. A successful HTTP 200 or source fix must not be reported as Google recrawled or indexed.
 
 ## Final GSC indexation audit — 2026-10-17
 
-This section supersedes the preliminary current-status fields in the original inventory. It records a new, rate-limited production run against the production revision `82a8cab9a8e185fa0ca80fab651d39f27669a0ba`.
+This section supersedes the preliminary current-status fields in the original inventory. It records a new, rate-limited production run against the production revision `eadea1edeffd01d177838b4304497279c2c36b85`.
 
 - Source rows: 807 exactly — 138 server errors, 101 not-found URLs, 147 crawled-not-indexed URLs and 421 discovered-not-indexed URLs.
 - Method: four concurrent requests with staggered starts, manual redirect tracing (maximum ten hops) and retries after temporary network failures, HTTP 429 and HTTP 5xx. Every request completed; no temporary failure or redirect loop was recorded.
@@ -142,8 +145,7 @@ Each currently self-serves at the public URL but declares its canonical as the `
 
 ### B — ACTION REQUIRED
 
-- Draft PR #25 contains a separate page-local metadata review for the four public TV URLs listed above. Preserve Spanish metadata, titles, H1, price, CTA, forms and routing; production release remains unapproved.
-- Draft PR #26 applies the documented conservative Fan policy: its Spanish redirects remain untouched and must not be represented as translation pairs.
+- No remaining confirmed active canonical/hreflang defect was found in the final 899-URL sitemap sweep. The five additional sitemap defects are released in PR #27, and Fan policy is released in PR #26.
 
 ### C — GOOGLE DATA REQUIRED
 
@@ -158,7 +160,7 @@ Do **not** start GSC Validate Fix yet. First obtain the missing drilldowns, rele
 
 ## Sitewide sitemap canonical sweep — 2026-10-18
 
-After PR #24, the production sitemap was re-read and all **899** unique URLs
+After PRs #25, #27 and #26, the production sitemap was re-read and all **899** unique URLs
 were checked from rendered production HTML with a Googlebot-compatible request,
 manual redirect tracing and retry handling. All 899 finished at HTTP 200; no
 sitemap URL redirected, no redirect loop was found, and no response had a
@@ -169,16 +171,11 @@ It records final status, redirect chain, canonical, EN/ES/x-default hreflang,
 robots, Open Graph URL, applicable Service URL/@id, final breadcrumb and a
 conservative classification for every sitemap URL.
 
-- 881 URLs passed the current metadata checks.
-- 18 URL records (nine EN/ES route pairs) expose redirect-only `/en/` URLs in
-  English metadata. Four route pairs are isolated in Draft PR #25. The other
-  five route pairs are documented as separate follow-up scope, not silently
-  folded into the TV-size package.
-- The two Fan route exceptions are not in the sitemap. They remain route-policy
-  cases: English pages are standalone 200 services; the advertised Spanish
-  routes are 308 redirects to a broad service. Draft PR #26 proposes only
-  public English metadata and removes false Spanish pairs; it does not change
-  any Spanish redirect, content or sitemap entry.
+- All 899 URLs passed the current metadata checks; no sitemap record is a
+  confirmed legacy `/en/` metadata defect.
+- The two Fan routes are not in the sitemap. Their released EN-only metadata
+  policy is independently production-verified: EN 200 self-canonical, EN
+  hreflang and EN x-default; Spanish legacy 308 endpoints unchanged.
 
 See `docs/seo/sitewide-canonical-and-indexation-final.md` for the final
 production evidence, the individual defect groups and the GSC-validation gate.

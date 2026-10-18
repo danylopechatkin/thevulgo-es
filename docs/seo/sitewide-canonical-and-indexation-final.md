@@ -2,8 +2,8 @@
 
 ## Production evidence
 
-- Production main checked: `c281320ece6ac4082514a68325c03ecdb88769d9`.
-- Production deployment: `dpl_GHauiQtWzK17QXTJhMuCNgurmpis` — READY.
+- Production main checked: `eadea1edeffd01d177838b4304497279c2c36b85`.
+- Production deployment: `dpl_87jPEPmgvJgJXLJzah7J7eR3i6jd` — READY.
 - Audit method: public production sitemap, Googlebot-compatible request header,
   manual redirect tracing, four concurrent workers, staggered starts, and retries
   for temporary network, rate-limit and 5xx responses.
@@ -20,32 +20,30 @@ recrawled, chosen the expected canonical, or indexed a URL.
 | Final HTTP 200 | 899 |
 | Redirect chains from sitemap | 0 |
 | Production `x-robots-tag: noindex` | 0 |
-| PASS | 881 |
-| Confirmed current metadata defects | 18 |
+| PASS | 899 |
+| Confirmed current metadata defects | 0 |
 | Intentional exceptions / review-only records | 0 in the sitemap sweep |
 
-Every sitemap URL had a single canonical and served HTML. The 18 defects are
-nine EN/ES route pairs that expose legacy `/en/` targets in English metadata.
-They are not candidates for a global replacement; each group must keep its own
-page-local regression boundary.
+Every sitemap URL had a single canonical and served HTML. No rendered sitemap
+page exposed a legacy `/en/` value in canonical, English hreflang, Open Graph,
+current Service URL/@id or final Breadcrumb URL.
 
 | Group | Routes | Current state | Next action |
 | --- | ---: | --- | --- |
-| TV-size pages | 4 | 8 URL records with legacy EN canonical/hreflang/OG/schema/breadcrumb | Draft PR #25 fixes only these four routes; do not merge without separate approval. |
-| Other TV commercial pages | 4 | 8 URL records: `montaje-tv-98-pulgadas-valencia`, `montaje-tv-samsung-frame-valencia`, `instalar-samsung-frame-valencia`, `instalador-tv-valencia` | Prepare a separate, lower-risk Draft package after reviewing page-local schema differences. |
-| Commercial Pladur | 1 | 2 URL records: `contratista-pladur-valencia` | Prepare a separate page-local Draft; do not extend a TV package into Pladur. |
+| TV-size pages | 4 | 8 URL records formerly used legacy EN metadata | Released in PR #25; production verified 8/8. |
+| Other TV commercial pages | 4 | 8 URL records formerly used legacy EN metadata | Released in PR #27; production verified 8/8. |
+| Commercial Pladur | 1 | 2 URL records formerly used legacy EN metadata | Released with PR #27; production verified 2/2. |
 
 ## Fan routes: policy decision
 
 | English public route | Current EN page | Current ES alternate | Safe recommendation |
 | --- | --- | --- | --- |
-| `/services/instalar-ventilador-techo` | 200, but canonical/EN href/OG use redirecting `/en/…` | 308 to `/es/services/instalacion-ventilador-techo-valencia` | Treat the EN page as standalone: public EN self-canonical, public EN hreflang, remove the false ES hreflang, and make `x-default` the public EN URL. |
-| `/services/montaje-ventilador-techo` | 200, but canonical/EN href/OG use redirecting `/en/…` | 308 to the same broad Spanish route | Same policy; the distinct mounting intent is not proven equivalent to the Spanish redirect target. |
+| `/services/instalar-ventilador-techo` | 200, public EN self-canonical | 308 to `/es/services/instalacion-ventilador-techo-valencia` | Released in PR #26: public EN canonical, EN hreflang and EN `x-default`; no false ES hreflang. |
+| `/services/montaje-ventilador-techo` | 200, public EN self-canonical | 308 to the same broad Spanish route | Same released conservative policy; the distinct mounting intent is not represented as a translation pair. |
 
-Neither source route appears in the current public sitemap. No Spanish route,
-redirect, content or sitemap entry should be changed. A dedicated metadata-only
-Draft PR is appropriate only with rendered EN-page checks and explicit checks
-that both legacy Spanish URLs retain their existing 308 behavior.
+Neither source route appears in the current public sitemap. PR #26 preserved
+both Spanish redirects, content and sitemap policy; production checks confirm
+both EN pages at 200 and both legacy ES endpoints at their original 308 targets.
 
 ## Indexation status and release #24
 
@@ -79,9 +77,9 @@ and Google's exclusion reason before changing content or indexation policy.
 
 ## Status
 
-**REMAINING VERIFIED TECHNICAL DEFECTS**
+**SITEWIDE CANONICAL RECOVERY — PRODUCTION VERIFIED**
 
-Open technical work is narrowly identified: Draft PR #25 (four TV-size routes),
-five additional page-local `/en/` metadata route pairs, and the two Fan-route
-policy corrections. Google-data gaps are separate evidence blockers. No Google
-Search Console validation request has been sent.
+The code-level canonical recovery is complete for the current 899-URL sitemap
+and both independent Fan routes. Google-data gaps remain evidence blockers for
+Search Console validation, not unverified production canonical defects. No
+Google Search Console validation request has been sent.
