@@ -101,6 +101,7 @@ const relatedPages = [
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}/services/${slug}`;
 
   const title = isEs
     ? "Instalar ventilador de techo en Valencia por 45 € | THEVULGO"
@@ -141,17 +142,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}/services/${slug}`,
+      canonical: pageUrl,
       languages: {
-        es: `${baseUrl}/es/services/${slug}`,
-        en: `${baseUrl}/en/services/${slug}`,
-        "x-default": `${baseUrl}/es/services/${slug}`,
+        en: pageUrl,
+        "x-default": pageUrl,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/${locale}/services/${slug}`,
+      url: pageUrl,
       siteName: "THEVULGO",
       locale: isEs ? "es_ES" : "en_GB",
       type: "website",
@@ -162,6 +162,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function InstallCeilingFanPage({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const pageUrl = `${baseUrl}/services/${slug}`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -244,7 +245,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       name: "THEVULGO",
-      url: `${baseUrl}/${locale}/services/${slug}`,
+      url: pageUrl,
       telephone: `+${phone}`,
       priceRange: "€€",
       areaServed: areas.map((area) => ({
@@ -318,7 +319,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
           "@type": "ListItem",
           position: 3,
           name: isEs ? "Instalar ventilador de techo" : "Install ceiling fan",
-          item: `${baseUrl}/${locale}/services/${slug}`,
+          item: pageUrl,
         },
       ],
     },
