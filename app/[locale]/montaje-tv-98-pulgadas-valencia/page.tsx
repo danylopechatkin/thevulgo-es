@@ -46,7 +46,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? "Montaje profesional de TV de 98 pulgadas en Valencia. Instalación segura para pantallas gigantes, revisión de pared, soporte compatible, manipulación cuidadosa y ocultación de cables. 129 €."
     : "Professional 98 inch TV mounting in Valencia. Safe installation for giant screens, wall check, compatible bracket, careful handling and cable concealment. €129.";
 
-  const url = `${baseUrl}/${locale}/montaje-tv-98-pulgadas-valencia`;
+  const path = "/montaje-tv-98-pulgadas-valencia";
+  const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
 
   return {
     title,
@@ -54,8 +55,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: url,
       languages: {
-        es: `${baseUrl}/es/montaje-tv-98-pulgadas-valencia`,
-        en: `${baseUrl}/en/montaje-tv-98-pulgadas-valencia`,
+        es: `${baseUrl}/es${path}`,
+        en: `${baseUrl}${path}`,
       },
     },
     openGraph: {
@@ -111,7 +112,7 @@ export default async function Page({ params }: Props) {
   const { locale } = await params;
   const isEs = locale === "es";
 
-  const pageUrl = `${baseUrl}/${locale}/montaje-tv-98-pulgadas-valencia`;
+  const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/montaje-tv-98-pulgadas-valencia`;
   const estimateHref = `/${locale}/estimate?category=tv-mounting`;
 
   const whatsappText = encodeURIComponent(
