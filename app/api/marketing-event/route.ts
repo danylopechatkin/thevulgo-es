@@ -86,7 +86,8 @@ export async function POST(request: Request) {
       return Response.json({ ok: false }, { status: 503 });
     }
     return Response.json({ ok: true });
-  } catch {
-    return new Response(null, { status: 204 });
+  } catch (error) {
+    console.error("Marketing event tracking exception", error);
+    return Response.json({ ok: false, status: "delivery_unknown" }, { status: 500 });
   }
 }

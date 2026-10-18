@@ -30,6 +30,8 @@ export function resolveServiceTaxonomy(path = "", hint = ""): ServiceTaxonomy {
 
 export function localeFromPath(path: string): "es" | "en" | "unknown" {
   if (/^\/es(?:\/|$)/.test(path)) return "es";
+  // next-intl uses English as the public default locale. `/en/` remains a
+  // legacy input, but all other public paths are English rather than unknown.
   if (/^\/en(?:\/|$)/.test(path)) return "en";
-  return "unknown";
+  return path.startsWith("/") ? "en" : "unknown";
 }

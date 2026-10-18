@@ -10,6 +10,19 @@ import { marketFromPath, marketName } from "@/lib/cities";
 import { appendWhatsAppReference, createWhatsAppIdentity } from "@/lib/analytics/whatsapp";
 
 const WA_ADS_CONVERSION = "AW-18261040714/0gYPCNfwjtocEMq8xYNE";
+
+function sendWhatsAppClick(payload: string) {
+  const body = new Blob([payload], { type: "application/json" });
+  // sendBeacon only confirms browser queueing, never database persistence.
+  if (navigator.sendBeacon?.("/api/whatsapp-click", body)) {
+    window.dispatchEvent(new CustomEvent("thevulgo:analytics-delivery", { detail: { eventName: "whatsapp_click", status: "delivery_unknown", transport: "beacon" } }));
+    return;
+  }
+  void fetch("/api/whatsapp-click", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true })
+    .then((response) => window.dispatchEvent(new CustomEvent("thevulgo:analytics-delivery", { detail: { eventName: "whatsapp_click", status: response.ok ? "recorded_or_duplicate" : "delivery_unknown", httpStatus: response.status, transport: "fetch" } })))
+    .catch(() => window.dispatchEvent(new CustomEvent("thevulgo:analytics-delivery", { detail: { eventName: "whatsapp_click", status: "delivery_unknown", transport: "fetch" } })));
+}
+
 export default function MarketingTracker() {
   const pathname = usePathname();
   useEffect(() => {
@@ -51,8 +64,7 @@ export default function MarketingTracker() {
         const payload = JSON.stringify({ clickId, eventId, contactReference, source: placement, service: taxonomy.serviceId,
           serviceCategory: taxonomy.category, pagePath: pathname, messageType: "service_quote", ctaId, ctaPlacement: placement,
           locale, market, city, promoId: target.getAttribute("data-promo-id") || null, ...attribution });
-        if (navigator.sendBeacon) navigator.sendBeacon("/api/whatsapp-click", new Blob([payload], { type: "application/json" }));
-        else void fetch("/api/whatsapp-click", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true });
+        sendWhatsAppClick(payload);
         if (readConsent()?.advertising) (window as Window & { gtag?: (...args: unknown[]) => void }).gtag?.("event", "conversion", { send_to: WA_ADS_CONVERSION });
         return;
       }
