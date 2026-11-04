@@ -100,12 +100,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalar ventilador de techo en Valencia | 45 €"
-    : "Ceiling Fan Installation Valencia | €45";
+    ? "Instalar ventilador de techo en Valencia | 50 €"
+    : "Ceiling Fan Installation Valencia | €50";
 
   const description = isEs
-    ? "Instalación de ventiladores de techo en Valencia por 45 €. Desmontaje del anterior, conexión y prueba incluidos. Precio rápido online."
-    : "Ceiling fan installation in Valencia for €45. Removal of the old fitting, connection and final testing included. Check your price online.";
+    ? "Instalación de ventiladores de techo en Valencia por 50 €. Desmontaje del anterior, conexión y prueba incluidos. Precio rápido online."
+    : "Ceiling fan installation in Valencia for €50. Removal of the old fitting, connection and final testing included. Check your price online.";
 
   return {
     title,
@@ -186,17 +186,21 @@ export default async function CeilingFanInstallationPage({
 
   const prices = isEs
     ? [
-        ["1 ventilador de techo", "45 €"],
-        ["2 ventiladores de techo", "85 €"],
-        ["3 ventiladores de techo", "125 €"],
+        ["1 ventilador de techo", "50 €"],
+        ["2 ventiladores de techo", "95 €"],
+        ["3 ventiladores de techo", "140 €"],
+        ["4 ventiladores de techo", "185 €"],
+        ["5 ventiladores de techo", "230 €"],
         ["Desmontaje del ventilador antiguo", "Incluido"],
         ["Desmontaje de lámpara", "Incluido"],
         ["Conexión al punto eléctrico existente", "Incluido"],
       ]
     : [
-        ["1 ceiling fan", "€45"],
-        ["2 ceiling fans", "€85"],
-        ["3 ceiling fans", "€125"],
+        ["1 ceiling fan", "€50"],
+        ["2 ceiling fans", "€95"],
+        ["3 ceiling fans", "€140"],
+        ["4 ceiling fans", "€185"],
+        ["5 ceiling fans", "€230"],
         ["Old ceiling fan removal", "Included"],
         ["Old light removal", "Included"],
         ["Connection to existing electrical point", "Included"],
@@ -305,7 +309,7 @@ export default async function CeilingFanInstallationPage({
     ? [
         {
           q: "¿Cuánto cuesta instalar un ventilador de techo en Valencia?",
-          a: "La instalación de un ventilador cuesta 45 €. Dos ventiladores cuestan 85 € y tres ventiladores 125 €.",
+          a: "La instalación de un ventilador cuesta 50 €. Dos ventiladores cuestan 95 € y tres ventiladores 140 €.",
         },
         {
   q: "¿Quién puede instalar un ventilador de techo en Valencia?",
@@ -343,7 +347,7 @@ export default async function CeilingFanInstallationPage({
     : [
         {
           q: "How much does ceiling fan installation cost in Valencia?",
-          a: "One fan costs €45, two fans €85 and three fans €125.",
+          a: "One fan costs €50, two fans €95 and three fans €140.",
         },
         {
           q: "Is old light removal included?",
@@ -407,27 +411,41 @@ export default async function CeilingFanInstallationPage({
         areaServed: areas,
         url: pageUrl,
         description: isEs
-          ? "Instalación de ventiladores de techo en Valencia por 45 €. Desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente incluidos."
-          : "Ceiling fan installation in Valencia for €45. Old lamp or fan removal and connection to the existing electrical point included.",
+          ? "Instalación de ventiladores de techo en Valencia por 50 €. Desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente incluidos."
+          : "Ceiling fan installation in Valencia for €50. Old lamp or fan removal and connection to the existing electrical point included.",
         offers: [
           {
             "@type": "Offer",
             name: isEs ? "Instalación de 1 ventilador" : "1 ceiling fan installation",
-            price: "45",
+            price: "50",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
           },
           {
             "@type": "Offer",
             name: isEs ? "Instalación de 2 ventiladores" : "2 ceiling fans installation",
-            price: "85",
+            price: "95",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
           },
           {
             "@type": "Offer",
             name: isEs ? "Instalación de 3 ventiladores" : "3 ceiling fans installation",
-            price: "125",
+            price: "140",
+            priceCurrency: "EUR",
+            availability: "https://schema.org/InStock",
+          },
+          {
+            "@type": "Offer",
+            name: isEs ? "Instalación de 4 ventiladores" : "4 ceiling fans installation",
+            price: "185",
+            priceCurrency: "EUR",
+            availability: "https://schema.org/InStock",
+          },
+          {
+            "@type": "Offer",
+            name: isEs ? "Instalación de 5 ventiladores" : "5 ceiling fans installation",
+            price: "230",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
           },
@@ -515,8 +533,8 @@ export default async function CeilingFanInstallationPage({
 
             <p className="mt-6 max-w-4xl text-lg leading-8 text-neutral-700">
   {isEs
-    ? "¿Necesitas instalar un ventilador de techo en Valencia? En THEVULGO realizamos la instalación de ventiladores de techo por 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles, CREATE, Cecotec y otras marcas. El servicio incluye montaje, conexión al punto eléctrico existente y prueba final."
-    : "Need to install a ceiling fan in Valencia? THEVULGO provides professional ceiling fan installation for €45. We install ceiling fans with lights, remote controls, WiFi and retractable blades. Installation includes mounting, connection to the existing electrical point and final testing."}
+    ? "¿Necesitas instalar un ventilador de techo en Valencia? En THEVULGO realizamos la instalación de ventiladores de techo por 50 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles, CREATE, Cecotec y otras marcas. El servicio incluye montaje, conexión al punto eléctrico existente y prueba final."
+    : "Need to install a ceiling fan in Valencia? THEVULGO provides professional ceiling fan installation for €50. We install ceiling fans with lights, remote controls, WiFi and retractable blades. Installation includes mounting, connection to the existing electrical point and final testing."}
 </p>
 
 <div className="mt-5 flex flex-wrap gap-3 text-sm font-bold">
@@ -535,32 +553,32 @@ export default async function CeilingFanInstallationPage({
 
   <span className="rounded-full bg-yellow-400 px-4 py-2 text-black shadow-sm">
 
-    {isEs ? "45 €" : "€45"}
+    {isEs ? "50 €" : "€50"}
 
   </span>
 
 </div>
 
-            <div className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-3">
+            <div className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2 lg:grid-cols-5">
               <div className="rounded-2xl border border-yellow-300 bg-white p-5 shadow-md">
                 <p className="text-sm font-bold text-neutral-600">
                   {isEs ? "1 ventilador" : "1 fan"}
                 </p>
-                <p className="mt-1 text-3xl font-black">45 €</p>
+                <p className="mt-1 text-3xl font-black">50 €</p>
               </div>
 
               <div className="rounded-2xl border border-yellow-300 bg-white p-5 shadow-md">
                 <p className="text-sm font-bold text-neutral-600">
                   {isEs ? "2 ventiladores" : "2 fans"}
                 </p>
-                <p className="mt-1 text-3xl font-black">85 €</p>
+                <p className="mt-1 text-3xl font-black">95 €</p>
               </div>
 
               <div className="rounded-2xl border border-yellow-300 bg-white p-5 shadow-md">
                 <p className="text-sm font-bold text-neutral-600">
                   {isEs ? "3 ventiladores" : "3 fans"}
                 </p>
-                <p className="mt-1 text-3xl font-black">125 €</p>
+                <p className="mt-1 text-3xl font-black">140 €</p>
               </div>
             </div>
 
@@ -602,7 +620,7 @@ export default async function CeilingFanInstallationPage({
     : "Fast WhatsApp reply • We work 7 days depending on availability"}
 </p>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {[
                 {
                   icon: Clock3,
@@ -652,8 +670,8 @@ export default async function CeilingFanInstallationPage({
 
     <p className="mt-5 text-lg leading-8 text-neutral-700">
       {isEs
-        ? "Si necesitas instalar un ventilador de techo en Valencia, THEVULGO ofrece un servicio profesional por 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles y modelos de todas las marcas. El servicio incluye el montaje, la conexión al punto eléctrico existente, el desmontaje de la lámpara o ventilador anterior y la prueba final de funcionamiento."
-        : "If you need to install a ceiling fan in Valencia, THEVULGO provides professional installation for €45. We install fans with lights, remote controls, WiFi, retractable blades and all major brands. The service includes mounting, connection to the existing electrical point, removal of the old light or fan and full testing."}
+        ? "Si necesitas instalar un ventilador de techo en Valencia, THEVULGO ofrece un servicio profesional por 50 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles y modelos de todas las marcas. El servicio incluye el montaje, la conexión al punto eléctrico existente, el desmontaje de la lámpara o ventilador anterior y la prueba final de funcionamiento."
+        : "If you need to install a ceiling fan in Valencia, THEVULGO provides professional installation for €50. We install fans with lights, remote controls, WiFi, retractable blades and all major brands. The service includes mounting, connection to the existing electrical point, removal of the old light or fan and full testing."}
     </p>
   </div>
 </section>
@@ -1275,9 +1293,9 @@ export default async function CeilingFanInstallationPage({
 
     {isEs
 
-      ? "Si buscas instalar un ventilador de techo en Valencia, THEVULGO ofrece un servicio profesional por 45 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles y modelos de todas las marcas. Confirmamos el precio antes de la visita y dejamos el ventilador completamente instalado, conectado y probado."
+      ? "Si buscas instalar un ventilador de techo en Valencia, THEVULGO ofrece un servicio profesional por 50 €. Instalamos ventiladores con luz, mando a distancia, WiFi, aspas retráctiles y modelos de todas las marcas. Confirmamos el precio antes de la visita y dejamos el ventilador completamente instalado, conectado y probado."
 
-      : "If you are looking to install a ceiling fan in Valencia, THEVULGO provides professional installation for €45. We install fans with lights, remote controls, WiFi, retractable blades and all major brands. We confirm the price before the visit and leave the fan fully installed, connected and tested."}
+      : "If you are looking to install a ceiling fan in Valencia, THEVULGO provides professional installation for €50. We install fans with lights, remote controls, WiFi, retractable blades and all major brands. We confirm the price before the visit and leave the fan fully installed, connected and tested."}
 
   </p>
 
@@ -1298,26 +1316,34 @@ export default async function CeilingFanInstallationPage({
                   : "Send us a photo of the ceiling and the fan. We confirm the price before the visit and leave the fan installed, connected and tested."}
               </p>
 
-              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
                 <div className="rounded-2xl bg-white/80 p-4">
                   <p className="text-sm font-bold">
                     {isEs ? "1 ventilador" : "1 fan"}
                   </p>
-                  <p className="mt-1 text-2xl font-black">45 €</p>
+                  <p className="mt-1 text-2xl font-black">50 €</p>
                 </div>
 
                 <div className="rounded-2xl bg-white/80 p-4">
                   <p className="text-sm font-bold">
                     {isEs ? "2 ventiladores" : "2 fans"}
                   </p>
-                  <p className="mt-1 text-2xl font-black">85 €</p>
+                  <p className="mt-1 text-2xl font-black">95 €</p>
                 </div>
 
                 <div className="rounded-2xl bg-white/80 p-4">
                   <p className="text-sm font-bold">
                     {isEs ? "3 ventiladores" : "3 fans"}
                   </p>
-                  <p className="mt-1 text-2xl font-black">125 €</p>
+                  <p className="mt-1 text-2xl font-black">140 €</p>
+                </div>
+                <div className="rounded-2xl bg-white/80 p-4">
+                  <p className="text-sm font-bold">{isEs ? "4 ventiladores" : "4 fans"}</p>
+                  <p className="mt-1 text-2xl font-black">185 €</p>
+                </div>
+                <div className="rounded-2xl bg-white/80 p-4">
+                  <p className="text-sm font-bold">{isEs ? "5 ventiladores" : "5 fans"}</p>
+                  <p className="mt-1 text-2xl font-black">230 €</p>
                 </div>
               </div>
             </div>
