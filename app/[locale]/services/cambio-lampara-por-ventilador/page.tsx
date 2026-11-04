@@ -871,7 +871,7 @@ export default async function ChangeLampToFanPage({ params }: Props) {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
             {[
               {
                 title: isEs ? "Precio confirmado" : "Confirmed price",
