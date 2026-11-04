@@ -2,11 +2,11 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { createHash } from "node:crypto";
 import { sanitizeReferrer } from "@/lib/analytics/channel";
+import { getCeilingFanPrice } from "@/lib/ceilingFanPricing";
 
 const PHOTO_BUCKET = "fan-lead-photos";
 const MAX_PHOTOS = 4;
 const MAX_PHOTO_BYTES = 800_000;
-const prices: Record<number, number> = { 1: 45, 2: 85, 3: 125 };
 
 const clean = (value: unknown, max: number) => String(value || "").trim().slice(0, max);
 const escapeHtml = (value: string) => value.replace(/[&<>"]/g, (character) => ({
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
     const submissionKey = clean(body.submissionKey, 80).replace(/[^a-zA-Z0-9-]/g, "");
     const locale = body.locale === "en" ? "en" : "es";
     const fanCount = Number(body.fanCount);
-    const price = prices[fanCount];
+    const price = getCeilingFanPrice(fanCount);
 
     if (!fullName || !submittedPhone || !area || !price || !submissionKey || body.privacyAccepted !== true) {
       return Response.json({ success: false, error: "Missing required fields" }, { status: 400 });

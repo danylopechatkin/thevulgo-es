@@ -132,12 +132,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const pageUrl = `${baseUrl}/services/montaje-ventilador-techo`;
 
   const title = isEs
-    ? "Montaje de ventilador de techo en Valencia por 45 € | THEVULGO"
-    : "Ceiling Fan Mounting in Valencia | €45 | THEVULGO";
+    ? "Montaje de ventilador de techo en Valencia por 50 € | THEVULGO"
+    : "Ceiling Fan Mounting in Valencia | €50 | THEVULGO";
 
   const description = isEs
-    ? "Montaje de ventilador de techo en Valencia por 45 €. 2 ventiladores 85 €, 3 ventiladores 125 €. Desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente incluidos."
-    : "Ceiling fan mounting in Valencia for €45. 2 fans €85, 3 fans €125. Old light or fan removal and connection to the existing electrical point included.";
+    ? "Montaje de ventilador de techo en Valencia por 50 €. 2 ventiladores 95 €, 3 ventiladores 140 €. Desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente incluidos."
+    : "Ceiling fan mounting in Valencia for €50. 2 fans €95, 3 fans €140. Old light or fan removal and connection to the existing electrical point included.";
 
   return {
     title,
@@ -199,14 +199,14 @@ export default async function CeilingFanMountingPage({ params }: Props) {
       ? "Montaje de ventiladores de techo en Valencia"
       : "Ceiling fan mounting in Valencia",
     title: isEs
-      ? "Montaje de ventilador de techo por 45 €"
-      : "Ceiling fan mounting for €45",
+      ? "Montaje de ventilador de techo por 50 €"
+      : "Ceiling fan mounting for €50",
     subtitle: isEs
       ? "Instalamos ventiladores de techo con luz, mando, aspas retráctiles o modelos clásicos. El precio incluye desmontaje de lámpara o ventilador antiguo y conexión al punto eléctrico existente."
       : "We install ceiling fans with light, remote control, retractable blades or classic models. The price includes removal of the old lamp or fan and connection to the existing electrical point.",
     primaryCta: isEs ? "Pedir presupuesto por WhatsApp" : "Request quote on WhatsApp",
     secondaryCta: isEs ? "Ver precios" : "See prices",
-    heroBadge1: isEs ? "45 €" : "€45",
+    heroBadge1: isEs ? "50 €" : "€50",
     heroBadge2: isEs ? "Mismo día según disponibilidad" : "Same day depending on availability",
     heroBadge3: isEs ? "Precio claro antes de empezar" : "Clear price before starting",
   };
@@ -259,19 +259,31 @@ export default async function CeilingFanMountingPage({ params }: Props) {
           {
             "@type": "Offer",
             name: isEs ? "1 ventilador" : "1 ceiling fan",
-            price: "45",
+            price: "50",
             priceCurrency: "EUR",
           },
           {
             "@type": "Offer",
             name: isEs ? "2 ventiladores" : "2 ceiling fans",
-            price: "85",
+            price: "95",
             priceCurrency: "EUR",
           },
           {
             "@type": "Offer",
             name: isEs ? "3 ventiladores" : "3 ceiling fans",
-            price: "125",
+            price: "140",
+            priceCurrency: "EUR",
+          },
+          {
+            "@type": "Offer",
+            name: isEs ? "4 ventiladores" : "4 ceiling fans",
+            price: "185",
+            priceCurrency: "EUR",
+          },
+          {
+            "@type": "Offer",
+            name: isEs ? "5 ventiladores" : "5 ceiling fans",
+            price: "230",
             priceCurrency: "EUR",
           },
         ],
@@ -306,7 +318,7 @@ export default async function CeilingFanMountingPage({ params }: Props) {
   const priceCards = [
     {
       title: isEs ? "1 ventilador" : "1 ceiling fan",
-      price: "45 €",
+      price: "50 €",
       text: isEs
         ? "Ideal para dormitorio, salón, despacho o habitación individual."
         : "Ideal for a bedroom, living room, office or single room.",
@@ -314,7 +326,7 @@ export default async function CeilingFanMountingPage({ params }: Props) {
     },
     {
       title: isEs ? "2 ventiladores" : "2 ceiling fans",
-      price: "85 €",
+      price: "95 €",
       text: isEs
         ? "Perfecto para montar dos ventiladores en la misma visita."
         : "Perfect for mounting two fans in the same visit.",
@@ -322,11 +334,23 @@ export default async function CeilingFanMountingPage({ params }: Props) {
     },
     {
       title: isEs ? "3 ventiladores" : "3 ceiling fans",
-      price: "125 €",
+      price: "140 €",
       text: isEs
         ? "Pack para vivienda completa, dormitorios o varias estancias."
         : "Package for a full home, bedrooms or several rooms.",
       badge: isEs ? "Mejor precio" : "Best value",
+    },
+    {
+      title: isEs ? "4 ventiladores" : "4 ceiling fans",
+      price: "185 €",
+      text: isEs ? "Instalación de cuatro ventiladores en una misma visita." : "Four fans installed during the same visit.",
+      badge: isEs ? "Pack de 4" : "4-fan package",
+    },
+    {
+      title: isEs ? "5 ventiladores" : "5 ceiling fans",
+      price: "230 €",
+      text: isEs ? "Instalación de cinco ventiladores en una misma visita." : "Five fans installed during the same visit.",
+      badge: isEs ? "Pack de 5" : "5-fan package",
     },
   ];
 
@@ -539,7 +563,7 @@ export default async function CeilingFanMountingPage({ params }: Props) {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
             {priceCards.map((card) => (
               <article
                 key={card.title}
@@ -1000,8 +1024,8 @@ export default async function CeilingFanMountingPage({ params }: Props) {
                   ? "¿Cuánto cuesta montar un ventilador de techo?"
                   : "How much does it cost to mount a ceiling fan?",
                 a: isEs
-                  ? "El precio es 45 € por 1 ventilador, 85 € por 2 ventiladores y 125 € por 3 ventiladores, si existe un punto eléctrico preparado."
-                  : "The price is €45 for 1 fan, €85 for 2 fans and €125 for 3 fans, if there is a prepared electrical point.",
+                  ? "El precio es 50 € por 1 ventilador, 95 € por 2 ventiladores y 140 € por 3 ventiladores, si existe un punto eléctrico preparado."
+                  : "The price is €50 for 1 fan, €95 for 2 fans and €140 for 3 fans, if there is a prepared electrical point.",
               },
               {
                 q: isEs

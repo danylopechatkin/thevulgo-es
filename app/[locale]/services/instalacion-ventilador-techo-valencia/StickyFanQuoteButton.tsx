@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { getCeilingFanPrice } from "@/lib/ceilingFanPricing";
 
 export default function StickyFanQuoteButton({ locale }: { locale: string }) {
   const isEs = locale === "es";
@@ -27,7 +28,7 @@ export default function StickyFanQuoteButton({ locale }: { locale: string }) {
         className="mx-auto flex h-14 max-w-md items-center justify-between rounded-xl bg-yellow-400 px-5 text-black shadow-md transition active:scale-[0.98]"
       >
         <span className="text-base font-black">
-          {isEs ? "Ver precio: 45 €" : "See price: €45"}
+          {isEs ? `Ver precio: ${getCeilingFanPrice(1)} €` : `See price: €${getCeilingFanPrice(1)}`}
         </span>
         <ArrowRight className="h-5 w-5 shrink-0 stroke-[2.5]" />
       </a>

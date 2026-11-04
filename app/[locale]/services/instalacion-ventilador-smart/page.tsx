@@ -102,12 +102,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Instalación de ventilador smart en Valencia por 45 € | THEVULGO"
-    : "Smart Ceiling Fan Installation in Valencia | €45 | THEVULGO";
+    ? "Instalación de ventilador smart en Valencia por 50 € | THEVULGO"
+    : "Smart Ceiling Fan Installation in Valencia | €50 | THEVULGO";
 
   const description = isEs
-    ? "Instalación de ventilador smart en Valencia por 45 €. Montaje, conexión, app, WiFi, mando, luz LED, velocidades y prueba final."
-    : "Smart ceiling fan installation in Valencia for €45. Mounting, connection, app, WiFi, remote, LED light, speeds and final test.";
+    ? "Instalación de ventilador smart en Valencia por 50 €. Montaje, conexión, app, WiFi, mando, luz LED, velocidades y prueba final."
+    : "Smart ceiling fan installation in Valencia for €50. Mounting, connection, app, WiFi, remote, LED light, speeds and final test.";
 
   return {
     title,
@@ -176,7 +176,7 @@ export default async function SmartFanPage({ params }: Props) {
   const priceCards = [
     {
       title: isEs ? "1 ventilador smart" : "1 smart fan",
-      price: "45 €",
+      price: "50 €",
       text: isEs
         ? "Montaje del ventilador, conexión al punto existente y prueba básica de mando/app."
         : "Fan mounting, connection to the existing point and basic remote/app test.",
@@ -184,7 +184,7 @@ export default async function SmartFanPage({ params }: Props) {
     },
     {
       title: isEs ? "2 ventiladores smart" : "2 smart fans",
-      price: "85 €",
+      price: "95 €",
       text: isEs
         ? "Instalación de dos ventiladores inteligentes en una misma visita."
         : "Installation of two smart ceiling fans in one visit.",
@@ -192,11 +192,23 @@ export default async function SmartFanPage({ params }: Props) {
     },
     {
       title: isEs ? "3 ventiladores smart" : "3 smart fans",
-      price: "125 €",
+      price: "140 €",
       text: isEs
         ? "Ideal para instalar ventiladores smart en varias habitaciones el mismo día."
         : "Ideal for installing smart fans in several rooms on the same day.",
       badge: isEs ? "Mejor precio" : "Best value",
+    },
+    {
+      title: isEs ? "4 ventiladores" : "4 ceiling fans",
+      price: "185 €",
+      text: isEs ? "Instalación de cuatro ventiladores en una misma visita." : "Four fans installed during the same visit.",
+      badge: isEs ? "Pack de 4" : "4-fan package",
+    },
+    {
+      title: isEs ? "5 ventiladores" : "5 ceiling fans",
+      price: "230 €",
+      text: isEs ? "Instalación de cinco ventiladores en una misma visita." : "Five fans installed during the same visit.",
+      badge: isEs ? "Pack de 5" : "5-fan package",
     },
   ];
 
@@ -277,8 +289,8 @@ export default async function SmartFanPage({ params }: Props) {
         ? "¿Cuánto cuesta instalar un ventilador smart?"
         : "How much does it cost to install a smart fan?",
       a: isEs
-        ? "El precio es de 45 € para un ventilador, 85 € para dos y 125 € para tres, usando el punto eléctrico existente."
-        : "The price is €45 for one fan, €85 for two and €125 for three, using the existing electrical point.",
+        ? "El precio es de 50 € para un ventilador, 95 € para dos y 140 € para tres, usando el punto eléctrico existente."
+        : "The price is €50 for one fan, €95 for two and €140 for three, using the existing electrical point.",
     },
     {
       q: isEs
@@ -434,8 +446,8 @@ export default async function SmartFanPage({ params }: Props) {
 
             <h1 className="max-w-4xl text-4xl font-black tracking-tight text-neutral-950 sm:text-5xl lg:text-6xl">
               {isEs
-                ? "Instalación de ventilador smart por 45 €"
-                : "Smart ceiling fan installation for €45"}
+                ? "Instalación de ventilador smart por 50 €"
+                : "Smart ceiling fan installation for €50"}
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600 sm:text-xl">
@@ -464,7 +476,7 @@ export default async function SmartFanPage({ params }: Props) {
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {[
-                isEs ? "45 €" : "€45",
+                isEs ? "50 €" : "€50",
                 isEs ? "WiFi y app" : "WiFi and app",
                 isEs ? "Prueba completa" : "Full test",
               ].map((item) => (
@@ -568,7 +580,7 @@ export default async function SmartFanPage({ params }: Props) {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
             {priceCards.map((card) => (
               <div
                 key={card.title}
@@ -1139,7 +1151,7 @@ export default async function SmartFanPage({ params }: Props) {
 
           <div className="mx-auto mt-8 grid max-w-4xl gap-3 sm:grid-cols-3">
             {[
-              isEs ? "Montaje por 45 €" : "Installation for €45",
+              isEs ? "Montaje por 50 €" : "Installation for €50",
               isEs ? "App y mando" : "App and remote",
               isEs ? "Valencia y alrededores" : "Valencia and nearby areas",
             ].map((item) => (

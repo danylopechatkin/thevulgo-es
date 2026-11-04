@@ -292,6 +292,8 @@ function addRoutes(
   for (const route of routes) {
     sitemap.push({
       url: absoluteUrl(localizedPath(locale, route)),
+      // Updated ceiling-fan pricing on 2026-11-04; do not mark unrelated pages as changed.
+      ...(route.includes("ventilador") ? { lastModified: new Date("2026-11-04T00:00:00.000Z") } : {}),
       changeFrequency: options.changeFrequency,
       priority: options.priority,
     });

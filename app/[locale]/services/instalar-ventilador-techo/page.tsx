@@ -104,12 +104,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const pageUrl = `${baseUrl}/services/${slug}`;
 
   const title = isEs
-    ? "Instalar ventilador de techo en Valencia por 45 € | THEVULGO"
-    : "Install Ceiling Fan in Valencia | €45 | THEVULGO";
+    ? "Instalar ventilador de techo en Valencia por 50 € | THEVULGO"
+    : "Install Ceiling Fan in Valencia | €50 | THEVULGO";
 
   const description = isEs
-    ? "Instalar ventilador de techo en Valencia por 45 €. 2 ventiladores 85 €, 3 ventiladores 125 €. Incluye desmontaje de lámpara antigua, conexión al punto eléctrico existente y prueba final."
-    : "Install a ceiling fan in Valencia for €45. 2 fans €85, 3 fans €125. Includes old lamp removal, connection to the existing electrical point and final test.";
+    ? "Instalar ventilador de techo en Valencia por 50 €. 2 ventiladores 95 €, 3 ventiladores 140 €. Incluye desmontaje de lámpara antigua, conexión al punto eléctrico existente y prueba final."
+    : "Install a ceiling fan in Valencia for €50. 2 fans €95, 3 fans €140. Includes old lamp removal, connection to the existing electrical point and final test.";
 
   return {
     title,
@@ -175,7 +175,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
   const priceCards = [
     {
       title: isEs ? "1 ventilador" : "1 ceiling fan",
-      price: "45 €",
+      price: "50 €",
       badge: isEs ? "Servicio básico" : "Basic service",
       text: isEs
         ? "Instalación de un ventilador en dormitorio, salón o despacho."
@@ -183,7 +183,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
     },
     {
       title: isEs ? "2 ventiladores" : "2 ceiling fans",
-      price: "85 €",
+      price: "95 €",
       badge: isEs ? "Pack ahorro" : "Saving pack",
       text: isEs
         ? "Dos ventiladores instalados en la misma visita."
@@ -191,11 +191,23 @@ export default async function InstallCeilingFanPage({ params }: Props) {
     },
     {
       title: isEs ? "3 ventiladores" : "3 ceiling fans",
-      price: "125 €",
+      price: "140 €",
       badge: isEs ? "Mejor precio" : "Best value",
       text: isEs
         ? "Ideal para varias habitaciones de la misma vivienda."
         : "Ideal for several rooms in the same home.",
+    },
+    {
+      title: isEs ? "4 ventiladores" : "4 ceiling fans",
+      price: "185 €",
+      text: isEs ? "Instalación de cuatro ventiladores en una misma visita." : "Four fans installed during the same visit.",
+      badge: isEs ? "Pack de 4" : "4-fan package",
+    },
+    {
+      title: isEs ? "5 ventiladores" : "5 ceiling fans",
+      price: "230 €",
+      text: isEs ? "Instalación de cinco ventiladores en una misma visita." : "Five fans installed during the same visit.",
+      badge: isEs ? "Pack de 5" : "5-fan package",
     },
   ];
 
@@ -205,8 +217,8 @@ export default async function InstallCeilingFanPage({ params }: Props) {
         ? "¿Cuánto cuesta instalar un ventilador de techo?"
         : "How much does it cost to install a ceiling fan?",
       a: isEs
-        ? "El precio es 45 € por 1 ventilador, 85 € por 2 ventiladores y 125 € por 3 ventiladores, siempre que exista un punto eléctrico preparado."
-        : "The price is €45 for 1 fan, €85 for 2 fans and €125 for 3 fans, as long as there is a prepared electrical point.",
+        ? "El precio es 50 € por 1 ventilador, 95 € por 2 ventiladores y 140 € por 3 ventiladores, siempre que exista un punto eléctrico preparado."
+        : "The price is €50 for 1 fan, €95 for 2 fans and €140 for 3 fans, as long as there is a prepared electrical point.",
     },
     {
       q: isEs
@@ -349,8 +361,8 @@ export default async function InstallCeilingFanPage({ params }: Props) {
 
             <h1 className="max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">
               {isEs
-                ? "Instalar ventilador de techo por 45 €"
-                : "Install a ceiling fan for €45"}
+                ? "Instalar ventilador de techo por 50 €"
+                : "Install a ceiling fan for €50"}
             </h1>
 
             <p className="mt-6 max-w-4xl text-lg leading-8 text-neutral-700">
@@ -379,9 +391,9 @@ export default async function InstallCeilingFanPage({ params }: Props) {
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
-                isEs ? "45 €" : "€45",
-                isEs ? "2 ventiladores 85 €" : "2 fans €85",
-                isEs ? "3 ventiladores 125 €" : "3 fans €125",
+                isEs ? "50 €" : "€50",
+                isEs ? "2 ventiladores 95 €" : "2 fans €95",
+                isEs ? "3 ventiladores 140 €" : "3 fans €140",
               ].map((item) => (
                 <div
                   key={item}
@@ -477,7 +489,7 @@ export default async function InstallCeilingFanPage({ params }: Props) {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
             {priceCards.map((card) => (
               <article
                 key={card.title}

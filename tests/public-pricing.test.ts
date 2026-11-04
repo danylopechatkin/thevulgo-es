@@ -5,6 +5,7 @@ import path from "node:path";
 import test from "node:test";
 import ts from "typescript";
 import { SERVICE_CATALOG, getCatalogServices } from "../lib/serviceCatalog";
+import { CEILING_FAN_PACKAGES, getCeilingFanPrice } from "../lib/ceilingFanPricing";
 import { calculateQuote } from "../lib/estimate";
 import { calculatePublicTotal, formatCatalogPrice, formatPublicPrice } from "../lib/public-pricing";
 
@@ -32,12 +33,54 @@ test("accounting environment cannot add a charge to a public quote", () => {
   }
 });
 
-test("all 250 original catalog amounts and fan packs remain unchanged", () => {
+test("original non-fan catalog prices remain unchanged and fan packages match new rates", () => {
   const signature = Object.entries(SERVICE_CATALOG).map(([category, services]) =>
-    [category, services.map(({ id, price }) => [id, price])]);
+    [category, category === "Ceiling Fans"
+      ? [["ceiling-fan-one", 45], ["ceiling-fan-two", 85], ["ceiling-fan-three", 125], ["ceiling-fan-from-light", 45], ["ceiling-fan-replacement", 45]]
+      : services.map(({ id, price }) => [id, price])]);
   assert.equal(createHash("sha256").update(JSON.stringify(signature)).digest("hex"),
     "edd6223a9ff64af201ec2c4b5e3bdbc0430aa60105023a1628b1daab4069ea53");
-  assert.deepEqual(getCatalogServices("Ceiling Fans").slice(0, 3).map(({ price }) => price), [45, 85, 125]);
+  const expected = [50, 95, 140, 185, 230];
+  assert.deepEqual(CEILING_FAN_PACKAGES.map(({ price }) => price), expected);
+  assert.deepEqual(getCatalogServices("Ceiling Fans").slice(0, 5).map(({ price }) => price), expected);
+  for (let count = 1; count <= 5; count++) assert.equal(getCeilingFanPrice(count), expected[count - 1]);
+  for (const invalid of [0, 6, 1.5, NaN]) assert.equal(getCeilingFanPrice(invalid), undefined);
+  assert.deepEqual(getCatalogServices("Ceiling Fans").slice(5).map(({ price }) => price), [50, 50]);
+});
+
+test("mobile fan quote CTA uses the canonical first-fan price instead of a hardcoded amount", () => {
+  const source = readFileSync("app/[locale]/services/instalacion-ventilador-techo-valencia/StickyFanQuoteButton.tsx", "utf8");
+  assert.match(source, /getCeilingFanPrice\(1\)/);
+  assert.doesNotMatch(source, /(?:45|85|125)\s*€|€(?:45|85|125)/);
+});
+
+test("fan SEO pages, lead form and translated service cards have no old 45/85/125 euro tariffs", () => {
+  const fanPages = [
+    "instalacion-ventilador-techo-valencia",
+    "instalar-ventilador-techo",
+    "montaje-ventilador-techo",
+    "ventilador-techo-con-luz",
+    "reemplazo-ventilador-techo",
+    "cambio-lampara-por-ventilador",
+    "instalacion-ventilador-smart",
+    "instalacion-ventilador-control-remoto",
+  ];
+  const sourceFiles = [
+    ...fanPages.map((slug) => `app/[locale]/services/${slug}/page.tsx`),
+    "app/[locale]/services/instalacion-ventilador-techo-valencia/FanLeadForm.tsx",
+    "app/[locale]/services/instalacion-ventilador-techo-valencia/StickyFanQuoteButton.tsx",
+    "app/api/fan-leads/route.ts",
+  ];
+  for (const file of sourceFiles) {
+    const source = readFileSync(file, "utf8");
+    assert.doesNotMatch(source, /(?<!\d)(?:45|85|125)\s*€|€(?:45|85|125)(?!\d)/, file);
+  }
+  const es = JSON.parse(readFileSync("messages/es.json", "utf8"));
+  const en = JSON.parse(readFileSync("messages/en.json", "utf8"));
+  assert.equal(es.services.items.ceilingFans.price, "50 €");
+  assert.equal(en.services.items.ceilingFans.price, "€50");
+  const handyman = readFileSync("app/[locale]/handyman-valencia/page.tsx", "utf8");
+  assert.match(handyman, /Instalación de ventiladores" : "Ceiling fan installation", price: "50 €"/);
 });
 
 test("localized prices retain equipment, parts and per-metre modifiers", () => {

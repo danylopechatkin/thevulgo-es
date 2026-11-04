@@ -74,7 +74,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
     { title: isEs ? "Montaje de TV" : "TV mounting", price: "49 €", href: `/${locale}/montaje-tv-valencia`, icon: Tv },
     { title: isEs ? "Montaje de muebles" : "Furniture assembly", price: "45 €", href: `/${locale}/montaje-muebles-valencia`, icon: Sofa },
     { title: isEs ? "Montaje de muebles IKEA" : "IKEA furniture assembly", price: "39 €", href: `/${locale}/montaje-muebles-ikea-valencia`, icon: Sofa },
-    { title: isEs ? "Instalación de ventiladores" : "Ceiling fan installation", price: "45 €", href: `/${locale}/services/instalacion-ventilador-techo-valencia`, icon: Wrench },
+    { title: isEs ? "Instalación de ventiladores" : "Ceiling fan installation", price: "50 €", href: `/${locale}/services/instalacion-ventilador-techo-valencia`, icon: Wrench },
     { title: isEs ? "Lámparas y apliques" : "Lights and wall lamps", price: "35 €", href: `/${locale}/instalacion-lampara-valencia`, icon: Plug },
     { title: isEs ? "Colgar espejos" : "Mirror hanging", price: "35 €", href: `/${locale}/colgar-espejos-valencia`, icon: ImageIcon },
     { title: isEs ? "Estanterías y baldas" : "Shelves and ledges", price: "35 €", href: `/${locale}/services/furniture/instalacion-estanterias-valencia`, icon: Wrench },

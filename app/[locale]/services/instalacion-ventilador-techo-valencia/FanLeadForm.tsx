@@ -1,16 +1,13 @@
 "use client";
 import { formatPublicPrice } from "@/lib/public-pricing";
+import { CEILING_FAN_PACKAGES } from "@/lib/ceilingFanPricing";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { BadgeCheck, CheckCircle2, Fan, ImagePlus, Loader2, MapPin, Phone, Send, X } from "lucide-react";
 import { getClientAttribution, trackMarketingEvent } from "@/lib/client-attribution";
 
-const packages = [
-  { count: 1, price: 45 },
-  { count: 2, price: 85 },
-  { count: 3, price: 125 },
-];
+const packages = CEILING_FAN_PACKAGES;
 
 async function compressPhoto(file: File) {
   const source = await new Promise<string>((resolve, reject) => {

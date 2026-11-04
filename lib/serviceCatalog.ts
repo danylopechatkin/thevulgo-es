@@ -13,6 +13,7 @@ export type CatalogService = {
 };
 
 import { RENOVATION_CATEGORIES } from "./renovationCatalog";
+import { getCeilingFanPrice } from "./ceilingFanPricing";
 import {
   AC_DEEP_CLEANING_SERVICE_ID,
   acDeepCleaningPromotion,
@@ -416,31 +417,43 @@ export const SERVICE_CATALOG: Record<string, CatalogService[]> = {
       id: "ceiling-fan-one",
       label: "1 ceiling fan — complete installation",
       labelEs: "1 ventilador — montaje completo",
-      price: 45,
+      price: getCeilingFanPrice(1)!,
     },
     {
       id: "ceiling-fan-two",
       label: "2 ceiling fans — double installation",
       labelEs: "2 ventiladores — instalación doble",
-      price: 85,
+      price: getCeilingFanPrice(2)!,
     },
     {
       id: "ceiling-fan-three",
       label: "3 ceiling fans — pack of 3 units",
       labelEs: "3 ventiladores — pack de 3 unidades",
-      price: 125,
+      price: getCeilingFanPrice(3)!,
+    },
+    {
+      id: "ceiling-fan-four",
+      label: "4 ceiling fans — pack of 4 units",
+      labelEs: "4 ventiladores — pack de 4 unidades",
+      price: getCeilingFanPrice(4)!,
+    },
+    {
+      id: "ceiling-fan-five",
+      label: "5 ceiling fans — pack of 5 units",
+      labelEs: "5 ventiladores — pack de 5 unidades",
+      price: getCeilingFanPrice(5)!,
     },
     {
       id: "ceiling-fan-from-light",
       label: "Replace a light with a ceiling fan",
       labelEs: "Cambio de lámpara a ventilador",
-      price: 45,
+      price: getCeilingFanPrice(1)!,
     },
     {
       id: "ceiling-fan-replacement",
       label: "Ceiling fan replacement — removal and installation",
       labelEs: "Reemplazo de ventilador — quitamos e instalamos",
-      price: 45,
+      price: getCeilingFanPrice(1)!,
     },
   ],
   Electrical: [
