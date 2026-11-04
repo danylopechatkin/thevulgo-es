@@ -100,12 +100,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Reemplazo de ventilador de techo en Valencia por 45 € | THEVULGO"
-    : "Ceiling Fan Replacement in Valencia | €45 | THEVULGO";
+    ? "Reemplazo de ventilador de techo en Valencia por 50 € | THEVULGO"
+    : "Ceiling Fan Replacement in Valencia | €50 | THEVULGO";
 
   const description = isEs
-    ? "Reemplazo de ventilador de techo en Valencia por 45 €. Desmontaje del ventilador antiguo, montaje del nuevo, conexión al punto eléctrico existente y prueba final."
-    : "Ceiling fan replacement in Valencia for €45. Old fan removal, new fan mounting, connection to the existing electrical point and final testing.";
+    ? "Reemplazo de ventilador de techo en Valencia por 50 €. Desmontaje del ventilador antiguo, montaje del nuevo, conexión al punto eléctrico existente y prueba final."
+    : "Ceiling fan replacement in Valencia for €50. Old fan removal, new fan mounting, connection to the existing electrical point and final testing.";
 
   return {
     title,
@@ -171,7 +171,7 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
   const priceCards = [
     {
       title: isEs ? "1 ventilador" : "1 fan",
-      price: "45 €",
+      price: "50 €",
       text: isEs
         ? "Quitamos el ventilador antiguo y montamos el nuevo en el mismo punto."
         : "We remove the old fan and install the new one in the same point.",
@@ -179,7 +179,7 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
     },
     {
       title: isEs ? "2 ventiladores" : "2 fans",
-      price: "85 €",
+      price: "95 €",
       text: isEs
         ? "Reemplazo de dos ventiladores de techo en la misma vivienda."
         : "Replacement of two ceiling fans in the same home.",
@@ -187,11 +187,23 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
     },
     {
       title: isEs ? "3 ventiladores" : "3 fans",
-      price: "125 €",
+      price: "140 €",
       text: isEs
         ? "Ideal para cambiar varios ventiladores antiguos en una sola visita."
         : "Ideal for replacing several old fans in one visit.",
       badge: isEs ? "Mejor precio" : "Best value",
+    },
+    {
+      title: isEs ? "4 ventiladores" : "4 ceiling fans",
+      price: "185 €",
+      text: isEs ? "Instalación de cuatro ventiladores en una misma visita." : "Four fans installed during the same visit.",
+      badge: isEs ? "Pack de 4" : "4-fan package",
+    },
+    {
+      title: isEs ? "5 ventiladores" : "5 ceiling fans",
+      price: "230 €",
+      text: isEs ? "Instalación de cinco ventiladores en una misma visita." : "Five fans installed during the same visit.",
+      badge: isEs ? "Pack de 5" : "5-fan package",
     },
   ];
 
@@ -256,8 +268,8 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
           acceptedAnswer: {
             "@type": "Answer",
             text: isEs
-              ? "El precio es de 45 € para un ventilador, 85 € para dos y 125 € para tres, usando el punto eléctrico existente."
-              : "The price is €45 for one fan, €85 for two and €125 for three, using the existing electrical point.",
+              ? "El precio es de 50 € para un ventilador, 95 € para dos y 140 € para tres, usando el punto eléctrico existente."
+              : "The price is €50 for one fan, €95 for two and €140 for three, using the existing electrical point.",
           },
         },
       ],
@@ -358,8 +370,8 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
         ? "¿Cuánto cuesta reemplazar un ventilador de techo?"
         : "How much does it cost to replace a ceiling fan?",
       a: isEs
-        ? "El precio es de 45 € para un ventilador, 85 € para dos y 125 € para tres, si se usa el mismo punto eléctrico existente."
-        : "The price is €45 for one fan, €85 for two and €125 for three, when using the same existing electrical point.",
+        ? "El precio es de 50 € para un ventilador, 95 € para dos y 140 € para tres, si se usa el mismo punto eléctrico existente."
+        : "The price is €50 for one fan, €95 for two and €140 for three, when using the same existing electrical point.",
     },
     {
       q: isEs
@@ -426,8 +438,8 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
 
             <h1 className="max-w-4xl text-4xl font-black tracking-tight text-neutral-950 sm:text-5xl lg:text-6xl">
               {isEs
-                ? "Reemplazo de ventilador de techo por 45 €"
-                : "Ceiling fan replacement for €45"}
+                ? "Reemplazo de ventilador de techo por 50 €"
+                : "Ceiling fan replacement for €50"}
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600 sm:text-xl">
@@ -456,7 +468,7 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {[
-                isEs ? "45 €" : "€45",
+                isEs ? "50 €" : "€50",
                 isEs ? "Desmontaje incluido" : "Removal included",
                 isEs ? "Prueba final completa" : "Full final test",
               ].map((item) => (
@@ -558,7 +570,7 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
             {priceCards.map((card) => (
               <div
                 key={card.title}
@@ -884,7 +896,7 @@ export default async function CeilingFanReplacementPage({ params }: Props) {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
             {[
               {
                 title: isEs ? "Precio antes de ir" : "Price before coming",
