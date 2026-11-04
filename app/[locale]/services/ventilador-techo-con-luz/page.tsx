@@ -102,12 +102,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = locale === "es";
 
   const title = isEs
-    ? "Ventilador de techo con luz en Valencia por 45 € | THEVULGO"
-    : "Ceiling Fan With Light Installation in Valencia | €45 | THEVULGO";
+    ? "Ventilador de techo con luz en Valencia por 50 € | THEVULGO"
+    : "Ceiling Fan With Light Installation in Valencia | €50 | THEVULGO";
 
   const description = isEs
-    ? "Instalación de ventilador de techo con luz en Valencia por 45 €. Montaje, conexión al punto eléctrico existente, desmontaje de lámpara antigua y prueba de luz, mando y velocidades."
-    : "Ceiling fan with light installation in Valencia for €45. Mounting, connection to the existing electrical point, old lamp removal and testing of light, remote and speeds.";
+    ? "Instalación de ventilador de techo con luz en Valencia por 50 €. Montaje, conexión al punto eléctrico existente, desmontaje de lámpara antigua y prueba de luz, mando y velocidades."
+    : "Ceiling fan with light installation in Valencia for €50. Mounting, connection to the existing electrical point, old lamp removal and testing of light, remote and speeds.";
 
   return {
     title,
@@ -173,7 +173,7 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
   const priceCards = [
     {
       title: isEs ? "1 ventilador con luz" : "1 fan with light",
-      price: "45 €",
+      price: "50 €",
       text: isEs
         ? "Montaje de un ventilador con luz LED en punto eléctrico existente."
         : "Installation of one ceiling fan with LED light on an existing electrical point.",
@@ -181,7 +181,7 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
     },
     {
       title: isEs ? "2 ventiladores con luz" : "2 fans with light",
-      price: "85 €",
+      price: "95 €",
       text: isEs
         ? "Pack para dos habitaciones en la misma visita."
         : "Package for two rooms in the same visit.",
@@ -189,11 +189,23 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
     },
     {
       title: isEs ? "3 ventiladores con luz" : "3 fans with light",
-      price: "125 €",
+      price: "140 €",
       text: isEs
         ? "Ideal para dormitorios, salón y vivienda completa."
         : "Ideal for bedrooms, living room and full home installation.",
       badge: isEs ? "Mejor precio" : "Best value",
+    },
+    {
+      title: isEs ? "4 ventiladores" : "4 ceiling fans",
+      price: "185 €",
+      text: isEs ? "Instalación de cuatro ventiladores en una misma visita." : "Four fans installed during the same visit.",
+      badge: isEs ? "Pack de 4" : "4-fan package",
+    },
+    {
+      title: isEs ? "5 ventiladores" : "5 ceiling fans",
+      price: "230 €",
+      text: isEs ? "Instalación de cinco ventiladores en una misma visita." : "Five fans installed during the same visit.",
+      badge: isEs ? "Pack de 5" : "5-fan package",
     },
   ];
 
@@ -258,8 +270,8 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
           acceptedAnswer: {
             "@type": "Answer",
             text: isEs
-              ? "El precio es de 45 € para 1 ventilador, 85 € para 2 ventiladores y 125 € para 3 ventiladores, si existe un punto eléctrico preparado."
-              : "The price is €45 for 1 fan, €85 for 2 fans and €125 for 3 fans, if there is a prepared electrical point.",
+              ? "El precio es de 50 € para 1 ventilador, 95 € para 2 ventiladores y 140 € para 3 ventiladores, si existe un punto eléctrico preparado."
+              : "The price is €50 for 1 fan, €95 for 2 fans and €140 for 3 fans, if there is a prepared electrical point.",
           },
         },
         {
@@ -325,8 +337,8 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
 
             <h1 className="max-w-4xl text-4xl font-black tracking-tight text-neutral-950 sm:text-5xl lg:text-6xl">
               {isEs
-                ? "Instalación de ventilador de techo con luz por 45 €"
-                : "Ceiling fan with light installation for €45"}
+                ? "Instalación de ventilador de techo con luz por 50 €"
+                : "Ceiling fan with light installation for €50"}
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600 sm:text-xl">
@@ -355,7 +367,7 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {[
-                isEs ? "45 €" : "€45",
+                isEs ? "50 €" : "€50",
                 isEs ? "Luz y mando probados" : "Light and remote tested",
                 isEs ? "Precio claro antes de ir" : "Clear price before visit",
               ].map((item) => (
@@ -453,7 +465,7 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
             {priceCards.map((card) => (
               <article
                 key={card.title}
@@ -967,8 +979,8 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
                   ? "¿Cuánto cuesta instalar un ventilador de techo con luz?"
                   : "How much does it cost to install a ceiling fan with light?",
                 a: isEs
-                  ? "El precio es de 45 € por 1 ventilador, 85 € por 2 y 125 € por 3, si el punto eléctrico ya está preparado."
-                  : "The price is €45 for 1 fan, €85 for 2 and €125 for 3, if the electrical point is already prepared.",
+                  ? "El precio es de 50 € por 1 ventilador, 95 € por 2 y 140 € por 3, si el punto eléctrico ya está preparado."
+                  : "The price is €50 for 1 fan, €95 for 2 and €140 for 3, if the electrical point is already prepared.",
               },
               {
                 q: isEs
