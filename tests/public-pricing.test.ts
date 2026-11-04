@@ -54,6 +54,35 @@ test("mobile fan quote CTA uses the canonical first-fan price instead of a hardc
   assert.doesNotMatch(source, /(?:45|85|125)\s*€|€(?:45|85|125)/);
 });
 
+test("fan SEO pages, lead form and translated service cards have no old 45/85/125 euro tariffs", () => {
+  const fanPages = [
+    "instalacion-ventilador-techo-valencia",
+    "instalar-ventilador-techo",
+    "montaje-ventilador-techo",
+    "ventilador-techo-con-luz",
+    "reemplazo-ventilador-techo",
+    "cambio-lampara-por-ventilador",
+    "instalacion-ventilador-smart",
+    "instalacion-ventilador-control-remoto",
+  ];
+  const sourceFiles = [
+    ...fanPages.map((slug) => `app/[locale]/services/${slug}/page.tsx`),
+    "app/[locale]/services/instalacion-ventilador-techo-valencia/FanLeadForm.tsx",
+    "app/[locale]/services/instalacion-ventilador-techo-valencia/StickyFanQuoteButton.tsx",
+    "app/api/fan-leads/route.ts",
+  ];
+  for (const file of sourceFiles) {
+    const source = readFileSync(file, "utf8");
+    assert.doesNotMatch(source, /(?<!\\d)(?:45|85|125)\\s*€|€(?:45|85|125)(?!\\d)/, file);
+  }
+  const es = JSON.parse(readFileSync("messages/es.json", "utf8"));
+  const en = JSON.parse(readFileSync("messages/en.json", "utf8"));
+  assert.equal(es.services.items.ceilingFans.price, "50 €");
+  assert.equal(en.services.items.ceilingFans.price, "€50");
+  const handyman = readFileSync("app/[locale]/handyman-valencia/page.tsx", "utf8");
+  assert.match(handyman, /Instalación de ventiladores" : "Ceiling fan installation", price: "50 €"/);
+});
+
 test("localized prices retain equipment, parts and per-metre modifiers", () => {
   assert.equal(formatPublicPrice(49, "es"), "49 €");
   assert.equal(formatPublicPrice(49, "en"), "€49");
