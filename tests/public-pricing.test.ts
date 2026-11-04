@@ -73,7 +73,7 @@ test("fan SEO pages, lead form and translated service cards have no old 45/85/12
   ];
   for (const file of sourceFiles) {
     const source = readFileSync(file, "utf8");
-    assert.doesNotMatch(source, /(?<!\\d)(?:45|85|125)\\s*€|€(?:45|85|125)(?!\\d)/, file);
+    assert.doesNotMatch(source, /(?<!\d)(?:45|85|125)\s*€|€(?:45|85|125)(?!\d)/, file);
   }
   const es = JSON.parse(readFileSync("messages/es.json", "utf8"));
   const en = JSON.parse(readFileSync("messages/en.json", "utf8"));
