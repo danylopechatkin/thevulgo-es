@@ -48,6 +48,12 @@ test("original non-fan catalog prices remain unchanged and fan packages match ne
   assert.deepEqual(getCatalogServices("Ceiling Fans").slice(5).map(({ price }) => price), [50, 50]);
 });
 
+test("mobile fan quote CTA uses the canonical first-fan price instead of a hardcoded amount", () => {
+  const source = readFileSync("app/[locale]/services/instalacion-ventilador-techo-valencia/StickyFanQuoteButton.tsx", "utf8");
+  assert.match(source, /getCeilingFanPrice\(1\)/);
+  assert.doesNotMatch(source, /(?:45|85|125)\s*€|€(?:45|85|125)/);
+});
+
 test("localized prices retain equipment, parts and per-metre modifiers", () => {
   assert.equal(formatPublicPrice(49, "es"), "49 €");
   assert.equal(formatPublicPrice(49, "en"), "€49");
