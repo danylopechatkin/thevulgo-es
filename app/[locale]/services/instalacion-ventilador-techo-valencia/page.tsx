@@ -620,7 +620,7 @@ export default async function CeilingFanInstallationPage({
     : "Fast WhatsApp reply • We work 7 days depending on availability"}
 </p>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {[
                 {
                   icon: Clock3,
