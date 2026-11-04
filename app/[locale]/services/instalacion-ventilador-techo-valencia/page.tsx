@@ -309,7 +309,7 @@ export default async function CeilingFanInstallationPage({
     ? [
         {
           q: "¿Cuánto cuesta instalar un ventilador de techo en Valencia?",
-          a: "La instalación de un ventilador cuesta 50 €. Dos ventiladores cuestan 95 € y tres ventiladores 140 €.",
+          a: "La instalación de un ventilador cuesta 50 €. Dos ventiladores cuestan 95 €, tres 140 €, cuatro 185 € y cinco 230 €.",
         },
         {
   q: "¿Quién puede instalar un ventilador de techo en Valencia?",
@@ -347,7 +347,7 @@ export default async function CeilingFanInstallationPage({
     : [
         {
           q: "How much does ceiling fan installation cost in Valencia?",
-          a: "One fan costs €50, two fans €95 and three fans €140.",
+          a: "One fan costs €50, two €95, three €140, four €185 and five €230.",
         },
         {
           q: "Is old light removal included?",
@@ -579,6 +579,14 @@ export default async function CeilingFanInstallationPage({
                   {isEs ? "3 ventiladores" : "3 fans"}
                 </p>
                 <p className="mt-1 text-3xl font-black">140 €</p>
+              </div>
+              <div className="rounded-2xl border border-yellow-300 bg-white p-5 shadow-md">
+                <p className="text-sm font-bold text-neutral-600">{isEs ? "4 ventiladores" : "4 fans"}</p>
+                <p className="mt-1 text-3xl font-black">185 €</p>
+              </div>
+              <div className="rounded-2xl border border-yellow-300 bg-white p-5 shadow-md">
+                <p className="text-sm font-bold text-neutral-600">{isEs ? "5 ventiladores" : "5 fans"}</p>
+                <p className="mt-1 text-3xl font-black">230 €</p>
               </div>
             </div>
 
