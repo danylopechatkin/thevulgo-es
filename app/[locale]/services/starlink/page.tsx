@@ -243,8 +243,8 @@ export default async function StarlinkInternetPage({ params }: Props) {
     ? [
         ["Diagnóstico de internet", "49 €"],
         ["Instalación de router 4G/5G", "79 €"],
-        ["Montaje de Starlink", "79 €"],
-        ["Starlink en tejado", "99 €"],
+        ["Montaje de Starlink", "Desde 149 €"],
+        ["Starlink en tejado", "Desde 149 €"],
         ["Antena exterior", "89 €"],
         ["WiFi bridge", "99 €"],
         ["Enlace punto a punto", "129 €"],
@@ -253,8 +253,8 @@ export default async function StarlinkInternetPage({ params }: Props) {
     : [
         ["Internet diagnostics", "€49"],
         ["4G/5G router installation", "€79"],
-        ["Starlink mounting", "€79"],
-        ["Starlink roof installation", "€99"],
+        ["Starlink mounting", "From €149"],
+        ["Starlink roof installation", "From €149"],
         ["Outdoor antenna", "€89"],
         ["WiFi bridge", "€99"],
         ["Point-to-point wireless", "€129"],
@@ -334,7 +334,7 @@ export default async function StarlinkInternetPage({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta instalar Starlink en Valencia?",
-          a: "Depende de la ubicación, altura, tipo de montaje, cableado, acceso al tejado o fachada y configuración. Un montaje básico puede costar 79–99 €.",
+          a: "Depende de la ubicación, altura, tipo de montaje, cableado, acceso al tejado o fachada y configuración. La instalación básica de Starlink parte de 149 €. El precio para tejados y montajes especiales depende del acceso, el cableado y los materiales necesarios.",
         },
         {
           q: "¿Instaláis Starlink en tejado?",
@@ -368,7 +368,7 @@ export default async function StarlinkInternetPage({ params }: Props) {
     : [
         {
           q: "How much does Starlink installation in Valencia cost?",
-          a: "It depends on location, height, mounting type, cabling, roof or façade access and configuration. A basic mounting job can cost €79–99.",
+          a: "It depends on location, height, mounting type, cabling, roof or façade access and configuration. Basic Starlink installation starts at €149. Roof installations and special mounting jobs depend on access, cabling and required materials.",
         },
         {
           q: "Do you install Starlink on roofs?",
