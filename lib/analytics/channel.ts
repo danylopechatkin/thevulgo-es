@@ -1,4 +1,4 @@
-export type AcquisitionChannel = "google_organic" | "bing_organic" | "google_ads" | "direct" | "referral" | "social" | "other";
+export type AcquisitionChannel = "google_organic" | "bing_organic" | "google_ads" | "direct" | "referral" | "social" | "other" | "unknown";
 
 export function sanitizeReferrer(value?: string | null): string | undefined {
   if (!value) return undefined;
@@ -12,8 +12,11 @@ export function classifyChannel(input: { utmSource?: string; utmMedium?: string;
   const source = (input.utmSource || "").toLowerCase();
   const medium = (input.utmMedium || "").toLowerCase();
   if (input.gclid || source === "google" && /(cpc|ppc|paid)/.test(medium)) return "google_ads";
+  if (source === "google" && /(organic|seo)/.test(medium)) return "google_organic";
+  if (source === "bing" && /(organic|seo)/.test(medium)) return "bing_organic";
   if (/(facebook|instagram|linkedin|tiktok|youtube|social)/.test(`${source} ${medium}`)) return "social";
-  if (source && !["direct", "(direct)"].includes(source)) return "other";
+  if (source && !["direct", "(direct)", "unknown", "(unknown)"].includes(source)) return "other";
+  if (["unknown", "(unknown)"].includes(source)) return "unknown";
   if (!input.referrer) return "direct";
   try {
     const host = new URL(input.referrer).hostname.toLowerCase();

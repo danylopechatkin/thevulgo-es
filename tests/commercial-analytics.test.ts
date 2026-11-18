@@ -13,13 +13,17 @@ test("canonical event contract includes calculator, promotion and lifecycle even
 });
 test("acquisition preserves meaningful channel classification",()=>{
   assert.equal(classifyChannel({referrer:"https://www.google.es/search?q=tv"}),"google_organic");
+  assert.equal(classifyChannel({utmSource:"google",utmMedium:"organic"}),"google_organic");
+  assert.equal(classifyChannel({utmSource:"bing",utmMedium:"seo"}),"bing_organic");
   assert.equal(classifyChannel({gclid:"abc"}),"google_ads");
+  assert.equal(classifyChannel({utmSource:"unknown"}),"unknown");
   assert.equal(classifyChannel({}),"direct");
 });
 test("ES and EN URLs resolve to the same service taxonomy",()=>{
   assert.deepEqual(resolveServiceTaxonomy("/es/montaje-tv-valencia"),resolveServiceTaxonomy("/en/tv-mounting-valencia"));
   assert.equal(localeFromPath("/es/montaje-tv-valencia"),"es");
   assert.equal(localeFromPath("/en/tv-mounting-valencia"),"en");
+  assert.equal(localeFromPath("/tv-mounting-valencia"),"en");
 });
 test("one WhatsApp click has one shared click and event id plus safe reference",()=>{
   const identity=createWhatsAppIdentity("tv_standard_mount",()=>"a8f42c00-0000-4000-8000-000000000000");
