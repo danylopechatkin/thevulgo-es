@@ -296,13 +296,13 @@ export default async function CeilingFanWithLightPage({ params }: Props) {
           "@type": "ListItem",
           position: 1,
           name: isEs ? "Inicio" : "Home",
-          item: `${baseUrl}/${locale}`,
+          item: localizedUrl(locale),
         },
         {
           "@type": "ListItem",
           position: 2,
           name: isEs ? "Servicios" : "Services",
-          item: `${baseUrl}/${locale}/services`,
+          item: localizedUrl(locale, "services"),
         },
         {
           "@type": "ListItem",

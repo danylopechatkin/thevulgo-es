@@ -29,5 +29,34 @@ async function check(path: typeof paths[number]) {
   const es = await get(`${base}/es/${path}`); assert.equal(es.response.status, 308, `${path}: legacy ES status unchanged`); assert.equal(es.response.headers.get("location"), "/es/services/instalacion-ventilador-techo-valencia", `${path}: legacy ES target unchanged`);
   if (reference) { const oldPage = await get(`${reference}/${path}`); assert.equal(oldPage.response.status, 200, `${path}: reference status`); assert.deepEqual(baseline(current.html), baseline(oldPage.html), `${path}: content and conversion baseline`); }
 }
-async function main() { await Promise.all(paths.map(check)); console.log("Passed 2 rendered standalone-English Fan-route checks and 2 legacy-Spanish redirect controls."); }
+const fanPages = ["instalacion-ventilador-techo-valencia", "ventilador-techo-con-luz"] as const;
+async function checkFanJsonLd(slug: typeof fanPages[number], locale: "en" | "es") {
+  const prefix = locale === "es" ? "/es" : "";
+  const path = `${prefix}/services/${slug}`;
+  const { response, html } = await get(`${base}${path}`);
+  assert.equal(response.status, 200, `${path}: status`);
+  const entries = json(html).flatMap((item) => Array.isArray(item) ? item : item["@graph"] ?? [item]);
+  const crumbs = entries.find((item) => item["@type"] === "BreadcrumbList")?.itemListElement;
+  assert.deepEqual(crumbs?.slice(0, 2).map((item: { item: string }) => item.item), [
+    `${site}${prefix || "/"}`,
+    `${site}${prefix}/services`,
+  ], `${path}: public breadcrumb URLs`);
+  assert.equal(crumbs?.[2]?.item, `${site}${path}`, `${path}: current breadcrumb`);
+  if (slug === "instalacion-ventilador-techo-valencia") {
+    const service = entries.find((item) => item["@type"] === "Service");
+    const urls = service?.hasOfferCatalog?.itemListElement?.map((item: { itemOffered: { url: string } }) => item.itemOffered.url);
+    assert.deepEqual(urls, [
+      "ventilador-techo-con-luz",
+      "cambio-lampara-por-ventilador",
+      "instalacion-ventilador-control-remoto",
+      "reemplazo-ventilador-techo",
+      "instalacion-ventilador-smart",
+    ].map((child) => `${site}${prefix}/services/${child}`), `${path}: related public Service URLs`);
+  }
+}
+async function main() {
+  await Promise.all(paths.map(check));
+  await Promise.all(fanPages.flatMap((slug) => (["en", "es"] as const).map((locale) => checkFanJsonLd(slug, locale))));
+  console.log("Passed 2 rendered standalone-English Fan-route checks, 2 legacy-Spanish redirect controls and 4 fan JSON-LD checks.");
+}
 main().catch((error) => { console.error(error); process.exitCode = 1; });

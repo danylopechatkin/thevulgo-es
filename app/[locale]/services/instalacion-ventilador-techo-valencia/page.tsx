@@ -460,7 +460,7 @@ export default async function CeilingFanInstallationPage({
             itemOffered: {
               "@type": "Service",
               name: isEs ? item.es : item.en,
-              url: `${baseUrl}/${locale}/services/${item.slug}`,
+              url: localizedUrl(locale, `services/${item.slug}`),
             },
           })),
         },
@@ -483,13 +483,13 @@ export default async function CeilingFanInstallationPage({
             "@type": "ListItem",
             position: 1,
             name: isEs ? "Inicio" : "Home",
-            item: `${baseUrl}/${locale}`,
+            item: localizedUrl(locale),
           },
           {
             "@type": "ListItem",
             position: 2,
             name: isEs ? "Servicios" : "Services",
-            item: `${baseUrl}/${locale}/services`,
+            item: localizedUrl(locale, "services"),
           },
           {
             "@type": "ListItem",
