@@ -12,6 +12,7 @@ import WhatsAppLink from "@/app/components/WhatsAppLink";
 import { AC_SEO_PAGES, getAcSeoPage } from "@/lib/acSeoPages";
 import { getAcSeoContent } from "@/lib/acSeoContent";
 import { SITE_ORIGIN } from "@/lib/seo";
+import { localizedPath } from "@/lib/technicalRoutes";
 import AcCleaningLanding from "@/app/components/AcCleaningLanding";
 import AcCleaningPromoCard from "@/app/components/AcCleaningPromoCard";
 import {
@@ -98,6 +99,25 @@ export default async function AcSeoLanding({ params }: Props) {
       ];
   const isBrand = page.category === "brand";
   const content = getAcSeoContent(page, isEs ? "es" : "en");
+
+  const cleaningContext = [
+    {
+      path: "aire-acondicionado-valencia/mantenimiento",
+      es: "El mantenimiento periódico ayuda a revisar el funcionamiento y el estado del equipo. Cuando hay suciedad acumulada en filtros y zonas interiores, puede ser conveniente valorar también una limpieza profunda del split como servicio diferente.",
+      en: "Periodic maintenance checks the unit's condition and operation. If filters or accessible internal areas are dirty, a separate deep cleaning of the split may also be worth considering.",
+    },
+    {
+      path: "aire-acondicionado-valencia/reparacion/huele-mal",
+      es: "Si el aire acondicionado desprende mal olor, la suciedad puede ser una de varias causas. Antes de elegir entre limpieza y diagnóstico, conviene revisar el equipo, el desagüe y los síntomas.",
+      en: "If an air conditioner smells unpleasant, accumulated dirt can be one of several possible causes. Consider the symptoms and drainage before deciding between cleaning and a diagnostic visit.",
+    },
+    {
+      path: "aire-acondicionado-valencia/comercial/airbnb",
+      es: "Para alojamientos turísticos, la limpieza interior del split puede planificarse como trabajo separado del mantenimiento o la reparación. La disponibilidad, los accesos y el alcance se confirman antes de la visita.",
+      en: "For holiday rentals, indoor split cleaning can be arranged separately from maintenance or repairs. Timing, access and the scope of work are confirmed before a visit.",
+    },
+  ].find((item) => item.path === page.path);
+
   const showCleaningCrossSell =
     acDeepCleaningPromotion.active &&
     !["ducted", "commercial"].includes(page.category);
@@ -255,6 +275,25 @@ export default async function AcSeoLanding({ params }: Props) {
           </div>
         </div>
       </section>
+      {cleaningContext && (
+        <section className="bg-neutral-50 px-4 py-12">
+          <div className="mx-auto max-w-5xl rounded-2xl border border-yellow-200 bg-white p-6 sm:p-8">
+            <h2 className="text-2xl font-black">
+              {isEs ? "¿Necesitas una limpieza profunda del split?" : "Do you need a deep split AC clean?"}
+            </h2>
+            <p className="mt-3 leading-7 text-neutral-700">
+              {isEs ? cleaningContext.es : cleaningContext.en}
+            </p>
+            <Link
+              href={localizedPath(locale, AC_CLEANING_PATH)}
+              className="mt-5 inline-flex items-center gap-2 font-bold text-yellow-800 underline decoration-yellow-400 underline-offset-4"
+            >
+              {isEs ? "Ver limpieza de aire acondicionado en Valencia" : "See air conditioner cleaning in Valencia"}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </section>
+      )}
       {cluster.length > 0 && (
         <section className="px-4 py-16">
           <div className="mx-auto max-w-6xl">
@@ -265,7 +304,7 @@ export default async function AcSeoLanding({ params }: Props) {
               {cluster.map((item) => (
                 <Link
                   key={item.path}
-                  href={`/${locale}/${item.path}`}
+                  href={localizedPath(locale, item.path)}
                   className="rounded-2xl border border-yellow-300 bg-white p-5 font-bold shadow-sm transition hover:-translate-y-0.5 hover:border-yellow-400"
                 >
                   {isEs ? item.titleEs : item.titleEn}
