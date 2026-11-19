@@ -17,7 +17,7 @@ import { getCatalogServices } from "@/lib/serviceCatalog";
 import { AC_SEO_PAGES } from "@/lib/acSeoPages";
 import WhatsAppLink from "@/app/components/WhatsAppLink";
 import AcCleaningPromoCard from "@/app/components/AcCleaningPromoCard";
-import { acDeepCleaningPromotion } from "@/lib/acPromotion";
+import { acDeepCleaningPromotion, getAcCleaningPath } from "@/lib/acPromotion";
 
 type Props = { params: Promise<{ locale: string }> };
 const baseUrl = "https://www.thevulgo.es";
@@ -318,7 +318,20 @@ export default async function AirConditioningPage({ params }: Props) {
         </div>
       </section>
       {acDeepCleaningPromotion.active && (
-        <AcCleaningPromoCard locale={locale} source="ac-hub" variant="hub" />
+        <>
+          <AcCleaningPromoCard locale={locale} source="ac-hub" variant="hub" />
+          <div className="px-4 pb-10 text-center">
+            <Link
+              href={getAcCleaningPath(locale)}
+              className="inline-flex items-center gap-2 font-bold text-yellow-800 underline decoration-yellow-400 underline-offset-4"
+            >
+              {isEs
+                ? "Ver qué incluye la limpieza profunda de aire acondicionado en Valencia"
+                : "See what deep air conditioner cleaning in Valencia includes"}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </>
       )}
       <section className="bg-neutral-950 px-4 py-16 text-white">
         <div className="mx-auto max-w-7xl">
