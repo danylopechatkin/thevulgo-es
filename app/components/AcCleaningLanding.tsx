@@ -19,6 +19,7 @@ import {
   getAcDeepCleaningPrice,
 } from "@/lib/acPromotion";
 import { SITE_ORIGIN } from "@/lib/seo";
+import { localizedPath } from "@/lib/technicalRoutes";
 
 export default function AcCleaningLanding({ locale }: { locale: string }) {
   const isEs = locale === "es";
@@ -74,6 +75,115 @@ export default function AcCleaningLanding({ locale }: { locale: string }) {
         "Additional electrical work",
         "Deep cleaning of the outdoor unit",
       ];
+
+  const cleaningProcess = isEs
+    ? [
+        {
+          title: "Confirmamos el tipo de equipo",
+          detail:
+            "Antes de reservar, revisamos por fotos cuántos splits de pared hay y si el acceso es normal. Los sistemas por conductos y cassette requieren otro presupuesto.",
+        },
+        {
+          title: "Protegemos la zona y limpiamos el interior",
+          detail:
+            "Protegemos la zona de trabajo y limpiamos filtros, evaporador y superficies interiores accesibles. La limpieza de la turbina depende del acceso; los desmontajes especiales no están incluidos.",
+        },
+        {
+          title: "Desinfección y comprobación final",
+          detail:
+            "Realizamos la desinfección contemplada en el servicio, una revisión visual del drenaje y una prueba básica de funcionamiento. Si aparece una avería, la comunicamos antes de proponer otros trabajos.",
+        },
+      ]
+    : [
+        {
+          title: "We confirm the unit type",
+          detail:
+            "Before booking, we check photos, the number of wall-mounted split units and access conditions. Ducted and cassette systems need a separate quote.",
+        },
+        {
+          title: "We protect the area and clean accessible parts",
+          detail:
+            "We protect the work area and clean filters, the evaporator and accessible internal surfaces. Cleaning the blower wheel depends on access; special dismantling is not included.",
+        },
+        {
+          title: "Disinfection and final check",
+          detail:
+            "We carry out the disinfection included in the service, visually inspect the drain and perform a basic function test. If we find a fault, we explain it before proposing any extra work.",
+        },
+      ];
+  const cleaningFaqs = isEs
+    ? [
+        {
+          question: "¿Los 49 € incluyen la limpieza de la unidad exterior?",
+          answer:
+            "No. La oferta indicada es por una unidad interior split de pared con acceso normal. La limpieza profunda de la unidad exterior se valora por separado.",
+        },
+        {
+          question: "¿Se limpia la turbina del aire acondicionado?",
+          answer:
+            "Podemos valorar las zonas accesibles de la turbina durante la limpieza. Si necesita desmontaje especial para una limpieza más profunda, se informa antes y se presupuesta aparte.",
+        },
+        {
+          question: "¿La limpieza elimina los malos olores del split?",
+          answer:
+            "La suciedad acumulada puede contribuir a algunos olores, pero no todos proceden del mismo lugar. La limpieza no garantiza resolver un olor causado por desagües, averías u otros problemas.",
+        },
+        {
+          question: "¿Qué datos necesitáis antes de la visita?",
+          answer:
+            "Envía el número de equipos, fotos de las unidades interiores, tu zona de Valencia y cualquier dificultad de acceso. Así podemos confirmar si encajan en la oferta.",
+        },
+        {
+          question: "¿La limpieza sustituye una reparación o recarga de gas?",
+          answer:
+            "No. La oferta incluye limpieza y comprobación básica; las reparaciones, recargas de refrigerante y trabajos eléctricos adicionales no están incluidos.",
+        },
+      ]
+    : [
+        {
+          question: "Does the €49 offer include the outdoor unit?",
+          answer:
+            "No. The offer covers one standard wall-mounted split indoor unit with normal access. Deep cleaning of the outdoor unit is quoted separately.",
+        },
+        {
+          question: "Do you clean the air conditioner's blower wheel?",
+          answer:
+            "We can assess accessible parts of the blower wheel during cleaning. If a deeper clean requires special dismantling, we explain the options and quote separately before proceeding.",
+        },
+        {
+          question: "Will cleaning remove a bad smell from the split?",
+          answer:
+            "Accumulated dirt can contribute to some smells, but not every smell has the same cause. Cleaning cannot guarantee a fix for drainage, mechanical or other problems.",
+        },
+        {
+          question: "What do you need before visiting?",
+          answer:
+            "Send the number of units, photos of each indoor unit, your area in Valencia and any access difficulties. That helps us confirm whether the offer applies.",
+        },
+        {
+          question: "Does cleaning replace a repair or refrigerant recharge?",
+          answer:
+            "No. The offer covers cleaning and a basic check, not repairs, refrigerant recharges or additional electrical work.",
+        },
+      ];
+  const relatedCleaningPages = [
+    {
+      path: "aire-acondicionado-valencia/mantenimiento",
+      es: "Mantenimiento de aire acondicionado",
+      en: "Air conditioning maintenance",
+    },
+    {
+      path: "aire-acondicionado-valencia/reparacion/huele-mal",
+      es: "Aire acondicionado con mal olor",
+      en: "Air conditioner with a bad smell",
+    },
+    {
+      path: "aire-acondicionado-valencia/comercial/airbnb",
+      es: "Mantenimiento para pisos turísticos",
+      en: "Maintenance for holiday rentals",
+    },
+  ];
+
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -302,6 +412,60 @@ export default function AcCleaningLanding({ locale }: { locale: string }) {
                 ? "Si durante la limpieza se detecta una avería, se informará al cliente antes de realizar cualquier trabajo adicional."
                 : "If a fault is found during cleaning, we will inform the customer before carrying out any additional work."}
             </p>
+          </div>
+        </div>
+      </section>
+
+
+      <section className="bg-neutral-50 px-4 py-16 sm:py-20" aria-labelledby="ac-cleaning-process">
+        <div className="mx-auto max-w-6xl">
+          <h2 id="ac-cleaning-process" className="text-3xl font-black sm:text-4xl">
+            {isEs ? "Cómo realizamos la limpieza de un split" : "How we clean a wall-mounted split AC"}
+          </h2>
+          <p className="mt-4 max-w-3xl leading-7 text-neutral-600">
+            {isEs
+              ? "El alcance depende del tipo de equipo y del acceso real. Estos pasos explican qué revisamos antes y durante una limpieza profesional en Valencia."
+              : "The scope depends on the unit and actual access. These steps explain what we check before and during professional cleaning in Valencia."}
+          </p>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {cleaningProcess.map((step, index) => (
+              <article key={step.title} className="rounded-2xl border border-neutral-200 bg-white p-6">
+                <span className="text-sm font-black text-yellow-700">0{index + 1}</span>
+                <h3 className="mt-3 text-xl font-black">{step.title}</h3>
+                <p className="mt-3 leading-7 text-neutral-600">{step.detail}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 py-16 sm:py-20" aria-labelledby="ac-cleaning-faq">
+        <div className="mx-auto max-w-6xl">
+          <h2 id="ac-cleaning-faq" className="text-3xl font-black sm:text-4xl">
+            {isEs ? "Preguntas frecuentes sobre limpieza de aire acondicionado" : "Frequently asked questions about air conditioner cleaning"}
+          </h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {cleaningFaqs.map((faq) => (
+              <article key={faq.question} className="rounded-2xl border border-neutral-200 p-6">
+                <h3 className="text-lg font-black">{faq.question}</h3>
+                <p className="mt-3 leading-7 text-neutral-600">{faq.answer}</p>
+              </article>
+            ))}
+          </div>
+          <h2 className="mt-12 text-2xl font-black">
+            {isEs ? "Otros servicios y dudas habituales" : "Related services and common problems"}
+          </h2>
+          <div className="mt-5 grid gap-3 md:grid-cols-3">
+            {relatedCleaningPages.map((item) => (
+              <Link
+                key={item.path}
+                href={localizedPath(locale, item.path)}
+                className="flex items-center justify-between gap-3 rounded-xl border border-yellow-300 bg-yellow-50 p-5 font-bold transition hover:border-yellow-500"
+              >
+                <span>{isEs ? item.es : item.en}</span>
+                <ArrowRight className="h-5 w-5 shrink-0 text-yellow-700" />
+              </Link>
+            ))}
           </div>
         </div>
       </section>
