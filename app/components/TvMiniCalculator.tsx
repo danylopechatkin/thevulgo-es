@@ -20,6 +20,7 @@ import {
 import { marketWhatsAppHref } from "@/lib/marketLinks";
 import { marketName } from "@/lib/cities";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
+import { TvBlackFridayReminder } from "./TvBlackFridayPromo";
 
 type TvOption = {
   id: string;
@@ -62,9 +63,11 @@ function madridToday() {
 export default function TvMiniCalculator({
   locale,
   options,
+  showBlackFriday = false,
 }: {
   locale: string;
   options: TvOption[];
+  showBlackFriday?: boolean;
 }) {
   const es = locale === "es";
   const { market } = useCurrentMarket(locale);
@@ -431,6 +434,8 @@ export default function TvMiniCalculator({
           })}
         </div>
       </fieldset>
+
+      {showBlackFriday && <TvBlackFridayReminder locale={locale} placement="calculator" />}
 
       <div className="mt-4 grid min-w-0 grid-cols-1 gap-3 border-t border-yellow-200 pt-4 sm:grid-cols-2">
         <label className="block min-w-0 text-xs font-extrabold">
