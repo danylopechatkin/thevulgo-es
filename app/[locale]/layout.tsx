@@ -12,6 +12,9 @@ import MarketingTracker from "@/app/components/MarketingTracker";
 import AnalyticsConsent from "@/app/components/AnalyticsConsent";
 import AnalyticsDebugPanel from "@/app/components/AnalyticsDebugPanel";
 import MarketSuggestion from "@/app/components/MarketSuggestion";
+import TvBlackFridayPromo, { TvBlackFridayRuntime } from "@/app/components/TvBlackFridayPromo";
+import { tvBlackFridayBootstrap, tvBlackFridayPromotion, TV_BLACK_FRIDAY_DISPLAY, TV_BLACK_FRIDAY_STYLE_ID } from "@/lib/tvBlackFridayPromotion";
+import { Suspense } from "react";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
@@ -75,13 +78,15 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
   const t = await getTranslations("nav");
+  const preview = process.env.VERCEL_ENV === "preview";
+  const renderTvPromotion = preview || tvBlackFridayPromotion.enabled;
 
   return (
       <div
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen overflow-x-hidden bg-white font-sans text-black antialiased`}
         data-locale={locale}
       >
-        <MarketingTracker />
+        {process.env.VERCEL_ENV !== "preview" ? <MarketingTracker /> : null}
         <AnalyticsConsent locale={locale} />
         <AnalyticsDebugPanel />
 
@@ -125,6 +130,13 @@ export default async function LocaleLayout({
           </header>
 
           <MarketSuggestion locale={locale} />
+
+          {renderTvPromotion && <>
+            <style id={TV_BLACK_FRIDAY_STYLE_ID}>{`:root{${TV_BLACK_FRIDAY_DISPLAY}:none}`}</style>
+            <script dangerouslySetInnerHTML={{ __html: tvBlackFridayBootstrap(preview) }} />
+            <TvBlackFridayPromo locale={locale} />
+            <Suspense fallback={null}><TvBlackFridayRuntime locale={locale} preview={preview} /></Suspense>
+          </>}
 
           {children}
 
