@@ -1,6 +1,6 @@
-/** Keep disabled until the manual WhatsApp campaign passes QA and release is approved. */
+/** Owner-approved, date-bounded manual WhatsApp campaign. No checkout price changes. */
 export const tvBlackFridayPromotion = {
-  enabled: false,
+  enabled: true,
   id: "black_friday_tv_raceway_2026",
   startsAt: "2026-11-24T23:00:00.000Z",
   endsAtExclusive: "2026-11-30T23:00:00.000Z",
