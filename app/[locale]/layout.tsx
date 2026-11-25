@@ -13,7 +13,7 @@ import AnalyticsConsent from "@/app/components/AnalyticsConsent";
 import AnalyticsDebugPanel from "@/app/components/AnalyticsDebugPanel";
 import MarketSuggestion from "@/app/components/MarketSuggestion";
 import TvBlackFridayPromo, { TvBlackFridayRuntime } from "@/app/components/TvBlackFridayPromo";
-import { tvBlackFridayBootstrap, tvBlackFridayPromotion } from "@/lib/tvBlackFridayPromotion";
+import { tvBlackFridayBootstrap, tvBlackFridayPromotion, TV_BLACK_FRIDAY_DISPLAY, TV_BLACK_FRIDAY_STYLE_ID } from "@/lib/tvBlackFridayPromotion";
 import { Suspense } from "react";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -132,6 +132,7 @@ export default async function LocaleLayout({
           <MarketSuggestion locale={locale} />
 
           {renderTvPromotion && <>
+            <style id={TV_BLACK_FRIDAY_STYLE_ID}>{`:root{${TV_BLACK_FRIDAY_DISPLAY}:none}`}</style>
             <script dangerouslySetInnerHTML={{ __html: tvBlackFridayBootstrap(preview) }} />
             <TvBlackFridayPromo locale={locale} />
             <Suspense fallback={null}><TvBlackFridayRuntime locale={locale} preview={preview} /></Suspense>
