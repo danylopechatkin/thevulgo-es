@@ -1,8 +1,9 @@
-# TV Black Friday 2026 — draft, not release ready
+# TV Black Friday 2026 — manual WhatsApp campaign
 
-This draft uses a WhatsApp-only campaign with manual confirmation. The production
-flag remains off. In a Vercel Preview only, append `?previewTvBlackFriday=1` to
-an eligible page to see the offer. Checkout prices and CRM are not changed.
+This campaign uses WhatsApp with manual confirmation. The owner approved release
+on 25 November 2026. The production flag is enabled for the scheduled window only:
+25–30 November inclusive, Europe/Madrid. The preview override remains limited to
+Vercel Preview. Checkout prices and CRM are not changed.
 
 ## Confirmed owner terms
 
@@ -14,7 +15,7 @@ and the exclusions stated in the task. Appointments may occur later by agreement
 The free service is discussed and confirmed manually in WhatsApp; the ordinary
 calculator does not automatically apply the offer.
 
-## Required implementation before release
+## Release verification checklist
 
 - Confirm that staff record the agreed gift on each order without charging for it.
 - Audit the 26 requested pages, WhatsApp, calculator, CRM, city restrictions,
