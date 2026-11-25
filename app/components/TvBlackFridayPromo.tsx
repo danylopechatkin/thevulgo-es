@@ -56,8 +56,8 @@ export default function TvBlackFridayPromo({ locale }: { locale: string }) {
   if (!pathname || !isTvBlackFridayCampaignPath(pathname)) return null;
   const es = locale === "es";
   return (
-    <section aria-label="Black Friday" style={promotionStyle} className="mx-auto w-full max-w-7xl px-4 py-3 sm:px-6">
-      <div className="overflow-hidden rounded-[1.5rem] border border-neutral-800 bg-neutral-950 p-4 text-white shadow-lg sm:p-5 lg:p-6">
+    <section aria-label="Black Friday" style={promotionStyle} className="mx-auto w-full max-w-7xl px-5 py-3 md:px-8">
+      <div className="overflow-hidden rounded-[1.5rem] border border-neutral-800 bg-neutral-950 p-4 text-white shadow-lg sm:p-5">
         <div className="grid items-center gap-4 md:grid-cols-[minmax(0,1fr)_minmax(220px,32%)] lg:gap-7">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
@@ -88,7 +88,7 @@ export default function TvBlackFridayPromo({ locale }: { locale: string }) {
               <p className="mt-1.5">{es ? "Una canaleta exterior de hasta 1 m por TV instalada. Metros adicionales, canalización interior, rozas, enchufes y trabajos eléctricos no incluidos. El montaje puede realizarse después de la promoción por acuerdo. Confirma el regalo por WhatsApp antes de contratar." : "One surface raceway up to 1 m per TV installed. Extra length, concealed wiring, chasing, sockets and electrical work excluded. Installation may take place later by agreement. Confirm the gift on WhatsApp before booking."}</p>
             </details>
           </div>
-          <div className="relative hidden aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-neutral-900 md:block">
+          <div className="relative hidden aspect-[16/9] max-h-[190px] overflow-hidden rounded-2xl border border-white/10 bg-neutral-900 md:block">
             <Image src="/tv-black-friday-raceway-2026.webp" alt="" fill sizes="(min-width: 1280px) 384px, (min-width: 768px) 32vw, 1px" className="object-cover" />
           </div>
         </div>
