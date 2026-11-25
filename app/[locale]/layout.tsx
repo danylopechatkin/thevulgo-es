@@ -12,7 +12,8 @@ import MarketingTracker from "@/app/components/MarketingTracker";
 import AnalyticsConsent from "@/app/components/AnalyticsConsent";
 import AnalyticsDebugPanel from "@/app/components/AnalyticsDebugPanel";
 import MarketSuggestion from "@/app/components/MarketSuggestion";
-import TvBlackFridayPromo from "@/app/components/TvBlackFridayPromo";
+import TvBlackFridayPromo, { TvBlackFridayRuntime } from "@/app/components/TvBlackFridayPromo";
+import { tvBlackFridayBootstrap, tvBlackFridayPromotion } from "@/lib/tvBlackFridayPromotion";
 import { Suspense } from "react";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -77,6 +78,8 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
   const t = await getTranslations("nav");
+  const preview = process.env.VERCEL_ENV === "preview";
+  const renderTvPromotion = preview || tvBlackFridayPromotion.enabled;
 
   return (
       <div
@@ -128,7 +131,11 @@ export default async function LocaleLayout({
 
           <MarketSuggestion locale={locale} />
 
-          <Suspense fallback={null}><TvBlackFridayPromo locale={locale} preview={process.env.VERCEL_ENV === "preview"} /></Suspense>
+          {renderTvPromotion && <>
+            <script dangerouslySetInnerHTML={{ __html: tvBlackFridayBootstrap(preview) }} />
+            <TvBlackFridayPromo locale={locale} />
+            <Suspense fallback={null}><TvBlackFridayRuntime locale={locale} preview={preview} /></Suspense>
+          </>}
 
           {children}
 
