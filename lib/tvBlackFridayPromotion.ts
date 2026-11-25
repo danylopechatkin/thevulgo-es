@@ -1,4 +1,4 @@
-/** Draft terms: do not enable until the owner confirms the offer and checkout handling. */
+/** Keep disabled until the manual WhatsApp campaign passes QA and release is approved. */
 export const tvBlackFridayPromotion = {
   enabled: false,
   id: "black_friday_tv_raceway_2026",
@@ -47,6 +47,7 @@ export const TV_BLACK_FRIDAY_PATHS = [
   "guias/como-elegir-soporte-tv-pared", "guias/a-que-altura-colgar-tv-pared", "guias/como-ocultar-cables-tv-pared",
 ] as const;
 export const TV_BLACK_FRIDAY_DISPLAY = "--tv-black-friday-display";
+export const TV_BLACK_FRIDAY_STYLE_ID = "tv-black-friday-visibility";
 const campaignPaths = new Set<string>(TV_BLACK_FRIDAY_PATHS);
 export function normalizeTvBlackFridayPath(pathname: string) {
   return pathname.replace(/^\/(?:es|en)(?=\/|$)/, "").replace(/^\/+|\/+$/g, "");
@@ -78,6 +79,7 @@ export function tvBlackFridayBootstrap(preview: boolean, enabled: boolean = tvBl
     startsAt: Date.parse(tvBlackFridayPromotion.startsAt),
     endsAt: Date.parse(tvBlackFridayPromotion.endsAtExclusive),
     cssProperty: TV_BLACK_FRIDAY_DISPLAY,
+    styleId: TV_BLACK_FRIDAY_STYLE_ID,
   });
-  return `(()=>{const p=${policy};const path=location.pathname.replace(/^\\/(?:es|en)(?=\\/|$)/,"").replace(/^\\/+|\\/+$/g,"");const guide=path.startsWith("guias/");const saved=guide?document.cookie.match(/(?:^|; )thevulgo_market=([^;]+)/)?.[1]:null;const other=guide&&["madrid","barcelona","alicante"].includes(saved);const t=Date.now();const active=(p.preview&&new URLSearchParams(location.search).get("previewTvBlackFriday")==="1")||(p.enabled&&t>=p.startsAt&&t<p.endsAt);document.documentElement.style.setProperty(p.cssProperty,active&&!other&&p.paths.includes(path)?"block":"none");})();`;
+  return `(()=>{const p=${policy};const path=location.pathname.replace(/^\\/(?:es|en)(?=\\/|$)/,"").replace(/^\\/+|\\/+$/g,"");const guide=path.startsWith("guias/");const saved=guide?document.cookie.match(/(?:^|; )thevulgo_market=([^;]+)/)?.[1]:null;const other=guide&&["madrid","barcelona","alicante"].includes(saved);const t=Date.now();const active=(p.preview&&new URLSearchParams(location.search).get("previewTvBlackFriday")==="1")||(p.enabled&&t>=p.startsAt&&t<p.endsAt);const rule=document.getElementById(p.styleId)?.sheet?.cssRules[0];if(rule?.style)rule.style.setProperty(p.cssProperty,active&&!other&&p.paths.includes(path)?"block":"none");})();`;
 }
