@@ -83,7 +83,7 @@ export default async function LocaleLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen overflow-x-hidden bg-white font-sans text-black antialiased`}
         data-locale={locale}
       >
-        <MarketingTracker />
+        {process.env.VERCEL_ENV !== "preview" ? <MarketingTracker /> : null}
         <AnalyticsConsent locale={locale} />
         <AnalyticsDebugPanel />
 

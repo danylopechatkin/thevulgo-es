@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
 import { trackMarketingEvent } from "@/lib/client-attribution";
 import WhatsAppLink from "./WhatsAppLink";
+import Image from "next/image";
 import { tvBlackFridayPromotion } from "@/lib/tvBlackFridayPromotion";
 
 const campaignPaths = new Set([
@@ -13,7 +14,7 @@ const campaignPaths = new Set([
   "instalador-tv-valencia", "montaje-tv-65-pulgadas-valencia", "montaje-tv-75-pulgadas-valencia",
   "montaje-tv-85-pulgadas-valencia", "montaje-tv-98-pulgadas-valencia", "montaje-tv-samsung-frame-valencia",
   "instalar-samsung-frame-valencia", "ocultar-cables-valencia", "services/tv-mounting/instalar-soundbar-valencia",
-  "services/furniture/montaje-muebles-tv-multimedia-valencia", "home-cinema-valencia", "estimate",
+  "services/furniture/montaje-muebles-tv-multimedia-valencia", "home-cinema-valencia",
 ]);
 
 export default function TvBlackFridayPromo({ locale, preview }: { locale: string; preview: boolean }) {
@@ -28,13 +29,13 @@ export default function TvBlackFridayPromo({ locale, preview }: { locale: string
     return () => window.clearInterval(timer);
   }, []);
   const normalized = pathname.replace(/^\/(?:es|en)(?=\/|$)/, "").replace(/^\/+|\/+$/g, "");
-  const eligiblePage = campaignPaths.has(normalized) || normalized.startsWith("guias/");
+  const eligiblePage = campaignPaths.has(normalized);
   const previewRequested = preview && query.get("previewTvBlackFriday") === "1";
   const active = now !== null && (previewRequested || (tvBlackFridayPromotion.enabled && now >= Date.parse(tvBlackFridayPromotion.startsAt) && now < Date.parse(tvBlackFridayPromotion.endsAtExclusive)));
   const visible = active && market === "valencia" && eligiblePage;
   useEffect(() => {
-    if (visible) trackMarketingEvent("promo_view", { source: "tv_black_friday", service: "tv_standard_mount", metadata: { promo_id: tvBlackFridayPromotion.id, locale, market } });
-  }, [visible, locale, market]);
+    if (visible && !preview) trackMarketingEvent("promo_view", { source: "tv_black_friday", service: "tv_standard_mount", metadata: { promo_id: tvBlackFridayPromotion.id, locale, market } });
+  }, [visible, locale, market, preview]);
   if (!visible) return null;
   const es = locale === "es";
   const message = es
@@ -50,7 +51,7 @@ export default function TvBlackFridayPromo({ locale, preview }: { locale: string
           <WhatsAppLink source="tv_black_friday" service="tv_standard_mount" message={message} ctaId="tv_black_friday_whatsapp" placement="promotion" eventMetadata={{ promo_id: tvBlackFridayPromotion.id }} className="mt-4 inline-flex rounded-xl bg-yellow-400 px-5 py-3 font-black text-black">{es ? "Consultar por WhatsApp" : "Ask us on WhatsApp"}</WhatsAppLink>
           <p className="mt-3 text-xs text-white/70">{es ? "Oferta para reservas del 25 al 30 de noviembre de 2026 en Valencia y zona de servicio confirmada. Una canaleta exterior de hasta 1 m por TV; instalación sujeta a viabilidad. Metros adicionales, canalización interior, rozas, enchufes y trabajos eléctricos no incluidos. Confirma las condiciones por WhatsApp." : "For bookings from 25–30 November 2026 in Valencia and the confirmed service area. One external raceway up to 1 m per TV; subject to feasibility. Extra length, concealed wiring, chasing, sockets and electrical work are excluded. Confirm the terms on WhatsApp."}</p>
         </div>
-        <div aria-hidden="true" className="hidden rounded-2xl bg-neutral-800 p-5 md:block"><div className="h-28 rounded-lg border-4 border-neutral-500 bg-neutral-950"><div className="h-full bg-gradient-to-br from-neutral-800 to-black" /></div><div className="mx-auto h-12 w-2 bg-neutral-400" /><div className="mx-auto h-2 w-24 rounded bg-neutral-400" /><p className="mt-3 text-center text-3xl font-black text-yellow-400">{es ? "GRATIS" : "FREE"}</p></div>
+        <div className="hidden overflow-hidden rounded-2xl md:block"><Image src="/tv-black-friday-raceway-2026.webp" alt="" width={900} height={506} sizes="240px" className="h-auto w-full object-cover" /><p className="mt-2 text-center text-3xl font-black text-yellow-400">{es ? "GRATIS" : "FREE"}</p></div>
       </div>
     </div>
   </section>;
