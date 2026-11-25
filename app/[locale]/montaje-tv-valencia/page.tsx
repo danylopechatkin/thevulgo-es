@@ -4,6 +4,8 @@ import TvMiniCalculator, {
   TvHeroWhatsAppCta,
 } from "@/app/components/TvMiniCalculator";
 import { getCatalogServices } from "@/lib/serviceCatalog";
+import { TvBlackFridayReminder } from "@/app/components/TvBlackFridayPromo";
+import { tvBlackFridayPromotion } from "@/lib/tvBlackFridayPromotion";
 import {
   CheckCircle2,
   ArrowRight,
@@ -150,6 +152,7 @@ const faqsEn = [
 export default async function TvMountingValenciaPage({ params }: PageProps) {
   const { locale } = await params;
   const isEs = locale === "es";
+  const showBlackFriday = process.env.VERCEL_ENV === "preview" || tvBlackFridayPromotion.enabled;
   const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/montaje-tv-valencia`;
   const faqs = isEs ? faqsEs : faqsEn;
   const catalog = getCatalogServices("TV Mounting");
@@ -338,7 +341,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             </div>
           </div>
 
-          <TvMiniCalculator locale={locale} options={calculatorOptions} />
+          <TvMiniCalculator locale={locale} options={calculatorOptions} showBlackFriday={showBlackFriday} />
         </div>
       </section>
 
@@ -630,6 +633,8 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
               : "The standard price is €49. The final cost may vary if you need a bracket supplied, a large TV installation, cable concealment, electrical work, trunking or a specialist installation."}
           </p>
 
+          {showBlackFriday && <TvBlackFridayReminder locale={locale} placement="price" />}
+
           <div className="mt-8 rounded-3xl border border-yellow-600/30 bg-white p-6 text-left shadow-xl">
             <h3 className="text-xl font-black">
               {isEs ? "El precio depende de:" : "The price depends on:"}
@@ -809,6 +814,8 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
               ? "Envíanos una foto de la pared, el tamaño de la TV y tu zona. Te damos un presupuesto claro antes de empezar."
               : "Send us a photo of the wall, your TV size and your area. We will provide a clear quote before work begins."}
           </p>
+
+          {showBlackFriday && <TvBlackFridayReminder locale={locale} placement="final" />}
 
           <a
             href={whatsappUrl}
