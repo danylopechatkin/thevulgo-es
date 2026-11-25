@@ -1,7 +1,8 @@
 # TV Black Friday 2026 — draft, not release ready
 
-This branch contains only an inactive configuration and a guard test. No promotional
-claims, price changes, checkout changes or customer-facing banners are enabled.
+This draft uses a WhatsApp-only campaign with manual confirmation. The production
+flag remains off. In a Vercel Preview only, append `?previewTvBlackFriday=1` to
+an eligible page to see the offer. Checkout prices and CRM are not changed.
 
 ## Confirmed owner terms
 
@@ -10,19 +11,12 @@ one external raceway up to one metre per TV (including materials and installatio
 all TV sizes and brackets including Samsung Frame, subject to technical suitability,
 and the exclusions stated in the task. Appointments may occur later by agreement.
 
-## Decisions remaining before activating
-
-- Verify the canonical mapping for every specialist TV calculator and apply the
-  confirmed service area consistently using the existing coverage definitions.
-- Establish server-authoritative catalogue validation: `/api/send` currently
-  computes totals from prices supplied in the request. A zero-price gift must not
-  be accepted from the client, and paid raceway selections must not be duplicated.
+The free service is discussed and confirmed manually in WhatsApp; the ordinary
+calculator does not automatically apply the offer.
 
 ## Required implementation before release
 
-- Add a server-authoritative eligibility and pricing rule, with auditable snapshots
-  for confirmed orders and no duplicate gifts; preserve the current catalogue price.
-- Implement consent-respecting analytics and time-aware ES/EN campaign placements.
+- Confirm that staff record the agreed gift on each order without charging for it.
 - Audit the 26 requested pages, WhatsApp, calculator, CRM, city restrictions,
   expiration, caching and previous promotions; capture mobile/desktop screenshots.
 - Run TypeScript, tests, lint, build, TV SEO regressions and verify the exact Vercel

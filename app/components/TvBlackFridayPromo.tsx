@@ -15,6 +15,7 @@ const campaignPaths = new Set([
   "montaje-tv-85-pulgadas-valencia", "montaje-tv-98-pulgadas-valencia", "montaje-tv-samsung-frame-valencia",
   "instalar-samsung-frame-valencia", "ocultar-cables-valencia", "services/tv-mounting/instalar-soundbar-valencia",
   "services/furniture/montaje-muebles-tv-multimedia-valencia", "home-cinema-valencia",
+  "guias/como-elegir-soporte-tv-pared", "guias/a-que-altura-colgar-tv-pared", "guias/como-ocultar-cables-tv-pared",
 ]);
 
 export default function TvBlackFridayPromo({ locale, preview }: { locale: string; preview: boolean }) {

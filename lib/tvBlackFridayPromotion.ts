@@ -12,9 +12,9 @@ export const tvBlackFridayPromotion = {
   promotionalPrice: 0,
 } as const;
 
-export function isTvBlackFridayActive(now: Date = new Date()): boolean {
+export function isTvBlackFridayActive(now: Date = new Date(), enabled: boolean = tvBlackFridayPromotion.enabled): boolean {
   const time = now.getTime();
-  return tvBlackFridayPromotion.enabled && Number.isFinite(time) &&
+  return enabled && Number.isFinite(time) &&
     time >= Date.parse(tvBlackFridayPromotion.startsAt) &&
     time < Date.parse(tvBlackFridayPromotion.endsAtExclusive);
 }
