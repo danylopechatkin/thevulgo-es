@@ -3,15 +3,20 @@
 This branch contains only an inactive configuration and a guard test. No promotional
 claims, price changes, checkout changes or customer-facing banners are enabled.
 
-## Owner decisions required before activating
+## Confirmed owner terms
 
-- Confirm the proposed 25–30 November 2026 Europe/Madrid booking window.
-- Confirm Valencia eligibility, including whether surrounding municipalities qualify.
-- Confirm one standard external raceway up to one metre per TV, including materials
-  and fitting, and whether multiple TVs receive multiple raceways.
-- Confirm exclusions and how late appointments, cancellations and rescheduling work.
-- Confirm the precise eligible TV services and what happens if a customer also
-  selects a separately priced raceway.
+The owner confirmed the proposed period, Valencia and the confirmed service area,
+one external raceway up to one metre per TV (including materials and installation),
+all TV sizes and brackets including Samsung Frame, subject to technical suitability,
+and the exclusions stated in the task. Appointments may occur later by agreement.
+
+## Decisions remaining before activating
+
+- Verify the canonical mapping for every specialist TV calculator and apply the
+  confirmed service area consistently using the existing coverage definitions.
+- Establish server-authoritative catalogue validation: `/api/send` currently
+  computes totals from prices supplied in the request. A zero-price gift must not
+  be accepted from the client, and paid raceway selections must not be duplicated.
 
 ## Required implementation before release
 

@@ -18,3 +18,19 @@ export function isTvBlackFridayActive(now: Date = new Date()): boolean {
     time >= Date.parse(tvBlackFridayPromotion.startsAt) &&
     time < Date.parse(tvBlackFridayPromotion.endsAtExclusive);
 }
+
+export type TvPromotionSelection = { id: string; qty: number };
+
+/** Pure policy calculation. The caller must supply verified server-side service IDs. */
+export function tvBlackFridayGiftQuantity(
+  market: string,
+  services: readonly TvPromotionSelection[],
+  now: Date = new Date(),
+): number {
+  if (!isTvBlackFridayActive(now) || market !== "valencia") return 0;
+  return services.reduce((total, service) => {
+    if (!(tvBlackFridayPromotion.eligibleServiceIds as readonly string[]).includes(service.id)) return total;
+    if (!Number.isSafeInteger(service.qty) || service.qty < 1 || service.qty > 20) return total;
+    return total + service.qty;
+  }, 0);
+}
