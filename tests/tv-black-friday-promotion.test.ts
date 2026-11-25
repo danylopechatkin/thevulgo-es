@@ -3,9 +3,10 @@ import assert from "node:assert/strict";
 import { runInNewContext } from "node:vm";
 import { isTvBlackFridayActive, isTvBlackFridayVisible, isTvBlackFridayCampaignPath, TV_BLACK_FRIDAY_PATHS, TV_BLACK_FRIDAY_STYLE_ID, TV_BLACK_FRIDAY_DISPLAY, tvBlackFridayBootstrap, tvBlackFridayGiftQuantity, tvBlackFridayPromotion } from "../lib/tvBlackFridayPromotion";
 
-test("draft Black Friday promotion remains disabled even during the proposed period", () => {
-  assert.equal(tvBlackFridayPromotion.enabled, false);
-  assert.equal(isTvBlackFridayActive(new Date("2026-11-27T12:00:00Z")), false);
+test("production flag controls the scheduled campaign; explicit disable always wins", () => {
+  const now = new Date("2026-11-27T12:00:00Z");
+  assert.equal(isTvBlackFridayActive(now), tvBlackFridayPromotion.enabled);
+  assert.equal(isTvBlackFridayActive(now, false), false);
   assert.equal(isTvBlackFridayActive(new Date("2026-12-01T00:00:00Z")), false);
 });
 
@@ -16,9 +17,10 @@ test("enabled offer uses inclusive Madrid dates and an exclusive end", () => {
   assert.equal(isTvBlackFridayActive(new Date("2026-11-30T23:00:00.000Z"), true), false);
 });
 
-test("disabled offer never awards gifts for televisions or standalone extras", () => {
+test("gift policy respects the campaign flag, market, extras and expiration", () => {
   const now = new Date("2026-11-27T12:00:00Z");
-  assert.equal(tvBlackFridayGiftQuantity("valencia", [{ id: "tv-small", qty: 2 }], now), 0);
+  assert.equal(tvBlackFridayGiftQuantity("valencia", [{ id: "tv-small", qty: 2 }], now), tvBlackFridayPromotion.enabled ? 2 : 0);
+  assert.equal(tvBlackFridayGiftQuantity("valencia", [{ id: "tv-small", qty: 2 }], new Date("2026-11-30T23:00:00Z")), 0);
   assert.equal(tvBlackFridayGiftQuantity("madrid", [{ id: "tv-small", qty: 1 }], now), 0);
   assert.equal(tvBlackFridayGiftQuantity("valencia", [{ id: "raceway", qty: 1 }], now), 0);
   assert.equal(tvBlackFridayGiftQuantity("valencia", [{ id: "soundbar", qty: 1 }], now), 0);
