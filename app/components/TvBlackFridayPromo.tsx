@@ -6,7 +6,7 @@ import { useCurrentMarket } from "@/lib/useCurrentMarket";
 import { trackMarketingEvent } from "@/lib/client-attribution";
 import WhatsAppLink from "./WhatsAppLink";
 import Image from "next/image";
-import { isTvBlackFridayCampaignPath, isTvBlackFridayVisible, TV_BLACK_FRIDAY_DISPLAY, tvBlackFridayPromotion } from "@/lib/tvBlackFridayPromotion";
+import { isTvBlackFridayCampaignPath, isTvBlackFridayVisible, TV_BLACK_FRIDAY_DISPLAY, TV_BLACK_FRIDAY_STYLE_ID, tvBlackFridayPromotion } from "@/lib/tvBlackFridayPromotion";
 
 /** Runtime reconciliation is separate from the SSR banner: search params must
  * never suspend or delay the initial banner markup. */
@@ -17,7 +17,11 @@ export function TvBlackFridayRuntime({ locale, preview }: { locale: string; prev
   useLayoutEffect(() => {
     const update = () => {
       const visible = isTvBlackFridayVisible({ pathname, preview, previewRequested, market });
-      document.documentElement.style.setProperty(TV_BLACK_FRIDAY_DISPLAY, visible ? "block" : "none");
+      const rule = (document.getElementById(TV_BLACK_FRIDAY_STYLE_ID) as HTMLStyleElement | null)?.sheet?.cssRules[0] as CSSStyleRule | undefined;
+      const display = visible ? "block" : "none";
+      if (rule?.style && rule.style.getPropertyValue(TV_BLACK_FRIDAY_DISPLAY).trim() !== display) {
+        rule.style.setProperty(TV_BLACK_FRIDAY_DISPLAY, display);
+      }
       if (!visible) lastView.current = "";
       if (visible && !preview && lastView.current !== pathname) {
         lastView.current = pathname;
