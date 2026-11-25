@@ -12,6 +12,8 @@ import MarketingTracker from "@/app/components/MarketingTracker";
 import AnalyticsConsent from "@/app/components/AnalyticsConsent";
 import AnalyticsDebugPanel from "@/app/components/AnalyticsDebugPanel";
 import MarketSuggestion from "@/app/components/MarketSuggestion";
+import TvBlackFridayPromo from "@/app/components/TvBlackFridayPromo";
+import { Suspense } from "react";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
@@ -125,6 +127,8 @@ export default async function LocaleLayout({
           </header>
 
           <MarketSuggestion locale={locale} />
+
+          <Suspense fallback={null}><TvBlackFridayPromo locale={locale} preview={process.env.VERCEL_ENV === "preview"} /></Suspense>
 
           {children}
 
