@@ -1,32 +1,33 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import AdminNav from "./AdminNav";
 
 type Metrics = { visitors:number;sessions:number;leads:number;bookings:number;completedJobs:number;bookedRevenue:number;completedRevenue:number;collectedRevenue:number;lostLeads:number;potentialRevenueLost:number;cancelled:number;newCustomers:number;repeatCustomers:number;repeatRevenue:number };
 type Row = { category?:string;channel?:string;lang?:string;visitors:number;leads:number;bookings:number;completed?:number;revenue:number };
 type TableRow = Row & { landing?: string; device?: string };
 type Snapshot = { metrics:Metrics;services:Row[];channels:Row[];locales:Row[];landings:Array<Row&{landing:string}>;devices:Array<Row&{device:string}>;geography:Array<{city:string;area:string;bookings:number;completed:number;revenue:number;aov:number}>;ctas:Array<{cta:string;clicks:number;leads:number;bookings:number;revenue:number}>;promotions:Array<{promo_id:string;views:number;clicks:number;bookings:number;revenue:number}>;funnel:Array<{stage:string;users:number}>;lost:Array<{reason:string;leads:number;potential:number}>;dataQuality:Record<string,number> };
-type ResponseData = { current:Snapshot;last7:Snapshot;previous7:Snapshot;days:number;model:"first"|"last" };
+type Period = "today"|"yesterday"|"7d"|"14d"|"28d"|"30d"|"90d";
+type ResponseData = { current:Snapshot;previous:Snapshot;period:Period;from:string;to:string;model:"first"|"last" };
 const money=(n:number)=>new Intl.NumberFormat("en-IE",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n||0);
 const pct=(a:number,b:number)=>b?`${((a/b)*100).toFixed(1)}%`:"Insufficient data";
 const rev100=(revenue:number,visitors:number)=>visitors?money(revenue/visitors*100):"Insufficient data";
 
 export default function GrowthAnalyticsClient(){
-  const [days,setDays]=useState(1),[model,setModel]=useState<"first"|"last">("last"),[data,setData]=useState<ResponseData|null>(null),[error,setError]=useState(""),[loading,setLoading]=useState(true);
-  useEffect(()=>{setLoading(true);setError("");void fetch(`/api/admin/growth-analytics?days=${days}&model=${model}`,{cache:"no-store"}).then(async r=>({r,b:await r.json()})).then(({r,b})=>r.ok?setData(b):setError(b.error||"Could not load analytics")).catch(()=>setError("Could not load analytics")).finally(()=>setLoading(false))},[days,model]);
+  const [period,setPeriod]=useState<Period>("today"),[model,setModel]=useState<"first"|"last">("last"),[data,setData]=useState<ResponseData|null>(null),[error,setError]=useState(""),[loading,setLoading]=useState(true);
+  useEffect(()=>{let active=true;void fetch(`/api/admin/growth-analytics?period=${period}&model=${model}`,{cache:"no-store"}).then(async r=>({r,b:await r.json()})).then(({r,b})=>{if(!active)return;if(r.ok)setData(b);else setError(b.error||"Could not load analytics")}).catch(()=>{if(active)setError("Could not load analytics")}).finally(()=>{if(active)setLoading(false)});return()=>{active=false}},[period,model]);
   const m=data?.current.metrics;
-  const insights=useMemo(()=>{
+  const insights=(()=>{
     if(!data)return[];const rows:string[]=[];
-    data.last7.services.forEach(s=>{if(s.visitors>=20&&s.leads===0)rows.push(`${s.category}: high traffic (${s.visitors}) and zero leads`);if(s.visitors>=10&&s.leads/s.visitors>.08)rows.push(`${s.category}: strong conversion ${pct(s.leads,s.visitors)} — consider more traffic`)});
-    const current=pctNumber(data.last7.metrics.leads,data.last7.metrics.visitors),previous=pctNumber(data.previous7.metrics.leads,data.previous7.metrics.visitors);
-    if(data.last7.metrics.visitors>=30&&data.previous7.metrics.visitors>=30&&current<previous*.75)rows.push(`Visitor → lead conversion fell from ${previous.toFixed(1)}% to ${current.toFixed(1)}%`);
+    data.current.services.forEach(s=>{if(s.visitors>=20&&s.leads===0)rows.push(`${s.category}: high traffic (${s.visitors}) and zero leads`);if(s.visitors>=10&&s.leads/s.visitors>.08)rows.push(`${s.category}: strong conversion ${pct(s.leads,s.visitors)} — consider more traffic`)});
+    const current=pctNumber(data.current.metrics.leads,data.current.metrics.visitors),previous=pctNumber(data.previous.metrics.leads,data.previous.metrics.visitors);
+    if(data.current.metrics.visitors>=30&&data.previous.metrics.visitors>=30&&current<previous*.75)rows.push(`Visitor → lead conversion fell from ${previous.toFixed(1)}% to ${current.toFixed(1)}%`);
     return rows.slice(0,6)
-  },[data]);
+  })();
   return <main className="min-h-screen bg-[#f4f4f0] p-3 text-[#111] sm:p-6"><div className="mx-auto max-w-[1500px] space-y-5"><AdminNav/>
-    <header className="rounded-[2rem] bg-black p-6 text-white shadow-xl sm:p-8"><div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end"><div><span className="rounded-full bg-yellow-400 px-3 py-1 text-xs font-black uppercase tracking-widest text-black">Commercial Analytics 2.0</span><h1 className="mt-4 text-3xl font-black sm:text-5xl">Owner dashboard</h1><p className="mt-2 text-sm text-white/60">Visitors → leads → bookings → completed jobs → collected revenue. Unknown attribution stays unknown.</p></div><div className="flex flex-wrap gap-2"><select value={model} onChange={e=>setModel(e.target.value as "first"|"last")} className="rounded-xl bg-white px-3 py-2 text-sm font-bold text-black"><option value="last">Last touch</option><option value="first">First touch</option></select>{[[1,"Today"],[7,"7 days"],[30,"30 days"],[90,"90 days"]].map(([n,label])=><button key={n} onClick={()=>setDays(Number(n))} className={`rounded-xl px-3 py-2 text-sm font-black ${days===n?"bg-yellow-400 text-black":"bg-white/10"}`}>{label}</button>)}</div></div></header>
+  <header className="rounded-[2rem] bg-black p-6 text-white shadow-xl sm:p-8"><div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end"><div><span className="rounded-full bg-yellow-400 px-3 py-1 text-xs font-black uppercase tracking-widest text-black">Commercial Analytics 3.0</span><h1 className="mt-4 text-3xl font-black sm:text-5xl">Owner dashboard</h1><p className="mt-2 text-sm text-white/60">Measured first-party traffic → CRM records → revenue. Unknown attribution stays unknown; incomplete stages are never treated as conversions.</p></div><div className="flex flex-wrap gap-2"><select value={model} onChange={e=>setModel(e.target.value as "first"|"last")} className="rounded-xl bg-white px-3 py-2 text-sm font-bold text-black"><option value="last">Last touch</option><option value="first">First touch</option></select>{[["today","Today"],["yesterday","Yesterday"],["7d","7 days"],["14d","14 days"],["28d","28 days"],["30d","30 days"],["90d","90 days"]].map(([value,label])=><button key={value} onClick={()=>setPeriod(value as Period)} className={`rounded-xl px-3 py-2 text-sm font-black ${period===value?"bg-yellow-400 text-black":"bg-white/10"}`}>{label}</button>)}</div></div></header>
     {error?<div className="rounded-2xl bg-red-50 p-5 font-bold text-red-700">{error}. Apply the Commercial Analytics 2.0 migration first.</div>:null}{loading?<div className="rounded-2xl bg-white p-8 text-center font-bold">Loading verified commercial data…</div>:null}
-    {m?<><section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+    {m?<><p className="rounded-xl bg-blue-50 px-4 py-3 text-sm text-blue-900">Reporting boundary: dates and equivalent comparison use Europe/Madrid. First-party event counts are consent-limited coverage, not a census of all visitors.</p><section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
       <Kpi label="Visitors" value={m.visitors}/><Kpi label="Leads" value={m.leads} note={pct(m.leads,m.visitors)+" visitor → lead"}/><Kpi label="Bookings" value={m.bookings} note={pct(m.bookings,m.leads)+" lead → booking"}/><Kpi label="Completed" value={m.completedJobs}/><Kpi label="Booked €" value={money(m.bookedRevenue)} accent/><Kpi label="Completed €" value={money(m.completedRevenue)} accent/><Kpi label="Collected €" value={money(m.collectedRevenue)} accent/><Kpi label="AOV" value={m.completedJobs?money(m.completedRevenue/m.completedJobs):"Insufficient data"}/><Kpi label="Revenue / 100 visitors" value={rev100(m.completedRevenue,m.visitors)}/><Kpi label="Lost leads" value={m.lostLeads}/><Kpi label="Potential lost €" value={money(m.potentialRevenueLost)} warning/><Kpi label="Repeat revenue" value={money(m.repeatRevenue)} note={`${m.repeatCustomers} repeat customers`}/>
     </section>
     <section className="grid gap-5 xl:grid-cols-[1.6fr_.8fr]"><Panel title="Service performance" subtitle="Comparable canonical categories across ES and EN"><Table rows={data!.current.services} labelKey="category"/></Panel><Panel title="Calculator funnel" subtitle="Unique sessions; percentages use the previous meaningful stage"><Funnel rows={data!.current.funnel}/></Panel></section>
