@@ -1,3 +1,4 @@
+import { formatTvMountingPrice } from "@/lib/tvMountingPricing";
 import type { Metadata } from "next";
 import Link from "next/link";
 import HandymanQuickRequest from "@/app/components/HandymanQuickRequest";
@@ -71,7 +72,7 @@ export default async function HandymanValenciaPage({ params }: Props) {
   const callHref = `tel:+${phone}`;
 
   const services = [
-    { title: isEs ? "Montaje de TV" : "TV mounting", price: "49 €", href: `/${locale}/montaje-tv-valencia`, icon: Tv },
+    { title: isEs ? "Montaje de TV hasta 55″" : "TV mounting up to 55″", price: formatTvMountingPrice(55, locale), href: `/${locale}/montaje-tv-valencia`, icon: Tv },
     { title: isEs ? "Montaje de muebles" : "Furniture assembly", price: "45 €", href: `/${locale}/montaje-muebles-valencia`, icon: Sofa },
     { title: isEs ? "Montaje de muebles IKEA" : "IKEA furniture assembly", price: "39 €", href: `/${locale}/montaje-muebles-ikea-valencia`, icon: Sofa },
     { title: isEs ? "Instalación de ventiladores" : "Ceiling fan installation", price: "50 €", href: `/${locale}/services/instalacion-ventilador-techo-valencia`, icon: Wrench },
