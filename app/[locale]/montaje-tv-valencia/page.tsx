@@ -39,8 +39,8 @@ export async function generateMetadata({
       ? "Montaje de TV en Valencia | Instalación en pared | THEVULGO"
       : "TV Mounting in Valencia | Wall Installation | THEVULGO",
     description: isEs
-      ? "Montaje de TV en pared en Valencia con soporte fijo, inclinable o articulado, nivelación, TVs grandes, Samsung Frame y cableado limpio. Presupuesto por WhatsApp."
-      : "Professional TV mounting in Valencia with fixed, tilting or full-motion brackets, accurate levelling, large TVs, Samsung Frame and clean cable management. Quote by WhatsApp.",
+      ? `Montaje de TV en Valencia desde ${formatTvMountingPrice(55, "es")} (hasta 55″). Tarifas por diagonal hasta 98″. Soportes, nivelación y presupuesto por WhatsApp.`
+      : `TV mounting in Valencia from ${formatTvMountingPrice(55, "en")} (up to 55″). Prices by screen size up to 98″. Brackets, levelling and WhatsApp quotes.`,
     alternates: {
       canonical: pageUrl,
       languages: {
@@ -50,8 +50,8 @@ export async function generateMetadata({
     },
     openGraph: {
       title: isEs
-        ? "Montaje de TV en Valencia | 49 €"
-        : "TV Mounting in Valencia | €49",
+        ? `Montaje de TV en Valencia | ${formatTvMountingPrice(55, locale)} hasta 55″`
+        : `TV Mounting in Valencia | ${formatTvMountingPrice(55, locale)} up to 55″`,
       description: isEs
         ? "Instalación limpia, rápida y profesional de televisores en Valencia y alrededores."
         : "Clean, fast and professional TV mounting in Valencia and nearby areas.",
@@ -99,7 +99,7 @@ const faqsEs = [
   },
   {
     q: "¿Instalan Samsung Frame TV?",
-    a: "Sí. Podemos instalar Samsung Frame TV, incluyendo soporte, nivelación precisa y planificación del cable One Connect según el espacio disponible.",
+    a: "Sí. Podemos instalar Samsung Frame TV, con soporte compatible del cliente, nivelación precisa y planificación del cable One Connect según el espacio disponible.",
   },
   {
     q: "¿Pueden traer el soporte de TV?",
@@ -134,7 +134,7 @@ const faqsEn = [
   },
   {
     q: "Do you install Samsung Frame TVs?",
-    a: "Yes. We install Samsung Frame TVs, including the bracket, accurate levelling and One Connect cable planning for the available space.",
+    a: "Yes. We install Samsung Frame TVs, with a compatible customer-supplied bracket, accurate levelling and One Connect cable planning for the available space.",
   },
   {
     q: "Can you supply the TV bracket?",
