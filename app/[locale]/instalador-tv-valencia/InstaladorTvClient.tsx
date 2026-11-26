@@ -228,7 +228,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Canaleta, rutas limpias y soluciones para mejorar el aspecto de la instalación."
         : "Raceways, clean routing and solutions to improve the look of the setup.",
-      price: isEs ? "29 €" : "€29",
+      price: isEs ? "25 € · canaleta" : "€25 · raceway",
       href: `/${locale}/ocultar-cables-valencia`,
       icon: <Cable className="h-5 w-5" />,
     },
