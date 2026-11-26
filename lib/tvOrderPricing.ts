@@ -12,7 +12,7 @@ export function isTvOrder(category: unknown, serviceCategory: unknown, lines: re
 }
 /** Never silently replace a stale customer-visible price with a higher one.
  * A mismatched price must be reconfirmed before creating the booking. */
-export function validateTvOrderPrices<T extends TvOrderLine>(lines: readonly T[], market: Market, locale: string): T[] {
+export function validateTvOrderPrices<T extends TvOrderLine>(lines: readonly T[], market: Market, locale: string): Array<T & { label: string; subtotal: number }> {
   const catalog = getCatalogServices("TV Mounting");
   const seen = new Set<string>();
   return lines.map(line => {
