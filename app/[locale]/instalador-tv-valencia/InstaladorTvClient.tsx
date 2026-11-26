@@ -1,6 +1,6 @@
 "use client";
 
-import { TV_MOUNTING_PRICES, formatTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions, tvMountingPriceSummary } from "@/lib/tvMountingPricing";
+import { formatSamsungFramePrice, TV_MOUNTING_PRICES, formatTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions, tvMountingPriceSummary } from "@/lib/tvMountingPricing";
 
 
 import React from "react";
@@ -201,7 +201,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Montaje cuidado para Samsung Frame con alineación precisa y acabado decorativo."
         : "Careful Samsung Frame mounting with precise alignment and decorative finish.",
-      price: isEs ? "69 €" : "€69",
+      price: `${formatSamsungFramePrice(55, locale)} · 43″/55″`,
       href: `/${locale}/montaje-tv-samsung-frame-valencia`,
       icon: <Paintbrush className="h-5 w-5" />,
     },
@@ -246,7 +246,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Montaje de soporte fijo, inclinable o articulado con fijación adecuada."
         : "Fixed, tilting or full-motion TV bracket installation with suitable fixings.",
-      price: isEs ? "49 €" : "€49",
+      price: isEs ? "35 € · solo soporte" : "€35 · bracket only",
       href: `/${locale}/instalacion-soporte-tv-valencia`,
       icon: <Brackets className="h-5 w-5" />,
     },
