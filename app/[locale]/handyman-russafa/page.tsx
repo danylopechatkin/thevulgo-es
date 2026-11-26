@@ -1,3 +1,4 @@
+import { formatTvMountingPrice } from "@/lib/tvMountingPricing";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -226,7 +227,7 @@ export default async function HandymanRussafaPage({ params }: Props) {
 
   const prices = isEs
     ? [
-        ["Montaje de TV", "49 €"],
+        ["Montaje de TV hasta 55″", formatTvMountingPrice(55, "es")],
         ["Montaje de muebles", "45 €"],
         ["Cambio de enchufe / interruptor", "35 €"],
         ["Instalación de lámpara", "39 €"],
@@ -236,7 +237,7 @@ export default async function HandymanRussafaPage({ params }: Props) {
         ["Visita / revisión", "49 €"],
       ]
     : [
-        ["TV mounting", "€49"],
+        ["TV mounting up to 55″", formatTvMountingPrice(55, "en")],
         ["Furniture assembly", "€45"],
         ["Outlet / switch replacement", "€35"],
         ["Light installation", "€39"],
