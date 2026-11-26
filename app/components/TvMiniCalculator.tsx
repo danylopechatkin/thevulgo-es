@@ -21,10 +21,13 @@ import { marketWhatsAppHref } from "@/lib/marketLinks";
 import { marketName } from "@/lib/cities";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
 import { TvBlackFridayReminder } from "./TvBlackFridayPromo";
+import { tvMountingExclusions, tvSpecialistHref } from "@/lib/tvMountingPricing";
+import { formatPublicPrice } from "@/lib/public-pricing";
 
 type TvOption = {
   id: string;
   label: string;
+  sizeLabel?: string;
   price: number;
   kind: "base" | "extra";
 };
@@ -73,7 +76,7 @@ export default function TvMiniCalculator({
   const { market } = useCurrentMarket(locale);
   const city = marketName(market);
   const baseOptions = options.filter((option) => option.kind === "base");
-  const [baseId, setBaseId] = useState(baseOptions[0]?.id || "");
+  const [baseId, setBaseId] = useState("");
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
@@ -157,8 +160,11 @@ export default function TvMiniCalculator({
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError("");
+    if (!baseId) {
+      setError(es ? "Selecciona la diagonal de tu TV." : "Select your TV screen size.");
+      return;
+    }
     if (
-      !baseId ||
       !form.name.trim() ||
       !form.email.trim() ||
       !form.phone.trim() ||
@@ -231,6 +237,7 @@ export default function TvMiniCalculator({
       });
       const body = await response.json();
       if (!response.ok || !body.success) {
+        if (body.code === "TV_PRICE_CHANGED") throw new Error("TV_PRICE_CHANGED");
         if (response.status === 409)
           setForm((current) => ({ ...current, time: "" }));
         throw new Error(body.error || "submit");
@@ -252,7 +259,9 @@ export default function TvMiniCalculator({
     } catch (cause) {
       trackMarketingEvent("booking_submit_failed", { source: "tv_landing", service: baseId, metadata: { calculator_type: "tv_mini", error_type: "api_failure", endpoint: "/api/send", locale, market, city } });
       setError(
-        cause instanceof Error &&
+        cause instanceof Error && cause.message === "TV_PRICE_CHANGED"
+          ? (es ? "Los precios se han actualizado. Recarga la página y selecciona de nuevo el tamaño." : "Prices have been updated. Reload the page and select your TV size again.")
+          : cause instanceof Error &&
           cause.message === "This time is already booked"
           ? es
             ? "Esta hora acaba de ocuparse. Elige otra."
@@ -400,10 +409,10 @@ export default function TvMiniCalculator({
       </div>
 
       <fieldset className="mt-4">
-        <legend className="sr-only">
+        <legend className="mb-2 text-sm font-bold text-neutral-700">
           {es ? "Tamaño de la TV" : "TV size"}
         </legend>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {baseOptions.map((option) => {
             const active = option.id === baseId;
             return (
@@ -414,6 +423,7 @@ export default function TvMiniCalculator({
                 onClick={() => {
                   markStarted();
                   setBaseId(option.id);
+                  setError("");
                 }}
                 className={`relative rounded-2xl border-2 p-3 text-left transition active:scale-[.98] ${active ? "border-black bg-yellow-400 shadow-md" : "border-neutral-200 hover:border-yellow-400"}`}
               >
@@ -421,18 +431,21 @@ export default function TvMiniCalculator({
                   <BadgeCheck className="absolute right-3 top-3 h-4 w-4" />
                 ) : null}
                 <span className="block pr-5 text-xs font-bold leading-4 text-neutral-600">
-                  {option.label.replace(
-                    /Instalación de TV |TV installation /i,
-                    "",
-                  )}
+                  {option.sizeLabel || option.label}
                 </span>
                 <strong className="mt-1 block text-2xl font-black">
-                  €{option.price}
+                  {formatPublicPrice(option.price, locale)}
                 </strong>
               </button>
             );
           })}
+          <a href={marketWhatsAppHref({ locale, market, serviceName: es ? "montaje de TV de más de 98 pulgadas" : "TV mounting over 98 inches" })} className="flex flex-col justify-center rounded-2xl border-2 border-dashed border-neutral-300 p-3 text-left hover:border-yellow-400">
+            <span className="text-xs font-bold">{es ? "Más de 98″" : "Over 98″"}</span>
+            <strong className="mt-1 text-sm">{es ? "Consultar" : "Request quote"}</strong>
+          </a>
         </div>
+        <p className="mt-3 text-xs leading-relaxed text-neutral-600">{tvMountingExclusions(locale)}</p>
+        <p className="mt-2 text-xs"><a className="font-bold underline" href={tvSpecialistHref(locale)}>{es ? "¿Samsung Frame? Consulta las tarifas especiales." : "Samsung Frame? View specialist rates."}</a></p>
       </fieldset>
 
       {showBlackFriday && <TvBlackFridayReminder locale={locale} placement="calculator" />}
@@ -566,11 +579,11 @@ export default function TvMiniCalculator({
           <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">
             {es ? "Precio seleccionado" : "Selected price"}
           </p>
-          <p className="text-2xl font-black">€{total}</p>
+          <p className="text-xl font-black">{baseId ? formatPublicPrice(total, locale) : (es ? "Elige tamaño" : "Choose size")}</p>
         </div>
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || !baseId}
           className="inline-flex min-h-14 min-w-0 w-full items-center justify-center gap-2 rounded-xl bg-yellow-400 px-3 py-3 text-center text-sm font-black leading-tight text-black transition hover:scale-[1.02] disabled:opacity-60"
         >
           {submitting ? (

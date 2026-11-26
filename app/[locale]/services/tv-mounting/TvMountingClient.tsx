@@ -1,5 +1,8 @@
 "use client";
 
+import { formatSamsungFramePrice, TV_MOUNTING_PRICES, formatTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions } from "@/lib/tvMountingPricing";
+
+
 import React from "react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
@@ -24,7 +27,7 @@ export default function TvMountingClient() {
   const locale = useLocale();
   const isEs = locale === "es";
 
-  const estimateHref = `/${locale}/estimate?category=tv-mounting`;
+  const estimateHref = tvMountingEstimateHref(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -122,7 +125,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Instalación segura y nivelada de televisores en paredes adecuadas."
         : "Secure, level TV installation on suitable wall types.",
-      price: isEs ? "49 €" : "€49",
+      price: isEs ? `${formatTvMountingPrice(55, locale)} · hasta 55″` : `${formatTvMountingPrice(55, locale)} · up to 55″`,
       icon: <Tv className="h-5 w-5" />,
       href: `/${locale}/montaje-tv-valencia`,
     },
@@ -131,7 +134,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Instalación de TVs grandes con posicionamiento cuidadoso y fijación adecuada."
         : "Installation for larger TVs with careful positioning and suitable fixing.",
-      price: isEs ? "69 €" : "€69",
+      price: isEs ? `${formatTvMountingPrice(65, locale)} · 56–65″` : `${formatTvMountingPrice(65, locale)} · 56–65″`,
       icon: <Monitor className="h-5 w-5" />,
       href: `/${locale}/montaje-tv-grande-valencia`,
     },
@@ -140,7 +143,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Montaje Samsung Frame con One Connect Box, cable invisible y acabado tipo cuadro."
         : "Samsung Frame mounting with One Connect Box, invisible cable and picture-frame finish.",
-      price: isEs ? "69 €" : "€69",
+      price: `${formatSamsungFramePrice(55, locale)} · 43″/55″`,
       icon: <Ruler className="h-5 w-5" />,
       href: `/${locale}/montaje-tv-samsung-frame-valencia`,
     },
@@ -149,7 +152,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Soluciones más limpias con canaletas, rutas sencillas o cable management."
         : "Cleaner look with raceways, simple routing or cable management.",
-      price: isEs ? "29 €" : "€29",
+      price: isEs ? "25 € · canaleta" : "€25 · raceway",
       icon: <Cable className="h-5 w-5" />,
       href: `/${locale}/ocultar-cables-valencia`,
     },
@@ -224,40 +227,12 @@ export default function TvMountingClient() {
     },
   ];
 
-  const tvSizePages = [
-    {
-      title: isEs ? "Montaje TV 65 pulgadas" : "65 inch TV mounting",
-      desc: isEs
-        ? "Montaje seguro para televisores de 65 pulgadas en Valencia."
-        : "Safe mounting for 65 inch TVs in Valencia.",
-      price: isEs ? "59 €" : "€59",
-      href: `/${locale}/montaje-tv-65-pulgadas-valencia`,
-    },
-    {
-      title: isEs ? "Montaje TV 75 pulgadas" : "75 inch TV mounting",
-      desc: isEs
-        ? "Instalación profesional para TVs grandes de 75 pulgadas."
-        : "Professional installation for large 75 inch TVs.",
-      price: isEs ? "79 €" : "€79",
-      href: `/${locale}/montaje-tv-75-pulgadas-valencia`,
-    },
-    {
-      title: isEs ? "Montaje TV 85 pulgadas" : "85 inch TV mounting",
-      desc: isEs
-        ? "Montaje de pantallas grandes de 85 pulgadas con revisión de pared."
-        : "85 inch large screen mounting with wall check.",
-      price: isEs ? "99 €" : "€99",
-      href: `/${locale}/montaje-tv-85-pulgadas-valencia`,
-    },
-    {
-      title: isEs ? "Montaje TV 98 pulgadas" : "98 inch TV mounting",
-      desc: isEs
-        ? "Instalación high-ticket para pantallas gigantes de 98 pulgadas."
-        : "High-ticket installation for giant 98 inch screens.",
-      price: isEs ? "129 €" : "€129",
-      href: `/${locale}/montaje-tv-98-pulgadas-valencia`,
-    },
-  ];
+  const tvSizePages = TV_MOUNTING_PRICES.map(tier => ({
+    title: isEs ? tier.labelEs : tier.label,
+    desc: isEs ? "Tarifa de montaje estándar según diagonal." : "Standard installation rate by screen size.",
+    price: formatTvMountingPrice(tier.max, locale),
+    href: tier.max === 55 ? tvMountingEstimateHref(locale, 55) : `${locale === "es" ? "/es" : ""}/montaje-tv-${tier.max}-pulgadas-valencia`,
+  }));
 
   const secondaryServices = [
     {
@@ -549,9 +524,10 @@ export default function TvMountingClient() {
                 </p>
               </div>
 
-              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {tvSizePages.map(renderLinkCard)}
               </div>
+              <p className="mt-4 text-sm leading-6 text-gray-600">{tvMountingExclusions(locale)}</p>
             </div>
           </section>
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { formatTvMountingPrice, getTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions } from "@/lib/tvMountingPricing";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -43,8 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "98 Inch TV Mounting Valencia | Professional Installation | THEVULGO";
 
   const description = isEs
-    ? "Montaje profesional de TV de 98 pulgadas en Valencia. Instalación segura para pantallas gigantes, revisión de pared, soporte compatible, manipulación cuidadosa y ocultación de cables. 129 €."
-    : "Professional 98 inch TV mounting in Valencia. Safe installation for giant screens, wall check, compatible bracket, careful handling and cable concealment. €129.";
+    ? `Montaje profesional de TV de 98 pulgadas en Valencia. Instalación segura para pantallas gigantes, revisión de pared, soporte compatible, manipulación cuidadosa y ocultación de cables. ${formatTvMountingPrice(98, "es")}.`
+    : `Professional 98 inch TV mounting in Valencia. Safe installation for giant screens, wall check, compatible bracket, careful handling and cable concealment. ${formatTvMountingPrice(98, "en")}.`;
 
   const path = "/montaje-tv-98-pulgadas-valencia";
   const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
@@ -113,7 +114,7 @@ export default async function Page({ params }: Props) {
   const isEs = locale === "es";
 
   const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/montaje-tv-98-pulgadas-valencia`;
-  const estimateHref = `/${locale}/estimate?category=tv-mounting`;
+  const estimateHref = tvMountingEstimateHref(locale, 98);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -175,7 +176,7 @@ export default async function Page({ params }: Props) {
     offers: {
       "@type": "Offer",
       priceCurrency: "EUR",
-      price: "129",
+      price: getTvMountingPrice(98),
       availability: "https://schema.org/InStock",
       url: pageUrl,
     },
@@ -193,8 +194,8 @@ export default async function Page({ params }: Props) {
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "El montaje de una TV de 98 pulgadas cuesta 129 €. El precio final depende del tipo de pared, soporte, altura, ocultación de cables, ayuda necesaria, peso de la TV y dificultad del trabajo."
-            : "98 inch TV mounting costs €129. The final price depends on wall type, bracket, height, cable concealment, required help, TV weight and job complexity.",
+            ? `El montaje de una TV de 98 pulgadas cuesta ${formatTvMountingPrice(98, "es")}. El precio final depende del tipo de pared, soporte, altura, ocultación de cables, ayuda necesaria, peso de la TV y dificultad del trabajo.`
+            : `98 inch TV mounting costs ${formatTvMountingPrice(98, "en")}. The final price depends on wall type, bracket, height, cable concealment, required help, TV weight and job complexity.`,
         },
       },
       {
@@ -267,8 +268,8 @@ export default async function Page({ params }: Props) {
     secondaryCta: isEs ? "WhatsApp rápido" : "Quick WhatsApp",
 
     heroNote: isEs
-      ? "129 €. Precio final según pared, soporte, altura, ayuda necesaria, cableado, peso y dificultad."
-      : "€129. Final price depends on wall, bracket, height, required help, cabling, weight and complexity.",
+      ? `${formatTvMountingPrice(98, "es")}. Precio final según pared, soporte, altura, ayuda necesaria, cableado, peso y dificultad.`
+      : `${formatTvMountingPrice(98, "en")}. Final price depends on wall, bracket, height, required help, cabling, weight and complexity.`,
 
     servicesTitle: isEs
       ? "Servicio para montar TV de 98 pulgadas"
@@ -536,7 +537,7 @@ export default async function Page({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta montar una TV de 98 pulgadas en Valencia?",
-          a: "El montaje cuesta 129 €. El precio final depende del tipo de pared, soporte, altura, cableado, peso, acceso y ayuda necesaria.",
+          a: `El montaje estándar cuesta ${formatTvMountingPrice(98, "es")}. ${tvMountingExclusions("es")}`,
         },
         {
           q: "¿Se puede colgar una TV de 98 pulgadas en pladur?",
@@ -570,7 +571,7 @@ export default async function Page({ params }: Props) {
     : [
         {
           q: "How much does it cost to mount a 98 inch TV in Valencia?",
-          a: "Mounting costs €129. Final price depends on wall type, bracket, height, cabling, weight, access and required help.",
+          a: `Standard mounting costs ${formatTvMountingPrice(98, "en")}. ${tvMountingExclusions("en")}`,
         },
         {
           q: "Can a 98 inch TV be mounted on drywall?",

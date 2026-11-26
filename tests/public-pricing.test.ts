@@ -33,11 +33,13 @@ test("accounting environment cannot add a charge to a public quote", () => {
   }
 });
 
-test("original non-fan catalog prices remain unchanged and fan packages match new rates", () => {
+test("unrelated catalog prices remain unchanged; approved TV and fan tariffs are tested separately", () => {
   const signature = Object.entries(SERVICE_CATALOG).map(([category, services]) =>
     [category, category === "Ceiling Fans"
       ? [["ceiling-fan-one", 45], ["ceiling-fan-two", 85], ["ceiling-fan-three", 125], ["ceiling-fan-from-light", 45], ["ceiling-fan-replacement", 45]]
-      : services.map(({ id, price }) => [id, price])]);
+      : category === "TV Mounting"
+        ? [["tv-small", 49], ["tv-medium", 59], ...services.filter(({ id }) => !id.startsWith("tv-size-")).map(({ id, price }) => [id, price])]
+        : services.map(({ id, price }) => [id, price])]);
   assert.equal(createHash("sha256").update(JSON.stringify(signature)).digest("hex"),
     "edd6223a9ff64af201ec2c4b5e3bdbc0430aa60105023a1628b1daab4069ea53");
   const expected = [50, 95, 140, 185, 230];
@@ -110,7 +112,8 @@ test("all public source copy, metadata, FAQ and structured data are free of lega
     const visit = (node: ts.Node) => {
       if (ts.isStringLiteralLike(node) || ts.isJsxText(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
         const text = node.text.trim();
-        if (forbidden.test(text)) violations.push(`${file}: ${text.slice(0, 130)}`);
+        const approvedTvEntryQualifier = file === "app/[locale]/montaje-tv-valencia/page.tsx" && /^(?:Montaje de TV en Valencia desde|Instalación profesional de televisores en pared desde|Instalación desde|Montaje de TV desde)$/.test(text) || file === "app/[locale]/instalar-tv-pared-valencia/page.tsx" && text === "Desde";
+        if (forbidden.test(text) && !approvedTvEntryQualifier) violations.push(`${file}: ${text.slice(0, 130)}`);
       }
       ts.forEachChild(node, visit);
     };

@@ -1,3 +1,5 @@
+import { TV_MOUNTING_IDS, LEGACY_TV_MOUNTING_IDS } from "./tvMountingPricing";
+
 /** Owner-approved, date-bounded manual WhatsApp campaign. No checkout price changes. */
 export const tvBlackFridayPromotion = {
   enabled: true,
@@ -6,7 +8,7 @@ export const tvBlackFridayPromotion = {
   endsAtExclusive: "2026-11-30T23:00:00.000Z",
   timezone: "Europe/Madrid",
   eligibleMarkets: ["valencia"],
-  eligibleServiceIds: ["tv-small", "tv-medium"],
+  eligibleServiceIds: [...TV_MOUNTING_IDS, ...LEGACY_TV_MOUNTING_IDS],
   giftServiceId: "raceway",
   giftMaxMetersPerTv: 1,
   promotionalPrice: 0,

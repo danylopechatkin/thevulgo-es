@@ -1,3 +1,4 @@
+import { TV_MOUNTING_PRICES, formatTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions, tvMountingPriceSummary } from "@/lib/tvMountingPricing";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -114,7 +115,7 @@ export default async function InstalacionSoporteTvValenciaPage({
   const isEs = locale === "es";
   const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalacion-soporte-tv-valencia`;
 
-  const estimateHref = `/${locale}/estimate?category=tv`;
+  const estimateHref = tvMountingEstimateHref(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -169,29 +170,18 @@ export default async function InstalacionSoporteTvValenciaPage({
     },
   ];
 
-  const prices = isEs
-    ? [
-        ["Instalación de soporte fijo", "49 €"],
-        ["Instalación de soporte inclinable", "59 €"],
-        ["Instalación de soporte articulado", "79 €"],
-        ["Instalación de soporte para TV grande", "69 €"],
-        ["Soundbar / cableado limpio", "según trabajo"],
-        ["Visita / revisión", "49 €"],
-      ]
-    : [
-        ["Fixed bracket installation", "€49"],
-        ["Tilting bracket installation", "€59"],
-        ["Full motion bracket installation", "€79"],
-        ["Large TV bracket installation", "€69"],
-        ["Soundbar / clean cabling", "by job"],
-        ["Visit / inspection", "€49"],
-      ];
+  const prices = [
+    ...TV_MOUNTING_PRICES.map(tier => [isEs ? tier.labelEs : tier.label, formatTvMountingPrice(tier.max, locale)]),
+    [isEs ? "Más de 98″" : "Over 98″", formatTvMountingPrice(99, locale)],
+    [isEs ? "Solo instalación del soporte (sin TV)" : "Bracket installation only (no TV)", isEs ? "35 €" : "€35"],
+    [isEs ? "Soporte, material y trabajos especiales" : "Bracket supply, materials and specialist work", isEs ? "Según presupuesto" : "By quote"],
+  ];
 
   const faqs = isEs
     ? [
         {
           q: "¿Cuánto cuesta instalar un soporte TV en Valencia?",
-          a: "Depende del tipo de soporte, tamaño y peso de la TV, tipo de pared, altura, dificultad y cableado. Un soporte fijo cuesta 49 €, y un soporte articulado por 79 €.",
+          a: `Montaje de TV con soporte compatible: ${tvMountingPriceSummary("es")}. Solo instalación del soporte sin TV: 35 €. ${tvMountingExclusions("es")}`,
         },
         {
           q: "¿Qué tipo de soporte TV podéis instalar?",
@@ -217,7 +207,7 @@ export default async function InstalacionSoporteTvValenciaPage({
     : [
         {
           q: "How much does TV bracket installation in Valencia cost?",
-          a: "It depends on bracket type, TV size and weight, wall type, height, difficulty and cabling. A fixed bracket costs €49, and a full motion bracket for €79.",
+          a: `TV mounting with a compatible bracket: ${tvMountingPriceSummary("en")}. Bracket-only installation without the TV: €35. ${tvMountingExclusions("en")}`,
         },
         {
           q: "What type of TV bracket can you install?",

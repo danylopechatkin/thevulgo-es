@@ -4,6 +4,7 @@ import TvMiniCalculator, {
   TvHeroWhatsAppCta,
 } from "@/app/components/TvMiniCalculator";
 import { getCatalogServices } from "@/lib/serviceCatalog";
+import { TV_MOUNTING_IDS, TV_MOUNTING_PRICES, formatTvMountingPrice, tvMountingExclusions, tvMountingOffers, tvMountingPriceSummary } from "@/lib/tvMountingPricing";
 import { TvBlackFridayReminder } from "@/app/components/TvBlackFridayPromo";
 import { tvBlackFridayPromotion } from "@/lib/tvBlackFridayPromotion";
 import {
@@ -38,8 +39,8 @@ export async function generateMetadata({
       ? "Montaje de TV en Valencia | Instalación en pared | THEVULGO"
       : "TV Mounting in Valencia | Wall Installation | THEVULGO",
     description: isEs
-      ? "Montaje de TV en pared en Valencia con soporte fijo, inclinable o articulado, nivelación, TVs grandes, Samsung Frame y cableado limpio. Presupuesto por WhatsApp."
-      : "Professional TV mounting in Valencia with fixed, tilting or full-motion brackets, accurate levelling, large TVs, Samsung Frame and clean cable management. Quote by WhatsApp.",
+      ? `Montaje de TV en Valencia desde ${formatTvMountingPrice(55, "es")} (hasta 55″). Tarifas por diagonal hasta 98″. Soportes, nivelación y presupuesto por WhatsApp.`
+      : `TV mounting in Valencia from ${formatTvMountingPrice(55, "en")} (up to 55″). Prices by screen size up to 98″. Brackets, levelling and WhatsApp quotes.`,
     alternates: {
       canonical: pageUrl,
       languages: {
@@ -49,8 +50,8 @@ export async function generateMetadata({
     },
     openGraph: {
       title: isEs
-        ? "Montaje de TV en Valencia | 49 €"
-        : "TV Mounting in Valencia | €49",
+        ? `Montaje de TV en Valencia | ${formatTvMountingPrice(55, locale)} hasta 55″`
+        : `TV Mounting in Valencia | ${formatTvMountingPrice(55, locale)} up to 55″`,
       description: isEs
         ? "Instalación limpia, rápida y profesional de televisores en Valencia y alrededores."
         : "Clean, fast and professional TV mounting in Valencia and nearby areas.",
@@ -82,7 +83,7 @@ const serviceAreas = [
 const faqsEs = [
   {
     q: "¿Cuánto cuesta montar una TV en Valencia?",
-    a: "El montaje estándar de TV en Valencia cuesta 49 €. El precio final depende del tamaño del televisor, tipo de soporte, tipo de pared, ocultación de cables y si hace falta instalar una toma eléctrica.",
+    a: `Tarifas de montaje estándar en Valencia: ${tvMountingPriceSummary("es")}. ${tvMountingExclusions("es")}`,
   },
   {
     q: "¿Pueden instalar televisores grandes de 65, 75, 85 o 98 pulgadas?",
@@ -98,7 +99,7 @@ const faqsEs = [
   },
   {
     q: "¿Instalan Samsung Frame TV?",
-    a: "Sí. Podemos instalar Samsung Frame TV, incluyendo soporte, nivelación precisa y planificación del cable One Connect según el espacio disponible.",
+    a: "Sí. Podemos instalar Samsung Frame TV, con soporte compatible del cliente, nivelación precisa y planificación del cable One Connect según el espacio disponible.",
   },
   {
     q: "¿Pueden traer el soporte de TV?",
@@ -117,7 +118,7 @@ const faqsEs = [
 const faqsEn = [
   {
     q: "How much does TV mounting cost in Valencia?",
-    a: "Standard TV mounting in Valencia costs €49. The final price depends on the TV size, bracket, wall type, cable concealment and whether a new electrical outlet is needed.",
+    a: `Standard TV mounting rates in Valencia: ${tvMountingPriceSummary("en")}. ${tvMountingExclusions("en")}`,
   },
   {
     q: "Can you install large 65, 75, 85 or 98 inch TVs?",
@@ -133,7 +134,7 @@ const faqsEn = [
   },
   {
     q: "Do you install Samsung Frame TVs?",
-    a: "Yes. We install Samsung Frame TVs, including the bracket, accurate levelling and One Connect cable planning for the available space.",
+    a: "Yes. We install Samsung Frame TVs, with a compatible customer-supplied bracket, accurate levelling and One Connect cable planning for the available space.",
   },
   {
     q: "Can you supply the TV bracket?",
@@ -156,13 +157,14 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
   const pageUrl = `${siteUrl}${isEs ? "/es" : ""}/montaje-tv-valencia`;
   const faqs = isEs ? faqsEs : faqsEn;
   const catalog = getCatalogServices("TV Mounting");
-  const baseIds = new Set(["tv-small", "tv-medium"]);
+  const baseIds = new Set(TV_MOUNTING_IDS);
   const extraIds = new Set(["soundbar", "shelf", "raceway"]);
   const calculatorOptions = catalog
     .filter((item) => baseIds.has(item.id) || extraIds.has(item.id))
     .map((item) => ({
       id: item.id,
       label: isEs ? item.labelEs : item.label,
+      sizeLabel: TV_MOUNTING_PRICES.find(tier => tier.id === item.id)?.[isEs ? "sizeLabelEs" : "sizeLabel"],
       price: item.price,
       kind: baseIds.has(item.id) ? ("base" as const) : ("extra" as const),
     }));
@@ -188,12 +190,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
       areaServed: "Valencia",
     },
     areaServed: serviceAreas,
-    offers: {
-      "@type": "Offer",
-      price: "49",
-      priceCurrency: "EUR",
-      availability: "https://schema.org/InStock",
-    },
+    offers: tvMountingOffers(locale),
   };
 
   const localBusinessSchema = {
@@ -286,22 +283,11 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
-              {isEs ? (
-                <>
-                  Instalación profesional de televisores en pared por{" "}
-                  <strong className="text-neutral-950">49 €</strong>. Soportes
-                  fijos, inclinables o articulados, gestión de cables, montaje
-                  de TVs grandes y acabado limpio sin sorpresas.
-                </>
-              ) : (
-                <>
-                  Professional wall-mounted TV installation for{" "}
-                  <strong className="text-neutral-950">€49</strong>. Fixed,
-                  tilting or full-motion brackets, cable management, large TVs
-                  and a clean finish.
-                </>
-              )}
+              {isEs ? "Instalación profesional de televisores en pared desde " : "Professional wall-mounted TV installation from "}
+              <strong className="text-neutral-950">{formatTvMountingPrice(55, locale)}</strong>.
+              {" "}{isEs ? "Precios según el tamaño de tu televisor. Montaje de TVs de hasta 98 pulgadas." : "Prices by screen size. Professional mounting for TVs up to 98 inches."}
             </p>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-neutral-600">{tvMountingExclusions(locale)}</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <TvHeroWhatsAppCta locale={locale} href={whatsappUrl} />
@@ -317,7 +303,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             <div className="mt-8 grid gap-3 text-sm font-semibold text-neutral-700 sm:grid-cols-2">
               {(isEs
                 ? [
-                    "Instalación por 49 €",
+                    `Instalación desde ${formatTvMountingPrice(55, "es")}`,
                     "Soportes fijos o articulados",
                     "Ocultación de cables",
                     "TVs grandes y Samsung Frame",
@@ -325,7 +311,7 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
                     "Valencia y alrededores",
                   ]
                 : [
-                    "Installation for €49",
+                    `Installation from ${formatTvMountingPrice(55, "en")}`,
                     "Fixed or full-motion brackets",
                     "Cable concealment",
                     "Large TVs and Samsung Frame",
@@ -625,14 +611,23 @@ export default async function TvMountingValenciaPage({ params }: PageProps) {
             {isEs ? "Precio claro" : "Clear price"}
           </p>
           <h2 className="mt-3 text-4xl font-black">
-            {isEs ? "Montaje de TV por 49 €" : "TV mounting for €49"}
+            {isEs ? `Montaje de TV desde ${formatTvMountingPrice(55, locale)}` : `TV mounting from ${formatTvMountingPrice(55, locale)}`}
           </h2>
           <p className="mt-6 text-lg font-medium leading-8 text-neutral-900">
             {isEs
-              ? "El precio estándar es de 49 €. El coste final puede variar si necesitas soporte incluido, instalación de TV grande, ocultación de cables, trabajo eléctrico, canaleta o montaje especial."
-              : "The standard price is €49. The final cost may vary if you need a bracket supplied, a large TV installation, cable concealment, electrical work, trunking or a specialist installation."}
+              ? "Tarifas claras según la diagonal. Selecciona tu tamaño para conocer el precio del montaje estándar."
+              : "Clear rates by screen size. Choose your screen size for the standard installation price."}
           </p>
 
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {TV_MOUNTING_PRICES.map(tier => (
+              <div key={tier.id} className="rounded-2xl bg-white p-3 text-center shadow-sm">
+                <p className="text-sm font-bold">{isEs ? tier.sizeLabelEs : tier.sizeLabel}</p>
+                <p className="mt-1 text-xl font-black">{formatTvMountingPrice(tier.max, locale)}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-sm leading-6">{tvMountingExclusions(locale)}</p>
           {showBlackFriday && <TvBlackFridayReminder locale={locale} placement="price" />}
 
           <div className="mt-8 rounded-3xl border border-yellow-600/30 bg-white p-6 text-left shadow-xl">

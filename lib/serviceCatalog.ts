@@ -14,6 +14,7 @@ export type CatalogService = {
 
 import { RENOVATION_CATEGORIES } from "./renovationCatalog";
 import { getCeilingFanPrice } from "./ceilingFanPricing";
+import { TV_MOUNTING_PRICES } from "./tvMountingPricing";
 import {
   AC_DEEP_CLEANING_SERVICE_ID,
   acDeepCleaningPromotion,
@@ -343,18 +344,7 @@ export const SERVICE_CATALOG: Record<string, CatalogService[]> = {
     },
   ],
   "TV Mounting": [
-    {
-      id: "tv-small",
-      label: "TV mounting up to 65”",
-      labelEs: "Instalación de TV hasta 65”",
-      price: 49,
-    },
-    {
-      id: "tv-medium",
-      label: "TV mounting from 66”",
-      labelEs: "Instalación de TV de 66” o más",
-      price: 59,
-    },
+    ...TV_MOUNTING_PRICES.map(({ id, label, labelEs, price }) => ({ id, label, labelEs, price })),
     {
       id: "soundbar",
       label: "Soundbar mounting",

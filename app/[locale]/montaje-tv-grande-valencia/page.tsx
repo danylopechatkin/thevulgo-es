@@ -1,3 +1,4 @@
+import { TV_MOUNTING_PRICES, formatTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions } from "@/lib/tvMountingPricing";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -134,11 +135,7 @@ export default async function LargeTvMountingValenciaPage({
       areaServed: "Valencia",
     },
     areaServed: serviceAreas,
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "EUR",
-      availability: "https://schema.org/InStock",
-    },
+    offers: TV_MOUNTING_PRICES.slice(1).map(tier => ({ "@type": "Offer", name: isEs ? tier.labelEs : tier.label, price: tier.price, priceCurrency: "EUR" })),
   };
 
   const localBusinessSchema = {
@@ -388,24 +385,7 @@ export default async function LargeTvMountingValenciaPage({
         </h2>
 
         <div className="grid gap-8 md:grid-cols-4">
-          {[
-            {
-              title: "65 pulgadas",
-              text: "Ideal para salones medianos. Requiere buena nivelación y soporte adecuado.",
-            },
-            {
-              title: "75 pulgadas",
-              text: "Pantalla grande para salón. Revisamos peso, pared y altura antes de instalar.",
-            },
-            {
-              title: "85 pulgadas",
-              text: "Instalación pesada. Recomendamos soporte reforzado y planificación cuidadosa.",
-            },
-            {
-              title: "98 pulgadas",
-              text: "Montaje especial. Necesita revisión previa, espacio suficiente y fijación segura.",
-            },
-          ].map((item) => (
+          {TV_MOUNTING_PRICES.slice(1).map(tier => ({ title: isEs ? tier.labelEs : tier.label, text: isEs ? "Confirmamos las condiciones de montaje y acceso antes de reservar." : "Mounting and access conditions are confirmed before booking.", price: formatTvMountingPrice(tier.max, locale), href: tvMountingEstimateHref(locale, tier.max) })).map((item) => (
             <div
               key={item.title}
               className="rounded-3xl border border-yellow-300 bg-white p-7 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
@@ -415,9 +395,12 @@ export default async function LargeTvMountingValenciaPage({
               </div>
               <h3 className="text-2xl font-black">{item.title}</h3>
               <p className="mt-4 leading-7 text-neutral-700">{item.text}</p>
+              <p className="mt-3 text-2xl font-black">{item.price}</p>
+              <Link href={item.href} className="mt-3 inline-flex text-sm font-bold underline">{isEs ? "Solicitar montaje" : "Request installation"}</Link>
             </div>
           ))}
         </div>
+        <p className="mt-5 text-sm leading-6 text-neutral-600">{tvMountingExclusions(locale)}</p>
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-10 md:px-8">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { formatTvMountingPrice, getTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions } from "@/lib/tvMountingPricing";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -42,8 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "85 Inch TV Mounting Valencia | Professional Installation | THEVULGO";
 
   const description = isEs
-    ? "Montaje profesional de TV de 85 pulgadas en Valencia. Instalación segura, soporte compatible, revisión de pared, nivelación precisa y ocultación de cables. 99 €."
-    : "Professional 85 inch TV mounting in Valencia. Safe installation, compatible bracket, wall check, precise levelling and cable concealment. €99.";
+    ? `Montaje profesional de TV de 85 pulgadas en Valencia. Instalación segura, soporte compatible, revisión de pared, nivelación precisa y ocultación de cables. ${formatTvMountingPrice(85, "es")}.`
+    : `Professional 85 inch TV mounting in Valencia. Safe installation, compatible bracket, wall check, precise levelling and cable concealment. ${formatTvMountingPrice(85, "en")}.`;
 
   const path = "/montaje-tv-85-pulgadas-valencia";
   const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
@@ -111,7 +112,7 @@ export default async function Page({ params }: Props) {
   const isEs = locale === "es";
 
   const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/montaje-tv-85-pulgadas-valencia`;
-  const estimateHref = `/${locale}/estimate?category=tv-mounting`;
+  const estimateHref = tvMountingEstimateHref(locale, 85);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -173,7 +174,7 @@ export default async function Page({ params }: Props) {
     offers: {
       "@type": "Offer",
       priceCurrency: "EUR",
-      price: "99",
+      price: getTvMountingPrice(85),
       availability: "https://schema.org/InStock",
       url: pageUrl,
     },
@@ -191,8 +192,8 @@ export default async function Page({ params }: Props) {
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "El montaje de una TV de 85 pulgadas cuesta 99 €. El precio final depende del tipo de pared, soporte, altura, ocultación de cables, ayuda necesaria y dificultad del trabajo."
-            : "85 inch TV mounting costs €99. The final price depends on wall type, bracket, height, cable concealment, required help and job complexity.",
+            ? `El montaje de una TV de 85 pulgadas cuesta ${formatTvMountingPrice(85, "es")}. El precio final depende del tipo de pared, soporte, altura, ocultación de cables, ayuda necesaria y dificultad del trabajo.`
+            : `85 inch TV mounting costs ${formatTvMountingPrice(85, "en")}. The final price depends on wall type, bracket, height, cable concealment, required help and job complexity.`,
         },
       },
       {
@@ -265,8 +266,8 @@ export default async function Page({ params }: Props) {
     secondaryCta: isEs ? "WhatsApp rápido" : "Quick WhatsApp",
 
     heroNote: isEs
-      ? "99 €. Precio final según pared, soporte, altura, ayuda necesaria, cableado y dificultad."
-      : "€99. Final price depends on wall, bracket, height, required help, cabling and complexity.",
+      ? `${formatTvMountingPrice(85, "es")}. Precio final según pared, soporte, altura, ayuda necesaria, cableado y dificultad.`
+      : `${formatTvMountingPrice(85, "en")}. Final price depends on wall, bracket, height, required help, cabling and complexity.`,
 
     servicesTitle: isEs
       ? "Servicio para montar TV de 85 pulgadas"
@@ -534,7 +535,7 @@ export default async function Page({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta montar una TV de 85 pulgadas en Valencia?",
-          a: "El montaje cuesta 99 €. El precio final depende del tipo de pared, soporte, altura, cableado, ayuda necesaria y dificultad.",
+          a: `El montaje estándar cuesta ${formatTvMountingPrice(85, "es")}. ${tvMountingExclusions("es")}`,
         },
         {
           q: "¿Se puede colgar una TV de 85 pulgadas en pladur?",
@@ -568,7 +569,7 @@ export default async function Page({ params }: Props) {
     : [
         {
           q: "How much does it cost to mount an 85 inch TV in Valencia?",
-          a: "Mounting costs €99. Final price depends on wall type, bracket, height, cabling, required help and complexity.",
+          a: `Standard mounting costs ${formatTvMountingPrice(85, "en")}. ${tvMountingExclusions("en")}`,
         },
         {
           q: "Can an 85 inch TV be mounted on drywall?",

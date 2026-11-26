@@ -1,5 +1,8 @@
 "use client";
 
+import { formatSamsungFramePrice, TV_MOUNTING_PRICES, formatTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions, tvMountingPriceSummary } from "@/lib/tvMountingPricing";
+
+
 import React from "react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
@@ -41,7 +44,7 @@ export default function InstaladorTvClient() {
 
   const phone = "34610076942";
 
-  const estimateHref = `/${locale}/estimate?category=tv-mounting`;
+  const estimateHref = tvMountingEstimateHref(locale);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -171,7 +174,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Instalación de TV en pared con soporte compatible, medición, nivelación y fijación segura."
         : "TV wall installation with compatible bracket, measuring, levelling and secure fixing.",
-      price: isEs ? "49 €" : "€49",
+      price: isEs ? `${formatTvMountingPrice(55, locale)} · hasta 55″` : `${formatTvMountingPrice(55, locale)} · up to 55″`,
       href: `/${locale}/montaje-tv-valencia`,
       icon: <Tv className="h-5 w-5" />,
     },
@@ -180,7 +183,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Servicio para colgar TV en salón, dormitorio, oficina, Airbnb, bar o local comercial."
         : "Service to hang a TV in a living room, bedroom, office, Airbnb, bar or commercial unit.",
-      price: isEs ? "49 €" : "€49",
+      price: isEs ? `${formatTvMountingPrice(55, locale)} · hasta 55″` : `${formatTvMountingPrice(55, locale)} · up to 55″`,
       href: `/${locale}/colgar-tv-valencia`,
       icon: <Drill className="h-5 w-5" />,
     },
@@ -189,7 +192,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Instalación completa para dejar la pantalla recta, estable y con una posición cómoda."
         : "Complete installation to leave the screen straight, stable and comfortably positioned.",
-      price: isEs ? "49 €" : "€49",
+      price: isEs ? `${formatTvMountingPrice(55, locale)} · hasta 55″` : `${formatTvMountingPrice(55, locale)} · up to 55″`,
       href: `/${locale}/instalar-tv-pared-valencia`,
       icon: <Monitor className="h-5 w-5" />,
     },
@@ -198,7 +201,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Montaje cuidado para Samsung Frame con alineación precisa y acabado decorativo."
         : "Careful Samsung Frame mounting with precise alignment and decorative finish.",
-      price: isEs ? "69 €" : "€69",
+      price: `${formatSamsungFramePrice(55, locale)} · 43″/55″`,
       href: `/${locale}/montaje-tv-samsung-frame-valencia`,
       icon: <Paintbrush className="h-5 w-5" />,
     },
@@ -207,7 +210,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Instalación de televisores grandes con revisión de pared, soporte y posición."
         : "Large TV installation with wall, bracket and position check.",
-      price: isEs ? "79 €" : "€79",
+      price: formatTvMountingPrice(75, locale),
       href: `/${locale}/montaje-tv-75-pulgadas-valencia`,
       icon: <Ruler className="h-5 w-5" />,
     },
@@ -216,7 +219,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Montaje de pantallas grandes con más cuidado, ayuda y fijación adecuada."
         : "Large screen mounting with extra care, support and suitable fixing.",
-      price: isEs ? "99 €" : "€99",
+      price: formatTvMountingPrice(85, locale),
       href: `/${locale}/montaje-tv-85-pulgadas-valencia`,
       icon: <Monitor className="h-5 w-5" />,
     },
@@ -225,7 +228,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Canaleta, rutas limpias y soluciones para mejorar el aspecto de la instalación."
         : "Raceways, clean routing and solutions to improve the look of the setup.",
-      price: isEs ? "29 €" : "€29",
+      price: isEs ? "25 € · canaleta" : "€25 · raceway",
       href: `/${locale}/ocultar-cables-valencia`,
       icon: <Cable className="h-5 w-5" />,
     },
@@ -243,7 +246,7 @@ export default function InstaladorTvClient() {
       desc: isEs
         ? "Montaje de soporte fijo, inclinable o articulado con fijación adecuada."
         : "Fixed, tilting or full-motion TV bracket installation with suitable fixings.",
-      price: isEs ? "49 €" : "€49",
+      price: isEs ? "35 € · solo soporte" : "€35 · bracket only",
       href: `/${locale}/instalacion-soporte-tv-valencia`,
       icon: <Brackets className="h-5 w-5" />,
     },
@@ -360,34 +363,13 @@ export default function InstaladorTvClient() {
   ];
 
   const tvSizes = [
-    {
-      title: isEs ? "TV de 43 a 55 pulgadas" : "43 to 55 inch TV",
-      text: isEs
-        ? "Tamaño habitual para dormitorios, salones pequeños y apartamentos. Instalación rápida si la pared y soporte son adecuados."
-        : "Common size for bedrooms, small living rooms and apartments. Quick installation if wall and bracket are suitable.",
-      price: isEs ? "49 €" : "€49",
-    },
-    {
-      title: isEs ? "TV de 65 pulgadas" : "65 inch TV",
-      text: isEs
-        ? "Pantalla popular para salones. Requiere medir bien la altura y distancia de visión."
-        : "Popular living room screen. Requires careful height and viewing distance measurement.",
-      price: isEs ? "59 €" : "€59",
-    },
-    {
-      title: isEs ? "TV de 75 pulgadas" : "75 inch TV",
-      text: isEs
-        ? "Necesita más cuidado en manipulación, soporte compatible y fijación estable."
-        : "Needs more careful handling, compatible bracket and stable fixing.",
-      price: isEs ? "79 €" : "€79",
-    },
-    {
-      title: isEs ? "TV de 85 pulgadas" : "85 inch TV",
-      text: isEs
-        ? "Instalación avanzada para pantallas grandes. Es importante revisar pared, peso y soporte antes del montaje."
-        : "Advanced installation for large screens. Wall, weight and bracket must be checked before mounting.",
-      price: isEs ? "99 €" : "€99",
-    },
+    ...TV_MOUNTING_PRICES.map(tier => ({
+      title: isEs ? tier.labelEs : tier.label,
+      text: isEs ? "Montaje estándar. Confirmamos pared, soporte y acceso antes de reservar." : "Standard installation. Wall, bracket and access are confirmed before booking.",
+      price: formatTvMountingPrice(tier.max, locale),
+      href: tvMountingEstimateHref(locale, tier.max),
+    })),
+    { title: isEs ? "Más de 98″" : "Over 98″", text: isEs ? "Valoración individual del proyecto." : "Individual project assessment.", price: formatTvMountingPrice(99, locale), href: whatsappHref },
   ];
 
   const useCases = [
@@ -965,7 +947,7 @@ export default function InstaladorTvClient() {
                 </p>
               </div>
 
-              <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {tvSizes.map((size) => (
                   <div
                     key={size.title}
@@ -982,6 +964,7 @@ export default function InstaladorTvClient() {
                     <div className="mt-4 text-sm font-black text-yellow-500">
                       {size.price}
                     </div>
+                    <Link href={size.href} className="mt-3 inline-flex text-sm font-bold underline">{isEs ? "Solicitar montaje" : "Request installation"}</Link>
                   </div>
                 ))}
               </div>
@@ -1450,7 +1433,7 @@ export default function InstaladorTvClient() {
                     ? [
                         {
                           q: "¿Cuánto cuesta un instalador de TV en Valencia?",
-                          a: "El montaje básico de TV en pared cuesta 49 €. El precio final depende del tamaño de la TV, tipo de pared, soporte, altura, ocultación de cables y dificultad del trabajo.",
+                          a: `Tarifas de montaje estándar: ${tvMountingPriceSummary("es")}. ${tvMountingExclusions("es")}`,
                         },
                         {
                           q: "¿Puedo montar una TV en pared de pladur?",
@@ -1492,7 +1475,7 @@ export default function InstaladorTvClient() {
                     : [
                         {
                           q: "How much does a TV installer cost in Valencia?",
-                          a: "Basic TV wall mounting costs €49. The final price depends on TV size, wall type, bracket, height, cable concealment and job complexity.",
+                          a: `Standard mounting rates: ${tvMountingPriceSummary("en")}. ${tvMountingExclusions("en")}`,
                         },
                         {
                           q: "Can a TV be mounted on drywall?",

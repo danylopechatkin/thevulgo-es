@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { samsungFramePriceSummary, samsungFrameOffers, formatSamsungFramePrice, tvMountingExclusions } from "@/lib/tvMountingPricing";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -43,8 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "Install Samsung Frame Valencia | Professional Mounting | THEVULGO";
 
   const description = isEs
-    ? "Instalar Samsung Frame en Valencia. Montaje profesional en pared, alineación precisa, One Connect Box, cable invisible, acabado tipo cuadro y ocultación de cables. 69 €."
-    : "Install Samsung Frame in Valencia. Professional wall mounting, precise alignment, One Connect Box, invisible cable, picture-frame finish and cable concealment. €69.";
+    ? `Instalar Samsung Frame en Valencia. Montaje profesional en pared, alineación precisa, One Connect Box, cable invisible, acabado tipo cuadro y ocultación de cables. ${formatSamsungFramePrice(55, "es")} (43″/55″).`
+    : `Install Samsung Frame in Valencia. Professional wall mounting, precise alignment, One Connect Box, invisible cable, picture-frame finish and cable concealment. ${formatSamsungFramePrice(55, "en")} (43″/55″).`;
 
   const path = "/instalar-samsung-frame-valencia";
   const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
@@ -112,7 +113,6 @@ export default async function Page({ params }: Props) {
   const isEs = locale === "es";
 
   const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/instalar-samsung-frame-valencia`;
-  const estimateHref = `/${locale}/estimate?category=tv-mounting`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -121,6 +121,7 @@ export default async function Page({ params }: Props) {
   );
 
   const whatsappHref = `https://wa.me/${whatsappPhone}?text=${whatsappText}`;
+  const estimateHref = whatsappHref;
 
   const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -173,13 +174,7 @@ export default async function Page({ params }: Props) {
     description: isEs
       ? "Servicio profesional para instalar Samsung Frame en Valencia con montaje en pared, alineación precisa, One Connect Box, cable invisible y acabado limpio."
       : "Professional service to install Samsung Frame in Valencia with wall mounting, precise alignment, One Connect Box, invisible cable and clean finish.",
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "EUR",
-      price: "69",
-      availability: "https://schema.org/InStock",
-      url: pageUrl,
-    },
+    offers: samsungFrameOffers(locale),
   };
 
   const faqSchema = {
@@ -194,8 +189,8 @@ export default async function Page({ params }: Props) {
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "Instalar una Samsung Frame en Valencia cuesta 69 €. El precio final depende del tamaño, tipo de pared, soporte, ubicación del One Connect Box y ocultación de cables."
-            : "Installing a Samsung Frame in Valencia costs €69. Final price depends on size, wall type, bracket, One Connect Box location and cable concealment.",
+            ? `Instalar una Samsung Frame en Valencia cuesta ${formatSamsungFramePrice(55, "es")} (43″/55″). El precio final depende del tamaño, tipo de pared, soporte, ubicación del One Connect Box y ocultación de cables.`
+            : `Installing a Samsung Frame in Valencia costs ${formatSamsungFramePrice(55, "en")} (43″/55″). Final price depends on size, wall type, bracket, One Connect Box location and cable concealment.`,
         },
       },
       {
@@ -265,13 +260,13 @@ export default async function Page({ params }: Props) {
       ? "Instalación profesional de Samsung Frame en pared con acabado tipo cuadro. Alineación precisa, soporte bien nivelado, planificación del One Connect Box, cable invisible y resultado limpio."
       : "Professional Samsung Frame wall installation with picture-frame finish. Precise alignment, level bracket, One Connect Box planning, invisible cable and clean result.",
 
-    primaryCta: isEs ? "Pedir presupuesto" : "Get estimate",
+    primaryCta: isEs ? "Pedir presupuesto por WhatsApp" : "Get quote via WhatsApp",
 
     secondaryCta: isEs ? "WhatsApp rápido" : "Quick WhatsApp",
 
     heroNote: isEs
-      ? "69 €. Precio final según tamaño, pared, soporte, cableado y dificultad."
-      : "€69. Final price depends on size, wall, bracket, cabling and complexity.",
+      ? `${formatSamsungFramePrice(55, "es")} (43″/55″). Precio final según tamaño, pared, soporte, cableado y dificultad.`
+      : `${formatSamsungFramePrice(55, "en")} (43″/55″). Final price depends on size, wall, bracket, cabling and complexity.`,
 
     servicesTitle: isEs
       ? "Servicio para instalar Samsung Frame"
@@ -516,7 +511,7 @@ export default async function Page({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta instalar una Samsung Frame en Valencia?",
-          a: "Instalar una Samsung Frame cuesta 69 €. El precio final depende del tamaño, pared, soporte, One Connect Box, cableado y dificultad.",
+          a: `Instalar una Samsung Frame cuesta ${formatSamsungFramePrice(55, "es")} (43″/55″). El precio final depende del tamaño, pared, soporte, One Connect Box, cableado y dificultad.`,
         },
         {
           q: "¿Samsung Frame necesita instalación especial?",
@@ -550,7 +545,7 @@ export default async function Page({ params }: Props) {
     : [
         {
           q: "How much does it cost to install a Samsung Frame in Valencia?",
-          a: "Installing a Samsung Frame costs €69. Final price depends on size, wall, bracket, One Connect Box, cabling and complexity.",
+          a: `Installing a Samsung Frame costs ${formatSamsungFramePrice(55, "en")} (43″/55″). Final price depends on size, wall, bracket, One Connect Box, cabling and complexity.`,
         },
         {
           q: "Does Samsung Frame need special installation?",
@@ -645,7 +640,7 @@ export default async function Page({ params }: Props) {
               </div>
 
               <p className="mt-5 text-sm font-medium text-gray-500">
-                {copy.heroNote}
+                {samsungFramePriceSummary(locale)}{" "}{tvMountingExclusions(locale)}
               </p>
             </div>
 

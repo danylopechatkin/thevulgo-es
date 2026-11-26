@@ -26,6 +26,7 @@ import {
   Wind,
 } from "lucide-react";
 import { localizedPath } from "@/lib/technicalRoutes";
+import { formatTvMountingPrice } from "@/lib/tvMountingPricing";
 
 export default function ServicesClient() {
   const router = useRouter();
@@ -154,7 +155,7 @@ export default function ServicesClient() {
       <div className="flex items-start justify-between gap-3"><div className="flex h-11 w-11 items-center justify-center rounded-xl bg-yellow-400 text-black shadow-md">{service.icon}</div><span className={`rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${technical ? "bg-neutral-800 text-yellow-400" : "bg-red-500 text-white"}`}>{t(`items.${service.key}.badge`)}</span></div>
       <h2 className="mt-4 text-xl font-extrabold">{t(`items.${service.key}.title`)}</h2>
       <p className={`mt-2 line-clamp-3 text-sm leading-relaxed ${technical ? "text-neutral-300" : "text-gray-700"}`} dangerouslySetInnerHTML={{ __html: t.raw(`items.${service.key}.desc`) as string }} />
-      <div className="mt-4 text-sm font-extrabold text-yellow-500">{t(`items.${service.key}.price`)}</div>
+      <div className="mt-4 text-sm font-extrabold text-yellow-500">{service.key === "tvMounting" ? `${formatTvMountingPrice(55, locale)} · ${isEs ? "hasta 55″" : "up to 55″"}` : t(`items.${service.key}.price`)}</div>
       <div className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-extrabold">{t("viewService")}<span className="text-yellow-400 transition-transform duration-200 group-hover:translate-x-1"><ArrowRight className="h-4 w-4" /></span></div>
     </button>
   );
