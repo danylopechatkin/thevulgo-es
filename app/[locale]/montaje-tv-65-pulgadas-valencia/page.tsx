@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { formatTvMountingPrice, getTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions } from "@/lib/tvMountingPricing";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -41,8 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "65 Inch TV Mounting Valencia | Professional Installation | THEVULGO";
 
   const description = isEs
-    ? "Montaje profesional de TV de 65 pulgadas en Valencia. Instalación segura en pared, soporte fijo o articulado, revisión de pared, nivelación precisa y ocultación de cables. 59 €."
-    : "Professional 65 inch TV mounting in Valencia. Safe wall installation, fixed or full-motion bracket, wall check, precise levelling and cable concealment. €59.";
+    ? `Montaje profesional de TV de 65 pulgadas en Valencia. Instalación segura en pared, soporte fijo o articulado, revisión de pared, nivelación precisa y ocultación de cables. ${formatTvMountingPrice(65, "es")}.`
+    : `Professional 65 inch TV mounting in Valencia. Safe wall installation, fixed or full-motion bracket, wall check, precise levelling and cable concealment. ${formatTvMountingPrice(65, "en")}.`;
 
   const path = "/montaje-tv-65-pulgadas-valencia";
   const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
@@ -110,7 +111,7 @@ export default async function Page({ params }: Props) {
   const isEs = locale === "es";
 
   const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/montaje-tv-65-pulgadas-valencia`;
-  const estimateHref = `/${locale}/estimate?category=tv-mounting`;
+  const estimateHref = tvMountingEstimateHref(locale, 65);
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -172,7 +173,7 @@ export default async function Page({ params }: Props) {
     offers: {
       "@type": "Offer",
       priceCurrency: "EUR",
-      price: "59",
+      price: getTvMountingPrice(65),
       availability: "https://schema.org/InStock",
       url: pageUrl,
     },
@@ -190,8 +191,8 @@ export default async function Page({ params }: Props) {
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "El montaje de una TV de 65 pulgadas cuesta 59 €. El precio final depende del tipo de pared, soporte, altura, ocultación de cables y dificultad del trabajo."
-            : "65 inch TV mounting costs €59. The final price depends on wall type, bracket, height, cable concealment and job complexity.",
+            ? `El montaje de una TV de 65 pulgadas cuesta ${formatTvMountingPrice(65, "es")}. El precio final depende del tipo de pared, soporte, altura, ocultación de cables y dificultad del trabajo.`
+            : `65 inch TV mounting costs ${formatTvMountingPrice(65, "en")}. The final price depends on wall type, bracket, height, cable concealment and job complexity.`,
         },
       },
       {
@@ -264,8 +265,8 @@ export default async function Page({ params }: Props) {
     secondaryCta: isEs ? "WhatsApp rápido" : "Quick WhatsApp",
 
     heroNote: isEs
-      ? "59 €. Precio final según pared, soporte, altura, cableado y dificultad."
-      : "€59. Final price depends on wall, bracket, height, cabling and complexity.",
+      ? `${formatTvMountingPrice(65, "es")}. Precio final según pared, soporte, altura, cableado y dificultad.`
+      : `${formatTvMountingPrice(65, "en")}. Final price depends on wall, bracket, height, cabling and complexity.`,
 
     servicesTitle: isEs
       ? "Servicio para montar TV de 65 pulgadas"
@@ -531,7 +532,7 @@ export default async function Page({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta montar una TV de 65 pulgadas en Valencia?",
-          a: "El montaje cuesta 59 €. El precio final depende del tipo de pared, soporte, altura, cableado y dificultad.",
+          a: `El montaje estándar cuesta ${formatTvMountingPrice(65, "es")}. ${tvMountingExclusions("es")}`,
         },
         {
           q: "¿Se puede colgar una TV de 65 pulgadas en pladur?",
@@ -561,7 +562,7 @@ export default async function Page({ params }: Props) {
     : [
         {
           q: "How much does it cost to mount a 65 inch TV in Valencia?",
-          a: "Mounting costs €59. Final price depends on wall type, bracket, height, cabling and complexity.",
+          a: `Standard mounting costs ${formatTvMountingPrice(65, "en")}. ${tvMountingExclusions("en")}`,
         },
         {
           q: "Can a 65 inch TV be mounted on drywall?",
