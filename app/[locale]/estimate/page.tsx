@@ -9,7 +9,7 @@ import {
   formatCatalogPrice,
 } from "@/lib/public-pricing";
 import { CatalogService, getCatalogServices } from "@/lib/serviceCatalog";
-import { tvMountingExclusions } from "@/lib/tvMountingPricing";
+import { tvMountingExclusions, tvSpecialistHref } from "@/lib/tvMountingPricing";
 import { RENOVATION_CATEGORIES } from "@/lib/renovationCatalog";
 import {
   Calculator,
@@ -1296,7 +1296,7 @@ function EstimatePageContent() {
                   })}
                 </div>
 
-                {category === "tv-mounting" && <p className="mt-4 text-sm leading-6 text-neutral-700">{tvMountingExclusions(locale)}</p>}
+                {category === "tv-mounting" && <div className="mt-4 text-sm leading-6 text-neutral-700"><p>{tvMountingExclusions(locale)}</p><a className="font-bold underline" href={tvSpecialistHref(locale)}>{isEs ? "¿Samsung Frame? Consulta las tarifas especiales y reserva por WhatsApp." : "Samsung Frame? View specialist rates and book via WhatsApp."}</a></div>}
                 <p className="mt-4 text-xs text-gray-500">
                   {t("step2.customNote")}
                 </p>
