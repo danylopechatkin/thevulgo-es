@@ -168,7 +168,7 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!isQuickQuoteRequest && isTvOrder(data.category, data.serviceCategory, data.services)) {
+    if (isTvOrder(data.category, data.serviceCategory, data.services)) {
       try {
         data.services = validateTvOrderPrices(data.services, market, locale);
       } catch (error) {
