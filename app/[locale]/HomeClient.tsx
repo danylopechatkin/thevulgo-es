@@ -54,7 +54,7 @@ export default function HomeClient({
       text: es
         ? "Soporte, nivelado y cables bien resueltos."
         : "Secure bracket, clean levelling and tidy cables.",
-      price: price("TV Mounting", "tv-mounting", 59),
+      price: price("TV Mounting", "tv-size-55", 49),
       href: market === "valencia" ? localizedPath(locale, "montaje-tv-valencia") : `${base}/montaje-tv`,
     },
     {
@@ -200,7 +200,7 @@ export default function HomeClient({
                   {text}
                 </p>
                 <p className="mt-6 text-sm font-bold">
-                  {es ? "Precio de referencia" : "Reference price"}{" "}
+                  {service === "tv" ? (es ? "Hasta 55″" : "Up to 55″") : (es ? "Precio de referencia" : "Reference price")}{" "}
                   <span className="text-2xl">€{from}</span>
                 </p>
                 <Link
