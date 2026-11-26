@@ -152,7 +152,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Soluciones más limpias con canaletas, rutas sencillas o cable management."
         : "Cleaner look with raceways, simple routing or cable management.",
-      price: isEs ? "29 €" : "€29",
+      price: isEs ? "25 € · canaleta" : "€25 · raceway",
       icon: <Cable className="h-5 w-5" />,
       href: `/${locale}/ocultar-cables-valencia`,
     },
