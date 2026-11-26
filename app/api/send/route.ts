@@ -1,4 +1,5 @@
 import { calculatePublicTotal } from "@/lib/public-pricing";
+import { isTvOrder, validateTvOrderPrices, TvOrderPricingError } from "@/lib/tvOrderPricing";
 import { Resend } from "resend";
 import { createClient } from "@supabase/supabase-js";
 import { isAvailableCity, marketFromCity } from "@/lib/cities";
@@ -29,6 +30,7 @@ function getServerClients() {
 }
 
 type OrderService = {
+  id?: string;
   label?: string;
   price: number;
   qty: number;
@@ -164,6 +166,15 @@ export async function POST(req: Request) {
         { success: false, error: "No services selected" },
         { status: 400 },
       );
+    }
+
+    if (!isQuickQuoteRequest && isTvOrder(data.category, data.serviceCategory, data.services)) {
+      try {
+        data.services = validateTvOrderPrices(data.services, market, locale);
+      } catch (error) {
+        if (!(error instanceof TvOrderPricingError)) throw error;
+        return Response.json({ success: false, code: "TV_PRICE_CHANGED", error: "TV_PRICE_CHANGED" }, { status: 409 });
+      }
     }
 
     if (
