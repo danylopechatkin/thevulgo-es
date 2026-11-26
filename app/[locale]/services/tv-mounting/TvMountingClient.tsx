@@ -1,6 +1,6 @@
 "use client";
 
-import { TV_MOUNTING_PRICES, formatTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions } from "@/lib/tvMountingPricing";
+import { formatSamsungFramePrice, TV_MOUNTING_PRICES, formatTvMountingPrice, tvMountingEstimateHref, tvMountingExclusions } from "@/lib/tvMountingPricing";
 
 
 import React from "react";
@@ -143,7 +143,7 @@ export default function TvMountingClient() {
       desc: isEs
         ? "Montaje Samsung Frame con One Connect Box, cable invisible y acabado tipo cuadro."
         : "Samsung Frame mounting with One Connect Box, invisible cable and picture-frame finish.",
-      price: isEs ? "69 €" : "€69",
+      price: `${formatSamsungFramePrice(55, locale)} · 43″/55″`,
       icon: <Ruler className="h-5 w-5" />,
       href: `/${locale}/montaje-tv-samsung-frame-valencia`,
     },
