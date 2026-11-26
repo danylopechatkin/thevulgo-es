@@ -76,7 +76,7 @@ export default function TvMiniCalculator({
   const { market } = useCurrentMarket(locale);
   const city = marketName(market);
   const baseOptions = options.filter((option) => option.kind === "base");
-  const [baseId, setBaseId] = useState(baseOptions[0]?.id || "");
+  const [baseId, setBaseId] = useState("");
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
@@ -160,8 +160,11 @@ export default function TvMiniCalculator({
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError("");
+    if (!baseId) {
+      setError(es ? "Selecciona la diagonal de tu TV." : "Select your TV screen size.");
+      return;
+    }
     if (
-      !baseId ||
       !form.name.trim() ||
       !form.email.trim() ||
       !form.phone.trim() ||
@@ -420,6 +423,7 @@ export default function TvMiniCalculator({
                 onClick={() => {
                   markStarted();
                   setBaseId(option.id);
+                  setError("");
                 }}
                 className={`relative rounded-2xl border-2 p-3 text-left transition active:scale-[.98] ${active ? "border-black bg-yellow-400 shadow-md" : "border-neutral-200 hover:border-yellow-400"}`}
               >
@@ -574,11 +578,11 @@ export default function TvMiniCalculator({
           <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">
             {es ? "Precio seleccionado" : "Selected price"}
           </p>
-          <p className="text-2xl font-black">€{total}</p>
+          <p className="text-xl font-black">{baseId ? formatPublicPrice(total, locale) : (es ? "Elige tamaño" : "Choose size")}</p>
         </div>
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || !baseId}
           className="inline-flex min-h-14 min-w-0 w-full items-center justify-center gap-2 rounded-xl bg-yellow-400 px-3 py-3 text-center text-sm font-black leading-tight text-black transition hover:scale-[1.02] disabled:opacity-60"
         >
           {submitting ? (
