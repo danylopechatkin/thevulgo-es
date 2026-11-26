@@ -1,5 +1,7 @@
 "use client";
 
+import { formatTvMountingPrice } from "@/lib/tvMountingPricing";
+
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
@@ -164,7 +166,7 @@ export default function MoveInClient() {
       desc: isEs
         ? "Montaje de TV y preparación de la zona con mejor alineación y distribución más terminada."
         : "Mounting TVs and setting up the viewing area with cleaner alignment and a more finished room layout.",
-      price: isEs ? "49 €" : "€49",
+      price: isEs ? `${formatTvMountingPrice(55, locale)} · TV hasta 55″` : `${formatTvMountingPrice(55, locale)} · TV up to 55″`,
       icon: <Tv className="h-5 w-5" />,
       className: "",
     },
