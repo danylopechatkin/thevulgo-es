@@ -9,6 +9,7 @@ import {
   formatCatalogPrice,
 } from "@/lib/public-pricing";
 import { CatalogService, getCatalogServices } from "@/lib/serviceCatalog";
+import { tvMountingExclusions } from "@/lib/tvMountingPricing";
 import { RENOVATION_CATEGORIES } from "@/lib/renovationCatalog";
 import {
   Calculator,
@@ -995,6 +996,7 @@ function EstimatePageContent() {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
+        if (result.code === "TV_PRICE_CHANGED") throw new Error("TV_PRICE_CHANGED");
         if (response.status === 409) {
           setSubmitStage("build");
           setClient((prev) => ({ ...prev, preferredTime: "" }));
@@ -1033,7 +1035,7 @@ function EstimatePageContent() {
     } catch (error) {
       console.error("SEND REQUEST ERROR:", error);
       trackMarketingEvent("booking_submit_failed", { source: "estimate", service: selectedServices[0]?.id, metadata: { calculator_type: "main", error_type: "api_failure", endpoint: "/api/send", locale, market: marketFromCity(displayCity), city: displayCity } });
-      setSendError(t("errors.sendError"));
+      setSendError(error instanceof Error && error.message === "TV_PRICE_CHANGED" ? (isEs ? "Los precios se han actualizado. Recarga la página y elige de nuevo el tamaño de la TV." : "Prices have been updated. Reload the page and select your TV size again.") : t("errors.sendError"));
     } finally {
       setIsSending(false);
     }
@@ -1294,6 +1296,7 @@ function EstimatePageContent() {
                   })}
                 </div>
 
+                {category === "tv-mounting" && <p className="mt-4 text-sm leading-6 text-neutral-700">{tvMountingExclusions(locale)}</p>}
                 <p className="mt-4 text-xs text-gray-500">
                   {t("step2.customNote")}
                 </p>
