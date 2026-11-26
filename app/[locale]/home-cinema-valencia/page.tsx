@@ -1,3 +1,4 @@
+import { formatTvMountingPrice } from "@/lib/tvMountingPricing";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -174,7 +175,8 @@ export default async function HomeCinemaValenciaPage({ params }: Props) {
         ["Instalación de proyector", "59 €"],
         ["Proyector en techo con soporte", "79 €"],
         ["Instalación de pantalla", "49 €"],
-        ["Montaje de TV / soundbar", "49 €"],
+        ["Montaje de TV hasta 55″", formatTvMountingPrice(55, "es")],
+        ["Soundbar / cine en casa", "Según presupuesto"],
         ["Visita / revisión", "49 €"],
       ]
     : [
@@ -182,7 +184,8 @@ export default async function HomeCinemaValenciaPage({ params }: Props) {
         ["Projector installation", "€59"],
         ["Ceiling projector with bracket", "€79"],
         ["Screen installation", "€49"],
-        ["TV / soundbar mounting", "€49"],
+        ["TV mounting up to 55″", formatTvMountingPrice(55, "en")],
+        ["Soundbar / home cinema", "By quote"],
         ["Visit / inspection", "€49"],
       ];
 
