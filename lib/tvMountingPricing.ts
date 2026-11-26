@@ -43,3 +43,22 @@ export function tvMountingExclusions(locale: string) {
 export function tvMountingOffers(locale: string) {
   return TV_MOUNTING_PRICES.map(tier => ({ "@type": "Offer", name: locale === "es" ? tier.labelEs : tier.label, price: tier.price, priceCurrency: "EUR" }));
 }
+
+/** Existing specialist prices; do not extend to unpriced Samsung Frame sizes. */
+export const SAMSUNG_FRAME_PRICES = [
+  { size: 43, price: 69 }, { size: 55, price: 69 }, { size: 65, price: 79 }, { size: 75, price: 99 },
+] as const;
+export function formatSamsungFramePrice(size: number, locale: string) {
+  const price = SAMSUNG_FRAME_PRICES.find(tier => tier.size === size)?.price;
+  return price == null ? (locale === "es" ? "Presupuesto personalizado" : "Individual quote") : locale === "es" ? `${price} €` : `€${price}`;
+}
+export function samsungFramePriceSummary(locale: string) {
+  return SAMSUNG_FRAME_PRICES.map(tier => `${tier.size}″: ${formatSamsungFramePrice(tier.size, locale)}`).join(" · ") +
+    (locale === "es" ? ". Otras diagonales: presupuesto personalizado." : ". Other sizes: individual quote.");
+}
+export function samsungFrameOffers(locale: string) {
+  return SAMSUNG_FRAME_PRICES.map(tier => ({ "@type": "Offer", name: `Samsung Frame ${tier.size}″`, price: tier.price, priceCurrency: "EUR", description: tvMountingExclusions(locale) }));
+}
+export function tvSpecialistHref(locale: string) {
+  return `${locale === "es" ? "/es" : ""}/montaje-tv-samsung-frame-valencia`;
+}
