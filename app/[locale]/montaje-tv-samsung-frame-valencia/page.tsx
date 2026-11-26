@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SAMSUNG_FRAME_PRICES, samsungFramePriceSummary, samsungFrameOffers, formatSamsungFramePrice, tvMountingExclusions } from "@/lib/tvMountingPricing";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -42,8 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "Samsung Frame TV Mounting in Valencia | Professional Installation | THEVULGO";
 
   const description = isEs
-    ? "Montaje profesional de Samsung Frame en Valencia. Instalación limpia, alineación precisa, One Connect Box, ocultación de cable invisible y montaje seguro en pared. 69 €."
-    : "Professional Samsung Frame TV mounting in Valencia. Clean installation, precise alignment, One Connect Box planning, cable concealment and secure wall mounting. €69.";
+    ? `Montaje profesional de Samsung Frame en Valencia. Instalación limpia, alineación precisa, One Connect Box, ocultación de cable invisible y montaje seguro en pared. ${formatSamsungFramePrice(55, "es")} (43″/55″).`
+    : `Professional Samsung Frame TV mounting in Valencia. Clean installation, precise alignment, One Connect Box planning, cable concealment and secure wall mounting. ${formatSamsungFramePrice(55, "en")} (43″/55″).`;
 
   const path = "/montaje-tv-samsung-frame-valencia";
   const url = `${baseUrl}${isEs ? "/es" : ""}${path}`;
@@ -112,7 +113,6 @@ export default async function Page({ params }: Props) {
   const isEs = locale === "es";
 
   const pageUrl = `${baseUrl}${isEs ? "/es" : ""}/montaje-tv-samsung-frame-valencia`;
-  const estimateHref = `/${locale}/estimate?category=tv-mounting`;
 
   const whatsappText = encodeURIComponent(
     isEs
@@ -121,6 +121,7 @@ export default async function Page({ params }: Props) {
   );
 
   const whatsappHref = `https://wa.me/${whatsappPhone}?text=${whatsappText}`;
+  const estimateHref = whatsappHref;
 
   const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -171,13 +172,7 @@ export default async function Page({ params }: Props) {
     description: isEs
       ? "Servicio profesional para montar Samsung Frame en pared con alineación precisa, instalación limpia, One Connect Box y ocultación de cables."
       : "Professional service to mount Samsung Frame TVs with precise alignment, clean installation, One Connect Box planning and cable concealment.",
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "EUR",
-      price: "69",
-      availability: "https://schema.org/InStock",
-      url: pageUrl,
-    },
+    offers: samsungFrameOffers(locale),
   };
 
   const faqSchema = {
@@ -192,8 +187,8 @@ export default async function Page({ params }: Props) {
         acceptedAnswer: {
           "@type": "Answer",
           text: isEs
-            ? "El montaje de Samsung Frame en Valencia cuesta 69 €. El precio final depende del tamaño de la TV, tipo de pared, soporte, altura, ubicación del One Connect Box y ocultación de cables."
-            : "Samsung Frame mounting in Valencia costs €69. The final price depends on TV size, wall type, bracket, height, One Connect Box position and cable concealment.",
+            ? `El montaje de Samsung Frame en Valencia cuesta ${formatSamsungFramePrice(55, "es")} (43″/55″). El precio final depende del tamaño de la TV, tipo de pared, soporte, altura, ubicación del One Connect Box y ocultación de cables.`
+            : `Samsung Frame mounting in Valencia costs ${formatSamsungFramePrice(55, "en")} (43″/55″). The final price depends on TV size, wall type, bracket, height, One Connect Box position and cable concealment.`,
         },
       },
       {
@@ -263,13 +258,13 @@ export default async function Page({ params }: Props) {
       ? "Instalación profesional de Samsung Frame en pared con alineación precisa, soporte bien nivelado, planificación del One Connect Box, ocultación de cable y acabado limpio tipo cuadro."
       : "Professional Samsung Frame wall installation with precise alignment, level bracket, One Connect Box planning, cable concealment and clean picture-frame style finish.",
 
-    primaryCta: isEs ? "Pedir presupuesto" : "Get estimate",
+    primaryCta: isEs ? "Pedir presupuesto por WhatsApp" : "Get quote via WhatsApp",
 
     secondaryCta: isEs ? "WhatsApp rápido" : "Quick WhatsApp",
 
     heroNote: isEs
-      ? "69 €. Precio final según tamaño, pared, soporte, cableado y dificultad."
-      : "€69. Final price depends on size, wall, bracket, cabling and complexity.",
+      ? `${formatSamsungFramePrice(55, "es")} (43″/55″). Precio final según tamaño, pared, soporte, cableado y dificultad.`
+      : `${formatSamsungFramePrice(55, "en")} (43″/55″). Final price depends on size, wall, bracket, cabling and complexity.`,
 
     servicesTitle: isEs
       ? "Servicio especializado para Samsung Frame"
@@ -450,36 +445,11 @@ export default async function Page({ params }: Props) {
     },
   ];
 
-  const sizes = [
-    {
-      title: "Samsung Frame 43”",
-      text: isEs
-        ? "Ideal para dormitorios, despachos y espacios pequeños."
-        : "Ideal for bedrooms, offices and smaller rooms.",
-      price: isEs ? "69 €" : "€69",
-    },
-    {
-      title: "Samsung Frame 55”",
-      text: isEs
-        ? "Una de las medidas más habituales para salones modernos."
-        : "One of the most common sizes for modern living rooms.",
-      price: isEs ? "69 €" : "€69",
-    },
-    {
-      title: "Samsung Frame 65”",
-      text: isEs
-        ? "Requiere buena medición para quedar centrada y cómoda."
-        : "Requires good measuring to stay centered and comfortable.",
-      price: isEs ? "79 €" : "€79",
-    },
-    {
-      title: "Samsung Frame 75”",
-      text: isEs
-        ? "Pantalla grande con más peso y necesidad de fijación muy estable."
-        : "Large screen with more weight and need for very stable fixing.",
-      price: isEs ? "99 €" : "€99",
-    },
-  ];
+  const sizes = SAMSUNG_FRAME_PRICES.map(tier => ({
+    title: `Samsung Frame ${tier.size}″`,
+    text: isEs ? "Montaje especializado, sujeto a revisión de pared y acceso." : "Specialist installation, subject to wall and access review.",
+    price: formatSamsungFramePrice(tier.size, locale),
+  }));
 
   const areas = [
     "Valencia",
@@ -531,7 +501,7 @@ export default async function Page({ params }: Props) {
     ? [
         {
           q: "¿Cuánto cuesta montar una Samsung Frame en Valencia?",
-          a: "El montaje cuesta 69 €. El precio final depende del tamaño, tipo de pared, soporte, ubicación del One Connect Box y ocultación de cables.",
+          a: `El montaje cuesta ${formatSamsungFramePrice(55, "es")} (43″/55″). El precio final depende del tamaño, tipo de pared, soporte, ubicación del One Connect Box y ocultación de cables.`,
         },
         {
           q: "¿Samsung Frame necesita instalación especial?",
@@ -565,7 +535,7 @@ export default async function Page({ params }: Props) {
     : [
         {
           q: "How much does Samsung Frame mounting cost in Valencia?",
-          a: "Mounting costs €69. Final price depends on size, wall type, bracket, One Connect Box location and cable concealment.",
+          a: `Mounting costs ${formatSamsungFramePrice(55, "en")} (43″/55″). Final price depends on size, wall type, bracket, One Connect Box location and cable concealment.`,
         },
         {
           q: "Does Samsung Frame need special installation?",
@@ -660,7 +630,7 @@ export default async function Page({ params }: Props) {
               </div>
 
               <p className="mt-5 text-sm font-medium text-gray-500">
-                {copy.heroNote}
+                {samsungFramePriceSummary(locale)}{" "}{tvMountingExclusions(locale)}
               </p>
             </div>
 
