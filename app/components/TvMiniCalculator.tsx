@@ -21,7 +21,7 @@ import { marketWhatsAppHref } from "@/lib/marketLinks";
 import { marketName } from "@/lib/cities";
 import { useCurrentMarket } from "@/lib/useCurrentMarket";
 import { TvBlackFridayReminder } from "./TvBlackFridayPromo";
-import { tvMountingExclusions } from "@/lib/tvMountingPricing";
+import { tvMountingExclusions, tvSpecialistHref } from "@/lib/tvMountingPricing";
 import { formatPublicPrice } from "@/lib/public-pricing";
 
 type TvOption = {
@@ -445,6 +445,7 @@ export default function TvMiniCalculator({
           </a>
         </div>
         <p className="mt-3 text-xs leading-relaxed text-neutral-600">{tvMountingExclusions(locale)}</p>
+        <p className="mt-2 text-xs"><a className="font-bold underline" href={tvSpecialistHref(locale)}>{es ? "¿Samsung Frame? Consulta las tarifas especiales." : "Samsung Frame? View specialist rates."}</a></p>
       </fieldset>
 
       {showBlackFriday && <TvBlackFridayReminder locale={locale} placement="calculator" />}
