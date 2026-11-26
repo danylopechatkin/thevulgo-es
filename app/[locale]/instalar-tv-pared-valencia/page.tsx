@@ -371,7 +371,7 @@ export default async function Page({ params }: Props) {
         "Nivelación y centrado de pantalla",
         "Revisión del tipo de pared",
         "Instalación en ladrillo, hormigón o pladur",
-        "Montaje de TVs de 43, 55, 65, 75 y 85 pulgadas",
+        "Montaje de TVs de 43, 55, 65, 75, 85 y 98 pulgadas",
         "Revisión del soporte si ya lo compraste",
         "Opciones para ocultar cables",
         "Instalación para salón, dormitorio, oficina o local",
@@ -385,7 +385,7 @@ export default async function Page({ params }: Props) {
         "Screen levelling and centering",
         "Wall type check",
         "Installation on brick, concrete or drywall",
-        "Mounting for 43, 55, 65, 75 and 85 inch TVs",
+        "Mounting for 43, 55, 65, 75, 85 and 98 inch TVs",
         "Bracket check if you already bought it",
         "Cable concealment options",
         "Installation for living room, bedroom, office or unit",
@@ -964,7 +964,7 @@ export default async function Page({ params }: Props) {
                   </h2>
                 </div>
 
-                <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {sizes.map((size) => (
                     <div
                       key={size.title}
